@@ -34,34 +34,6 @@ padding:30px 20px 60px;
 
 
 
-
-/* HERO */
-
-
-.hero{
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-gap:50px;
-
-min-height:600px;
-
-}
-
-
-
-.hero-text{
-
-flex:1;
-
-}
-
-
-
 .logo{
 
 width:110px;
