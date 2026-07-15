@@ -314,28 +314,6 @@ color:#dc8126;
 }
 
 
-
-
-
-/* TESTIMONIAL */
-
-
-.testimonial{
-
-background:white;
-
-padding:30px;
-
-margin-top:35px;
-
-border-radius:30px;
-
-text-align:center;
-
-}
-
-
-
 .stars{
 
 color:#f5b52c;
@@ -346,51 +324,11 @@ font-size:30px;
 
 
 
-.testimonial p{
-
-font-size:20px;
-
-margin:15px;
-
-}
-
-
-
-
-
-/* SOCIAL */
-
-
-.social{
-
-margin-top:30px;
-
-background:#fff0f4;
-
-padding:30px;
-
-border-radius:30px;
-
-text-align:center;
-
-}
 
 
 
 
 footer{
-
-margin-top:30px;
-
-background:white;
-
-padding:25px;
-
-border-radius:20px;
-
-display:flex;
-
-justify-content:space-between;
 
 }
 
