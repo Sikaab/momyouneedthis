@@ -1,48 +1,36 @@
-// Smooth scroll for buttons
+// Smooth button interaction
 
-document.querySelectorAll("a").forEach(link => {
+const chartButton = document.querySelector("button");
 
-  link.addEventListener("click", function(e){
 
-    const target = document.querySelector(
-      this.getAttribute("href")
-    );
+chartButton.addEventListener("click", function () {
 
-    if(target){
-      e.preventDefault();
+    chartButton.innerHTML = "✅ Chart Ready!";
 
-      target.scrollIntoView({
-        behavior:"smooth"
-      });
-    }
+    chartButton.style.transform = "scale(0.96)";
 
-  });
+
+    setTimeout(() => {
+
+        chartButton.style.transform = "scale(1)";
+
+        // Replace this with your actual freebie link later
+        window.location.href = "#download";
+
+
+    }, 200);
+
 
 });
 
 
-// Simple scroll animation
 
-const cards = document.querySelectorAll(".card");
+// Small animation when page loads
 
-
-const observer = new IntersectionObserver(entries => {
-
-entries.forEach(entry => {
-
-if(entry.isIntersecting){
-
-entry.target.classList.add("show");
-
-}
-
-});
-
-});
+window.addEventListener("load", () => {
 
 
-cards.forEach(card => {
+    document.querySelector(".page").style.opacity = "1";
 
-observer.observe(card);
 
 });
