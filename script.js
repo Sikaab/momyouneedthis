@@ -4,7 +4,7 @@
 
 
 
-// Smooth scrolling for buttons
+// Smooth scrolling for buttons //
 
 document.querySelectorAll('a[href^="#"]').forEach(link => {
 
