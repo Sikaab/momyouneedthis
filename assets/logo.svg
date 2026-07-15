@@ -1,57 +1,47 @@
 <svg width="300" height="300" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
 
-<defs>
-<linearGradient id="pink" x1="0" x2="1">
-<stop stop-color="#F9B7C3"/>
-<stop offset="1" stop-color="#E88A9C"/>
-</linearGradient>
-</defs>
+<circle cx="150" cy="150" r="145" fill="#FFDDE5"/>
 
+<circle cx="150" cy="150" r="125" fill="#FFF8F5"/>
 
-<circle cx="150" cy="150" r="140" fill="url(#pink)"/>
-
-
-<text
-x="150"
-y="120"
+<text x="150" y="120"
 text-anchor="middle"
-font-family="Arial"
-font-size="42"
-font-weight="700"
-fill="white">
-Mom
+font-family="Nunito"
+font-size="55"
+font-weight="900"
+fill="#E89AAA">
+MOM
+</text>
+
+<text x="150" y="170"
+text-anchor="middle"
+font-family="Nunito"
+font-size="45"
+font-weight="900"
+fill="#333">
+YOU NEED
 </text>
 
 
-<text
-x="150"
-y="170"
+<text x="150" y="215"
 text-anchor="middle"
-font-family="Arial"
-font-size="38"
-font-weight="700"
-fill="white">
-You Need
+font-family="Nunito"
+font-size="55"
+font-weight="900"
+fill="#E89AAA">
+THIS
 </text>
 
 
-<text
-x="150"
-y="215"
-text-anchor="middle"
-font-family="Arial"
-font-size="42"
-font-weight="700"
-fill="white">
-This
-</text>
-
-
-<path
-d="M90 70 C120 35 180 35 210 70"
-stroke="white"
+<path d="M90 70 C110 40 130 40 150 70"
+stroke="#E89AAA"
 stroke-width="8"
-fill="none"
-stroke-linecap="round"/>
+fill="none"/>
+
+<path d="M150 70 C170 40 190 40 210 70"
+stroke="#E89AAA"
+stroke-width="8"
+fill="none"/>
+
 
 </svg>
