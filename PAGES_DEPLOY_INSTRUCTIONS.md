@@ -1,4 +1,4 @@
-This repository is configured to deploy GitHub Pages from the repository root using the workflow in .github/workflows/deploy-pages.yml.
+This repository is configured to deploy GitHub Pages from the repository root using the workflow in .github/workflows/deploy.yml.
 
 To publish a site, add your static site files (e.g., index.html) to the repository root and push to the main branch. The workflow will run on push and deploy the files to GitHub Pages.
 
