@@ -1,0 +1,19 @@
+<svg width="180" height="180"
+viewBox="0 0 180 180"
+xmlns="http://www.w3.org/2000/svg">
+
+
+<circle cx="90" cy="90" r="80" fill="#FFF3C9"/>
+
+
+<polygon
+points="
+90,35 105,70 145,70
+115,95 125,135
+90,112 55,135
+65,95 35,70
+75,70"
+fill="#F6B73C"/>
+
+
+</svg>
