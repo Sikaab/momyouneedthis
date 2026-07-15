@@ -1,0 +1,54 @@
+<svg width="500" height="500" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+
+<defs>
+<linearGradient id="bg" x1="0" x2="1">
+<stop stop-color="#FFE9E5"/>
+<stop offset="1" stop-color="#FCE5EA"/>
+</linearGradient>
+</defs>
+
+
+<circle cx="250" cy="250" r="220" fill="url(#bg)"/>
+
+
+<!-- Mom hair -->
+<circle cx="210" cy="190" r="70" fill="#5A3928"/>
+
+<!-- Mom face -->
+<circle cx="210" cy="220" r="55" fill="#FFD6B8"/>
+
+<!-- Mom body -->
+<path
+d="M120 430 C120 320 300 320 300 430"
+fill="#E88A9C"/>
+
+
+<!-- Toddler head -->
+<circle cx="330" cy="250" r="55" fill="#FFD6B8"/>
+
+
+<!-- Toddler hair -->
+<path
+d="M280 230 Q330 150 380 230"
+fill="#70452D"/>
+
+
+<!-- Toddler body -->
+<path
+d="M270 430 C270 340 400 340 400 430"
+fill="#9BC7E8"/>
+
+
+<!-- Hearts -->
+
+<text
+x="250"
+y="110"
+text-anchor="middle"
+font-size="50"
+fill="#E88A9C">
+♥
+</text>
+
+
+</svg>
