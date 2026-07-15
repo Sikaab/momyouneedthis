@@ -29,10 +29,6 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
 });
 
 
-
-
-
-
 // Fade-in animation when sections appear
 
 
@@ -58,7 +54,6 @@ threshold:0.15
 
 
 
-
 document
 .querySelectorAll(
 ".card, .review-card, .product-card, .favorites, .follow"
@@ -68,10 +63,6 @@ document
 observer.observe(section);
 
 });
-
-
-
-
 
 
 // Button click effect
@@ -99,10 +90,6 @@ button.style.transform="";
 
 
 });
-
-
-
-
 
 
 // Dynamic year in footer
