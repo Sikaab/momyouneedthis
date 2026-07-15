@@ -1,12 +1,6 @@
-// ============================
-// MOMYOUNEEDTHIS INTERACTIONS
-// ============================
+// Smooth scroll for buttons
 
-
-
-// Smooth scrolling for buttons //
-
-document.querySelectorAll('a[href^="#"]').forEach(link => {
+document.querySelectorAll("a").forEach(link => {
 
   link.addEventListener("click", function(e){
 
@@ -15,13 +9,11 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
     );
 
     if(target){
-
       e.preventDefault();
 
       target.scrollIntoView({
         behavior:"smooth"
       });
-
     }
 
   });
@@ -29,13 +21,14 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
 });
 
 
-// Fade-in animation when sections appear
+// Simple scroll animation
+
+const cards = document.querySelectorAll(".card");
 
 
-const observer = new IntersectionObserver(
-(entries)=>{
+const observer = new IntersectionObserver(entries => {
 
-entries.forEach(entry=>{
+entries.forEach(entry => {
 
 if(entry.isIntersecting){
 
@@ -45,65 +38,11 @@ entry.target.classList.add("show");
 
 });
 
-
-},
-{
-threshold:0.15
-}
-);
-
-
-
-document
-.querySelectorAll(
-".card, .review-card, .product-card, .favorites, .follow"
-)
-.forEach(section=>{
-
-observer.observe(section);
-
 });
 
 
-// Button click effect
+cards.forEach(card => {
 
-
-document.querySelectorAll(".cta")
-.forEach(button=>{
-
-
-button.addEventListener(
-"click",
-()=>{
-
-button.style.transform="scale(.96)";
-
-
-setTimeout(()=>{
-
-button.style.transform="";
-
-},150);
-
+observer.observe(card);
 
 });
-
-
-});
-
-
-// Dynamic year in footer
-
-
-const year = new Date().getFullYear();
-
-const footerText =
-document.querySelector("footer p");
-
-
-if(footerText){
-
-footerText.innerHTML =
-`© ${year} MomYouNeedThis`;
-
-}
