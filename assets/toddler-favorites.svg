@@ -1,0 +1,27 @@
+<svg width="180" height="180"
+viewBox="0 0 180 180"
+xmlns="http://www.w3.org/2000/svg">
+
+
+<circle cx="90" cy="90" r="80" fill="#DFF3E6"/>
+
+
+<!-- teddy -->
+
+<circle cx="90" cy="90" r="45" fill="#B9855A"/>
+
+<circle cx="55" cy="55" r="18" fill="#B9855A"/>
+<circle cx="125" cy="55" r="18" fill="#B9855A"/>
+
+
+<circle cx="75" cy="85" r="5"/>
+<circle cx="105" cy="85" r="5"/>
+
+<path
+d="M75 110 Q90 125 105 110"
+fill="none"
+stroke="#333"
+stroke-width="5"/>
+
+
+</svg>
