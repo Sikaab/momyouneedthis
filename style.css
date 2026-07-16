@@ -651,7 +651,7 @@ button:hover{
 
 
 
-.deal-section p{
+.deal-section > p{
 
     color:#666;
 
@@ -705,13 +705,16 @@ button:hover{
 
 .deal-note{
 
-    margin-top:18px;
+    margin-top:18px !important;
+
+    margin-bottom:0 !important;
 
     font-size:15px;
 
     color:#777;
 
 }
+
 
 
 
