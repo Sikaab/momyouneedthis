@@ -5,6 +5,16 @@
 }
 
 
+html,
+body{
+
+    overflow-x:hidden;
+
+    scroll-behavior:auto;
+
+}
+
+
 body{
 
     background:#fffaf8;
@@ -993,15 +1003,6 @@ footer p{
    PAGE LOAD ANIMATION
 ===================== */
 
-
-.hero-text{
-
-    animation: heroAppear .8s ease forwards;
-
-}
-
-
-
 .hero-text .logo{
 
     opacity:0;
@@ -1052,26 +1053,6 @@ footer p{
 
 }
 
-
-
-
-
-@keyframes heroAppear{
-
-    from{
-
-        opacity:0;
-
-    }
-
-
-    to{
-
-        opacity:1;
-
-    }
-
-}
 
 
 @keyframes fadeUp{
@@ -1126,7 +1107,7 @@ footer p{
     }
 
 
-    .hero button{
+    .hero-button{
 
         width:100%;
 
