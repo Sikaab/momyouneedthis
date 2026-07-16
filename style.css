@@ -1028,8 +1028,55 @@ footer p{
     }
 
 }
+body::before{
+
+content:"✨";
+
+position:fixed;
+
+top:20%;
+
+left:10%;
+
+font-size:30px;
+
+animation:sparkle 3s infinite;
+
+}
 
 
+@keyframes sparkle{
+
+0%,100%{
+opacity:.3;
+transform:translateY(0);
+}
+
+50%{
+opacity:1;
+transform:translateY(-20px);
+}
+
+}
+
+.logo{
+
+animation: floatLogo 4s ease-in-out infinite;
+
+}
+
+
+@keyframes floatLogo{
+
+0%,100%{
+transform:translateY(0);
+}
+
+50%{
+transform:translateY(-10px);
+}
+
+}
 
 /* =====================
    MOBILE
