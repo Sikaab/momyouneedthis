@@ -615,11 +615,13 @@ button:hover{
 
 }
 
-
-
 .deal-badge{
 
-    display:inline-block;
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
 
     background:#fff0d9;
 
@@ -635,7 +637,33 @@ button:hover{
 
     margin-bottom:20px;
 
+    position:relative;
+
+    animation:badgeFloat 3s ease-in-out infinite;
+
+    box-shadow:0 8px 20px rgba(229,138,0,.25);
+
 }
+
+
+.deal-badge::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:-5px;
+
+    border-radius:999px;
+
+    background:rgba(229,138,0,.20);
+
+    z-index:-1;
+
+    animation:badgePulse 2s ease-in-out infinite;
+
+}
+
 
 
 
