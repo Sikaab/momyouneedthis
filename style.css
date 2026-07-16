@@ -168,8 +168,6 @@ button:hover{
 
 }
 
-
-
 /* =====================
    FEATURES
 ===================== */
@@ -186,8 +184,6 @@ button:hover{
     margin:50px 0;
 
 }
-
-
 
 .features div{
 
@@ -213,8 +209,6 @@ button:hover{
 
 }
 
-
-
 .features span{
 
     display:block;
@@ -225,15 +219,11 @@ button:hover{
 
 }
 
-
-
 .features strong{
 
     font-size:18px;
 
 }
-
-
 
 .features p{
 
@@ -243,12 +233,9 @@ button:hover{
 
 }
 
-
-
 /* =====================
    AMAZON FAVORITES
 ===================== */
-
 
 .amazon-section{
 
@@ -256,7 +243,7 @@ button:hover{
 
     border-radius:35px;
 
-    padding:45px 25px;
+    padding:25px;
 
     text-align:center;
 
