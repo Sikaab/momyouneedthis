@@ -247,8 +247,6 @@ button:hover{
 
 
 
-
-
 /* =====================
    AMAZON FAVORITES
 ===================== */
@@ -453,10 +451,6 @@ button:hover{
 
 }
 
-
-
-
-
 /* =====================
    FOOTER
 ===================== */
@@ -466,53 +460,23 @@ footer{
 
     margin-top:40px;
 
-    padding:25px;
-
-    background:white;
+    background:#fff0f4;
 
     border-radius:25px;
 
+    padding:25px 20px;
+
     text-align:center;
 
-    color:#777;
-
 }
 
-
-
-footer strong{
-
-    color:#332b2b;
-
-    font-size:20px;
-
-}
-
-/* =====================
-   FOOTER
-===================== */
-
-
-footer{
-
-margin-top:50px;
-
-background:#fff0f4;
-
-border-radius:35px;
-
-padding:40px 25px;
-
-text-align:center;
-
-}
 
 
 .footer-logo img{
 
-width:80px;
+    width:55px;
 
-margin-bottom:15px;
+    margin-bottom:10px;
 
 }
 
@@ -520,11 +484,11 @@ margin-bottom:15px;
 
 footer h3{
 
-font-size:26px;
+    font-size:20px;
 
-font-weight:900;
+    font-weight:900;
 
-margin-bottom:10px;
+    margin-bottom:8px;
 
 }
 
@@ -532,11 +496,13 @@ margin-bottom:10px;
 
 footer p{
 
-color:#777;
+    color:#777;
 
-line-height:1.5;
+    font-size:14px;
 
-margin-bottom:20px;
+    line-height:1.4;
+
+    margin-bottom:15px;
 
 }
 
@@ -544,15 +510,15 @@ margin-bottom:20px;
 
 .footer-links{
 
-display:flex;
+    display:flex;
 
-justify-content:center;
+    justify-content:center;
 
-gap:25px;
+    gap:15px;
 
-flex-wrap:wrap;
+    flex-wrap:wrap;
 
-margin:25px 0;
+    margin:15px 0;
 
 }
 
@@ -560,11 +526,13 @@ margin:25px 0;
 
 .footer-links a{
 
-text-decoration:none;
+    text-decoration:none;
 
-color:#332b2b;
+    color:#332b2b;
 
-font-weight:700;
+    font-size:14px;
+
+    font-weight:700;
 
 }
 
@@ -572,13 +540,13 @@ font-weight:700;
 
 .social-links{
 
-display:flex;
+    display:flex;
 
-justify-content:center;
+    justify-content:center;
 
-gap:20px;
+    gap:10px;
 
-margin-bottom:30px;
+    margin-bottom:15px;
 
 }
 
@@ -586,19 +554,19 @@ margin-bottom:30px;
 
 .social-links a{
 
-text-decoration:none;
+    text-decoration:none;
 
-background:white;
+    background:white;
 
-padding:10px 18px;
+    padding:8px 14px;
 
-border-radius:50px;
+    border-radius:50px;
 
-color:#e89aaa;
+    color:#e89aaa;
 
-font-weight:800;
+    font-size:13px;
 
-box-shadow:0 5px 15px rgba(0,0,0,.05);
+    font-weight:800;
 
 }
 
@@ -606,11 +574,9 @@ box-shadow:0 5px 15px rgba(0,0,0,.05);
 
 .footer-bottom{
 
-border-top:1px solid #f2dce2;
+    border-top:1px solid #f2dce2;
 
-padding-top:20px;
-
-font-size:13px;
+    padding-top:12px;
 
 }
 
@@ -618,13 +584,11 @@ font-size:13px;
 
 .footer-bottom p{
 
-margin:5px;
+    margin:4px;
 
-font-size:13px;
+    font-size:12px;
 
 }
-
-
 
 
 
@@ -633,23 +597,16 @@ font-size:13px;
 
 footer{
 
-padding:35px 20px;
+    padding:25px 15px;
 
 }
 
 
 .footer-links{
 
-flex-direction:column;
+    flex-direction:column;
 
-gap:15px;
-
-}
-
-
-.social-links{
-
-flex-wrap:wrap;
+    gap:10px;
 
 }
 
