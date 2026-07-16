@@ -908,3 +908,21 @@ footer p{
 
 }
 
+@media(max-width:750px){
+
+    .resource-list{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .resource-button{
+
+        width:100%;
+
+        font-size:18px;
+
+    }
+
+}
+
