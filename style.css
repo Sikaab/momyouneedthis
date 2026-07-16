@@ -265,18 +265,19 @@ button:hover{
     box-shadow:0 15px 35px rgba(0,0,0,.06);
 
 }
-
-
-
 .amazon-badge{
 
-    display:inline-block;
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
 
     background:#fde6ec;
 
     color:#d97f95;
 
-    padding:8px 18px;
+    padding:10px 22px;
 
     border-radius:999px;
 
@@ -286,9 +287,91 @@ button:hover{
 
     margin-bottom:18px;
 
+    position:relative;
+
+    animation:badgeFloat 3s ease-in-out infinite;
+
+    box-shadow:0 8px 20px rgba(232,154,170,.25);
+
 }
 
 
+/* soft glow */
+
+.amazon-badge::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:-5px;
+
+    border-radius:999px;
+
+    background:rgba(232,154,170,.25);
+
+    z-index:-1;
+
+    animation:badgePulse 2s ease-in-out infinite;
+
+}
+
+
+
+
+
+@keyframes badgeFloat{
+
+
+0%,100%{
+
+    transform:translateY(0);
+
+}
+
+
+50%{
+
+    transform:translateY(-5px);
+
+}
+
+
+}
+
+
+
+@keyframes badgePulse{
+
+
+0%{
+
+    transform:scale(1);
+
+    opacity:.5;
+
+}
+
+
+50%{
+
+    transform:scale(1.08);
+
+    opacity:.2;
+
+}
+
+
+100%{
+
+    transform:scale(1);
+
+    opacity:.5;
+
+}
+
+
+}
 
 .amazon-header h2{
 
