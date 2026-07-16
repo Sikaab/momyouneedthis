@@ -989,7 +989,45 @@ footer p{
 
 }
 
+.hero-text > * {
+    opacity:0;
+    animation: fadeUp .8s ease forwards;
+}
 
+.hero-text .logo {
+    animation-delay:.2s;
+}
+
+.hero h1 {
+    animation-delay:.4s;
+}
+
+.hero-text p {
+    animation-delay:.6s;
+}
+
+.hero-button {
+    animation-delay:.8s;
+}
+
+.rating {
+    animation-delay:1s;
+}
+
+
+@keyframes fadeUp {
+
+    from {
+        opacity:0;
+        transform:translateY(25px);
+    }
+
+    to {
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
 
 
 
