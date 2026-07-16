@@ -41,21 +41,13 @@ body{
    HERO
 ===================== */
 
-
 .hero{
-
     display:flex;
-
     justify-content:center;
-
     align-items:center;
-
     text-align:center;
-
-    padding-bottom:20px;
-
+    padding-bottom:8px;
 }
-
 
 
 .hero-text{
@@ -190,31 +182,150 @@ button:hover{
 
 }
 
+/* FREE SECTION */
 
+.free-section{
 
+    margin:45px 0;
+
+    background:#fff;
+
+    border-radius:35px;
+
+    padding:45px 30px;
+
+    text-align:center;
+
+    box-shadow:0 12px 30px rgba(0,0,0,.05);
+
+}
+
+.free-badge{
+
+    display:inline-block;
+
+    background:#fde6ec;
+
+    color:#d97f95;
+
+    padding:10px 20px;
+
+    border-radius:999px;
+
+    font-weight:900;
+
+    margin-bottom:20px;
+
+}
+
+.free-section h2{
+
+    font-size:36px;
+
+    margin-bottom:15px;
+
+}
+
+.free-section p{
+
+    color:#666;
+
+    line-height:1.6;
+
+    max-width:650px;
+
+    margin:auto;
+
+}
+
+.resource-list{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:15px;
+
+    margin:35px auto;
+
+    max-width:700px;
+
+}
+
+.resource-list div{
+
+    background:#fff8fb;
+
+    padding:18px;
+
+    border-radius:18px;
+
+    font-weight:700;
+
+}
+
+.resource-button{
+
+    display:inline-flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:#e89aaa;
+
+    color:white;
+
+    text-decoration:none;
+
+    padding:20px 40px;
+
+    border-radius:999px;
+
+    font-size:20px;
+
+    font-weight:900;
+
+    transition:.25s;
+
+}
+
+.resource-button:hover{
+
+    transform:translateY(-3px);
+
+}
+
+.resource-note{
+
+    margin-top:18px;
+
+    color:#777;
+
+    font-size:15px;
+
+}
 
 
 /* =====================
    AMAZON FAVORITES
 ===================== */
 
-
 .amazon-section{
 
-    margin-top:25px;
+    margin-top:8px;
 
     background:linear-gradient(180deg,#fff8fb,#ffffff);
 
     border-radius:35px;
 
-    padding:45px 25px;
+    padding:28px 25px 40px;
 
     text-align:center;
 
     box-shadow:0 15px 35px rgba(0,0,0,.06);
 
 }
-
 
 
 .amazon-header{
@@ -796,3 +907,4 @@ footer p{
     }
 
 }
+
