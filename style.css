@@ -637,13 +637,15 @@ button:hover{
 
     border-radius:35px;
 
-    padding:45px 30px;
+    padding:35px 30px 40px;
 
     text-align:center;
 
     box-shadow:0 12px 30px rgba(0,0,0,.05);
 
 }
+
+
 
 .deal-badge{
 
@@ -665,7 +667,7 @@ button:hover{
 
     font-size:14px;
 
-    margin-bottom:20px;
+    margin-bottom:18px;
 
     position:relative;
 
@@ -674,6 +676,7 @@ button:hover{
     box-shadow:0 8px 20px rgba(229,138,0,.25);
 
 }
+
 
 
 .deal-badge::before{
@@ -696,7 +699,6 @@ button:hover{
 
 
 
-
 .deal-section h2{
 
     font-size:36px;
@@ -709,7 +711,7 @@ button:hover{
 
 
 
-.deal-section > p{
+.deal-description{
 
     color:#666;
 
@@ -763,17 +765,15 @@ button:hover{
 
 .deal-note{
 
-    margin-top:18px !important;
+    margin-top:18px;
 
-    margin-bottom:0 !important;
+    margin-bottom:0;
 
     font-size:15px;
 
     color:#777;
 
 }
-
-
 
 
 
