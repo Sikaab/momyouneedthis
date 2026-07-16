@@ -1,28 +1,29 @@
 *{
-
-box-sizing:border-box;
-margin:0;
-padding:0;
-
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
 
 body{
 
-background:#fffaf8;
+    background:#fffaf8;
 
-font-family:'Nunito',sans-serif;
+    font-family:'Nunito',sans-serif;
 
-color:#332b2b;
+    color:#332b2b;
 
-display:flex;
+    display:flex;
 
-justify-content:center;
+    justify-content:center;
 
 }
+
+
 .page{
 
     width:100%;
+
     max-width:1100px;
 
     margin:0 auto;
@@ -33,23 +34,57 @@ justify-content:center;
 
 
 
-.logo {
+/* =====================
+   HERO
+===================== */
+
+
+.hero{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    text-align:center;
+
+    padding-bottom:40px;
+
+}
+
+
+.hero-text{
+
+    max-width:650px;
+
+    margin:0 auto;
+
+}
+
+
+
+.logo{
+
     width:110px;
+
     display:block;
+
     margin:0 auto 20px;
+
 }
 
 
 
 .hero h1{
 
-font-size:55px;
+    font-size:55px;
 
-font-weight:900;
+    font-weight:900;
 
-line-height:1.05;
+    line-height:1.05;
 
-margin-top:20px;
+    margin-top:20px;
 
 }
 
@@ -57,9 +92,9 @@ margin-top:20px;
 
 .hero h1 span{
 
-display:block;
+    display:block;
 
-color:#e89aaa;
+    color:#e89aaa;
 
 }
 
@@ -67,13 +102,13 @@ color:#e89aaa;
 
 .hero-text p{
 
-font-size:21px;
+    font-size:21px;
 
-line-height:1.5;
+    line-height:1.5;
 
-margin:25px 0;
+    margin:25px auto;
 
-max-width:450px;
+    max-width:450px;
 
 }
 
@@ -81,40 +116,45 @@ max-width:450px;
 
 button{
 
-background:#e89aaa;
+    background:#e89aaa;
 
-color:white;
+    color:white;
 
-border:none;
+    border:none;
 
-padding:18px 35px;
+    padding:18px 35px;
 
-border-radius:50px;
+    border-radius:50px;
 
-font-size:18px;
+    font-size:18px;
 
-font-weight:900;
+    font-weight:900;
 
-cursor:pointer;
+    cursor:pointer;
 
-}
-
-button{
     transition:.25s ease;
+
 }
+
+
 
 button:hover{
+
     transform:translateY(-3px);
+
     box-shadow:0 12px 30px rgba(232,154,170,.35);
+
 }
+
+
 
 .rating{
 
-margin-top:25px;
+    margin-top:25px;
 
-color:#f5b52c;
+    color:#f5b52c;
 
-font-size:20px;
+    font-size:20px;
 
 }
 
@@ -122,93 +162,33 @@ font-size:20px;
 
 .rating p{
 
-color:#555;
+    color:#555;
 
-font-size:15px;
+    font-size:15px;
 
-margin-top:5px;
-
-}
-
-
-/* HERO IMAGE */
-
-.hero-image{
-
-flex:1;
-
-display:flex;
-
-justify-content:center;
+    margin-top:5px;
 
 }
 
-.image-box{
-
-background:#fff0e8;
-
-padding:30px;
-
-border-radius:45px;
-
-position:relative;
-
-}
-
-.image-box img{
-
-width:350px;
-
-}
-
-.badge{
-
-position:absolute;
-
-top:25px;
-
-right:25px;
-
-background:#e89aaa;
-
-color:white;
-
-padding:12px 20px;
-
-border-radius:40px;
-
-font-weight:900;
-
-}
-
-.hero {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 50px;
-    text-align: center;
-}
-
-.hero-text {
-    max-width: 650px;
-    margin: 0 auto;
-}
 
 
-/* FEATURES */
+/* =====================
+   FEATURES
+===================== */
 
 
 .features{
 
-display:grid;
+    display:grid;
 
-grid-template-columns:repeat(4,1fr);
+    grid-template-columns:repeat(4,1fr);
 
-gap:20px;
+    gap:20px;
 
-margin:50px 0;
+    margin:50px 0;
 
 }
+
 
 
 .features div{
@@ -222,8 +202,11 @@ margin:50px 0;
     text-align:center;
 
     display:flex;
+
     flex-direction:column;
+
     justify-content:center;
+
     align-items:center;
 
     min-height:220px;
@@ -233,13 +216,14 @@ margin:50px 0;
 }
 
 
+
 .features span{
 
-display:block;
+    display:block;
 
-font-size:35px;
+    font-size:35px;
 
-margin-bottom:15px;
+    margin-bottom:15px;
 
 }
 
@@ -247,7 +231,7 @@ margin-bottom:15px;
 
 .features strong{
 
-font-size:18px;
+    font-size:18px;
 
 }
 
@@ -255,353 +239,341 @@ font-size:18px;
 
 .features p{
 
-margin-top:8px;
+    margin-top:8px;
 
-color:#777;
-
-}
-
-
-/* RESOURCE */
-
-.resource{
-
-background:#dc8126;
-
-border-radius:35px;
-
-padding:35px;
-
-display:flex;
-
-align-items:center;
-
-gap:35px;
-
-color:white;
+    color:#777;
 
 }
 
 
 
-.resource-image img{
-
-width:230px;
-
-}
-
-.resource h2{
-
-font-size:35px;
-
-font-weight:900;
-
-}
-
-.resource p{
-
-font-size:20px;
-
-margin:20px 0;
-
-}
-
-.resource button{
-
-background:white;
-
-color:#dc8126;
-
-}
-
-.stars{
-
-color:#f5b52c;
-
-font-size:30px;
-
-}
-
-footer{
-
-}
-
-/* MOBILE */
 
 
-@media(max-width:750px){
+/* =====================
+   AMAZON FAVORITES
+===================== */
 
-
-.hero{
-
-flex-direction:column-reverse;
-
-text-align:center;
-
-}
-
-
-.hero h1{
-
-font-size:40px;
-
-}
-
-.hero-text p{
-
-font-size:18px;
-
-margin-left:auto;
-
-margin-right:auto;
-
-}
-
-.hero button{
-
-width:100%;
-
-}
-
-.image-box img{
-
-width:250px;
-
-}
-
-.features{
-
-grid-template-columns:repeat(2,1fr);
-
-}
-
-.resource{
-
-flex-direction:column;
-
-text-align:center;
-
-}
-
-.resource h2{
-
-font-size:28px;
-
-}
-
-}/* AMAZON SECTION */
 
 .amazon-section{
 
-background:linear-gradient(180deg,#fff8fb,#fff);
+    margin-top:60px;
 
-border-radius:35px;
+    background:linear-gradient(180deg,#fff8fb,#ffffff);
 
-padding:40px 25px;
+    border-radius:35px;
 
-text-align:center;
+    padding:45px 25px;
 
-box-shadow:0 15px 35px rgba(0,0,0,.06);
+    text-align:center;
+
+    box-shadow:0 15px 35px rgba(0,0,0,.06);
 
 }
+
 
 
 .amazon-badge{
 
-display:inline-block;
+    display:inline-block;
 
-background:#fde6ec;
+    background:#fde6ec;
 
-color:#d97f95;
+    color:#d97f95;
 
-padding:8px 18px;
+    padding:8px 18px;
 
-border-radius:999px;
+    border-radius:999px;
 
-font-weight:800;
+    font-weight:900;
 
-font-size:14px;
+    font-size:14px;
 
-margin-bottom:18px;
+    margin-bottom:18px;
 
 }
+
 
 
 .amazon-header h2{
 
-font-size:38px;
+    font-size:38px;
 
-font-weight:900;
+    font-weight:900;
 
-margin-bottom:15px;
+    margin-bottom:15px;
 
 }
+
 
 
 .amazon-header p{
 
-font-size:18px;
+    font-size:18px;
 
-color:#666;
+    color:#666;
 
-max-width:650px;
+    max-width:650px;
 
-margin:auto;
+    margin:auto;
 
-line-height:1.6;
+    line-height:1.6;
 
 }
+
+
+
 
 
 .amazon-grid{
 
-display:grid;
+    display:grid;
 
-grid-template-columns:repeat(2,1fr);
+    grid-template-columns:repeat(3,1fr);
 
-gap:20px;
+    gap:20px;
 
-margin:40px 0;
+    margin:40px 0;
 
 }
+
+
 
 
 .amazon-card{
 
-background:white;
+    background:white;
 
-border-radius:25px;
-
-padding:28px 20px;
-
-box-shadow:0 8px 25px rgba(0,0,0,.05);
-
-transition:.25s;
-
-}
-
-
-.amazon-card:hover{
-
-transform:translateY(-5px);
-
-}
-
-
-.amazon-card .icon{
-
-font-size:42px;
-
-margin-bottom:15px;
-
-}
-
-
-.amazon-card h3{
-
-font-size:22px;
-
-margin-bottom:10px;
-
-}
-
-
-.amazon-card p{
-
-color:#777;
-
-line-height:1.5;
-
-}
-
-
-.amazon-button{
-
-display:inline-block;
-
-background:#ff9900;
-
-color:white;
-
-padding:20px 40px;
-
-border-radius:999px;
-
-font-size:20px;
-
-font-weight:900;
-
-text-decoration:none;
-
-box-shadow:0 10px 25px rgba(255,153,0,.35);
-
-transition:.25s;
-
-}
-
-
-.amazon-button:hover{
-
-transform:scale(1.04);
-
-}
-
-
-.amazon-note{
-
-margin-top:18px;
-
-font-size:15px;
-
-color:#777;
-
-}
-
-
-@media(max-width:750px){.page{
-
-    padding:25px 16px 50px;
-
-}
-
-.features{
-
-    gap:15px;
-
-}
-
-.amazon-section{
+    border-radius:25px;
 
     padding:30px 20px;
 
-}
+    min-height:190px;
 
-.amazon-grid{
+    box-shadow:0 8px 25px rgba(0,0,0,.05);
 
-grid-template-columns:1fr;
+    transition:.25s;
 
-}
+    display:flex;
 
-.amazon-header h2{
-
-font-size:30px;
-
-}
-
-.amazon-button{
-
-width:100%;
-
-}
-
-}
-.amazon-button{
-
-    display:inline-flex;
+    flex-direction:column;
 
     justify-content:center;
+
     align-items:center;
 
 }
 
 
+
+.amazon-card:hover{
+
+    transform:translateY(-5px);
+
+}
+
+
+
+.amazon-card .icon{
+
+    font-size:42px;
+
+    margin-bottom:15px;
+
+}
+
+
+
+.amazon-card h3{
+
+    font-size:21px;
+
+    margin-bottom:10px;
+
+}
+
+
+
+.amazon-card p{
+
+    color:#777;
+
+    line-height:1.5;
+
+}
+
+
+
+
+
+.amazon-button{
+
+    display:inline-flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:#ff9900;
+
+    color:white;
+
+    padding:20px 45px;
+
+    border-radius:999px;
+
+    font-size:20px;
+
+    font-weight:900;
+
+    text-decoration:none;
+
+    box-shadow:0 12px 30px rgba(255,153,0,.35);
+
+    transition:.25s;
+
+}
+
+
+
+.amazon-button:hover{
+
+    transform:scale(1.04);
+
+}
+
+
+
+.amazon-note{
+
+    margin-top:18px;
+
+    font-size:15px;
+
+    color:#777;
+
+}
+
+
+
+
+
+/* =====================
+   FOOTER
+===================== */
+
+
+footer{
+
+    margin-top:40px;
+
+    padding:25px;
+
+    background:white;
+
+    border-radius:25px;
+
+    text-align:center;
+
+    color:#777;
+
+}
+
+
+
+footer strong{
+
+    color:#332b2b;
+
+    font-size:20px;
+
+}
+
+
+
+
+
+/* =====================
+   MOBILE
+===================== */
+
+
+@media(max-width:750px){
+
+
+    .page{
+
+        padding:25px 16px 50px;
+
+    }
+
+
+    .hero h1{
+
+        font-size:40px;
+
+    }
+
+
+    .hero-text p{
+
+        font-size:18px;
+
+    }
+
+
+    .hero button{
+
+        width:100%;
+
+    }
+
+
+    .features{
+
+        grid-template-columns:repeat(2,1fr);
+
+        gap:15px;
+
+    }
+
+
+    .features div{
+
+        min-height:180px;
+
+    }
+
+
+    .amazon-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+
+    .amazon-section{
+
+        padding:35px 20px;
+
+    }
+
+
+    .amazon-header h2{
+
+        font-size:30px;
+
+    }
+
+
+    .amazon-button{
+
+        width:100%;
+
+        padding:18px 15px;
+
+        font-size:17px;
+
+    }
+
+
+}
