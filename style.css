@@ -131,11 +131,7 @@ margin-top:5px;
 }
 
 
-
-
-
 /* HERO IMAGE */
-
 
 .hero-image{
 
@@ -146,8 +142,6 @@ display:flex;
 justify-content:center;
 
 }
-
-
 
 .image-box{
 
@@ -161,15 +155,11 @@ position:relative;
 
 }
 
-
-
 .image-box img{
 
 width:350px;
 
 }
-
-
 
 .badge{
 
@@ -190,6 +180,7 @@ border-radius:40px;
 font-weight:900;
 
 }
+
 .hero {
     display: flex;
     justify-content: center;
@@ -202,9 +193,6 @@ font-weight:900;
     max-width: 650px;
     margin: 0 auto;
 }
-
-
-
 
 
 /* FEATURES */
@@ -274,11 +262,7 @@ color:#777;
 }
 
 
-
-
-
 /* RESOURCE */
-
 
 .resource{
 
@@ -306,8 +290,6 @@ width:230px;
 
 }
 
-
-
 .resource h2{
 
 font-size:35px;
@@ -315,8 +297,6 @@ font-size:35px;
 font-weight:900;
 
 }
-
-
 
 .resource p{
 
@@ -326,8 +306,6 @@ margin:20px 0;
 
 }
 
-
-
 .resource button{
 
 background:white;
@@ -335,7 +313,6 @@ background:white;
 color:#dc8126;
 
 }
-
 
 .stars{
 
@@ -345,18 +322,9 @@ font-size:30px;
 
 }
 
-
-
-
-
-
-
 footer{
 
 }
-
-
-
 
 /* MOBILE */
 
@@ -373,14 +341,11 @@ text-align:center;
 }
 
 
-
 .hero h1{
 
 font-size:40px;
 
 }
-
-
 
 .hero-text p{
 
@@ -392,15 +357,11 @@ margin-right:auto;
 
 }
 
-
-
 .hero button{
 
 width:100%;
 
 }
-
-
 
 .image-box img{
 
@@ -408,15 +369,11 @@ width:250px;
 
 }
 
-
-
 .features{
 
 grid-template-columns:repeat(2,1fr);
 
 }
-
-
 
 .resource{
 
@@ -425,8 +382,6 @@ flex-direction:column;
 text-align:center;
 
 }
-
-
 
 .resource h2{
 
@@ -437,8 +392,6 @@ font-size:28px;
 }/* AMAZON SECTION */
 
 .amazon-section{
-
-margin-top:60px;
 
 background:linear-gradient(180deg,#fff8fb,#fff);
 
