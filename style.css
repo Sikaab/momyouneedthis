@@ -1074,9 +1074,6 @@ footer p{
 }
 
 
-
-
-
 @keyframes fadeUp{
 
 
@@ -1096,85 +1093,6 @@ footer p{
         transform:translateY(0);
 
     }
-
-}
-
-
-
-
-
-@keyframes floatLogo{
-
-
-    0%,100%{
-
-        transform:translateY(0);
-
-    }
-
-
-    50%{
-
-        transform:translateY(-8px);
-
-    }
-
-
-}
-
-
-
-
-
-body::before{
-
-
-content:"✨";
-
-
-position:fixed;
-
-
-top:20%;
-
-
-left:10%;
-
-
-font-size:30px;
-
-
-animation:sparkle 3s infinite;
-
-
-pointer-events:none;
-
-
-}
-
-
-
-
-@keyframes sparkle{
-
-
-0%,100%{
-
-opacity:.3;
-
-transform:translateY(0);
-
-}
-
-
-50%{
-
-opacity:1;
-
-transform:translateY(-20px);
-
-}
-
 
 }
 
