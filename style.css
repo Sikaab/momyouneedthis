@@ -594,6 +594,124 @@ button:hover{
 
 }
 
+/* =====================
+   AMAZON DEALS FACEBOOK SECTION
+===================== */
+
+
+.deal-section{
+
+    margin:45px 0;
+
+    background:linear-gradient(180deg,#fff8fb,#ffffff);
+
+    border-radius:35px;
+
+    padding:45px 30px;
+
+    text-align:center;
+
+    box-shadow:0 12px 30px rgba(0,0,0,.05);
+
+}
+
+
+
+.deal-badge{
+
+    display:inline-block;
+
+    background:#fff0d9;
+
+    color:#e58a00;
+
+    padding:10px 22px;
+
+    border-radius:999px;
+
+    font-weight:900;
+
+    font-size:14px;
+
+    margin-bottom:20px;
+
+}
+
+
+
+.deal-section h2{
+
+    font-size:36px;
+
+    font-weight:900;
+
+    margin-bottom:15px;
+
+}
+
+
+
+.deal-section p{
+
+    color:#666;
+
+    line-height:1.6;
+
+    max-width:650px;
+
+    margin:0 auto 30px;
+
+}
+
+
+
+.deal-button{
+
+    display:inline-flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:#1877f2;
+
+    color:white;
+
+    text-decoration:none;
+
+    padding:20px 40px;
+
+    border-radius:999px;
+
+    font-size:20px;
+
+    font-weight:900;
+
+    box-shadow:0 12px 30px rgba(24,119,242,.25);
+
+    transition:.25s ease;
+
+}
+
+
+
+.deal-button:hover{
+
+    transform:translateY(-3px);
+
+}
+
+
+
+.deal-note{
+
+    margin-top:18px;
+
+    font-size:15px;
+
+    color:#777;
+
+}
 
 
 
