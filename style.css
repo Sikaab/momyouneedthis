@@ -1435,6 +1435,66 @@ footer p{
 
 
 }
+/* CATEGORY BUTTONS */
+
+
+.shop-categories{
+
+    display:flex;
+
+    justify-content:center;
+
+    flex-wrap:wrap;
+
+    gap:12px;
+
+    margin:35px auto 50px;
+
+}
+
+
+
+.shop-categories a{
+
+    background:white;
+
+    color:#332b2b;
+
+    text-decoration:none;
+
+    padding:14px 22px;
+
+    border-radius:999px;
+
+    font-weight:900;
+
+    font-size:15px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.06);
+
+    transition:.25s ease;
+
+}
+
+
+
+.shop-categories a:hover{
+
+    background:#e89aaa;
+
+    color:white;
+
+    transform:translateY(-3px);
+
+}
+
+
+
+html{
+
+    scroll-behavior:smooth;
+
+}
 
 
 @media(max-width:750px){
