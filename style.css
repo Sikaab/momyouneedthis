@@ -859,8 +859,86 @@ button:hover{
 }
 
 
+/* =====================
+   RESOURCE LIBRARY PAGE
+===================== */
+
+.resource-library{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:20px;
+
+    max-width:850px;
+
+    margin:40px auto;
+
+}
 
 
+.resource-library a{
+
+    background:#fff8fb;
+
+    padding:25px;
+
+    border-radius:25px;
+
+    text-decoration:none;
+
+    color:#332b2b;
+
+    font-size:20px;
+
+    font-weight:900;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.05);
+
+    transition:.25s ease;
+
+}
+
+
+.resource-library a:hover{
+
+    transform:translateY(-5px);
+
+    background:white;
+
+    box-shadow:0 15px 30px rgba(0,0,0,.08);
+
+}
+
+
+
+.resource-library span{
+
+    display:block;
+
+    margin-top:10px;
+
+    font-size:15px;
+
+    color:#777;
+
+    font-weight:400;
+
+    line-height:1.5;
+
+}
+
+
+@media(max-width:750px){
+
+    .resource-library{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
 
 /* =====================
    FOOTER
