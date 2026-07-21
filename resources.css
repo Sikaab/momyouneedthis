@@ -12,31 +12,32 @@
 }
 
 
+
+.resource-page .free-badge{
+
+    display:inline-block;
+
+}
+
+
+
 .resource-page h1{
 
     font-size:50px;
 
     font-weight:900;
 
-    margin:25px 0;
+    margin:25px auto;
 
     line-height:1.1;
 
-}
-
-
-
-.resource-page h1 span{
-
-    display:block;
-
-    color:#e89aaa;
+    text-align:center;
 
 }
 
 
 
-.resource-note{
+.resource-page .intro{
 
     max-width:650px;
 
@@ -47,6 +48,8 @@
     font-size:20px;
 
     line-height:1.6;
+
+    text-align:center;
 
 }
 
@@ -93,7 +96,7 @@
 
     padding:0;
 
-    margin:0 auto;
+    margin:30px auto 0;
 
     max-width:850px;
 
