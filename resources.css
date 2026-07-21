@@ -1,0 +1,287 @@
+/* =====================
+   FREE RESOURCE PAGES
+===================== */
+
+
+.resource-page{
+
+    text-align:left;
+
+    padding:40px 0;
+
+}
+
+
+.resource-page h1{
+
+    font-size:55px;
+
+    font-weight:900;
+
+    margin:25px 0;
+
+    line-height:1.1;
+
+}
+
+
+
+.resource-page h1 span{
+
+    display:block;
+
+    color:#e89aaa;
+
+}
+
+
+
+.intro{
+
+    max-width:650px;
+
+    font-size:21px;
+
+    line-height:1.6;
+
+    color:#666;
+
+    margin-bottom:35px;
+
+}
+
+
+
+.free-badge{
+
+    display:inline-block;
+
+    background:#fde6ec;
+
+    color:#d97f95;
+
+    padding:10px 20px;
+
+    border-radius:999px;
+
+    font-weight:900;
+
+    margin-bottom:20px;
+
+}
+
+
+
+/* =====================
+   ADSENSE PLACEHOLDER
+===================== */
+
+
+.ad-box{
+
+    height:120px;
+
+    background:#f7f7f7;
+
+    border-radius:25px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    color:#aaa;
+
+    margin:40px 0;
+
+}
+
+
+
+/* =====================
+   RESOURCE DIRECTORY
+===================== */
+
+
+.featured-resources{
+
+    background:white;
+
+    border-radius:30px;
+
+    padding:35px 25px;
+
+    margin:40px 0;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.05);
+
+}
+
+
+
+.featured-resources h2{
+
+    font-size:32px;
+
+    font-weight:900;
+
+    margin-bottom:25px;
+
+}
+
+
+
+.resource-links{
+
+    list-style:none;
+
+    padding:0;
+
+    margin:0;
+
+}
+
+
+
+.resource-links li{
+
+    margin-bottom:15px;
+
+}
+
+
+
+.resource-links a{
+
+    display:block;
+
+    background:#fff8fb;
+
+    padding:18px 22px;
+
+    border-radius:18px;
+
+    color:#332b2b;
+
+    text-decoration:none;
+
+    font-size:18px;
+
+    font-weight:900;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.05);
+
+    transition:.25s ease;
+
+}
+
+
+
+.resource-links a:hover{
+
+    background:white;
+
+    color:#d97f95;
+
+    transform:translateX(5px);
+
+}
+
+
+
+/* =====================
+   MORE RESOURCES BOX
+===================== */
+
+
+.weekly-box{
+
+    background:white;
+
+    border-radius:35px;
+
+    padding:40px 25px;
+
+    margin-top:50px;
+
+    text-align:center;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.06);
+
+}
+
+
+
+.weekly-box h2{
+
+    font-size:32px;
+
+    margin-bottom:15px;
+
+}
+
+
+
+.weekly-box p{
+
+    color:#666;
+
+    line-height:1.6;
+
+}
+
+
+
+/* =====================
+   MOBILE
+===================== */
+
+
+@media(max-width:750px){
+
+
+    .resource-page{
+
+        padding:25px 0;
+
+    }
+
+
+    .resource-page h1{
+
+        font-size:38px;
+
+    }
+
+
+    .intro{
+
+        font-size:18px;
+
+    }
+
+
+    .featured-resources{
+
+        padding:25px 18px;
+
+    }
+
+
+    .featured-resources h2{
+
+        font-size:26px;
+
+    }
+
+
+    .resource-links a{
+
+        font-size:16px;
+
+        padding:16px;
+
+    }
+
+}
