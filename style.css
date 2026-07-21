@@ -1921,8 +1921,49 @@ font-weight:900;
 
 }
 
+.resource-links{
 
+    max-width:850px;
+    margin:40px auto;
 
+}
+
+.resource-link{
+
+    padding:28px 0;
+    border-bottom:1px solid #eee;
+
+}
+
+.resource-link h3{
+
+    font-size:28px;
+    margin-bottom:10px;
+
+}
+
+.resource-link p{
+
+    color:#666;
+    line-height:1.6;
+    margin-bottom:12px;
+
+}
+
+.resource-link a{
+
+    color:#e89aaa;
+    text-decoration:none;
+    font-weight:900;
+    font-size:17px;
+
+}
+
+.resource-link a:hover{
+
+    text-decoration:underline;
+
+}
 
 @media(max-width:750px){
 
