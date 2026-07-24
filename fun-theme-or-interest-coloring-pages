@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Free Theme Coloring Pages | MomYouNeedThis</title>
+
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="resources.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+
+</head>
+
+
+<body>
+
+
+<div class="page free-page">
+
+
+
+<header>
+
+<a href="index.html">
+<img src="assets/logo.svg" class="logo" alt="MomYouNeedThis Logo">
+</a>
+
+</header>
+
+
+
+
+<section class="resource-page">
+
+
+
+<span class="free-badge">
+🌎 FUN THEME COLORING FREE RESOURCE
+</span>
+
+
+
+
+<h1>
+Free Theme Coloring Pages
+</h1>
+
+
+
+
+<p class="intro">
+Explore fun and creative coloring pages for kids featuring favorite themes and interests. Discover space adventures, delicious foods, and toddler-friendly coloring pages designed for toddlers, preschoolers, and children who love to learn and create.
+</p>
+
+
+
+
+<div class="ad-box">
+Advertisement
+</div>
+
+
+
+
+
+<section class="featured-resources">
+
+
+
+<h2>
+🌎 Fun Theme Coloring Categories
+</h2>
+
+
+<ul class="resource-links">
+
+
+<li>
+<a href="space-coloring-pages.html">
+🚀 Space Coloring Pages
+</a>
+</li>
+
+
+<li>
+<a href="food-coloring-pages.html">
+🍎 Food Coloring Pages
+</a>
+</li>
+
+
+<li>
+<a href="toddler-coloring-pages.html">
+🧸 Toddler Coloring Pages
+</a>
+</li>
+
+
+</ul>
+
+
+
+
+</section>
+
+
+
+
+
+<div class="ad-box">
+Advertisement
+</div>
+
+
+
+
+
+<section class="weekly-box">
+
+
+
+<h2>
+More Fun Theme Coloring Pages Coming Soon
+</h2>
+
+
+
+
+<p>
+Save this page! More free printable coloring pages, creative activities, and kid-friendly resources are added regularly.
+</p>
+
+
+
+
+</section>
+
+
+
+
+
+</section>
+
+
+
+
+
+<footer>
+
+
+
+<div class="footer-logo">
+
+<img src="assets/logo.svg" class="footer-logo" alt="MomYouNeedThis Logo">
+
+</div>
+
+
+
+
+<p>
+Helping moms find products and resources that make everyday life easier.
+</p>
+
+
+
+
+<div class="footer-links">
+
+
+<a href="index.html">
+Home
+</a>
+
+
+<a href="free-mom-resources.html">
+Free Resources
+</a>
+
+
+<a href="privacy.html">
+Privacy
+</a>
+
+
+</div>
+
+
+
+
+<div class="footer-bottom">
+
+<p>
+© 2026 MomYouNeedThis. All rights reserved.
+</p>
+
+
+</div>
+
+
+
+
+</footer>
+
+
+
+
+</div>
+
+
+
+</body>
+
+
+</html>
