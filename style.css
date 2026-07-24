@@ -2061,6 +2061,24 @@ width:100%;
 
 }
 
+/* =====================
+   COLORING CATEGORY SPACING
+===================== */
+
+.featured-resources h2{
+
+    margin-top:60px;
+
+}
+
+
+/* Keep the first category closer to the top */
+.featured-resources h2:first-child{
+
+    margin-top:0;
+
+}
+
 
 
 html{
