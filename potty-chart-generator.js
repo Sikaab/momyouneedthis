@@ -6,28 +6,42 @@
 
 let selectedColor = "pink";
 
+
 let chartData = {
-    name: "Your Child",
-    theme: "princess",
-    days: 7,
-    color: "pink"
+
+    name:"Your Child",
+    theme:"princess",
+    days:7,
+    color:"pink"
+
 };
 
 
 
+
 const childNameInput = document.getElementById("childName");
+
 const chartTheme = document.getElementById("chartTheme");
+
 const chartLength = document.getElementById("chartLength");
 
+
 const preview = document.getElementById("pottyPreview");
+
 const chartDays = document.getElementById("chartDays");
+
 
 const previewButton = document.getElementById("previewButton");
 
+
 const emailModal = document.getElementById("emailModal");
+
 const closeModal = document.getElementById("closeModal");
 
+
 const downloadButton = document.getElementById("downloadButton");
+
+
 
 
 
@@ -40,37 +54,51 @@ const downloadButton = document.getElementById("downloadButton");
 
 const colors = {
 
-    pink:{
-        background:"#fff1f7",
-        border:"#ffb6d5",
-        title:"#ff6fae"
-    },
 
-    purple:{
-        background:"#f4edff",
-        border:"#d7bfff",
-        title:"#9b6cff"
-    },
+pink:{
 
-    blue:{
-        background:"#edf8ff",
-        border:"#a8dcff",
-        title:"#4da6ff"
-    },
+background:"#fff0f7",
+border:"#ffb6d9"
 
-    green:{
-        background:"#effff1",
-        border:"#a8e6b0",
-        title:"#48a868"
-    },
+},
 
-    rainbow:{
-        background:"#fff7fc",
-        border:"#ffb6d5",
-        title:"#ff6fae"
-    }
+
+purple:{
+
+background:"#f8efff",
+border:"#d59cff"
+
+},
+
+
+blue:{
+
+background:"#eef3ff",
+border:"#8aa9ff"
+
+},
+
+
+green:{
+
+background:"#efffe8",
+border:"#8bd66a"
+
+},
+
+
+rainbow:{
+
+background:"#fff7fc",
+border:"#ffb6d9"
+
+}
+
 
 };
+
+
+
 
 
 
@@ -83,45 +111,81 @@ const colors = {
 
 const themes = {
 
-    princess:{
-        icon:"👑",
-        class:"theme-princess",
-        title:"{name}'s Princess Potty Adventure",
-        subtitle:"Every sticker brings you closer to becoming a big kid!"
-    },
 
-    dinosaur:{
-        icon:"🦖",
-        class:"theme-dinosaur",
-        title:"{name}'s Dinosaur Potty Quest",
-        subtitle:"Roar! You're doing an amazing job!"
-    },
+princess:{
 
+icon:"👑",
 
-    animals:{
-        icon:"🐻",
-        class:"theme-animals",
-        title:"{name}'s Animal Potty Journey",
-        subtitle:"Little steps make big achievements!"
-    },
+class:"theme-princess",
+
+title:"{name}'s Princess Potty Adventure",
+
+subtitle:"Every sticker brings you closer to becoming a big kid!"
+
+},
 
 
-    space:{
-        icon:"🚀",
-        class:"theme-space",
-        title:"{name}'s Space Adventure",
-        subtitle:"Blast off into big kid success!"
-    },
+
+dinosaur:{
+
+icon:"🦖",
+
+class:"theme-dinosaur",
+
+title:"{name}'s Dinosaur Potty Quest",
+
+subtitle:"Roar! You're doing an amazing job!"
+
+},
 
 
-    unicorn:{
-        icon:"🦄",
-        class:"theme-unicorn",
-        title:"{name}'s Magical Potty Journey",
-        subtitle:"Sparkles, smiles, and lots of success!"
-    }
+
+animals:{
+
+icon:"🐻",
+
+class:"theme-animals",
+
+title:"{name}'s Animal Potty Journey",
+
+subtitle:"Little steps make big achievements!"
+
+},
+
+
+
+space:{
+
+icon:"🚀",
+
+class:"theme-space",
+
+title:"{name}'s Space Adventure",
+
+subtitle:"Blast off into big kid success!"
+
+},
+
+
+
+unicorn:{
+
+icon:"🦄",
+
+class:"theme-unicorn",
+
+title:"{name}'s Magical Potty Journey",
+
+subtitle:"Sparkles, smiles, and lots of success!"
+
+}
+
 
 };
+
+
+
+
 
 
 
@@ -135,48 +199,72 @@ const themes = {
 function updatePreview(){
 
 
-    chartData.name =
-    childNameInput.value || "Your Child";
+
+chartData.name =
+childNameInput.value.trim() || "Your Child";
 
 
-    chartData.theme =
-    chartTheme.value;
+chartData.theme =
+chartTheme.value;
 
 
-    chartData.days =
-    Number(chartLength.value);
+chartData.days =
+Number(chartLength.value);
 
 
-    chartData.color =
-    selectedColor;
-
-
-
-    const style = colors[selectedColor];
-
-
-    preview.style.background =
-    style.background;
-
-
-    preview.style.borderColor =
-    style.border;
+chartData.color =
+selectedColor;
 
 
 
-    const theme = themes[chartData.theme];
+
+const theme =
+themes[chartData.theme];
 
 
-preview.className = 
+const color =
+colors[selectedColor];
+
+
+
+
+
+// Theme class
+
+preview.className =
 `potty-preview ${theme.class}`;
 
+
+
+
+
+// Custom color
+
+preview.style.background =
+color.background;
+
+
+preview.style.borderColor =
+color.border;
+
+
+
+
+
+// Header
 
 document.getElementById("themeIcon").innerHTML =
 theme.icon;
 
 
+
 document.getElementById("chartTitle").innerHTML =
-theme.title.replace("{name}", chartData.name);
+theme.title.replace(
+"{name}",
+chartData.name
+);
+
+
 
 
 document.getElementById("chartSubtitle").innerHTML =
@@ -184,24 +272,54 @@ theme.subtitle;
 
 
 
-    chartDays.innerHTML = "";
 
 
 
-    for(let i = 1; i <= chartData.days; i++){
+// Days
+
+chartDays.innerHTML = "";
 
 
-        const day = document.createElement("div");
 
 
-        day.innerHTML =
-        `Day ${i} ⭐ ⭐ ⭐`;
+for(
+let i = 1;
+i <= chartData.days;
+i++
+){
 
 
-        chartDays.appendChild(day);
+
+const day =
+document.createElement("div");
 
 
-    }
+day.className =
+"reward-day";
+
+
+
+day.innerHTML = `
+
+<span>
+Day ${i}
+</span>
+
+<div>
+⭐ ⭐ ⭐
+</div>
+
+`;
+
+
+
+chartDays.appendChild(day);
+
+
+
+}
+
+
 
 
 }
@@ -211,9 +329,13 @@ theme.subtitle;
 
 
 
+
+
+
 /* ===========================
-   LISTENERS
+   EVENTS
 =========================== */
+
 
 
 childNameInput.addEventListener(
@@ -222,10 +344,12 @@ updatePreview
 );
 
 
+
 chartTheme.addEventListener(
 "change",
 updatePreview
 );
+
 
 
 chartLength.addEventListener(
@@ -237,23 +361,28 @@ updatePreview
 
 
 
-document.querySelectorAll(".color-choice")
-.forEach(button => {
+
+document
+.querySelectorAll(".color-choice")
+.forEach(button=>{
 
 
-    button.addEventListener(
-    "click",
-    ()=>{
+button.addEventListener(
+"click",
+()=>{
 
 
-        selectedColor =
-        button.dataset.color;
+selectedColor =
+button.dataset.color;
 
 
-        updatePreview();
+
+updatePreview();
 
 
-    });
+
+});
+
 
 
 });
@@ -262,9 +391,13 @@ document.querySelectorAll(".color-choice")
 
 
 
+
+
+
 /* ===========================
-   OPEN EMAIL GATE
+   EMAIL POPUP
 =========================== */
+
 
 
 previewButton.addEventListener(
@@ -272,14 +405,15 @@ previewButton.addEventListener(
 ()=>{
 
 
-    updatePreview();
+updatePreview();
 
 
-    emailModal.style.display =
-    "flex";
+emailModal.style.display =
+"flex";
 
 
 });
+
 
 
 
@@ -289,8 +423,10 @@ closeModal.addEventListener(
 "click",
 ()=>{
 
-    emailModal.style.display =
-    "none";
+
+emailModal.style.display =
+"none";
+
 
 });
 
@@ -300,14 +436,17 @@ closeModal.addEventListener(
 
 
 
+
+
 /* ===========================
-   GENERATE PDF
+   PDF GENERATION
 =========================== */
 
 
 downloadButton.addEventListener(
 "click",
-async ()=>{
+async()=>{
+
 
 
 const email =
@@ -317,56 +456,72 @@ document.getElementById("emailInput").value;
 
 if(!email){
 
-alert("Please enter your email first.");
+
+alert(
+"Please enter your email first."
+);
+
 
 return;
+
 
 }
 
 
 
 
-/*
- HERE YOU CONNECT EMAIL SERVICE LATER
-
- Example:
- EmailJS
- Brevo
- MailerLite
-
- For now it continues directly.
-*/
-
-
-
 const canvas =
-await html2canvas(preview);
+await html2canvas(
+preview,
+{
+
+scale:2
+
+}
+);
+
+
 
 
 
 const imgData =
-canvas.toDataURL("image/png");
+canvas.toDataURL(
+"image/png"
+);
 
 
 
-const { jsPDF } =
+
+
+const {
+jsPDF
+} =
 window.jspdf;
 
 
 
+
+
 const pdf =
-new jsPDF();
+new jsPDF(
+"portrait",
+"mm",
+"a4"
+);
 
 
 
-const width =
-190;
+
+
+const width = 190;
 
 
 const height =
 (canvas.height * width)
 /
 canvas.width;
+
+
 
 
 
@@ -381,9 +536,13 @@ height
 
 
 
+
+
 pdf.save(
 `${chartData.name}-potty-chart.pdf`
 );
+
+
 
 
 
@@ -392,7 +551,10 @@ emailModal.style.display =
 
 
 
-});
+}
+
+);
+
 
 
 
@@ -400,5 +562,6 @@ emailModal.style.display =
 
 
 /* INITIAL LOAD */
+
 
 updatePreview();
