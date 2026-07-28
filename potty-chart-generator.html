@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Free Personalized Potty Training Chart Generator | MomYouNeedThis</title>
+
+<meta name="description" content="Create a free personalized potty training chart for your toddler. Choose a theme, customize colors, and download your printable PDF.">
+
+<link rel="stylesheet" href="style.css">
+
+<!-- PDF Libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+</head>
+
+
+<body>
+
+
+<main class="potty-page">
+
+
+<!-- HERO -->
+
+<section class="potty-hero">
+
+<div class="potty-container">
+
+<h1>
+🎉 Create Your Child's Personalized Potty Training Chart
+</h1>
+
+<p>
+Make potty training more fun with a custom reward chart made just for your little one.
+</p>
+
+<div class="potty-rating">
+⭐⭐⭐⭐⭐ Loved by parents
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- GENERATOR -->
+
+<section class="potty-generator">
+
+
+<div class="potty-container">
+
+
+<div class="potty-form-card">
+
+
+<h2>
+Create Your Free Chart
+</h2>
+
+
+<label>
+Child's Name
+</label>
+
+<input 
+type="text" 
+id="childName"
+placeholder="Enter your child's name"
+>
+
+
+<label>
+Choose Theme
+</label>
+
+<select id="chartTheme">
+
+<option value="princess">
+👑 Princess
+</option>
+
+<option value="dinosaur">
+🦖 Dinosaur
+</option>
+
+<option value="animals">
+🐻 Animals
+</option>
+
+<option value="space">
+🚀 Space
+</option>
+
+<option value="unicorn">
+🦄 Unicorn
+</option>
+
+</select>
+
+
+
+<label>
+Choose Page Color
+</label>
+
+
+<div class="potty-colors">
+
+
+<button 
+class="color-choice pink"
+data-color="pink">
+</button>
+
+
+<button 
+class="color-choice purple"
+data-color="purple">
+</button>
+
+
+<button 
+class="color-choice blue"
+data-color="blue">
+</button>
+
+
+<button 
+class="color-choice green"
+data-color="green">
+</button>
+
+
+<button 
+class="color-choice rainbow"
+data-color="rainbow">
+</button>
+
+
+</div>
+
+
+
+
+<label>
+Chart Length
+</label>
+
+
+<select id="chartLength">
+
+<option value="7">
+7 Days
+</option>
+
+<option value="14">
+14 Days
+</option>
+
+<option value="30">
+30 Days
+</option>
+
+</select>
+
+
+
+<button 
+id="previewButton"
+class="potty-main-button">
+
+✨ Create My Chart
+
+</button>
+
+
+
+</div>
+
+
+
+
+
+
+<!-- LIVE PREVIEW -->
+
+
+<div class="potty-preview-wrapper">
+
+
+<h2>
+Your Preview
+</h2>
+
+
+
+<div 
+id="pottyPreview"
+class="potty-preview">
+
+
+<h3>
+Emma's Potty Chart
+</h3>
+
+
+<p>
+⭐ Add a sticker every time you reach your goal!
+</p>
+
+
+
+<div id="chartDays">
+
+
+<div>
+Monday ⭐
+</div>
+
+<div>
+Tuesday ⭐
+</div>
+
+<div>
+Wednesday ⭐
+</div>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+<!-- EMAIL POPUP -->
+
+
+<div 
+id="emailModal"
+class="potty-modal">
+
+
+<div class="potty-modal-content">
+
+
+<button 
+id="closeModal"
+class="potty-close">
+×
+</button>
+
+
+
+<h2>
+🎉 Your chart is ready!
+</h2>
+
+
+<p>
+Enter your email and we'll send your personalized potty chart.
+</p>
+
+
+
+<input 
+type="email"
+id="emailInput"
+placeholder="Your email address"
+>
+
+
+
+<button 
+id="downloadButton"
+class="potty-main-button">
+
+Send My Chart
+
+</button>
+
+
+
+<p class="potty-small-text">
+
+By submitting, you agree to receive free parenting resources and mom finds.
+
+</p>
+
+
+
+</div>
+
+</div>
+
+
+
+
+
+<!-- BENEFITS -->
+
+
+<section class="potty-benefits">
+
+
+<div class="potty-container">
+
+
+<h2>
+Why Parents Love Personalized Charts
+</h2>
+
+
+<div class="potty-benefit-grid">
+
+
+<div>
+⭐ Makes potty training exciting
+</div>
+
+
+<div>
+🎨 Designed for your child's personality
+</div>
+
+
+<div>
+📄 Printable instantly
+</div>
+
+
+<div>
+💛 Helps create positive routines
+</div>
+
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+<!-- MORE RESOURCES -->
+
+
+<section class="potty-footer-section">
+
+
+<h2>
+More Free Mom Resources
+</h2>
+
+
+<a href="#">
+Free Coloring Pages
+</a>
+
+
+<a href="#">
+Toddler Activities
+</a>
+
+
+<a href="#">
+Learning Printables
+</a>
+
+
+
+</section>
+
+
+
+</main>
+
+
+
+<script src="potty-chart-generator.js"></script>
+
+
+</body>
+
+</html>
