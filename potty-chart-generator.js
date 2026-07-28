@@ -7,7 +7,7 @@
 let selectedColor = "pink";
 
 
-let chartData = {
+const chartData = {
 
     name:"Your Child",
     theme:"princess",
@@ -19,27 +19,41 @@ let chartData = {
 
 
 
-const childNameInput = document.getElementById("childName");
 
-const chartTheme = document.getElementById("chartTheme");
-
-const chartLength = document.getElementById("chartLength");
+const childNameInput =
+document.getElementById("childName");
 
 
-const preview = document.getElementById("pottyPreview");
-
-const chartDays = document.getElementById("chartDays");
-
-
-const previewButton = document.getElementById("previewButton");
+const chartTheme =
+document.getElementById("chartTheme");
 
 
-const emailModal = document.getElementById("emailModal");
+const chartLength =
+document.getElementById("chartLength");
 
-const closeModal = document.getElementById("closeModal");
+
+const preview =
+document.getElementById("pottyPreview");
 
 
-const downloadButton = document.getElementById("downloadButton");
+const chartGrid =
+document.getElementById("chartGrid");
+
+
+const previewButton =
+document.getElementById("previewButton");
+
+
+const emailModal =
+document.getElementById("emailModal");
+
+
+const closeModal =
+document.getElementById("closeModal");
+
+
+const downloadButton =
+document.getElementById("downloadButton");
 
 
 
@@ -56,42 +70,26 @@ const colors = {
 
 
 pink:{
-
 background:"#fff0f7",
-border:"#ffb6d9"
-
+border:"#ff9fc9"
 },
 
 
 purple:{
-
 background:"#f8efff",
 border:"#d59cff"
-
 },
 
 
 blue:{
-
 background:"#eef3ff",
 border:"#8aa9ff"
-
 },
 
 
 green:{
-
 background:"#efffe8",
 border:"#8bd66a"
-
-},
-
-
-rainbow:{
-
-background:"#fff7fc",
-border:"#ffb6d9"
-
 }
 
 
@@ -116,11 +114,11 @@ princess:{
 
 icon:"👑",
 
-class:"theme-princess",
+className:"theme-princess",
 
 title:"{name}'s Princess Potty Adventure",
 
-subtitle:"Every sticker brings you closer to becoming a big kid!"
+subtitle:"Fill your sticker chart and become a big kid!"
 
 },
 
@@ -130,39 +128,11 @@ dinosaur:{
 
 icon:"🦖",
 
-class:"theme-dinosaur",
+className:"theme-dinosaur",
 
 title:"{name}'s Dinosaur Potty Quest",
 
-subtitle:"Roar! You're doing an amazing job!"
-
-},
-
-
-
-animals:{
-
-icon:"🐻",
-
-class:"theme-animals",
-
-title:"{name}'s Animal Potty Journey",
-
-subtitle:"Little steps make big achievements!"
-
-},
-
-
-
-space:{
-
-icon:"🚀",
-
-class:"theme-space",
-
-title:"{name}'s Space Adventure",
-
-subtitle:"Blast off into big kid success!"
+subtitle:"Roar! Every success is amazing!"
 
 },
 
@@ -172,16 +142,132 @@ unicorn:{
 
 icon:"🦄",
 
-class:"theme-unicorn",
+className:"theme-unicorn",
 
-title:"{name}'s Magical Potty Journey",
+title:"{name}'s Magical Unicorn Journey",
 
-subtitle:"Sparkles, smiles, and lots of success!"
+subtitle:"Sparkles, smiles, and potty wins!"
+
+},
+
+
+
+space:{
+
+icon:"🚀",
+
+className:"theme-space",
+
+title:"{name}'s Space Potty Mission",
+
+subtitle:"Blast off toward big kid success!"
+
+},
+
+
+
+animals:{
+
+icon:"🐻",
+
+className:"theme-animals",
+
+title:"{name}'s Animal Potty Adventure",
+
+subtitle:"Little steps create big achievements!"
 
 }
 
 
 };
+
+
+
+
+
+
+
+
+
+/* ===========================
+   DAY NAMES
+=========================== */
+
+
+const days = [
+
+"Monday",
+"Tuesday",
+"Wednesday",
+"Thursday",
+"Friday",
+"Saturday",
+"Sunday"
+
+];
+
+
+
+
+
+
+
+/* ===========================
+   CREATE GRID
+=========================== */
+
+
+function createChartDays(numberOfDays){
+
+
+chartGrid.innerHTML = "";
+
+
+
+for(let i = 0; i < numberOfDays; i++){
+
+
+let dayName =
+days[i % 7];
+
+
+
+const day =
+document.createElement("div");
+
+
+
+day.className =
+"chart-day";
+
+
+
+day.innerHTML = `
+
+<strong>
+${dayName}
+</strong>
+
+
+<div class="sticker-row">
+
+<span></span>
+<span></span>
+<span></span>
+
+</div>
+
+`;
+
+
+
+chartGrid.appendChild(day);
+
+
+}
+
+
+}
 
 
 
@@ -204,12 +290,15 @@ chartData.name =
 childNameInput.value.trim() || "Your Child";
 
 
+
 chartData.theme =
 chartTheme.value;
 
 
+
 chartData.days =
 Number(chartLength.value);
+
 
 
 chartData.color =
@@ -218,8 +307,10 @@ selectedColor;
 
 
 
+
 const theme =
 themes[chartData.theme];
+
 
 
 const color =
@@ -229,19 +320,16 @@ colors[selectedColor];
 
 
 
-// Theme class
 
 preview.className =
-`potty-preview ${theme.class}`;
+`potty-preview ${theme.className}`;
 
 
 
-
-
-// Custom color
 
 preview.style.background =
 color.background;
+
 
 
 preview.style.borderColor =
@@ -250,8 +338,6 @@ color.border;
 
 
 
-
-// Header
 
 document.getElementById("themeIcon").innerHTML =
 theme.icon;
@@ -266,59 +352,15 @@ chartData.name
 
 
 
-
 document.getElementById("chartSubtitle").innerHTML =
 theme.subtitle;
 
 
 
 
-
-
-// Days
-
-chartDays.innerHTML = "";
-
-
-
-
-for(
-let i = 1;
-i <= chartData.days;
-i++
-){
-
-
-
-const day =
-document.createElement("div");
-
-
-day.className =
-"reward-day";
-
-
-
-day.innerHTML = `
-
-<span>
-Day ${i}
-</span>
-
-<div>
-⭐ ⭐ ⭐
-</div>
-
-`;
-
-
-
-chartDays.appendChild(day);
-
-
-
-}
-
+createChartDays(
+chartData.days
+);
 
 
 
@@ -335,7 +377,6 @@ chartDays.appendChild(day);
 /* ===========================
    EVENTS
 =========================== */
-
 
 
 childNameInput.addEventListener(
@@ -362,6 +403,7 @@ updatePreview
 
 
 
+
 document
 .querySelectorAll(".color-choice")
 .forEach(button=>{
@@ -380,9 +422,7 @@ button.dataset.color;
 updatePreview();
 
 
-
 });
-
 
 
 });
@@ -397,7 +437,6 @@ updatePreview();
 /* ===========================
    EMAIL POPUP
 =========================== */
-
 
 
 previewButton.addEventListener(
@@ -437,16 +476,14 @@ emailModal.style.display =
 
 
 
-
 /* ===========================
-   PDF GENERATION
+   PDF DOWNLOAD
 =========================== */
 
 
 downloadButton.addEventListener(
 "click",
 async()=>{
-
 
 
 const email =
@@ -470,21 +507,26 @@ return;
 
 
 
+
+
 const canvas =
 await html2canvas(
 preview,
 {
 
-scale:2
+scale:2,
+
+backgroundColor:null
 
 }
+
 );
 
 
 
 
 
-const imgData =
+const image =
 canvas.toDataURL(
 "image/png"
 );
@@ -516,6 +558,7 @@ new jsPDF(
 const width = 190;
 
 
+
 const height =
 (canvas.height * width)
 /
@@ -526,12 +569,19 @@ canvas.width;
 
 
 pdf.addImage(
-imgData,
+
+image,
+
 "PNG",
+
 10,
+
 10,
+
 width,
+
 height
+
 );
 
 
@@ -539,7 +589,9 @@ height
 
 
 pdf.save(
+
 `${chartData.name}-potty-chart.pdf`
+
 );
 
 
@@ -554,6 +606,7 @@ emailModal.style.display =
 }
 
 );
+
 
 
 
