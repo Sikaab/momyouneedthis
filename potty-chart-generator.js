@@ -164,8 +164,23 @@ function updatePreview(){
 
 
 
-    preview.querySelector("h3").innerHTML =
-    `${themes[chartData.theme]} ${chartData.name}'s Potty Chart`;
+    const theme = themes[chartData.theme];
+
+
+preview.className = 
+`potty-preview ${theme.class}`;
+
+
+document.getElementById("themeIcon").innerHTML =
+theme.icon;
+
+
+document.getElementById("chartTitle").innerHTML =
+theme.title.replace("{name}", chartData.name);
+
+
+document.getElementById("chartSubtitle").innerHTML =
+theme.subtitle;
 
 
 
