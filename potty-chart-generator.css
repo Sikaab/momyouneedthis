@@ -431,6 +431,170 @@ font-weight:700;
 }
 
 
+/* ===========================
+   THEMED POTTY CHARTS
+=========================== */
+
+
+.potty-preview {
+
+padding:30px;
+border-radius:30px;
+text-align:center;
+transition:.3s;
+}
+
+
+.theme-icon {
+
+font-size:55px;
+margin-bottom:10px;
+
+}
+
+
+
+.chart-header h3 {
+
+font-size:32px;
+font-weight:900;
+margin:10px 0;
+
+}
+
+
+
+.chart-subtitle {
+
+font-size:16px;
+
+}
+
+
+
+.reward-area {
+
+font-size:28px;
+margin:25px 0;
+
+}
+
+
+
+.chart-days div {
+
+background:white;
+margin:12px 0;
+padding:15px;
+
+border-radius:15px;
+
+font-weight:700;
+
+}
+
+
+
+.chart-footer {
+
+margin-top:25px;
+font-size:20px;
+font-weight:900;
+
+}
+
+
+
+
+
+/* THEMES */
+
+
+.theme-princess {
+
+background:#fff0f7;
+border:5px solid #ffb6d9;
+
+}
+
+
+
+.theme-princess h3 {
+
+color:#ff5f9e;
+
+}
+
+
+
+
+.theme-dinosaur {
+
+background:#efffe8;
+border:5px solid #8bd66a;
+
+}
+
+
+.theme-dinosaur h3 {
+
+color:#4c9c38;
+
+}
+
+
+
+
+.theme-animals {
+
+background:#fff7df;
+border:5px solid #ffc85c;
+
+}
+
+
+.theme-animals h3 {
+
+color:#e89b00;
+
+}
+
+
+
+
+
+.theme-space {
+
+background:#eef3ff;
+border:5px solid #8aa9ff;
+
+}
+
+
+.theme-space h3 {
+
+color:#4169e1;
+
+}
+
+
+
+
+
+.theme-unicorn {
+
+background:#f8efff;
+border:5px solid #d59cff;
+
+}
+
+
+.theme-unicorn h3 {
+
+color:#a34ee8;
+
+}
+
 
 /* MOBILE */
 
