@@ -4,18 +4,32 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Free Personalized Potty Training Chart Generator | MomYouNeedThis</title>
 
-<meta name="description" content="Create a free personalized potty training chart for your toddler. Choose a theme, customize colors, and download your printable PDF.">
+<title>
+Free Personalized Potty Training Chart Generator | MomYouNeedThis
+</title>
+
+
+<meta name="description" content="Create a free personalized potty training chart for your toddler. Choose a theme, colors, and download your printable PDF.">
+
 
 <link rel="stylesheet" href="style.css">
+
 <link rel="stylesheet" href="potty-chart-generator.css">
 
+
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+
+
 <!-- PDF Libraries -->
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
 
 </head>
 
@@ -23,39 +37,68 @@
 <body>
 
 
-<main class="potty-page">
+<div class="page">
 
 
-<!-- HERO -->
 
-<section class="potty-hero">
+<section class="resource-page">
 
-<div class="potty-container">
+
+
+<img src="assets/logo.svg" class="logo" alt="MomYouNeedThis">
+
+
+
+
+
+<span class="free-badge">
+
+🚽 FREE POTTY TRAINING TOOL
+
+</span>
+
+
+
+
 
 <h1>
-🎉 Create Your Child's Personalized Potty Training Chart
+
+Create Your Child's
+
+<span>
+Personalized Potty Chart
+</span>
+
 </h1>
 
-<p>
-Make potty training more fun with a custom reward chart made just for your little one.
+
+
+
+<p class="intro">
+
+Make potty training more exciting with a custom reward chart.
+Choose your child's name, favorite theme, and colors — then download your printable chart instantly.
+
 </p>
 
-<div class="potty-rating">
-⭐⭐⭐⭐⭐ Loved by parents
-</div>
 
-</div>
-
-</section>
 
 
 
 <!-- GENERATOR -->
 
+
 <section class="potty-generator">
 
 
+
 <div class="potty-container">
+
+
+
+
+
+<!-- FORM -->
 
 
 <div class="potty-form-card">
@@ -66,50 +109,64 @@ Create Your Free Chart
 </h2>
 
 
+
 <label>
 Child's Name
 </label>
 
+
 <input 
-type="text" 
+type="text"
 id="childName"
-placeholder="Enter your child's name"
->
+placeholder="Enter your child's name">
+
+
+
 
 
 <label>
 Choose Theme
 </label>
 
+
 <select id="chartTheme">
+
 
 <option value="princess">
 👑 Princess
 </option>
 
+
 <option value="dinosaur">
 🦖 Dinosaur
 </option>
+
 
 <option value="animals">
 🐻 Animals
 </option>
 
+
 <option value="space">
 🚀 Space
 </option>
+
 
 <option value="unicorn">
 🦄 Unicorn
 </option>
 
+
 </select>
+
+
 
 
 
 <label>
 Choose Page Color
 </label>
+
 
 
 <div class="potty-colors">
@@ -145,7 +202,9 @@ data-color="rainbow">
 </button>
 
 
+
 </div>
+
 
 
 
@@ -157,29 +216,36 @@ Chart Length
 
 <select id="chartLength">
 
+
 <option value="7">
 7 Days
 </option>
+
 
 <option value="14">
 14 Days
 </option>
 
+
 <option value="30">
 30 Days
 </option>
+
 
 </select>
 
 
 
+
+
 <button 
 id="previewButton"
-class="potty-main-button">
+class="download-button">
 
 ✨ Create My Chart
 
 </button>
+
 
 
 
@@ -190,25 +256,26 @@ class="potty-main-button">
 
 
 
-<!-- LIVE PREVIEW -->
+
+<!-- PREVIEW -->
 
 
 <div class="potty-preview-wrapper">
 
 
 <h2>
-Your Preview
+Preview
 </h2>
 
 
 
-<div 
-id="pottyPreview"
-class="potty-preview">
+
+<div id="pottyPreview" class="potty-preview">
+
 
 
 <h3>
-Emma's Potty Chart
+Your Child's Potty Chart
 </h3>
 
 
@@ -218,35 +285,43 @@ Emma's Potty Chart
 
 
 
+
 <div id="chartDays">
 
 
 <div>
-Monday ⭐
+Day 1 ⭐
 </div>
+
 
 <div>
-Tuesday ⭐
+Day 2 ⭐
 </div>
+
 
 <div>
-Wednesday ⭐
+Day 3 ⭐
 </div>
 
 
 </div>
 
 
+
 </div>
 
 
+
 </div>
+
+
 
 
 </div>
 
 
 </section>
+
 
 
 
@@ -260,57 +335,69 @@ id="emailModal"
 class="potty-modal">
 
 
+
 <div class="potty-modal-content">
+
 
 
 <button 
 id="closeModal"
 class="potty-close">
+
 ×
+
 </button>
 
 
 
 <h2>
-🎉 Your chart is ready!
+🎉 Your Chart Is Ready!
 </h2>
 
 
 <p>
-Enter your email and we'll send your personalized potty chart.
+
+Enter your email to receive your personalized potty chart.
+
 </p>
 
 
 
-<input 
+<input
 type="email"
 id="emailInput"
-placeholder="Your email address"
->
+placeholder="Your email address">
 
 
 
-<button 
+
+
+<button
 id="downloadButton"
-class="potty-main-button">
+class="download-button">
 
-Send My Chart
+Download My Chart
 
 </button>
 
 
 
+
 <p class="potty-small-text">
 
-By submitting, you agree to receive free parenting resources and mom finds.
+Get free printables, toddler activities, and mom finds.
 
 </p>
 
 
 
-</div>
 
 </div>
+
+
+</div>
+
+
 
 
 
@@ -319,10 +406,7 @@ By submitting, you agree to receive free parenting resources and mom finds.
 <!-- BENEFITS -->
 
 
-<section class="potty-benefits">
-
-
-<div class="potty-container">
+<section class="tips">
 
 
 <h2>
@@ -330,30 +414,29 @@ Why Parents Love Personalized Charts
 </h2>
 
 
+
 <div class="potty-benefit-grid">
 
 
 <div>
-⭐ Makes potty training exciting
+⭐ Makes potty training fun
 </div>
 
 
 <div>
-🎨 Designed for your child's personality
+🎨 Choose your child's style
 </div>
 
 
 <div>
-📄 Printable instantly
+📄 Print instantly
 </div>
 
 
 <div>
-💛 Helps create positive routines
+💛 Celebrate progress
 </div>
 
-
-</div>
 
 
 </div>
@@ -366,10 +449,12 @@ Why Parents Love Personalized Charts
 
 
 
-<!-- MORE RESOURCES -->
 
 
-<section class="potty-footer-section">
+<!-- RELATED RESOURCES -->
+
+
+<section class="tips">
 
 
 <h2>
@@ -377,19 +462,37 @@ More Free Mom Resources
 </h2>
 
 
-<a href="#">
+<p>
+
+
+<a href="free-coloring-pages.html">
 Free Coloring Pages
 </a>
 
+<br><br>
 
-<a href="#">
-Toddler Activities
+
+<a href="learning-activities.html">
+Learning Activities
 </a>
 
 
-<a href="#">
-Learning Printables
+<br><br>
+
+
+<a href="free-potty-training-charts.html">
+More Potty Training Charts
 </a>
+
+
+
+</p>
+
+
+</section>
+
+
+
 
 
 
@@ -397,7 +500,51 @@ Learning Printables
 
 
 
-</main>
+
+
+
+
+<footer>
+
+
+<div class="footer-logo">
+
+<img src="assets/logo.svg" alt="MomYouNeedThis">
+
+</div>
+
+
+
+<h3>
+MomYouNeedThis
+</h3>
+
+
+<p>
+Helping moms find products and resources that make everyday life easier.
+</p>
+
+
+
+<div class="footer-bottom">
+
+<p>
+© 2026 MomYouNeedThis
+</p>
+
+</div>
+
+
+
+</footer>
+
+
+
+
+
+</div>
+
+
 
 
 
