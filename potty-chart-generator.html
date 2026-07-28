@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+
 <meta charset="UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,6 +24,7 @@ Free Personalized Potty Training Chart Generator | MomYouNeedThis
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
 
 
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -31,12 +33,10 @@ Free Personalized Potty Training Chart Generator | MomYouNeedThis
 </head>
 
 
-
 <body>
 
 
 <div class="page">
-
 
 
 <section class="resource-page">
@@ -52,8 +52,6 @@ Free Personalized Potty Training Chart Generator | MomYouNeedThis
 🚽 FREE POTTY TRAINING TOOL
 
 </span>
-
-
 
 
 
@@ -92,8 +90,8 @@ Pick a theme, add your child's name, and create a printable chart they'll love.
 
 
 
-
 <!-- FORM -->
+
 
 <div class="potty-form-card">
 
@@ -101,6 +99,7 @@ Pick a theme, add your child's name, and create a printable chart they'll love.
 <h2>
 Create Your Chart
 </h2>
+
 
 
 
@@ -118,11 +117,9 @@ placeholder="Example: Emma">
 
 
 
-
 <label>
 Choose Theme
 </label>
-
 
 
 <select id="chartTheme">
@@ -153,9 +150,7 @@ Choose Theme
 </option>
 
 
-
 </select>
-
 
 
 
@@ -172,31 +167,36 @@ Choose Color
 <div class="potty-colors">
 
 
-<button class="color-choice pink"
+<button 
+class="color-choice pink"
 data-color="pink"
 type="button">
 </button>
 
 
 
-<button class="color-choice purple"
+<button 
+class="color-choice purple"
 data-color="purple"
 type="button">
 </button>
 
 
 
-<button class="color-choice blue"
+<button 
+class="color-choice blue"
 data-color="blue"
 type="button">
 </button>
 
 
 
-<button class="color-choice green"
+<button 
+class="color-choice green"
 data-color="green"
 type="button">
 </button>
+
 
 
 </div>
@@ -211,6 +211,7 @@ type="button">
 <label>
 Chart Length
 </label>
+
 
 
 <select id="chartLength">
@@ -231,9 +232,7 @@ Chart Length
 </option>
 
 
-
 </select>
-
 
 
 
@@ -245,7 +244,7 @@ id="previewButton"
 class="download-button"
 type="button">
 
-✨ Create My Chart
+✨ Customize My Chart
 
 </button>
 
@@ -264,7 +263,6 @@ type="button">
 <!-- PREVIEW -->
 
 
-
 <div class="potty-preview-wrapper">
 
 
@@ -272,15 +270,30 @@ type="button">
 Your Preview
 </h2>
 
+
+
+
+
 <div 
 id="pottyPreview"
 class="potty-preview theme-princess">
 
 
-<div class="theme-art" id="themeArt">
 
 
-<!-- Princess -->
+
+
+<!-- THEME ART -->
+
+
+<div 
+class="theme-art"
+id="themeArt"
+aria-hidden="true">
+
+
+
+
 
 <svg class="theme-svg princess-svg" viewBox="0 0 200 120">
 
@@ -296,7 +309,6 @@ class="potty-preview theme-princess">
 
 
 
-<!-- Dinosaur -->
 
 <svg class="theme-svg dinosaur-svg" viewBox="0 0 200 120">
 
@@ -315,8 +327,6 @@ class="potty-preview theme-princess">
 
 
 
-<!-- Unicorn -->
-
 <svg class="theme-svg unicorn-svg" viewBox="0 0 200 120">
 
 <circle cx="100" cy="70" r="35"/>
@@ -333,8 +343,6 @@ class="potty-preview theme-princess">
 
 
 
-<!-- Space -->
-
 <svg class="theme-svg space-svg" viewBox="0 0 200 120">
 
 <ellipse cx="100" cy="70" rx="45" ry="20"/>
@@ -350,8 +358,6 @@ class="potty-preview theme-princess">
 
 
 
-<!-- Animals -->
-
 <svg class="theme-svg animals-svg" viewBox="0 0 200 120">
 
 <circle cx="100" cy="55" r="35"/>
@@ -364,7 +370,13 @@ class="potty-preview theme-princess">
 
 
 
+
+
 </div>
+
+
+
+
 
 
 
@@ -380,6 +392,7 @@ id="themeIcon">
 
 
 
+
 <h3 id="chartTitle">
 
 Your Child's Potty Adventure
@@ -388,11 +401,18 @@ Your Child's Potty Adventure
 
 
 
+
+
 <p id="chartSubtitle">
 
 Every little step is a big achievement!
 
 </p>
+
+
+
+
+
 
 
 <div 
@@ -417,21 +437,28 @@ class="chart-grid">
 
 
 <p>
-Fill your sticker chart and celebrate your success!
+Fill your stickers and celebrate every success!
 </p>
+
 
 
 
 <div class="reward-stars">
 
+
 <span></span>
+
 <span></span>
+
 <span></span>
+
 
 </div>
 
 
+
 </div>
+
 
 
 
@@ -450,7 +477,17 @@ Fill your sticker chart and celebrate your success!
 </div>
 
 
+</div>
+
+
+
+
+
+</div>
+
+
 </section>
+
 
 
 
@@ -467,7 +504,6 @@ id="emailModal"
 class="potty-modal">
 
 
-
 <div class="potty-modal-content">
 
 
@@ -482,15 +518,20 @@ class="potty-close">
 
 
 
+
+
 <h2>
 🎉 Your Chart Is Ready!
 </h2>
 
 
 
+
 <p>
 Enter your email to download your personalized chart.
 </p>
+
+
 
 
 
@@ -522,10 +563,11 @@ Get free toddler activities and mom resources.
 
 
 
-</div>
-
 
 </div>
+
+</div>
+
 
 
 
@@ -540,6 +582,7 @@ Get free toddler activities and mom resources.
 <h2>
 Why Parents Love Personalized Charts
 </h2>
+
 
 
 <div class="potty-benefit-grid">
@@ -563,6 +606,7 @@ Why Parents Love Personalized Charts
 <div>
 💛 Encourages routines
 </div>
+
 
 
 </div>
@@ -589,14 +633,18 @@ Why Parents Love Personalized Charts
 
 
 
+
 <h3>
 MomYouNeedThis
 </h3>
 
 
+
+
 <p>
 Helping moms find products and resources that make everyday life easier.
 </p>
+
 
 
 
@@ -610,6 +658,7 @@ Helping moms find products and resources that make everyday life easier.
 </div>
 
 
+
 </footer>
 
 
@@ -620,6 +669,7 @@ Helping moms find products and resources that make everyday life easier.
 
 </section>
 
+
 </div>
 
 
@@ -627,6 +677,7 @@ Helping moms find products and resources that make everyday life easier.
 
 
 <script src="potty-chart-generator.js" defer></script>
+
 
 
 </body>
