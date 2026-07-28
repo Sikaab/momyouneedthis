@@ -83,11 +83,43 @@ const colors = {
 
 const themes = {
 
-    princess:"👑",
-    dinosaur:"🦖",
-    animals:"🐻",
-    space:"🚀",
-    unicorn:"🦄"
+    princess:{
+        icon:"👑",
+        class:"theme-princess",
+        title:"{name}'s Princess Potty Adventure",
+        subtitle:"Every sticker brings you closer to becoming a big kid!"
+    },
+
+    dinosaur:{
+        icon:"🦖",
+        class:"theme-dinosaur",
+        title:"{name}'s Dinosaur Potty Quest",
+        subtitle:"Roar! You're doing an amazing job!"
+    },
+
+
+    animals:{
+        icon:"🐻",
+        class:"theme-animals",
+        title:"{name}'s Animal Potty Journey",
+        subtitle:"Little steps make big achievements!"
+    },
+
+
+    space:{
+        icon:"🚀",
+        class:"theme-space",
+        title:"{name}'s Space Adventure",
+        subtitle:"Blast off into big kid success!"
+    },
+
+
+    unicorn:{
+        icon:"🦄",
+        class:"theme-unicorn",
+        title:"{name}'s Magical Potty Journey",
+        subtitle:"Sparkles, smiles, and lots of success!"
+    }
 
 };
 
