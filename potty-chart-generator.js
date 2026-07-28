@@ -39,8 +39,6 @@ document.getElementById("pottyPreview");
 const chartGrid =
 document.getElementById("chartGrid");
 
-const childNamePreview =
-document.getElementById("childNamePreview");
 
 const previewButton =
 document.getElementById("previewButton");
@@ -56,7 +54,6 @@ document.getElementById("closeModal");
 
 const downloadButton =
 document.getElementById("downloadButton");
-
 
 
 
@@ -190,9 +187,8 @@ subtitle:"Little steps create big achievements!"
 
 
 
-
 /* ===========================
-   DAY NAMES
+   DAYS
 =========================== */
 
 
@@ -215,12 +211,7 @@ const days = [
 
 
 /* ===========================
-   CREATE GRID
-=========================== */
-
-
-/* ===========================
-   CREATE PREMIUM CHART GRID
+   CREATE CHART
 =========================== */
 
 
@@ -234,16 +225,19 @@ chartGrid.innerHTML = "";
 if(numberOfDays === 30){
 
 
-chartGrid.className = "chart-grid calendar-grid";
+chartGrid.className =
+"chart-grid calendar-grid";
 
 
 for(let i = 1; i <= 30; i++){
 
 
-const day = document.createElement("div");
+const day =
+document.createElement("div");
 
 
-day.className = "calendar-day";
+day.className =
+"calendar-day";
 
 
 day.innerHTML = `
@@ -252,9 +246,7 @@ day.innerHTML = `
 Day ${i}
 </strong>
 
-<div class="calendar-sticker">
-
-</div>
+<div class="calendar-sticker"></div>
 
 `;
 
@@ -268,25 +260,19 @@ chartGrid.appendChild(day);
 
 }
 
-
 else{
 
 
-chartGrid.className = "chart-grid";
+chartGrid.className =
+"chart-grid";
 
 
 
 for(let i = 0; i < numberOfDays; i++){
 
 
-let dayName =
-days[i % 7];
-
-
-
 const day =
 document.createElement("div");
-
 
 
 day.className =
@@ -297,24 +283,17 @@ day.className =
 day.innerHTML = `
 
 <div class="day-name">
-
-${dayName}
-
+${days[i % 7]}
 </div>
 
 
 <div class="sticker-row">
 
-
 <span></span>
-
 <span></span>
-
 <span></span>
-
 
 </div>
-
 
 `;
 
@@ -323,7 +302,6 @@ ${dayName}
 chartGrid.appendChild(day);
 
 
-
 }
 
 
@@ -333,6 +311,50 @@ chartGrid.appendChild(day);
 
 
 }
+
+
+
+
+
+
+
+
+
+
+/* ===========================
+   UPDATE SVG ART
+=========================== */
+
+
+function updateThemeArt(theme){
+
+
+document
+.querySelectorAll(".theme-svg")
+.forEach(svg=>{
+
+svg.style.display="none";
+
+});
+
+
+
+const active =
+document.querySelector(
+"." + theme + "-svg"
+);
+
+
+
+if(active){
+
+active.style.display="block";
+
+}
+
+
+}
+
 
 
 
@@ -354,8 +376,6 @@ chartData.name =
 childNameInput.value.trim() || "Your Child";
 
 
-childNamePreview.innerHTML =
-chartData.name;
 
 chartData.theme =
 chartTheme.value;
@@ -405,12 +425,17 @@ color.border;
 
 
 
-document.getElementById("themeIcon").innerHTML =
+
+document.getElementById("themeIcon")
+.textContent =
 theme.icon;
 
 
 
-document.getElementById("chartTitle").innerHTML =
+
+
+document.getElementById("chartTitle")
+.textContent =
 theme.title.replace(
 "{name}",
 chartData.name
@@ -418,8 +443,23 @@ chartData.name
 
 
 
-document.getElementById("chartSubtitle").innerHTML =
+
+
+
+document.getElementById("chartSubtitle")
+.textContent =
 theme.subtitle;
+
+
+
+
+
+
+updateThemeArt(
+chartData.theme
+);
+
+
 
 
 
@@ -469,7 +509,6 @@ updatePreview
 
 
 
-
 document
 .querySelectorAll(".color-choice")
 .forEach(button=>{
@@ -482,7 +521,6 @@ button.addEventListener(
 
 selectedColor =
 button.dataset.color;
-
 
 
 updatePreview();
@@ -500,8 +538,9 @@ updatePreview();
 
 
 
+
 /* ===========================
-   EMAIL POPUP
+   MODAL
 =========================== */
 
 
@@ -542,6 +581,8 @@ emailModal.style.display =
 
 
 
+
+
 /* ===========================
    PDF DOWNLOAD
 =========================== */
@@ -573,21 +614,14 @@ return;
 
 
 
-
-
 const canvas =
 await html2canvas(
 preview,
 {
-
 scale:2,
-
 backgroundColor:null
-
 }
-
 );
-
 
 
 
@@ -624,7 +658,6 @@ new jsPDF(
 const width = 190;
 
 
-
 const height =
 (canvas.height * width)
 /
@@ -635,19 +668,12 @@ canvas.width;
 
 
 pdf.addImage(
-
 image,
-
 "PNG",
-
 10,
-
 10,
-
 width,
-
 height
-
 );
 
 
@@ -655,9 +681,7 @@ height
 
 
 pdf.save(
-
 `${chartData.name}-potty-chart.pdf`
-
 );
 
 
@@ -666,7 +690,6 @@ pdf.save(
 
 emailModal.style.display =
 "none";
-
 
 
 }
@@ -680,7 +703,15 @@ emailModal.style.display =
 
 
 
-/* INITIAL LOAD */
+/* ===========================
+   INITIAL LOAD
+=========================== */
 
+
+document.addEventListener(
+"DOMContentLoaded",
+()=>{
 
 updatePreview();
+
+});
