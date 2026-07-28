@@ -8,32 +8,6 @@
    BASE
 ===================================== */
 
-.potty-page {
-
-font-family:'Nunito', sans-serif;
-background:#fffaf8;
-color:#332b2b;
-
-}
-
-
-.potty-container {
-
-max-width:1100px;
-margin:auto;
-padding:0 20px;
-
-}
-
-
-
-
-
-
-/* =====================================
-   GENERATOR LAYOUT
-===================================== */
-
 
 .potty-generator {
 
@@ -42,17 +16,24 @@ padding:40px 0;
 }
 
 
-.potty-generator .potty-container {
+
+.potty-container {
+
+max-width:1100px;
+
+margin:auto;
+
+padding:0 20px;
 
 display:grid;
+
 grid-template-columns:1fr 1fr;
+
 gap:35px;
+
 align-items:start;
 
 }
-
-
-
 
 
 
@@ -69,16 +50,13 @@ background:white;
 
 padding:35px;
 
-border-radius:28px;
+border-radius:30px;
 
 box-shadow:
 0 12px 35px rgba(0,0,0,.08);
 
-width:100%;
-
-box-sizing:border-box;
-
 }
+
 
 
 
@@ -97,8 +75,6 @@ margin-top:0;
 
 
 
-
-
 /* =====================================
    FORM
 ===================================== */
@@ -108,13 +84,14 @@ margin-top:0;
 
 display:block;
 
-font-weight:800;
+font-weight:900;
 
 margin-top:20px;
 
 margin-bottom:8px;
 
 }
+
 
 
 
@@ -126,7 +103,7 @@ width:100%;
 
 padding:14px;
 
-border-radius:14px;
+border-radius:15px;
 
 border:1px solid #ddd;
 
@@ -142,16 +119,16 @@ box-sizing:border-box;
 
 
 
+/* =====================================
+   COLORS
+===================================== */
 
-/* COLORS */
 
 .potty-colors {
 
 display:flex;
 
 gap:12px;
-
-margin-top:10px;
 
 }
 
@@ -181,7 +158,6 @@ transform:scale(1.15);
 }
 
 
-
 .pink {
 
 background:#ffd6e8;
@@ -191,24 +167,23 @@ background:#ffd6e8;
 
 .purple {
 
-background:#e7d9ff;
+background:#e8d8ff;
 
 }
 
 
 .blue {
 
-background:#d8efff;
+background:#dcecff;
 
 }
 
 
 .green {
 
-background:#d9f7dc;
+background:#dcf7d8;
 
 }
-
 
 
 
@@ -221,8 +196,6 @@ background:#d9f7dc;
 
 
 .download-button {
-
-display:block;
 
 width:100%;
 
@@ -244,10 +217,6 @@ font-weight:900;
 
 cursor:pointer;
 
-text-align:center;
-
-text-decoration:none;
-
 transition:.2s;
 
 }
@@ -256,9 +225,10 @@ transition:.2s;
 
 .download-button:hover {
 
-transform:translateY(-2px);
+transform:translateY(-3px);
 
 }
+
 
 
 
@@ -268,7 +238,7 @@ transform:translateY(-2px);
 
 
 /* =====================================
-   PREVIEW
+   WEBSITE PREVIEW
 ===================================== */
 
 
@@ -276,33 +246,33 @@ transform:translateY(-2px);
 
 position:relative;
 
-padding:30px;
+padding:35px;
 
 border-radius:35px;
 
-border:5px solid;
+min-height:520px;
 
 text-align:center;
 
 overflow:hidden;
 
+border:5px solid;
+
 transition:.3s;
 
-min-height:520px;
-
 }
 
 
 
-.chart-icon {
 
-font-size:60px;
+.preview-art {
 
-position:relative;
+font-size:70px;
 
-z-index:3;
+margin-bottom:10px;
 
 }
+
 
 
 
@@ -311,8 +281,6 @@ z-index:3;
 font-size:30px;
 
 font-weight:900;
-
-line-height:1.2;
 
 margin:15px 0;
 
@@ -330,19 +298,16 @@ font-size:16px;
 
 
 
-
-
-
 /* =====================================
-   STICKER GRID
+   PREVIEW GRID
 ===================================== */
 
 
-.chart-grid {
+.preview-grid {
 
 display:grid;
 
-grid-template-columns:repeat(2, 1fr);
+grid-template-columns:1fr;
 
 gap:12px;
 
@@ -352,202 +317,22 @@ margin-top:25px;
 
 
 
-.chart-day {
+
+.preview-day {
 
 background:white;
 
 border-radius:18px;
 
-padding:12px;
+padding:15px;
 
 display:flex;
-
-align-items:center;
 
 justify-content:space-between;
 
-font-weight:800;
+align-items:center;
 
-box-shadow:
-0 3px 10px rgba(0,0,0,.06);
-
-}
-
-
-
-.sticker-row {
-
-display:flex;
-
-gap:6px;
-
-}
-
-
-
-.sticker-row span {
-
-height:26px;
-
-width:26px;
-
-border-radius:50%;
-
-border:3px dashed #ddd;
-
-background:#fff;
-
-display:block;
-
-}
-
-
-
-
-/* 30 DAY CALENDAR */
-
-.thirty-day-grid {
-
-grid-template-columns:repeat(5,1fr);
-
-gap:8px;
-
-}
-
-
-
-.calendar-day {
-
-background:white;
-
-border-radius:14px;
-
-padding:10px 5px;
-
-text-align:center;
-
-font-size:13px;
-
-box-shadow:
-0 3px 10px rgba(0,0,0,.06);
-
-}
-
-
-
-.calendar-sticker {
-
-height:28px;
-
-width:28px;
-
-border-radius:50%;
-
-border:3px dashed #ddd;
-
-background:white;
-
-margin:8px auto 0;
-
-}
-
-
-
-
-
-@media(max-width:850px){
-
-
-.thirty-day-grid {
-
-grid-template-columns:repeat(4,1fr);
-
-}
-
-
-}
-
-
-
-@media(max-width:500px){
-
-
-.chart-grid {
-
-grid-template-columns:1fr;
-
-}
-
-
-
-.thirty-day-grid {
-
-grid-template-columns:repeat(3,1fr);
-
-}
-
-
-
-.calendar-day {
-
-font-size:12px;
-
-}
-
-
-
-}
-
-
-
-/* =====================================
-   CHILD NAME + REWARD AREA
-===================================== */
-
-
-.child-name-box {
-
-background:white;
-
-padding:15px;
-
-border-radius:20px;
-
-margin:20px 0;
-
-font-size:18px;
-
-box-shadow:
-0 4px 12px rgba(0,0,0,.06);
-
-}
-
-
-
-.child-name-box strong {
-
-display:block;
-
-font-size:25px;
-
-margin-top:5px;
-
-}
-
-
-
-
-
-
-.reward-box {
-
-background:white;
-
-padding:20px;
-
-margin-top:25px;
-
-border-radius:25px;
+font-weight:900;
 
 box-shadow:
 0 5px 15px rgba(0,0,0,.08);
@@ -556,53 +341,50 @@ box-shadow:
 
 
 
-.reward-box h4 {
 
-margin:0;
-
-font-size:22px;
-
-}
-
-
-
-.reward-stars {
+.sticker-row {
 
 display:flex;
 
-justify-content:center;
-
-gap:12px;
-
-margin-top:15px;
+gap:8px;
 
 }
 
 
 
-.reward-stars span {
 
-width:40px;
+.sticker-row span {
 
-height:40px;
+height:28px;
+
+width:28px;
 
 border-radius:50%;
 
-border:3px dashed #ffc85c;
+background:white;
 
-background:#fffaf0;
+border:3px dashed #ddd;
 
 }
 
 
 
-.footer-message {
+
+
+
+.preview-reward {
+
+background:white;
+
+padding:18px;
+
+border-radius:20px;
 
 margin-top:25px;
 
-font-weight:900;
+font-size:20px;
 
-font-size:18px;
+font-weight:900;
 
 }
 
@@ -625,7 +407,7 @@ background:
 linear-gradient(
 135deg,
 #fff0f7,
-#ffe2ef
+#ffe1ef
 );
 
 border-color:#ff9fc9;
@@ -638,7 +420,6 @@ border-color:#ff9fc9;
 color:#ff5f9e;
 
 }
-
 
 
 
@@ -673,7 +454,7 @@ background:
 linear-gradient(
 135deg,
 #f8efff,
-#f0ddff
+#efdfff
 );
 
 border-color:#d59cff;
@@ -742,88 +523,63 @@ color:#e89b00;
 
 
 
+
 /* =====================================
-   SVG THEME ART
+   PRINTABLE CHART
 ===================================== */
 
 
-.theme-art {
-
-position:absolute;
-
-top:15px;
-
-right:15px;
-
-width:100px;
-
-height:80px;
-
-pointer-events:none;
-
-z-index:2;
-
-}
+.printable-chart {
 
 
+width:900px;
 
-.theme-svg {
+background:white;
+
+padding:50px;
+
+border-radius:30px;
+
+margin:auto;
+
+box-sizing:border-box;
 
 display:none;
 
-width:100%;
+font-family:'Nunito',sans-serif;
 
-height:100%;
-
-}
-
-
-
-.theme-princess .princess-svg {
-
-display:block;
-
-fill:#ffb6d9;
+text-align:center;
 
 }
 
 
 
-.theme-dinosaur .dinosaur-svg {
 
-display:block;
+.print-header h1 {
 
-fill:#8bd66a;
+font-size:45px;
 
-}
+font-weight:900;
 
-
-
-.theme-unicorn .unicorn-svg {
-
-display:block;
-
-fill:#d59cff;
+margin:10px 0;
 
 }
 
 
 
-.theme-space .space-svg {
 
-display:block;
+.print-icon {
 
-fill:#8aa9ff;
+font-size:80px;
 
 }
 
 
 
-.theme-animals .animals-svg {
 
-display:block;
+.print-header p {
 
-fill:#ffc85c;
+font-size:22px;
 
 }
 
@@ -834,7 +590,147 @@ fill:#ffc85c;
 
 
 /* =====================================
-   EMAIL MODAL
+   PRINT GRID
+===================================== */
+
+
+.print-grid {
+
+
+display:grid;
+
+grid-template-columns:1fr;
+
+gap:15px;
+
+margin-top:35px;
+
+}
+
+
+
+
+
+.print-day {
+
+
+background:#fff8fb;
+
+border-radius:20px;
+
+padding:18px;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+font-size:20px;
+
+font-weight:900;
+
+}
+
+
+
+
+
+/* 30 DAYS */
+
+
+.print-grid.thirty {
+
+
+grid-template-columns:repeat(5,1fr);
+
+gap:15px;
+
+}
+
+
+
+
+
+.print-grid.thirty .print-day {
+
+
+flex-direction:column;
+
+min-height:90px;
+
+justify-content:center;
+
+font-size:16px;
+
+}
+
+
+
+
+
+
+
+
+/* =====================================
+   PRINT REWARD
+===================================== */
+
+
+.print-reward {
+
+
+margin-top:35px;
+
+background:#fffaf0;
+
+padding:25px;
+
+border-radius:25px;
+
+}
+
+
+
+
+.reward-stars {
+
+display:flex;
+
+justify-content:center;
+
+gap:15px;
+
+margin-top:20px;
+
+}
+
+
+
+
+.reward-stars span {
+
+
+width:45px;
+
+height:45px;
+
+border-radius:50%;
+
+border:3px dashed #ffc85c;
+
+background:white;
+
+}
+
+
+
+
+
+
+
+/* =====================================
+   MODAL
 ===================================== */
 
 
@@ -858,7 +754,9 @@ z-index:999;
 
 
 
+
 .potty-modal-content {
+
 
 background:white;
 
@@ -868,13 +766,13 @@ max-width:450px;
 
 padding:35px;
 
-border-radius:25px;
+border-radius:30px;
 
 text-align:center;
 
-box-sizing:border-box;
-
 }
+
+
 
 
 
@@ -886,11 +784,12 @@ background:none;
 
 font-size:30px;
 
-cursor:pointer;
-
 float:right;
 
+cursor:pointer;
+
 }
+
 
 
 
@@ -945,6 +844,8 @@ box-shadow:
 
 
 
+
+
 /* =====================================
    MOBILE
 ===================================== */
@@ -953,7 +854,7 @@ box-shadow:
 @media(max-width:850px){
 
 
-.potty-generator .potty-container {
+.potty-container {
 
 grid-template-columns:1fr;
 
@@ -973,16 +874,7 @@ grid-template-columns:1fr 1fr;
 
 
 
-
-@media(max-width:500px){
-
-
-.potty-container {
-
-padding:0 15px;
-
-}
-
+@media(max-width:600px){
 
 
 .potty-form-card,
@@ -994,13 +886,6 @@ padding:20px;
 
 
 
-.chart-icon {
-
-font-size:45px;
-
-}
-
-
 
 .potty-preview h3 {
 
@@ -1010,23 +895,12 @@ font-size:23px;
 
 
 
-.chart-day {
+.preview-art {
 
-flex-direction:column;
-
-gap:10px;
+font-size:55px;
 
 }
 
-
-
-.sticker-row span {
-
-height:25px;
-
-width:25px;
-
-}
 
 
 
@@ -1038,47 +912,22 @@ grid-template-columns:1fr;
 
 
 
-.child-name-box strong {
+.printable-chart {
 
-font-size:22px;
+width:100%;
 
-}
-
-
-
-.reward-stars span {
-
-width:32px;
-
-height:32px;
+padding:20px;
 
 }
 
 
 
-.theme-art {
+.print-grid.thirty {
 
-width:70px;
-
-height:60px;
-
-top:10px;
-
-right:10px;
+grid-template-columns:repeat(3,1fr);
 
 }
 
 
-}
-
-
-@media(max-width:600px){
-
-.chart-grid{
-
-grid-template-columns:1fr;
 
 }
-
-}
-
