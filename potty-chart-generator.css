@@ -337,6 +337,7 @@ font-size:16px;
    STICKER GRID
 ===================================== */
 
+
 .chart-grid {
 
 display:grid;
@@ -348,6 +349,7 @@ gap:12px;
 margin-top:25px;
 
 }
+
 
 
 .chart-day {
@@ -377,13 +379,63 @@ box-shadow:
 
 display:flex;
 
-gap:8px;
+gap:6px;
 
 }
 
 
 
 .sticker-row span {
+
+height:26px;
+
+width:26px;
+
+border-radius:50%;
+
+border:3px dashed #ddd;
+
+background:#fff;
+
+display:block;
+
+}
+
+
+
+
+/* 30 DAY CALENDAR */
+
+.thirty-day-grid {
+
+grid-template-columns:repeat(5,1fr);
+
+gap:8px;
+
+}
+
+
+
+.calendar-day {
+
+background:white;
+
+border-radius:14px;
+
+padding:10px 5px;
+
+text-align:center;
+
+font-size:13px;
+
+box-shadow:
+0 3px 10px rgba(0,0,0,.06);
+
+}
+
+
+
+.calendar-sticker {
 
 height:28px;
 
@@ -395,7 +447,7 @@ border:3px dashed #ddd;
 
 background:white;
 
-display:block;
+margin:8px auto 0;
 
 }
 
@@ -403,6 +455,48 @@ display:block;
 
 
 
+@media(max-width:850px){
+
+
+.thirty-day-grid {
+
+grid-template-columns:repeat(4,1fr);
+
+}
+
+
+}
+
+
+
+@media(max-width:500px){
+
+
+.chart-grid {
+
+grid-template-columns:1fr;
+
+}
+
+
+
+.thirty-day-grid {
+
+grid-template-columns:repeat(3,1fr);
+
+}
+
+
+
+.calendar-day {
+
+font-size:12px;
+
+}
+
+
+
+}
 
 
 
