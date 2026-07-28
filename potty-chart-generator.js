@@ -217,101 +217,47 @@ const days = [
 
 function createChartDays(numberOfDays){
 
-
-chartGrid.innerHTML = "";
-
+    chartGrid.innerHTML = "";
 
 
-if(numberOfDays === 30){
+    chartGrid.className = "chart-grid";
 
 
-chartGrid.className =
-"chart-grid calendar-grid";
+    for(let i = 1; i <= numberOfDays; i++){
 
 
-for(let i = 1; i <= 30; i++){
+        const day =
+        document.createElement("div");
 
 
-const day =
-document.createElement("div");
+        day.className =
+        "chart-day";
 
 
-day.className =
-"calendar-day";
+        day.innerHTML = `
+
+        <div class="day-name">
+        ${numberOfDays === 30 ? "Day " + i : days[(i-1) % 7]}
+        </div>
 
 
-day.innerHTML = `
+        <div class="sticker-row">
 
-<strong>
-Day ${i}
-</strong>
+        <span></span>
+        <span></span>
+        <span></span>
 
-<div class="calendar-sticker"></div>
+        </div>
 
-`;
-
-
-chartGrid.appendChild(day);
+        `;
 
 
-}
+        chartGrid.appendChild(day);
 
 
-
-}
-
-else{
-
-
-chartGrid.className =
-"chart-grid";
-
-
-
-for(let i = 0; i < numberOfDays; i++){
-
-
-const day =
-document.createElement("div");
-
-
-day.className =
-"chart-day";
-
-
-
-day.innerHTML = `
-
-<div class="day-name">
-${days[i % 7]}
-</div>
-
-
-<div class="sticker-row">
-
-<span></span>
-<span></span>
-<span></span>
-
-</div>
-
-`;
-
-
-
-chartGrid.appendChild(day);
-
+    }
 
 }
-
-
-
-}
-
-
-
-}
-
 
 
 
