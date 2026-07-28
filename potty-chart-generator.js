@@ -643,7 +643,6 @@ window.jspdf;
 
 
 
-
 const pdf =
 new jsPDF(
 {
@@ -655,6 +654,7 @@ format:"a4"
 
 
 const pageWidth = 190;
+
 const pageHeight = 277;
 
 
@@ -663,11 +663,13 @@ let imageHeight =
 canvas.width;
 
 
+
 if(imageHeight > pageHeight){
 
 imageHeight = pageHeight;
 
 }
+
 
 
 pdf.addImage(
@@ -678,33 +680,6 @@ image,
 pageWidth,
 imageHeight
 );
-
-
-
-
-
-const width = 190;
-
-
-const height =
-(canvas.height * width)
-/
-canvas.width;
-
-
-
-
-
-pdf.addImage(
-image,
-"PNG",
-10,
-10,
-width,
-height
-);
-
-
 
 
 
