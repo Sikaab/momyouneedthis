@@ -60,6 +60,7 @@ document.getElementById("downloadButton");
 
 
 
+
 /* ===========================
    COLORS
 =========================== */
@@ -67,30 +68,25 @@ document.getElementById("downloadButton");
 
 const colors = {
 
-
 pink:{
 background:"#fff0f7",
 border:"#ff9fc9"
 },
-
 
 purple:{
 background:"#f8efff",
 border:"#d59cff"
 },
 
-
 blue:{
 background:"#eef3ff",
 border:"#8aa9ff"
 },
 
-
 green:{
 background:"#efffe8",
 border:"#8bd66a"
 }
-
 
 };
 
@@ -122,7 +118,6 @@ subtitle:"Fill your sticker chart and become a big kid!"
 },
 
 
-
 dinosaur:{
 
 icon:"🦖",
@@ -134,7 +129,6 @@ title:"{name}'s Dinosaur Potty Quest",
 subtitle:"Roar! Every success is amazing!"
 
 },
-
 
 
 unicorn:{
@@ -150,7 +144,6 @@ subtitle:"Sparkles, smiles, and potty wins!"
 },
 
 
-
 space:{
 
 icon:"🚀",
@@ -162,7 +155,6 @@ title:"{name}'s Space Potty Mission",
 subtitle:"Blast off toward big kid success!"
 
 },
-
 
 
 animals:{
@@ -187,10 +179,6 @@ subtitle:"Little steps create big achievements!"
 
 
 
-/* ===========================
-   DAYS
-=========================== */
-
 
 const days = [
 
@@ -210,108 +198,136 @@ const days = [
 
 
 
+
 /* ===========================
-   CREATE CHART
+   CREATE CHART DAYS
 =========================== */
+
 
 function createChartDays(numberOfDays){
 
-    chartGrid.innerHTML = "";
 
-
-    // 30 DAY CALENDAR STYLE
-    if(numberOfDays === 30){
-
-
-        chartGrid.className =
-        "chart-grid thirty-day-grid";
-
-
-        for(let i = 1; i <= 30; i++){
-
-
-            const day =
-            document.createElement("div");
-
-
-            day.className =
-            "calendar-day";
-
-
-            day.innerHTML = `
-
-            <strong>
-            Day ${i}
-            </strong>
-
-
-            <div class="calendar-sticker">
-
-            </div>
-
-            `;
-
-
-            chartGrid.appendChild(day);
-
-
-        }
-
-
-        return;
-
-    }
+chartGrid.innerHTML = "";
 
 
 
-    // 7 OR 14 DAYS
+/* 30 DAY CALENDAR */
 
-    chartGrid.className =
-    "chart-grid";
-
+if(numberOfDays === 30){
 
 
-    for(let i = 0; i < numberOfDays; i++){
-
-
-        const day =
-        document.createElement("div");
-
-
-        day.className =
-        "chart-day";
-
-
-        day.innerHTML = `
-
-
-        <div class="day-name">
-
-        ${days[i % 7]}
-
-        </div>
+chartGrid.className =
+"chart-grid thirty-day-grid";
 
 
 
-        <div class="sticker-row">
-
-        <span></span>
-        <span></span>
-        <span></span>
-
-        </div>
+for(let i = 1; i <= 30; i++){
 
 
-        `;
+const day =
+document.createElement("div");
 
 
-        chartGrid.appendChild(day);
+day.className =
+"calendar-day";
 
 
-    }
+
+day.innerHTML = `
+
+
+<strong>
+Day ${i}
+</strong>
+
+
+<div class="sticker-row">
+
+<span></span>
+<span></span>
+<span></span>
+
+</div>
+
+
+`;
+
+
+
+chartGrid.appendChild(day);
+
 
 
 }
+
+
+
+return;
+
+
+}
+
+
+
+
+
+
+/* 7 / 14 DAYS */
+
+
+chartGrid.className =
+"chart-grid";
+
+
+
+for(let i = 0; i < numberOfDays; i++){
+
+
+
+const day =
+document.createElement("div");
+
+
+
+day.className =
+"chart-day";
+
+
+
+day.innerHTML = `
+
+
+<div class="day-name">
+
+${days[i % 7]}
+
+</div>
+
+
+
+<div class="sticker-row">
+
+<span></span>
+<span></span>
+<span></span>
+
+</div>
+
+
+`;
+
+
+
+chartGrid.appendChild(day);
+
+
+
+}
+
+
+
+}
+
 
 
 
@@ -406,10 +422,8 @@ colors[selectedColor];
 
 
 
-
 preview.className =
 `potty-preview ${theme.className}`;
-
 
 
 
@@ -420,7 +434,6 @@ color.background;
 
 preview.style.borderColor =
 color.border;
-
 
 
 
@@ -445,7 +458,6 @@ chartData.name
 
 
 
-
 document.getElementById("chartSubtitle")
 .textContent =
 theme.subtitle;
@@ -454,11 +466,9 @@ theme.subtitle;
 
 
 
-
 updateThemeArt(
 chartData.theme
 );
-
 
 
 
@@ -562,7 +572,6 @@ emailModal.style.display =
 
 
 
-
 closeModal.addEventListener(
 "click",
 ()=>{
@@ -573,7 +582,6 @@ emailModal.style.display =
 
 
 });
-
 
 
 
@@ -614,14 +622,22 @@ return;
 
 
 
+
 const canvas =
 await html2canvas(
 preview,
 {
+
 scale:2,
-backgroundColor:null
+
+backgroundColor:null,
+
+useCORS:true
+
 }
+
 );
+
 
 
 
@@ -643,47 +659,91 @@ window.jspdf;
 
 
 
+
+const isThirtyDays =
+chartData.days === 30;
+
+
+
+
+
 const pdf =
-new jsPDF(
-{
-orientation:"portrait",
+new jsPDF({
+
+orientation:
+isThirtyDays ?
+"landscape" :
+"portrait",
+
 unit:"mm",
+
 format:"a4"
-}
-);
 
-const pageWidth = 190;
+});
 
-const pageHeight = 277;
+
+
+
+
+const pageWidth =
+isThirtyDays ? 277 : 190;
+
+
+
+const pageHeight =
+isThirtyDays ? 190 : 277;
+
+
 
 
 let imageHeight =
-(canvas.height * pageWidth) /
+(canvas.height * pageWidth)
+/
 canvas.width;
+
+
 
 
 
 if(imageHeight > pageHeight){
 
-imageHeight = pageHeight;
+
+const scale =
+pageHeight / imageHeight;
+
+
+imageHeight =
+imageHeight * scale;
+
 
 }
 
 
 
 pdf.addImage(
+
 image,
+
 "PNG",
+
 10,
+
 10,
+
 pageWidth,
+
 imageHeight
+
 );
 
 
 
+
+
 pdf.save(
+
 `${chartData.name}-potty-chart.pdf`
+
 );
 
 
@@ -694,9 +754,9 @@ emailModal.style.display =
 "none";
 
 
-}
 
-);
+});
+
 
 
 
