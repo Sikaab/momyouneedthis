@@ -292,6 +292,8 @@ chartData.name =
 childNameInput.value.trim() || "Your Child";
 
 
+childNamePreview.innerHTML =
+chartData.name;
 
 chartData.theme =
 chartTheme.value;
