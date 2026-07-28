@@ -214,16 +214,64 @@ const days = [
    CREATE CHART
 =========================== */
 
-
 function createChartDays(numberOfDays){
 
     chartGrid.innerHTML = "";
 
 
-    chartGrid.className = "chart-grid";
+    // 30 DAY CALENDAR STYLE
+    if(numberOfDays === 30){
 
 
-    for(let i = 1; i <= numberOfDays; i++){
+        chartGrid.className =
+        "chart-grid thirty-day-grid";
+
+
+        for(let i = 1; i <= 30; i++){
+
+
+            const day =
+            document.createElement("div");
+
+
+            day.className =
+            "calendar-day";
+
+
+            day.innerHTML = `
+
+            <strong>
+            Day ${i}
+            </strong>
+
+
+            <div class="calendar-sticker">
+
+            </div>
+
+            `;
+
+
+            chartGrid.appendChild(day);
+
+
+        }
+
+
+        return;
+
+    }
+
+
+
+    // 7 OR 14 DAYS
+
+    chartGrid.className =
+    "chart-grid";
+
+
+
+    for(let i = 0; i < numberOfDays; i++){
 
 
         const day =
@@ -236,9 +284,13 @@ function createChartDays(numberOfDays){
 
         day.innerHTML = `
 
+
         <div class="day-name">
-        ${numberOfDays === 30 ? "Day " + i : days[(i-1) % 7]}
+
+        ${days[i % 7]}
+
         </div>
+
 
 
         <div class="sticker-row">
@@ -249,6 +301,7 @@ function createChartDays(numberOfDays){
 
         </div>
 
+
         `;
 
 
@@ -256,6 +309,7 @@ function createChartDays(numberOfDays){
 
 
     }
+
 
 }
 
