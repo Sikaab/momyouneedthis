@@ -1,0 +1,488 @@
+/* ===========================
+   POTTY TRAINING GENERATOR
+   MomYouNeedThis
+=========================== */
+
+
+.potty-page {
+
+font-family: 'Nunito', sans-serif;
+background:#fffaf8;
+color:#332b2b;
+
+}
+
+
+
+.potty-container {
+
+max-width:1100px;
+margin:auto;
+padding:0 20px;
+
+}
+
+
+
+
+/* HERO */
+
+
+.potty-hero {
+
+text-align:center;
+padding:70px 20px 50px;
+
+}
+
+
+
+.potty-hero h1 {
+
+font-size:42px;
+line-height:1.2;
+margin-bottom:20px;
+font-weight:900;
+
+}
+
+
+
+.potty-hero p {
+
+font-size:20px;
+max-width:650px;
+margin:auto;
+line-height:1.6;
+
+}
+
+
+
+.potty-rating {
+
+margin-top:25px;
+font-weight:700;
+
+}
+
+
+
+/* GENERATOR AREA */
+
+
+.potty-generator {
+
+padding:40px 0;
+
+}
+
+
+
+.potty-generator > .potty-container {
+
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:40px;
+align-items:start;
+
+}
+
+
+
+/* FORM CARD */
+
+
+.potty-form-card,
+.potty-preview-wrapper {
+
+background:white;
+padding:35px;
+border-radius:25px;
+box-shadow:0 10px 35px rgba(0,0,0,0.08);
+
+}
+
+
+
+.potty-form-card h2,
+.potty-preview-wrapper h2 {
+
+margin-top:0;
+font-size:28px;
+
+}
+
+
+
+.potty-form-card label {
+
+display:block;
+font-weight:700;
+margin-top:20px;
+margin-bottom:8px;
+
+}
+
+
+
+.potty-form-card input,
+.potty-form-card select,
+.potty-modal input {
+
+width:100%;
+padding:14px;
+border-radius:12px;
+border:1px solid #ddd;
+font-size:16px;
+font-family:inherit;
+
+}
+
+
+
+
+/* COLORS */
+
+
+.potty-colors {
+
+display:flex;
+gap:12px;
+
+}
+
+
+
+.color-choice {
+
+width:40px;
+height:40px;
+border-radius:50%;
+border:none;
+cursor:pointer;
+
+}
+
+
+
+.pink {
+
+background:#ffd6e8;
+
+}
+
+
+.purple {
+
+background:#e7d9ff;
+
+}
+
+
+.blue {
+
+background:#d8efff;
+
+}
+
+
+.green {
+
+background:#d9f7dc;
+
+}
+
+
+.rainbow {
+
+background:linear-gradient(
+45deg,
+#ffd6e8,
+#e7d9ff,
+#d8efff,
+#d9f7dc
+);
+
+}
+
+
+
+/* BUTTON */
+
+
+.potty-main-button {
+
+margin-top:25px;
+width:100%;
+padding:16px;
+
+border:none;
+border-radius:50px;
+
+background:#ff6fae;
+color:white;
+
+font-size:18px;
+font-weight:800;
+
+cursor:pointer;
+
+transition:.2s;
+
+}
+
+
+
+.potty-main-button:hover {
+
+transform:translateY(-2px);
+
+}
+
+
+
+/* PREVIEW */
+
+
+.potty-preview {
+
+min-height:400px;
+
+padding:35px;
+
+border-radius:20px;
+
+background:#fff1f7;
+
+text-align:center;
+
+border:4px dashed #ffb6d5;
+
+}
+
+
+
+.potty-preview h3 {
+
+font-size:32px;
+
+}
+
+
+
+#chartDays {
+
+margin-top:30px;
+
+}
+
+
+
+#chartDays div {
+
+background:white;
+
+padding:14px;
+
+margin:10px 0;
+
+border-radius:12px;
+
+font-weight:700;
+
+}
+
+
+
+/* EMAIL MODAL */
+
+
+.potty-modal {
+
+display:none;
+
+position:fixed;
+
+inset:0;
+
+background:rgba(0,0,0,.45);
+
+align-items:center;
+justify-content:center;
+
+z-index:999;
+
+}
+
+
+
+.potty-modal-content {
+
+background:white;
+
+width:90%;
+max-width:450px;
+
+padding:35px;
+
+border-radius:25px;
+
+text-align:center;
+
+position:relative;
+
+}
+
+
+
+.potty-close {
+
+position:absolute;
+
+right:20px;
+top:15px;
+
+border:none;
+background:none;
+
+font-size:30px;
+
+cursor:pointer;
+
+}
+
+
+
+.potty-small-text {
+
+font-size:13px;
+margin-top:15px;
+color:#777;
+
+}
+
+
+
+/* BENEFITS */
+
+
+.potty-benefits {
+
+padding:70px 0;
+
+text-align:center;
+
+}
+
+
+
+.potty-benefit-grid {
+
+display:grid;
+
+grid-template-columns:repeat(4,1fr);
+
+gap:20px;
+
+margin-top:30px;
+
+}
+
+
+
+.potty-benefit-grid div {
+
+background:white;
+
+padding:25px;
+
+border-radius:20px;
+
+box-shadow:0 5px 20px rgba(0,0,0,.06);
+
+}
+
+
+
+/* FOOTER LINKS */
+
+
+.potty-footer-section {
+
+text-align:center;
+
+padding:50px;
+
+}
+
+
+
+.potty-footer-section a {
+
+display:inline-block;
+
+margin:10px;
+
+color:#ff6fae;
+
+font-weight:700;
+
+}
+
+
+
+/* MOBILE */
+
+
+@media(max-width:850px){
+
+
+.potty-generator > .potty-container {
+
+grid-template-columns:1fr;
+
+}
+
+
+
+.potty-hero h1 {
+
+font-size:32px;
+
+}
+
+
+
+.potty-benefit-grid {
+
+grid-template-columns:1fr 1fr;
+
+}
+
+
+}
+
+
+
+@media(max-width:500px){
+
+
+.potty-benefit-grid {
+
+grid-template-columns:1fr;
+
+}
+
+
+
+.potty-form-card,
+.potty-preview-wrapper {
+
+padding:25px;
+
+}
+
+
+
+}
