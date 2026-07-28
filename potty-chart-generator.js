@@ -592,9 +592,37 @@ window.jspdf;
 
 const pdf =
 new jsPDF(
-"portrait",
-"mm",
-"a4"
+{
+orientation:"portrait",
+unit:"mm",
+format:"a4"
+}
+);
+
+
+const pageWidth = 190;
+const pageHeight = 277;
+
+
+let imageHeight =
+(canvas.height * pageWidth) /
+canvas.width;
+
+
+if(imageHeight > pageHeight){
+
+imageHeight = pageHeight;
+
+}
+
+
+pdf.addImage(
+image,
+"PNG",
+10,
+10,
+pageWidth,
+imageHeight
 );
 
 
