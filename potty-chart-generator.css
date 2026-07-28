@@ -337,19 +337,17 @@ font-size:16px;
    STICKER GRID
 ===================================== */
 
-
 .chart-grid {
 
 display:grid;
 
-grid-template-columns:1fr;
+grid-template-columns:repeat(2, 1fr);
 
-gap:10px;
+gap:12px;
 
 margin-top:25px;
 
 }
-
 
 
 .chart-day {
