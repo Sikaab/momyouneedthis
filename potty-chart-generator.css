@@ -1484,3 +1484,111 @@ height:32px;
 
 
 }
+
+/* =====================================
+   THEME SVG ART
+===================================== */
+
+
+.theme-art {
+
+position:absolute;
+
+top:15px;
+
+right:15px;
+
+width:100px;
+
+height:80px;
+
+}
+
+
+
+.theme-svg {
+
+display:none;
+
+width:100%;
+
+height:100%;
+
+}
+
+
+
+
+
+/* SHOW ACTIVE THEME */
+
+
+.theme-princess .princess-svg {
+
+display:block;
+
+fill:#ffb6d9;
+
+}
+
+
+
+.theme-dinosaur .dinosaur-svg {
+
+display:block;
+
+fill:#8bd66a;
+
+}
+
+
+
+.theme-unicorn .unicorn-svg {
+
+display:block;
+
+fill:#d59cff;
+
+}
+
+
+
+.theme-space .space-svg {
+
+display:block;
+
+fill:#8aa9ff;
+
+}
+
+
+
+.theme-animals .animals-svg {
+
+display:block;
+
+fill:#ffc85c;
+
+}
+
+
+
+
+
+@media(max-width:500px){
+
+
+.theme-art {
+
+width:70px;
+
+height:60px;
+
+top:10px;
+
+right:10px;
+
+}
+
+
+}
