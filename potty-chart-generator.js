@@ -219,10 +219,60 @@ const days = [
 =========================== */
 
 
+/* ===========================
+   CREATE PREMIUM CHART GRID
+=========================== */
+
+
 function createChartDays(numberOfDays){
 
 
 chartGrid.innerHTML = "";
+
+
+
+if(numberOfDays === 30){
+
+
+chartGrid.className = "chart-grid calendar-grid";
+
+
+for(let i = 1; i <= 30; i++){
+
+
+const day = document.createElement("div");
+
+
+day.className = "calendar-day";
+
+
+day.innerHTML = `
+
+<strong>
+Day ${i}
+</strong>
+
+<div class="calendar-sticker">
+
+</div>
+
+`;
+
+
+chartGrid.appendChild(day);
+
+
+}
+
+
+
+}
+
+
+else{
+
+
+chartGrid.className = "chart-grid";
 
 
 
@@ -246,18 +296,25 @@ day.className =
 
 day.innerHTML = `
 
-<strong>
+<div class="day-name">
+
 ${dayName}
-</strong>
+
+</div>
 
 
 <div class="sticker-row">
 
-<span></span>
-<span></span>
+
 <span></span>
 
+<span></span>
+
+<span></span>
+
+
 </div>
+
 
 `;
 
@@ -266,11 +323,16 @@ ${dayName}
 chartGrid.appendChild(day);
 
 
-}
-
 
 }
 
+
+
+}
+
+
+
+}
 
 
 
