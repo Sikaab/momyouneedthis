@@ -1,12 +1,13 @@
-/* ===========================
+ /* =====================================
    POTTY TRAINING GENERATOR
    MomYouNeedThis
-=========================== */
+===================================== */
+
 
 
 .potty-page {
 
-font-family: 'Nunito', sans-serif;
+font-family:'Nunito', sans-serif;
 background:#fffaf8;
 color:#332b2b;
 
@@ -25,50 +26,8 @@ padding:0 20px;
 
 
 
-/* HERO */
 
-
-.potty-hero {
-
-text-align:center;
-padding:70px 20px 50px;
-
-}
-
-
-
-.potty-hero h1 {
-
-font-size:42px;
-line-height:1.2;
-margin-bottom:20px;
-font-weight:900;
-
-}
-
-
-
-.potty-hero p {
-
-font-size:20px;
-max-width:650px;
-margin:auto;
-line-height:1.6;
-
-}
-
-
-
-.potty-rating {
-
-margin-top:25px;
-font-weight:700;
-
-}
-
-
-
-/* GENERATOR AREA */
+/* GENERATOR LAYOUT */
 
 
 .potty-generator {
@@ -79,18 +38,21 @@ padding:40px 0;
 
 
 
-.potty-generator > .potty-container {
+.potty-generator .potty-container {
 
 display:grid;
 grid-template-columns:1fr 1fr;
-gap:40px;
+gap:35px;
 align-items:start;
 
 }
 
 
 
-/* FORM CARD */
+
+
+
+/* FORM */
 
 
 .potty-form-card,
@@ -99,7 +61,7 @@ align-items:start;
 background:white;
 padding:35px;
 border-radius:25px;
-box-shadow:0 10px 35px rgba(0,0,0,0.08);
+box-shadow:0 10px 35px rgba(0,0,0,.08);
 
 }
 
@@ -108,8 +70,9 @@ box-shadow:0 10px 35px rgba(0,0,0,0.08);
 .potty-form-card h2,
 .potty-preview-wrapper h2 {
 
-margin-top:0;
 font-size:28px;
+margin-top:0;
+font-weight:900;
 
 }
 
@@ -130,14 +93,22 @@ margin-bottom:8px;
 .potty-form-card select,
 .potty-modal input {
 
+
 width:100%;
+box-sizing:border-box;
+
 padding:14px;
+
 border-radius:12px;
+
 border:1px solid #ddd;
-font-size:16px;
+
 font-family:inherit;
 
+font-size:16px;
+
 }
+
 
 
 
@@ -149,6 +120,7 @@ font-family:inherit;
 
 display:flex;
 gap:12px;
+margin-top:10px;
 
 }
 
@@ -156,11 +128,24 @@ gap:12px;
 
 .color-choice {
 
-width:40px;
-height:40px;
+width:42px;
+height:42px;
+
 border-radius:50%;
+
 border:none;
+
 cursor:pointer;
+
+transition:.2s;
+
+}
+
+
+
+.color-choice:hover {
+
+transform:scale(1.1);
 
 }
 
@@ -173,11 +158,13 @@ background:#ffd6e8;
 }
 
 
+
 .purple {
 
 background:#e7d9ff;
 
 }
+
 
 
 .blue {
@@ -187,11 +174,13 @@ background:#d8efff;
 }
 
 
+
 .green {
 
 background:#d9f7dc;
 
 }
+
 
 
 .rainbow {
@@ -208,25 +197,40 @@ background:linear-gradient(
 
 
 
+
+
+
+
 /* BUTTON */
 
 
-.potty-main-button {
+.download-button {
+
+display:inline-block;
+
+width:100%;
 
 margin-top:25px;
-width:100%;
+
 padding:16px;
 
-border:none;
 border-radius:50px;
 
+border:none;
+
 background:#ff6fae;
+
 color:white;
 
 font-size:18px;
-font-weight:800;
+
+font-weight:900;
+
+text-align:center;
 
 cursor:pointer;
+
+text-decoration:none;
 
 transition:.2s;
 
@@ -234,11 +238,17 @@ transition:.2s;
 
 
 
-.potty-main-button:hover {
+.download-button:hover {
 
 transform:translateY(-2px);
 
 }
+
+
+
+
+
+
 
 
 
@@ -247,51 +257,236 @@ transform:translateY(-2px);
 
 .potty-preview {
 
-min-height:400px;
+padding:30px;
 
-padding:35px;
-
-border-radius:20px;
-
-background:#fff1f7;
+border-radius:30px;
 
 text-align:center;
 
-border:4px dashed #ffb6d5;
+border:5px solid;
+
+transition:.3s;
+
+overflow:hidden;
 
 }
 
 
 
-.potty-preview h3 {
 
-font-size:32px;
+.theme-icon {
 
-}
-
-
-
-#chartDays {
-
-margin-top:30px;
+font-size:60px;
 
 }
 
 
 
-#chartDays div {
+
+.chart-header h3 {
+
+font-size:30px;
+
+font-weight:900;
+
+margin:15px 0 10px;
+
+}
+
+
+
+.chart-header p {
+
+font-size:16px;
+
+}
+
+
+
+
+
+.reward-area {
+
+font-size:28px;
+
+margin:25px 0;
+
+}
+
+
+
+
+
+.chart-days {
+
+display:flex;
+
+flex-direction:column;
+
+gap:12px;
+
+}
+
+
+
+
+
+.reward-day {
 
 background:white;
 
-padding:14px;
+padding:15px;
 
-margin:10px 0;
+border-radius:18px;
 
-border-radius:12px;
+display:flex;
 
-font-weight:700;
+justify-content:space-between;
+
+align-items:center;
+
+font-weight:800;
+
+box-shadow:0 4px 12px rgba(0,0,0,.05);
 
 }
+
+
+
+.reward-day div {
+
+font-size:20px;
+
+}
+
+
+
+
+
+
+.chart-footer {
+
+margin-top:25px;
+
+font-size:20px;
+
+font-weight:900;
+
+}
+
+
+
+
+
+
+
+
+
+/* THEMES */
+
+
+.theme-princess {
+
+background:#fff0f7;
+
+border-color:#ffb6d9;
+
+}
+
+
+
+.theme-princess h3 {
+
+color:#ff5f9e;
+
+}
+
+
+
+
+
+.theme-dinosaur {
+
+background:#efffe8;
+
+border-color:#8bd66a;
+
+}
+
+
+
+.theme-dinosaur h3 {
+
+color:#4c9c38;
+
+}
+
+
+
+
+
+
+.theme-animals {
+
+background:#fff7df;
+
+border-color:#ffc85c;
+
+}
+
+
+
+.theme-animals h3 {
+
+color:#e89b00;
+
+}
+
+
+
+
+
+.theme-space {
+
+background:#eef3ff;
+
+border-color:#8aa9ff;
+
+}
+
+
+
+.theme-space h3 {
+
+color:#4169e1;
+
+}
+
+
+
+
+
+.theme-unicorn {
+
+background:#f8efff;
+
+border-color:#d59cff;
+
+}
+
+
+
+.theme-unicorn h3 {
+
+color:#a34ee8;
+
+}
+
+
+
+
+
+
 
 
 
@@ -309,6 +504,7 @@ inset:0;
 background:rgba(0,0,0,.45);
 
 align-items:center;
+
 justify-content:center;
 
 z-index:999;
@@ -317,11 +513,14 @@ z-index:999;
 
 
 
+
+
 .potty-modal-content {
 
 background:white;
 
 width:90%;
+
 max-width:450px;
 
 padding:35px;
@@ -336,17 +535,21 @@ position:relative;
 
 
 
+
+
 .potty-close {
 
 position:absolute;
 
 right:20px;
+
 top:15px;
 
-border:none;
-background:none;
-
 font-size:30px;
+
+border:none;
+
+background:none;
 
 cursor:pointer;
 
@@ -354,27 +557,25 @@ cursor:pointer;
 
 
 
+
+
 .potty-small-text {
 
 font-size:13px;
-margin-top:15px;
+
 color:#777;
 
+margin-top:15px;
+
 }
+
+
+
+
 
 
 
 /* BENEFITS */
-
-
-.potty-benefits {
-
-padding:70px 0;
-
-text-align:center;
-
-}
-
 
 
 .potty-benefit-grid {
@@ -405,195 +606,9 @@ box-shadow:0 5px 20px rgba(0,0,0,.06);
 
 
 
-/* FOOTER LINKS */
 
 
-.potty-footer-section {
 
-text-align:center;
-
-padding:50px;
-
-}
-
-
-
-.potty-footer-section a {
-
-display:inline-block;
-
-margin:10px;
-
-color:#ff6fae;
-
-font-weight:700;
-
-}
-
-
-/* ===========================
-   THEMED POTTY CHARTS
-=========================== */
-
-
-.potty-preview {
-
-padding:30px;
-border-radius:30px;
-text-align:center;
-transition:.3s;
-}
-
-
-.theme-icon {
-
-font-size:55px;
-margin-bottom:10px;
-
-}
-
-
-
-.chart-header h3 {
-
-font-size:32px;
-font-weight:900;
-margin:10px 0;
-
-}
-
-
-
-.chart-subtitle {
-
-font-size:16px;
-
-}
-
-
-
-.reward-area {
-
-font-size:28px;
-margin:25px 0;
-
-}
-
-
-
-.chart-days div {
-
-background:white;
-margin:12px 0;
-padding:15px;
-
-border-radius:15px;
-
-font-weight:700;
-
-}
-
-
-
-.chart-footer {
-
-margin-top:25px;
-font-size:20px;
-font-weight:900;
-
-}
-
-
-
-
-
-/* THEMES */
-
-
-.theme-princess {
-
-background:#fff0f7;
-border:5px solid #ffb6d9;
-
-}
-
-
-
-.theme-princess h3 {
-
-color:#ff5f9e;
-
-}
-
-
-
-
-.theme-dinosaur {
-
-background:#efffe8;
-border:5px solid #8bd66a;
-
-}
-
-
-.theme-dinosaur h3 {
-
-color:#4c9c38;
-
-}
-
-
-
-
-.theme-animals {
-
-background:#fff7df;
-border:5px solid #ffc85c;
-
-}
-
-
-.theme-animals h3 {
-
-color:#e89b00;
-
-}
-
-
-
-
-
-.theme-space {
-
-background:#eef3ff;
-border:5px solid #8aa9ff;
-
-}
-
-
-.theme-space h3 {
-
-color:#4169e1;
-
-}
-
-
-
-
-
-.theme-unicorn {
-
-background:#f8efff;
-border:5px solid #d59cff;
-
-}
-
-
-.theme-unicorn h3 {
-
-color:#a34ee8;
-
-}
 
 
 /* MOBILE */
@@ -602,62 +617,6 @@ color:#a34ee8;
 @media(max-width:850px){
 
 
-.potty-generator > .potty-container {
-
-grid-template-columns:1fr;
-
-}
-
-
-
-.potty-hero h1 {
-
-font-size:32px;
-
-}
-
-
-
-.potty-benefit-grid {
-
-grid-template-columns:1fr 1fr;
-
-}
-
-
-}
-/* ===========================
-   MOBILE RESPONSIVE FIXES
-=========================== */
-
-
-.potty-generator .potty-container {
-
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:35px;
-align-items:start;
-
-}
-
-
-
-.potty-form-card,
-.potty-preview-wrapper {
-
-width:100%;
-box-sizing:border-box;
-
-}
-
-
-
-
-/* TABLET + MOBILE */
-
-@media(max-width:850px){
-
-
 .potty-generator .potty-container {
 
 grid-template-columns:1fr;
@@ -675,30 +634,26 @@ padding:25px;
 
 
 
-.potty-form-card h2,
-.potty-preview-wrapper h2 {
+.potty-benefit-grid {
 
-font-size:24px;
-
-}
-
-
+grid-template-columns:1fr 1fr;
 
 }
 
 
 
+}
 
-/* SMALL PHONES */
+
+
+
 
 @media(max-width:500px){
-
 
 
 .potty-container {
 
-padding-left:15px;
-padding-right:15px;
+padding:0 15px;
 
 }
 
@@ -707,100 +662,43 @@ padding-right:15px;
 .potty-form-card,
 .potty-preview-wrapper {
 
+padding:20px;
+
 border-radius:18px;
-padding:20px;
 
 }
 
 
 
-.potty-form-card input,
-.potty-form-card select {
+.chart-header h3 {
 
-font-size:16px;
-padding:12px;
+font-size:23px;
 
 }
 
 
 
-/* COLOR BUTTONS */
+.theme-icon {
 
-.potty-colors {
-
-flex-wrap:wrap;
-justify-content:center;
-
-}
-
-
-.color-choice {
-
-width:35px;
-height:35px;
+font-size:45px;
 
 }
 
 
 
-/* PREVIEW */
+.reward-day {
 
-.potty-preview {
+flex-direction:column;
 
-padding:20px;
-min-height:auto;
-
-}
-
-
-
-.potty-preview h3 {
-
-font-size:24px;
+gap:8px;
 
 }
 
-
-
-#chartDays div {
-
-font-size:14px;
-padding:12px;
-
-}
-
-
-
-/* BUTTONS */
-
-.download-button,
-.potty-main-button {
-
-font-size:16px;
-padding:14px;
-
-}
-
-
-
-}
-
-
-@media(max-width:500px){
 
 
 .potty-benefit-grid {
 
 grid-template-columns:1fr;
-
-}
-
-
-
-.potty-form-card,
-.potty-preview-wrapper {
-
-padding:25px;
 
 }
 
