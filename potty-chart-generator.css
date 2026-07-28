@@ -827,3 +827,332 @@ grid-template-columns:1fr;
 
 
 }
+
+/* =====================================
+   PREMIUM PRINTABLE DESIGN
+===================================== */
+
+
+
+.child-name-box {
+
+background:white;
+
+padding:15px;
+
+border-radius:20px;
+
+margin:20px 0;
+
+font-size:18px;
+
+box-shadow:
+0 4px 12px rgba(0,0,0,.06);
+
+}
+
+
+
+.child-name-box strong {
+
+display:block;
+
+font-size:25px;
+
+margin-top:5px;
+
+}
+
+
+
+
+
+.reward-box {
+
+
+background:white;
+
+padding:20px;
+
+margin-top:25px;
+
+border-radius:25px;
+
+box-shadow:
+0 5px 15px rgba(0,0,0,.08);
+
+}
+
+
+
+.reward-box h4 {
+
+margin:0;
+
+font-size:22px;
+
+}
+
+
+
+
+
+.reward-stars {
+
+display:flex;
+
+justify-content:center;
+
+gap:12px;
+
+margin-top:15px;
+
+}
+
+
+
+.reward-stars span {
+
+width:40px;
+
+height:40px;
+
+border-radius:50%;
+
+border:3px dashed #ffc85c;
+
+background:#fffaf0;
+
+}
+
+
+
+
+
+.footer-message {
+
+margin-top:25px;
+
+font-weight:900;
+
+font-size:18px;
+
+}
+
+
+
+
+
+
+
+/* =====================================
+   CSS ART ELEMENTS
+===================================== */
+
+
+.theme-art {
+
+position:absolute;
+
+inset:0;
+
+pointer-events:none;
+
+}
+
+
+
+
+
+.art-shape {
+
+position:absolute;
+
+border-radius:50%;
+
+opacity:.25;
+
+}
+
+
+
+
+.art-shape.one {
+
+width:120px;
+
+height:120px;
+
+top:-40px;
+
+left:-40px;
+
+}
+
+
+
+.art-shape.two {
+
+width:100px;
+
+height:100px;
+
+bottom:-30px;
+
+right:-30px;
+
+}
+
+
+
+
+
+
+
+/* PRINCESS */
+
+
+.theme-princess .art-shape.one {
+
+background:#ff9fc9;
+
+}
+
+
+
+.theme-princess .art-shape.two {
+
+background:#ffd166;
+
+}
+
+
+
+
+
+
+/* DINOSAUR */
+
+
+.theme-dinosaur .art-shape.one {
+
+background:#8bd66a;
+
+}
+
+
+
+.theme-dinosaur .art-shape.two {
+
+background:#4c9c38;
+
+}
+
+
+
+
+
+/* UNICORN */
+
+
+.theme-unicorn .art-shape.one {
+
+background:#d59cff;
+
+}
+
+
+
+.theme-unicorn .art-shape.two {
+
+background:#ff9fc9;
+
+}
+
+
+
+
+
+
+/* SPACE */
+
+
+.theme-space .art-shape.one {
+
+background:#4169e1;
+
+}
+
+
+
+.theme-space .art-shape.two {
+
+background:#8aa9ff;
+
+}
+
+
+
+
+
+
+/* ANIMALS */
+
+
+.theme-animals .art-shape.one {
+
+background:#ffc85c;
+
+}
+
+
+
+.theme-animals .art-shape.two {
+
+background:#e89b00;
+
+}
+
+
+
+
+
+/* Make preview printable */
+
+.potty-preview {
+
+min-height:600px;
+
+}
+
+
+
+@media(max-width:500px){
+
+
+.potty-preview {
+
+min-height:auto;
+
+}
+
+
+
+.child-name-box strong {
+
+font-size:22px;
+
+}
+
+
+
+.reward-stars span {
+
+width:32px;
+
+height:32px;
+
+}
+
+
+}
