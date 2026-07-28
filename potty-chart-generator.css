@@ -4,7 +4,9 @@
 ===================================== */
 
 
-/* BASE */
+/* =====================================
+   BASE
+===================================== */
 
 .potty-page {
 
@@ -27,8 +29,9 @@ padding:0 20px;
 
 
 
+
 /* =====================================
-   LAYOUT
+   GENERATOR LAYOUT
 ===================================== */
 
 
@@ -47,6 +50,8 @@ gap:35px;
 align-items:start;
 
 }
+
+
 
 
 
@@ -92,6 +97,8 @@ margin-top:0;
 
 
 
+
+
 /* =====================================
    FORM
 ===================================== */
@@ -114,7 +121,6 @@ margin-bottom:8px;
 .potty-form-card input,
 .potty-form-card select,
 .potty-modal input {
-
 
 width:100%;
 
@@ -175,6 +181,7 @@ transform:scale(1.15);
 }
 
 
+
 .pink {
 
 background:#ffd6e8;
@@ -207,7 +214,10 @@ background:#d9f7dc;
 
 
 
-/* BUTTON */
+
+/* =====================================
+   BUTTON
+===================================== */
 
 
 .download-button {
@@ -238,6 +248,16 @@ text-align:center;
 
 text-decoration:none;
 
+transition:.2s;
+
+}
+
+
+
+.download-button:hover {
+
+transform:translateY(-2px);
+
 }
 
 
@@ -247,9 +267,8 @@ text-decoration:none;
 
 
 
-
 /* =====================================
-   CHART PREVIEW
+   PREVIEW
 ===================================== */
 
 
@@ -269,6 +288,8 @@ overflow:hidden;
 
 transition:.3s;
 
+min-height:520px;
+
 }
 
 
@@ -279,57 +300,12 @@ font-size:60px;
 
 position:relative;
 
-z-index:2;
+z-index:3;
 
 }
 
 
 
-.chart-decoration {
-
-position:absolute;
-
-}
-
-
-
-.top-decoration {
-
-top:-30px;
-
-left:-30px;
-
-width:100px;
-
-height:100px;
-
-border-radius:50%;
-
-opacity:.4;
-
-}
-
-
-
-.bottom-decoration {
-
-bottom:-40px;
-
-right:-40px;
-
-width:120px;
-
-height:120px;
-
-border-radius:50%;
-
-opacity:.4;
-
-}
-
-
-
-.chart-header h3,
 .potty-preview h3 {
 
 font-size:30px;
@@ -354,7 +330,12 @@ font-size:16px;
 
 
 
-/* STICKER GRID */
+
+
+
+/* =====================================
+   STICKER GRID
+===================================== */
 
 
 .chart-grid {
@@ -414,7 +395,7 @@ border-radius:50%;
 
 border:3px dashed #ddd;
 
-background:#fff;
+background:white;
 
 display:block;
 
@@ -425,9 +406,14 @@ display:block;
 
 
 
-.big-kid-box {
 
-margin-top:20px;
+
+/* =====================================
+   CHILD NAME + REWARD AREA
+===================================== */
+
+
+.child-name-box {
 
 background:white;
 
@@ -435,11 +421,100 @@ padding:15px;
 
 border-radius:20px;
 
-font-weight:900;
+margin:20px 0;
 
-font-size:17px;
+font-size:18px;
+
+box-shadow:
+0 4px 12px rgba(0,0,0,.06);
 
 }
+
+
+
+.child-name-box strong {
+
+display:block;
+
+font-size:25px;
+
+margin-top:5px;
+
+}
+
+
+
+
+
+
+.reward-box {
+
+background:white;
+
+padding:20px;
+
+margin-top:25px;
+
+border-radius:25px;
+
+box-shadow:
+0 5px 15px rgba(0,0,0,.08);
+
+}
+
+
+
+.reward-box h4 {
+
+margin:0;
+
+font-size:22px;
+
+}
+
+
+
+.reward-stars {
+
+display:flex;
+
+justify-content:center;
+
+gap:12px;
+
+margin-top:15px;
+
+}
+
+
+
+.reward-stars span {
+
+width:40px;
+
+height:40px;
+
+border-radius:50%;
+
+border:3px dashed #ffc85c;
+
+background:#fffaf0;
+
+}
+
+
+
+.footer-message {
+
+margin-top:25px;
+
+font-weight:900;
+
+font-size:18px;
+
+}
+
+
 
 
 
@@ -450,7 +525,6 @@ font-size:17px;
 /* =====================================
    THEMES
 ===================================== */
-
 
 
 .theme-princess {
@@ -467,22 +541,11 @@ border-color:#ff9fc9;
 }
 
 
-
-.theme-princess .top-decoration {
-
-background:#ffb6d9;
-
-}
-
-
-
 .theme-princess h3 {
 
 color:#ff5f9e;
 
 }
-
-
 
 
 
@@ -502,20 +565,11 @@ border-color:#8bd66a;
 }
 
 
-.theme-dinosaur .top-decoration {
-
-background:#8bd66a;
-
-}
-
-
 .theme-dinosaur h3 {
 
 color:#4c9c38;
 
 }
-
-
 
 
 
@@ -535,21 +589,11 @@ border-color:#d59cff;
 }
 
 
-.theme-unicorn .top-decoration {
-
-background:#d59cff;
-
-}
-
-
 .theme-unicorn h3 {
 
 color:#a34ee8;
 
 }
-
-
-
 
 
 
@@ -569,21 +613,11 @@ border-color:#8aa9ff;
 }
 
 
-.theme-space .top-decoration {
-
-background:#8aa9ff;
-
-}
-
-
 .theme-space h3 {
 
 color:#4169e1;
 
 }
-
-
-
 
 
 
@@ -603,19 +637,103 @@ border-color:#ffc85c;
 }
 
 
-.theme-animals .top-decoration {
-
-background:#ffc85c;
-
-}
-
-
 .theme-animals h3 {
 
 color:#e89b00;
 
 }
 
+
+
+
+
+
+
+
+/* =====================================
+   SVG THEME ART
+===================================== */
+
+
+.theme-art {
+
+position:absolute;
+
+top:15px;
+
+right:15px;
+
+width:100px;
+
+height:80px;
+
+pointer-events:none;
+
+z-index:2;
+
+}
+
+
+
+.theme-svg {
+
+display:none;
+
+width:100%;
+
+height:100%;
+
+}
+
+
+
+.theme-princess .princess-svg {
+
+display:block;
+
+fill:#ffb6d9;
+
+}
+
+
+
+.theme-dinosaur .dinosaur-svg {
+
+display:block;
+
+fill:#8bd66a;
+
+}
+
+
+
+.theme-unicorn .unicorn-svg {
+
+display:block;
+
+fill:#d59cff;
+
+}
+
+
+
+.theme-space .space-svg {
+
+display:block;
+
+fill:#8aa9ff;
+
+}
+
+
+
+.theme-animals .animals-svg {
+
+display:block;
+
+fill:#ffc85c;
+
+}
 
 
 
@@ -698,6 +816,7 @@ color:#777;
 
 
 
+
 /* =====================================
    BENEFITS
 ===================================== */
@@ -732,6 +851,8 @@ box-shadow:
 
 
 
+
+
 /* =====================================
    MOBILE
 ===================================== */
@@ -753,7 +874,6 @@ grid-template-columns:1fr;
 grid-template-columns:1fr 1fr;
 
 }
-
 
 
 }
@@ -790,7 +910,6 @@ font-size:45px;
 
 
 
-.chart-header h3,
 .potty-preview h3 {
 
 font-size:23px;
@@ -826,317 +945,6 @@ grid-template-columns:1fr;
 }
 
 
-}
-
-/* =====================================
-   PREMIUM PRINTABLE DESIGN
-===================================== */
-
-
-
-.child-name-box {
-
-background:white;
-
-padding:15px;
-
-border-radius:20px;
-
-margin:20px 0;
-
-font-size:18px;
-
-box-shadow:
-0 4px 12px rgba(0,0,0,.06);
-
-}
-
-
-
-.child-name-box strong {
-
-display:block;
-
-font-size:25px;
-
-margin-top:5px;
-
-}
-
-
-
-
-
-.reward-box {
-
-
-background:white;
-
-padding:20px;
-
-margin-top:25px;
-
-border-radius:25px;
-
-box-shadow:
-0 5px 15px rgba(0,0,0,.08);
-
-}
-
-
-
-.reward-box h4 {
-
-margin:0;
-
-font-size:22px;
-
-}
-
-
-
-
-
-.reward-stars {
-
-display:flex;
-
-justify-content:center;
-
-gap:12px;
-
-margin-top:15px;
-
-}
-
-
-
-.reward-stars span {
-
-width:40px;
-
-height:40px;
-
-border-radius:50%;
-
-border:3px dashed #ffc85c;
-
-background:#fffaf0;
-
-}
-
-
-
-
-
-.footer-message {
-
-margin-top:25px;
-
-font-weight:900;
-
-font-size:18px;
-
-}
-
-
-
-
-
-
-
-/* =====================================
-   CSS ART ELEMENTS
-===================================== */
-
-
-.theme-art {
-
-position:absolute;
-
-inset:0;
-
-pointer-events:none;
-
-}
-
-
-
-
-
-.art-shape {
-
-position:absolute;
-
-border-radius:50%;
-
-opacity:.25;
-
-}
-
-
-
-
-.art-shape.one {
-
-width:120px;
-
-height:120px;
-
-top:-40px;
-
-left:-40px;
-
-}
-
-
-
-.art-shape.two {
-
-width:100px;
-
-height:100px;
-
-bottom:-30px;
-
-right:-30px;
-
-}
-
-
-
-
-
-
-
-/* PRINCESS */
-
-
-.theme-princess .art-shape.one {
-
-background:#ff9fc9;
-
-}
-
-
-
-.theme-princess .art-shape.two {
-
-background:#ffd166;
-
-}
-
-
-
-
-
-
-/* DINOSAUR */
-
-
-.theme-dinosaur .art-shape.one {
-
-background:#8bd66a;
-
-}
-
-
-
-.theme-dinosaur .art-shape.two {
-
-background:#4c9c38;
-
-}
-
-
-
-
-
-/* UNICORN */
-
-
-.theme-unicorn .art-shape.one {
-
-background:#d59cff;
-
-}
-
-
-
-.theme-unicorn .art-shape.two {
-
-background:#ff9fc9;
-
-}
-
-
-
-
-
-
-/* SPACE */
-
-
-.theme-space .art-shape.one {
-
-background:#4169e1;
-
-}
-
-
-
-.theme-space .art-shape.two {
-
-background:#8aa9ff;
-
-}
-
-
-
-
-
-
-/* ANIMALS */
-
-
-.theme-animals .art-shape.one {
-
-background:#ffc85c;
-
-}
-
-
-
-.theme-animals .art-shape.two {
-
-background:#e89b00;
-
-}
-
-
-
-
-
-/* Make preview printable */
-
-.potty-preview {
-
-min-height:600px;
-
-}
-
-
-
-@media(max-width:500px){
-
-
-.potty-preview {
-
-min-height:auto;
-
-}
-
-
 
 .child-name-box strong {
 
@@ -1154,428 +962,6 @@ height:32px;
 
 }
 
-
-}
-/* =====================================
-   PREMIUM PRINTABLE DESIGN
-===================================== */
-
-
-
-.child-name-box {
-
-background:white;
-
-padding:15px;
-
-border-radius:20px;
-
-margin:20px 0;
-
-font-size:18px;
-
-box-shadow:
-0 4px 12px rgba(0,0,0,.06);
-
-}
-
-
-
-.child-name-box strong {
-
-display:block;
-
-font-size:25px;
-
-margin-top:5px;
-
-}
-
-
-
-
-
-.reward-box {
-
-
-background:white;
-
-padding:20px;
-
-margin-top:25px;
-
-border-radius:25px;
-
-box-shadow:
-0 5px 15px rgba(0,0,0,.08);
-
-}
-
-
-
-.reward-box h4 {
-
-margin:0;
-
-font-size:22px;
-
-}
-
-
-
-
-
-.reward-stars {
-
-display:flex;
-
-justify-content:center;
-
-gap:12px;
-
-margin-top:15px;
-
-}
-
-
-
-.reward-stars span {
-
-width:40px;
-
-height:40px;
-
-border-radius:50%;
-
-border:3px dashed #ffc85c;
-
-background:#fffaf0;
-
-}
-
-
-
-
-
-.footer-message {
-
-margin-top:25px;
-
-font-weight:900;
-
-font-size:18px;
-
-}
-
-
-
-
-
-
-
-/* =====================================
-   CSS ART ELEMENTS
-===================================== */
-
-
-.theme-art {
-
-position:absolute;
-
-inset:0;
-
-pointer-events:none;
-
-}
-
-
-
-
-
-.art-shape {
-
-position:absolute;
-
-border-radius:50%;
-
-opacity:.25;
-
-}
-
-
-
-
-.art-shape.one {
-
-width:120px;
-
-height:120px;
-
-top:-40px;
-
-left:-40px;
-
-}
-
-
-
-.art-shape.two {
-
-width:100px;
-
-height:100px;
-
-bottom:-30px;
-
-right:-30px;
-
-}
-
-
-
-
-
-
-
-/* PRINCESS */
-
-
-.theme-princess .art-shape.one {
-
-background:#ff9fc9;
-
-}
-
-
-
-.theme-princess .art-shape.two {
-
-background:#ffd166;
-
-}
-
-
-
-
-
-
-/* DINOSAUR */
-
-
-.theme-dinosaur .art-shape.one {
-
-background:#8bd66a;
-
-}
-
-
-
-.theme-dinosaur .art-shape.two {
-
-background:#4c9c38;
-
-}
-
-
-
-
-
-/* UNICORN */
-
-
-.theme-unicorn .art-shape.one {
-
-background:#d59cff;
-
-}
-
-
-
-.theme-unicorn .art-shape.two {
-
-background:#ff9fc9;
-
-}
-
-
-
-
-
-
-/* SPACE */
-
-
-.theme-space .art-shape.one {
-
-background:#4169e1;
-
-}
-
-
-
-.theme-space .art-shape.two {
-
-background:#8aa9ff;
-
-}
-
-
-
-
-
-
-/* ANIMALS */
-
-
-.theme-animals .art-shape.one {
-
-background:#ffc85c;
-
-}
-
-
-
-.theme-animals .art-shape.two {
-
-background:#e89b00;
-
-}
-
-
-
-
-
-/* Make preview printable */
-
-.potty-preview {
-
-min-height:600px;
-
-}
-
-
-
-@media(max-width:500px){
-
-
-.potty-preview {
-
-min-height:auto;
-
-}
-
-
-
-.child-name-box strong {
-
-font-size:22px;
-
-}
-
-
-
-.reward-stars span {
-
-width:32px;
-
-height:32px;
-
-}
-
-
-}
-
-/* =====================================
-   THEME SVG ART
-===================================== */
-
-
-.theme-art {
-
-position:absolute;
-
-top:15px;
-
-right:15px;
-
-width:100px;
-
-height:80px;
-
-}
-
-
-
-.theme-svg {
-
-display:none;
-
-width:100%;
-
-height:100%;
-
-}
-
-
-
-
-
-/* SHOW ACTIVE THEME */
-
-
-.theme-princess .princess-svg {
-
-display:block;
-
-fill:#ffb6d9;
-
-}
-
-
-
-.theme-dinosaur .dinosaur-svg {
-
-display:block;
-
-fill:#8bd66a;
-
-}
-
-
-
-.theme-unicorn .unicorn-svg {
-
-display:block;
-
-fill:#d59cff;
-
-}
-
-
-
-.theme-space .space-svg {
-
-display:block;
-
-fill:#8aa9ff;
-
-}
-
-
-
-.theme-animals .animals-svg {
-
-display:block;
-
-fill:#ffc85c;
-
-}
-
-
-
-
-
-@media(max-width:500px){
 
 
 .theme-art {
