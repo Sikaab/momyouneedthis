@@ -39,6 +39,8 @@ document.getElementById("pottyPreview");
 const chartGrid =
 document.getElementById("chartGrid");
 
+const childNamePreview =
+document.getElementById("childNamePreview");
 
 const previewButton =
 document.getElementById("previewButton");
