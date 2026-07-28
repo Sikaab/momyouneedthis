@@ -652,7 +652,6 @@ format:"a4"
 }
 );
 
-
 const pageWidth = 190;
 
 const pageHeight = 277;
