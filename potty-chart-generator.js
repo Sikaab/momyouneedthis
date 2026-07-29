@@ -4,6 +4,11 @@
 ===================================== */
 
 
+/* ===========================
+   STATE
+=========================== */
+
+
 let selectedColor = "pink";
 
 
@@ -20,24 +25,45 @@ const chartData = {
 
 
 
-const childNameInput = document.getElementById("childName");
+/* ===========================
+   ELEMENTS
+=========================== */
 
-const chartTheme = document.getElementById("chartTheme");
 
-const chartLength = document.getElementById("chartLength");
+const childNameInput =
+document.getElementById("childName");
 
-const preview = document.getElementById("pottyPreview");
 
-const chartGrid = document.getElementById("chartGrid");
+const chartTheme =
+document.getElementById("chartTheme");
 
-const previewButton = document.getElementById("previewButton");
 
-const emailModal = document.getElementById("emailModal");
+const chartLength =
+document.getElementById("chartLength");
 
-const closeModal = document.getElementById("closeModal");
 
-const downloadButton = document.getElementById("downloadButton");
+const preview =
+document.getElementById("pottyPreview");
 
+
+const chartGrid =
+document.getElementById("chartGrid");
+
+
+const previewButton =
+document.getElementById("previewButton");
+
+
+const emailModal =
+document.getElementById("emailModal");
+
+
+const closeModal =
+document.getElementById("closeModal");
+
+
+const downloadButton =
+document.getElementById("downloadButton");
 
 
 
@@ -53,26 +79,34 @@ const colors = {
 
 
 pink:{
+
 background:"#fff0f7",
 border:"#ff9fc9"
+
 },
 
 
 purple:{
+
 background:"#f8efff",
 border:"#d59cff"
+
 },
 
 
 blue:{
+
 background:"#eef3ff",
 border:"#8aa9ff"
+
 },
 
 
 green:{
+
 background:"#efffe8",
 border:"#8bd66a"
+
 }
 
 
@@ -101,9 +135,10 @@ className:"theme-princess",
 
 title:"{name}'s Princess Potty Adventure",
 
-subtitle:"Fill your sticker chart and become a big kid!"
+subtitle:"Fill your chart and become a big kid!"
 
 },
+
 
 
 
@@ -115,9 +150,10 @@ className:"theme-dinosaur",
 
 title:"{name}'s Dinosaur Potty Quest",
 
-subtitle:"Roar! Every success is amazing!"
+subtitle:"Roar! Every success counts!"
 
 },
+
 
 
 
@@ -135,6 +171,7 @@ subtitle:"Sparkles, smiles, and potty wins!"
 
 
 
+
 space:{
 
 icon:"🚀",
@@ -149,6 +186,7 @@ subtitle:"Blast off toward big kid success!"
 
 
 
+
 animals:{
 
 icon:"🐻",
@@ -157,7 +195,7 @@ className:"theme-animals",
 
 title:"{name}'s Animal Potty Adventure",
 
-subtitle:"Little steps create big achievements!"
+subtitle:"Small steps create big wins!"
 
 }
 
@@ -171,20 +209,104 @@ subtitle:"Little steps create big achievements!"
 
 
 
+
 /* ===========================
-   DAYS
+   CREATE POTTY TABLE
 =========================== */
 
 
-const days = [
+function createChartDays(totalDays){
 
-"Monday",
-"Tuesday",
-"Wednesday",
-"Thursday",
-"Friday",
-"Saturday",
-"Sunday"
+
+chartGrid.innerHTML = "";
+
+
+
+chartGrid.className =
+"chart-grid potty-table";
+
+
+
+
+
+const table =
+document.createElement("table");
+
+
+
+table.className =
+"potty-chart-table";
+
+
+
+
+
+
+
+/* HEADER ROW */
+
+
+const header =
+document.createElement("tr");
+
+
+
+let headerHTML =
+`
+<th class="empty-cell"></th>
+`;
+
+
+
+for(let i = 1; i <= totalDays; i++){
+
+
+headerHTML +=
+`
+
+<th>
+Day ${i}
+</th>
+
+`;
+
+}
+
+
+
+header.innerHTML =
+headerHTML;
+
+
+
+table.appendChild(header);
+
+
+
+
+
+
+
+
+/* ACTIVITY ROWS */
+
+
+const activities = [
+
+{
+icon:"🚽",
+name:"Pee"
+},
+
+{
+icon:"💩",
+name:"Poop"
+},
+
+{
+icon:"⭐",
+name:"Tried"
+}
 
 ];
 
@@ -193,176 +315,77 @@ const days = [
 
 
 
+activities.forEach(activity=>{
 
 
-/* ===========================
-   CREATE CHART DAYS
-=========================== */
-
-
-function createChartDays(numberOfDays){
-
-
-chartGrid.innerHTML = "";
+const row =
+document.createElement("tr");
 
 
 
-if(numberOfDays === 30){
+let html =
 
+`
 
-chartGrid.className =
-"chart-grid thirty-day-grid";
+<td class="activity-label">
 
+${activity.icon}
+<span>
+${activity.name}
+</span>
 
-
-for(let i = 1; i <= 30; i++){
-
-
-const day =
-document.createElement("div");
-
-
-day.className =
-"calendar-day";
-
-
-
-day.innerHTML = `
-
-<strong>
-Day ${i}
-</strong>
-
-
-<div class="calendar-sticker">
-
-<span></span>
-
-</div>
+</td>
 
 `;
 
 
 
-chartGrid.appendChild(day);
 
 
-}
+for(let i = 1; i <= totalDays; i++){
 
 
+html +=
 
-return;
+`
 
+<td>
 
-}
-
-
-
-
-
-
-chartGrid.className =
-"chart-grid";
-
-
-
-
-for(let i = 0; i < numberOfDays; i++){
-
-
-
-const day =
-document.createElement("div");
-
-
-
-day.className =
-"chart-day";
-
-
-
-day.innerHTML = `
-
-<div class="day-name">
-
-${days[i % 7]}
+<div class="reward-circle">
 
 </div>
 
-
-
-<div class="sticker-row">
-
-<span></span>
-<span></span>
-<span></span>
-<span></span>
-
-</div>
+</td>
 
 `;
 
 
 
-chartGrid.appendChild(day);
-
-
-
 }
 
 
 
-}
+row.innerHTML =
+html;
 
 
 
+table.appendChild(row);
 
 
-
-
-
-
-/* ===========================
-   UPDATE SVG ART
-=========================== */
-
-
-function updateThemeArt(theme){
-
-
-document
-.querySelectorAll(".theme-svg")
-.forEach(svg=>{
-
-svg.style.display="none";
 
 });
 
 
 
-const active =
-document.querySelector(
-"." + theme + "-svg"
-);
 
 
 
-if(active){
+chartGrid.appendChild(table);
 
-active.style.display="block";
-
-}
 
 
 }
-
-
-
-
-
-
-
-
 
 /* ===========================
    UPDATE PREVIEW
@@ -370,7 +393,6 @@ active.style.display="block";
 
 
 function updatePreview(){
-
 
 
 chartData.name =
@@ -407,10 +429,13 @@ colors[selectedColor];
 
 
 
+
+
+/* UPDATE PREVIEW STYLE */
+
+
 preview.className =
 `potty-preview ${theme.className}`;
-
-
 
 
 
@@ -426,13 +451,20 @@ color.border;
 
 
 
-document.getElementById("themeIcon").textContent =
+
+
+/* UPDATE TEXT */
+
+
+document.getElementById("themeIcon")
+.textContent =
 theme.icon;
 
 
 
 
-document.getElementById("chartTitle").textContent =
+document.getElementById("chartTitle")
+.textContent =
 theme.title.replace(
 "{name}",
 chartData.name
@@ -441,19 +473,18 @@ chartData.name
 
 
 
-document.getElementById("chartSubtitle").textContent =
+
+document.getElementById("chartSubtitle")
+.textContent =
 theme.subtitle;
 
 
 
 
 
-updateThemeArt(
-chartData.theme
-);
 
 
-
+/* CREATE TABLE */
 
 
 createChartDays(
@@ -472,15 +503,18 @@ chartData.days
 
 
 
+
 /* ===========================
    EVENTS
 =========================== */
+
 
 
 childNameInput.addEventListener(
 "input",
 updatePreview
 );
+
 
 
 
@@ -491,10 +525,12 @@ updatePreview
 
 
 
+
 chartLength.addEventListener(
 "change",
 updatePreview
 );
+
 
 
 
@@ -515,6 +551,7 @@ selectedColor =
 button.dataset.color;
 
 
+
 updatePreview();
 
 
@@ -531,8 +568,9 @@ updatePreview();
 
 
 
+
 /* ===========================
-   OPEN MODAL
+   EMAIL MODAL
 =========================== */
 
 
@@ -607,6 +645,14 @@ return;
 
 
 
+
+/*
+Create a temporary clean printable
+version so the PDF captures the
+whole chart instead of cutting it.
+*/
+
+
 const canvas =
 await html2canvas(
 preview,
@@ -614,9 +660,11 @@ preview,
 
 scale:2,
 
-backgroundColor:null,
+backgroundColor:"#ffffff",
 
-useCORS:true
+useCORS:true,
+
+windowWidth:1200
 
 }
 
@@ -635,17 +683,21 @@ canvas.toDataURL(
 
 
 
+
 const {
 jsPDF
-} =
+}
+=
 window.jspdf;
 
 
 
 
 
+
 const pdf =
-new jsPDF({
+new jsPDF(
+{
 
 orientation:"portrait",
 
@@ -653,17 +705,26 @@ unit:"mm",
 
 format:"a4"
 
-});
+}
+
+);
 
 
 
 
 
 
-const pdfWidth = 190;
 
-const pdfHeight = 
-(canvas.height * pdfWidth)
+const pageWidth = 190;
+
+
+const pageHeight = 277;
+
+
+
+
+let imageHeight =
+(canvas.height * pageWidth)
 /
 canvas.width;
 
@@ -672,71 +733,37 @@ canvas.width;
 
 
 
-let heightLeft = pdfHeight;
-
-let position = 10;
-
-
-
+/*
+If chart is too tall,
+fit it on the page
+*/
 
 
-pdf.addImage(
+if(imageHeight > pageHeight){
 
-image,
-
-"PNG",
-
-10,
-
-position,
-
-pdfWidth,
-
-pdfHeight
-
-);
-
-
-
-
-
-heightLeft -= 277;
-
-
-
-
-
-while(heightLeft > 0){
-
-
-pdf.addPage();
-
-
-position = 10;
-
-
-pdf.addImage(
-
-image,
-
-"PNG",
-
-10,
-
-position,
-
-pdfWidth,
-
-pdfHeight
-
-);
-
-
-
-heightLeft -= 277;
-
+imageHeight = pageHeight;
 
 }
+
+
+
+
+
+pdf.addImage(
+
+image,
+
+"PNG",
+
+10,
+
+10,
+
+pageWidth,
+
+imageHeight
+
+);
 
 
 
@@ -753,8 +780,10 @@ pdf.save(
 
 
 
+
 emailModal.style.display =
 "none";
+
 
 
 }
@@ -769,15 +798,10 @@ emailModal.style.display =
 
 
 
+
 /* ===========================
    INITIAL LOAD
 =========================== */
 
 
-window.addEventListener(
-"DOMContentLoaded",
-()=>{
-
 updatePreview();
-
-});
