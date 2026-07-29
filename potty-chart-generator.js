@@ -24,7 +24,6 @@ const chartData = {
 
 
 
-
 /* ===========================
    ELEMENTS
 =========================== */
@@ -64,8 +63,6 @@ document.getElementById("closeModal");
 
 const downloadButton =
 document.getElementById("downloadButton");
-
-
 
 
 
@@ -115,10 +112,6 @@ border:"#8bd66a"
 
 
 
-
-
-
-
 /* ===========================
    THEMES
 =========================== */
@@ -141,7 +134,6 @@ subtitle:"Fill your chart and become a big kid!"
 
 
 
-
 dinosaur:{
 
 icon:"🦖",
@@ -153,7 +145,6 @@ title:"{name}'s Dinosaur Potty Quest",
 subtitle:"Roar! Every success counts!"
 
 },
-
 
 
 
@@ -171,7 +162,6 @@ subtitle:"Sparkles, smiles, and potty wins!"
 
 
 
-
 space:{
 
 icon:"🚀",
@@ -183,7 +173,6 @@ title:"{name}'s Space Potty Mission",
 subtitle:"Blast off toward big kid success!"
 
 },
-
 
 
 
@@ -205,11 +194,6 @@ subtitle:"Small steps create big wins!"
 
 
 
-
-
-
-
-
 /* ===========================
    CREATE POTTY TABLE
 =========================== */
@@ -221,74 +205,8 @@ function createChartDays(totalDays){
 chartGrid.innerHTML = "";
 
 
-
 chartGrid.className =
-"chart-grid potty-table";
-
-
-
-
-
-const table =
-document.createElement("table");
-
-
-
-table.className =
-"potty-chart-table";
-
-
-
-
-
-
-
-/* HEADER ROW */
-
-
-const header =
-document.createElement("tr");
-
-
-
-let headerHTML =
-`
-<th class="empty-cell"></th>
-`;
-
-
-
-for(let i = 1; i <= totalDays; i++){
-
-
-headerHTML +=
-`
-
-<th>
-Day ${i}
-</th>
-
-`;
-
-}
-
-
-
-header.innerHTML =
-headerHTML;
-
-
-
-table.appendChild(header);
-
-
-
-
-
-
-
-
-/* ACTIVITY ROWS */
+"chart-grid potty-week-container";
 
 
 const activities = [
@@ -311,79 +229,144 @@ name:"Tried"
 ];
 
 
+const totalWeeks =
+Math.ceil(totalDays / 7);
 
+for(let week = 0; week < totalWeeks; week++){
 
+    const weekBox =
+    document.createElement("div");
 
+    weekBox.className =
+    "potty-week";
 
-activities.forEach(activity=>{
+    const weekTitle =
+    document.createElement("h4");
 
+    weekTitle.className =
+    "week-title";
 
-const row =
-document.createElement("tr");
+    weekTitle.textContent =
+    `⭐ Week ${week + 1}`;
 
+    weekBox.appendChild(
+    weekTitle
+    );
 
+    const table =
+    document.createElement("table");
 
-let html =
+    table.className =
+    "potty-chart-table";
 
-`
+    /* ===========================
+       HEADER
+    =========================== */
 
-<td class="activity-label">
+    const header =
+    document.createElement("tr");
 
-${activity.icon}
-<span>
-${activity.name}
-</span>
+    let headerHTML =
+    `
+    <th class="empty-cell"></th>
+    `;
 
-</td>
+    const startDay =
+    week * 7 + 1;
 
-`;
+    const endDay =
+    Math.min(
+    startDay + 6,
+    totalDays
+    );
 
+    for(
+    let day = startDay;
+    day <= endDay;
+    day++
+    ){
 
+    headerHTML +=
+    `
 
+    <th>
+    Day ${day}
+    </th>
 
+    `;
 
-for(let i = 1; i <= totalDays; i++){
+    }
 
+    header.innerHTML =
+    headerHTML;
 
-html +=
+    table.appendChild(
+    header
+    );
 
-`
+    /* ===========================
+       ACTIVITIES
+    =========================== */
 
-<td>
+    activities.forEach(activity=>{
 
-<div class="reward-circle">
+    const row =
+    document.createElement("tr");
 
-</div>
+    let rowHTML =
+    `
 
-</td>
+    <td class="activity-label">
 
-`;
+    ${activity.icon}
 
+    <span>
+    ${activity.name}
+    </span>
 
+    </td>
+
+    `;
+
+    for(
+    let day = startDay;
+    day <= endDay;
+    day++
+    ){
+
+    rowHTML +=
+    `
+
+    <td>
+
+    <div class="reward-circle">
+
+    </div>
+
+    </td>
+
+    `;
+
+    }
+
+    row.innerHTML =
+    rowHTML;
+
+    table.appendChild(
+    row
+    );
+
+    });
+
+    weekBox.appendChild(
+    table
+    );
+
+    chartGrid.appendChild(
+    weekBox
+    );
 
 }
-
-
-
-row.innerHTML =
-html;
-
-
-
-table.appendChild(row);
-
-
-
-});
-
-
-
-
-
-
-chartGrid.appendChild(table);
-
-
 
 }
 
@@ -399,68 +382,45 @@ chartData.name =
 childNameInput.value.trim() || "Your Child";
 
 
-
 chartData.theme =
 chartTheme.value;
-
 
 
 chartData.days =
 Number(chartLength.value);
 
 
-
 chartData.color =
 selectedColor;
-
-
-
 
 
 const theme =
 themes[chartData.theme];
 
 
-
 const color =
 colors[selectedColor];
 
 
-
-
-
-
-
 /* UPDATE PREVIEW STYLE */
-
 
 preview.className =
 `potty-preview ${theme.className}`;
-
 
 
 preview.style.background =
 color.background;
 
 
-
 preview.style.borderColor =
 color.border;
 
 
-
-
-
-
-
 /* UPDATE TEXT */
-
 
 document.getElementById("themeIcon")
 .textContent =
 theme.icon;
-
-
 
 
 document.getElementById("chartTitle")
@@ -471,43 +431,24 @@ chartData.name
 );
 
 
-
-
-
 document.getElementById("chartSubtitle")
 .textContent =
 theme.subtitle;
 
 
-
-
-
-
-
 /* CREATE TABLE */
-
 
 createChartDays(
 chartData.days
 );
 
 
-
 }
-
-
-
-
-
-
-
-
 
 
 /* ===========================
    EVENTS
 =========================== */
-
 
 
 childNameInput.addEventListener(
@@ -516,14 +457,10 @@ updatePreview
 );
 
 
-
-
 chartTheme.addEventListener(
 "change",
 updatePreview
 );
-
-
 
 
 chartLength.addEventListener(
@@ -532,41 +469,22 @@ updatePreview
 );
 
 
-
-
-
-
-
 document
 .querySelectorAll(".color-choice")
 .forEach(button=>{
 
+    button.addEventListener(
+    "click",
+    ()=>{
 
-button.addEventListener(
-"click",
-()=>{
+        selectedColor =
+        button.dataset.color;
 
+        updatePreview();
 
-selectedColor =
-button.dataset.color;
-
-
-
-updatePreview();
-
+    });
 
 });
-
-
-});
-
-
-
-
-
-
-
-
 
 
 /* ===========================
@@ -578,19 +496,12 @@ previewButton.addEventListener(
 "click",
 ()=>{
 
+    updatePreview();
 
-updatePreview();
-
-
-emailModal.style.display =
-"flex";
-
+    emailModal.style.display =
+    "flex";
 
 });
-
-
-
-
 
 
 
@@ -598,10 +509,8 @@ closeModal.addEventListener(
 "click",
 ()=>{
 
-
-emailModal.style.display =
-"none";
-
+    emailModal.style.display =
+    "none";
 
 });
 
@@ -613,222 +522,160 @@ downloadButton.addEventListener(
 "click",
 async()=>{
 
+    const email =
+    document.getElementById("emailInput").value;
 
-const email =
-document.getElementById("emailInput").value;
+    if(!email){
 
+    alert(
+    "Please enter your email first."
+    );
 
+    return;
 
-if(!email){
+    }
 
-alert(
-"Please enter your email first."
-);
+    /*
+    Create temporary printable version
+    */
 
-return;
+    const clone =
+    preview.cloneNode(true);
 
-}
+    clone.style.position = "absolute";
+    clone.style.left = "-9999px";
+    clone.style.top = "0";
 
+    clone.style.width = "1100px";
+    clone.style.height = "auto";
 
+    clone.style.overflow = "visible";
 
-/*
-Create temporary printable version
-*/
+    const scroll =
+    clone.querySelector(".chart-scroll");
 
-const clone =
-preview.cloneNode(true);
+    if(scroll){
 
+    scroll.style.overflow = "visible";
+    scroll.style.width = "100%";
 
+    }
 
-clone.style.position = "absolute";
-clone.style.left = "-9999px";
-clone.style.top = "0";
+    const table =
+    clone.querySelector(".potty-chart-table");
 
-clone.style.width = "1100px";
-clone.style.height = "auto";
+    if(table){
 
-clone.style.overflow = "visible";
+    table.style.minWidth = "auto";
+    table.style.width = "100%";
 
+    }
 
+    document.body.appendChild(clone);
 
-const scroll =
-clone.querySelector(".chart-scroll");
+    const canvas =
+    await html2canvas(
+    clone,
+    {
 
+    scale:2,
 
-if(scroll){
+    backgroundColor:"#ffffff",
 
-scroll.style.overflow = "visible";
-scroll.style.width = "100%";
+    useCORS:true
 
-}
+    }
 
+    );
 
+    document.body.removeChild(clone);
 
-const table =
-clone.querySelector(".potty-chart-table");
+    const image =
+    canvas.toDataURL(
+    "image/png"
+    );
 
+    const {
+    jsPDF
+    } =
+    window.jspdf;
 
-if(table){
+    /*
+    Landscape is better for 14 and 30 days
+    */
 
-table.style.minWidth = "auto";
-table.style.width = "100%";
+    const orientation =
+    chartData.days > 7
+    ? "landscape"
+    : "portrait";
 
-}
+    const pdf =
+    new jsPDF(
+    {
 
+    orientation:orientation,
 
+    unit:"mm",
 
-document.body.appendChild(clone);
+    format:"a4"
 
+    }
 
+    );
 
-
-
-const canvas =
-await html2canvas(
-clone,
-{
-
-scale:2,
-
-backgroundColor:"#ffffff",
-
-useCORS:true
-
-}
-
-);
-
-
-
-
-
-document.body.removeChild(clone);
-
-
-
-
-
-const image =
-canvas.toDataURL(
-"image/png"
-);
-
-
-
-
-
-const {
-jsPDF
-}
-=
-window.jspdf;
-
-
-
-
-/*
-Landscape is better for 14 and 30 days
-*/
-
-const orientation =
-chartData.days > 7
-? "landscape"
-: "portrait";
-
-
-
-
-const pdf =
-new jsPDF(
-{
-
-orientation:orientation,
-
-unit:"mm",
-
-format:"a4"
-
-}
-
-);
-
-
-
-
-
-const pageWidth =
-orientation === "landscape"
-? 277
-: 190;
-
-
-
-const pageHeight =
-orientation === "landscape"
-? 190
-: 277;
-
-
-
-
-
-let imageHeight =
-(canvas.height * pageWidth)
-/
-canvas.width;
-
-
-
-
-if(imageHeight > pageHeight){
-
-const ratio =
-pageHeight / imageHeight;
-
-pdf.addImage(
-image,
-"PNG",
-10,
-10,
-pageWidth * ratio,
-pageHeight
-);
-
-
-}
-else{
-
-
-pdf.addImage(
-image,
-"PNG",
-10,
-10,
-pageWidth,
-imageHeight
-);
-
-
-}
-
-
-
-
-pdf.save(
-`${chartData.name}-potty-chart.pdf`
-);
-
-
-
-
-emailModal.style.display =
-"none";
-
+    const pageWidth =
+    orientation === "landscape"
+    ? 277
+    : 190;
+
+    const pageHeight =
+    orientation === "landscape"
+    ? 190
+    : 277;
+
+    let imageHeight =
+    (canvas.height * pageWidth)
+    /
+    canvas.width;
+
+    if(imageHeight > pageHeight){
+
+    const ratio =
+    pageHeight / imageHeight;
+
+    pdf.addImage(
+    image,
+    "PNG",
+    10,
+    10,
+    pageWidth * ratio,
+    pageHeight
+    );
+
+    }
+    else{
+
+    pdf.addImage(
+    image,
+    "PNG",
+    10,
+    10,
+    pageWidth,
+    imageHeight
+    );
+
+    }
+
+    pdf.save(
+    `${chartData.name}-potty-chart.pdf`
+    );
+
+    emailModal.style.display =
+    "none";
 
 }
 
 );
-
 
 /* ===========================
    INITIAL LOAD
