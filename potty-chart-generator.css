@@ -9,19 +9,17 @@
 ===================================== */
 
 
-.potty-container{
+.potty-container {
 
 max-width:1100px;
-
 margin:auto;
-
 padding:0 20px;
 
 }
 
 
 
-.potty-generator{
+.potty-generator {
 
 padding:40px 0;
 
@@ -29,11 +27,11 @@ padding:40px 0;
 
 
 
-.potty-generator .potty-container{
+.potty-generator .potty-container {
 
 display:grid;
 
-grid-template-columns:380px 1fr;
+grid-template-columns:1fr 1fr;
 
 gap:35px;
 
@@ -53,34 +51,33 @@ align-items:start;
 
 
 .potty-form-card,
-.potty-preview-wrapper{
-
+.potty-preview-wrapper {
 
 background:white;
 
 padding:35px;
 
-border-radius:30px;
+border-radius:28px;
 
 box-shadow:
-0 15px 40px rgba(0,0,0,.08);
+0 12px 35px rgba(0,0,0,.08);
 
 box-sizing:border-box;
+
+width:100%;
 
 }
 
 
 
-
 .potty-form-card h2,
-.potty-preview-wrapper h2{
-
-
-margin-top:0;
+.potty-preview-wrapper h2 {
 
 font-size:28px;
 
 font-weight:900;
+
+margin-top:0;
 
 }
 
@@ -95,8 +92,7 @@ font-weight:900;
 ===================================== */
 
 
-.potty-form-card label{
-
+.potty-form-card label {
 
 display:block;
 
@@ -112,14 +108,14 @@ margin-bottom:8px;
 
 .potty-form-card input,
 .potty-form-card select,
-.potty-modal input{
+.potty-modal input {
 
 
 width:100%;
 
 padding:14px;
 
-border-radius:15px;
+border-radius:14px;
 
 border:1px solid #ddd;
 
@@ -136,29 +132,26 @@ box-sizing:border-box;
 
 
 
-
-/* =====================================
-   COLORS
-===================================== */
+/* COLORS */
 
 
-.potty-colors{
-
+.potty-colors {
 
 display:flex;
 
 gap:12px;
 
+margin-top:10px;
+
 }
 
 
 
-.color-choice{
+.color-choice {
 
+width:42px;
 
-height:45px;
-
-width:45px;
+height:42px;
 
 border-radius:50%;
 
@@ -172,7 +165,7 @@ transition:.2s;
 
 
 
-.color-choice:hover{
+.color-choice:hover {
 
 transform:scale(1.15);
 
@@ -180,31 +173,28 @@ transform:scale(1.15);
 
 
 
-.pink{
+.pink {
 
 background:#ffd6e8;
 
 }
 
 
-
-.purple{
+.purple {
 
 background:#e7d9ff;
 
 }
 
 
-
-.blue{
+.blue {
 
 background:#d8efff;
 
 }
 
 
-
-.green{
+.green {
 
 background:#d9f7dc;
 
@@ -216,14 +206,12 @@ background:#d9f7dc;
 
 
 
-
 /* =====================================
-   BUTTON
+ BUTTON
 ===================================== */
 
 
-.download-button{
-
+.download-button {
 
 width:100%;
 
@@ -231,9 +219,9 @@ margin-top:25px;
 
 padding:16px;
 
-border:none;
-
 border-radius:50px;
+
+border:none;
 
 background:#ff6fae;
 
@@ -251,8 +239,7 @@ transition:.2s;
 
 
 
-.download-button:hover{
-
+.download-button:hover {
 
 transform:translateY(-2px);
 
@@ -265,18 +252,16 @@ transform:translateY(-2px);
 
 
 /* =====================================
-   PREVIEW AREA
+ PREVIEW
 ===================================== */
 
 
-.potty-preview{
+.potty-preview {
 
 
 position:relative;
 
-overflow:hidden;
-
-padding:35px;
+padding:30px;
 
 border-radius:35px;
 
@@ -284,7 +269,9 @@ border:5px solid;
 
 text-align:center;
 
-min-height:550px;
+overflow:hidden;
+
+min-height:520px;
 
 transition:.3s;
 
@@ -292,10 +279,9 @@ transition:.3s;
 
 
 
-.chart-icon{
+.chart-icon {
 
-
-font-size:65px;
+font-size:60px;
 
 position:relative;
 
@@ -306,12 +292,13 @@ z-index:2;
 
 
 
-.potty-preview h3{
+.potty-preview h3 {
 
-
-font-size:32px;
+font-size:30px;
 
 font-weight:900;
+
+line-height:1.2;
 
 margin:15px 0;
 
@@ -319,12 +306,12 @@ margin:15px 0;
 
 
 
-.potty-preview p{
+.potty-preview p {
 
-
-font-size:17px;
+font-size:16px;
 
 }
+
 
 
 
@@ -333,171 +320,114 @@ font-size:17px;
 
 
 /* =====================================
-   THEME DECORATION
+ POTTY TABLE
 ===================================== */
 
 
-.theme-decoration{
+.chart-grid {
 
-
-position:absolute;
-
-inset:0;
-
-pointer-events:none;
+margin-top:25px;
 
 }
 
 
 
-.bubble{
+.chart-scroll {
 
-
-position:absolute;
-
-border-radius:50%;
-
-opacity:.25;
-
-}
-
-
-
-.bubble-one{
-
-
-height:150px;
-
-width:150px;
-
-top:-60px;
-
-left:-60px;
-
-}
-
-
-
-.bubble-two{
-
-
-height:120px;
-
-width:120px;
-
-right:-40px;
-
-bottom:-40px;
-
-}
-
-
-
-
-
-
-/* =====================================
-   REWARD TABLE
-===================================== */
-
-
-.chart-grid{
-
-
-display:grid;
-
-grid-template-columns:
-
-120px repeat(7,1fr);
-
-gap:8px;
-
-margin-top:30px;
+width:100%;
 
 overflow-x:auto;
 
-padding-bottom:10px;
+-webkit-overflow-scrolling:touch;
 
 }
 
 
 
-.day-header{
+.potty-chart-table {
+
+
+border-collapse:separate;
+
+border-spacing:5px;
+
+width:max-content;
+
+min-width:100%;
+
+}
+
+
+
+.potty-chart-table th {
 
 
 background:white;
 
+padding:10px;
+
 border-radius:12px;
-
-padding:10px 5px;
-
-font-weight:900;
 
 font-size:13px;
 
-text-align:center;
+font-weight:900;
 
-box-shadow:
-0 3px 10px rgba(0,0,0,.06);
-
-}
-
-
-
-.day-header small{
-
-
-display:block;
-
-font-size:11px;
-
-opacity:.7;
+white-space:nowrap;
 
 }
 
-/* =====================================
-   ACTIVITY ROWS
-===================================== */
 
 
-.activity-name{
+.potty-chart-table td {
 
 
 background:white;
+
+padding:10px;
 
 border-radius:12px;
 
-padding:12px;
-
-font-weight:900;
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-gap:5px;
-
-box-shadow:
-0 3px 10px rgba(0,0,0,.06);
+text-align:center;
 
 }
 
 
 
-.reward-circle{
+.empty-cell {
+
+background:transparent!important;
+
+}
 
 
-height:34px;
 
-width:34px;
+.activity-label {
+
+
+font-weight:900;
+
+text-align:left!important;
+
+white-space:nowrap;
+
+min-width:80px;
+
+}
+
+
+
+.reward-circle {
+
+
+height:32px;
+
+width:32px;
 
 border-radius:50%;
 
-background:white;
+border:3px dashed #ddd;
 
-border:3px dashed #ffc85c;
+background:#fffaf0;
 
 margin:auto;
 
@@ -507,36 +437,31 @@ margin:auto;
 
 
 
+
+
+
 /* =====================================
-   30 DAY MODE
+ THEMES
 ===================================== */
 
 
-.chart-grid.month-grid{
+.theme-princess {
 
+background:
+linear-gradient(
+135deg,
+#fff0f7,
+#ffe2ef
+);
 
-grid-template-columns:
-
-120px repeat(10,1fr);
+border-color:#ff9fc9;
 
 }
 
 
+.theme-princess h3 {
 
-.month-day{
-
-
-background:white;
-
-border-radius:12px;
-
-padding:8px;
-
-font-size:12px;
-
-text-align:center;
-
-font-weight:900;
+color:#ff5f9e;
 
 }
 
@@ -544,46 +469,228 @@ font-weight:900;
 
 
 
+.theme-dinosaur {
+
+background:
+linear-gradient(
+135deg,
+#efffe8,
+#dff8d5
+);
+
+border-color:#8bd66a;
+
+}
+
+
+.theme-dinosaur h3 {
+
+color:#4c9c38;
+
+}
+
+
+
+
+
+.theme-unicorn {
+
+background:
+linear-gradient(
+135deg,
+#f8efff,
+#f0ddff
+);
+
+border-color:#d59cff;
+
+}
+
+
+.theme-unicorn h3 {
+
+color:#a34ee8;
+
+}
+
+
+
+
+
+.theme-space {
+
+background:
+linear-gradient(
+135deg,
+#eef3ff,
+#dce6ff
+);
+
+border-color:#8aa9ff;
+
+}
+
+
+.theme-space h3 {
+
+color:#4169e1;
+
+}
+
+
+
+
+
+.theme-animals {
+
+background:
+linear-gradient(
+135deg,
+#fff7df,
+#ffefb8
+);
+
+border-color:#ffc85c;
+
+}
+
+
+.theme-animals h3 {
+
+color:#e89b00;
+
+}
+
+
+
+
+
+
 
 
 /* =====================================
-   REWARD SECTION
+ SVG ART
 ===================================== */
 
 
-.reward-section{
+.theme-art {
+
+position:absolute;
+
+top:15px;
+
+right:15px;
+
+width:100px;
+
+height:80px;
+
+z-index:1;
+
+}
+
+
+
+.theme-svg {
+
+display:none;
+
+width:100%;
+
+height:100%;
+
+}
+
+
+
+.theme-princess .princess-svg {
+
+display:block;
+
+fill:#ffb6d9;
+
+}
+
+
+
+.theme-dinosaur .dinosaur-svg {
+
+display:block;
+
+fill:#8bd66a;
+
+}
+
+
+
+.theme-unicorn .unicorn-svg {
+
+display:block;
+
+fill:#d59cff;
+
+}
+
+
+
+.theme-space .space-svg {
+
+display:block;
+
+fill:#8aa9ff;
+
+}
+
+
+
+.theme-animals .animals-svg {
+
+display:block;
+
+fill:#ffc85c;
+
+}
+
+
+
+
+
+
+
+/* =====================================
+ REWARD AREA
+===================================== */
+
+
+.reward-box {
 
 
 background:white;
-
-margin-top:30px;
 
 padding:20px;
 
 border-radius:25px;
 
-box-shadow:
+margin-top:25px;
 
+box-shadow:
 0 5px 15px rgba(0,0,0,.08);
 
 }
 
 
 
-.reward-section h4{
-
-
-margin:0;
+.reward-box h4 {
 
 font-size:22px;
 
-font-weight:900;
+margin:0;
 
 }
 
 
 
-.reward-badges{
+.reward-stars {
 
 
 display:flex;
@@ -598,12 +705,12 @@ margin-top:15px;
 
 
 
-.reward-badges span{
+.reward-stars span {
 
 
-height:42px;
+width:40px;
 
-width:42px;
+height:40px;
 
 border-radius:50%;
 
@@ -617,7 +724,9 @@ background:#fffaf0;
 
 
 
-.footer-message{
+
+
+.footer-message {
 
 
 margin-top:25px;
@@ -635,210 +744,11 @@ font-weight:900;
 
 
 /* =====================================
-   THEMES
+ MODAL
 ===================================== */
 
 
-.theme-princess{
-
-
-background:
-
-linear-gradient(
-135deg,
-#fff0f7,
-#ffe2ef
-);
-
-border-color:#ff9fc9;
-
-}
-
-
-
-.theme-princess h3{
-
-color:#ff5f9e;
-
-}
-
-
-
-.theme-princess .bubble-one{
-
-background:#ff9fc9;
-
-}
-
-
-
-.theme-princess .bubble-two{
-
-background:#ffd166;
-
-}
-
-
-
-
-
-.theme-dinosaur{
-
-
-background:
-
-linear-gradient(
-135deg,
-#efffe8,
-#ddf7d0
-);
-
-border-color:#8bd66a;
-
-}
-
-
-
-.theme-dinosaur h3{
-
-color:#4c9c38;
-
-}
-
-
-
-.theme-dinosaur .bubble-one,
-.theme-dinosaur .bubble-two{
-
-background:#8bd66a;
-
-}
-
-
-
-
-
-.theme-unicorn{
-
-
-background:
-
-linear-gradient(
-135deg,
-#f8efff,
-#eddcff
-);
-
-border-color:#d59cff;
-
-}
-
-
-
-.theme-unicorn h3{
-
-color:#a34ee8;
-
-}
-
-
-
-.theme-unicorn .bubble-one,
-.theme-unicorn .bubble-two{
-
-background:#d59cff;
-
-}
-
-
-
-
-
-
-
-.theme-space{
-
-
-background:
-
-linear-gradient(
-135deg,
-#eef3ff,
-#dce6ff
-);
-
-border-color:#8aa9ff;
-
-}
-
-
-
-.theme-space h3{
-
-color:#4169e1;
-
-}
-
-
-
-.theme-space .bubble-one,
-.theme-space .bubble-two{
-
-background:#8aa9ff;
-
-}
-
-
-
-
-
-
-
-.theme-animals{
-
-
-background:
-
-linear-gradient(
-135deg,
-#fff7df,
-#ffefb8
-);
-
-border-color:#ffc85c;
-
-}
-
-
-
-.theme-animals h3{
-
-color:#e89b00;
-
-}
-
-
-
-.theme-animals .bubble-one,
-.theme-animals .bubble-two{
-
-background:#ffc85c;
-
-}
-
-
-
-
-
-
-
-
-/* =====================================
-   MODAL
-===================================== */
-
-
-.potty-modal{
+.potty-modal {
 
 
 display:none;
@@ -859,27 +769,28 @@ z-index:999;
 
 
 
-.potty-modal-content{
+.potty-modal-content {
 
 
 background:white;
+
+padding:35px;
 
 width:90%;
 
 max-width:450px;
 
-padding:35px;
-
 border-radius:25px;
 
 text-align:center;
+
+box-sizing:border-box;
 
 }
 
 
 
-.potty-close{
-
+.potty-close {
 
 border:none;
 
@@ -895,27 +806,15 @@ float:right;
 
 
 
-.potty-small-text{
-
-
-font-size:13px;
-
-color:#777;
-
-}
-
-
-
-
 
 
 
 /* =====================================
-   BENEFITS
+ BENEFITS
 ===================================== */
 
 
-.potty-benefit-grid{
+.potty-benefit-grid {
 
 
 display:grid;
@@ -928,7 +827,7 @@ gap:20px;
 
 
 
-.potty-benefit-grid div{
+.potty-benefit-grid div {
 
 
 background:white;
@@ -938,7 +837,6 @@ padding:25px;
 border-radius:20px;
 
 box-shadow:
-
 0 5px 20px rgba(0,0,0,.06);
 
 }
@@ -950,40 +848,40 @@ box-shadow:
 
 
 /* =====================================
-   MOBILE
+ MOBILE
 ===================================== */
 
 
-@media(max-width:900px){
+@media(max-width:850px){
 
 
-.potty-generator .potty-container{
-
+.potty-generator .potty-container {
 
 grid-template-columns:1fr;
 
 }
 
 
-.potty-benefit-grid{
 
+.potty-benefit-grid {
 
-grid-template-columns:repeat(2,1fr);
-
-}
-
+grid-template-columns:1fr 1fr;
 
 }
 
 
 
+}
 
 
-@media(max-width:600px){
 
 
-.potty-container{
 
+@media(max-width:500px){
+
+
+
+.potty-container {
 
 padding:0 15px;
 
@@ -992,8 +890,7 @@ padding:0 15px;
 
 
 .potty-form-card,
-.potty-preview-wrapper{
-
+.potty-preview-wrapper {
 
 padding:20px;
 
@@ -1001,64 +898,77 @@ padding:20px;
 
 
 
-.chart-grid{
+.chart-icon {
 
-
-grid-template-columns:
-
-90px repeat(7,70px);
+font-size:45px;
 
 }
 
 
 
-.potty-preview h3{
+.potty-preview h3 {
 
-
-font-size:24px;
-
-}
-
-
-
-.potty-benefit-grid{
-
-
-grid-template-columns:1fr;
-
-}
-
+font-size:22px;
 
 }
 
 
 
+.potty-chart-table th {
 
+font-size:11px;
 
-/* =====================================
-   PRINT HELPERS
-===================================== */
-
-
-@media print{
-
-
-body{
-
-
-background:white;
+padding:7px;
 
 }
 
 
 
-.potty-preview{
+.potty-chart-table td {
 
-
-box-shadow:none;
+padding:7px;
 
 }
 
+
+
+.reward-circle {
+
+width:24px;
+
+height:24px;
+
+}
+
+
+
+.activity-label {
+
+min-width:70px;
+
+font-size:13px;
+
+}
+
+
+
+.reward-stars span {
+
+width:32px;
+
+height:32px;
+
+}
+
+
+
+.theme-art {
+
+width:70px;
+
+height:60px;
+
+}
 
 
 }
