@@ -9,15 +9,7 @@
 ===================================== */
 
 
-.potty-generator {
-
-padding:40px 0;
-
-}
-
-
-
-.potty-container {
+.potty-container{
 
 max-width:1100px;
 
@@ -25,9 +17,23 @@ margin:auto;
 
 padding:0 20px;
 
+}
+
+
+
+.potty-generator{
+
+padding:40px 0;
+
+}
+
+
+
+.potty-generator .potty-container{
+
 display:grid;
 
-grid-template-columns:1fr 1fr;
+grid-template-columns:380px 1fr;
 
 gap:35px;
 
@@ -38,13 +44,17 @@ align-items:start;
 
 
 
+
+
+
 /* =====================================
    CARDS
 ===================================== */
 
 
 .potty-form-card,
-.potty-preview-wrapper {
+.potty-preview-wrapper{
+
 
 background:white;
 
@@ -53,7 +63,9 @@ padding:35px;
 border-radius:30px;
 
 box-shadow:
-0 12px 35px rgba(0,0,0,.08);
+0 15px 40px rgba(0,0,0,.08);
+
+box-sizing:border-box;
 
 }
 
@@ -61,15 +73,18 @@ box-shadow:
 
 
 .potty-form-card h2,
-.potty-preview-wrapper h2 {
+.potty-preview-wrapper h2{
+
+
+margin-top:0;
 
 font-size:28px;
 
 font-weight:900;
 
-margin-top:0;
-
 }
+
+
 
 
 
@@ -80,7 +95,8 @@ margin-top:0;
 ===================================== */
 
 
-.potty-form-card label {
+.potty-form-card label{
+
 
 display:block;
 
@@ -94,10 +110,10 @@ margin-bottom:8px;
 
 
 
-
 .potty-form-card input,
 .potty-form-card select,
-.potty-modal input {
+.potty-modal input{
+
 
 width:100%;
 
@@ -119,12 +135,15 @@ box-sizing:border-box;
 
 
 
+
+
 /* =====================================
    COLORS
 ===================================== */
 
 
-.potty-colors {
+.potty-colors{
+
 
 display:flex;
 
@@ -134,11 +153,12 @@ gap:12px;
 
 
 
-.color-choice {
+.color-choice{
 
-height:42px;
 
-width:42px;
+height:45px;
+
+width:45px;
 
 border-radius:50%;
 
@@ -151,39 +171,46 @@ transition:.2s;
 }
 
 
-.color-choice:hover {
+
+.color-choice:hover{
 
 transform:scale(1.15);
 
 }
 
 
-.pink {
+
+.pink{
 
 background:#ffd6e8;
 
 }
 
 
-.purple {
 
-background:#e8d8ff;
+.purple{
 
-}
-
-
-.blue {
-
-background:#dcecff;
+background:#e7d9ff;
 
 }
 
 
-.green {
 
-background:#dcf7d8;
+.blue{
+
+background:#d8efff;
 
 }
+
+
+
+.green{
+
+background:#d9f7dc;
+
+}
+
+
 
 
 
@@ -195,7 +222,8 @@ background:#dcf7d8;
 ===================================== */
 
 
-.download-button {
+.download-button{
+
 
 width:100%;
 
@@ -203,13 +231,13 @@ margin-top:25px;
 
 padding:16px;
 
+border:none;
+
 border-radius:50px;
 
 background:#ff6fae;
 
 color:white;
-
-border:none;
 
 font-size:18px;
 
@@ -223,13 +251,12 @@ transition:.2s;
 
 
 
-.download-button:hover {
+.download-button:hover{
 
-transform:translateY(-3px);
+
+transform:translateY(-2px);
 
 }
-
-
 
 
 
@@ -238,25 +265,26 @@ transform:translateY(-3px);
 
 
 /* =====================================
-   WEBSITE PREVIEW
+   PREVIEW AREA
 ===================================== */
 
 
-.potty-preview {
+.potty-preview{
+
 
 position:relative;
+
+overflow:hidden;
 
 padding:35px;
 
 border-radius:35px;
 
-min-height:520px;
+border:5px solid;
 
 text-align:center;
 
-overflow:hidden;
-
-border:5px solid;
+min-height:550px;
 
 transition:.3s;
 
@@ -264,21 +292,24 @@ transition:.3s;
 
 
 
+.chart-icon{
 
-.preview-art {
 
-font-size:70px;
+font-size:65px;
 
-margin-bottom:10px;
+position:relative;
+
+z-index:2;
 
 }
 
 
 
 
-.potty-preview h3 {
+.potty-preview h3{
 
-font-size:30px;
+
+font-size:32px;
 
 font-weight:900;
 
@@ -288,9 +319,187 @@ margin:15px 0;
 
 
 
-.potty-preview p {
+.potty-preview p{
 
-font-size:16px;
+
+font-size:17px;
+
+}
+
+
+
+
+
+
+
+/* =====================================
+   THEME DECORATION
+===================================== */
+
+
+.theme-decoration{
+
+
+position:absolute;
+
+inset:0;
+
+pointer-events:none;
+
+}
+
+
+
+.bubble{
+
+
+position:absolute;
+
+border-radius:50%;
+
+opacity:.25;
+
+}
+
+
+
+.bubble-one{
+
+
+height:150px;
+
+width:150px;
+
+top:-60px;
+
+left:-60px;
+
+}
+
+
+
+.bubble-two{
+
+
+height:120px;
+
+width:120px;
+
+right:-40px;
+
+bottom:-40px;
+
+}
+
+
+
+
+
+
+/* =====================================
+   REWARD TABLE
+===================================== */
+
+
+.chart-grid{
+
+
+display:grid;
+
+grid-template-columns:
+
+120px repeat(7,1fr);
+
+gap:8px;
+
+margin-top:30px;
+
+overflow-x:auto;
+
+padding-bottom:10px;
+
+}
+
+
+
+.day-header{
+
+
+background:white;
+
+border-radius:12px;
+
+padding:10px 5px;
+
+font-weight:900;
+
+font-size:13px;
+
+text-align:center;
+
+box-shadow:
+0 3px 10px rgba(0,0,0,.06);
+
+}
+
+
+
+.day-header small{
+
+
+display:block;
+
+font-size:11px;
+
+opacity:.7;
+
+}
+
+/* =====================================
+   ACTIVITY ROWS
+===================================== */
+
+
+.activity-name{
+
+
+background:white;
+
+border-radius:12px;
+
+padding:12px;
+
+font-weight:900;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+gap:5px;
+
+box-shadow:
+0 3px 10px rgba(0,0,0,.06);
+
+}
+
+
+
+.reward-circle{
+
+
+height:34px;
+
+width:34px;
+
+border-radius:50%;
+
+background:white;
+
+border:3px dashed #ffc85c;
+
+margin:auto;
 
 }
 
@@ -299,96 +508,125 @@ font-size:16px;
 
 
 /* =====================================
-   PREVIEW GRID
+   30 DAY MODE
 ===================================== */
 
 
-.preview-grid {
+.chart-grid.month-grid{
 
-display:grid;
 
-grid-template-columns:1fr;
+grid-template-columns:
 
-gap:12px;
+120px repeat(10,1fr);
 
-margin-top:25px;
+}
+
+
+
+.month-day{
+
+
+background:white;
+
+border-radius:12px;
+
+padding:8px;
+
+font-size:12px;
+
+text-align:center;
+
+font-weight:900;
 
 }
 
 
 
 
-.preview-day {
+
+
+
+/* =====================================
+   REWARD SECTION
+===================================== */
+
+
+.reward-section{
+
 
 background:white;
 
-border-radius:18px;
+margin-top:30px;
 
-padding:15px;
+padding:20px;
 
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-font-weight:900;
+border-radius:25px;
 
 box-shadow:
+
 0 5px 15px rgba(0,0,0,.08);
 
 }
 
 
 
-
-.sticker-row {
-
-display:flex;
-
-gap:8px;
-
-}
+.reward-section h4{
 
 
+margin:0;
 
-
-.sticker-row span {
-
-height:28px;
-
-width:28px;
-
-border-radius:50%;
-
-background:white;
-
-border:3px dashed #ddd;
-
-}
-
-
-
-
-
-
-.preview-reward {
-
-background:white;
-
-padding:18px;
-
-border-radius:20px;
-
-margin-top:25px;
-
-font-size:20px;
+font-size:22px;
 
 font-weight:900;
 
 }
 
 
+
+.reward-badges{
+
+
+display:flex;
+
+justify-content:center;
+
+gap:12px;
+
+margin-top:15px;
+
+}
+
+
+
+.reward-badges span{
+
+
+height:42px;
+
+width:42px;
+
+border-radius:50%;
+
+border:3px dashed #ffc85c;
+
+background:#fffaf0;
+
+}
+
+
+
+
+
+.footer-message{
+
+
+margin-top:25px;
+
+font-size:18px;
+
+font-weight:900;
+
+}
 
 
 
@@ -401,13 +639,15 @@ font-weight:900;
 ===================================== */
 
 
-.theme-princess {
+.theme-princess{
+
 
 background:
+
 linear-gradient(
 135deg,
 #fff0f7,
-#ffe1ef
+#ffe2ef
 );
 
 border-color:#ff9fc9;
@@ -415,7 +655,8 @@ border-color:#ff9fc9;
 }
 
 
-.theme-princess h3 {
+
+.theme-princess h3{
 
 color:#ff5f9e;
 
@@ -423,14 +664,33 @@ color:#ff5f9e;
 
 
 
+.theme-princess .bubble-one{
 
-.theme-dinosaur {
+background:#ff9fc9;
+
+}
+
+
+
+.theme-princess .bubble-two{
+
+background:#ffd166;
+
+}
+
+
+
+
+
+.theme-dinosaur{
+
 
 background:
+
 linear-gradient(
 135deg,
 #efffe8,
-#dff8d5
+#ddf7d0
 );
 
 border-color:#8bd66a;
@@ -438,7 +698,8 @@ border-color:#8bd66a;
 }
 
 
-.theme-dinosaur h3 {
+
+.theme-dinosaur h3{
 
 color:#4c9c38;
 
@@ -446,15 +707,26 @@ color:#4c9c38;
 
 
 
+.theme-dinosaur .bubble-one,
+.theme-dinosaur .bubble-two{
+
+background:#8bd66a;
+
+}
 
 
-.theme-unicorn {
+
+
+
+.theme-unicorn{
+
 
 background:
+
 linear-gradient(
 135deg,
 #f8efff,
-#efdfff
+#eddcff
 );
 
 border-color:#d59cff;
@@ -462,7 +734,8 @@ border-color:#d59cff;
 }
 
 
-.theme-unicorn h3 {
+
+.theme-unicorn h3{
 
 color:#a34ee8;
 
@@ -470,11 +743,24 @@ color:#a34ee8;
 
 
 
+.theme-unicorn .bubble-one,
+.theme-unicorn .bubble-two{
+
+background:#d59cff;
+
+}
 
 
-.theme-space {
+
+
+
+
+
+.theme-space{
+
 
 background:
+
 linear-gradient(
 135deg,
 #eef3ff,
@@ -486,7 +772,8 @@ border-color:#8aa9ff;
 }
 
 
-.theme-space h3 {
+
+.theme-space h3{
 
 color:#4169e1;
 
@@ -494,11 +781,24 @@ color:#4169e1;
 
 
 
+.theme-space .bubble-one,
+.theme-space .bubble-two{
+
+background:#8aa9ff;
+
+}
 
 
-.theme-animals {
+
+
+
+
+
+.theme-animals{
+
 
 background:
+
 linear-gradient(
 135deg,
 #fff7df,
@@ -510,7 +810,8 @@ border-color:#ffc85c;
 }
 
 
-.theme-animals h3 {
+
+.theme-animals h3{
 
 color:#e89b00;
 
@@ -518,210 +819,13 @@ color:#e89b00;
 
 
 
+.theme-animals .bubble-one,
+.theme-animals .bubble-two{
 
-
-
-
-
-
-/* =====================================
-   PRINTABLE CHART
-===================================== */
-
-
-.printable-chart {
-
-
-width:900px;
-
-background:white;
-
-padding:50px;
-
-border-radius:30px;
-
-margin:auto;
-
-box-sizing:border-box;
-
-display:none;
-
-font-family:'Nunito',sans-serif;
-
-text-align:center;
+background:#ffc85c;
 
 }
 
-
-
-
-.print-header h1 {
-
-font-size:45px;
-
-font-weight:900;
-
-margin:10px 0;
-
-}
-
-
-
-
-.print-icon {
-
-font-size:80px;
-
-}
-
-
-
-
-.print-header p {
-
-font-size:22px;
-
-}
-
-
-
-
-
-
-
-/* =====================================
-   PRINT GRID
-===================================== */
-
-
-.print-grid {
-
-
-display:grid;
-
-grid-template-columns:1fr;
-
-gap:15px;
-
-margin-top:35px;
-
-}
-
-
-
-
-
-.print-day {
-
-
-background:#fff8fb;
-
-border-radius:20px;
-
-padding:18px;
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-font-size:20px;
-
-font-weight:900;
-
-}
-
-
-
-
-
-/* 30 DAYS */
-
-
-.print-grid.thirty {
-
-
-grid-template-columns:repeat(5,1fr);
-
-gap:15px;
-
-}
-
-
-
-
-
-.print-grid.thirty .print-day {
-
-
-flex-direction:column;
-
-min-height:90px;
-
-justify-content:center;
-
-font-size:16px;
-
-}
-
-
-
-
-
-
-
-
-/* =====================================
-   PRINT REWARD
-===================================== */
-
-
-.print-reward {
-
-
-margin-top:35px;
-
-background:#fffaf0;
-
-padding:25px;
-
-border-radius:25px;
-
-}
-
-
-
-
-.reward-stars {
-
-display:flex;
-
-justify-content:center;
-
-gap:15px;
-
-margin-top:20px;
-
-}
-
-
-
-
-.reward-stars span {
-
-
-width:45px;
-
-height:45px;
-
-border-radius:50%;
-
-border:3px dashed #ffc85c;
-
-background:white;
-
-}
 
 
 
@@ -734,7 +838,8 @@ background:white;
 ===================================== */
 
 
-.potty-modal {
+.potty-modal{
+
 
 display:none;
 
@@ -754,8 +859,7 @@ z-index:999;
 
 
 
-
-.potty-modal-content {
+.potty-modal-content{
 
 
 background:white;
@@ -766,7 +870,7 @@ max-width:450px;
 
 padding:35px;
 
-border-radius:30px;
+border-radius:25px;
 
 text-align:center;
 
@@ -774,9 +878,8 @@ text-align:center;
 
 
 
+.potty-close{
 
-
-.potty-close {
 
 border:none;
 
@@ -784,16 +887,16 @@ background:none;
 
 font-size:30px;
 
-float:right;
-
 cursor:pointer;
+
+float:right;
 
 }
 
 
 
+.potty-small-text{
 
-.potty-small-text {
 
 font-size:13px;
 
@@ -807,13 +910,13 @@ color:#777;
 
 
 
-
 /* =====================================
    BENEFITS
 ===================================== */
 
 
-.potty-benefit-grid {
+.potty-benefit-grid{
+
 
 display:grid;
 
@@ -825,7 +928,8 @@ gap:20px;
 
 
 
-.potty-benefit-grid div {
+.potty-benefit-grid div{
+
 
 background:white;
 
@@ -834,11 +938,10 @@ padding:25px;
 border-radius:20px;
 
 box-shadow:
+
 0 5px 20px rgba(0,0,0,.06);
 
 }
-
-
 
 
 
@@ -851,25 +954,27 @@ box-shadow:
 ===================================== */
 
 
-@media(max-width:850px){
+@media(max-width:900px){
 
 
-.potty-container {
+.potty-generator .potty-container{
+
 
 grid-template-columns:1fr;
 
 }
 
 
+.potty-benefit-grid{
 
-.potty-benefit-grid {
 
-grid-template-columns:1fr 1fr;
+grid-template-columns:repeat(2,1fr);
+
+}
+
 
 }
 
-
-}
 
 
 
@@ -877,8 +982,18 @@ grid-template-columns:1fr 1fr;
 @media(max-width:600px){
 
 
+.potty-container{
+
+
+padding:0 15px;
+
+}
+
+
+
 .potty-form-card,
-.potty-preview-wrapper {
+.potty-preview-wrapper{
+
 
 padding:20px;
 
@@ -886,45 +1001,61 @@ padding:20px;
 
 
 
-
-.potty-preview h3 {
-
-font-size:23px;
-
-}
+.chart-grid{
 
 
+grid-template-columns:
 
-.preview-art {
-
-font-size:55px;
+90px repeat(7,70px);
 
 }
 
 
 
+.potty-preview h3{
 
-.potty-benefit-grid {
+
+font-size:24px;
+
+}
+
+
+
+.potty-benefit-grid{
+
 
 grid-template-columns:1fr;
 
 }
 
 
+}
 
-.printable-chart {
 
-width:100%;
 
-padding:20px;
+
+
+/* =====================================
+   PRINT HELPERS
+===================================== */
+
+
+@media print{
+
+
+body{
+
+
+background:white;
 
 }
 
 
 
-.print-grid.thirty {
+.potty-preview{
 
-grid-template-columns:repeat(3,1fr);
+
+box-shadow:none;
 
 }
 
