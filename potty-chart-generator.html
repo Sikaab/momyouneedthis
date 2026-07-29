@@ -1,811 +1,393 @@
-/* =====================================
-   POTTY TRAINING GENERATOR
-   MomYouNeedThis
-===================================== */
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
 
-let selectedColor = "pink";
+<meta charset="UTF-8">
 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-const chartData = {
-    name:"Your Child",
-    theme:"princess",
-    days:7,
-    color:"pink"
-};
+<title>
+Free Potty Training Chart Generator | MomYouNeedThis
+</title>
 
+<meta name="description" content="Create a personalized potty training reward chart for your toddler. Choose a theme and download your printable chart.">
 
+<link rel="stylesheet" href="style.css">
 
-const childNameInput = document.getElementById("childName");
-const chartTheme = document.getElementById("chartTheme");
-const chartLength = document.getElementById("chartLength");
+<link rel="stylesheet" href="potty-chart-generator.css">
 
-const preview = document.getElementById("pottyPreview");
-const chartGrid = document.getElementById("chartGrid");
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
 
-const previewButton = document.getElementById("previewButton");
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-const emailModal = document.getElementById("emailModal");
-const closeModal = document.getElementById("closeModal");
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-const downloadButton = document.getElementById("downloadButton");
+</head>
 
+<body>
 
+<div class="page">
 
+<section class="resource-page">
 
+<img src="assets/logo.svg" class="logo" alt="MomYouNeedThis">
 
-/* ===========================
- COLORS
-=========================== */
+<span class="free-badge">
 
+🚽 FREE POTTY TRAINING TOOL
 
-const colors = {
+</span>
 
-pink:{
-background:"#fff0f7",
-border:"#ff9fc9"
-},
+<h1>
 
-purple:{
-background:"#f8efff",
-border:"#d59cff"
-},
+Create Your Child's
 
-blue:{
-background:"#eef3ff",
-border:"#8aa9ff"
-},
+<span>
+Potty Training Reward Chart
+</span>
 
-green:{
-background:"#efffe8",
-border:"#8bd66a"
-}
+</h1>
 
-};
+<p class="intro">
 
+Make potty training exciting with a personalized reward chart.
+Choose a theme, add your child's name, and create a printable chart.
 
+</p>
 
+<section class="potty-generator">
 
+<div class="potty-container">
 
+<!-- ===========================
+     FORM
+=========================== -->
 
+<div class="potty-form-card">
 
-/* ===========================
- THEMES
-=========================== */
+<h2>
+Customize Your Chart
+</h2>
 
+<label>
+Child's Name
+</label>
 
-const themes = {
+<input
+id="childName"
+type="text"
+placeholder="Example: Emma">
 
-princess:{
-icon:"👑",
-className:"theme-princess",
-title:"{name}'s Princess Potty Adventure",
-subtitle:"Fill your chart and become a big kid!"
-},
+<label>
+Choose Theme
+</label>
 
+<select id="chartTheme">
 
-dinosaur:{
-icon:"🦖",
-className:"theme-dinosaur",
-title:"{name}'s Dinosaur Potty Quest",
-subtitle:"Roar! Every success is amazing!"
-},
+<option value="princess">
+👑 Princess Castle
+</option>
 
+<option value="dinosaur">
+🦖 Dinosaur Adventure
+</option>
 
-unicorn:{
-icon:"🦄",
-className:"theme-unicorn",
-title:"{name}'s Magical Unicorn Journey",
-subtitle:"Sparkles and potty wins!"
-},
+<option value="unicorn">
+🦄 Magical Unicorn
+</option>
 
+<option value="space">
+🚀 Space Explorer
+</option>
+
+<option value="animals">
+🐻 Cute Animals
+</option>
+
+</select>
+
+<label>
+Chart Color
+</label>
+
+<div class="potty-colors">
+
+<button
+type="button"
+class="color-choice pink"
+data-color="pink">
+</button>
+
+<button
+type="button"
+class="color-choice purple"
+data-color="purple">
+</button>
+
+<button
+type="button"
+class="color-choice blue"
+data-color="blue">
+</button>
+
+<button
+type="button"
+class="color-choice green"
+data-color="green">
+</button>
 
-space:{
-icon:"🚀",
-className:"theme-space",
-title:"{name}'s Space Potty Mission",
-subtitle:"Blast off toward success!"
-},
-
-
-animals:{
-icon:"🐻",
-className:"theme-animals",
-title:"{name}'s Animal Potty Adventure",
-subtitle:"Little steps create big achievements!"
-}
-
-
-};
-
-
-
-
-
-
-/* ===========================
- CREATE CHART TABLE
-=========================== */
-
-
-function createChartDays(days){
-
-
-chartGrid.innerHTML="";
-
-
-
-if(days === 30){
-
-createThirtyDayChart();
-
-return;
-
-}
-
-
-
-
-let startDay = 1;
-
-
-
-for(let week=0; week < days/7; week++){
-
-
-const table = document.createElement("div");
-
-table.className="week-chart";
-
-
-
-table.innerHTML = `
-
-<div class="activity-cell"></div>
-
-${["Mon","Tue","Wed","Thu","Fri","Sat","Sun"]
-.map(day=>`<div class="day-header">${day}</div>`).join("")}
-
-
-
-<div class="activity-label">🚽 Pee</div>
-${Array(7).fill("").map(()=>`
-<div class="check-box"></div>
-`).join("")}
-
-
-
-<div class="activity-label">💩 Poop</div>
-${Array(7).fill("").map(()=>`
-<div class="check-box"></div>
-`).join("")}
-
-
-
-<div class="activity-label">⭐ Tried</div>
-${Array(7).fill("").map(()=>`
-<div class="check-box"></div>
-`).join("")}
-
-
-`;
-
-
-
-chartGrid.appendChild(table);
-
-
-}
-
-
-}
-
-
-
-
-
-
-
-function createThirtyDayChart(){
-
-
-const calendar =
-document.createElement("div");
-
-
-calendar.className="month-chart";
-
-
-
-for(let i=1;i<=30;i++){
-
-
-const day=document.createElement("div");
-
-
-day.className="month-day";
-
-
-day.innerHTML=`
-
-<strong>
-Day ${i}
-</strong>
-
-
-<div>
-🚽 ☐
 </div>
 
+<label>
+Chart Length
+</label>
 
-<div>
-💩 ☐
+<select id="chartLength">
+
+<option value="7">
+7 Days
+</option>
+
+<option value="14">
+14 Days
+</option>
+
+<option value="30">
+30 Days
+</option>
+
+</select>
+
+<button
+id="previewButton"
+class="download-button"
+type="button">
+
+✨ Create My Chart
+
+</button>
+
 </div>
 
+<!-- ===========================
+     PREVIEW
+=========================== -->
 
-<div>
-⭐ ☐
+<div class="potty-preview-wrapper">
+
+<h2>
+Your Preview
+</h2>
+
+<div
+id="pottyPreview"
+class="potty-preview theme-princess">
+
+<div class="theme-decoration">
+
+<div class="bubble bubble-one"></div>
+
+<div class="bubble bubble-two"></div>
+
 </div>
 
+<div
+class="chart-icon"
+id="themeIcon">
 
-`;
+👑
 
+</div>
 
-calendar.appendChild(day);
+<h3 id="chartTitle">
 
+Your Child's Potty Adventure
 
-}
+</h3>
 
+<p id="chartSubtitle">
 
+Every little step is a big achievement!
 
-chartGrid.appendChild(calendar);
+</p>
 
+<!-- REWARD TABLE CREATED BY JS -->
 
-}
+<div class="chart-scroll">
+    <div id="chartGrid" class="chart-grid"></div>
+</div>
 
-/* ===========================
-   UPDATE PREVIEW
-=========================== */
+<div class="reward-section">
 
+<h4>
+🏆 Big Kid Reward
+</h4>
 
-function updatePreview(){
+<p>
+Fill your chart and celebrate your success!
+</p>
 
+<div class="reward-badges">
 
-chartData.name =
-childNameInput.value.trim() || "Your Child";
+<span></span>
 
+<span></span>
 
+<span></span>
 
-chartData.theme =
-chartTheme.value;
+<span></span>
 
+<span></span>
 
+</div>
 
-chartData.days =
-Number(chartLength.value);
+</div>
 
+<div class="footer-message">
 
+🌟 You are doing amazing!
 
-chartData.color =
-selectedColor;
+</div>
 
+</div>
 
+</div>
 
+</div>
 
+</section>
+<!-- ===========================
+     EMAIL MODAL
+=========================== -->
 
-const theme =
-themes[chartData.theme];
+<div
+id="emailModal"
+class="potty-modal">
 
+<div class="potty-modal-content">
 
+<button
+id="closeModal"
+class="potty-close">
 
-const color =
-colors[selectedColor];
+×
 
+</button>
 
+<h2>
+🎉 Your Chart Is Ready!
+</h2>
 
+<p>
+Enter your email to download your personalized printable chart.
+</p>
 
+<input
+id="emailInput"
+type="email"
+placeholder="Your email address">
 
-/* UPDATE MAIN PREVIEW */
+<button
+id="downloadButton"
+class="download-button">
 
+Download My Chart
 
-preview.className =
-`potty-preview ${theme.className}`;
+</button>
 
+<p class="potty-small-text">
 
+Get free toddler activities and mom resources.
 
+</p>
 
+</div>
 
-preview.style.background =
-color.background;
+</div>
 
+<!-- ===========================
+     BENEFITS
+=========================== -->
 
+<section class="tips">
 
-preview.style.borderColor =
-color.border;
+<h2>
+Why Parents Love Personalized Charts
+</h2>
 
+<div class="potty-benefit-grid">
 
+<div>
 
+⭐ Makes potty training fun
 
+</div>
 
+<div>
 
-/* TITLE */
+🎨 Kids love choosing themes
 
+</div>
 
-document.getElementById("themeIcon")
-.textContent =
-theme.icon;
+<div>
 
+📄 Printable at home
 
+</div>
 
+<div>
 
+💛 Encourages routines
 
-document.getElementById("chartTitle")
-.textContent =
-theme.title.replace(
-"{name}",
-chartData.name
-);
+</div>
 
+</div>
 
+</section>
 
+<!-- ===========================
+     FOOTER
+=========================== -->
 
+<footer>
 
+<div class="footer-logo">
 
-document.getElementById("chartSubtitle")
-.textContent =
-theme.subtitle;
+<img 
+src="assets/logo.svg"
+alt="MomYouNeedThis">
 
+</div>
 
+<h3>
+MomYouNeedThis
+</h3>
 
+<p>
 
+Helping moms find products and resources that make everyday life easier.
 
+</p>
 
-/* CHANGE PRINT ORIENTATION CLASS */
+<div class="footer-bottom">
 
+<p>
 
-preview.classList.remove(
-"portrait-chart",
-"landscape-chart"
-);
+© 2026 MomYouNeedThis
 
+</p>
 
+</div>
 
-if(chartData.days === 7){
+</footer>
 
-preview.classList.add(
-"portrait-chart"
-);
+</section>
 
-}
+</div>
 
-else{
+<script src="potty-chart-generator.js" defer></script>
 
-preview.classList.add(
-"landscape-chart"
-);
+</body>
 
-}
-
-
-
-
-
-
-/* CREATE TABLE */
-
-
-createChartDays(
-chartData.days
-);
-
-
-
-}
-
-
-
-
-
-
-
-
-/* ===========================
-   EVENTS
-=========================== */
-
-
-childNameInput.addEventListener(
-"input",
-updatePreview
-);
-
-
-
-chartTheme.addEventListener(
-"change",
-updatePreview
-);
-
-
-
-chartLength.addEventListener(
-"change",
-updatePreview
-);
-
-
-
-
-
-
-
-/* COLORS */
-
-
-document
-.querySelectorAll(".color-choice")
-.forEach(button=>{
-
-
-button.addEventListener(
-"click",
-()=>{
-
-
-selectedColor =
-button.dataset.color;
-
-
-
-updatePreview();
-
-
-});
-
-
-});
-
-
-
-
-
-
-
-
-/* ===========================
-   MODAL
-=========================== */
-
-
-previewButton.addEventListener(
-"click",
-()=>{
-
-
-updatePreview();
-
-
-emailModal.style.display="flex";
-
-
-});
-
-
-
-
-
-closeModal.addEventListener(
-"click",
-()=>{
-
-
-emailModal.style.display="none";
-
-
-});
-
-
-
-
-
-/* CLOSE MODAL OUTSIDE */
-
-
-window.addEventListener(
-"click",
-(e)=>{
-
-
-if(e.target === emailModal){
-
-emailModal.style.display="none";
-
-}
-
-
-});
-
- 
-/* ===========================
-   PDF DOWNLOAD
-=========================== */
-
-
-downloadButton.addEventListener(
-"click",
-async()=>{
-
-
-const email =
-document.getElementById("emailInput").value;
-
-
-
-if(!email){
-
-
-alert(
-"Please enter your email first."
-);
-
-
-return;
-
-}
-
-
-
-
-
-/*
-   Temporarily remove preview limitations
-   so the whole chart is captured
-*/
-
-
-const oldOverflow =
-preview.style.overflow;
-
-
-
-preview.style.overflow =
-"visible";
-
-
-
-
-
-const canvas =
-await html2canvas(
-preview,
-{
-
-scale:2,
-
-backgroundColor:"#ffffff",
-
-useCORS:true,
-
-scrollX:0,
-
-scrollY:-window.scrollY
-
-}
-
-);
-
-
-
-
-
-preview.style.overflow =
-oldOverflow;
-
-
-
-
-
-
-
-const image =
-canvas.toDataURL(
-"image/png"
-);
-
-
-
-
-
-
-const {
-jsPDF
-} =
-window.jspdf;
-
-
-
-
-
-/*
-   7 DAYS = PORTRAIT
-   14/30 DAYS = LANDSCAPE
-*/
-
-
-let orientation =
-chartData.days === 7
-?
-"portrait"
-:
-"landscape";
-
-
-
-
-
-const pdf =
-new jsPDF({
-
-orientation:orientation,
-
-unit:"mm",
-
-format:"a4"
-
-});
-
-
-
-
-
-
-
-let pageWidth;
-let pageHeight;
-
-
-
-if(orientation==="portrait"){
-
-
-pageWidth = 190;
-
-pageHeight = 277;
-
-
-}
-
-else{
-
-
-pageWidth = 277;
-
-pageHeight = 190;
-
-
-}
-
-
-
-
-
-
-
-let imageWidth =
-pageWidth;
-
-
-
-let imageHeight =
-(canvas.height * imageWidth)
-/
-canvas.width;
-
-
-
-
-
-
-/*
-   Scale down if too tall
-*/
-
-
-if(imageHeight > pageHeight){
-
-
-imageHeight = pageHeight;
-
-
-imageWidth =
-(canvas.width * imageHeight)
-/
-canvas.height;
-
-
-}
-
-
-
-
-
-
-
-
-const x =
-(pageWidth-imageWidth)/2;
-
-
-
-const y =
-(pageHeight-imageHeight)/2;
-
-
-
-
-
-
-
-
-pdf.addImage(
-
-image,
-
-"PNG",
-
-x,
-
-y,
-
-imageWidth,
-
-imageHeight
-
-);
-
-
-
-
-
-
-
-pdf.save(
-
-`${chartData.name}-potty-chart.pdf`
-
-);
-
-
-
-
-
-emailModal.style.display =
-"none";
-
-
-
-}
-
-);
-
-
-
-
-
-
-
-
-/* ===========================
-   INITIAL LOAD
-=========================== */
-
-
-document.addEventListener(
-"DOMContentLoaded",
-()=>{
-
-
-updatePreview();
-
-
-});
+</html>
