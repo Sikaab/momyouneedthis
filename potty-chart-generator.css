@@ -741,15 +741,12 @@ font-weight:900;
 
 
 
-
-
 /* =====================================
- MODAL
+   EMAIL MODAL
 ===================================== */
 
 
 .potty-modal {
-
 
 display:none;
 
@@ -765,46 +762,128 @@ justify-content:center;
 
 z-index:999;
 
+padding:20px;
+
 }
 
 
 
 .potty-modal-content {
 
-
 background:white;
 
-padding:35px;
+padding:40px 30px;
 
-width:90%;
+width:100%;
 
 max-width:450px;
 
-border-radius:25px;
+border-radius:28px;
 
 text-align:center;
 
 box-sizing:border-box;
 
+position:relative;
+
 }
+
+
+
+.potty-modal-content h2 {
+
+font-size:26px;
+
+font-weight:900;
+
+margin-top:10px;
+
+text-align:center;
+
+}
+
+
+
+.potty-modal-content p {
+
+text-align:center;
+
+line-height:1.5;
+
+}
+
+
+
+
+
+.potty-modal input {
+
+width:100%;
+
+padding:15px;
+
+border-radius:14px;
+
+border:1px solid #ddd;
+
+font-family:inherit;
+
+font-size:16px;
+
+box-sizing:border-box;
+
+margin-top:15px;
+
+}
+
 
 
 
 .potty-close {
 
+position:absolute;
+
+top:15px;
+
+right:15px;
+
+width:36px;
+
+height:36px;
+
+border-radius:50%;
+
 border:none;
 
-background:none;
+background:#ff6fae;
 
-font-size:30px;
+color:white;
+
+font-size:24px;
+
+font-weight:900;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
 
 cursor:pointer;
 
-float:right;
+padding:0;
+
+line-height:1;
 
 }
 
 
+
+.potty-close:hover {
+
+transform:scale(1.1);
+
+}
 
 
 
