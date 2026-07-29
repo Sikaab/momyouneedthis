@@ -16,8 +16,8 @@ const chartData = {
 
     name:"Your Child",
     theme:"princess",
-    days:7,
-    color:"pink"
+    color:"pink",
+    week:1
 
 };
 
@@ -37,9 +37,8 @@ const chartTheme =
 document.getElementById("chartTheme");
 
 
-const chartLength =
-document.getElementById("chartLength");
-
+const weekNumberInput =
+document.getElementById("weekNumber");
 
 const preview =
 document.getElementById("pottyPreview");
@@ -312,40 +311,101 @@ return week;
 
 
 
-
-
-
-function createChartDays(totalDays){
+function createChartDays(){
 
 
 chartGrid.innerHTML = "";
 
 
 
-const numberOfWeeks =
-Math.ceil(totalDays / 7);
+const table =
+document.createElement("table");
+
+
+table.className =
+"potty-chart-table";
 
 
 
-for(let i = 1; i <= numberOfWeeks; i++){
+table.innerHTML = `
+
+<tr>
+
+<th class="empty-cell">
+Week ${chartData.week}
+</th>
+
+<th>Day 1</th>
+<th>Day 2</th>
+<th>Day 3</th>
+<th>Day 4</th>
+<th>Day 5</th>
+<th>Day 6</th>
+<th>Day 7</th>
+
+</tr>
 
 
-const week =
-createWeek();
+<tr>
+
+<td class="activity-label">
+🚽 Pee
+</td>
+
+${createRewardCells()}
+
+</tr>
 
 
 
-week.querySelector(".week-title").textContent =
-`Week ${i}`;
+<tr>
+
+<td class="activity-label">
+💩 Poop
+</td>
+
+${createRewardCells()}
+
+</tr>
 
 
 
-chartGrid.appendChild(week);
+<tr>
 
+<td class="activity-label">
+⭐ Tried
+</td>
+
+${createRewardCells()}
+
+</tr>
+
+`;
+
+
+
+chartGrid.appendChild(table);
 
 
 }
 
+
+
+
+
+function createRewardCells(){
+
+return `
+
+<td><div class="reward-circle"></div></td>
+<td><div class="reward-circle"></div></td>
+<td><div class="reward-circle"></div></td>
+<td><div class="reward-circle"></div></td>
+<td><div class="reward-circle"></div></td>
+<td><div class="reward-circle"></div></td>
+<td><div class="reward-circle"></div></td>
+
+`;
 
 }
 
@@ -365,9 +425,8 @@ childNameInput.value.trim() || "Your Child";
 chartData.theme =
 chartTheme.value;
 
-
-chartData.days =
-Number(chartLength.value);
+chartData.week =
+Number(weekNumberInput.value) || 1;
 
 
 chartData.color =
@@ -442,9 +501,8 @@ chartTheme.addEventListener(
 updatePreview
 );
 
-
-chartLength.addEventListener(
-"change",
+weekNumberInput.addEventListener(
+"input",
 updatePreview
 );
 
