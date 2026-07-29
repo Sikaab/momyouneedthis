@@ -972,3 +972,215 @@ height:60px;
 
 
 }
+
+/* =====================================
+   MOBILE FIXES - POTTY CHART GENERATOR
+===================================== */
+
+
+/* Allow chart to scroll horizontally */
+.chart-scroll {
+
+    width:100%;
+    overflow-x:auto;
+    overflow-y:hidden;
+    padding-bottom:10px;
+
+}
+
+
+/* Keep the table layout intact */
+.potty-chart-table {
+
+    border-collapse:collapse;
+    width:max-content;
+    min-width:700px;
+
+}
+
+
+/* Make table cells smaller */
+.potty-chart-table th,
+.potty-chart-table td {
+
+    padding:8px;
+    text-align:center;
+    white-space:nowrap;
+
+}
+
+
+/* Activity names stay visible */
+.activity-label {
+
+    position:sticky;
+    left:0;
+    background:white;
+    z-index:2;
+    min-width:80px;
+
+}
+
+
+
+
+/* Reward stamp circles */
+
+.reward-circle {
+
+    width:30px;
+    height:30px;
+
+    border-radius:50%;
+
+    border:3px dashed #ddd;
+
+    background:white;
+
+    margin:auto;
+
+}
+
+
+
+
+/* MOBILE */
+
+@media(max-width:850px){
+
+
+.potty-generator .potty-container {
+
+    grid-template-columns:1fr;
+
+}
+
+
+
+.potty-form-card,
+.potty-preview-wrapper {
+
+    padding:20px;
+
+}
+
+
+
+.potty-preview {
+
+    padding:20px;
+
+    min-height:auto;
+
+}
+
+
+
+.potty-preview h3 {
+
+    font-size:24px;
+
+}
+
+
+
+.chart-icon {
+
+    font-size:45px;
+
+}
+
+
+
+}
+
+
+/* Small phones */
+
+@media(max-width:500px){
+
+
+.page {
+
+    overflow-x:hidden;
+
+}
+
+
+
+.potty-container {
+
+    padding:0 12px;
+
+}
+
+
+
+.potty-form-card,
+.potty-preview-wrapper {
+
+    border-radius:20px;
+
+}
+
+
+
+.potty-preview-wrapper h2 {
+
+    font-size:22px;
+
+}
+
+
+
+/* Make table easier to use */
+
+.potty-chart-table th,
+.potty-chart-table td {
+
+    padding:6px;
+
+    font-size:12px;
+
+}
+
+
+
+.activity-label {
+
+    min-width:65px;
+
+    font-size:12px;
+
+}
+
+
+
+.reward-circle {
+
+    width:24px;
+
+    height:24px;
+
+}
+
+
+
+/* Keep title readable */
+
+#chartTitle {
+
+    font-size:22px;
+
+}
+
+
+
+#chartSubtitle {
+
+    font-size:14px;
+
+}
+
+
+}
