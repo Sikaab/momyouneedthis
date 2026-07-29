@@ -973,85 +973,87 @@ height:60px;
 
 }
 
-/* =====================================
-   MOBILE FIXES - POTTY CHART GENERATOR
+
+/* ====================================
+   MOBILE
 ===================================== */
 
 
-/* Allow chart to scroll horizontally */
+/* Prevent the whole page from expanding */
+html,
+body {
+
+    max-width:100%;
+    overflow-x:hidden;
+
+}
+
+
+/* Fix grid children overflowing */
+.potty-container > * {
+
+    min-width:0;
+
+}
+
+
+/* Preview card must shrink */
+.potty-preview-wrapper {
+
+    min-width:0;
+    overflow:hidden;
+
+}
+
+
+
+/* Horizontal scrolling only happens inside chart */
 .chart-scroll {
 
     width:100%;
+    max-width:100%;
     overflow-x:auto;
     overflow-y:hidden;
-    padding-bottom:10px;
+
+    display:block;
+
+    -webkit-overflow-scrolling:touch;
 
 }
 
 
-/* Keep the table layout intact */
+
+/* Keep table horizontal */
 .potty-chart-table {
 
-    border-collapse:collapse;
     width:max-content;
     min-width:700px;
 
-}
-
-
-/* Make table cells smaller */
-.potty-chart-table th,
-.potty-chart-table td {
-
-    padding:8px;
-    text-align:center;
-    white-space:nowrap;
-
-}
-
-
-/* Activity names stay visible */
-.activity-label {
-
-    position:sticky;
-    left:0;
-    background:white;
-    z-index:2;
-    min-width:80px;
+    table-layout:auto;
 
 }
 
 
 
-
-/* Reward stamp circles */
-
+/* Keep stamps visible */
 .reward-circle {
 
-    width:30px;
-    height:30px;
-
-    border-radius:50%;
-
-    border:3px dashed #ddd;
-
-    background:white;
-
-    margin:auto;
+    flex-shrink:0;
 
 }
 
 
 
-
-/* MOBILE */
-
+/* Mobile layout */
 @media(max-width:850px){
 
 
 .potty-generator .potty-container {
 
-    grid-template-columns:1fr;
+    display:flex;
+    flex-direction:column;
+
+    width:100%;
 
 }
 
@@ -1060,7 +1062,7 @@ height:60px;
 .potty-form-card,
 .potty-preview-wrapper {
 
-    padding:20px;
+    width:100%;
 
 }
 
@@ -1068,25 +1070,8 @@ height:60px;
 
 .potty-preview {
 
-    padding:20px;
-
-    min-height:auto;
-
-}
-
-
-
-.potty-preview h3 {
-
-    font-size:24px;
-
-}
-
-
-
-.chart-icon {
-
-    font-size:45px;
+    width:100%;
+    box-sizing:border-box;
 
 }
 
@@ -1096,21 +1081,13 @@ height:60px;
 
 
 /* Small phones */
-
 @media(max-width:500px){
-
-
-.page {
-
-    overflow-x:hidden;
-
-}
-
 
 
 .potty-container {
 
-    padding:0 12px;
+    padding-left:12px;
+    padding-right:12px;
 
 }
 
@@ -1119,28 +1096,32 @@ height:60px;
 .potty-form-card,
 .potty-preview-wrapper {
 
-    border-radius:20px;
+    padding:18px;
 
 }
 
 
 
-.potty-preview-wrapper h2 {
+.potty-preview {
 
-    font-size:22px;
+    border-radius:25px;
 
 }
 
 
 
-/* Make table easier to use */
+.potty-chart-table th {
 
-.potty-chart-table th,
+    font-size:10px;
+    padding:6px;
+
+}
+
+
+
 .potty-chart-table td {
 
     padding:6px;
-
-    font-size:12px;
 
 }
 
@@ -1148,7 +1129,7 @@ height:60px;
 
 .activity-label {
 
-    min-width:65px;
+    min-width:60px;
 
     font-size:12px;
 
@@ -1158,27 +1139,8 @@ height:60px;
 
 .reward-circle {
 
-    width:24px;
-
-    height:24px;
-
-}
-
-
-
-/* Keep title readable */
-
-#chartTitle {
-
-    font-size:22px;
-
-}
-
-
-
-#chartSubtitle {
-
-    font-size:14px;
+    width:22px;
+    height:22px;
 
 }
 
