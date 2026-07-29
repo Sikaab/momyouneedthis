@@ -347,19 +347,14 @@ margin-top:25px;
 
 }
 
-
 .chart-scroll {
-
-width:100%;
-
-max-width:100%;
-
-overflow-x:auto;
-
-overflow-y:hidden;
-
--webkit-overflow-scrolling:touch;
-
+    width:100%;
+    overflow-x:auto;
+    overflow-y:hidden;
+    -webkit-overflow-scrolling:touch;
+    background:white;
+    border-radius:20px;
+    padding:10px;
 }
 
 
