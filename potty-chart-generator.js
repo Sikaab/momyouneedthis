@@ -605,18 +605,9 @@ emailModal.style.display =
 
 });
 
-
-
-
-
-
-
-
-
 /* ===========================
    PDF DOWNLOAD
 =========================== */
-
 
 downloadButton.addEventListener(
 "click",
@@ -630,45 +621,88 @@ document.getElementById("emailInput").value;
 
 if(!email){
 
-
 alert(
 "Please enter your email first."
 );
 
-
 return;
-
 
 }
 
 
 
-
-
-
 /*
-Create a temporary clean printable
-version so the PDF captures the
-whole chart instead of cutting it.
+Create temporary printable version
 */
+
+const clone =
+preview.cloneNode(true);
+
+
+
+clone.style.position = "absolute";
+clone.style.left = "-9999px";
+clone.style.top = "0";
+
+clone.style.width = "1100px";
+clone.style.height = "auto";
+
+clone.style.overflow = "visible";
+
+
+
+const scroll =
+clone.querySelector(".chart-scroll");
+
+
+if(scroll){
+
+scroll.style.overflow = "visible";
+scroll.style.width = "100%";
+
+}
+
+
+
+const table =
+clone.querySelector(".potty-chart-table");
+
+
+if(table){
+
+table.style.minWidth = "auto";
+table.style.width = "100%";
+
+}
+
+
+
+document.body.appendChild(clone);
+
+
+
 
 
 const canvas =
 await html2canvas(
-preview,
+clone,
 {
 
 scale:2,
 
 backgroundColor:"#ffffff",
 
-useCORS:true,
-
-windowWidth:1200
+useCORS:true
 
 }
 
 );
+
+
+
+
+
+document.body.removeChild(clone);
 
 
 
@@ -683,7 +717,6 @@ canvas.toDataURL(
 
 
 
-
 const {
 jsPDF
 }
@@ -693,13 +726,23 @@ window.jspdf;
 
 
 
+/*
+Landscape is better for 14 and 30 days
+*/
+
+const orientation =
+chartData.days > 7
+? "landscape"
+: "portrait";
+
+
 
 
 const pdf =
 new jsPDF(
 {
 
-orientation:"portrait",
+orientation:orientation,
 
 unit:"mm",
 
@@ -713,12 +756,18 @@ format:"a4"
 
 
 
+const pageWidth =
+orientation === "landscape"
+? 277
+: 190;
 
 
-const pageWidth = 190;
 
+const pageHeight =
+orientation === "landscape"
+? 190
+: 277;
 
-const pageHeight = 277;
 
 
 
@@ -731,52 +780,43 @@ canvas.width;
 
 
 
-
-
-/*
-If chart is too tall,
-fit it on the page
-*/
-
-
 if(imageHeight > pageHeight){
 
-imageHeight = pageHeight;
+const ratio =
+pageHeight / imageHeight;
+
+pdf.addImage(
+image,
+"PNG",
+10,
+10,
+pageWidth * ratio,
+pageHeight
+);
+
+
+}
+else{
+
+
+pdf.addImage(
+image,
+"PNG",
+10,
+10,
+pageWidth,
+imageHeight
+);
+
 
 }
 
 
 
 
-
-pdf.addImage(
-
-image,
-
-"PNG",
-
-10,
-
-10,
-
-pageWidth,
-
-imageHeight
-
-);
-
-
-
-
-
-
 pdf.save(
-
 `${chartData.name}-potty-chart.pdf`
-
 );
-
-
 
 
 
@@ -785,18 +825,9 @@ emailModal.style.display =
 "none";
 
 
-
 }
 
 );
-
-
-
-
-
-
-
-
 
 
 /* ===========================
