@@ -199,176 +199,156 @@ subtitle:"Small steps create big wins!"
 =========================== */
 
 
+
+  /* ===========================
+   CREATE WEEKLY POTTY TABLE
+=========================== */
+
+
+function createWeek(){
+
+
+const week =
+document.createElement("div");
+
+
+week.className =
+"potty-week";
+
+
+
+week.innerHTML = `
+
+<h4 class="week-title">
+Week 1
+</h4>
+
+
+<table class="potty-chart-table">
+
+
+<tr>
+
+<th class="empty-cell"></th>
+
+<th>Day 1</th>
+<th>Day 2</th>
+<th>Day 3</th>
+<th>Day 4</th>
+<th>Day 5</th>
+<th>Day 6</th>
+<th>Day 7</th>
+
+</tr>
+
+
+
+
+<tr>
+
+<td class="activity-label">
+🚽 Pee
+</td>
+
+<td><div class="reward-circle"></div></td>
+<td><div class="reward-circle"></div></td>
+<td><div class="reward-circle"></div></td>
+<td><div class="reward-circle"></div></td>
+<td><div class="reward-circle"></div></td>
+<td><div class="reward-circle"></div></td>
+<td><div class="reward-circle"></div></td>
+
+</tr>
+
+
+
+
+<tr>
+
+<td class="activity-label">
+💩 Poop
+</td>
+
+<td><div class="reward-circle"></div></td>
+<td><div class="reward-circle"></div></td>
+<td><div class="reward-circle"></div></td>
+<td><div class="reward-circle"></div></td>
+<td><div class="reward-circle"></div></td>
+<td><div class="reward-circle"></div></td>
+<td><div class="reward-circle"></div></td>
+
+</tr>
+
+
+
+
+
+<tr>
+
+<td class="activity-label">
+⭐ Tried
+</td>
+
+<td><div class="reward-circle"></div></td>
+<td><div class="reward-circle"></div></td>
+<td><div class="reward-circle"></div></td>
+<td><div class="reward-circle"></div></td>
+<td><div class="reward-circle"></div></td>
+<td><div class="reward-circle"></div></td>
+<td><div class="reward-circle"></div></td>
+
+</tr>
+
+
+</table>
+
+`;
+
+
+return week;
+
+}
+
+
+
+
+
+
+
 function createChartDays(totalDays){
 
 
 chartGrid.innerHTML = "";
 
 
-chartGrid.className =
-"chart-grid potty-week-container";
 
-
-const activities = [
-
-{
-icon:"🚽",
-name:"Pee"
-},
-
-{
-icon:"💩",
-name:"Poop"
-},
-
-{
-icon:"⭐",
-name:"Tried"
-}
-
-];
-
-
-const totalWeeks =
+const numberOfWeeks =
 Math.ceil(totalDays / 7);
 
-for(let week = 0; week < totalWeeks; week++){
 
-    const weekBox =
-    document.createElement("div");
 
-    weekBox.className =
-    "potty-week";
+for(let i = 1; i <= numberOfWeeks; i++){
 
-    const weekTitle =
-    document.createElement("h4");
 
-    weekTitle.className =
-    "week-title";
+const week =
+createWeek();
 
-    weekTitle.textContent =
-    `⭐ Week ${week + 1}`;
 
-    weekBox.appendChild(
-    weekTitle
-    );
 
-    const table =
-    document.createElement("table");
+week.querySelector(".week-title").textContent =
+`Week ${i}`;
 
-    table.className =
-    "potty-chart-table";
 
-    /* ===========================
-       HEADER
-    =========================== */
 
-    const header =
-    document.createElement("tr");
+chartGrid.appendChild(week);
 
-    let headerHTML =
-    `
-    <th class="empty-cell"></th>
-    `;
 
-    const startDay =
-    week * 7 + 1;
-
-    const endDay =
-    Math.min(
-    startDay + 6,
-    totalDays
-    );
-
-    for(
-    let day = startDay;
-    day <= endDay;
-    day++
-    ){
-
-    headerHTML +=
-    `
-
-    <th>
-    Day ${day}
-    </th>
-
-    `;
-
-    }
-
-    header.innerHTML =
-    headerHTML;
-
-    table.appendChild(
-    header
-    );
-
-    /* ===========================
-       ACTIVITIES
-    =========================== */
-
-    activities.forEach(activity=>{
-
-    const row =
-    document.createElement("tr");
-
-    let rowHTML =
-    `
-
-    <td class="activity-label">
-
-    ${activity.icon}
-
-    <span>
-    ${activity.name}
-    </span>
-
-    </td>
-
-    `;
-
-    for(
-    let day = startDay;
-    day <= endDay;
-    day++
-    ){
-
-    rowHTML +=
-    `
-
-    <td>
-
-    <div class="reward-circle">
-
-    </div>
-
-    </td>
-
-    `;
-
-    }
-
-    row.innerHTML =
-    rowHTML;
-
-    table.appendChild(
-    row
-    );
-
-    });
-
-    weekBox.appendChild(
-    table
-    );
-
-    chartGrid.appendChild(
-    weekBox
-    );
 
 }
 
+
 }
+
 
 /* ===========================
    UPDATE PREVIEW
