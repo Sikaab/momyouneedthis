@@ -27,7 +27,6 @@ const previewButton = document.getElementById("previewButton");
 
 const emailModal = document.getElementById("emailModal");
 const closeModal = document.getElementById("closeModal");
-
 const downloadButton = document.getElementById("downloadButton");
 
 
@@ -68,13 +67,13 @@ border:"#8bd66a"
 
 
 
-
 /* ===========================
  THEMES
 =========================== */
 
 
 const themes = {
+
 
 princess:{
 icon:"👑",
@@ -115,7 +114,6 @@ title:"{name}'s Animal Potty Adventure",
 subtitle:"Little steps create big achievements!"
 }
 
-
 };
 
 
@@ -123,69 +121,125 @@ subtitle:"Little steps create big achievements!"
 
 
 
+
 /* ===========================
- CREATE CHART TABLE
+ CREATE CHART
 =========================== */
 
 
-function createChartDays(days){
+function createChartDays(totalDays){
 
 
 chartGrid.innerHTML="";
 
 
 
-if(days === 30){
+let sections = Math.ceil(totalDays / 7);
 
-createThirtyDayChart();
 
-return;
+
+for(let section=0; section < sections; section++){
+
+
+let startDay =
+(section * 7) + 1;
+
+
+let endDay =
+Math.min(startDay + 6,totalDays);
+
+
+
+let days=[];
+
+
+
+for(let i=startDay;i<=endDay;i++){
+
+days.push(i);
 
 }
 
 
 
 
-let startDay = 1;
+
+const table =
+document.createElement("div");
 
 
+table.className =
+"week-chart";
 
-for(let week=0; week < days/7; week++){
 
-
-const table = document.createElement("div");
-
-table.className="week-chart";
 
 
 
 table.innerHTML = `
 
-<div class="activity-cell"></div>
 
-${["Mon","Tue","Wed","Thu","Fri","Sat","Sun"]
-.map(day=>`<div class="day-header">${day}</div>`).join("")}
+<div class="corner-cell"></div>
 
 
+${days.map(day=>`
 
-<div class="activity-label">🚽 Pee</div>
-${Array(7).fill("").map(()=>`
-<div class="check-box"></div>
+<div class="day-header">
+Day ${day}
+</div>
+
 `).join("")}
 
 
 
-<div class="activity-label">💩 Poop</div>
-${Array(7).fill("").map(()=>`
-<div class="check-box"></div>
+
+<div class="activity-label">
+🚽 Pee
+</div>
+
+
+${days.map(()=>`
+
+<div class="stamp-box">
+<span>⭐</span>
+</div>
+
 `).join("")}
 
 
 
-<div class="activity-label">⭐ Tried</div>
-${Array(7).fill("").map(()=>`
-<div class="check-box"></div>
+
+
+
+<div class="activity-label">
+💩 Poop
+</div>
+
+
+${days.map(()=>`
+
+<div class="stamp-box">
+<span>⭐</span>
+</div>
+
 `).join("")}
+
+
+
+
+
+<div class="activity-label">
+⭐ Tried
+</div>
+
+
+${days.map(()=>`
+
+<div class="stamp-box">
+<span>⭐</span>
+</div>
+
+`).join("")}
+
 
 
 `;
@@ -195,80 +249,28 @@ ${Array(7).fill("").map(()=>`
 chartGrid.appendChild(table);
 
 
-}
-
 
 }
-
-
-
-
-
-
-
-function createThirtyDayChart(){
-
-
-const calendar =
-document.createElement("div");
-
-
-calendar.className="month-chart";
-
-
-
-for(let i=1;i<=30;i++){
-
-
-const day=document.createElement("div");
-
-
-day.className="month-day";
-
-
-day.innerHTML=`
-
-<strong>
-Day ${i}
-</strong>
-
-
-<div>
-🚽 ☐
-</div>
-
-
-<div>
-💩 ☐
-</div>
-
-
-<div>
-⭐ ☐
-</div>
-
-
-`;
-
-
-calendar.appendChild(day);
 
 
 }
 
 
 
-chartGrid.appendChild(calendar);
 
 
-}
+
+
+
+
 
 /* ===========================
-   UPDATE PREVIEW
+ UPDATE PREVIEW
 =========================== */
 
 
 function updatePreview(){
+
 
 
 chartData.name =
@@ -305,9 +307,6 @@ colors[selectedColor];
 
 
 
-/* UPDATE MAIN PREVIEW */
-
-
 preview.className =
 `potty-preview ${theme.className}`;
 
@@ -325,10 +324,6 @@ color.border;
 
 
 
-
-
-
-/* TITLE */
 
 
 document.getElementById("themeIcon")
@@ -350,48 +345,12 @@ chartData.name
 
 
 
-
 document.getElementById("chartSubtitle")
 .textContent =
 theme.subtitle;
 
 
 
-
-
-
-/* CHANGE PRINT ORIENTATION CLASS */
-
-
-preview.classList.remove(
-"portrait-chart",
-"landscape-chart"
-);
-
-
-
-if(chartData.days === 7){
-
-preview.classList.add(
-"portrait-chart"
-);
-
-}
-
-else{
-
-preview.classList.add(
-"landscape-chart"
-);
-
-}
-
-
-
-
-
-
-/* CREATE TABLE */
 
 
 createChartDays(
@@ -408,9 +367,8 @@ chartData.days
 
 
 
-
 /* ===========================
-   EVENTS
+ EVENTS
 =========================== */
 
 
@@ -435,11 +393,6 @@ updatePreview
 
 
 
-
-
-
-
-/* COLORS */
 
 
 document
@@ -471,9 +424,8 @@ updatePreview();
 
 
 
-
 /* ===========================
-   MODAL
+ MODAL
 =========================== */
 
 
@@ -481,26 +433,18 @@ previewButton.addEventListener(
 "click",
 ()=>{
 
-
 updatePreview();
-
 
 emailModal.style.display="flex";
 
-
 });
-
-
-
 
 
 closeModal.addEventListener(
 "click",
 ()=>{
 
-
 emailModal.style.display="none";
-
 
 });
 
@@ -508,26 +452,11 @@ emailModal.style.display="none";
 
 
 
-/* CLOSE MODAL OUTSIDE */
 
 
-window.addEventListener(
-"click",
-(e)=>{
 
-
-if(e.target === emailModal){
-
-emailModal.style.display="none";
-
-}
-
-
-});
-
- 
 /* ===========================
-   PDF DOWNLOAD
+ PDF DOWNLOAD
 =========================== */
 
 
@@ -543,34 +472,13 @@ document.getElementById("emailInput").value;
 
 if(!email){
 
-
 alert(
 "Please enter your email first."
 );
 
-
 return;
 
 }
-
-
-
-
-
-/*
-   Temporarily remove preview limitations
-   so the whole chart is captured
-*/
-
-
-const oldOverflow =
-preview.style.overflow;
-
-
-
-preview.style.overflow =
-"visible";
-
 
 
 
@@ -584,24 +492,11 @@ scale:2,
 
 backgroundColor:"#ffffff",
 
-useCORS:true,
-
-scrollX:0,
-
-scrollY:-window.scrollY
+useCORS:true
 
 }
 
 );
-
-
-
-
-
-preview.style.overflow =
-oldOverflow;
-
-
 
 
 
@@ -616,7 +511,6 @@ canvas.toDataURL(
 
 
 
-
 const {
 jsPDF
 } =
@@ -625,19 +519,8 @@ window.jspdf;
 
 
 
-
-/*
-   7 DAYS = PORTRAIT
-   14/30 DAYS = LANDSCAPE
-*/
-
-
-let orientation =
-chartData.days === 7
-?
-"portrait"
-:
-"landscape";
+const landscape =
+chartData.days > 7;
 
 
 
@@ -646,7 +529,8 @@ chartData.days === 7
 const pdf =
 new jsPDF({
 
-orientation:orientation,
+orientation:
+landscape ? "landscape":"portrait",
 
 unit:"mm",
 
@@ -659,45 +543,13 @@ format:"a4"
 
 
 
-
-let pageWidth;
-let pageHeight;
-
-
-
-if(orientation==="portrait"){
-
-
-pageWidth = 190;
-
-pageHeight = 277;
-
-
-}
-
-else{
-
-
-pageWidth = 277;
-
-pageHeight = 190;
-
-
-}
+let width =
+landscape ? 277 : 190;
 
 
 
-
-
-
-
-let imageWidth =
-pageWidth;
-
-
-
-let imageHeight =
-(canvas.height * imageWidth)
+let height =
+(canvas.height * width)
 /
 canvas.width;
 
@@ -705,42 +557,25 @@ canvas.width;
 
 
 
-
-/*
-   Scale down if too tall
-*/
+let maxHeight =
+landscape ? 190 : 277;
 
 
-if(imageHeight > pageHeight){
 
 
-imageHeight = pageHeight;
+if(height > maxHeight){
 
 
-imageWidth =
-(canvas.width * imageHeight)
+height=maxHeight;
+
+
+width =
+(canvas.width * height)
 /
 canvas.height;
 
 
 }
-
-
-
-
-
-
-
-
-const x =
-(pageWidth-imageWidth)/2;
-
-
-
-const y =
-(pageHeight-imageHeight)/2;
-
-
 
 
 
@@ -753,41 +588,30 @@ image,
 
 "PNG",
 
-x,
+(landscape?277:210-width)/2,
 
-y,
+10,
 
-imageWidth,
+width,
 
-imageHeight
+height
 
 );
-
-
 
 
 
 
 
 pdf.save(
-
 `${chartData.name}-potty-chart.pdf`
-
 );
 
 
 
+emailModal.style.display="none";
 
 
-emailModal.style.display =
-"none";
-
-
-
-}
-
-);
-
+});
 
 
 
@@ -796,16 +620,8 @@ emailModal.style.display =
 
 
 /* ===========================
-   INITIAL LOAD
+ INITIALIZE
 =========================== */
 
 
-document.addEventListener(
-"DOMContentLoaded",
-()=>{
-
-
 updatePreview();
-
-
-});
