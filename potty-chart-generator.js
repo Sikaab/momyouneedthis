@@ -4,61 +4,111 @@
 ===================================== */
 
 
+/* ===========================
+   STATE
+=========================== */
+
+
 let selectedColor = "pink";
 
 
 const chartData = {
+
     name:"Your Child",
     theme:"princess",
     days:7,
     color:"pink"
+
 };
-
-
-
-const childNameInput = document.getElementById("childName");
-const chartTheme = document.getElementById("chartTheme");
-const chartLength = document.getElementById("chartLength");
-
-const preview = document.getElementById("pottyPreview");
-const chartGrid = document.getElementById("chartGrid");
-
-const previewButton = document.getElementById("previewButton");
-
-const emailModal = document.getElementById("emailModal");
-const closeModal = document.getElementById("closeModal");
-const downloadButton = document.getElementById("downloadButton");
 
 
 
 
 
 /* ===========================
- COLORS
+   ELEMENTS
+=========================== */
+
+
+const childNameInput =
+document.getElementById("childName");
+
+
+const chartTheme =
+document.getElementById("chartTheme");
+
+
+const chartLength =
+document.getElementById("chartLength");
+
+
+const preview =
+document.getElementById("pottyPreview");
+
+
+const chartGrid =
+document.getElementById("chartGrid");
+
+
+const previewButton =
+document.getElementById("previewButton");
+
+
+const emailModal =
+document.getElementById("emailModal");
+
+
+const closeModal =
+document.getElementById("closeModal");
+
+
+const downloadButton =
+document.getElementById("downloadButton");
+
+
+
+
+
+
+/* ===========================
+   COLORS
 =========================== */
 
 
 const colors = {
 
+
 pink:{
+
 background:"#fff0f7",
 border:"#ff9fc9"
+
 },
+
 
 purple:{
+
 background:"#f8efff",
 border:"#d59cff"
+
 },
+
 
 blue:{
+
 background:"#eef3ff",
 border:"#8aa9ff"
+
 },
 
+
 green:{
+
 background:"#efffe8",
 border:"#8bd66a"
+
 }
+
 
 };
 
@@ -67,8 +117,10 @@ border:"#8bd66a"
 
 
 
+
+
 /* ===========================
- THEMES
+   THEMES
 =========================== */
 
 
@@ -76,43 +128,77 @@ const themes = {
 
 
 princess:{
+
 icon:"👑",
+
 className:"theme-princess",
+
 title:"{name}'s Princess Potty Adventure",
+
 subtitle:"Fill your chart and become a big kid!"
+
 },
+
+
 
 
 dinosaur:{
+
 icon:"🦖",
+
 className:"theme-dinosaur",
+
 title:"{name}'s Dinosaur Potty Quest",
-subtitle:"Roar! Every success is amazing!"
+
+subtitle:"Roar! Every success counts!"
+
 },
+
+
 
 
 unicorn:{
+
 icon:"🦄",
+
 className:"theme-unicorn",
+
 title:"{name}'s Magical Unicorn Journey",
-subtitle:"Sparkles and potty wins!"
+
+subtitle:"Sparkles, smiles, and potty wins!"
+
 },
+
+
 
 
 space:{
+
 icon:"🚀",
+
 className:"theme-space",
+
 title:"{name}'s Space Potty Mission",
-subtitle:"Blast off toward success!"
+
+subtitle:"Blast off toward big kid success!"
+
 },
 
 
+
+
 animals:{
+
 icon:"🐻",
+
 className:"theme-animals",
+
 title:"{name}'s Animal Potty Adventure",
-subtitle:"Little steps create big achievements!"
+
+subtitle:"Small steps create big wins!"
+
 }
+
 
 };
 
@@ -122,127 +208,176 @@ subtitle:"Little steps create big achievements!"
 
 
 
+
+
 /* ===========================
- CREATE CHART
+   CREATE POTTY TABLE
 =========================== */
 
 
 function createChartDays(totalDays){
 
 
-chartGrid.innerHTML="";
+chartGrid.innerHTML = "";
 
 
 
-let sections = Math.ceil(totalDays / 7);
-
-
-
-for(let section=0; section < sections; section++){
-
-
-let startDay =
-(section * 7) + 1;
-
-
-let endDay =
-Math.min(startDay + 6,totalDays);
-
-
-
-let days=[];
-
-
-
-for(let i=startDay;i<=endDay;i++){
-
-days.push(i);
-
-}
+chartGrid.className =
+"chart-grid potty-table";
 
 
 
 
 
 const table =
-document.createElement("div");
+document.createElement("table");
+
 
 
 table.className =
-"week-chart";
-
-
-
-
-
-table.innerHTML = `
-
-
-<div class="corner-cell"></div>
-
-
-${days.map(day=>`
-
-<div class="day-header">
-Day ${day}
-</div>
-
-`).join("")}
-
-
-
-
-<div class="activity-label">
-🚽 Pee
-</div>
-
-
-${days.map(()=>`
-
-<div class="stamp-box">
-<span>⭐</span>
-</div>
-
-`).join("")}
+"potty-chart-table";
 
 
 
 
 
 
-<div class="activity-label">
-💩 Poop
-</div>
+
+/* HEADER ROW */
 
 
-${days.map(()=>`
-
-<div class="stamp-box">
-<span>⭐</span>
-</div>
-
-`).join("")}
+const header =
+document.createElement("tr");
 
 
 
+let headerHTML =
+`
+<th class="empty-cell"></th>
+`;
 
 
-<div class="activity-label">
-⭐ Tried
-</div>
+
+for(let i = 1; i <= totalDays; i++){
 
 
-${days.map(()=>`
+headerHTML +=
+`
 
-<div class="stamp-box">
-<span>⭐</span>
-</div>
-
-`).join("")}
-
-
+<th>
+Day ${i}
+</th>
 
 `;
+
+}
+
+
+
+header.innerHTML =
+headerHTML;
+
+
+
+table.appendChild(header);
+
+
+
+
+
+
+
+
+/* ACTIVITY ROWS */
+
+
+const activities = [
+
+{
+icon:"🚽",
+name:"Pee"
+},
+
+{
+icon:"💩",
+name:"Poop"
+},
+
+{
+icon:"⭐",
+name:"Tried"
+}
+
+];
+
+
+
+
+
+
+activities.forEach(activity=>{
+
+
+const row =
+document.createElement("tr");
+
+
+
+let html =
+
+`
+
+<td class="activity-label">
+
+${activity.icon}
+<span>
+${activity.name}
+</span>
+
+</td>
+
+`;
+
+
+
+
+
+for(let i = 1; i <= totalDays; i++){
+
+
+html +=
+
+`
+
+<td>
+
+<div class="reward-circle">
+
+</div>
+
+</td>
+
+`;
+
+
+
+}
+
+
+
+row.innerHTML =
+html;
+
+
+
+table.appendChild(row);
+
+
+
+});
+
+
+
 
 
 
@@ -252,25 +387,12 @@ chartGrid.appendChild(table);
 
 }
 
-
-}
-
-
-
-
-
-
-
-
-
-
 /* ===========================
- UPDATE PREVIEW
+   UPDATE PREVIEW
 =========================== */
 
 
 function updatePreview(){
-
 
 
 chartData.name =
@@ -307,10 +429,13 @@ colors[selectedColor];
 
 
 
+
+
+/* UPDATE PREVIEW STYLE */
+
+
 preview.className =
 `potty-preview ${theme.className}`;
-
-
 
 
 
@@ -326,10 +451,14 @@ color.border;
 
 
 
+
+
+/* UPDATE TEXT */
+
+
 document.getElementById("themeIcon")
 .textContent =
 theme.icon;
-
 
 
 
@@ -353,6 +482,11 @@ theme.subtitle;
 
 
 
+
+
+/* CREATE TABLE */
+
+
 createChartDays(
 chartData.days
 );
@@ -367,15 +501,20 @@ chartData.days
 
 
 
+
+
+
 /* ===========================
- EVENTS
+   EVENTS
 =========================== */
+
 
 
 childNameInput.addEventListener(
 "input",
 updatePreview
 );
+
 
 
 
@@ -386,10 +525,13 @@ updatePreview
 
 
 
+
 chartLength.addEventListener(
 "change",
 updatePreview
 );
+
+
 
 
 
@@ -424,8 +566,11 @@ updatePreview();
 
 
 
+
+
+
 /* ===========================
- MODAL
+   EMAIL MODAL
 =========================== */
 
 
@@ -433,20 +578,33 @@ previewButton.addEventListener(
 "click",
 ()=>{
 
+
 updatePreview();
 
-emailModal.style.display="flex";
+
+emailModal.style.display =
+"flex";
+
 
 });
+
+
+
+
+
 
 
 closeModal.addEventListener(
 "click",
 ()=>{
 
-emailModal.style.display="none";
+
+emailModal.style.display =
+"none";
+
 
 });
+
 
 
 
@@ -456,7 +614,7 @@ emailModal.style.display="none";
 
 
 /* ===========================
- PDF DOWNLOAD
+   PDF DOWNLOAD
 =========================== */
 
 
@@ -472,15 +630,27 @@ document.getElementById("emailInput").value;
 
 if(!email){
 
+
 alert(
 "Please enter your email first."
 );
 
+
 return;
+
 
 }
 
 
+
+
+
+
+/*
+Create a temporary clean printable
+version so the PDF captures the
+whole chart instead of cutting it.
+*/
 
 
 const canvas =
@@ -492,7 +662,9 @@ scale:2,
 
 backgroundColor:"#ffffff",
 
-useCORS:true
+useCORS:true,
+
+windowWidth:1200
 
 }
 
@@ -511,45 +683,48 @@ canvas.toDataURL(
 
 
 
+
 const {
 jsPDF
-} =
+}
+=
 window.jspdf;
 
-
-
-
-const landscape =
-chartData.days > 7;
 
 
 
 
 
 const pdf =
-new jsPDF({
+new jsPDF(
+{
 
-orientation:
-landscape ? "landscape":"portrait",
+orientation:"portrait",
 
 unit:"mm",
 
 format:"a4"
 
-});
+}
+
+);
 
 
 
 
 
 
-let width =
-landscape ? 277 : 190;
+
+const pageWidth = 190;
+
+
+const pageHeight = 277;
 
 
 
-let height =
-(canvas.height * width)
+
+let imageHeight =
+(canvas.height * pageWidth)
 /
 canvas.width;
 
@@ -557,26 +732,18 @@ canvas.width;
 
 
 
-let maxHeight =
-landscape ? 190 : 277;
+
+/*
+If chart is too tall,
+fit it on the page
+*/
 
 
+if(imageHeight > pageHeight){
 
-
-if(height > maxHeight){
-
-
-height=maxHeight;
-
-
-width =
-(canvas.width * height)
-/
-canvas.height;
-
+imageHeight = pageHeight;
 
 }
-
 
 
 
@@ -588,30 +755,43 @@ image,
 
 "PNG",
 
-(landscape?277:210-width)/2,
+10,
 
 10,
 
-width,
+pageWidth,
 
-height
+imageHeight
 
 );
+
 
 
 
 
 
 pdf.save(
+
 `${chartData.name}-potty-chart.pdf`
+
 );
 
 
 
-emailModal.style.display="none";
 
 
-});
+
+emailModal.style.display =
+"none";
+
+
+
+}
+
+);
+
+
+
 
 
 
@@ -620,7 +800,7 @@ emailModal.style.display="none";
 
 
 /* ===========================
- INITIALIZE
+   INITIAL LOAD
 =========================== */
 
 
