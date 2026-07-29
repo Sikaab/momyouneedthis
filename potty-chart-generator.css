@@ -917,7 +917,8 @@ padding:20px;
 
 
 .potty-preview {
-
+    
+background:white;
 padding:20px;
 
 }
@@ -1037,7 +1038,8 @@ grid-template-columns:1fr;
 .potty-week-container {
 
 display:flex;
-
+background: white;
+width:100%;
 flex-direction:column;
 
 gap:25px;
@@ -1047,11 +1049,12 @@ gap:25px;
 
 .potty-week {
 
-background:white;
-
-padding:15px;
-
-border-radius:20px;
+    background:white;
+    padding:15px;
+    border-radius:20px;
+    box-shadow:0 5px 15px rgba(0,0,0,.05);
+    width:100%;
+    box-sizing:border-box;
 
 }
 
