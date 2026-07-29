@@ -235,8 +235,14 @@ cursor:pointer;
 
 transition:.2s;
 
-}
 
+/* Center text */
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+
+}
 
 
 .download-button:hover {
