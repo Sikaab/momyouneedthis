@@ -31,7 +31,7 @@ padding:40px 0;
 
 display:grid;
 
-grid-template-columns:1fr 1fr;
+grid-template-columns:minmax(0,1fr) minmax(0,1fr);
 
 gap:35px;
 
@@ -66,6 +66,10 @@ box-shadow:
 box-sizing:border-box;
 
 width:100%;
+
+min-width:0;
+
+overflow:hidden;
 
 }
 
@@ -271,7 +275,6 @@ transform:translateY(-2px);
 
 .potty-preview {
 
-
 position:relative;
 
 padding:30px;
@@ -283,6 +286,10 @@ border:5px solid;
 text-align:center;
 
 overflow:hidden;
+
+width:100%;
+
+box-sizing:border-box;
 
 min-height:520px;
 
@@ -345,7 +352,11 @@ margin-top:25px;
 
 width:100%;
 
+max-width:100%;
+
 overflow-x:auto;
+
+overflow-y:hidden;
 
 -webkit-overflow-scrolling:touch;
 
@@ -354,14 +365,13 @@ overflow-x:auto;
 
 .potty-chart-table {
 
-
 border-collapse:separate;
 
 border-spacing:5px;
 
 width:max-content;
 
-min-width:100%;
+max-width:none;
 
 }
 
@@ -896,7 +906,27 @@ box-shadow:
 
 grid-template-columns:1fr;
 
+gap:25px;
+
 }
+
+
+
+.potty-form-card,
+.potty-preview-wrapper {
+
+padding:20px;
+
+}
+
+
+
+.potty-preview {
+
+padding:20px;
+
+}
+
 
 
 .potty-benefit-grid {
@@ -909,22 +939,33 @@ grid-template-columns:1fr 1fr;
 }
 
 
+
 @media(max-width:500px){
 
 
 .potty-container {
 
-padding:0 15px;
+padding:0 12px;
 
 }
+
 
 
 .potty-form-card,
 .potty-preview-wrapper {
 
-padding:20px;
+border-radius:20px;
 
 }
+
+
+
+.potty-preview-wrapper h2 {
+
+font-size:22px;
+
+}
+
 
 
 .chart-icon {
@@ -934,18 +975,62 @@ font-size:45px;
 }
 
 
-.potty-preview h3 {
+
+#chartTitle {
 
 font-size:22px;
 
 }
 
 
-.potty-chart-table th {
 
-/* keep existing responsive rules */
+#chartSubtitle {
+
+font-size:14px;
+
 }
 
+
+
+.potty-chart-table th,
+.potty-chart-table td {
+
+padding:6px;
+
+font-size:12px;
+
+}
+
+
+
+.reward-circle {
+
+width:24px;
+
+height:24px;
+
+}
+
+
+
+.activity-label {
+
+min-width:65px;
+
+font-size:12px;
+
+}
+
+
+
+.potty-benefit-grid {
+
+grid-template-columns:1fr;
+
+}
+
+
+}
 
 
 
