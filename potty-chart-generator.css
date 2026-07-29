@@ -45,6 +45,7 @@ align-items:start;
 
 
 
+
 /* =====================================
    CARDS
 ===================================== */
@@ -80,6 +81,8 @@ font-weight:900;
 margin-top:0;
 
 }
+
+
 
 
 
@@ -126,6 +129,7 @@ font-size:16px;
 box-sizing:border-box;
 
 }
+
 
 
 
@@ -206,6 +210,8 @@ background:#d9f7dc;
 
 
 
+
+
 /* =====================================
  BUTTON
 ===================================== */
@@ -257,6 +263,7 @@ transform:translateY(-2px);
 
 
 
+
 /* =====================================
  PREVIEW
 ===================================== */
@@ -284,7 +291,6 @@ transition:.3s;
 }
 
 
-
 .chart-icon {
 
 font-size:60px;
@@ -294,7 +300,6 @@ position:relative;
 z-index:2;
 
 }
-
 
 
 
@@ -309,7 +314,6 @@ line-height:1.2;
 margin:15px 0;
 
 }
-
 
 
 .potty-preview p {
@@ -337,7 +341,6 @@ margin-top:25px;
 }
 
 
-
 .chart-scroll {
 
 width:100%;
@@ -347,7 +350,6 @@ overflow-x:auto;
 -webkit-overflow-scrolling:touch;
 
 }
-
 
 
 .potty-chart-table {
@@ -362,7 +364,6 @@ width:max-content;
 min-width:100%;
 
 }
-
 
 
 .potty-chart-table th {
@@ -383,7 +384,6 @@ white-space:nowrap;
 }
 
 
-
 .potty-chart-table td {
 
 
@@ -398,13 +398,11 @@ text-align:center;
 }
 
 
-
 .empty-cell {
 
 background:transparent!important;
 
 }
-
 
 
 .activity-label {
@@ -419,7 +417,6 @@ white-space:nowrap;
 min-width:80px;
 
 }
-
 
 
 .reward-circle {
@@ -473,8 +470,6 @@ color:#ff5f9e;
 
 
 
-
-
 .theme-dinosaur {
 
 background:
@@ -494,8 +489,6 @@ border-color:#8bd66a;
 color:#4c9c38;
 
 }
-
-
 
 
 
@@ -520,9 +513,6 @@ color:#a34ee8;
 }
 
 
-
-
-
 .theme-space {
 
 background:
@@ -544,9 +534,6 @@ color:#4169e1;
 }
 
 
-
-
-
 .theme-animals {
 
 background:
@@ -566,7 +553,6 @@ border-color:#ffc85c;
 color:#e89b00;
 
 }
-
 
 
 
@@ -596,7 +582,6 @@ z-index:1;
 }
 
 
-
 .theme-svg {
 
 display:none;
@@ -608,7 +593,6 @@ height:100%;
 }
 
 
-
 .theme-princess .princess-svg {
 
 display:block;
@@ -616,7 +600,6 @@ display:block;
 fill:#ffb6d9;
 
 }
-
 
 
 .theme-dinosaur .dinosaur-svg {
@@ -628,7 +611,6 @@ fill:#8bd66a;
 }
 
 
-
 .theme-unicorn .unicorn-svg {
 
 display:block;
@@ -638,7 +620,6 @@ fill:#d59cff;
 }
 
 
-
 .theme-space .space-svg {
 
 display:block;
@@ -646,7 +627,6 @@ display:block;
 fill:#8aa9ff;
 
 }
-
 
 
 .theme-animals .animals-svg {
@@ -685,7 +665,6 @@ box-shadow:
 }
 
 
-
 .reward-box h4 {
 
 font-size:22px;
@@ -693,7 +672,6 @@ font-size:22px;
 margin:0;
 
 }
-
 
 
 .reward-stars {
@@ -708,7 +686,6 @@ gap:12px;
 margin-top:15px;
 
 }
-
 
 
 .reward-stars span {
@@ -727,11 +704,6 @@ background:#fffaf0;
 }
 
 
-
-
-
-
-
 .footer-message {
 
 
@@ -745,7 +717,7 @@ font-weight:900;
 
 
 /* =====================================
-   EMAIL MODAL
+ EMAIL MODAL
 ===================================== */
 
 
@@ -770,7 +742,6 @@ padding:20px;
 }
 
 
-
 .potty-modal-content {
 
 background:white;
@@ -792,7 +763,6 @@ position:relative;
 }
 
 
-
 .potty-modal-content h2 {
 
 font-size:26px;
@@ -806,7 +776,6 @@ text-align:center;
 }
 
 
-
 .potty-modal-content p {
 
 text-align:center;
@@ -814,9 +783,6 @@ text-align:center;
 line-height:1.5;
 
 }
-
-
-
 
 
 .potty-modal input {
@@ -838,8 +804,6 @@ box-sizing:border-box;
 margin-top:15px;
 
 }
-
-
 
 
 .potty-close {
@@ -881,14 +845,11 @@ line-height:1;
 }
 
 
-
 .potty-close:hover {
 
 transform:scale(1.1);
 
 }
-
-
 
 
 /* =====================================
@@ -908,7 +869,6 @@ gap:20px;
 }
 
 
-
 .potty-benefit-grid div {
 
 
@@ -922,11 +882,6 @@ box-shadow:
 0 5px 20px rgba(0,0,0,.06);
 
 }
-
-
-
-
-
 
 
 /* =====================================
@@ -944,7 +899,6 @@ grid-template-columns:1fr;
 }
 
 
-
 .potty-benefit-grid {
 
 grid-template-columns:1fr 1fr;
@@ -952,15 +906,10 @@ grid-template-columns:1fr 1fr;
 }
 
 
-
 }
 
 
-
-
-
 @media(max-width:500px){
-
 
 
 .potty-container {
@@ -968,7 +917,6 @@ grid-template-columns:1fr 1fr;
 padding:0 15px;
 
 }
-
 
 
 .potty-form-card,
@@ -979,13 +927,11 @@ padding:20px;
 }
 
 
-
 .chart-icon {
 
 font-size:45px;
 
 }
-
 
 
 .potty-preview h3 {
@@ -995,236 +941,51 @@ font-size:22px;
 }
 
 
-
 .potty-chart-table th {
 
-font-size:11px;
-
-padding:7px;
-
+/* keep existing responsive rules */
 }
 
 
 
-.potty-chart-table td {
 
-padding:7px;
-
-}
-
+/* ===========================
+   WEEKLY CHART SECTIONS
+=========================== */
 
 
-.reward-circle {
+.potty-week-container {
 
-width:24px;
+display:flex;
 
-height:24px;
+flex-direction:column;
 
-}
-
-
-
-.activity-label {
-
-min-width:70px;
-
-font-size:13px;
+gap:25px;
 
 }
 
 
+.potty-week {
 
-.reward-stars span {
+background:white;
 
-width:32px;
+padding:15px;
 
-height:32px;
-
-}
-
-
-
-.theme-art {
-
-width:70px;
-
-height:60px;
+border-radius:20px;
 
 }
 
 
-}
+.week-title {
 
+font-size:20px;
 
-/* ====================================
-   MOBILE
-===================================== */
+font-weight:900;
 
+margin:0 0 15px;
 
-/* Prevent the whole page from expanding */
-html,
-body {
+text-align:left;
 
-    max-width:100%;
-    overflow-x:hidden;
-
-}
-
-
-/* Fix grid children overflowing */
-.potty-container > * {
-
-    min-width:0;
-
-}
-
-
-/* Preview card must shrink */
-.potty-preview-wrapper {
-
-    min-width:0;
-    overflow:hidden;
-
-}
-
-
-
-/* Horizontal scrolling only happens inside chart */
-.chart-scroll {
-
-    width:100%;
-    max-width:100%;
-    overflow-x:auto;
-    overflow-y:hidden;
-
-    display:block;
-
-    -webkit-overflow-scrolling:touch;
-
-}
-
-
-
-/* Keep table horizontal */
-.potty-chart-table {
-
-    width:max-content;
-    min-width:700px;
-
-    table-layout:auto;
-
-}
-
-
-
-/* Keep stamps visible */
-.reward-circle {
-
-    flex-shrink:0;
-
-}
-
-
-
-/* Mobile layout */
-@media(max-width:850px){
-
-
-.potty-generator .potty-container {
-
-    display:flex;
-    flex-direction:column;
-
-    width:100%;
-
-}
-
-
-
-.potty-form-card,
-.potty-preview-wrapper {
-
-    width:100%;
-
-}
-
-
-
-.potty-preview {
-
-    width:100%;
-    box-sizing:border-box;
-
-}
-
-
-
-}
-
-
-/* Small phones */
-@media(max-width:500px){
-
-
-.potty-container {
-
-    padding-left:12px;
-    padding-right:12px;
-
-}
-
-
-
-.potty-form-card,
-.potty-preview-wrapper {
-
-    padding:18px;
-
-}
-
-
-
-.potty-preview {
-
-    border-radius:25px;
-
-}
-
-
-
-.potty-chart-table th {
-
-    font-size:10px;
-    padding:6px;
-
-}
-
-
-
-.potty-chart-table td {
-
-    padding:6px;
-
-}
-
-
-
-.activity-label {
-
-    min-width:60px;
-
-    font-size:12px;
-
-}
-
-
-
-.reward-circle {
-
-    width:22px;
-    height:22px;
-
-}
-
+color:#ff6fae;
 
 }
