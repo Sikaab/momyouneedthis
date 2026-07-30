@@ -584,7 +584,7 @@ async()=>{
     clone.style.left = "-9999px";
     clone.style.top = "0";
 
-    clone.style.width = "1100px";
+    clone.style.width = "1400px";
     clone.style.height = "auto";
 
     clone.style.overflow = "visible";
@@ -616,7 +616,7 @@ async()=>{
     clone,
     {
 
-    scale:2,
+    scale:3,
 
     backgroundColor:"#ffffff",
 
@@ -647,62 +647,71 @@ async()=>{
     ? "landscape"
     : "portrait";
 
-    const pdf =
-    new jsPDF(
-    {
-
-    orientation:orientation,
-
+ 
+   const pdf =
+new jsPDF(
+{
+    orientation:"landscape",
     unit:"mm",
-
     format:"a4"
+}
+);
 
-    }
 
-    );
 
-    const pageWidth =
-    orientation === "landscape"
-    ? 277
-    : 190;
+const pageWidth = 297;
+const pageHeight = 210;
 
-    const pageHeight =
-    orientation === "landscape"
-    ? 190
-    : 277;
 
-    let imageHeight =
-    (canvas.height * pageWidth)
-    /
-    canvas.width;
 
-    if(imageHeight > pageHeight){
+// Add a little zoom
+const margin = 5;
 
-    const ratio =
-    pageHeight / imageHeight;
+const availableWidth = pageWidth - (margin * 2);
+const availableHeight = pageHeight - (margin * 2);
 
-    pdf.addImage(
-    image,
-    "PNG",
-    10,
-    10,
-    pageWidth * ratio,
-    pageHeight
-    );
 
-    }
-    else{
 
-    pdf.addImage(
-    image,
-    "PNG",
-    10,
-    10,
-    pageWidth,
-    imageHeight
-    );
+let imageWidth = availableWidth;
 
-    }
+let imageHeight =
+(canvas.height * imageWidth) /
+canvas.width;
+
+
+
+// If too tall, scale down slightly
+if(imageHeight > availableHeight){
+
+imageHeight = availableHeight;
+
+imageWidth =
+(canvas.width * imageHeight) /
+canvas.height;
+
+}
+
+
+
+// Center the chart on page
+
+const x =
+(pageWidth - imageWidth) / 2;
+
+
+const y =
+(pageHeight - imageHeight) / 2;
+
+
+
+pdf.addImage(
+image,
+"PNG",
+x,
+y,
+imageWidth,
+imageHeight
+);
 
     pdf.save(
     `${chartData.name}-potty-chart.pdf`
