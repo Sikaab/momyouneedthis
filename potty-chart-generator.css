@@ -380,20 +380,19 @@ min-width:72px;
 
 }
 
-
-.potty-chart-table td {
-
+.potty-chart-table td{
 
 background:white;
 
-padding:10px;
+padding:14px;
 
-border-radius:12px;
+border-radius:14px;
 
 text-align:center;
 
-}
+min-width:72px;
 
+}
 
 .empty-cell {
 
@@ -402,8 +401,7 @@ background:transparent!important;
 }
 
 
-.activity-label {
-
+.activity-label{
 
 font-weight:900;
 
@@ -411,7 +409,9 @@ text-align:left!important;
 
 white-space:nowrap;
 
-min-width:80px;
+min-width:90px;
+
+font-size:17px;
 
 }
 
@@ -1001,31 +1001,37 @@ font-size:14px;
 
 
 .potty-chart-table th,
-.potty-chart-table td {
+.potty-chart-table td{
 
-padding:6px;
+padding:8px;
 
-font-size:12px;
+font-size:14px;
 
-}
-
-
-
-.reward-circle {
-
-width:24px;
-
-height:24px;
+min-width:56px;
 
 }
 
+.reward-circle{
 
+width:34px;
 
-.activity-label {
+height:34px;
 
-min-width:65px;
+}
 
-font-size:12px;
+.activity-label{
+
+min-width:78px;
+
+font-size:14px;
+
+}
+
+.week-title{
+
+margin-left:78px;
+
+font-size:18px;
 
 }
 
