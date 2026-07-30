@@ -362,21 +362,21 @@ max-width:none;
 
 }
 
-
-.potty-chart-table th {
-
+.potty-chart-table th{
 
 background:white;
 
-padding:10px;
+padding:14px 12px;
 
-border-radius:12px;
+border-radius:14px;
 
-font-size:13px;
+font-size:17px;
 
 font-weight:900;
 
 white-space:nowrap;
+
+min-width:72px;
 
 }
 
@@ -416,12 +416,11 @@ min-width:80px;
 }
 
 
-.reward-circle {
+.reward-circle{
 
+width:46px;
 
-height:32px;
-
-width:32px;
+height:46px;
 
 border-radius:50%;
 
@@ -432,13 +431,6 @@ background:#fffaf0;
 margin:auto;
 
 }
-
-
-
-
-
-
-
 
 /* =====================================
  THEMES
@@ -1077,17 +1069,18 @@ gap:25px;
 
 }
 
+.week-title{
 
-.week-title {
+display:block;
 
-font-size:20px;
+margin:0 0 18px 90px;
+
+font-size:22px;
 
 font-weight:900;
 
-margin:0 0 15px;
+color:#ff6fae;
 
 text-align:left;
-
-color:#ff6fae;
 
 }
