@@ -362,13 +362,12 @@ max-width:none;
 
 }
 
-.potty-chart-table th{
 
-background:white;
+.potty-chart-table th{
 
 padding:14px 12px;
 
-border-radius:14px;
+border-radius:16px;
 
 font-size:17px;
 
@@ -378,7 +377,14 @@ white-space:nowrap;
 
 min-width:72px;
 
+color:#444;
+
+border:2px solid rgba(255,255,255,.6);
+
+box-shadow:0 3px 10px rgba(0,0,0,.05);
+
 }
+
 
 .potty-chart-table td{
 
@@ -544,9 +550,60 @@ color:#e89b00;
 }
 
 
+/* ===========================
+   DAY HEADER COLORS
+=========================== */
+
+.theme-princess .potty-chart-table th{
+
+background:#ffd9ea;
+
+color:#d94b86;
+
+}
+
+.theme-dinosaur .potty-chart-table th{
+
+background:#daf5c8;
+
+color:#4c9c38;
+
+}
+
+.theme-unicorn .potty-chart-table th{
+
+background:#ecd8ff;
+
+color:#9147d8;
+
+}
+
+.theme-space .potty-chart-table th{
+
+background:#dbe7ff;
+
+color:#4169e1;
+
+}
+
+.theme-animals .potty-chart-table th{
+
+background:#fff1c6;
+
+color:#d18d00;
+
+}
 
 
+.empty-cell{
 
+background:transparent !important;
+
+border:none !important;
+
+box-shadow:none !important;
+
+}
 
 
 /* =====================================
@@ -648,6 +705,10 @@ text-align:left;
 
 }
 
+/* =====================================
+   REWARD BOX THEME COLORS
+===================================== */
+
 .reward-box h4{
 
 margin:0 0 18px;
@@ -656,9 +717,52 @@ font-size:22px;
 
 font-weight:900;
 
-color:#ff6fae;
-
 text-align:center;
+
+}
+
+
+/* Princess */
+
+.theme-princess .reward-box h4{
+
+color:#ff5f9e;
+
+}
+
+
+/* Dinosaur */
+
+.theme-dinosaur .reward-box h4{
+
+color:#4c9c38;
+
+}
+
+
+/* Unicorn */
+
+.theme-unicorn .reward-box h4{
+
+color:#a34ee8;
+
+}
+
+
+/* Space */
+
+.theme-space .reward-box h4{
+
+color:#4169e1;
+
+}
+
+
+/* Animals */
+
+.theme-animals .reward-box h4{
+
+color:#e89b00;
 
 }
 
@@ -1011,28 +1115,81 @@ min-width:56px;
 
 }
 
+
 .reward-circle{
 
-width:34px;
+width:46px;
 
-height:34px;
+height:46px;
+
+border-radius:50%;
+
+border:3px dashed #d7d7d7;
+
+background:#ffffff;
+
+margin:auto;
+
+transition:.2s;
+
+box-shadow:inset 0 2px 4px rgba(0,0,0,.04);
 
 }
 
+
 .activity-label{
 
-min-width:78px;
+font-weight:900;
 
-font-size:14px;
+text-align:left !important;
+
+white-space:nowrap;
+
+min-width:90px;
+
+font-size:17px;
+
+padding-left:10px !important;
+
+color:#444;
+
+background:#ffffff !important;
 
 }
 
 .week-title{
 
-margin-left:78px;
+font-size:20px;
 
-font-size:18px;
+font-weight:900;
 
+margin:0 0 15px;
+
+text-align:left;
+
+}
+
+
+/* Match theme */
+
+.theme-princess .week-title{
+color:#ff5f9e;
+}
+
+.theme-dinosaur .week-title{
+color:#4c9c38;
+}
+
+.theme-unicorn .week-title{
+color:#a34ee8;
+}
+
+.theme-space .week-title{
+color:#4169e1;
+}
+
+.theme-animals .week-title{
+color:#e89b00;
 }
 
 
