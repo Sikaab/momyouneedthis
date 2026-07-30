@@ -438,6 +438,8 @@ margin:auto;
 
 }
 
+
+
 /* =====================================
  THEMES
 ===================================== */
@@ -447,16 +449,18 @@ margin:auto;
 
 background:
 linear-gradient(
-135deg,
-#fff0f7,
-#ffe2ef
-);
+rgba(255,240,247,0.75),
+rgba(255,226,239,0.75)
+),
+url("assets/princess-potty-chart-reward.png");
+
+background-size:cover;
+
+background-position:center;
+
+background-repeat:no-repeat;
 
 border-color:#ff9fc9;
-
-.theme-princess {
-    background-image: url("assets/princess-potty-chart-reward.png");
-}
 
 }
 
@@ -473,12 +477,16 @@ color:#ff5f9e;
 
 background:
 linear-gradient(
-135deg,
-#efffe8,
-#dff8d5
-);
+rgba(239,255,232,0.75),
+rgba(223,248,213,0.75)
+),
+url("assets/dinosaurs-potty-chart-reward.png");
 
-background-image: url("assets/dinosaurs-potty-chart-reward.png");
+background-size:cover;
+
+background-position:center;
+
+background-repeat:no-repeat;
 
 border-color:#8bd66a;
 
@@ -497,12 +505,16 @@ color:#4c9c38;
 
 background:
 linear-gradient(
-135deg,
-#f8efff,
-#f0ddff
-);
+rgba(248,239,255,0.75),
+rgba(240,221,255,0.75)
+),
+url("assets/unicorn-potty-chart-reward.png");
 
-background-image: url("assets/unicorn-potty-chart-reward.png");
+background-size:cover;
+
+background-position:center;
+
+background-repeat:no-repeat;
 
 border-color:#d59cff;
 
@@ -516,16 +528,21 @@ color:#a34ee8;
 }
 
 
+
 .theme-space {
 
 background:
 linear-gradient(
-135deg,
-#eef3ff,
-#dce6ff
-);
+rgba(238,243,255,0.75),
+rgba(220,230,255,0.75)
+),
+url("assets/space-potty-chart-reward.png");
 
-background-image: url("assets/space-potty-chart-reward.png");
+background-size:cover;
+
+background-position:center;
+
+background-repeat:no-repeat;
 
 border-color:#8aa9ff;
 
@@ -539,16 +556,21 @@ color:#4169e1;
 }
 
 
+
 .theme-animals {
 
 background:
 linear-gradient(
-135deg,
-#fff7df,
-#ffefb8
-);
+rgba(255,247,223,0.75),
+rgba(255,239,184,0.75)
+),
+url("assets/animal-potty-chart-reward.png");
 
-background-image: url("assets/animal-potty-chart-reward.png");
+background-size:cover;
+
+background-position:center;
+
+background-repeat:no-repeat;
 
 border-color:#ffc85c;
 
@@ -560,6 +582,7 @@ border-color:#ffc85c;
 color:#e89b00;
 
 }
+
 
 
 /* ===========================
