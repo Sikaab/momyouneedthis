@@ -447,9 +447,8 @@ preview.className =
 `potty-preview ${theme.className}`;
 
 
-preview.style.background =
+preview.style.backgroundColor =
 color.background;
-
 
 preview.style.borderColor =
 color.border;
