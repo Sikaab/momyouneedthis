@@ -478,6 +478,8 @@ linear-gradient(
 #dff8d5
 );
 
+background-image: url("assets/dinosaurs-potty-chart-reward.png");
+
 border-color:#8bd66a;
 
 }
@@ -500,6 +502,8 @@ linear-gradient(
 #f0ddff
 );
 
+background-image: url("assets/unicorn-potty-chart-reward.png");
+
 border-color:#d59cff;
 
 }
@@ -521,6 +525,8 @@ linear-gradient(
 #dce6ff
 );
 
+background-image: url("assets/space-potty-chart-reward.png");
+
 border-color:#8aa9ff;
 
 }
@@ -541,6 +547,8 @@ linear-gradient(
 #fff7df,
 #ffefb8
 );
+
+background-image: url("assets/animal-potty-chart-reward.png");
 
 border-color:#ffc85c;
 
