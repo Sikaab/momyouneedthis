@@ -388,7 +388,9 @@ box-shadow:0 3px 10px rgba(0,0,0,.05);
 
 .potty-chart-table td{
 
-background:white;
+background:rgba(255,255,255,0.75);
+
+backdrop-filter:blur(3px);
 
 padding:14px;
 
@@ -448,9 +450,10 @@ margin:auto;
 .theme-princess {
 
 background:
-linear-gradient(
-rgba(255,240,247,0.75),
-rgba(255,226,239,0.75)
+rgba(255,240,247,0.35),
+
+rgba(255,226,239,0.35)
+
 ),
 url("assets/princess-potty-chart-reward.png.jpeg");
 
@@ -476,9 +479,8 @@ color:#ff5f9e;
 .theme-dinosaur {
 
 background:
-linear-gradient(
-rgba(239,255,232,0.75),
-rgba(223,248,213,0.75)
+linear-gradient(rgba(239,255,232,0.30),
+rgba(223,248,213,0.30)
 ),
 url("assets/dinosaurs-potty-chart-reward.png.jpeg");
 
@@ -505,8 +507,8 @@ color:#4c9c38;
 
 background:
 linear-gradient(
-rgba(248,239,255,0.75),
-rgba(240,221,255,0.75)
+rgba(248,239,255,0.40),
+rgba(240,221,255,0.40)
 ),
 url("assets/unicorn-potty-chart-reward.png.jpeg");
 
@@ -533,8 +535,8 @@ color:#a34ee8;
 
 background:
 linear-gradient(
-rgba(238,243,255,0.75),
-rgba(220,230,255,0.75)
+rgba(238,243,255,0.45),
+rgba(220,230,255,0.45)
 ),
 url("assets/space-potty-chart-reward.png.jpeg");
 
@@ -561,9 +563,10 @@ color:#4169e1;
 
 background:
 linear-gradient(
-rgba(255,247,223,0.75),
-rgba(255,239,184,0.75)
-),
+rgba(255,247,223,0.35),
+rgba(255,239,184,0.35)
+)
+,
 url("assets/animal-potty-chart-reward.png.jpeg");
 
 background-size:cover;
@@ -646,8 +649,9 @@ box-shadow:none !important;
 ===================================== */
 
 .reward-box{
+background:rgba(255,255,255,0.78);
 
-background:white;
+backdrop-filter:blur(4px);
 
 padding:22px;
 
