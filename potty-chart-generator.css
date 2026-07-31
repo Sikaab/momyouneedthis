@@ -450,10 +450,9 @@ margin:auto;
 .theme-princess {
 
 background:
+linear-gradient(
 rgba(255,240,247,0.35),
-
 rgba(255,226,239,0.35)
-
 ),
 url("assets/princess-potty-chart-reward.png.jpeg");
 
