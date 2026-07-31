@@ -3,6 +3,7 @@
    MomYouNeedThis
 ===================================== */
 
+import { db } from "./firebase-config.js";
 
 /* ===========================
    STATE
