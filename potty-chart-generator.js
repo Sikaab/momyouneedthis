@@ -27,9 +27,6 @@ const chartData = {
 
 };
 
-
-
-
 /* ===========================
    ELEMENTS
 =========================== */
@@ -68,9 +65,6 @@ document.getElementById("closeModal");
 
 const downloadButton =
 document.getElementById("downloadButton");
-
-
-
 
 /* ===========================
    COLORS
@@ -113,9 +107,6 @@ border:"#8bd66a"
 
 
 };
-
-
-
 
 /* ===========================
    THEMES
@@ -195,15 +186,6 @@ subtitle:"Small steps create big wins!"
 
 
 };
-
-
-
-
-/* ===========================
-   CREATE POTTY TABLE
-=========================== */
-
-
 
   /* ===========================
    CREATE WEEKLY POTTY TABLE
@@ -396,9 +378,6 @@ chartGrid.appendChild(table);
 }
 
 
-
-
-
 function createRewardCells(){
 
 return `
@@ -489,6 +468,44 @@ chartData.days
 
 }
 
+/* ===========================
+   ACTIONS
+=========================== */
+
+async function saveLead(){
+
+    const email =
+    document.getElementById("emailInput").value.trim();
+
+    if(!email){
+        return;
+    }
+
+
+    try {
+
+        await addDoc(
+            collection(db, "leads"),
+            {
+                email: email,
+                childName: chartData.name,
+                theme: chartData.theme,
+                createdAt: serverTimestamp()
+            }
+        );
+
+        console.log("Lead saved!");
+
+    } catch(error){
+
+        console.error(
+            "Error saving lead:",
+            error
+        );
+
+    }
+
+}
 
 /* ===========================
    EVENTS
@@ -576,7 +593,9 @@ async()=>{
 
     return;
 
-    }
+    } 
+    
+    await saveLead();
 
     /*
     Create temporary printable version
