@@ -474,17 +474,22 @@ chartData.days
 
 async function saveLead(){
 
+    console.log("saveLead started");
+
     const email =
     document.getElementById("emailInput").value.trim();
 
+    console.log("Email:", email);
+
     if(!email){
+        console.log("No email");
         return;
     }
 
 
     try {
 
-        await addDoc(
+        const docRef = await addDoc(
             collection(db, "leads"),
             {
                 email: email,
@@ -494,12 +499,12 @@ async function saveLead(){
             }
         );
 
-        console.log("Lead saved!");
+        console.log("Lead saved with ID:", docRef.id);
 
     } catch(error){
 
         console.error(
-            "Error saving lead:",
+            "Firebase save error:",
             error
         );
 
