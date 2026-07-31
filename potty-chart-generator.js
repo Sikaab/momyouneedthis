@@ -493,8 +493,8 @@ async function saveLead(){
             collection(db, "leads"),
             {
                 email: email,
-                childName: chartData.name,
-                theme: chartData.theme,
+                childName: chartData.name || "unknown child name",
+                theme: chartData.theme || "unknown theme",
                 createdAt: serverTimestamp()
             }
         );
