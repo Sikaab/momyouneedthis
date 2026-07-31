@@ -492,7 +492,7 @@ async function saveLead(){
         const docRef = await addDoc(
             collection(db, "leads"),
             {
-                email: email,
+                email: email || "unknown email",
                 childName: chartData.name || "unknown child name",
                 theme: chartData.theme || "unknown theme",
                 createdAt: serverTimestamp()
