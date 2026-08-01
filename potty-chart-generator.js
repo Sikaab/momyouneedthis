@@ -755,54 +755,38 @@ imageHeight
 // ADD CERTIFICATE PAGE
 // ===========================
 
-const certificate =
-document.createElement("div");
-
-certificate.style.position = "absolute";
-certificate.style.left = "-9999px";
-certificate.style.width = "1400px";
+const certificatePath =
+themes[chartData.theme].certificate;
 
 
-certificate.innerHTML = `
-<img 
-src="${themes[chartData.theme].certificate}"
-style="width:1400px; display:block;"
->
-`;
+const certificateImg =
+new Image();
 
 
-document.body.appendChild(certificate);
+certificateImg.src =
+certificatePath;
 
 
-const certificateCanvas =
-await html2canvas(
-certificate,
-{
-    scale:3,
-    backgroundColor:"#ffffff",
-    useCORS:true
+await new Promise((resolve, reject)=>{
+
+    certificateImg.onload = resolve;
+
+    certificateImg.onerror = reject;
+
 });
-
-
-document.body.removeChild(certificate);
-
-
-const certificateImage =
-certificateCanvas.toDataURL("image/png");
 
 
 pdf.addPage();
 
 
 pdf.addImage(
-certificateImage,
-"PNG",
+certificateImg,
+"JPEG",
 5,
 5,
 287,
 200
 );
-
 
     pdf.save(
     `${chartData.name}-potty-chart.pdf`
