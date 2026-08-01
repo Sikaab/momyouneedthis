@@ -756,13 +756,22 @@ imageHeight
 // ===========================
 
 const certificate =
-document.createElement("img");
+document.createElement("div");
 
-certificate.src =
-themes[chartData.theme].certificate;
-
-
+certificate.style.position = "absolute";
+certificate.style.left = "-9999px";
 certificate.style.width = "1400px";
+
+
+certificate.innerHTML = `
+<img 
+src="${themes[chartData.theme].certificate}"
+style="width:1400px; display:block;"
+>
+`;
+
+
+document.body.appendChild(certificate);
 
 
 const certificateCanvas =
@@ -773,6 +782,9 @@ certificate,
     backgroundColor:"#ffffff",
     useCORS:true
 });
+
+
+document.body.removeChild(certificate);
 
 
 const certificateImage =
@@ -790,6 +802,7 @@ certificateImage,
 287,
 200
 );
+
 
     pdf.save(
     `${chartData.name}-potty-chart.pdf`
