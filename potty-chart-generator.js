@@ -124,8 +124,9 @@ className:"theme-princess",
 
 title:"{name}'s Princess Potty Adventure",
 
-subtitle:"Fill your chart and become a big kid!"
+subtitle:"Fill your chart and become a big kid!",
 
+certificate:"assets/princess-potty-training-certificate.jpeg"
 },
 
 
@@ -138,7 +139,9 @@ className:"theme-dinosaur",
 
 title:"{name}'s Dinosaur Potty Quest",
 
-subtitle:"Roar! Every success counts!"
+subtitle:"Roar! Every success counts!",
+
+certificate:"assets/dinosaurs-potty-training-certificate.jpeg"
 
 },
 
@@ -152,7 +155,9 @@ className:"theme-unicorn",
 
 title:"{name}'s Magical Unicorn Journey",
 
-subtitle:"Sparkles, smiles, and potty wins!"
+subtitle:"Sparkles, smiles, and potty wins!",
+
+certificate:"assets/unicorn-potty-training-certificate.jpeg"
 
 },
 
@@ -166,7 +171,9 @@ className:"theme-space",
 
 title:"{name}'s Space Potty Mission",
 
-subtitle:"Blast off toward big kid success!"
+subtitle:"Blast off toward big kid success!",
+
+certificate:"assets/space-potty-training-certificate.jpeg"
 
 },
 
@@ -180,7 +187,9 @@ className:"theme-animals",
 
 title:"{name}'s Animal Potty Adventure",
 
-subtitle:"Small steps create big wins!"
+subtitle:"Small steps create big wins!",
+
+certificate:"assets/animals-potty-training-certificate.jpeg"
 
 }
 
@@ -740,6 +749,46 @@ x,
 y,
 imageWidth,
 imageHeight
+);
+
+// ===========================
+// ADD CERTIFICATE PAGE
+// ===========================
+
+const certificate =
+document.createElement("img");
+
+certificate.src =
+themes[chartData.theme].certificate;
+
+
+certificate.style.width = "1400px";
+
+
+const certificateCanvas =
+await html2canvas(
+certificate,
+{
+    scale:3,
+    backgroundColor:"#ffffff",
+    useCORS:true
+});
+
+
+const certificateImage =
+certificateCanvas.toDataURL("image/png");
+
+
+pdf.addPage();
+
+
+pdf.addImage(
+certificateImage,
+"PNG",
+5,
+5,
+287,
+200
 );
 
     pdf.save(
