@@ -788,6 +788,84 @@ certificateImg,
 200
 );
 
+// ===========================
+// ADD CERTIFICATE TEXT
+// ===========================
+
+pdf.setTextColor(80,80,80);
+
+
+// Title
+pdf.setFontSize(28);
+pdf.setFont("helvetica","bold");
+
+pdf.text(
+"Certificate of Achievement",
+148,
+55,
+{
+align:"center"
+}
+);
+
+
+// Presented text
+pdf.setFontSize(16);
+pdf.setFont("helvetica","normal");
+
+pdf.text(
+"Presented with pride to",
+148,
+75,
+{
+align:"center"
+}
+);
+
+
+// Child name
+pdf.setFontSize(32);
+pdf.setFont("helvetica","bold");
+
+pdf.text(
+chartData.name,
+148,
+100,
+{
+align:"center"
+}
+);
+
+
+// Achievement message
+pdf.setFontSize(15);
+pdf.setFont("helvetica","normal");
+
+pdf.text(
+`For becoming a Potty Training Champion!`,
+148,
+125,
+{
+align:"center"
+}
+);
+
+
+// Date and signature
+pdf.setFontSize(12);
+
+pdf.text(
+"Date: __________________",
+70,
+170
+);
+
+pdf.text(
+"Parent Signature: __________________",
+180,
+170
+);
+
     pdf.save(
     `${chartData.name}-potty-chart.pdf`
     );
