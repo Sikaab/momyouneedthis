@@ -779,14 +779,23 @@ await new Promise((resolve, reject)=>{
 pdf.addPage();
 
 
+
+const certWidth = 287;
+
+const certHeight =
+(certificateImg.height * certWidth) /
+certificateImg.width;
+
+
 pdf.addImage(
 certificateImg,
 "JPEG",
 5,
-5,
-287,
-200
+(210 - certHeight) / 2,
+certWidth,
+certHeight
 );
+
 
 // ===========================
 // ADD CERTIFICATE TEXT
