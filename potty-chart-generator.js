@@ -126,6 +126,8 @@ title:"{name}'s Princess Potty Adventure",
 
 subtitle:"Fill your chart and become a big kid!",
 
+certificateTitle:"Potty Training Princess",
+
 certificate:"assets/princess-potty-training-certificate.jpeg"
 },
 
@@ -140,6 +142,8 @@ className:"theme-dinosaur",
 title:"{name}'s Dinosaur Potty Quest",
 
 subtitle:"Roar! Every success counts!",
+
+certificateTitle:"Potty Training Dinosaur Champion",
 
 certificate:"assets/dinosaurs-potty-training-certificate.jpeg"
 
@@ -851,7 +855,7 @@ pdf.setFontSize(15);
 pdf.setFont("helvetica","normal");
 
 pdf.text(
-`For becoming a Potty Training Champion!`,
+`For becoming a ${themes[chartData.theme].certificateTitle}!`,
 148,
 125,
 {
