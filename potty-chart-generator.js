@@ -636,12 +636,14 @@ preview.cloneNode(true);
 
 
 
-clone.style.position="absolute";
-clone.style.left="-9999px";
-clone.style.top="0";
-clone.style.width="1400px";
-clone.style.height="auto";
-clone.style.overflow="visible";
+
+clone.style.position = "absolute";
+clone.style.left = "-9999px";
+clone.style.top = "0";
+clone.style.width = "1000px";
+clone.style.height = "auto";
+clone.style.overflow = "visible";
+
 
 const scroll =
 clone.querySelector(".chart-scroll");
@@ -649,8 +651,20 @@ clone.querySelector(".chart-scroll");
 
 if(scroll){
 
-scroll.style.overflow = "visible";
-scroll.style.width = "100%";
+    scroll.style.overflow = "visible";
+    scroll.style.width = "100%";
+
+}
+
+
+const table =
+clone.querySelector(".potty-chart-table");
+
+
+if(table){
+
+    table.style.width = "100%";
+    table.style.tableLayout = "fixed";
 
 }
 
@@ -665,7 +679,7 @@ if(table){
 table.style.minWidth = "auto";
 table.style.width = "100%";
 
-}.
+}
 
 
 
