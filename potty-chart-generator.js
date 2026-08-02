@@ -126,7 +126,7 @@ title:"{name}'s Princess Potty Adventure",
 
 subtitle:"Fill your chart and become a big kid!",
 
-certificateTitle:"Potty Training Princess",
+certificateTitle:"Potty Training Princess!",
 
 certificate:"assets/princess-potty-training-certificate.jpeg"
 },
@@ -143,7 +143,7 @@ title:"{name}'s Dinosaur Potty Quest",
 
 subtitle:"Roar! Every success counts!",
 
-certificateTitle:"Potty Training Dinosaur Champion",
+certificateTitle:"Potty Training Dinosaur Champion!",
 
 certificate:"assets/dinosaurs-potty-training-certificate.jpeg"
 
@@ -161,6 +161,8 @@ title:"{name}'s Magical Unicorn Journey",
 
 subtitle:"Sparkles, smiles, and potty wins!",
 
+certificateTitle:"Magical Potty Training Unicorn!",
+
 certificate:"assets/unicorn-potty-training-certificate.jpeg"
 
 },
@@ -177,6 +179,8 @@ title:"{name}'s Space Potty Mission",
 
 subtitle:"Blast off toward big kid success!",
 
+certificateTitle:"Potty Training Space Explorer!",
+
 certificate:"assets/space-potty-training-certificate.jpeg"
 
 },
@@ -192,6 +196,8 @@ className:"theme-animals",
 title:"{name}'s Animal Potty Adventure",
 
 subtitle:"Small steps create big wins!",
+
+certificateTitle:"Potty Training Superstar!",
 
 certificate:"assets/animals-potty-training-certificate.jpeg"
 
