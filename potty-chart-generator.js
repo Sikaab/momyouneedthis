@@ -635,19 +635,16 @@ const clone =
 preview.cloneNode(true);
 
 
-
-
 clone.style.position = "absolute";
 clone.style.left = "-9999px";
 clone.style.top = "0";
-clone.style.width = "1000px";
+clone.style.width = "1400px";
 clone.style.height = "auto";
 clone.style.overflow = "visible";
 
 
 const scroll =
 clone.querySelector(".chart-scroll");
-
 
 if(scroll){
 
@@ -660,18 +657,15 @@ if(scroll){
 const table =
 clone.querySelector(".potty-chart-table");
 
-
 if(table){
 
     table.style.width = "100%";
-    table.style.tableLayout = "fixed";
+    table.style.tableLayout = "auto";
 
 }
 
 
-
 document.body.appendChild(clone);
-
 
 
 const canvas =
