@@ -128,7 +128,9 @@ subtitle:"Fill your chart and become a big kid!",
 
 certificateTitle:"Potty Training Princess!",
 
-certificate:"assets/princess-potty-training-certificate.jpeg"
+certificate:"assets/princess-potty-training-certificate.jpeg",
+
+coupons:"assets/princess-potty-training-reward-coupons.jpeg"
 },
 
 
@@ -145,8 +147,9 @@ subtitle:"Roar! Every success counts!",
 
 certificateTitle:"Potty Training Dinosaur Champion!",
 
-certificate:"assets/dinosaurs-potty-training-certificate.jpeg"
+certificate:"assets/dinosaurs-potty-training-certificate.jpeg",
 
+coupons:"assets/dinosaurs-potty-training-reward-coupons.jpeg"
 },
 
 
@@ -163,7 +166,7 @@ subtitle:"Sparkles, smiles, and potty wins!",
 
 certificateTitle:"Magical Potty Training Unicorn!",
 
-certificate:"assets/unicorn-potty-training-certificate.jpeg"
+certificate:"assets/unicorn-potty-training-certificate.jpeg",
 
 },
 
@@ -181,8 +184,9 @@ subtitle:"Blast off toward big kid success!",
 
 certificateTitle:"Potty Training Space Explorer!",
 
-certificate:"assets/space-potty-training-certificate.jpeg"
+certificate:"assets/space-potty-training-certificate.jpeg",
 
+coupons:"assets/space-potty-training-reward-coupons.jpeg"
 },
 
 
@@ -199,8 +203,9 @@ subtitle:"Small steps create big wins!",
 
 certificateTitle:"Potty Training Superstar!",
 
-certificate:"assets/animals-potty-training-certificate.jpeg"
+certificate:"assets/animals-potty-training-certificate.jpeg",
 
+coupons:"assets/animals-potty-training-reward-coupons.jpeg"
 }
 
 
@@ -884,6 +889,86 @@ pdf.text(
 180,
 170
 );
+
+
+
+// ===========================
+// ADD REWARD COUPONS PAGE
+// ===========================
+
+const couponsPath =
+themes[chartData.theme].coupons;
+
+
+const couponsImg =
+new Image();
+
+
+couponsImg.src =
+couponsPath;
+
+
+await new Promise((resolve, reject)=>{
+
+    couponsImg.onload = resolve;
+
+    couponsImg.onerror = reject;
+
+});
+
+
+pdf.addPage();
+
+
+// Keep original aspect ratio
+const pageWidth = 297;
+const pageHeight = 210;
+
+const margin = 5;
+
+const maxWidth = pageWidth - (margin * 2);
+const maxHeight = pageHeight - (margin * 2);
+
+
+let couponsWidth = maxWidth;
+
+let couponsHeight =
+(couponsImg.height * couponsWidth) /
+couponsImg.width;
+
+
+// If too tall, scale down
+if(couponsHeight > maxHeight){
+
+    couponsHeight = maxHeight;
+
+    couponsWidth =
+    (couponsImg.width * couponsHeight) /
+    couponsImg.height;
+
+}
+
+
+// Center image
+
+const couponsX =
+(pageWidth - couponsWidth) / 2;
+
+
+const couponsY =
+(pageHeight - couponsHeight) / 2;
+
+
+pdf.addImage(
+couponsImg,
+"JPEG",
+couponsX,
+couponsY,
+couponsWidth,
+couponsHeight
+);
+
+
 
     pdf.save(
     `${chartData.name}-potty-chart.pdf`
