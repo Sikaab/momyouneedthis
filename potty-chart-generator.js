@@ -670,19 +670,6 @@ if(table){
 
 
 
-const table =
-clone.querySelector(".potty-chart-table");
-
-
-if(table){
-
-table.style.minWidth = "auto";
-table.style.width = "100%";
-
-}
-
-
-
 document.body.appendChild(clone);
 
 
