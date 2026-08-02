@@ -115,7 +115,6 @@ border:"#8bd66a"
 
 const themes = {
 
-
 princess:{
 
 icon:"👑",
@@ -131,8 +130,8 @@ certificateTitle:"Potty Training Princess!",
 certificate:"assets/princess-potty-training-certificate.jpeg",
 
 coupons:"assets/princess-potty-training-reward-coupons.jpeg"
-},
 
+},
 
 
 dinosaur:{
@@ -150,8 +149,8 @@ certificateTitle:"Potty Training Dinosaur Champion!",
 certificate:"assets/dinosaurs-potty-training-certificate.jpeg",
 
 coupons:"assets/dinosaurs-potty-training-reward-coupons.jpeg"
-},
 
+},
 
 
 unicorn:{
@@ -168,8 +167,9 @@ certificateTitle:"Magical Potty Training Unicorn!",
 
 certificate:"assets/unicorn-potty-training-certificate.jpeg",
 
-},
+coupons:"assets/unicorn-potty-training-reward-coupons.jpeg"
 
+},
 
 
 space:{
@@ -187,8 +187,8 @@ certificateTitle:"Potty Training Space Explorer!",
 certificate:"assets/space-potty-training-certificate.jpeg",
 
 coupons:"assets/space-potty-training-reward-coupons.jpeg"
-},
 
+},
 
 
 animals:{
@@ -206,8 +206,8 @@ certificateTitle:"Potty Training Superstar!",
 certificate:"assets/animals-potty-training-certificate.jpeg",
 
 coupons:"assets/animals-potty-training-reward-coupons.jpeg"
-}
 
+}
 
 };
 
@@ -611,167 +611,115 @@ downloadButton.addEventListener(
 "click",
 async()=>{
 
-    const email =
-    document.getElementById("emailInput").value;
+try{
 
-    if(!email){
 
-    alert(
-    "Please enter your email first."
-    );
+const email =
+document.getElementById("emailInput").value.trim();
 
-    return;
 
-    } 
-    
-    await saveLead();
+if(!email){
 
-    /*
-    Create temporary printable version
-    */
+alert("Please enter your email first.");
 
-    const clone =
-    preview.cloneNode(true);
+return;
 
-    clone.style.position = "absolute";
-    clone.style.left = "-9999px";
-    clone.style.top = "0";
+}
 
-    clone.style.width = "1400px";
-    clone.style.height = "auto";
 
-    clone.style.overflow = "visible";
+await saveLead();
 
-    const scroll =
-    clone.querySelector(".chart-scroll");
 
-    if(scroll){
 
-    scroll.style.overflow = "visible";
-    scroll.style.width = "100%";
+const clone =
+preview.cloneNode(true);
 
-    }
 
-    const table =
-    clone.querySelector(".potty-chart-table");
 
-    if(table){
+clone.style.position="absolute";
+clone.style.left="-9999px";
+clone.style.top="0";
+clone.style.width="1400px";
+clone.style.height="auto";
+clone.style.overflow="visible";
 
-    table.style.minWidth = "auto";
-    table.style.width = "100%";
 
-    }
 
-    document.body.appendChild(clone);
+document.body.appendChild(clone);
 
-    const canvas =
-    await html2canvas(
-    clone,
-    {
 
-    scale:3,
 
-    backgroundColor:"#ffffff",
-
-    useCORS:true
-
-    }
-
-    );
-
-    document.body.removeChild(clone);
-
-    const image =
-    canvas.toDataURL(
-    "image/png"
-    );
-
-    const {
-    jsPDF
-    } =
-    window.jspdf;
-
-    /*
-    Landscape is better for 14 and 30 days
-    */
-
-    const orientation =
-    chartData.days > 7
-    ? "landscape"
-    : "portrait";
-
- 
-   const pdf =
-new jsPDF(
+const canvas =
+await html2canvas(
+clone,
 {
-    orientation:"landscape",
-    unit:"mm",
-    format:"a4"
+scale:3,
+backgroundColor:"#ffffff",
+useCORS:true
 }
 );
 
 
 
-const pageWidth = 297;
-const pageHeight = 210;
+document.body.removeChild(clone);
 
 
 
-// Add a little zoom
-const margin = 5;
-
-const availableWidth = pageWidth - (margin * 2);
-const availableHeight = pageHeight - (margin * 2);
+const chartImage =
+canvas.toDataURL("image/png");
 
 
 
-let imageWidth = availableWidth;
+const {
+jsPDF
+}=window.jspdf;
 
-let imageHeight =
-(canvas.height * imageWidth) /
+
+
+const pdf =
+new jsPDF(
+{
+orientation:"landscape",
+unit:"mm",
+format:"a4"
+}
+);
+
+
+
+const pageWidth=297;
+const pageHeight=210;
+
+
+
+/* =========================
+PAGE 1 CHART
+========================= */
+
+
+const chartWidth=287;
+
+
+const chartHeight =
+(canvas.height * chartWidth) /
 canvas.width;
 
 
 
-// If too tall, scale down slightly
-if(imageHeight > availableHeight){
-
-imageHeight = availableHeight;
-
-imageWidth =
-(canvas.width * imageHeight) /
-canvas.height;
-
-}
-
-
-
-// Center the chart on page
-
-const x =
-(pageWidth - imageWidth) / 2;
-
-
-const y =
-(pageHeight - imageHeight) / 2;
-
-
-
 pdf.addImage(
-image,
+chartImage,
 "PNG",
-x,
-y,
-imageWidth,
-imageHeight
+5,
+(pageHeight-chartHeight)/2,
+chartWidth,
+chartHeight
 );
 
-// ===========================
-// ADD CERTIFICATE PAGE
-// ===========================
 
-const certificatePath =
-themes[chartData.theme].certificate;
+
+/* =========================
+PAGE 2 CERTIFICATE
+========================= */
 
 
 const certificateImg =
@@ -779,49 +727,57 @@ new Image();
 
 
 certificateImg.src =
-certificatePath;
+themes[chartData.theme].certificate;
 
 
-await new Promise((resolve, reject)=>{
 
-    certificateImg.onload = resolve;
+await new Promise(
+(resolve,reject)=>{
 
-    certificateImg.onerror = reject;
+certificateImg.onload=resolve;
+
+certificateImg.onerror=reject;
 
 });
+
 
 
 pdf.addPage();
 
 
 
-const certWidth = 287;
+const certWidth=287;
+
 
 const certHeight =
 (certificateImg.height * certWidth) /
 certificateImg.width;
 
 
+
 pdf.addImage(
 certificateImg,
 "JPEG",
 5,
-(210 - certHeight) / 2,
+(pageHeight-certHeight)/2,
 certWidth,
 certHeight
 );
 
 
-// ===========================
-// ADD CERTIFICATE TEXT
-// ===========================
 
 pdf.setTextColor(80,80,80);
 
 
-// Title
+
+pdf.setFont(
+"helvetica",
+"bold"
+);
+
+
 pdf.setFontSize(28);
-pdf.setFont("helvetica","bold");
+
 
 pdf.text(
 "Certificate of Achievement",
@@ -833,9 +789,15 @@ align:"center"
 );
 
 
-// Presented text
+
 pdf.setFontSize(16);
-pdf.setFont("helvetica","normal");
+
+
+pdf.setFont(
+"helvetica",
+"normal"
+);
+
 
 pdf.text(
 "Presented with pride to",
@@ -847,9 +809,15 @@ align:"center"
 );
 
 
-// Child name
+
 pdf.setFontSize(32);
-pdf.setFont("helvetica","bold");
+
+
+pdf.setFont(
+"helvetica",
+"bold"
+);
+
 
 pdf.text(
 chartData.name,
@@ -861,12 +829,18 @@ align:"center"
 );
 
 
-// Achievement message
+
 pdf.setFontSize(15);
-pdf.setFont("helvetica","normal");
+
+
+pdf.setFont(
+"helvetica",
+"normal"
+);
+
 
 pdf.text(
-`For becoming a ${themes[chartData.theme].certificateTitle}!`,
+`For becoming a ${themes[chartData.theme].certificateTitle}`,
 148,
 125,
 {
@@ -875,107 +849,80 @@ align:"center"
 );
 
 
-// Date and signature
-pdf.setFontSize(12);
 
-pdf.text(
-"Date: __________________",
-70,
-170
-);
-
-pdf.text(
-"Parent Signature: __________________",
-180,
-170
-);
-
-
-
-// ===========================
-// ADD REWARD COUPONS PAGE
-// ===========================
-
-const couponsPath =
-themes[chartData.theme].coupons;
+/* =========================
+PAGE 3 COUPONS
+========================= */
 
 
 const couponsImg =
 new Image();
 
 
+
 couponsImg.src =
-couponsPath;
+themes[chartData.theme].coupons;
 
 
-await new Promise((resolve, reject)=>{
 
-    couponsImg.onload = resolve;
+await new Promise(
+(resolve,reject)=>{
 
-    couponsImg.onerror = reject;
+couponsImg.onload=resolve;
+
+couponsImg.onerror=reject;
 
 });
+
 
 
 pdf.addPage();
 
 
-// Keep original aspect ratio
-const pageWidth = 297;
-const pageHeight = 210;
 
-const margin = 5;
-
-const maxWidth = pageWidth - (margin * 2);
-const maxHeight = pageHeight - (margin * 2);
+const couponWidth=287;
 
 
-let couponsWidth = maxWidth;
-
-let couponsHeight =
-(couponsImg.height * couponsWidth) /
+const couponHeight =
+(couponsImg.height * couponWidth) /
 couponsImg.width;
 
-
-// If too tall, scale down
-if(couponsHeight > maxHeight){
-
-    couponsHeight = maxHeight;
-
-    couponsWidth =
-    (couponsImg.width * couponsHeight) /
-    couponsImg.height;
-
-}
-
-
-// Center image
-
-const couponsX =
-(pageWidth - couponsWidth) / 2;
-
-
-const couponsY =
-(pageHeight - couponsHeight) / 2;
 
 
 pdf.addImage(
 couponsImg,
 "JPEG",
-couponsX,
-couponsY,
-couponsWidth,
-couponsHeight
+5,
+(pageHeight-couponHeight)/2,
+couponWidth,
+couponHeight
 );
 
 
 
-    pdf.save(
-    `${chartData.name}-potty-chart.pdf`
-    );
+pdf.save(
+`${chartData.name}-potty-chart.pdf`
+);
 
-    emailModal.style.display =
-    "none";
+
+
+emailModal.style.display="none";
+
+
+}
+catch(error){
+
+console.error(
+"PDF Error:",
+error
+);
+
+alert(
+"PDF creation failed. Check console."
+);
+
+}
+
 
 }
 
