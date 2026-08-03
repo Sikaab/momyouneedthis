@@ -645,6 +645,8 @@ return;
 
 }
 
+downloadButton.disabled = true;
+downloadButton.textContent = "Downloading...";
 
 await saveLead();
 
@@ -997,6 +999,7 @@ emailModal.style.display="none";
 
 
 }
+
 catch(error){
 
 console.error(
@@ -1007,6 +1010,13 @@ error
 alert(
 "PDF creation failed. Check console."
 );
+
+}
+
+finally{
+
+downloadButton.disabled = false;
+downloadButton.textContent = "Download My Chart";
 
 }
 
