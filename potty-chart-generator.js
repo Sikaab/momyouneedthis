@@ -952,6 +952,277 @@ align:"center"
 }
 );
 
+
+/* =========================
+PAGE 4 POTTY TRAINING GUIDE
+========================= */
+
+pdf.addPage();
+
+
+pdf.setTextColor(80,80,80);
+
+
+pdf.setFont(
+"helvetica",
+"bold"
+);
+
+pdf.setFontSize(26);
+
+
+pdf.text(
+"🌟 Potty Training Success Plan",
+148,
+25,
+{
+align:"center"
+}
+);
+
+
+
+pdf.setFont(
+"helvetica",
+"normal"
+);
+
+pdf.setFontSize(14);
+
+
+pdf.text(
+"A simple routine to help your child build confidence & independence",
+148,
+38,
+{
+align:"center"
+}
+);
+
+
+
+let guideY = 55;
+
+
+
+function addGuideSection(title, lines){
+
+
+pdf.setFont(
+"helvetica",
+"bold"
+);
+
+pdf.setFontSize(16);
+
+
+pdf.text(
+title,
+15,
+guideY
+);
+
+
+
+guideY += 8;
+
+
+pdf.setFont(
+"helvetica",
+"normal"
+);
+
+pdf.setFontSize(12);
+
+
+
+lines.forEach(line=>{
+
+pdf.text(
+line,
+20,
+guideY
+);
+
+
+guideY += 6;
+
+
+});
+
+
+guideY += 8;
+
+
+}
+
+
+
+/* SECTION 1 */
+
+addGuideSection(
+"🚽 1. Create Predictable Potty Moments",
+[
+"Offer regular potty opportunities:",
+"• After waking up",
+"• Before leaving the house",
+"• After meals",
+"• Before bath time",
+"• Before bedtime",
+"",
+"Keep it calm and positive:",
+"\"Let's give your potty a try!\""
+]
+);
+
+
+
+/* SECTION 2 */
+
+addGuideSection(
+"🌱 2. Teach Independence",
+[
+"Help your child learn the steps:",
+"1. Walk to the potty",
+"2. Pull clothing down",
+"3. Sit comfortably",
+"4. Try to go",
+"5. Wipe",
+"6. Flush",
+"7. Wash hands",
+"",
+"Allow your child to do as much as they can independently."
+]
+);
+
+
+
+/* SECTION 3 */
+
+addGuideSection(
+"⭐ 3. Celebrate Progress",
+[
+"Celebrate:",
+"• Trying",
+"• Sitting on the potty",
+"• Telling you they need to go",
+"• Using the potty successfully",
+"",
+"\"I'm proud of you for trying!\""
+]
+);
+
+
+
+/* SECTION 4 */
+
+addGuideSection(
+"💛 4. Handle Accidents Calmly",
+[
+"Accidents are a normal part of learning.",
+"",
+"\"It's okay. Accidents happen.",
+"Let's clean up and try again.\""
+]
+);
+
+
+
+/* REWARD BOX */
+
+pdf.setFont(
+"helvetica",
+"bold"
+);
+
+pdf.setFontSize(16);
+
+
+pdf.text(
+"🎁 Reward Ideas For Potty Coupons",
+15,
+guideY
+);
+
+
+guideY += 10;
+
+
+pdf.setFont(
+"helvetica",
+"normal"
+);
+
+pdf.setFontSize(12);
+
+
+[
+"⭐ Small Rewards:",
+"• Choose bedtime story",
+"• Pick a family song",
+"• Extra cuddle time",
+"• Choose an activity",
+"",
+"🌟 Special Rewards:",
+"• Family movie night",
+"• Special outing",
+"• Bake a treat together",
+"• Pick a small toy",
+"• Choose a new book"
+].forEach(line=>{
+
+
+pdf.text(
+line,
+20,
+guideY
+);
+
+
+guideY += 6;
+
+
+});
+
+
+
+guideY += 8;
+
+
+pdf.setFont(
+"helvetica",
+"bold"
+);
+
+pdf.text(
+"Small steps create big wins. 🌟",
+148,
+guideY,
+{
+align:"center"
+}
+);
+
+
+pdf.setFont(
+"helvetica",
+"normal"
+);
+
+pdf.setFontSize(11);
+
+
+pdf.text(
+"Created with love by MomYouNeedThis",
+148,
+guideY + 12,
+{
+align:"center"
+}
+);
+
+
+
 pdf.save(
 `${chartData.name}-potty-chart.pdf`
 );
