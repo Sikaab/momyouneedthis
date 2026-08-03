@@ -1147,6 +1147,75 @@ rightY
 );
 
 
+/* =========================
+COUPON REWARD IDEAS
+========================= */
+
+
+let rewardY = Math.max(leftY, rightY) + 5;
+
+
+pdf.setFont(
+"helvetica",
+"bold"
+);
+
+pdf.setFontSize(16);
+
+
+pdf.text(
+"Reward Ideas For Potty Coupons",
+148,
+rewardY,
+{
+align:"center"
+}
+);
+
+
+rewardY += 10;
+
+
+pdf.setFont(
+"helvetica",
+"normal"
+);
+
+pdf.setFontSize(12);
+
+
+const rewardIdeas = [
+"Small Rewards:",
+"• Choose bedtime story",
+"• Pick a family song",
+"• Extra cuddle time",
+"• Choose a fun activity",
+"",
+"Special Rewards:",
+"• Family movie night",
+"• Special outing",
+"• Bake a treat together",
+"• Pick a small toy",
+"• Choose a new book"
+];
+
+
+rewardIdeas.forEach(line=>{
+
+pdf.text(
+line,
+148,
+rewardY,
+{
+align:"center"
+}
+);
+
+rewardY += 6;
+
+});
+
+
 pdf.save(
 `${chartData.name}-potty-chart.pdf`
 );
