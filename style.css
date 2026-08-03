@@ -905,6 +905,57 @@ margin:0 auto 25px;
 
 }
 
+/* =====================================
+   GENERATOR CTA KIT LIST
+===================================== */
+
+.generator-bottom-cta ul {
+
+list-style:none;
+
+padding:0;
+
+margin:25px auto;
+
+display:grid;
+
+grid-template-columns:1fr 1fr;
+
+gap:12px;
+
+max-width:600px;
+
+}
+
+
+.generator-bottom-cta li {
+
+background:#fffaf8;
+
+padding:14px;
+
+border-radius:16px;
+
+font-weight:700;
+
+box-shadow:
+0 5px 15px rgba(0,0,0,.05);
+
+}
+
+
+/* Mobile */
+
+@media(max-width:600px){
+
+.generator-bottom-cta ul {
+
+grid-template-columns:1fr;
+
+}
+
+}
+
 
 @media(max-width:750px){
 
