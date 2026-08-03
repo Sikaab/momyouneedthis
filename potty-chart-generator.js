@@ -464,10 +464,6 @@ colors[selectedColor];
 preview.className =
 `potty-preview ${theme.className}`;
 
-
-preview.style.backgroundColor =
-color.background;
-
 preview.style.borderColor =
 color.border;
 
