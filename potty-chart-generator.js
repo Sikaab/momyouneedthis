@@ -957,6 +957,7 @@ align:"center"
 PAGE 4 POTTY TRAINING GUIDE
 ========================= */
 
+
 pdf.addPage();
 
 
@@ -1001,11 +1002,17 @@ align:"center"
 
 
 
-let guideY = 55;
+/* =========================
+SIDE BY SIDE GUIDE SECTIONS
+========================= */
+
+
+let leftY = 60;
+let rightY = 60;
 
 
 
-function addGuideSection(title, lines){
+function addGuideSection(title, lines, x, y){
 
 
 pdf.setFont(
@@ -1013,18 +1020,17 @@ pdf.setFont(
 "bold"
 );
 
-pdf.setFontSize(16);
+pdf.setFontSize(15);
 
 
 pdf.text(
 title,
-15,
-guideY
+x,
+y
 );
 
 
-
-guideY += 8;
+y += 8;
 
 
 pdf.setFont(
@@ -1032,35 +1038,41 @@ pdf.setFont(
 "normal"
 );
 
-pdf.setFontSize(12);
+pdf.setFontSize(11);
 
 
 
 lines.forEach(line=>{
 
+
 pdf.text(
 line,
-20,
-guideY
+x + 5,
+y
 );
 
 
-guideY += 6;
+y += 6;
 
 
 });
 
 
-guideY += 8;
+
+return y + 12;
 
 
 }
 
 
 
-/* SECTION 1 */
 
-addGuideSection(
+/* =========================
+LEFT COLUMN
+========================= */
+
+
+leftY = addGuideSection(
 "1. Create Predictable Potty Moments",
 [
 "Offer regular potty opportunities:",
@@ -1072,14 +1084,14 @@ addGuideSection(
 "",
 "Keep it calm and positive:",
 "\"Let's give your potty a try!\""
-]
+],
+15,
+leftY
 );
 
 
 
-/* SECTION 2 */
-
-addGuideSection(
+leftY = addGuideSection(
 "2. Teach Independence",
 [
 "Help your child learn the steps:",
@@ -1091,15 +1103,20 @@ addGuideSection(
 "6. Flush",
 "7. Wash hands",
 "",
-"Allow your child to do as much as they can independently."
-]
+"Allow your child to do",
+"as much as they can independently."
+],
+15,
+leftY
 );
 
 
+/* =========================
+RIGHT COLUMN
+========================= */
 
-/* SECTION 3 */
 
-addGuideSection(
+rightY = addGuideSection(
 "3. Celebrate Progress",
 [
 "Celebrate:",
@@ -1109,118 +1126,25 @@ addGuideSection(
 "• Using the potty successfully",
 "",
 "\"I'm proud of you for trying!\""
-]
+],
+155,
+rightY
 );
 
 
 
-/* SECTION 4 */
-
-addGuideSection(
+rightY = addGuideSection(
 "4. Handle Accidents Calmly",
 [
-"Accidents are a normal part of learning.",
+"Accidents are a normal",
+"part of learning.",
 "",
 "\"It's okay. Accidents happen.",
 "Let's clean up and try again.\""
-]
+],
+155,
+rightY
 );
-
-
-
-/* REWARD BOX */
-
-pdf.setFont(
-"helvetica",
-"bold"
-);
-
-pdf.setFontSize(16);
-
-
-pdf.text(
-"Reward Ideas For Potty Coupons",
-15,
-guideY
-);
-
-
-guideY += 10;
-
-
-pdf.setFont(
-"helvetica",
-"normal"
-);
-
-pdf.setFontSize(12);
-
-
-[
-"Small Rewards:",
-"• Choose bedtime story",
-"• Pick a family song",
-"• Extra cuddle time",
-"• Choose an activity",
-"",
-"Special Rewards:",
-"• Family movie night",
-"• Special outing",
-"• Bake a treat together",
-"• Pick a small toy",
-"• Choose a new book"
-].forEach(line=>{
-
-
-pdf.text(
-line,
-20,
-guideY
-);
-
-
-guideY += 6;
-
-
-});
-
-
-
-guideY += 8;
-
-
-pdf.setFont(
-"helvetica",
-"bold"
-);
-
-pdf.text(
-"Small steps create big wins.",
-148,
-guideY,
-{
-align:"center"
-}
-);
-
-
-pdf.setFont(
-"helvetica",
-"normal"
-);
-
-pdf.setFontSize(11);
-
-
-pdf.text(
-"Created with love by MomYouNeedThis",
-148,
-guideY + 12,
-{
-align:"center"
-}
-);
-
 
 
 pdf.save(
