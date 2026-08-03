@@ -1017,67 +1017,61 @@ rightY
 COUPON REWARD IDEAS
 ========================= */
 
+/* Vertical divider */
+pdf.setDrawColor(190,190,190);
+pdf.setLineWidth(0.5);
+pdf.line(230, 55, 230, 175);
 
-let rewardY = Math.max(leftY, rightY) + 5;
-
+/* Right column */
+let rewardY = 60;
 
 pdf.setFont(
 "helvetica",
 "bold"
 );
 
-pdf.setFontSize(16);
-
+pdf.setFontSize(15);
 
 pdf.text(
-"Reward Ideas For Potty Coupons",
-148,
-rewardY,
-{
-align:"center"
-}
+"Reward Coupon Ideas",
+238,
+rewardY
 );
 
-
 rewardY += 10;
-
 
 pdf.setFont(
 "helvetica",
 "normal"
 );
 
-pdf.setFontSize(12);
+pdf.setFontSize(11);
 
-
-const rewardIdeas = [
-"Small Rewards:",
-"• Choose bedtime story",
-"• Pick a family song",
-"• Extra cuddle time",
-"• Choose a fun activity",
+[
+"Small Rewards",
 "",
-"Special Rewards:",
-"• Family movie night",
-"• Special outing",
-"• Bake a treat together",
-"• Pick a small toy",
-"• Choose a new book"
-];
+"• Pick bedtime story",
+"• Choose dessert",
+"• Dance party",
+"• Extra cuddle time",
+"• Sticker",
+"",
+"Big Rewards",
+"",
+"• Movie night",
+"• Park trip",
+"• Bake cookies",
+"• Pick a toy",
+"• Stay up 15 mins"
+].forEach(line => {
 
+    pdf.text(
+        line,
+        238,
+        rewardY
+    );
 
-rewardIdeas.forEach(line=>{
-
-pdf.text(
-line,
-148,
-rewardY,
-{
-align:"center"
-}
-);
-
-rewardY += 6;
+    rewardY += 6;
 
 });
 
