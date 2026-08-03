@@ -742,140 +742,6 @@ chartHeight
 );
 
 
-
-/* =========================
-PAGE 2 CERTIFICATE
-========================= */
-
-
-const certificateImg =
-new Image();
-
-
-certificateImg.src =
-themes[chartData.theme].certificate;
-
-
-
-await new Promise(
-(resolve,reject)=>{
-
-certificateImg.onload=resolve;
-
-certificateImg.onerror=reject;
-
-});
-
-
-
-pdf.addPage();
-
-
-
-const certWidth=287;
-
-
-const certHeight =
-(certificateImg.height * certWidth) /
-certificateImg.width;
-
-
-
-pdf.addImage(
-certificateImg,
-"JPEG",
-5,
-(pageHeight-certHeight)/2,
-certWidth,
-certHeight
-);
-
-
-
-pdf.setTextColor(80,80,80);
-
-
-
-pdf.setFont(
-"helvetica",
-"bold"
-);
-
-
-pdf.setFontSize(28);
-
-
-pdf.text(
-"Certificate of Achievement",
-148,
-55,
-{
-align:"center"
-}
-);
-
-
-
-pdf.setFontSize(16);
-
-
-pdf.setFont(
-"helvetica",
-"normal"
-);
-
-
-pdf.text(
-"Presented with pride to",
-148,
-75,
-{
-align:"center"
-}
-);
-
-
-
-pdf.setFontSize(32);
-
-
-pdf.setFont(
-"helvetica",
-"bold"
-);
-
-
-pdf.text(
-chartData.name,
-148,
-100,
-{
-align:"center"
-}
-);
-
-
-
-pdf.setFontSize(15);
-
-
-pdf.setFont(
-"helvetica",
-"normal"
-);
-
-
-pdf.text(
-`For becoming a ${themes[chartData.theme].certificateTitle}`,
-148,
-125,
-{
-align:"center"
-}
-);
-
-
-
 /* =========================
 PAGE 3 COUPONS
 ========================= */
@@ -946,7 +812,7 @@ pdf.setFontSize(28);
 pdf.text(
 themes[chartData.theme].couponTitle,
 148,
-13,
+14,
 {
 align:"center"
 }
@@ -1214,6 +1080,139 @@ align:"center"
 rewardY += 6;
 
 });
+
+
+/* =========================
+PAGE 2 CERTIFICATE
+========================= */
+
+
+const certificateImg =
+new Image();
+
+
+certificateImg.src =
+themes[chartData.theme].certificate;
+
+
+
+await new Promise(
+(resolve,reject)=>{
+
+certificateImg.onload=resolve;
+
+certificateImg.onerror=reject;
+
+});
+
+
+
+pdf.addPage();
+
+
+
+const certWidth=287;
+
+
+const certHeight =
+(certificateImg.height * certWidth) /
+certificateImg.width;
+
+
+
+pdf.addImage(
+certificateImg,
+"JPEG",
+5,
+(pageHeight-certHeight)/2,
+certWidth,
+certHeight
+);
+
+
+
+pdf.setTextColor(80,80,80);
+
+
+
+pdf.setFont(
+"helvetica",
+"bold"
+);
+
+
+pdf.setFontSize(28);
+
+
+pdf.text(
+"Certificate of Achievement",
+148,
+55,
+{
+align:"center"
+}
+);
+
+
+
+pdf.setFontSize(16);
+
+
+pdf.setFont(
+"helvetica",
+"normal"
+);
+
+
+pdf.text(
+"Presented with pride to",
+148,
+75,
+{
+align:"center"
+}
+);
+
+
+
+pdf.setFontSize(32);
+
+
+pdf.setFont(
+"helvetica",
+"bold"
+);
+
+
+pdf.text(
+chartData.name,
+148,
+100,
+{
+align:"center"
+}
+);
+
+
+
+pdf.setFontSize(15);
+
+
+pdf.setFont(
+"helvetica",
+"normal"
+);
+
+
+pdf.text(
+`For becoming a ${themes[chartData.theme].certificateTitle}`,
+148,
+125,
+{
+align:"center"
+}
+);
+
 
 
 pdf.save(
