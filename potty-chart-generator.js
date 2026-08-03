@@ -972,7 +972,7 @@ pdf.setFontSize(26);
 
 
 pdf.text(
-"🌟 Potty Training Success Plan",
+"Potty Training Success Plan",
 148,
 25,
 {
@@ -1061,7 +1061,7 @@ guideY += 8;
 /* SECTION 1 */
 
 addGuideSection(
-"🚽 1. Create Predictable Potty Moments",
+"1. Create Predictable Potty Moments",
 [
 "Offer regular potty opportunities:",
 "• After waking up",
@@ -1080,7 +1080,7 @@ addGuideSection(
 /* SECTION 2 */
 
 addGuideSection(
-"🌱 2. Teach Independence",
+"2. Teach Independence",
 [
 "Help your child learn the steps:",
 "1. Walk to the potty",
@@ -1100,7 +1100,7 @@ addGuideSection(
 /* SECTION 3 */
 
 addGuideSection(
-"⭐ 3. Celebrate Progress",
+"3. Celebrate Progress",
 [
 "Celebrate:",
 "• Trying",
@@ -1117,7 +1117,7 @@ addGuideSection(
 /* SECTION 4 */
 
 addGuideSection(
-"💛 4. Handle Accidents Calmly",
+"4. Handle Accidents Calmly",
 [
 "Accidents are a normal part of learning.",
 "",
@@ -1139,7 +1139,7 @@ pdf.setFontSize(16);
 
 
 pdf.text(
-"🎁 Reward Ideas For Potty Coupons",
+"Reward Ideas For Potty Coupons",
 15,
 guideY
 );
@@ -1157,13 +1157,13 @@ pdf.setFontSize(12);
 
 
 [
-"⭐ Small Rewards:",
+"Small Rewards:",
 "• Choose bedtime story",
 "• Pick a family song",
 "• Extra cuddle time",
 "• Choose an activity",
 "",
-"🌟 Special Rewards:",
+"Special Rewards:",
 "• Family movie night",
 "• Special outing",
 "• Bake a treat together",
@@ -1195,7 +1195,7 @@ pdf.setFont(
 );
 
 pdf.text(
-"Small steps create big wins. 🌟",
+"Small steps create big wins.",
 148,
 guideY,
 {
