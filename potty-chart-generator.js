@@ -128,7 +128,7 @@ certificateTitle:"Potty Training Princess!",
 
 couponTitle:"Princess Reward Coupon",
 
-couponText:"You earned a magical reward for your potty training success! 👑",
+couponText:"You earned a magical reward for your potty training success!",
 
 certificate:"assets/princess-potty-training-certificate.jpeg",
 
@@ -151,7 +151,7 @@ certificateTitle:"Potty Training Dinosaur Champion!",
 
 couponTitle:"Dinosaur Reward Coupon",
 
-couponText:"Roar! You did an amazing job. Time for a special reward! 🦖",
+couponText:"Roar! You did an amazing job. Time for a special reward!",
 
 certificate:"assets/dinosaurs-potty-training-certificate.jpeg",
 
@@ -174,7 +174,7 @@ certificateTitle:"Magical Potty Training Unicorn!",
 
 couponTitle:"Magical Unicorn Reward",
 
-couponText:"A magical reward for a potty training superstar! 🦄✨",
+couponText:"A magical reward for a potty training superstar!",
 
 certificate:"assets/unicorn-potty-training-certificate.jpeg",
 
@@ -197,7 +197,7 @@ certificateTitle:"Potty Training Space Explorer!",
 
 couponTitle:"Space Mission Reward",
 
-couponText:"Mission accomplished! You earned a special reward! 🚀",
+couponText:"Mission accomplished! You earned a special reward!",
 
 certificate:"assets/space-potty-training-certificate.jpeg",
 
@@ -220,7 +220,7 @@ certificateTitle:"Potty Training Superstar!",
 
 couponTitle:"Superstar Reward Coupon",
 
-couponText:"Great job! Your potty training adventure deserves a reward! 🐻",
+couponText:"Great job! Your potty training adventure deserves a reward!",
 
 certificate:"assets/animals-potty-training-certificate.jpeg",
 
