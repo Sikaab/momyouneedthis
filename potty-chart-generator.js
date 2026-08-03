@@ -960,7 +960,7 @@ pdf.setFontSize(28);
 pdf.text(
 themes[chartData.theme].couponTitle,
 148,
-5,
+10,
 {
 align:"center"
 }
@@ -981,7 +981,7 @@ pdf.setFontSize(14);
 pdf.text(
 themes[chartData.theme].couponText,
 148,
-10,
+15,
 {
 align:"center",
 maxWidth:220
