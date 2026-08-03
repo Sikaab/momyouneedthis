@@ -1061,7 +1061,7 @@ pdf.setFontSize(11);
 "• Movie night",
 "• Park trip",
 "• Bake cookies",
-"• Pick a toy",
+"• Pick a new toy",
 "• Stay up 15 mins"
 ].forEach(line => {
 
