@@ -938,26 +938,27 @@ couponHeight
 
 
 /* =========================
-COUPON TEXT
+COUPON PAGE TEXT
 ========================= */
 
 
 pdf.setTextColor(80,80,80);
 
 
+/* TITLE */
+
 pdf.setFont(
 "helvetica",
 "bold"
 );
 
-
-pdf.setFontSize(24);
+pdf.setFontSize(28);
 
 
 pdf.text(
 themes[chartData.theme].couponTitle,
-5,
-70,
+148,
+25,
 {
 align:"center"
 }
@@ -965,19 +966,20 @@ align:"center"
 
 
 
+/* SUBTITLE */
+
 pdf.setFont(
 "helvetica",
 "normal"
 );
-
 
 pdf.setFontSize(14);
 
 
 pdf.text(
 themes[chartData.theme].couponText,
-10,
-75,
+148,
+38,
 {
 align:"center",
 maxWidth:220
