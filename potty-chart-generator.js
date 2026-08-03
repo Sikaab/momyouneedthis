@@ -128,8 +128,6 @@ certificateTitle:"Potty Training Princess!",
 
 couponTitle:"Princess Reward Coupon",
 
-couponText:"You earned a magical reward for your potty training success!",
-
 certificate:"assets/princess-potty-training-certificate.jpeg",
 
 coupons:"assets/princess-potty-training-reward-coupons.jpeg"
@@ -150,8 +148,6 @@ subtitle:"Roar! Every success counts!",
 certificateTitle:"Potty Training Dinosaur Champion!",
 
 couponTitle:"Dinosaur Reward Coupon",
-
-couponText:"Roar! You did an amazing job. Time for a special reward!",
 
 certificate:"assets/dinosaurs-potty-training-certificate.jpeg",
 
@@ -174,8 +170,6 @@ certificateTitle:"Magical Potty Training Unicorn!",
 
 couponTitle:"Magical Unicorn Reward",
 
-couponText:"A magical reward for a potty training superstar!",
-
 certificate:"assets/unicorn-potty-training-certificate.jpeg",
 
 coupons:"assets/unicorn-potty-training-reward-coupons.jpeg"
@@ -197,8 +191,6 @@ certificateTitle:"Potty Training Space Explorer!",
 
 couponTitle:"Space Mission Reward",
 
-couponText:"Mission accomplished! You earned a special reward!",
-
 certificate:"assets/space-potty-training-certificate.jpeg",
 
 coupons:"assets/space-potty-training-reward-coupons.jpeg"
@@ -219,8 +211,6 @@ subtitle:"Small steps create big wins!",
 certificateTitle:"Potty Training Superstar!",
 
 couponTitle:"Superstar Reward Coupon",
-
-couponText:"Great job! Your potty training adventure deserves a reward!",
 
 certificate:"assets/animals-potty-training-certificate.jpeg",
 
@@ -960,34 +950,11 @@ pdf.setFontSize(28);
 pdf.text(
 themes[chartData.theme].couponTitle,
 148,
-10,
+8,
 {
 align:"center"
 }
 );
-
-
-
-/* SUBTITLE */
-
-pdf.setFont(
-"helvetica",
-"normal"
-);
-
-pdf.setFontSize(14);
-
-
-pdf.text(
-themes[chartData.theme].couponText,
-148,
-15,
-{
-align:"center",
-maxWidth:220
-}
-);
-
 
 pdf.save(
 `${chartData.name}-potty-chart.pdf`
