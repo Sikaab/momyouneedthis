@@ -976,8 +976,8 @@ pdf.setFontSize(14);
 
 pdf.text(
 themes[chartData.theme].couponText,
-148,
-95,
+10,
+20,
 {
 align:"center",
 maxWidth:220
