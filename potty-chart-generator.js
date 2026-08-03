@@ -126,7 +126,7 @@ subtitle:"Fill your chart and become a big kid!",
 
 certificateTitle:"Potty Training Princess!",
 
-couponTitle:"Princess Reward Coupon",
+couponTitle:"Princess Reward Coupons",
 
 certificate:"assets/princess-potty-training-certificate.jpeg",
 
@@ -147,7 +147,7 @@ subtitle:"Roar! Every success counts!",
 
 certificateTitle:"Potty Training Dinosaur Champion!",
 
-couponTitle:"Dinosaur Reward Coupon",
+couponTitle:"Dinosaur Reward Coupons",
 
 certificate:"assets/dinosaurs-potty-training-certificate.jpeg",
 
@@ -168,7 +168,7 @@ subtitle:"Sparkles, smiles, and potty wins!",
 
 certificateTitle:"Magical Potty Training Unicorn!",
 
-couponTitle:"Magical Unicorn Reward",
+couponTitle:"Magical Unicorn Reward Coupons",
 
 certificate:"assets/unicorn-potty-training-certificate.jpeg",
 
@@ -189,7 +189,7 @@ subtitle:"Blast off toward big kid success!",
 
 certificateTitle:"Potty Training Space Explorer!",
 
-couponTitle:"Space Mission Reward",
+couponTitle:"Space Mission Reward Coupons",
 
 certificate:"assets/space-potty-training-certificate.jpeg",
 
@@ -210,7 +210,7 @@ subtitle:"Small steps create big wins!",
 
 certificateTitle:"Potty Training Superstar!",
 
-couponTitle:"Superstar Reward Coupon",
+couponTitle:"Superstar Reward Coupons",
 
 certificate:"assets/animals-potty-training-certificate.jpeg",
 
