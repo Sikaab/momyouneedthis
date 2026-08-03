@@ -946,7 +946,7 @@ pdf.setFontSize(28);
 pdf.text(
 themes[chartData.theme].couponTitle,
 148,
-9,
+11,
 {
 align:"center"
 }
