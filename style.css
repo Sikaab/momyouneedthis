@@ -1230,7 +1230,7 @@ grid-template-columns:1fr;
 
 footer{
 
-    margin-top:40px;
+    margin-topj:20px;
 
     background:#fff0f4;
 
@@ -1519,11 +1519,8 @@ footer p{
 
 
 .resource-page{
-
     text-align:center;
-
-    padding:30px 0;
-
+    padding:20px 0;
 }
 
 
