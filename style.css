@@ -862,6 +862,67 @@ button:hover{
 }
 
 
+/* =====================================
+   ALPHABET COLORING PAGES
+===================================== */
+
+.alphabet-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 20px;
+    max-width: 900px;
+    margin: 40px auto;
+}
+
+
+.letter-card {
+    background: #fff0f7;
+    border-radius: 22px;
+    padding: 25px 15px;
+    text-align: center;
+    text-decoration: none;
+    color: #332b2b;
+    box-shadow: 0 8px 20px rgba(0,0,0,.08);
+    transition: .2s;
+}
+
+
+.letter-card:hover {
+    transform: translateY(-5px);
+}
+
+
+.letter-card span {
+    font-size: 55px;
+    font-weight: 900;
+    color: #ff9fc9;
+}
+
+
+.letter-card h3 {
+    margin: 10px 0 5px;
+}
+
+
+.letter-card p {
+    font-size: 14px;
+    color: #777;
+}
+
+
+@media(max-width:700px){
+
+    .alphabet-grid {
+        grid-template-columns: repeat(3,1fr);
+    }
+
+
+    .letter-card span {
+        font-size:40px;
+    }
+
+}
+
 /* PERSONALIZED POTTY GENERATOR CTA */
 
 .generator-callout,
