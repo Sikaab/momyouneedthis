@@ -347,6 +347,28 @@ button:hover{
 }
 
 
+.printable-preview {
+
+max-width:600px;
+
+margin:40px auto;
+
+text-align:center;
+
+}
+
+
+.printable-preview img {
+
+width:100%;
+
+border-radius:20px;
+
+box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+}
+
+
 /* =====================
    AMAZON FAVORITES
 ===================== */
