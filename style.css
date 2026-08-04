@@ -1,9 +1,10 @@
+Remove only duplicate and touch nothing else. Give me the full solution 
+
 *{
     box-sizing:border-box;
     margin:0;
     padding:0;
 }
-
 
 html,
 body{
@@ -13,7 +14,6 @@ body{
     scroll-behavior:auto;
 
 }
-
 
 body{
 
@@ -31,8 +31,6 @@ body{
 
 }
 
-
-
 .page{
 
     width:100%;
@@ -45,37 +43,25 @@ body{
 
 }
 
-
-
 /* =====================
    HERO
 ===================== */
 
 .hero{
-
     display:flex;
-
     justify-content:center;
-
     align-items:center;
-
     text-align:center;
-
     padding-bottom:8px;
-
 }
-
 
 .hero-button{
 
     display:inline-flex;
-
     justify-content:center;
-
     align-items:center;
 
     background:#e89aaa;
-
     color:white;
 
     padding:18px 35px;
@@ -83,7 +69,6 @@ body{
     border-radius:50px;
 
     font-size:18px;
-
     font-weight:900;
 
     text-decoration:none;
@@ -92,7 +77,6 @@ body{
 
 }
 
-
 .hero-button:hover{
 
     transform:translateY(-3px);
@@ -100,7 +84,6 @@ body{
     box-shadow:0 12px 30px rgba(232,154,170,.35);
 
 }
-
 
 .hero-text{
 
@@ -112,8 +95,6 @@ body{
 
 }
 
-
-
 .logo{
 
     width:110px;
@@ -123,8 +104,6 @@ body{
     margin:0 auto 20px;
 
 }
-
-
 
 .hero h1{
 
@@ -138,7 +117,6 @@ body{
 
 }
 
-
 .hero h1 span{
 
     display:block;
@@ -146,8 +124,6 @@ body{
     color:#e89aaa;
 
 }
-
-
 
 .hero-text p{
 
@@ -161,8 +137,6 @@ body{
 
 }
 
-
-
 .hero-shop-text{
 
     margin:12px 0 0;
@@ -174,8 +148,6 @@ body{
     font-weight:700;
 
 }
-
-
 
 button{
 
@@ -199,8 +171,6 @@ button{
 
 }
 
-
-
 button:hover{
 
     transform:translateY(-3px);
@@ -208,8 +178,6 @@ button:hover{
     box-shadow:0 12px 30px rgba(232,154,170,.35);
 
 }
-
-
 
 .rating{
 
@@ -221,7 +189,6 @@ button:hover{
 
 }
 
-
 .rating p{
 
     color:#555;
@@ -232,11 +199,7 @@ button:hover{
 
 }
 
-
-/* =====================
-   FREE SECTION
-===================== */
-
+/* FREE SECTION */
 
 .free-section{
 
@@ -253,8 +216,6 @@ button:hover{
     box-shadow:0 12px 30px rgba(0,0,0,.05);
 
 }
-
-
 
 .free-badge{
 
@@ -274,8 +235,6 @@ button:hover{
 
 }
 
-
-
 .free-section h2{
 
     font-size:36px;
@@ -283,8 +242,6 @@ button:hover{
     margin-bottom:15px;
 
 }
-
-
 
 .free-section p{
 
@@ -297,8 +254,6 @@ button:hover{
     margin:auto;
 
 }
-
-
 
 .resource-list{
 
@@ -314,8 +269,6 @@ button:hover{
 
 }
 
-
-
 .resource-list div{
 
     background:#fff8fb;
@@ -327,8 +280,6 @@ button:hover{
     font-weight:700;
 
 }
-
-
 
 .resource-button{
 
@@ -356,15 +307,11 @@ button:hover{
 
 }
 
-
-
 .resource-button:hover{
 
     transform:translateY(-3px);
 
 }
-
-
 
 .resource-note{
 
@@ -376,43 +323,33 @@ button:hover{
 
 }
 
+.printable-preview {
 
+max-width:600px;
 
-.printable-preview{
+margin:40px auto;
 
-    max-width:600px;
-
-    margin:40px auto;
-
-    text-align:center;
+text-align:center;
 
 }
 
+.printable-preview img {
 
+width:100%;
 
-.printable-preview img{
+border-radius:20px;
 
-    width:100%;
-
-    border-radius:20px;
-
-    box-shadow:0 10px 25px rgba(0,0,0,.08);
+box-shadow:0 10px 25px rgba(0,0,0,.08);
 
 }
 
-
-
-.tips p{
-
-    margin-bottom:25px;
-
+.tips p {
+    margin-bottom: 25px;
 }
-
 
 /* =====================
    AMAZON FAVORITES
 ===================== */
-
 
 .amazon-section{
 
@@ -430,7 +367,6 @@ button:hover{
 
 }
 
-
 .amazon-header{
 
     width:100%;
@@ -438,8 +374,6 @@ button:hover{
     text-align:center;
 
 }
-
-
 
 .amazon-badge{
 
@@ -471,8 +405,6 @@ button:hover{
 
 }
 
-
-
 .amazon-badge::before{
 
     content:"";
@@ -491,7 +423,6 @@ button:hover{
 
 }
 
-
 @keyframes badgeFloat{
 
     0%,100%{
@@ -507,8 +438,6 @@ button:hover{
     }
 
 }
-
-
 
 @keyframes badgePulse{
 
@@ -538,8 +467,6 @@ button:hover{
 
 }
 
-/* AMAZON CONTENT */
-
 .amazon-header h2{
 
     font-size:38px;
@@ -549,8 +476,6 @@ button:hover{
     margin-bottom:15px;
 
 }
-
-
 
 .amazon-header p{
 
@@ -566,8 +491,6 @@ button:hover{
 
 }
 
-
-
 .amazon-grid{
 
     display:grid;
@@ -581,8 +504,6 @@ button:hover{
     max-width:900px;
 
 }
-
-
 
 .amazon-card{
 
@@ -608,15 +529,11 @@ button:hover{
 
 }
 
-
-
 .amazon-card:hover{
 
     transform:translateY(-5px);
 
 }
-
-
 
 .amazon-card .icon{
 
@@ -626,8 +543,6 @@ button:hover{
 
 }
 
-
-
 .amazon-card h3{
 
     font-size:21px;
@@ -636,8 +551,6 @@ button:hover{
 
 }
 
-
-
 .amazon-card p{
 
     color:#777;
@@ -645,8 +558,6 @@ button:hover{
     line-height:1.5;
 
 }
-
-
 
 .amazon-button{
 
@@ -676,15 +587,11 @@ button:hover{
 
 }
 
-
-
 .amazon-button:hover{
 
     transform:scale(1.04);
 
 }
-
-
 
 .amazon-note{
 
@@ -696,11 +603,9 @@ button:hover{
 
 }
 
-
 /* =====================
-   AMAZON DEALS FACEBOOK
+   AMAZON DEALS FACEBOOK SECTION
 ===================== */
-
 
 .deal-section{
 
@@ -717,8 +622,6 @@ button:hover{
     box-shadow:0 12px 30px rgba(0,0,0,.05);
 
 }
-
-
 
 .deal-badge{
 
@@ -750,8 +653,6 @@ button:hover{
 
 }
 
-
-
 .deal-badge::before{
 
     content:"";
@@ -770,8 +671,6 @@ button:hover{
 
 }
 
-
-
 .deal-section h2{
 
     font-size:36px;
@@ -781,8 +680,6 @@ button:hover{
     margin-bottom:15px;
 
 }
-
-
 
 .deal-description{
 
@@ -795,8 +692,6 @@ button:hover{
     margin:0 auto 30px;
 
 }
-
-
 
 .deal-button{
 
@@ -826,15 +721,11 @@ button:hover{
 
 }
 
-
-
 .deal-button:hover{
 
     transform:translateY(-3px);
 
 }
-
-
 
 .deal-note{
 
@@ -848,11 +739,9 @@ button:hover{
 
 }
 
-
 /* =====================
-   RESOURCE LIBRARY
+   FREE RESOURCE LIBRARY
 ===================== */
-
 
 .resource-library{
 
@@ -867,8 +756,6 @@ button:hover{
     margin:40px auto;
 
 }
-
-
 
 .resource-library a{
 
@@ -886,13 +773,13 @@ button:hover{
 
     font-weight:900;
 
+    text-align:left;
+
     box-shadow:0 10px 25px rgba(0,0,0,.05);
 
     transition:.25s ease;
 
 }
-
-
 
 .resource-library a:hover{
 
@@ -904,17 +791,15 @@ button:hover{
 
 }
 
-
-
 .resource-library span{
 
     display:block;
 
     margin-top:10px;
 
-    font-size:15px;
-
     color:#777;
+
+    font-size:15px;
 
     font-weight:400;
 
@@ -922,193 +807,139 @@ button:hover{
 
 }
 
-
-/* =====================
+/* =====================================
    ALPHABET COLORING PAGES
-===================== */
+===================================== */
 
-
-.alphabet-grid{
-
-    display:grid;
-
-    grid-template-columns:repeat(6,1fr);
-
-    gap:20px;
-
-    max-width:900px;
-
-    margin:40px auto;
-
+.alphabet-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 20px;
+    max-width: 900px;
+    margin: 40px auto;
 }
 
-
-
-.letter-card{
-
-    background:#fff0f7;
-
-    border-radius:22px;
-
-    padding:25px 15px;
-
-    text-align:center;
-
-    text-decoration:none;
-
-    color:#332b2b;
-
-    box-shadow:0 8px 20px rgba(0,0,0,.08);
-
-    transition:.2s;
-
+.letter-card {
+    background: #fff0f7;
+    border-radius: 22px;
+    padding: 25px 15px;
+    text-align: center;
+    text-decoration: none;
+    color: #332b2b;
+    box-shadow: 0 8px 20px rgba(0,0,0,.08);
+    transition: .2s;
 }
 
-
-
-.letter-card:hover{
-
-    transform:translateY(-5px);
-
+.letter-card:hover {
+    transform: translateY(-5px);
 }
 
-
-
-.letter-card span{
-
-    font-size:55px;
-
-    font-weight:900;
-
-    color:#ff9fc9;
-
+.letter-card span {
+    font-size: 55px;
+    font-weight: 900;
+    color: #ff9fc9;
 }
 
-
-
-.letter-card h3{
-
-    margin:10px 0 5px;
-
+.letter-card h3 {
+    margin: 10px 0 5px;
 }
 
-
-
-.letter-card p{
-
-    font-size:14px;
-
-    color:#777;
-
+.letter-card p {
+    font-size: 14px;
+    color: #777;
 }
-
-
 
 @media(max-width:700px){
 
-    .alphabet-grid{
-
-        grid-template-columns:repeat(3,1fr);
-
+    .alphabet-grid {
+        grid-template-columns: repeat(3,1fr);
     }
 
-
-    .letter-card span{
-
+    .letter-card span {
         font-size:40px;
-
     }
 
 }
 
-
-/* =====================
-   GENERATOR CTA
-===================== */
-
+/* PERSONALIZED POTTY GENERATOR CTA */
 
 .generator-callout,
-.generator-bottom-cta{
+.generator-bottom-cta {
 
-    background:#fff1f7;
+background:#fff1f7;
 
-    padding:35px;
+padding:35px;
 
-    border-radius:25px;
+border-radius:25px;
 
-    text-align:center;
+text-align:center;
 
-    margin:40px 0;
+margin:40px 0;
 
 }
-
-
 
 .generator-callout h2,
-.generator-bottom-cta h2{
+.generator-bottom-cta h2 {
 
-    font-size:28px;
+font-size:28px;
 
-    font-weight:900;
+font-weight:900;
 
-    margin-bottom:15px;
+margin-bottom:15px;
 
 }
-
-
 
 .generator-callout p,
-.generator-bottom-cta p{
+.generator-bottom-cta p {
 
-    font-size:18px;
+font-size:18px;
 
-    line-height:1.6;
+line-height:1.6;
 
-    max-width:650px;
+max-width:650px;
 
-    margin:0 auto 25px;
-
-}
-
-
-
-.generator-bottom-cta ul{
-
-    list-style:none;
-
-    padding:0;
-
-    margin:25px auto;
-
-    display:grid;
-
-    grid-template-columns:1fr 1fr;
-
-    gap:12px;
-
-    max-width:600px;
+margin:0 auto 25px;
 
 }
 
+/* =====================================
+   GENERATOR CTA KIT LIST
+===================================== */
 
+.generator-bottom-cta ul {
 
-.generator-bottom-cta li{
+list-style:none;
 
-    background:#fffaf8;
+padding:0;
 
-    padding:14px;
+margin:25px auto;
 
-    border-radius:16px;
+display:grid;
 
-    font-weight:700;
+grid-template-columns:1fr 1fr;
 
-    box-shadow:0 5px 15px rgba(0,0,0,.05);
+gap:12px;
+
+max-width:600px;
 
 }
 
+.generator-bottom-cta li {
 
+background:#fffaf8;
 
-.generator-bottom-cta .free-note{
+padding:14px;
+
+border-radius:16px;
+
+font-weight:700;
+
+box-shadow:
+0 5px 15px rgba(0,0,0,.05);
+
+}
+
+.generator-bottom-cta .free-note {
 
     font-size:14px;
 
@@ -1122,20 +953,31 @@ button:hover{
 
 }
 
+/* Mobile */
 
 @media(max-width:600px){
 
-    .generator-bottom-cta ul{
+.generator-bottom-cta ul {
+
+grid-template-columns:1fr;
+
+}
+
+}
+
+@media(max-width:750px){
+
+    .resource-library{
 
         grid-template-columns:1fr;
 
     }
 
 }
+
 /* =====================
    FEATURES
 ===================== */
-
 
 .features{
 
@@ -1148,8 +990,6 @@ button:hover{
     margin:50px 0;
 
 }
-
-
 
 .features div{
 
@@ -1175,8 +1015,6 @@ button:hover{
 
 }
 
-
-
 .features span{
 
     font-size:35px;
@@ -1185,15 +1023,11 @@ button:hover{
 
 }
 
-
-
 .features strong{
 
     font-size:18px;
 
 }
-
-
 
 .features p{
 
@@ -1203,16 +1037,89 @@ button:hover{
 
 }
 
+/* =====================
+   RESOURCE LIBRARY PAGE
+===================== */
 
+.resource-library{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:20px;
+
+    max-width:850px;
+
+    margin:40px auto;
+
+}
+
+.resource-library a{
+
+    background:#fff8fb;
+
+    padding:25px;
+
+    border-radius:25px;
+
+    text-decoration:none;
+
+    color:#332b2b;
+
+    font-size:20px;
+
+    font-weight:900;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.05);
+
+    transition:.25s ease;
+
+}
+
+.resource-library a:hover{
+
+    transform:translateY(-5px);
+
+    background:white;
+
+    box-shadow:0 15px 30px rgba(0,0,0,.08);
+
+}
+
+.resource-library span{
+
+    display:block;
+
+    margin-top:10px;
+
+    font-size:15px;
+
+    color:#777;
+
+    font-weight:400;
+
+    line-height:1.5;
+
+}
+
+@media(max-width:750px){
+
+    .resource-library{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
 
 /* =====================
    FOOTER
 ===================== */
 
-
 footer{
 
-    margin-top:20px;
+    margin-topj:20px;
 
     background:#fff0f4;
 
@@ -1224,8 +1131,6 @@ footer{
 
 }
 
-
-
 .footer-logo img{
 
     width:55px;
@@ -1233,8 +1138,6 @@ footer{
     margin-bottom:10px;
 
 }
-
-
 
 footer h3{
 
@@ -1246,8 +1149,6 @@ footer h3{
 
 }
 
-
-
 footer p{
 
     color:#777;
@@ -1257,8 +1158,6 @@ footer p{
     line-height:1.4;
 
 }
-
-
 
 .footer-links{
 
@@ -1274,8 +1173,6 @@ footer p{
 
 }
 
-
-
 .footer-links a{
 
     text-decoration:none;
@@ -1288,8 +1185,6 @@ footer p{
 
 }
 
-
-
 .social-links{
 
     display:flex;
@@ -1301,8 +1196,6 @@ footer p{
     margin-bottom:15px;
 
 }
-
-
 
 .social-links a{
 
@@ -1322,8 +1215,6 @@ footer p{
 
 }
 
-
-
 .footer-bottom{
 
     border-top:1px solid #f2dce2;
@@ -1331,8 +1222,6 @@ footer p{
     padding-top:12px;
 
 }
-
-
 
 .footer-bottom p{
 
@@ -1342,88 +1231,53 @@ footer p{
 
 }
 
-
-
-/* =====================
-   FEATURED RESOURCES
-===================== */
-
-
 .featured-resources{
 
     background:white;
-
     border-radius:30px;
-
     padding:35px 25px;
-
     margin:40px 0;
-
     box-shadow:0 10px 25px rgba(0,0,0,.05);
 
 }
 
-
-
 .featured-resources h2{
 
     font-size:32px;
-
     margin-bottom:25px;
 
 }
 
-
-
 .featured-grid{
 
     display:grid;
-
     grid-template-columns:repeat(2,1fr);
-
     gap:20px;
 
 }
 
-
-
 .featured-grid a{
 
     background:#fff8fb;
-
     padding:25px;
-
     border-radius:20px;
-
     text-decoration:none;
-
     color:#332b2b;
-
     font-size:20px;
-
     font-weight:900;
-
     transition:.25s;
 
 }
 
-
-
 .featured-grid span{
 
     display:block;
-
     margin-top:8px;
-
     font-size:15px;
-
     color:#777;
-
     font-weight:400;
 
 }
-
-
 
 .featured-grid a:hover{
 
@@ -1431,12 +1285,19 @@ footer p{
 
 }
 
+@media(max-width:750px){
 
+    .featured-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
 
 /* =====================
    PAGE LOAD ANIMATION
 ===================== */
-
 
 .hero-text .logo{
 
@@ -1448,47 +1309,37 @@ footer p{
 
 }
 
-
-
 .hero h1{
 
     opacity:0;
 
-    animation:fadeUp .8s ease .4s forwards;
+    animation: fadeUp .8s ease .4s forwards;
 
 }
-
-
 
 .hero-text > p{
 
     opacity:0;
 
-    animation:fadeUp .8s ease .6s forwards;
+    animation: fadeUp .8s ease .6s forwards;
 
 }
-
-
 
 .hero-button{
 
     opacity:0;
 
-    animation:fadeUp .8s ease .8s forwards;
+    animation: fadeUp .8s ease .8s forwards;
 
 }
-
-
 
 .rating{
 
     opacity:0;
 
-    animation:fadeUp .8s ease 1s forwards;
+    animation: fadeUp .8s ease 1s forwards;
 
 }
-
-
 
 @keyframes fadeUp{
 
@@ -1500,7 +1351,6 @@ footer p{
 
     }
 
-
     to{
 
         opacity:1;
@@ -1511,36 +1361,24 @@ footer p{
 
 }
 
-
-
 /* =====================
    FREE RESOURCE PAGE
 ===================== */
 
-
 .resource-page{
-
     text-align:center;
-
-    padding:40px 0;
-
+    padding:20px 0;
 }
-
-
 
 .resource-page h1{
 
-    font-size:55px;
+    font-size:50px;
 
     font-weight:900;
 
     margin:25px 0;
 
-    line-height:1.1;
-
 }
-
-
 
 .resource-page h1 span{
 
@@ -1550,15 +1388,13 @@ footer p{
 
 }
 
-
-
 .intro{
 
     max-width:650px;
 
-    margin:auto;
+    margin:0 auto 35px;
 
-    font-size:21px;
+    font-size:20px;
 
     line-height:1.6;
 
@@ -1566,29 +1402,25 @@ footer p{
 
 }
 
-
-
 .ad-box{
 
     height:120px;
 
-    background:#f7f7f7;
+    background:#f8f8f8;
 
-    border-radius:25px;
+    border-radius:20px;
 
     display:flex;
 
-    justify-content:center;
-
     align-items:center;
+
+    justify-content:center;
 
     color:#aaa;
 
     margin:40px 0;
 
 }
-
-
 
 .resource-page h2{
 
@@ -1597,8 +1429,6 @@ footer p{
     margin-bottom:30px;
 
 }
-
-
 
 .download-grid{
 
@@ -1610,55 +1440,173 @@ footer p{
 
 }
 
-
-
 .download-card{
 
     background:white;
 
-    padding:25px;
-
     border-radius:30px;
 
-    box-shadow:0 10px 30px rgba(0,0,0,.06);
+    padding:25px;
 
-    transition:.25s;
-
-}
-
-
-
-.download-card:hover{
-
-    transform:translateY(-6px);
+    box-shadow:0 10px 25px rgba(0,0,0,.06);
 
 }
-
-
 
 .download-card img{
 
     width:100%;
 
-    border-radius:20px;
+    border-radius:15px;
 
     margin-bottom:20px;
 
 }
 
-
-
 .download-card h3{
 
-    font-size:23px;
+    margin-bottom:20px;
 
-    margin-bottom:10px;
+    font-size:22px;
 
 }
 
+.download-button{
 
+    display:inline-flex;
 
-.download-card p{
+    background:#e89aaa;
+
+    color:white;
+
+    padding:15px 25px;
+
+    border-radius:50px;
+
+    text-decoration:none;
+
+    font-weight:900;
+
+}
+
+.download-button:hover{
+
+    transform:translateY(-3px);
+
+}
+
+.tips{
+
+    background:#fff;
+
+    padding:35px;
+
+    border-radius:30px;
+
+    margin-top:40px;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.05);
+
+}
+
+/* =====================
+   AMAZON PRODUCT PAGE
+===================== */
+
+.product-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:25px;
+
+    margin:40px 0;
+
+}
+
+.product-card{
+
+    background:white;
+
+    border-radius:30px;
+
+    padding:25px;
+
+    text-align:center;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.06);
+
+    transition:.25s ease;
+
+}
+
+.product-card:hover{
+
+    transform:translateY(-6px);
+
+}
+
+.product-card img{
+
+    width:100%;
+
+    height:220px;
+
+    object-fit:contain;
+
+    border-radius:20px;
+
+    margin-bottom:15px;
+
+}
+
+/* MOM RATING BADGE */
+
+.mom-rating{
+
+    display:inline-flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:#fff8fb;
+
+    padding:10px 18px;
+
+    border-radius:999px;
+
+    font-size:15px;
+
+    font-weight:900;
+
+    color:#f5b52c;
+
+    margin-bottom:15px;
+
+}
+
+.mom-rating span{
+
+    color:#d97f95;
+
+    font-size:13px;
+
+    margin-top:3px;
+
+}
+
+.product-card h3{
+
+    font-size:23px;
+
+    margin-bottom:12px;
+
+}
+
+.product-card p{
 
     color:#666;
 
@@ -1668,23 +1616,542 @@ footer p{
 
 }
 
-
-
-.download-button,
-.resource-button{
+.amazon-product-button{
 
     display:inline-flex;
 
-    background:#e89aaa;
+    justify-content:center;
+
+    align-items:center;
+
+    background:#ff9900;
 
     color:white;
 
-    padding:15px 30px;
+    text-decoration:none;
+
+    padding:16px 25px;
 
     border-radius:50px;
 
     font-weight:900;
 
+    width:100%;
+
+    transition:.25s;
+
+}
+
+.amazon-product-button:hover{
+
+    transform:scale(1.04);
+
+    box-shadow:0 10px 25px rgba(255,153,0,.35);
+
+}
+
+/* FREE RESOURCE PAGE */
+
+.resource-page{
+text-align:center;
+padding:40px 0;
+}
+
+.resource-page h1{
+font-size:55px;
+font-weight:900;
+margin:25px 0;
+line-height:1.1;
+}
+
+.resource-page h1 span{
+display:block;
+color:#e89aaa;
+}
+
+.intro{
+
+max-width:650px;
+margin:auto;
+
+font-size:21px;
+
+line-height:1.6;
+
+color:#666;
+
+}
+
+.mom-rating{
+
+display:inline-flex;
+
+flex-direction:column;
+
+background:#fff;
+
+padding:15px 30px;
+
+border-radius:50px;
+
+box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+margin:25px 0;
+
+}
+
+.stars{
+
+color:#f5b52c;
+
+font-size:22px;
+
+letter-spacing:3px;
+
+}
+
+.mom-rating strong{
+
+color:#d97f95;
+
+}
+
+.mom-rating span{
+
+font-size:13px;
+
+color:#777;
+
+}
+
+.ad-box{
+
+height:120px;
+
+background:#f7f7f7;
+
+border-radius:25px;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+color:#aaa;
+
+margin:40px 0;
+
+}
+
+.category-buttons{
+
+display:flex;
+
+justify-content:center;
+
+gap:12px;
+
+flex-wrap:wrap;
+
+margin-bottom:40px;
+
+}
+
+.category-buttons a{
+
+background:white;
+
+padding:14px 22px;
+
+border-radius:999px;
+
+text-decoration:none;
+
+color:#332b2b;
+
+font-weight:900;
+
+box-shadow:0 8px 20px rgba(0,0,0,.06);
+
+}
+
+.download-grid{
+
+display:grid;
+
+grid-template-columns:repeat(3,1fr);
+
+gap:25px;
+
+}
+
+.download-card{
+
+background:white;
+
+padding:25px;
+
+border-radius:30px;
+
+box-shadow:0 10px 30px rgba(0,0,0,.06);
+
+transition:.25s;
+
+}
+
+.download-card:hover{
+
+transform:translateY(-6px);
+
+}
+
+.download-card img{
+
+width:100%;
+
+border-radius:20px;
+
+margin-bottom:20px;
+
+}
+
+.download-card h3{
+
+font-size:23px;
+
+margin-bottom:10px;
+
+}
+
+.download-card p{
+
+color:#666;
+
+line-height:1.5;
+
+margin-bottom:20px;
+
+}
+
+.download-button,
+.resource-button{
+
+display:inline-flex;
+
+background:#e89aaa;
+
+color:white;
+
+padding:15px 30px;
+
+border-radius:50px;
+
+font-weight:900;
+
+text-decoration:none;
+
+}
+
+.weekly-box,
+.amazon-cta{
+
+background:white;
+
+border-radius:35px;
+
+padding:40px 25px;
+
+margin-top:50px;
+
+box-shadow:0 10px 30px rgba(0,0,0,.06);
+
+}
+
+.amazon-cta a{
+
+display:inline-flex;
+
+margin-top:20px;
+
+background:#ff9900;
+
+color:white;
+
+padding:18px 35px;
+
+border-radius:50px;
+
+text-decoration:none;
+
+font-weight:900;
+
+}
+
+.resource-links{
+
+    max-width:850px;
+    margin:40px auto;
+
+}
+
+.resource-link{
+
+    padding:28px 0;
+    border-bottom:1px solid #eee;
+
+}
+
+.resource-link h3{
+
+    font-size:28px;
+    margin-bottom:10px;
+
+}
+
+.resource-link p{
+
+    color:#666;
+    line-height:1.6;
+    margin-bottom:12px;
+
+}
+
+.resource-link a{
+
+    color:#e89aaa;
     text-decoration:none;
+    font-weight:900;
+    font-size:17px;
+
+}
+
+.resource-link a:hover{
+
+    text-decoration:underline;
+
+}
+
+@media(max-width:750px){
+
+.resource-page h1{
+
+font-size:38px;
+
+}
+
+.download-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.category-buttons a{
+
+width:100%;
+
+}
+
+}
+
+@media(max-width:750px){
+
+.product-grid{
+
+    grid-template-columns:1fr;
+
+}
+
+.product-card img{
+
+    height:200px;
+
+}
+
+}
+/* CATEGORY BUTTONS */
+
+.shop-categories{
+
+    display:flex;
+
+    justify-content:center;
+
+    flex-wrap:wrap;
+
+    gap:12px;
+
+    margin:35px auto 50px;
+
+}
+
+.shop-categories a{
+
+    background:white;
+
+    color:#332b2b;
+
+    text-decoration:none;
+
+    padding:14px 22px;
+
+    border-radius:999px;
+
+    font-weight:900;
+
+    font-size:15px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.06);
+
+    transition:.25s ease;
+
+}
+
+.shop-categories a:hover{
+
+    background:#e89aaa;
+
+    color:white;
+
+    transform:translateY(-3px);
+
+}
+
+/* =====================
+   COLORING CATEGORY SPACING
+===================== */
+
+.featured-resources h2{
+
+    margin-top:60px;
+
+}
+
+/* Keep the first category closer to the top */
+.featured-resources h2:first-child{
+
+    margin-top:0;
+
+}
+
+html{
+
+    scroll-behavior:smooth;
+
+}
+
+@media(max-width:750px){
+
+.resource-page h1{
+
+    font-size:38px;
+
+}
+
+.download-grid{
+
+    grid-template-columns:1fr;
+
+}
+
+}
+
+/* =====================
+   MOBILE
+===================== */
+
+@media(max-width:750px){
+
+    .page{
+
+        padding:25px 16px 50px;
+
+    }
+
+    .hero h1{
+
+        font-size:40px;
+
+    }
+
+    .hero-text p{
+
+        font-size:18px;
+
+    }
+
+    .hero-button{
+
+        width:100%;
+
+    }
+
+    .amazon-section{
+
+        padding:35px 20px;
+
+    }
+
+    .amazon-header h2{
+
+        font-size:30px;
+
+    }
+
+    .amazon-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .amazon-button{
+
+        width:100%;
+
+        padding:18px 15px;
+
+        font-size:17px;
+
+    }
+
+    .features{
+
+        grid-template-columns:repeat(2,1fr);
+
+        gap:15px;
+
+    }
+
+    .features div{
+
+        min-height:180px;
+
+    }
+
+    .footer-links{
+
+        flex-direction:column;
+
+        gap:10px;
+
+    }
+
+}
+
+@media(max-width:750px){
+
+    .resource-list{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .resource-button{
+
+        width:100%;
+
+        font-size:18px;
+
+    }
 
 }
