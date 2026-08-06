@@ -806,6 +806,130 @@ box-shadow:0 10px 25px rgba(0,0,0,.08);
 
 }
 
+
+/* =====================
+   FREE MOM TOOLS
+===================== */
+
+
+.featured-resources{
+
+    background:white;
+
+    border-radius:35px;
+
+    padding:40px 25px;
+
+    margin:45px 0;
+
+    text-align:center;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.05);
+
+}
+
+
+.featured-resources h2{
+
+    font-size:36px;
+
+    font-weight:900;
+
+    margin-bottom:15px;
+
+}
+
+
+.featured-resources .intro{
+
+    margin-bottom:35px;
+
+}
+
+
+.featured-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:20px;
+
+    max-width:850px;
+
+    margin:auto;
+
+}
+
+
+.featured-grid a{
+
+    background:#fff8fb;
+
+    padding:30px;
+
+    border-radius:25px;
+
+    text-decoration:none;
+
+    color:#332b2b;
+
+    font-size:22px;
+
+    font-weight:900;
+
+    transition:.25s ease;
+
+}
+
+
+.featured-grid span{
+
+    display:block;
+
+    margin-top:12px;
+
+    font-size:15px;
+
+    color:#777;
+
+    font-weight:400;
+
+    line-height:1.5;
+
+}
+
+
+.featured-grid a:hover{
+
+    transform:translateY(-5px);
+
+    background:white;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+}
+
+
+
+@media(max-width:750px){
+
+.featured-grid{
+
+    grid-template-columns:1fr;
+
+}
+
+
+.featured-resources h2{
+
+    font-size:28px;
+
+}
+
+}
+
+
 /* =====================================
    ALPHABET COLORING PAGES
 ===================================== */
