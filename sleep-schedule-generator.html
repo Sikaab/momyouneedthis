@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>
+Free Baby Sleep Schedule Generator | Wake Window Calculator & Nap Planner | MomYouNeedThis
+</title>
+
+<meta name="description" content="Create a personalized baby sleep schedule based on your baby's age, wake time, naps and wake windows. Get recommended nap times and bedtime instantly.">
+
+<link rel="stylesheet" href="style.css">
+
+<link rel="stylesheet" href="sleep-schedule-generator.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+
+</head>
+
+
+<body>
+
+
+<div class="page">
+
+
+<section class="resource-page">
+
+
+<img 
+src="assets/logo.svg" 
+class="logo" 
+alt="MomYouNeedThis">
+
+
+<span class="free-badge">
+
+😴 CREATE YOUR FREE BABY SLEEP SCHEDULE
+
+</span>
+
+
+<h1>
+
+Find Your Baby's
+
+<span>
+Sleep Sweet Spot
+</span>
+
+</h1>
+
+
+<p class="intro">
+
+Create a personalized sleep schedule based on your baby's age, wake time and naps. Get recommended nap times, wake windows and bedtime adjustments instantly.
+
+</p>
+
+
+
+<section class="sleep-generator">
+
+
+<div class="sleep-container">
+
+
+
+<!-- =========================
+     SETTINGS CARD
+========================= -->
+
+
+<div class="sleep-form-card">
+
+
+<h2>
+Create Your Schedule
+</h2>
+
+
+
+<label>
+Baby's Age
+</label>
+
+
+<select id="babyAge">
+
+
+<option value="0">
+Newborn (0-6 weeks)
+</option>
+
+
+<option value="2">
+2 months
+</option>
+
+
+<option value="4">
+4 months
+</option>
+
+
+<option value="6">
+6 months
+</option>
+
+
+<option value="8" selected>
+8 months
+</option>
+
+
+<option value="10">
+10 months
+</option>
+
+
+<option value="12">
+12 months
+</option>
+
+
+<option value="18">
+18 months
+</option>
+
+
+<option value="24">
+2 years
+</option>
+
+
+<option value="36">
+3 years
+</option>
+
+
+</select>
+
+
+
+
+<label>
+Morning Wake Up Time
+</label>
+
+
+<input 
+type="time"
+id="wakeTime"
+value="07:00">
+
+
+
+
+
+<label>
+Number Of Naps
+</label>
+
+
+<select id="napCount">
+
+<option value="auto">
+Recommended Automatically
+</option>
+
+<option value="1">
+1 Nap
+</option>
+
+<option value="2">
+2 Naps
+</option>
+
+<option value="3">
+3 Naps
+</option>
+
+<option value="4">
+4 Naps
+</option>
+
+</select>
+
+
+
+
+<button 
+id="generateSchedule"
+class="download-button">
+
+✨ Create My Sleep Schedule
+
+</button>
+
+
+
+<div class="saved-message" id="savedMessage">
+
+💾 Schedule saved on this device
+
+</div>
+
+
+</div>
+
+
+
+
+<!-- =========================
+     PREVIEW
+========================= -->
+
+
+<div class="sleep-preview-wrapper">
+
+
+<h2>
+Today's Sleep Plan
+</h2>
+
+
+<div class="sleep-preview">
+
+
+
+<div class="sleep-score">
+
+⭐⭐⭐⭐⭐
+
+<strong>
+Great Sleep Balance
+</strong>
+
+<span id="sleepScoreText">
+
+Your personalized schedule will appear here.
+
+</span>
+
+</div>
+
+
+
+
+<div class="sleep-summary">
+
+
+<div>
+
+<strong>
+Age
+</strong>
+
+<span id="summaryAge">
+-
+</span>
+
+</div>
+
+
+<div>
+
+<strong>
+Wake Up
+</strong>
+
+<span id="summaryWake">
+-
+</span>
+
+</div>
+
+
+<div>
+
+<strong>
+Total Sleep Goal
+</strong>
+
+<span id="summaryTotal">
+-
+</span>
+
+</div>
+
+
+</div>
+
+
+
+
+
+<h3>
+Daily Timeline
+</h3>
+
+
+
+<div 
+id="sleepTimeline"
+class="sleep-timeline">
+
+
+<div class="empty-state">
+
+Create your schedule to see your baby's day.
+
+</div>
+
+
+</div>
+
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+</section>
+
+<!-- =========================
+     NAP ADJUSTMENT SECTION
+========================= -->
+
+<section class="nap-adjustment-section">
+
+
+<h2>
+Adjust Today's Naps
+</h2>
+
+
+<p>
+Update nap lengths during the day and your bedtime recommendation will automatically adjust.
+</p>
+
+
+
+<div class="nap-input-grid">
+
+
+<div class="nap-card">
+
+<h3>
+😴 Nap 1
+</h3>
+
+<label>
+Start Time
+</label>
+
+<input 
+type="time"
+class="nap-start"
+data-nap="1">
+
+
+<label>
+Duration
+</label>
+
+<select 
+class="nap-duration"
+data-nap="1">
+
+<option value="0">
+Not taken
+</option>
+
+<option value="30">
+30 minutes
+</option>
+
+<option value="45">
+45 minutes
+</option>
+
+<option value="60">
+1 hour
+</option>
+
+<option value="90">
+1.5 hours
+</option>
+
+<option value="120">
+2 hours
+</option>
+
+</select>
+
+</div>
+
+
+
+
+<div class="nap-card">
+
+<h3>
+😴 Nap 2
+</h3>
+
+
+<label>
+Start Time
+</label>
+
+
+<input 
+type="time"
+class="nap-start"
+data-nap="2">
+
+
+<label>
+Duration
+</label>
+
+
+<select 
+class="nap-duration"
+data-nap="2">
+
+<option value="0">
+Not taken
+</option>
+
+<option value="30">
+30 minutes
+</option>
+
+<option value="45">
+45 minutes
+</option>
+
+<option value="60">
+1 hour
+</option>
+
+<option value="90">
+1.5 hours
+</option>
+
+<option value="120">
+2 hours
+</option>
+
+</select>
+
+
+</div>
+
+
+
+
+
+<div class="nap-card">
+
+<h3>
+😴 Nap 3
+</h3>
+
+
+<label>
+Start Time
+</label>
+
+
+<input 
+type="time"
+class="nap-start"
+data-nap="3">
+
+
+<label>
+Duration
+</label>
+
+
+<select 
+class="nap-duration"
+data-nap="3">
+
+<option value="0">
+Not taken
+</option>
+
+<option value="30">
+30 minutes
+</option>
+
+<option value="45">
+45 minutes
+</option>
+
+<option value="60">
+1 hour
+</option>
+
+<option value="90">
+1.5 hours
+</option>
+
+<option value="120">
+2 hours
+</option>
+
+</select>
+
+
+</div>
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+<!-- =========================
+     BEDTIME RESULT
+========================= -->
+
+
+<section class="bedtime-card">
+
+
+<h2>
+🌙 Recommended Bedtime
+</h2>
+
+
+<div 
+id="bedtimeResult"
+class="bedtime-result">
+
+Create your schedule to see bedtime.
+
+</div>
+
+
+
+<p id="bedtimeExplanation">
+
+Your schedule adjusts based on naps, age and wake windows.
+
+</p>
+
+
+</section>
+
+
+
+
+
+
+
+<!-- =========================
+     BENEFITS
+========================= -->
+
+
+<section class="tips">
+
+
+<h2>
+Why Parents Love This Sleep Tool
+</h2>
+
+
+<div class="sleep-benefits">
+
+
+<div>
+
+😴
+
+<strong>
+Age-Based Wake Windows
+</strong>
+
+<span>
+Uses recommended sleep ranges for your baby's stage.
+</span>
+
+</div>
+
+
+
+<div>
+
+⏰
+
+<strong>
+Flexible Scheduling
+</strong>
+
+<span>
+Adjusts when naps are shorter or longer.
+</span>
+
+</div>
+
+
+
+
+<div>
+
+📱
+
+<strong>
+Saved On Your Device
+</strong>
+
+<span>
+Come back anytime without creating an account.
+</span>
+
+</div>
+
+
+
+<div>
+
+💛
+
+<strong>
+Less Guessing
+</strong>
+
+<span>
+Understand your baby's sweet spot.
+</span>
+
+</div>
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+<!-- =========================
+     FAQ SEO SECTION
+========================= -->
+
+
+<section class="sleep-faq">
+
+
+<h2>
+Baby Sleep Schedule Questions
+</h2>
+
+
+<div>
+
+
+<h3>
+What is a wake window?
+</h3>
+
+
+<p>
+A wake window is the amount of time a baby can comfortably stay awake between sleep periods. It changes as babies grow.
+</p>
+
+
+</div>
+
+
+
+<div>
+
+
+<h3>
+Should bedtime change if naps are short?
+</h3>
+
+
+<p>
+Yes. When daytime sleep is shorter than expected, an earlier bedtime can help prevent overtiredness.
+</p>
+
+
+</div>
+
+
+
+
+<div>
+
+
+<h3>
+Is every baby schedule the same?
+</h3>
+
+
+<p>
+No. This tool provides an evidence-informed starting point, but every baby has individual sleep needs.
+</p>
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+
+<footer>
+
+
+<div class="footer-logo">
+
+<img 
+src="assets/logo.svg"
+alt="MomYouNeedThis">
+
+</div>
+
+
+<h3>
+MomYouNeedThis
+</h3>
+
+
+<p>
+Helping moms find products and resources that make everyday life easier.
+</p>
+
+
+
+<div class="footer-bottom">
+
+<p>
+© 2026 MomYouNeedThis
+</p>
+
+
+</div>
+
+
+</footer>
+
+
+
+</section>
+
+
+</div>
+
+
+
+
+
+<script src="sleep-schedule-generator.js"></script>
+
+
+</body>
+
+
+</html>
