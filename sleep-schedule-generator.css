@@ -1,5 +1,5 @@
 /* =====================================
-PREMIUM BABY SLEEP TRACKER (REFINED)
+PREMIUM BABY SLEEP TRACKER
 ===================================== */
 
 .sleep-app{
@@ -15,7 +15,7 @@ border-radius:32px;
 }
 
 /* =====================================
-CARDS (MORE PREMIUM)
+CARDS
 ===================================== */
 
 .sleep-main-card,
@@ -38,7 +38,7 @@ margin-bottom:10px;
 }
 
 /* =====================================
-FORM FIX (MOBILE SAFE)
+FORM FIX 
 ===================================== */
 
 .sleep-main-card label{
@@ -63,7 +63,7 @@ background:#fff;
 }
 
 /* =====================================
-SWEET SPOT CARD (CLEANER)
+SWEET SPOT CARD 
 ===================================== */
 
 .sweet-spot-card{
@@ -94,7 +94,7 @@ color:#666;
 }
 
 /* =====================================
-NAPS (FIXED MOBILE + REMOVE BUTTON)
+NAPS 
 ===================================== */
 
 #napList{
@@ -127,7 +127,7 @@ background:#ffc9d3;
 }
 
 /* =====================================
-BUTTONS (MORE PREMIUM)
+BUTTONS 
 ===================================== */
 
 .secondary-button{
@@ -252,8 +252,8 @@ text-align:center;
 box-shadow:0 6px 18px rgba(0,0,0,.05);
 }
 
-/* =====================================
-MOBILE FIXES
+/* ====================================
+MOBILE 
 ===================================== */
 
 @media(max-width:900px){
