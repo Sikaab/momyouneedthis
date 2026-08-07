@@ -208,9 +208,15 @@
 
 .nap-row h3{
 
-    margin-top:0;
+    margin-top:15px;
 
-    font-size:18px;
+    margin-bottom:12px;
+
+    font-size:16px;
+
+    font-weight:900;
+
+    color:#332b2b;
 
 }
 
