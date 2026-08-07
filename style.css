@@ -216,27 +216,6 @@ button:hover{
 
 }
 
-.free-tool-badge{
-
-    display:inline-block;
-
-    background:#fde6ec;
-
-    color:#d97f95;
-
-    padding:10px 20px;
-
-    border-radius:999px;
-
-    font-weight:900;
-}
-
-.free-tool-badge h2{
-
-    margin-top: 0px;
-    padding-top: 0px;
-}
-
 .free-badge{
 
     display:inline-block;
@@ -621,6 +600,27 @@ box-shadow:0 10px 25px rgba(0,0,0,.08);
 
     color:#777;
 
+}
+
+.free-tool-badge{
+
+    display:inline-block;
+
+    background:#fde6ec;
+
+    color:#d97f95;
+
+    padding:10px 20px;
+
+    border-radius:999px;
+
+    font-weight:900;
+}
+
+.free-tool-badge h2{
+
+    margin-top: 0px;
+    padding-top: 0px;
 }
 
 /* =====================
