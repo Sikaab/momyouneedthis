@@ -1,353 +1,652 @@
 /* =====================================
-PREMIUM BABY SLEEP TRACKER
+   PREMIUM BABY SLEEP TRACKER
+   MODERN APP STYLE
 ===================================== */
 
-.sleep-app{
+
+.sleep-app {
+
 max-width:1100px;
-margin:30px auto;
-padding:35px 20px;
+margin:40px auto;
+padding:0;
+
 display:grid;
 grid-template-columns:1fr 1fr;
 gap:28px;
-align-items:center:
-background:
 
-        radial-gradient(circle at top left,#3e74c8 0%,transparent 35%),
+align-items:start;
 
-        radial-gradient(circle at bottom right,#244c8f 0%,transparent 30%),
-
-        linear-gradient(180deg,#0f2a44,#132f4e);
-border-radius:32px;
 }
 
+
 /* =====================================
-CARDS
+   MAIN CARDS
 ===================================== */
+
 
 .sleep-main-card,
-.sleep-results-card{
-background:#fff;
-padding:28px;
-border-radius:24px;
-box-shadow:
-0 15px 45px rgba(0,0,0,.12),
-0 2px 8px rgba(255,255,255,.5) inset;
-min-width:0;
-overflow:hidden;
+.sleep-results-card {
+
+background:#ffffff;
+
+padding:32px;
+
+border-radius:18px;
+
+border:1px solid #edf2f8;
+
+box-shadow:0 8px 25px rgba(20,40,80,.06);
+
 }
+
+
+/* HEADINGS */
 
 .sleep-main-card h2,
-.sleep-results-card h2{
+.sleep-results-card h2 {
+
+font-size:22px;
+
 font-weight:900;
-color:#1d4f91;
+
+color:#173b6d;
+
 text-align:center;
-font-size:20px;
-margin-bottom:10px;
+
+margin:0 0 25px;
+
 }
+
 
 /* =====================================
-FORM FIX 
+   FORM
 ===================================== */
 
-.sleep-main-card label{
+
+.sleep-main-card label {
+
 display:block;
-margin-top:16px;
-margin-bottom:6px;
+
+font-size:14px;
+
 font-weight:800;
-color:#2b2b2b;
+
+color:#374151;
+
+margin-top:18px;
+
+margin-bottom:8px;
+
 }
+
 
 
 .sleep-main-card input,
 .sleep-main-card select,
 .nap-row input,
-.nap-row select{
+.nap-row select {
 
-background:#fafcff;
-border:2px solid #edf2fb;
-transition:.25s;
+
+width:100%;
+
+box-sizing:border-box;
+
+padding:14px 16px;
+
+font-size:15px;
+
+font-family:inherit;
+
+background:#f8fafc;
+
+border:1px solid #e5eaf2;
+
+border-radius:14px;
+
+transition:.2s ease;
 
 }
+
+
 
 .sleep-main-card input:focus,
 .sleep-main-card select:focus,
 .nap-row input:focus,
-.nap-row select:focus{
+.nap-row select:focus {
+
 
 outline:none;
-border-color:#5f9bff;
-box-shadow:0 0 0 4px rgba(95,155,255,.15);
-
-}
-
-/* =====================================
-SWEET SPOT CARD 
-===================================== */
-
-.sweet-spot-card{
-
-background:
-linear-gradient(135deg,#edf5ff,#ffffff);
-
-border:2px solid #d9e9ff;
-
-box-shadow:
-0 10px 25px rgba(29,79,145,.08);
-
-}
-
-.sweet-spot-card h3{
-font-size:18px;
-color:#1d4f91;
-margin-bottom:10px;
-}
-
-.sweet-spot-card strong{
-
-font-size:38px;
-font-weight:900;
-letter-spacing:-1px;
-
-}
-
-.sweet-spot-card p{
-font-size:14px;
-color:#666;
-}
-
-/* =====================================
-NAPS 
-===================================== */
-
-#napList{
-margin-top:12px;
-}
-
-.nap-row{
-background:#fbfcff;
-border:1px solid #edf2fb;
-padding:14px;
-border-radius:16px;
-margin-bottom:12px;
-}
-
-/* remove button */
-.remove-nap{
-margin-top:10px;
-width:100%;
-border:none;
-background:#ffe3e8;
-color:#b00020;
-padding:10px;
-border-radius:12px;
-font-weight:800;
-cursor:pointer;
-transition:.2s ease;
-}
-
-.remove-nap:hover{
-background:#ffc9d3;
-}
-
-/* =====================================
-BUTTONS 
-===================================== */
-
-.secondary-button{
-width:100%;
-margin-top:12px;
-padding:12px;
-border-radius:16px;
-border:none;
-background:#eef3ff;
-color:#1d4f91;
-font-weight:900;
-cursor:pointer;
-}
-
-.secondary-button:hover{
-background:#dfeaff;
-}
-
-.download-button{
-
-background:
-linear-gradient(180deg,#3d7cff,#2563eb);
-
-box-shadow:
-0 12px 25px rgba(37,99,235,.35);
-
-}
-
-.download-button:hover{
-
-transform:translateY(-3px);
-
-box-shadow:
-0 18px 35px rgba(37,99,235,.45);
-
-}
-
-/* =====================================
-SUMMARY
-===================================== */
-
-.summary-grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:12px;
-margin:20px 0;
-}
-
-.summary-grid div{
 
 background:white;
 
-border:1px solid #edf2fb;
+border-color:#6da5ff;
 
-box-shadow:0 5px 15px rgba(0,0,0,.04);
+box-shadow:0 0 0 4px rgba(109,165,255,.15);
 
 }
 
-.summary-grid strong{
-font-size:13px;
-}
 
-.summary-grid span{
-display:block;
-margin-top:6px;
-font-weight:900;
-color:#1d4f91;
-word-break:break-word;
-}
 
 /* =====================================
-TIMELINE
+   SWEET SPOT FEATURE
 ===================================== */
 
-.sleep-timeline{
-display:flex;
-flex-direction:column;
-gap:12px;
-}
 
-.timeline-item{
+.sweet-spot-card {
 
-position:relative;
-padding-left:18px;
 
-}
+margin-top:28px;
 
-.timeline-item::before{
+padding:26px 20px;
 
-content:"";
+border-radius:18px;
 
-position:absolute;
+background:#f4f8ff;
 
-left:0;
+border:1px solid #dceaff;
 
-top:20px;
-
-width:5px;
-
-height:40px;
-
-background:#7cb5ff;
-
-border-radius:10px;
-
-}
-
-.timeline-icon{
-font-size:26px;
-}
-
-/* =====================================
-BEDTIME CARD
-===================================== */
-
-.bedtime-card{
-margin-top:20px;
-background:#f6f8fc;
-padding:20px;
-border-radius:20px;
 text-align:center;
+
 }
 
-.bedtime-card strong{
-font-size:30px;
-color:#1d4f91;
+
+
+.sweet-spot-card h3 {
+
+
+font-size:16px;
+
+font-weight:900;
+
+color:#2864b7;
+
+margin:0 0 12px;
+
 }
+
+
+
+.sweet-spot-card strong {
+
+
+display:block;
+
+font-size:38px;
+
+font-weight:900;
+
+letter-spacing:-1px;
+
+color:#173b6d;
+
+margin:12px 0;
+
+}
+
+
+
+.sweet-spot-card p {
+
+
+font-size:14px;
+
+color:#64748b;
+
+margin:0;
+
+}
+
+
 
 /* =====================================
-BENEFITS
+   NAPS
 ===================================== */
 
-.sleep-benefits{
+
+#napList {
+
+margin-top:15px;
+
+}
+
+
+
+.nap-row {
+
+
+background:#fbfcfe;
+
+border:1px solid #edf2f7;
+
+padding:16px;
+
+border-radius:16px;
+
+margin-bottom:12px;
+
+}
+
+
+
+/* REMOVE BUTTON */
+
+
+.remove-nap {
+
+
+margin-top:12px;
+
+width:100%;
+
+padding:11px;
+
+border-radius:12px;
+
+border:none;
+
+background:#fff1f2;
+
+color:#be123c;
+
+font-weight:800;
+
+cursor:pointer;
+
+}
+
+
+
+.remove-nap:hover {
+
+
+background:#ffe4e6;
+
+}
+
+
+
+/* =====================================
+   BUTTONS
+===================================== */
+
+
+.secondary-button,
+.download-button {
+
+
+width:100%;
+
+padding:15px;
+
+border-radius:14px;
+
+border:none;
+
+font-size:15px;
+
+font-weight:900;
+
+font-family:inherit;
+
+cursor:pointer;
+
+transition:.2s ease;
+
+}
+
+
+
+.secondary-button {
+
+
+margin-top:15px;
+
+background:#eef5ff;
+
+color:#2864b7;
+
+}
+
+
+
+.secondary-button:hover {
+
+
+background:#dfebff;
+
+}
+
+
+
+.download-button {
+
+
+margin-top:14px;
+
+background:#2d7ef7;
+
+color:white;
+
+box-shadow:0 8px 18px rgba(45,126,247,.25);
+
+}
+
+
+
+.download-button:hover {
+
+
+background:#2168d8;
+
+transform:translateY(-2px);
+
+}
+
+
+
+/* =====================================
+   SUMMARY
+===================================== */
+
+
+.summary-grid {
+
+
 display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:16px;
-}
 
-.sleep-benefits div{
+grid-template-columns:repeat(3,1fr);
 
-transition:.25s;
+gap:12px;
 
-}
-
-.sleep-benefits div:hover{
-
-transform:translateY(-6px);
-
-box-shadow:0 18px 30px rgba(0,0,0,.08);
+margin:20px 0 30px;
 
 }
 
-/* ====================================
-MOBILE 
+
+
+.summary-grid div {
+
+
+background:#f8fafc;
+
+border:1px solid #edf2f7;
+
+padding:16px 10px;
+
+border-radius:14px;
+
+text-align:center;
+
+}
+
+
+
+.summary-grid strong {
+
+
+display:block;
+
+font-size:13px;
+
+color:#64748b;
+
+}
+
+
+
+.summary-grid span {
+
+
+display:block;
+
+margin-top:8px;
+
+font-weight:900;
+
+color:#173b6d;
+
+}
+
+
+
+/* =====================================
+   TIMELINE
 ===================================== */
+
+
+.sleep-timeline {
+
+
+display:flex;
+
+flex-direction:column;
+
+gap:12px;
+
+}
+
+
+
+.timeline-item {
+
+
+display:flex;
+
+align-items:center;
+
+gap:14px;
+
+padding:15px;
+
+background:#ffffff;
+
+border:1px solid #edf2f7;
+
+border-radius:14px;
+
+}
+
+
+
+.timeline-icon {
+
+
+font-size:24px;
+
+}
+
+
+
+/* =====================================
+   BEDTIME CARD
+===================================== */
+
+
+.bedtime-card {
+
+
+margin-top:25px;
+
+padding:24px;
+
+border-radius:18px;
+
+background:#f8fafc;
+
+border:1px solid #edf2f7;
+
+text-align:center;
+
+}
+
+
+
+.bedtime-card h3 {
+
+
+font-size:16px;
+
+color:#173b6d;
+
+}
+
+
+
+.bedtime-card strong {
+
+
+display:block;
+
+font-size:36px;
+
+font-weight:900;
+
+color:#2d7ef7;
+
+margin:10px 0;
+
+}
+
+
+
+/* =====================================
+   BENEFITS
+===================================== */
+
+
+.sleep-benefits {
+
+
+display:grid;
+
+grid-template-columns:repeat(4,1fr);
+
+gap:18px;
+
+}
+
+
+
+.sleep-benefits div {
+
+
+background:white;
+
+border:1px solid #edf2f7;
+
+padding:22px;
+
+border-radius:18px;
+
+text-align:center;
+
+transition:.2s ease;
+
+}
+
+
+
+.sleep-benefits div:hover {
+
+
+transform:translateY(-4px);
+
+box-shadow:0 10px 25px rgba(0,0,0,.06);
+
+}
+
+
+
+.sleep-benefits strong {
+
+
+display:block;
+
+margin:10px 0;
+
+color:#173b6d;
+
+}
+
+
+
+.sleep-benefits span {
+
+
+font-size:14px;
+
+color:#64748b;
+
+line-height:1.5;
+
+}
+
+
+
+/* =====================================
+   MOBILE
+===================================== */
+
 
 @media(max-width:900px){
 
-.sleep-app{
+
+.sleep-app {
+
 grid-template-columns:1fr;
-padding:25px 15px;
-border-radius:24px;
+
 }
 
-.sleep-benefits{
+
+
+.sleep-benefits {
+
 grid-template-columns:1fr 1fr;
-}
 
 }
+
+
+}
+
+
 
 @media(max-width:600px){
 
-.sleep-app{
-padding:18px 12px;
-}
 
 .sleep-main-card,
-.sleep-results-card{
-padding:20px;
-text-align:center;
+.sleep-results-card {
+
+
+padding:22px;
+
 }
 
-.summary-grid{
+
+
+.summary-grid {
+
+
 grid-template-columns:1fr;
+
 }
 
-.download-button,
-.secondary-button{
-font-size:15px;
+
+
+.sweet-spot-card strong {
+
+
+font-size:30px;
+
 }
 
-.sweet-spot-card strong{
-font-size:24px;
+
+
+.sleep-benefits {
+
+
+grid-template-columns:1fr;
+
 }
 
-.remove-nap{
-font-size:14px;
-}
 
 }
