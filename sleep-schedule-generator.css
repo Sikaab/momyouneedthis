@@ -5,7 +5,7 @@
 
 
 /* =====================================
-   MAIN APP
+   MAIN CONTAINER
 ===================================== */
 
 .sleep-app{
@@ -24,7 +24,7 @@
 
     align-items:start;
 
-    background:#eef4ff;
+    background:#102a43;
 
     border-radius:40px;
 
@@ -34,7 +34,6 @@
 /* =====================================
    CARDS
 ===================================== */
-
 
 .sleep-main-card,
 .sleep-results-card{
@@ -46,9 +45,11 @@
     border-radius:30px;
 
     box-shadow:
-    0 12px 35px rgba(79,111,174,.12);
+    0 12px 35px rgba(0,0,0,.08);
 
     min-width:0;
+
+    overflow:hidden;
 
 }
 
@@ -57,9 +58,9 @@
 .sleep-main-card h2,
 .sleep-results-card h2{
 
-    color:#304b7a;
-
     font-weight:900;
+
+    color:#1d4f91;
 
 }
 
@@ -80,7 +81,9 @@
 
     font-weight:900;
 
-    color:#304b7a;
+    color:#332b2b;
+
+    white-space:normal;
 
 }
 
@@ -90,7 +93,6 @@
 .sleep-main-card select,
 .nap-row input,
 .nap-row select{
-
 
     display:block;
 
@@ -102,49 +104,24 @@
 
     box-sizing:border-box;
 
-
-    padding:13px;
-
+    padding:13px 12px;
 
     border-radius:15px;
 
-
-    border:1px solid #d6def0;
-
+    border:1px solid #ddd;
 
     font-family:inherit;
 
-
     font-size:16px;
-
 
     background:white;
 
-
-    color:#332b2b;
-
 }
-
-
-.sleep-main-card input:focus,
-.sleep-main-card select:focus,
-.nap-row input:focus,
-.nap-row select:focus{
-
-    outline:none;
-
-    border-color:#4f6fae;
-
-    box-shadow:0 0 0 3px rgba(79,111,174,.15);
-
-}
-
-
 
 
 
 /* =====================================
-   SWEET SPOT
+   SWEET SPOT CARD
 ===================================== */
 
 
@@ -152,7 +129,9 @@
 
     margin-top:25px;
 
-    background:#e8f0ff;
+    background:#eaf2ff;
+
+    border:1px solid #d4e3ff;
 
     padding:25px;
 
@@ -170,7 +149,7 @@
 
     font-size:22px;
 
-    color:#304b7a;
+    color:#1d4f91;
 
 }
 
@@ -182,7 +161,7 @@
 
     font-size:32px;
 
-    color:#4f6fae;
+    color:#1d4f91;
 
     margin:15px 0;
 
@@ -192,13 +171,11 @@
 
 .sweet-spot-card p{
 
-    color:#667085;
+    color:#666;
 
     line-height:1.5;
 
 }
-
-
 
 
 
@@ -217,18 +194,13 @@
 
 .nap-row{
 
+    background:#f4f7fc;
 
-    background:#f3f7ff;
+    padding:15px;
 
+    border-radius:18px;
 
-    padding:18px;
-
-
-    border-radius:22px;
-
-
-    margin-bottom:15px;
-
+    margin-bottom:12px;
 
 }
 
@@ -238,98 +210,68 @@
 
     margin-top:0;
 
-    color:#304b7a;
-
-    font-size:20px;
+    font-size:18px;
 
 }
 
 
+
+/* Remove nap button */
 
 .remove-nap{
 
-
     margin-top:12px;
-
 
     border:none;
 
+    background:#ffe5eb;
 
-    background:#dce8ff;
-
-
-    color:#304b7a;
-
-
-    padding:8px 14px;
-
+    padding:10px 15px;
 
     border-radius:12px;
 
-
     cursor:pointer;
-
 
     font-family:inherit;
 
-
     font-weight:700;
-
 
 }
 
 
 
+/* Add nap button */
 
 
 .secondary-button{
 
-
     width:100%;
 
+    margin-top:15px;
 
-    margin-top:12px;
-
-
-    padding:12px;
-
+    padding:13px;
 
     border-radius:18px;
 
-
     border:none;
 
+    background:#edf3ff;
 
-    background:#e8f0ff;
-
-
-    color:#304b7a;
-
+    color:#1d4f91;
 
     font-family:inherit;
 
-
     font-size:15px;
-
 
     font-weight:900;
 
-
     cursor:pointer;
 
-
 }
 
 
 
-.secondary-button:hover{
-
-    background:#dce8ff;
-
-}
-
-
-
+/* Save button */
 
 
 .download-button{
@@ -338,9 +280,36 @@
 
     margin-top:15px;
 
+    background:#1d4f91;
+
+    color:white;
+
+    border:none;
+
+    padding:16px;
+
+    border-radius:20px;
+
+    font-family:inherit;
+
+    font-weight:900;
+
+    cursor:pointer;
+
+    transition:.25s ease;
+
 }
 
 
+
+.download-button:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+    0 10px 25px rgba(29,79,145,.35);
+
+}
 
 
 
@@ -351,18 +320,13 @@
 
 .summary-grid{
 
-
     display:grid;
-
 
     grid-template-columns:repeat(3,1fr);
 
-
     gap:15px;
 
-
     margin:25px 0;
-
 
 }
 
@@ -370,21 +334,15 @@
 
 .summary-grid div{
 
-
-    background:#f3f7ff;
-
+    background:#f4f7fc;
 
     padding:18px;
 
-
     border-radius:20px;
-
 
     text-align:center;
 
-
     min-width:0;
-
 
 }
 
@@ -392,13 +350,9 @@
 
 .summary-grid strong{
 
-
     display:block;
 
     font-size:14px;
-
-    color:#304b7a;
-
 
 }
 
@@ -406,25 +360,17 @@
 
 .summary-grid span{
 
-
     display:block;
-
 
     margin-top:8px;
 
-
     font-weight:900;
 
-
-    color:#4f6fae;
-
+    color:#1d4f91;
 
     word-break:break-word;
 
-
 }
-
-
 
 
 
@@ -435,13 +381,11 @@
 
 .sleep-timeline{
 
-
     display:flex;
 
     flex-direction:column;
 
     gap:15px;
-
 
 }
 
@@ -449,24 +393,17 @@
 
 .timeline-item{
 
-
     display:flex;
-
 
     align-items:center;
 
-
     gap:15px;
 
-
-    background:#f3f7ff;
-
+    background:#f4f7fc;
 
     padding:18px;
 
-
     border-radius:20px;
-
 
 }
 
@@ -474,12 +411,9 @@
 
 .timeline-icon{
 
-
     font-size:32px;
 
-
     flex-shrink:0;
-
 
 }
 
@@ -487,9 +421,7 @@
 
 .timeline-content{
 
-
     min-width:0;
-
 
 }
 
@@ -497,11 +429,7 @@
 
 .timeline-content strong{
 
-
     display:block;
-
-    color:#304b7a;
-
 
 }
 
@@ -509,40 +437,27 @@
 
 .timeline-content span{
 
-
-    color:#667085;
-
+    color:#777;
 
 }
-
-
 
 
 
 .empty-state{
 
-
     text-align:center;
 
-
-    color:#667085;
-
+    color:#777;
 
     padding:25px;
 
-
-    background:#f3f7ff;
-
+    background:#f4f7fc;
 
     border-radius:20px;
 
-
 }
 
-
-
-
-
+ 
 /* =====================================
    NEXT SLEEP SWEET SPOT RESULT
 ===================================== */
@@ -550,29 +465,23 @@
 
 .bedtime-card{
 
-
     margin-top:30px;
 
-
-    background:#e8f0ff;
-
+    background:#f4f7fc;
 
     padding:25px;
 
-
     border-radius:25px;
 
-
     text-align:center;
-
 
 }
 
 
 
-.bedtime-card h2{
+.bedtime-card h3{
 
-    color:#304b7a;
+    color:#1d4f91;
 
 }
 
@@ -580,22 +489,15 @@
 
 .bedtime-card strong{
 
-
     display:block;
-
 
     font-size:35px;
 
-
-    color:#4f6fae;
-
+    color:#1d4f91;
 
     margin:15px 0;
 
-
 }
-
-
 
 
 
@@ -606,15 +508,11 @@
 
 .sleep-benefits{
 
-
     display:grid;
-
 
     grid-template-columns:repeat(4,1fr);
 
-
     gap:20px;
-
 
 }
 
@@ -622,23 +520,17 @@
 
 .sleep-benefits div{
 
-
     background:white;
-
 
     padding:25px;
 
-
     border-radius:22px;
-
 
     text-align:center;
 
-
     box-shadow:
 
-    0 8px 20px rgba(79,111,174,.08);
-
+    0 8px 20px rgba(0,0,0,.05);
 
 }
 
@@ -646,14 +538,9 @@
 
 .sleep-benefits strong{
 
-
     display:block;
 
-
     margin:10px 0;
-
-    color:#304b7a;
-
 
 }
 
@@ -661,15 +548,11 @@
 
 .sleep-benefits span{
 
-
-    color:#667085;
-
+    color:#777;
 
     font-size:14px;
 
-
     line-height:1.5;
-
 
 }
 
@@ -684,31 +567,17 @@
 
 .sleep-faq{
 
-
     background:white;
-
 
     padding:35px;
 
-
     border-radius:30px;
-
 
     margin-top:40px;
 
-
     box-shadow:
 
-    0 12px 35px rgba(79,111,174,.12);
-
-
-}
-
-
-
-.sleep-faq h2{
-
-    color:#304b7a;
+    0 12px 35px rgba(0,0,0,.07);
 
 }
 
@@ -716,12 +585,9 @@
 
 .sleep-faq div{
 
-
     padding:20px 0;
 
-
-    border-bottom:1px solid #e8edf7;
-
+    border-bottom:1px solid #eee;
 
 }
 
@@ -731,7 +597,7 @@
 
     font-size:22px;
 
-    color:#304b7a;
+    color:#1d4f91;
 
 }
 
@@ -739,12 +605,36 @@
 
 .sleep-faq p{
 
-
-    color:#667085;
-
+    color:#666;
 
     line-height:1.6;
 
+}
+
+
+
+
+
+/* =====================================
+   PAGE TITLE
+===================================== */
+
+
+.sleep-page h1,
+.sleep-header h1{
+
+    color:#1d4f91;
+
+    font-weight:900;
+
+}
+
+
+
+.sleep-page h1 span,
+.sleep-header h1 span{
+
+    color:#4f6fae;
 
 }
 
@@ -764,6 +654,8 @@
 
     grid-template-columns:1fr;
 
+    padding:30px 15px;
+
 }
 
 
@@ -779,16 +671,15 @@
 
 
 
-
 @media(max-width:600px){
 
 
 
 .sleep-app{
 
-    padding:25px 15px;
+    border-radius:25px;
 
-    border-radius:30px;
+    padding:20px 10px;
 
 }
 
@@ -837,7 +728,79 @@
 
     font-size:15px;
 
+    padding:12px;
+
 }
 
+
+
+.download-button{
+
+    font-size:16px;
+
+}
+
+
+
+}
+
+
+
+/* =====================================
+   PREVENT SELECT OVERFLOW
+===================================== */
+
+
+select{
+
+    appearance:auto;
+
+    max-width:100%;
+
+}
+
+
+
+.sleep-main-card{
+
+    min-width:0;
+
+}
+
+
+
+.sleep-results-card{
+
+    min-width:0;
+
+}
+
+
+
+/* =====================================
+   BLUE ACCENTS
+===================================== */
+
+
+.timeline-content strong,
+.summary-grid span{
+
+    color:#1d4f91;
+
+}
+
+
+
+.secondary-button:hover{
+
+    background:#dce9ff;
+
+}
+
+
+
+.remove-nap:hover{
+
+    background:#ffd6df;
 
 }
