@@ -308,10 +308,12 @@ transition:.2s ease;
 
 }
 
-#saveDay{
-    text-align: center; }
-
-
+.sleep-main-card .download-button {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+}
 
 .secondary-button {
 
