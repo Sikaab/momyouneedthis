@@ -1,50 +1,22 @@
 /* =====================================
-   BABY SLEEP SCHEDULE GENERATOR
+   BABY SLEEP TRACKER
    MomYouNeedThis
 ===================================== */
 
 
-/* =========================
-   MAIN CONTAINER
-========================= */
+/* MAIN */
 
-
-.sleep-generator{
-
-    padding:40px 0;
-
-}
-
-
-.sleep-container{
+.sleep-app{
 
     max-width:1100px;
-
-    margin:auto;
-
+    margin:40px auto;
     padding:0 20px;
-
-    display:grid;
-
-    grid-template-columns:1fr 1fr;
-
-    gap:35px;
-
-    align-items:start;
 
 }
 
 
-
-/* =========================
-   CARDS
-========================= */
-
-
-.sleep-form-card,
-.sleep-preview-wrapper,
-.bedtime-card,
-.sleep-faq{
+.sleep-main-card,
+.sleep-results-card{
 
     background:white;
 
@@ -59,28 +31,36 @@
 
 
 
-.sleep-form-card h2,
-.sleep-preview-wrapper h2,
-.bedtime-card h2,
-.sleep-faq h2{
 
-    font-size:30px;
+.sleep-app{
 
-    font-weight:900;
+    display:grid;
 
-    margin-top:0;
+    grid-template-columns:1fr 1fr;
+
+    gap:35px;
+
+    align-items:start;
 
 }
 
 
 
 
-/* =========================
-   FORM
-========================= */
+
+h2{
+
+    font-weight:900;
+
+}
 
 
-.sleep-form-card label{
+
+
+
+/* FORM */
+
+.sleep-main-card label{
 
     display:block;
 
@@ -94,10 +74,10 @@
 
 
 
-.sleep-form-card input,
-.sleep-form-card select,
-.nap-card input,
-.nap-card select{
+.sleep-main-card input,
+.sleep-main-card select,
+.nap-row input,
+.nap-row select{
 
 
     width:100%;
@@ -118,75 +98,55 @@
 
 
 
-/* =========================
-   SAVE MESSAGE
-========================= */
-
-
-.saved-message{
-
-    margin-top:15px;
-
-    font-size:14px;
-
-    color:#777;
-
-    text-align:center;
-
-    display:none;
-
-}
 
 
 
-/* =========================
-   PREVIEW
-========================= */
+/* SWEET SPOT */
+
+.sweet-spot-card{
 
 
-.sleep-preview{
+    margin-top:30px;
 
     background:#fff8fb;
 
-    border-radius:25px;
-
     padding:25px;
 
-}
-
-
-
-.sleep-score{
-
-    background:white;
-
-    padding:20px;
-
-    border-radius:20px;
+    border-radius:25px;
 
     text-align:center;
 
-    box-shadow:0 8px 20px rgba(0,0,0,.05);
-
 }
 
 
 
-.sleep-score strong{
+.sweet-spot-card h3{
 
-    display:block;
+    margin-top:0;
 
     font-size:22px;
 
+}
+
+
+
+.sweet-spot-card strong{
+
+    display:block;
+
+    font-size:32px;
+
     color:#e89aaa;
 
-    margin:10px 0;
+    margin:15px 0;
 
 }
 
 
 
-.sleep-score span{
+
+
+.sweet-spot-card p{
 
     color:#777;
 
@@ -195,40 +155,144 @@
 
 
 
-/* =========================
- SUMMARY
-========================= */
 
 
-.sleep-summary{
+/* NAPS */
+
+#napList{
+
+    margin-top:20px;
+
+}
+
+
+
+.nap-row{
+
+
+    background:#fff8fb;
+
+    padding:20px;
+
+    border-radius:22px;
+
+    margin-bottom:15px;
+
+}
+
+
+
+.nap-row h3{
+
+    margin-top:0;
+
+}
+
+
+
+.remove-nap{
+
+    margin-top:15px;
+
+    border:none;
+
+    background:#ffe5eb;
+
+    padding:10px 15px;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    font-family:inherit;
+
+    font-weight:700;
+
+}
+
+
+
+
+
+.secondary-button{
+
+
+    width:100%;
+
+    margin-top:15px;
+
+    padding:15px;
+
+    border-radius:20px;
+
+    border:none;
+
+    background:#f5f5f5;
+
+    font-family:inherit;
+
+    font-size:16px;
+
+    font-weight:900;
+
+    cursor:pointer;
+
+}
+
+
+
+
+
+.download-button{
+
+    width:100%;
+
+    margin-top:15px;
+
+}
+
+
+
+
+
+
+
+/* SUMMARY */
+
+.summary-grid{
+
 
     display:grid;
 
     grid-template-columns:repeat(3,1fr);
 
-    gap:12px;
+    gap:15px;
 
     margin:25px 0;
 
+
 }
 
 
 
-.sleep-summary div{
+.summary-grid div{
 
-    background:white;
 
-    padding:15px;
+    background:#fff8fb;
 
-    border-radius:18px;
+    padding:18px;
+
+    border-radius:20px;
 
     text-align:center;
 
+
 }
 
 
 
-.sleep-summary strong{
+.summary-grid strong{
+
 
     display:block;
 
@@ -238,38 +302,29 @@
 
 
 
-.sleep-summary span{
+.summary-grid span{
 
-    color:#e89aaa;
-
-    font-weight:900;
 
     display:block;
 
-    margin-top:5px;
-
-}
-
-
-
-
-
-/* =========================
- TIMELINE
-========================= */
-
-
-.sleep-preview h3{
-
-    font-size:25px;
+    margin-top:8px;
 
     font-weight:900;
 
+    color:#e89aaa;
+
 }
 
 
 
+
+
+
+/* TIMELINE */
+
+
 .sleep-timeline{
+
 
     display:flex;
 
@@ -283,11 +338,6 @@
 
 .timeline-item{
 
-    background:white;
-
-    padding:18px;
-
-    border-radius:20px;
 
     display:flex;
 
@@ -295,8 +345,12 @@
 
     gap:15px;
 
-    box-shadow:
-    0 5px 15px rgba(0,0,0,.05);
+    background:#fff8fb;
+
+    padding:18px;
+
+    border-radius:20px;
+
 
 }
 
@@ -304,7 +358,7 @@
 
 .timeline-icon{
 
-    font-size:35px;
+    font-size:32px;
 
 }
 
@@ -313,8 +367,6 @@
 .timeline-content strong{
 
     display:block;
-
-    font-size:18px;
 
 }
 
@@ -330,76 +382,32 @@
 
 .empty-state{
 
-    background:white;
-
-    padding:30px;
-
-    border-radius:20px;
 
     text-align:center;
 
     color:#777;
 
-}
+    padding:25px;
 
+    background:#fff8fb;
 
-
-
-/* =========================
- NAP ADJUSTMENTS
-========================= */
-
-
-.nap-adjustment-section{
-
-    margin-top:45px;
-
-    background:white;
-
-    padding:35px;
-
-    border-radius:30px;
-
-    box-shadow:
-    0 12px 35px rgba(0,0,0,.07);
+    border-radius:20px;
 
 }
 
 
 
-.nap-adjustment-section h2{
-
-    font-size:32px;
-
-    font-weight:900;
-
-}
 
 
 
-.nap-adjustment-section p{
 
-    color:#666;
-
-    margin-bottom:25px;
-
-}
+/* BEDTIME */
 
 
-
-.nap-input-grid{
-
-    display:grid;
-
-    grid-template-columns:repeat(3,1fr);
-
-    gap:20px;
-
-}
+.bedtime-card{
 
 
-
-.nap-card{
+    margin-top:30px;
 
     background:#fff8fb;
 
@@ -407,71 +415,35 @@
 
     border-radius:25px;
 
-}
-
-
-
-.nap-card h3{
-
-    margin-top:0;
-
-    font-size:22px;
-
-}
-
-
-
-
-/* =========================
- BEDTIME
-========================= */
-
-
-.bedtime-card{
-
-    margin-top:40px;
-
     text-align:center;
 
 }
 
 
 
-.bedtime-result{
+.bedtime-card strong{
 
-    background:#fff0f5;
 
-    padding:25px;
+    display:block;
 
-    border-radius:25px;
-
-    font-size:32px;
-
-    font-weight:900;
+    font-size:35px;
 
     color:#e89aaa;
 
-}
-
-
-
-#bedtimeExplanation{
-
-    margin-top:15px;
-
-    color:#777;
+    margin:15px 0;
 
 }
 
 
 
 
-/* =========================
- BENEFITS
-========================= */
+
+
+/* BENEFITS */
 
 
 .sleep-benefits{
+
 
     display:grid;
 
@@ -479,11 +451,13 @@
 
     gap:20px;
 
+
 }
 
 
 
 .sleep-benefits div{
+
 
     background:white;
 
@@ -496,15 +470,18 @@
     box-shadow:
     0 8px 20px rgba(0,0,0,.05);
 
+
 }
 
 
 
 .sleep-benefits strong{
 
+
     display:block;
 
     margin:10px 0;
+
 
 }
 
@@ -512,7 +489,6 @@
 
 .sleep-benefits span{
 
-    display:block;
 
     color:#777;
 
@@ -520,20 +496,32 @@
 
     line-height:1.5;
 
+
 }
 
 
 
 
 
-/* =========================
- FAQ
-========================= */
+
+
+/* FAQ */
 
 
 .sleep-faq{
 
+
+    background:white;
+
+    padding:35px;
+
+    border-radius:30px;
+
     margin-top:40px;
+
+    box-shadow:
+    0 12px 35px rgba(0,0,0,.07);
+
 
 }
 
@@ -541,9 +529,11 @@
 
 .sleep-faq div{
 
+
     padding:20px 0;
 
     border-bottom:1px solid #eee;
+
 
 }
 
@@ -569,22 +559,13 @@
 
 
 
-/* =========================
- MOBILE
-========================= */
+/* MOBILE */
 
 
-@media(max-width:850px){
+@media(max-width:900px){
 
 
-.sleep-container{
-
-    grid-template-columns:1fr;
-
-}
-
-
-.nap-input-grid{
+.sleep-app{
 
     grid-template-columns:1fr;
 
@@ -600,29 +581,31 @@
 
 
 
-.sleep-summary{
+}
+
+
+
+@media(max-width:600px){
+
+
+
+.sleep-main-card,
+.sleep-results-card,
+.sleep-faq{
+
+    padding:22px;
+
+    border-radius:22px;
+
+}
+
+
+
+.summary-grid{
+
 
     grid-template-columns:1fr;
 
-}
-
-
-}
-
-
-
-@media(max-width:500px){
-
-
-.sleep-form-card,
-.sleep-preview-wrapper,
-.bedtime-card,
-.sleep-faq,
-.nap-adjustment-section{
-
-    padding:20px;
-
-    border-radius:22px;
 
 }
 
@@ -636,9 +619,9 @@
 
 
 
-.bedtime-result{
+.sweet-spot-card strong{
 
-    font-size:25px;
+    font-size:26px;
 
 }
 
