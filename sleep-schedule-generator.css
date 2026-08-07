@@ -10,18 +10,21 @@
 
     max-width:1100px;
     margin:25px auto;
-    padding:0 20px;
+    padding:35px 20px;
 
     display:grid;
     grid-template-columns:1fr 1fr;
     gap:30px;
     align-items:start;
 
+    background:#fff1f7;
+
+    border-radius:40px;
+
 }
 
 
 /* CARDS */
-
 .sleep-main-card,
 .sleep-results-card{
 
@@ -32,9 +35,7 @@
     border-radius:30px;
 
     box-shadow:
-    0 12px 35px rgba(0,0,0,.07);
-
-    min-width:0;
+    0 12px 35px rgba(0,0,0,.08);
 
 }
 
@@ -44,31 +45,6 @@ h2{
     font-weight:900;
 
 }
-
-
-
-/* =====================================
-   FREE TOOL BADGE SPACING FIX
-===================================== */
-
-
-/* Prevent huge gap between badge and title */
-
-.resource-page .free-badge,
-.featured-resources .free-badge{
-
-    margin-bottom:8px;
-
-}
-
-
-.resource-page h2,
-.featured-resources h2{
-
-    margin-top:10px;
-
-}
-
 
 
 /* =====================================
@@ -116,14 +92,11 @@ h2{
 }
 
 
-
-
 /* Prevent long labels breaking cards */
 
 .sleep-main-card label{
 
     white-space:normal;
-
 }
 
 
