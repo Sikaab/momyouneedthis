@@ -1,110 +1,75 @@
 // =====================================
-// BABY SLEEP SCHEDULE GENERATOR
+// BABY SLEEP TRACKER
 // MomYouNeedThis
 // =====================================
 
 
-/*
-Evidence-informed averages based on
-common pediatric sleep recommendations.
-
-These are starting points, not medical rules.
-Every baby is different.
-*/
-
-
 const sleepData = {
 
-
 0:{
-    label:"Newborn",
-    naps:"variable",
-    wakeWindows:[45,60],
-    totalSleep:"14-17 hours"
+label:"Newborn",
+wake:[45,60],
+total:"14-17 hours"
 },
-
 
 2:{
-    label:"2 months",
-    naps:5,
-    wakeWindows:[60,90],
-    totalSleep:"14-17 hours"
+label:"2 months",
+wake:[60,90],
+total:"14-17 hours"
 },
-
 
 4:{
-    label:"4 months",
-    naps:4,
-    wakeWindows:[90,120],
-    totalSleep:"12-16 hours"
+label:"4 months",
+wake:[90,120],
+total:"12-16 hours"
 },
-
 
 6:{
-    label:"6 months",
-    naps:3,
-    wakeWindows:[135,165],
-    totalSleep:"12-16 hours"
+label:"6 months",
+wake:[135,165],
+total:"12-16 hours"
 },
-
 
 8:{
-    label:"8 months",
-    naps:3,
-    wakeWindows:[150,195],
-    totalSleep:"12-16 hours"
+label:"8 months",
+wake:[150,195],
+total:"12-16 hours"
 },
-
 
 10:{
-    label:"10 months",
-    naps:2,
-    wakeWindows:[180,225],
-    totalSleep:"12-16 hours"
+label:"10 months",
+wake:[180,225],
+total:"12-16 hours"
 },
-
 
 12:{
-    label:"12 months",
-    naps:2,
-    wakeWindows:[180,240],
-    totalSleep:"11-14 hours"
+label:"12 months",
+wake:[180,240],
+total:"11-14 hours"
 },
-
 
 18:{
-    label:"18 months",
-    naps:1,
-    wakeWindows:[240,330],
-    totalSleep:"11-14 hours"
+label:"18 months",
+wake:[240,330],
+total:"11-14 hours"
 },
-
 
 24:{
-    label:"2 years",
-    naps:1,
-    wakeWindows:[300,390],
-    totalSleep:"11-14 hours"
+label:"2 years",
+wake:[300,390],
+total:"11-14 hours"
 },
 
-
 36:{
-    label:"3 years",
-    naps:"optional",
-    wakeWindows:[330,420],
-    totalSleep:"10-13 hours"
+label:"3 years",
+wake:[330,420],
+total:"10-13 hours"
 }
-
 
 };
 
 
 
-
-
-// =====================================
-// ELEMENTS
-// =====================================
 
 
 const ageInput =
@@ -115,19 +80,31 @@ const wakeInput =
 document.getElementById("wakeTime");
 
 
-const napInput =
-document.getElementById("napCount");
+const napList =
+document.getElementById("napList");
 
 
-const generateButton =
-document.getElementById("generateSchedule");
+const addNapButton =
+document.getElementById("addNap");
+
+
+const saveButton =
+document.getElementById("saveDay");
 
 
 const timeline =
 document.getElementById("sleepTimeline");
 
 
-const bedtimeResult =
+const nextSleep =
+document.getElementById("nextSleepTime");
+
+
+const wakeText =
+document.getElementById("wakeWindowText");
+
+
+const bedtime =
 document.getElementById("bedtimeResult");
 
 
@@ -135,71 +112,65 @@ const bedtimeExplanation =
 document.getElementById("bedtimeExplanation");
 
 
-const savedMessage =
-document.getElementById("savedMessage");
+
+
+
+let naps=[];
 
 
 
 
 
-// =====================================
+// ================================
 // TIME HELPERS
-// =====================================
+// ================================
+
+
+function toMinutes(time){
+
+let p=time.split(":");
+
+return Number(p[0])*60 + Number(p[1]);
+
+}
 
 
 
-function timeToMinutes(time){
+function formatTime(minutes){
+
+minutes = minutes % 1440;
 
 
-const parts =
-time.split(":");
+let h=Math.floor(minutes/60);
+
+let m=minutes%60;
 
 
-return (
-parseInt(parts[0]) * 60
-+
-parseInt(parts[1])
-);
+let suffix=h>=12?"PM":"AM";
 
+
+h=h%12;
+
+if(h===0)
+h=12;
+
+
+return `${h}:${String(m).padStart(2,"0")} ${suffix}`;
 
 }
 
 
 
 
+function formatDuration(minutes){
 
-function minutesToTime(minutes){
+if(minutes>=60){
 
+return `${Math.floor(minutes/60)}h ${minutes%60 || ""}`;
 
-minutes =
-minutes % 1440;
+}
 
-
-let hours =
-Math.floor(minutes / 60);
-
-
-let mins =
-minutes % 60;
-
-
-
-let suffix =
-hours >= 12 ? "PM":"AM";
-
-
-
-hours =
-hours % 12;
-
-
-if(hours===0)
-hours=12;
-
-
-
-return `${hours}:${String(mins).padStart(2,"0")} ${suffix}`;
-
+return `${minutes} min`;
 
 }
 
@@ -208,70 +179,177 @@ return `${hours}:${String(mins).padStart(2,"0")} ${suffix}`;
 
 
 
-function addMinutes(time, amount){
+// ================================
+// WAKE WINDOW
+// ================================
 
 
-return minutesToTime(
-timeToMinutes(time)+amount
-);
+function getWakeWindow(){
 
-
-}
-
-
-
-
-
-// =====================================
-// WAKE WINDOW CALCULATION
-// =====================================
-
-
-
-function getWakeWindow(age){
-
-
-const data =
-sleepData[age];
-
-
-const min =
-data.wakeWindows[0];
-
-
-const max =
-data.wakeWindows[1];
-
+let data=sleepData[ageInput.value];
 
 return Math.round(
-(min+max)/2
+(data.wake[0]+data.wake[1])/2
+);
+
+}
+
+
+
+
+
+// ================================
+// ADD NAP
+// ================================
+
+
+addNapButton.addEventListener(
+"click",
+()=>{
+
+
+let index=naps.length+1;
+
+
+let div=document.createElement("div");
+
+div.className="nap-row";
+
+
+div.innerHTML=`
+
+<h3>
+😴 Nap ${index}
+</h3>
+
+
+<label>
+Start Time
+</label>
+
+
+<input type="time" class="nap-start">
+
+
+<label>
+Duration
+</label>
+
+
+<select class="nap-length">
+
+<option value="30">
+30 minutes
+</option>
+
+<option value="45">
+45 minutes
+</option>
+
+<option value="60">
+1 hour
+</option>
+
+<option value="90">
+1.5 hours
+</option>
+
+<option value="120">
+2 hours
+</option>
+
+</select>
+
+
+<button class="remove-nap">
+Remove
+</button>
+
+`;
+
+
+
+napList.appendChild(div);
+
+
+
+div.querySelector(".remove-nap")
+.addEventListener(
+"click",
+()=>{
+
+div.remove();
+
+updateTracker();
+
+});
+
+
+div.querySelectorAll("input,select")
+.forEach(input=>{
+
+input.addEventListener(
+"change",
+updateTracker
+);
+
+});
+
+
+updateTracker();
+
+
+});
+
+
+
+
+
+
+
+
+// ================================
+// CALCULATIONS
+// ================================
+
+
+function collectNaps(){
+
+
+let rows=document.querySelectorAll(".nap-row");
+
+
+naps=[];
+
+
+rows.forEach(row=>{
+
+
+let start =
+row.querySelector(".nap-start").value;
+
+
+let duration =
+Number(
+row.querySelector(".nap-length").value
 );
 
 
+
+if(start){
+
+naps.push({
+
+start:start,
+
+minutes:duration
+
+});
+
 }
 
 
-
-
-
-
-// =====================================
-// NAP COUNT LOGIC
-// =====================================
-
-
-function getRecommendedNapCount(age){
-
-
-const naps =
-sleepData[age].naps;
-
-
-if(typeof naps === "number")
-return naps;
-
-
-return 3;
+});
 
 
 }
@@ -281,291 +359,40 @@ return 3;
 
 
 
-// =====================================
-// STORAGE
-// =====================================
+function calculateNextSleep(){
 
 
-function saveSchedule(data){
+let lastSleep;
 
 
-localStorage.setItem(
-"momYouNeedThisSleepSchedule",
-JSON.stringify(data)
-);
+if(naps.length){
+
+let last=naps[naps.length-1];
 
 
-savedMessage.style.display="block";
+lastSleep =
+toMinutes(last.start)
++
+last.minutes;
 
-
-setTimeout(()=>{
-
-
-savedMessage.style.display="none";
-
-
-},3000);
-
-
-}
-
-
-
-
-
-function loadSavedSchedule(){
-
-
-const saved =
-localStorage.getItem(
-"momYouNeedThisSleepSchedule"
-);
-
-
-if(!saved)
-return null;
-
-
-return JSON.parse(saved);
-
-
-}
-
-// =====================================
-// CREATE BASE SCHEDULE
-// =====================================
-
-
-function createSchedule(){
-
-
-const age =
-ageInput.value;
-
-
-const wake =
-wakeInput.value;
-
-
-const baby =
-sleepData[age];
-
-
-
-let napCount;
-
-
-if(napInput.value==="auto"){
-
-    napCount =
-    getRecommendedNapCount(age);
 
 }
 else{
 
-    napCount =
-    Number(napInput.value);
 
-}
-
-
-
-const wakeWindow =
-getWakeWindow(age);
-
-
-
-let schedule = [];
-
-
-schedule.push({
-
-type:"wake",
-
-icon:"☀️",
-
-title:"Wake Up",
-
-time:minutesToTime(
-timeToMinutes(wake)
-)
-
-});
-
-
-
-
-let currentTime =
-timeToMinutes(wake);
-
-
-
-
-
-// Create naps
-
-
-for(let i=1;i<=napCount;i++){
-
-
-
-currentTime += wakeWindow;
-
-
-
-schedule.push({
-
-type:"nap",
-
-icon:"😴",
-
-title:`Nap ${i}`,
-
-time:minutesToTime(currentTime),
-
-duration:
-getDefaultNapLength(age,i)
-
-});
-
-
-
-currentTime +=
-getDefaultNapLength(age,i);
-
+lastSleep =
+toMinutes(wakeInput.value);
 
 
 }
 
 
 
+let next =
+lastSleep + getWakeWindow();
 
 
-// Bedtime calculation
-
-
-let bedtime =
-calculateBedtime(
-currentTime,
-age
-);
-
-
-
-schedule.push({
-
-type:"bed",
-
-icon:"🌙",
-
-title:"Bedtime",
-
-time:minutesToTime(bedtime)
-
-});
-
-
-
-
-
-return {
-
-
-age:age,
-
-baby:baby.label,
-
-wake:wake,
-
-schedule:schedule,
-
-bedtime:minutesToTime(bedtime)
-
-
-};
-
-
-
-}
-
-
-
-
-
-
-// =====================================
-// DEFAULT NAP LENGTH
-// =====================================
-
-
-function getDefaultNapLength(age,index){
-
-
-if(age<=4)
-return 60;
-
-
-if(age<=8){
-
-if(index===1)
-return 75;
-
-return 60;
-
-}
-
-
-
-if(age<=12){
-
-return 75;
-
-}
-
-
-
-return 90;
-
-
-}
-
-
-
-
-
-
-// =====================================
-// BEDTIME CALCULATION
-// =====================================
-
-
-function calculateBedtime(lastSleepTime,age){
-
-
-
-const data =
-sleepData[age];
-
-
-let finalWakeWindow =
-data.wakeWindows[1];
-
-
-
-// younger babies get shorter final wake time
-
-if(age<=6){
-
-finalWakeWindow =
-data.wakeWindows[0];
-
-}
-
-
-
-
-return lastSleepTime + finalWakeWindow;
-
+return next;
 
 
 }
@@ -576,38 +403,90 @@ return lastSleepTime + finalWakeWindow;
 
 
 
-// =====================================
-// RENDER TIMELINE
-// =====================================
+function calculateBedtime(){
+
+
+let lastWake;
+
+
+if(naps.length){
+
+let last=naps[naps.length-1];
+
+lastWake =
+toMinutes(last.start)
++
+last.minutes;
+
+}
+
+else{
+
+lastWake=
+toMinutes(wakeInput.value);
+
+}
 
 
 
-function renderTimeline(data){
+return lastWake + getWakeWindow();
+
+}
+
+
+
+
+
+
+
+
+// ================================
+// RENDER
+// ================================
+
+
+function renderTimeline(){
 
 
 timeline.innerHTML="";
 
 
+timeline.innerHTML += `
 
-data.schedule.forEach(item=>{
-
-
-
-const card =
-document.createElement("div");
-
-
-card.className =
-"timeline-item";
-
-
-
-card.innerHTML = `
+<div class="timeline-item">
 
 <div class="timeline-icon">
+☀️
+</div>
 
-${item.icon}
+<div class="timeline-content">
 
+<strong>
+Wake Up
+</strong>
+
+<span>
+${formatTime(toMinutes(wakeInput.value))}
+</span>
+
+</div>
+
+</div>
+
+`;
+
+
+
+naps.forEach((nap,index)=>{
+
+
+timeline.innerHTML += `
+
+<div class="timeline-item">
+
+
+<div class="timeline-icon">
+😴
 </div>
 
 
@@ -615,30 +494,25 @@ ${item.icon}
 
 
 <strong>
-
-${item.title}
-
+Nap ${index+1}
 </strong>
 
 
 <span>
 
-${item.time}
-
-${item.duration ? 
-" • "+formatDuration(item.duration)
-:""}
+${formatTime(toMinutes(nap.start))}
+•
+${formatDuration(nap.minutes)}
 
 </span>
 
 
 </div>
 
+
+</div>
+
 `;
-
-
-
-timeline.appendChild(card);
 
 
 
@@ -652,276 +526,71 @@ timeline.appendChild(card);
 
 
 
-// =====================================
-// FORMAT DURATION
-// =====================================
-
-
-function formatDuration(minutes){
-
-
-if(minutes>=60){
-
-
-let hours =
-Math.floor(minutes/60);
-
-
-let mins =
-minutes % 60;
 
 
 
-if(mins===0)
-
-return `${hours} hour${hours>1?"s":""}`;
+function updateTracker(){
 
 
-
-return `${hours}h ${mins}m`;
+collectNaps();
 
 
 
-}
+let data=sleepData[ageInput.value];
+
+
+wakeText.textContent =
+`Recommended wake window: ${data.wake[0]}-${data.wake[1]} minutes`;
 
 
 
-return `${minutes} minutes`;
-
-}
-
-
-
-
-
-// =====================================
-// SLEEP SCORE
-// =====================================
-
-
-function calculateSleepScore(data){
-
-
-
-let score = 5;
-
-
-
-const naps =
-data.schedule.filter(
-item=>item.type==="nap"
-).length;
-
-
-
-if(naps===0)
-score--;
-
-
-
-if(data.schedule.length < 3)
-score--;
-
-
-
-return Math.max(
-1,
-Math.min(score,5)
+nextSleep.textContent =
+formatTime(
+calculateNextSleep()
 );
 
 
 
-}
+bedtime.textContent =
+formatTime(
+calculateBedtime()
+);
 
 
 
-
-function renderSleepScore(data){
-
-
-
-const score =
-calculateSleepScore(data);
+bedtimeExplanation.textContent =
+"Adjusted using today's naps and your baby's age-based wake window.";
 
 
 
-const stars =
-"⭐".repeat(score);
+document.getElementById("summaryAge")
+.textContent=data.label;
 
 
 
-document.querySelector(".sleep-score")
-.innerHTML = `
-
-
-<div>
-
-${stars}
-
-</div>
-
-
-<strong>
-
-${score===5?
-"Great Sleep Balance":
-"Good Starting Point"}
-
-</strong>
-
-
-<span>
-
-This schedule is based on age, wake windows and average sleep needs.
-
-</span>
-
-
-`;
+document.getElementById("summaryWake")
+.textContent=formatTime(
+toMinutes(wakeInput.value)
+);
 
 
 
-}
-
-// =====================================
-// NAP ADJUSTMENT LOGIC
-// =====================================
+let total=0;
 
 
-function getActualNapSleep(){
+naps.forEach(n=>{
 
-
-const durations =
-document.querySelectorAll(".nap-duration");
-
-
-let total = 0;
-
-
-durations.forEach(select=>{
-
-
-total += Number(select.value);
-
+total+=n.minutes;
 
 });
 
 
-return total;
+document.getElementById("summaryDaySleep")
+.textContent=formatDuration(total);
 
 
-}
 
-
-
-
-
-
-function adjustBedtimeForNaps(baseBedtime){
-
-
-const napSleep =
-getActualNapSleep();
-
-
-
-let adjustment = 0;
-
-
-
-// Short daytime sleep = earlier bedtime
-
-if(napSleep < 60){
-
-adjustment = -45;
-
-}
-
-
-else if(napSleep < 120){
-
-adjustment = -25;
-
-}
-
-
-else if(napSleep > 240){
-
-adjustment = 15;
-
-}
-
-
-
-return baseBedtime + adjustment;
-
-
-}
-
-
-
-
-
-
-
-// =====================================
-// UPDATE BEDTIME DISPLAY
-// =====================================
-
-
-function updateBedtime(data){
-
-
-
-let bedtime =
-timeToMinutes(
-data.bedtime
-);
-
-
-
-bedtime =
-adjustBedtimeForNaps(
-bedtime
-);
-
-
-
-bedtimeResult.textContent =
-minutesToTime(bedtime);
-
-
-
-const napSleep =
-getActualNapSleep();
-
-
-
-if(napSleep < 120){
-
-
-bedtimeExplanation.textContent =
-"Today's naps were shorter than average. An earlier bedtime may help prevent overtiredness.";
-
-}
-
-
-else if(napSleep > 240){
-
-
-bedtimeExplanation.textContent =
-"Your baby had a lot of daytime sleep. Bedtime may naturally move slightly later.";
-
-}
-
-
-else{
-
-
-bedtimeExplanation.textContent =
-"Your baby's schedule is balanced based on today's sleep.";
-
-}
+renderTimeline();
 
 
 
@@ -931,160 +600,80 @@ bedtimeExplanation.textContent =
 
 
 
+// ================================
+// SAVE
+// ================================
 
 
-
-// =====================================
-// UPDATE SUMMARY
-// =====================================
-
-
-function updateSummary(data){
-
-
-
-document.getElementById(
-"summaryAge"
-).textContent =
-data.baby;
-
-
-
-document.getElementById(
-"summaryWake"
-).textContent =
-minutesToTime(
-timeToMinutes(data.wake)
-);
-
-
-
-document.getElementById(
-"summaryTotal"
-).textContent =
-sleepData[data.age].totalSleep;
-
-
-
-}
-
-
-
-
-
-
-
-// =====================================
-// MAIN GENERATE FUNCTION
-// =====================================
-
-
-function generate(){
-
-
-
-const schedule =
-createSchedule();
-
-
-
-renderTimeline(schedule);
-
-
-renderSleepScore(schedule);
-
-
-updateSummary(schedule);
-
-
-updateBedtime(schedule);
-
-
-
-saveSchedule(schedule);
-
-
-
-}
-
-
-
-
-
-
-
-// =====================================
-// EVENTS
-// =====================================
-
-
-
-generateButton.addEventListener(
+saveButton.addEventListener(
 "click",
-generate
+()=>{
+
+
+localStorage.setItem(
+
+"momSleepTracker",
+
+JSON.stringify({
+
+age:ageInput.value,
+
+wake:wakeInput.value,
+
+naps:naps
+
+})
+
 );
 
 
+saveButton.textContent=
+"✅ Saved";
+
+
+setTimeout(()=>{
+
+saveButton.textContent=
+"💾 Save Today's Sleep";
+
+},2000);
+
+
+
+});
+
+
+
+
+
+
+
+// ================================
+// EVENTS
+// ================================
 
 
 ageInput.addEventListener(
 "change",
-generate
+updateTracker
 );
 
 
 
 wakeInput.addEventListener(
 "change",
-generate
-);
-
-
-
-napInput.addEventListener(
-"change",
-generate
+updateTracker
 );
 
 
 
 
 
-document.querySelectorAll(".nap-duration")
-.forEach(input=>{
 
 
-input.addEventListener(
-"change",
-()=>{
-
-
-const schedule =
-createSchedule();
-
-
-updateBedtime(schedule);
-
-
-saveSchedule(schedule);
-
-
-});
-
-
-
-});
-
-
-
-
-
-
-
-// =====================================
-// LOAD PREVIOUS USER DATA
-// =====================================
-
+// ================================
+// LOAD
+// ================================
 
 
 window.addEventListener(
@@ -1092,42 +681,51 @@ window.addEventListener(
 ()=>{
 
 
-
-const saved =
-loadSavedSchedule();
+let saved =
+localStorage.getItem(
+"momSleepTracker"
+);
 
 
 
 if(saved){
 
 
-
-renderTimeline(saved);
-
-
-renderSleepScore(saved);
+let data=JSON.parse(saved);
 
 
-updateSummary(saved);
+ageInput.value=data.age;
+
+wakeInput.value=data.wake;
 
 
-updateBedtime(saved);
+data.naps.forEach(n=>{
 
+
+addNapButton.click();
+
+
+let rows=
+document.querySelectorAll(".nap-row");
+
+
+let row=
+rows[rows.length-1];
+
+
+row.querySelector(".nap-start").value=n.start;
+
+
+row.querySelector(".nap-length").value=n.minutes;
+
+
+});
 
 
 }
 
 
-
-else{
-
-
-generate();
-
-
-
-}
-
+updateTracker();
 
 
 });
