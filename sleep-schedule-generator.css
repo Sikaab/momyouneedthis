@@ -4,17 +4,24 @@
 ===================================== */
 
 
-/* MAIN */
+/* =====================================
+   MAIN APP
+===================================== */
 
 .sleep-app{
 
     max-width:1100px;
+
     margin:25px auto;
+
     padding:40px 20px;
 
     display:grid;
+
     grid-template-columns:1fr 1fr;
+
     gap:30px;
+
     align-items:start;
 
     background:#eef4ff;
@@ -24,7 +31,11 @@
 }
 
 
-/* CARDS */
+/* =====================================
+   CARDS
+===================================== */
+
+
 .sleep-main-card,
 .sleep-results-card{
 
@@ -35,16 +46,23 @@
     border-radius:30px;
 
     box-shadow:
-    0 12px 35px rgba(0,0,0,.08);
+    0 12px 35px rgba(79,111,174,.12);
+
+    min-width:0;
 
 }
 
 
-h2{
+
+.sleep-main-card h2,
+.sleep-results-card h2{
+
+    color:#304b7a;
 
     font-weight:900;
 
 }
+
 
 
 /* =====================================
@@ -62,6 +80,8 @@ h2{
 
     font-weight:900;
 
+    color:#304b7a;
+
 }
 
 
@@ -71,33 +91,54 @@ h2{
 .nap-row input,
 .nap-row select{
 
+
+    display:block;
+
     width:100%;
 
     max-width:100%;
 
+    min-width:0;
+
     box-sizing:border-box;
+
 
     padding:13px;
 
+
     border-radius:15px;
 
-    border:1px solid #ddd;
+
+    border:1px solid #d6def0;
+
 
     font-family:inherit;
 
+
     font-size:16px;
+
 
     background:white;
 
+
+    color:#332b2b;
+
 }
 
 
-/* Prevent long labels breaking cards */
+.sleep-main-card input:focus,
+.sleep-main-card select:focus,
+.nap-row input:focus,
+.nap-row select:focus{
 
-.sleep-main-card label{
+    outline:none;
 
-    white-space:normal;
+    border-color:#4f6fae;
+
+    box-shadow:0 0 0 3px rgba(79,111,174,.15);
+
 }
+
 
 
 
@@ -105,7 +146,6 @@ h2{
 /* =====================================
    SWEET SPOT
 ===================================== */
-
 
 
 .sweet-spot-card{
@@ -123,6 +163,19 @@ h2{
 }
 
 
+
+.sweet-spot-card h3{
+
+    margin-top:0;
+
+    font-size:22px;
+
+    color:#304b7a;
+
+}
+
+
+
 .sweet-spot-card strong{
 
     display:block;
@@ -136,22 +189,16 @@ h2{
 }
 
 
-.sweet-spot-card h3{
-
-    margin-top:0;
-
-    font-size:22px;
-
-}
-
 
 .sweet-spot-card p{
 
-    color:#777;
+    color:#667085;
 
     line-height:1.5;
 
 }
+
+
 
 
 
@@ -162,7 +209,7 @@ h2{
 
 #napList{
 
-    margin-top:20px;
+    margin-top:15px;
 
 }
 
@@ -171,13 +218,17 @@ h2{
 .nap-row{
 
 
-    background:#fff8fb;
+    background:#f3f7ff;
 
-    padding:20px;
+
+    padding:18px;
+
 
     border-radius:22px;
 
+
     margin-bottom:15px;
+
 
 }
 
@@ -187,27 +238,43 @@ h2{
 
     margin-top:0;
 
+    color:#304b7a;
+
+    font-size:20px;
+
 }
 
 
 
 .remove-nap{
 
-    margin-top:15px;
+
+    margin-top:12px;
+
 
     border:none;
 
-    background:#ffe5eb;
 
-    padding:10px 15px;
+    background:#dce8ff;
+
+
+    color:#304b7a;
+
+
+    padding:8px 14px;
+
 
     border-radius:12px;
 
+
     cursor:pointer;
+
 
     font-family:inherit;
 
+
     font-weight:700;
+
 
 }
 
@@ -220,23 +287,44 @@ h2{
 
     width:100%;
 
-    margin-top:15px;
 
-    padding:15px;
+    margin-top:12px;
 
-    border-radius:20px;
+
+    padding:12px;
+
+
+    border-radius:18px;
+
 
     border:none;
 
-    background:#f5f5f5;
+
+    background:#e8f0ff;
+
+
+    color:#304b7a;
+
 
     font-family:inherit;
 
-    font-size:16px;
+
+    font-size:15px;
+
 
     font-weight:900;
 
+
     cursor:pointer;
+
+
+}
+
+
+
+.secondary-button:hover{
+
+    background:#dce8ff;
 
 }
 
@@ -266,9 +354,12 @@ h2{
 
     display:grid;
 
+
     grid-template-columns:repeat(3,1fr);
 
+
     gap:15px;
+
 
     margin:25px 0;
 
@@ -280,15 +371,20 @@ h2{
 .summary-grid div{
 
 
-    background:#fff8fb;
+    background:#f3f7ff;
+
 
     padding:18px;
 
+
     border-radius:20px;
+
 
     text-align:center;
 
+
     min-width:0;
+
 
 }
 
@@ -301,6 +397,9 @@ h2{
 
     font-size:14px;
 
+    color:#304b7a;
+
+
 }
 
 
@@ -310,13 +409,18 @@ h2{
 
     display:block;
 
+
     margin-top:8px;
+
 
     font-weight:900;
 
-    color:#e89aaa;
+
+    color:#4f6fae;
+
 
     word-break:break-word;
+
 
 }
 
@@ -338,6 +442,7 @@ h2{
 
     gap:15px;
 
+
 }
 
 
@@ -347,15 +452,21 @@ h2{
 
     display:flex;
 
+
     align-items:center;
+
 
     gap:15px;
 
-    background:#fff8fb;
+
+    background:#f3f7ff;
+
 
     padding:18px;
 
+
     border-radius:20px;
+
 
 }
 
@@ -363,9 +474,12 @@ h2{
 
 .timeline-icon{
 
+
     font-size:32px;
 
+
     flex-shrink:0;
+
 
 }
 
@@ -373,7 +487,9 @@ h2{
 
 .timeline-content{
 
+
     min-width:0;
+
 
 }
 
@@ -381,7 +497,11 @@ h2{
 
 .timeline-content strong{
 
+
     display:block;
+
+    color:#304b7a;
+
 
 }
 
@@ -389,7 +509,9 @@ h2{
 
 .timeline-content span{
 
-    color:#777;
+
+    color:#667085;
+
 
 }
 
@@ -402,13 +524,18 @@ h2{
 
     text-align:center;
 
-    color:#777;
+
+    color:#667085;
+
 
     padding:25px;
 
-    background:#fff8fb;
+
+    background:#f3f7ff;
+
 
     border-radius:20px;
+
 
 }
 
@@ -417,7 +544,7 @@ h2{
 
 
 /* =====================================
-   SWEET SPOT RESULT
+   NEXT SLEEP SWEET SPOT RESULT
 ===================================== */
 
 
@@ -426,13 +553,26 @@ h2{
 
     margin-top:30px;
 
-    background:#fff8fb;
+
+    background:#e8f0ff;
+
 
     padding:25px;
 
+
     border-radius:25px;
 
+
     text-align:center;
+
+
+}
+
+
+
+.bedtime-card h2{
+
+    color:#304b7a;
 
 }
 
@@ -443,13 +583,18 @@ h2{
 
     display:block;
 
+
     font-size:35px;
 
-    color:#e89aaa;
+
+    color:#4f6fae;
+
 
     margin:15px 0;
 
+
 }
+
 
 
 
@@ -464,7 +609,9 @@ h2{
 
     display:grid;
 
+
     grid-template-columns:repeat(4,1fr);
+
 
     gap:20px;
 
@@ -478,14 +625,19 @@ h2{
 
     background:white;
 
+
     padding:25px;
+
 
     border-radius:22px;
 
+
     text-align:center;
 
+
     box-shadow:
-    0 8px 20px rgba(0,0,0,.05);
+
+    0 8px 20px rgba(79,111,174,.08);
 
 
 }
@@ -497,7 +649,10 @@ h2{
 
     display:block;
 
+
     margin:10px 0;
+
+    color:#304b7a;
 
 
 }
@@ -507,9 +662,11 @@ h2{
 .sleep-benefits span{
 
 
-    color:#777;
+    color:#667085;
+
 
     font-size:14px;
+
 
     line-height:1.5;
 
@@ -530,15 +687,28 @@ h2{
 
     background:white;
 
+
     padding:35px;
+
 
     border-radius:30px;
 
+
     margin-top:40px;
 
-    box-shadow:
-    0 12px 35px rgba(0,0,0,.07);
 
+    box-shadow:
+
+    0 12px 35px rgba(79,111,174,.12);
+
+
+}
+
+
+
+.sleep-faq h2{
+
+    color:#304b7a;
 
 }
 
@@ -549,7 +719,8 @@ h2{
 
     padding:20px 0;
 
-    border-bottom:1px solid #eee;
+
+    border-bottom:1px solid #e8edf7;
 
 
 }
@@ -560,15 +731,20 @@ h2{
 
     font-size:22px;
 
+    color:#304b7a;
+
 }
 
 
 
 .sleep-faq p{
 
-    color:#666;
+
+    color:#667085;
+
 
     line-height:1.6;
+
 
 }
 
@@ -599,12 +775,22 @@ h2{
 }
 
 
-
 }
 
 
 
+
 @media(max-width:600px){
+
+
+
+.sleep-app{
+
+    padding:25px 15px;
+
+    border-radius:30px;
+
+}
 
 
 
@@ -622,9 +808,7 @@ h2{
 
 .summary-grid{
 
-
     grid-template-columns:1fr;
-
 
 }
 
@@ -645,6 +829,7 @@ h2{
 }
 
 
+
 .sleep-main-card input,
 .sleep-main-card select,
 .nap-row input,
@@ -653,7 +838,6 @@ h2{
     font-size:15px;
 
 }
-
 
 
 }
