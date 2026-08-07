@@ -231,6 +231,12 @@ button:hover{
     font-weight:900;
 }
 
+.free-tool-badge h2{
+
+    margin-top: 0px;
+    padding-top: 0px;
+}
+
 .free-badge{
 
     display:inline-block;
