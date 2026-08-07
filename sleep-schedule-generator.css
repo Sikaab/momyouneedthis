@@ -45,6 +45,10 @@ box-shadow:0 8px 25px rgba(20,40,80,.06);
 #todayNaps{
     margin-top: 15px;
     },
+    
+#dailyTimeline{
+    marginbottom: 15px
+    },
 
 .sleep-main-card h2,
 .sleep-results-card h2 {
