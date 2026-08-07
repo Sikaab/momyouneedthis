@@ -4,14 +4,13 @@
 <head>
 
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>
-Free Baby Sleep Schedule Generator | Wake Window Calculator & Nap Planner | MomYouNeedThis
+Free Baby Sleep Tracker & Wake Window Calculator | MomYouNeedThis
 </title>
 
-<meta name="description" content="Create a personalized baby sleep schedule based on your baby's age, wake time, naps and wake windows. Get recommended nap times and bedtime instantly.">
+<meta name="description" content="Track your baby's naps, calculate wake windows, and find the perfect sleep sweet spots with this free baby sleep tracker.">
 
 <link rel="stylesheet" href="style.css">
 
@@ -32,16 +31,18 @@ Free Baby Sleep Schedule Generator | Wake Window Calculator & Nap Planner | MomY
 
 
 <img 
-src="assets/logo.svg" 
-class="logo" 
-alt="MomYouNeedThis">
+src="assets/logo.svg"
+class="logo"
+alt="MomYouNeedThis Logo">
+
 
 
 <span class="free-badge">
 
-😴 CREATE YOUR FREE BABY SLEEP SCHEDULE
+😴 FREE BABY SLEEP TRACKER
 
 </span>
+
 
 
 <h1>
@@ -55,31 +56,27 @@ Sleep Sweet Spot
 </h1>
 
 
+
 <p class="intro">
 
-Create a personalized sleep schedule based on your baby's age, wake time and naps. Get recommended nap times, wake windows and bedtime adjustments instantly.
+Track naps, calculate wake windows, and discover your baby's next sleep sweet spot with a personalized daily sleep tracker.
 
 </p>
 
 
 
-<section class="sleep-generator">
 
 
-<div class="sleep-container">
+<section class="sleep-app">
 
 
 
-<!-- =========================
-     SETTINGS CARD
-========================= -->
+<div class="sleep-main-card">
 
-
-<div class="sleep-form-card">
 
 
 <h2>
-Create Your Schedule
+Today's Sleep Tracker
 </h2>
 
 
@@ -91,64 +88,54 @@ Baby's Age
 
 <select id="babyAge">
 
-
 <option value="0">
 Newborn (0-6 weeks)
 </option>
-
 
 <option value="2">
 2 months
 </option>
 
-
 <option value="4">
 4 months
 </option>
-
 
 <option value="6">
 6 months
 </option>
 
-
 <option value="8" selected>
 8 months
 </option>
-
 
 <option value="10">
 10 months
 </option>
 
-
 <option value="12">
 12 months
 </option>
-
 
 <option value="18">
 18 months
 </option>
 
-
 <option value="24">
 2 years
 </option>
 
-
 <option value="36">
 3 years
 </option>
-
 
 </select>
 
 
 
 
+
 <label>
-Morning Wake Up Time
+Morning Wake Time
 </label>
 
 
@@ -161,97 +148,89 @@ value="07:00">
 
 
 
-<label>
-Number Of Naps
-</label>
+<div class="sweet-spot-card">
 
 
-<select id="napCount">
+<h3>
+✨ Next Sleep Sweet Spot
+</h3>
 
-<option value="auto">
-Recommended Automatically
-</option>
 
-<option value="1">
-1 Nap
-</option>
+<strong id="nextSleepTime">
 
-<option value="2">
-2 Naps
-</option>
+Create your tracker
 
-<option value="3">
-3 Naps
-</option>
+</strong>
 
-<option value="4">
-4 Naps
-</option>
 
-</select>
+<p id="wakeWindowText">
 
+Your baby's recommended wake window will appear here.
+
+</p>
+
+
+</div>
+
+
+
+
+
+
+<h2>
+Add Today's Naps
+</h2>
+
+
+
+<div id="napList">
+
+
+</div>
 
 
 
 <button 
-id="generateSchedule"
-class="download-button">
+id="addNap"
+class="secondary-button">
 
-✨ Create My Sleep Schedule
+➕ Add Nap
 
 </button>
 
 
 
-<div class="saved-message" id="savedMessage">
+<button 
+id="saveDay"
+class="download-button">
 
-💾 Schedule saved on this device
+💾 Save Today's Sleep
+
+</button>
+
+
 
 </div>
 
 
-</div>
 
 
 
 
-<!-- =========================
-     PREVIEW
-========================= -->
 
 
-<div class="sleep-preview-wrapper">
+<div class="sleep-results-card">
+
 
 
 <h2>
-Today's Sleep Plan
+Today's Sleep Summary
 </h2>
 
 
-<div class="sleep-preview">
 
 
-
-<div class="sleep-score">
-
-⭐⭐⭐⭐⭐
-
-<strong>
-Great Sleep Balance
-</strong>
-
-<span id="sleepScoreText">
-
-Your personalized schedule will appear here.
-
-</span>
-
-</div>
-
-
-
-
-<div class="sleep-summary">
+<div class="summary-grid">
 
 
 <div>
@@ -267,10 +246,11 @@ Age
 </div>
 
 
+
 <div>
 
 <strong>
-Wake Up
+Wake Time
 </strong>
 
 <span id="summaryWake">
@@ -280,13 +260,14 @@ Wake Up
 </div>
 
 
+
 <div>
 
 <strong>
-Total Sleep Goal
+Day Sleep
 </strong>
 
-<span id="summaryTotal">
+<span id="summaryDaySleep">
 -
 </span>
 
@@ -294,6 +275,8 @@ Total Sleep Goal
 
 
 </div>
+
+
 
 
 
@@ -304,265 +287,53 @@ Daily Timeline
 </h3>
 
 
-
 <div 
 id="sleepTimeline"
 class="sleep-timeline">
 
 
-<div class="empty-state">
+<p class="empty-state">
 
-Create your schedule to see your baby's day.
+Add naps to track your baby's day.
 
-</div>
-
-
-</div>
-
-
-
-</div>
-
-
-</div>
-
-
-</div>
-
-
-</section>
-
-<!-- =========================
-     NAP ADJUSTMENT SECTION
-========================= -->
-
-<section class="nap-adjustment-section">
-
-
-<h2>
-Adjust Today's Naps
-</h2>
-
-
-<p>
-Update nap lengths during the day and your bedtime recommendation will automatically adjust.
 </p>
 
 
+</div>
 
-<div class="nap-input-grid">
 
 
-<div class="nap-card">
+
+
+
+<div class="bedtime-card">
+
 
 <h3>
-😴 Nap 1
-</h3>
-
-<label>
-Start Time
-</label>
-
-<input 
-type="time"
-class="nap-start"
-data-nap="1">
-
-
-<label>
-Duration
-</label>
-
-<select 
-class="nap-duration"
-data-nap="1">
-
-<option value="0">
-Not taken
-</option>
-
-<option value="30">
-30 minutes
-</option>
-
-<option value="45">
-45 minutes
-</option>
-
-<option value="60">
-1 hour
-</option>
-
-<option value="90">
-1.5 hours
-</option>
-
-<option value="120">
-2 hours
-</option>
-
-</select>
-
-</div>
-
-
-
-
-<div class="nap-card">
-
-<h3>
-😴 Nap 2
-</h3>
-
-
-<label>
-Start Time
-</label>
-
-
-<input 
-type="time"
-class="nap-start"
-data-nap="2">
-
-
-<label>
-Duration
-</label>
-
-
-<select 
-class="nap-duration"
-data-nap="2">
-
-<option value="0">
-Not taken
-</option>
-
-<option value="30">
-30 minutes
-</option>
-
-<option value="45">
-45 minutes
-</option>
-
-<option value="60">
-1 hour
-</option>
-
-<option value="90">
-1.5 hours
-</option>
-
-<option value="120">
-2 hours
-</option>
-
-</select>
-
-
-</div>
-
-
-
-
-
-<div class="nap-card">
-
-<h3>
-😴 Nap 3
-</h3>
-
-
-<label>
-Start Time
-</label>
-
-
-<input 
-type="time"
-class="nap-start"
-data-nap="3">
-
-
-<label>
-Duration
-</label>
-
-
-<select 
-class="nap-duration"
-data-nap="3">
-
-<option value="0">
-Not taken
-</option>
-
-<option value="30">
-30 minutes
-</option>
-
-<option value="45">
-45 minutes
-</option>
-
-<option value="60">
-1 hour
-</option>
-
-<option value="90">
-1.5 hours
-</option>
-
-<option value="120">
-2 hours
-</option>
-
-</select>
-
-
-</div>
-
-
-
-</div>
-
-
-</section>
-
-
-
-
-
-<!-- =========================
-     BEDTIME RESULT
-========================= -->
-
-
-<section class="bedtime-card">
-
-
-<h2>
 🌙 Recommended Bedtime
-</h2>
+</h3>
 
 
-<div 
-id="bedtimeResult"
-class="bedtime-result">
+<strong id="bedtimeResult">
 
-Create your schedule to see bedtime.
+-
 
-</div>
-
+</strong>
 
 
 <p id="bedtimeExplanation">
 
-Your schedule adjusts based on naps, age and wake windows.
+Based on wake windows and today's naps.
 
 </p>
+
+
+</div>
+
+
+
+</div>
+
 
 
 </section>
@@ -573,17 +344,17 @@ Your schedule adjusts based on naps, age and wake windows.
 
 
 
-<!-- =========================
-     BENEFITS
-========================= -->
 
 
 <section class="tips">
 
 
 <h2>
-Why Parents Love This Sleep Tool
+
+How This Sleep Tracker Helps
+
 </h2>
+
 
 
 <div class="sleep-benefits">
@@ -594,14 +365,17 @@ Why Parents Love This Sleep Tool
 😴
 
 <strong>
-Age-Based Wake Windows
+Wake Windows
+
 </strong>
 
 <span>
-Uses recommended sleep ranges for your baby's stage.
+Know when your baby is likely ready for sleep.
+
 </span>
 
 </div>
+
 
 
 
@@ -610,11 +384,32 @@ Uses recommended sleep ranges for your baby's stage.
 ⏰
 
 <strong>
-Flexible Scheduling
+Flexible Tracking
+
 </strong>
 
 <span>
-Adjusts when naps are shorter or longer.
+Adjust throughout the day as naps change.
+
+</span>
+
+</div>
+
+
+
+
+<div>
+
+💛
+
+<strong>
+Less Guessing
+
+</strong>
+
+<span>
+Understand your baby's natural rhythm.
+
 </span>
 
 </div>
@@ -627,31 +422,16 @@ Adjusts when naps are shorter or longer.
 📱
 
 <strong>
-Saved On Your Device
+Saved On Device
+
 </strong>
 
 <span>
-Come back anytime without creating an account.
+Come back anytime without an account.
+
 </span>
 
 </div>
-
-
-
-<div>
-
-💛
-
-<strong>
-Less Guessing
-</strong>
-
-<span>
-Understand your baby's sweet spot.
-</span>
-
-</div>
-
 
 
 </div>
@@ -665,17 +445,14 @@ Understand your baby's sweet spot.
 
 
 
-<!-- =========================
-     FAQ SEO SECTION
-========================= -->
-
 
 <section class="sleep-faq">
 
 
 <h2>
-Baby Sleep Schedule Questions
+Baby Sleep Tracker Questions
 </h2>
+
 
 
 <div>
@@ -687,24 +464,7 @@ What is a wake window?
 
 
 <p>
-A wake window is the amount of time a baby can comfortably stay awake between sleep periods. It changes as babies grow.
-</p>
-
-
-</div>
-
-
-
-<div>
-
-
-<h3>
-Should bedtime change if naps are short?
-</h3>
-
-
-<p>
-Yes. When daytime sleep is shorter than expected, an earlier bedtime can help prevent overtiredness.
+A wake window is the amount of time your baby can comfortably stay awake between sleep periods.
 </p>
 
 
@@ -717,12 +477,30 @@ Yes. When daytime sleep is shorter than expected, an earlier bedtime can help pr
 
 
 <h3>
-Is every baby schedule the same?
+Does every baby need the same schedule?
 </h3>
 
 
 <p>
-No. This tool provides an evidence-informed starting point, but every baby has individual sleep needs.
+No. This tool provides a starting point based on age, but every baby has individual sleep needs.
+</p>
+
+
+</div>
+
+
+
+
+<div>
+
+
+<h3>
+Why track naps instead of following a strict schedule?
+</h3>
+
+
+<p>
+Babies often have different sleep needs each day. Tracking helps you adjust based on your baby's actual sleep.
 </p>
 
 
@@ -737,11 +515,6 @@ No. This tool provides an evidence-informed starting point, but every baby has i
 
 
 
-<!-- =========================
-     FOOTER
-========================= -->
-
-
 <footer>
 
 
@@ -749,9 +522,10 @@ No. This tool provides an evidence-informed starting point, but every baby has i
 
 <img 
 src="assets/logo.svg"
-alt="MomYouNeedThis">
+alt="MomYouNeedThis Logo">
 
 </div>
+
 
 
 <h3>
@@ -771,11 +545,11 @@ Helping moms find products and resources that make everyday life easier.
 © 2026 MomYouNeedThis
 </p>
 
-
 </div>
 
 
 </footer>
+
 
 
 
@@ -786,12 +560,9 @@ Helping moms find products and resources that make everyday life easier.
 
 
 
-
-
 <script src="sleep-schedule-generator.js"></script>
 
 
 </body>
-
 
 </html>
