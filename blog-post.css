@@ -735,6 +735,17 @@
     font-size: 14px;
 }
 
+.related-card,
+.related-card:hover,
+.related-card:focus,
+.related-card:active {
+    text-decoration: none !important;
+}
+
+.related-card h3 {
+    text-decoration: none !important;
+}
+
 
 /* =========================================================
    CTA SECTIONS
