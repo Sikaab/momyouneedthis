@@ -929,6 +929,206 @@ box-shadow:0 10px 25px rgba(0,0,0,.08);
 
 }
 
+/* =====================
+MOM YOU NEED TO KNOW
+===================== */
+
+.mom-answers-section{
+
+margin:45px 0;
+background:linear-gradient(
+    180deg,
+    #fff7fa,
+    #ffffff
+);
+border-radius:35px;
+padding:45px 30px;
+text-align:center;
+box-shadow:0 12px 30px rgba(0,0,0,.05);
+
+}
+
+.mom-answers-badge{
+
+display:inline-flex;
+align-items:center;
+justify-content:center;
+background:#fde6ec;
+color:#d97f95;
+padding:10px 22px;
+border-radius:999px;
+font-size:14px;
+font-weight:900;
+margin-bottom:18px;
+
+}
+
+.mom-answers-section h2{
+
+font-size:36px;
+font-weight:900;
+margin-bottom:15px;
+
+}
+
+.mom-answers-intro{
+
+max-width:650px;
+margin:0 auto;
+color:#666;
+font-size:18px;
+line-height:1.6;
+
+}
+
+.mom-answers-grid{
+
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:22px;
+max-width:950px;
+margin:40px auto 30px;
+
+}
+
+.mom-answers-card{
+
+background:white;
+border-radius:25px;
+padding:28px 22px;
+text-align:left;
+box-shadow:0 8px 25px rgba(0,0,0,.06);
+border:1px solid #f5e8ed;
+transition:.25s ease;
+
+}
+
+.mom-answers-card:hover{
+
+transform:translateY(-5px);
+box-shadow:0 14px 30px rgba(0,0,0,.09);
+
+}
+
+.mom-answers-icon{
+
+width:55px;
+height:55px;
+display:flex;
+align-items:center;
+justify-content:center;
+background:#fff1f6;
+border-radius:18px;
+font-size:28px;
+margin-bottom:18px;
+
+}
+
+.mom-answers-category{
+
+display:inline-block;
+color:#d97f95;
+font-size:12px;
+font-weight:900;
+letter-spacing:.5px;
+margin-bottom:10px;
+
+}
+
+.mom-answers-card h3{
+
+font-size:21px;
+line-height:1.25;
+margin-bottom:12px;
+
+}
+
+.mom-answers-card p{
+
+color:#666;
+font-size:15px;
+line-height:1.6;
+margin-bottom:18px;
+
+}
+
+.mom-answers-card a{
+
+color:#e89aaa;
+text-decoration:none;
+font-size:15px;
+font-weight:900;
+
+}
+
+.mom-answers-card a:hover{
+
+text-decoration:underline;
+
+}
+
+.mom-answers-button{
+
+display:inline-flex;
+justify-content:center;
+align-items:center;
+background:#e89aaa;
+color:white;
+text-decoration:none;
+padding:17px 32px;
+border-radius:999px;
+font-size:17px;
+font-weight:900;
+transition:.25s ease;
+
+}
+
+.mom-answers-button:hover{
+
+transform:translateY(-3px);
+box-shadow:0 10px 25px rgba(232,154,170,.25);
+
+}
+
+.mom-answers-note{
+
+margin-top:15px;
+margin-bottom:0;
+color:#888;
+font-size:14px;
+
+}
+
+@media(max-width:850px){
+
+.mom-answers-grid{
+    grid-template-columns:1fr;
+    max-width:600px;
+}
+
+}
+
+@media(max-width:600px){
+
+.mom-answers-section{
+    padding:35px 20px;
+    border-radius:28px;
+}
+.mom-answers-section h2{
+    font-size:29px;
+}
+.mom-answers-intro{
+    font-size:16px;
+}
+.mom-answers-card{
+    padding:24px 20px;
+}
+.mom-answers-button{
+    width:100%;
+    font-size:16px;
+}
+
+}
 
 /* =====================================
    ALPHABET COLORING PAGES
