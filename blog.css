@@ -211,8 +211,6 @@
 }
 
 .blog-featured-card:hover {
-    transform: translateY(-6px);
-
     border-color: #efc5d0;
 
     box-shadow:
