@@ -26,6 +26,111 @@ href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&d
 rel="stylesheet"
 >
 
+<style>
+
+/* Keep this page aligned with the same centered article layout */
+.blog-page {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.blog-page .article-header,
+.blog-page .article-content,
+.blog-page .article-breadcrumbs,
+.blog-page .related-guides {
+    width: min(100%, 900px);
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+}
+
+.blog-page .article-content {
+    text-align: left;
+}
+
+.blog-page .article-section {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.blog-page .article-section > h2,
+.blog-page .article-section > p {
+    max-width: 100%;
+}
+
+.blog-page .step-grid,
+.blog-page .blog-grid,
+.blog-page .phrase-grid,
+.blog-page .comparison-card,
+.blog-page .process-card,
+.blog-page .checklist-card,
+.blog-page .quote-card,
+.blog-page .avoid-card,
+.blog-page .timeline-card {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.blog-page .process-steps {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 18px 0;
+}
+
+.blog-page .process-steps > div {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.blog-page .process-steps span {
+    flex: 0 0 34px;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-weight: 900;
+}
+
+.blog-page .process-steps p {
+    margin: 4px 0 0;
+}
+
+.blog-page .checklist-card ul {
+    margin: 16px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.blog-page .checklist-card li {
+    padding: 9px 0;
+}
+
+.blog-page footer {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+@media (max-width: 700px) {
+
+    .blog-page .article-header,
+    .blog-page .article-content,
+    .blog-page .article-breadcrumbs,
+    .blog-page .related-guides {
+        width: 100%;
+    }
+
+    .blog-page .process-steps {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+</style>
+
 </head>
 
 <body>
@@ -98,7 +203,7 @@ Little Learners
 
 
 <!-- =====================================================
-     QUICK ANSWER
+     CONTENT
 ===================================================== -->
 
 <article class="article-content">
@@ -181,9 +286,7 @@ without buying anything new.
 
 <div class="step-card">
 
-<span>
-1
-</span>
+<span>1</span>
 
 <strong>
 Count the stairs
@@ -199,9 +302,7 @@ appropriate to do so.
 
 <div class="step-card">
 
-<span>
-2
-</span>
+<span>2</span>
 
 <strong>
 Count the toys
@@ -217,9 +318,7 @@ are being put away.
 
 <div class="step-card">
 
-<span>
-3
-</span>
+<span>3</span>
 
 <strong>
 Count food
@@ -235,9 +334,7 @@ mealtimes.
 
 <div class="step-card">
 
-<span>
-4
-</span>
+<span>4</span>
 
 <strong>
 Count while getting dressed
@@ -329,25 +426,37 @@ already has a reason to care about the objects being counted.
 Try this:
 </strong>
 
-<ol style="list-style:none;padding-left:0;margin-left:0;">
+<div class="process-steps">
 
-<li style="margin-bottom:10px;">
+<div>
+<span>1</span>
+<p>
 Put a small number of pieces of food on a plate.
-</li>
+</p>
+</div>
 
-<li style="margin-bottom:10px;">
+<div>
+<span>2</span>
+<p>
 Ask your child to count them with you.
-</li>
+</p>
+</div>
 
-<li style="margin-bottom:10px;">
+<div>
+<span>3</span>
+<p>
 Add one more and ask, "How many now?"
-</li>
+</p>
+</div>
 
-<li>
+<div>
+<span>4</span>
+<p>
 Let your child decide how many pieces to give you.
-</li>
+</p>
+</div>
 
-</ol>
+</div>
 
 <p>
 Keep it playful. You don't need to turn every snack into a quiz.
@@ -465,7 +574,7 @@ a number worksheet, turn finding numbers into a little game.
 Look for numbers on:
 </strong>
 
-<ul style="list-style:none;padding-left:0;margin-left:0;">
+<ul>
 
 <li>
 🚗 Cars and license plates
@@ -599,45 +708,41 @@ change right in front of them.
 
 <div>
 
-<span>
-1
-</span>
+<span>1</span>
 
 <p>
-Build a tower with a few blocks.</p>
+Build a tower with a few blocks.
+</p>
 
 </div>
 
 <div>
 
-<span>
-2
-</span>
+<span>2</span>
 
 <p>
-Count the blocks together.</p>
+Count the blocks together.
+</p>
 
 </div>
 
 <div>
 
-<span>
-3
-</span>
+<span>3</span>
 
 <p>
-Add or remove a block.</p>
+Add or remove a block.
+</p>
 
 </div>
 
 <div>
 
-<span>
-4
-</span>
+<span>4</span>
 
 <p>
-Count again and notice what changed.</p>
+Count again and notice what changed.
+</p>
 
 </div>
 
@@ -685,6 +790,7 @@ Try saying...
 </p>
 
 </div>
+
 
 <div class="avoid-card">
 
@@ -780,7 +886,8 @@ Morning
 </strong>
 
 <p>
-Count socks, shoes or steps while getting ready.</p>
+Count socks, shoes or steps while getting ready.
+</p>
 
 </div>
 
@@ -800,7 +907,8 @@ Snack
 </strong>
 
 <p>
-Count a few pieces of food together.</p>
+Count a few pieces of food together.
+</p>
 
 </div>
 
@@ -820,7 +928,8 @@ Play
 </strong>
 
 <p>
-Count blocks, cars or stuffed animals.</p>
+Count blocks, cars or stuffed animals.
+</p>
 
 </div>
 
@@ -840,7 +949,8 @@ Out And About
 </strong>
 
 <p>
-Point out numbers you see on signs and buildings.</p>
+Point out numbers you see on signs and buildings.
+</p>
 
 </div>
 
@@ -860,7 +970,8 @@ Bedtime
 </strong>
 
 <p>
-Count a few books or talk about numbers you noticed during the day.</p>
+Count a few books or talk about numbers you noticed during the day.
+</p>
 
 </div>
 
