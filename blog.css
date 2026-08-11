@@ -368,8 +368,6 @@
 }
 
 .blog-card:hover {
-    transform: translateY(-5px);
-
     border-color: #efd0d8;
 
     box-shadow:
