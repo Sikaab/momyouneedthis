@@ -28,103 +28,133 @@ rel="stylesheet"
 
 <style>
 
-/* Keep this page aligned with the same centered article layout */
+/* =====================================================
+   ARTICLE PAGE CENTERING
+===================================================== */
+
 .blog-page {
     width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
     box-sizing: border-box;
 }
 
-.blog-page .article-header,
-.blog-page .article-content,
-.blog-page .article-breadcrumbs,
-.blog-page .related-guides {
-    width: min(100%, 900px);
+.article-breadcrumbs,
+.article-header,
+.article-content,
+.related-guides {
+    width: 100%;
+    max-width: 900px;
     margin-left: auto;
     margin-right: auto;
     box-sizing: border-box;
 }
 
-.blog-page .article-content {
-    text-align: left;
+.article-header {
+    text-align: center;
 }
 
-.blog-page .article-section {
+.article-content {
+    margin-top: 0;
+}
+
+.article-section {
     width: 100%;
     box-sizing: border-box;
 }
 
-.blog-page .article-section > h2,
-.blog-page .article-section > p {
-    max-width: 100%;
+.article-section > h2,
+.article-section > p {
+    max-width: 820px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.blog-page .step-grid,
-.blog-page .blog-grid,
-.blog-page .phrase-grid,
-.blog-page .comparison-card,
-.blog-page .process-card,
-.blog-page .checklist-card,
-.blog-page .quote-card,
-.blog-page .avoid-card,
-.blog-page .timeline-card {
+.article-section > h2 {
+    text-align: center;
+}
+
+.article-section > p {
+    text-align: center;
+}
+
+.article-highlight,
+.quote-card,
+.comparison-card,
+.process-card,
+.avoid-card,
+.checklist-card,
+.timeline-card,
+.four-step-card,
+.step-grid,
+.blog-grid,
+.phrase-grid {
     width: 100%;
     box-sizing: border-box;
 }
 
-.blog-page .process-steps {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-    margin: 18px 0;
+.article-highlight,
+.quote-card,
+.process-card,
+.checklist-card,
+.avoid-card {
+    text-align: center;
 }
 
-.blog-page .process-steps > div {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
+.step-grid,
+.blog-grid,
+.phrase-grid {
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.blog-page .process-steps span {
-    flex: 0 0 34px;
-    width: 34px;
-    height: 34px;
-    display: flex;
-    align-items: center;
+.related-guides {
+    text-align: center;
+}
+
+.section-heading {
+    text-align: center;
+}
+
+.blog-resource-cta,
+.blog-amazon-cta {
+    width: 100%;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+footer {
+    width: 100%;
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.footer-links,
+.social-links {
     justify-content: center;
-    border-radius: 50%;
-    font-weight: 900;
-}
-
-.blog-page .process-steps p {
-    margin: 4px 0 0;
-}
-
-.blog-page .checklist-card ul {
-    margin: 16px 0 0;
-    padding: 0;
-    list-style: none;
-}
-
-.blog-page .checklist-card li {
-    padding: 9px 0;
-}
-
-.blog-page footer {
-    width: 100%;
-    box-sizing: border-box;
 }
 
 @media (max-width: 700px) {
 
-    .blog-page .article-header,
-    .blog-page .article-content,
-    .blog-page .article-breadcrumbs,
-    .blog-page .related-guides {
-        width: 100%;
+    .blog-page {
+        padding-left: 14px;
+        padding-right: 14px;
     }
 
-    .blog-page .process-steps {
-        grid-template-columns: 1fr;
+    .article-breadcrumbs,
+    .article-header,
+    .article-content,
+    .related-guides,
+    .blog-resource-cta,
+    .blog-amazon-cta {
+        max-width: 100%;
     }
 
 }
@@ -203,7 +233,7 @@ Little Learners
 
 
 <!-- =====================================================
-     CONTENT
+     QUICK ANSWER
 ===================================================== -->
 
 <article class="article-content">
@@ -286,7 +316,9 @@ without buying anything new.
 
 <div class="step-card">
 
-<span>1</span>
+<span>
+1
+</span>
 
 <strong>
 Count the stairs
@@ -302,7 +334,9 @@ appropriate to do so.
 
 <div class="step-card">
 
-<span>2</span>
+<span>
+2
+</span>
 
 <strong>
 Count the toys
@@ -318,7 +352,9 @@ are being put away.
 
 <div class="step-card">
 
-<span>3</span>
+<span>
+3
+</span>
 
 <strong>
 Count food
@@ -334,7 +370,9 @@ mealtimes.
 
 <div class="step-card">
 
-<span>4</span>
+<span>
+4
+</span>
 
 <strong>
 Count while getting dressed
@@ -426,37 +464,25 @@ already has a reason to care about the objects being counted.
 Try this:
 </strong>
 
-<div class="process-steps">
+<ol style="list-style:none;padding-left:0;margin-left:0;">
 
-<div>
-<span>1</span>
-<p>
+<li style="margin-bottom:10px;">
 Put a small number of pieces of food on a plate.
-</p>
-</div>
+</li>
 
-<div>
-<span>2</span>
-<p>
+<li style="margin-bottom:10px;">
 Ask your child to count them with you.
-</p>
-</div>
+</li>
 
-<div>
-<span>3</span>
-<p>
+<li style="margin-bottom:10px;">
 Add one more and ask, "How many now?"
-</p>
-</div>
+</li>
 
-<div>
-<span>4</span>
-<p>
+<li>
 Let your child decide how many pieces to give you.
-</p>
-</div>
+</li>
 
-</div>
+</ol>
 
 <p>
 Keep it playful. You don't need to turn every snack into a quiz.
@@ -574,7 +600,7 @@ a number worksheet, turn finding numbers into a little game.
 Look for numbers on:
 </strong>
 
-<ul>
+<ul style="list-style:none;padding-left:0;margin-left:0;">
 
 <li>
 🚗 Cars and license plates
@@ -708,7 +734,9 @@ change right in front of them.
 
 <div>
 
-<span>1</span>
+<span>
+1
+</span>
 
 <p>
 Build a tower with a few blocks.
@@ -718,7 +746,9 @@ Build a tower with a few blocks.
 
 <div>
 
-<span>2</span>
+<span>
+2
+</span>
 
 <p>
 Count the blocks together.
@@ -728,7 +758,9 @@ Count the blocks together.
 
 <div>
 
-<span>3</span>
+<span>
+3
+</span>
 
 <p>
 Add or remove a block.
@@ -738,7 +770,9 @@ Add or remove a block.
 
 <div>
 
-<span>4</span>
+<span>
+4
+</span>
 
 <p>
 Count again and notice what changed.
@@ -790,7 +824,6 @@ Try saying...
 </p>
 
 </div>
-
 
 <div class="avoid-card">
 
