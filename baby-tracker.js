@@ -1,7 +1,6 @@
 /* =========================================================
    MOMYOURENEEDTHIS
    BABY TRACKER
-   IndexedDB + Voice-First Logging
 ========================================================= */
 
 
@@ -16,15 +15,12 @@ const LOG_STORE = "logs";
 const SETTINGS_STORE = "settings";
 
 let db = null;
-
 let logs = [];
 
 let activeSleep = null;
-
 let sleepTimerInterval = null;
 
 let recognition = null;
-
 let isListening = false;
 
 let toastTimeout;
@@ -91,6 +87,7 @@ function openDatabase() {
                         }
                     );
 
+
                 logStore.createIndex(
                     "date",
                     "date",
@@ -98,6 +95,7 @@ function openDatabase() {
                         unique: false
                     }
                 );
+
 
                 logStore.createIndex(
                     "timestamp",
@@ -130,7 +128,8 @@ function openDatabase() {
 
         request.onsuccess = event => {
 
-            db = event.target.result;
+            db =
+                event.target.result;
 
             resolve(db);
 
@@ -164,10 +163,12 @@ function dbGetAllLogs() {
                 "readonly"
             );
 
+
         const store =
             transaction.objectStore(
                 LOG_STORE
             );
+
 
         const request =
             store.getAll();
@@ -205,10 +206,12 @@ function dbPutLog(log) {
                 "readwrite"
             );
 
+
         const store =
             transaction.objectStore(
                 LOG_STORE
             );
+
 
         const request =
             store.put(log);
@@ -244,10 +247,12 @@ function dbDeleteLog(id) {
                 "readwrite"
             );
 
+
         const store =
             transaction.objectStore(
                 LOG_STORE
             );
+
 
         const request =
             store.delete(id);
@@ -283,10 +288,12 @@ function dbClearLogs() {
                 "readwrite"
             );
 
+
         const store =
             transaction.objectStore(
                 LOG_STORE
             );
+
 
         const request =
             store.clear();
@@ -322,10 +329,12 @@ function dbGetSetting(key) {
                 "readonly"
             );
 
+
         const store =
             transaction.objectStore(
                 SETTINGS_STORE
             );
+
 
         const request =
             store.get(key);
@@ -362,6 +371,7 @@ function dbSetSetting(key, value) {
                 SETTINGS_STORE,
                 "readwrite"
             );
+
 
         const store =
             transaction.objectStore(
@@ -406,8 +416,10 @@ async function initializeTracker() {
 
         await openDatabase();
 
+
         logs =
             await dbGetAllLogs();
+
 
         const savedSleep =
             await dbGetSetting(
@@ -431,10 +443,12 @@ async function initializeTracker() {
 
         setupButtons();
 
-        setupBackupControls();
-
         setupSettings();
 
+        /*
+           Backup controls are NOT initialized here.
+           They are initialized when Settings is opened.
+        */
 
     } catch (error) {
 
@@ -442,6 +456,7 @@ async function initializeTracker() {
             "Baby Tracker initialization failed:",
             error
         );
+
 
         showToast(
             "⚠️",
@@ -480,10 +495,12 @@ function todayKey(
     const year =
         date.getFullYear();
 
+
     const month =
         String(
             date.getMonth() + 1
         ).padStart(2, "0");
+
 
     const day =
         String(
@@ -540,7 +557,8 @@ async function addLog(
 
     const log = {
 
-        id: createId(),
+        id:
+            createId(),
 
         type,
 
@@ -557,9 +575,12 @@ async function addLog(
 
     logs.push(log);
 
+
     await dbPutLog(log);
 
+
     render();
+
 
     showToast(
         getLogIcon(log),
@@ -783,6 +804,7 @@ function formatDuration(minutes) {
             minutes / 60
         );
 
+
     const mins =
         minutes % 60;
 
@@ -899,6 +921,7 @@ function renderTimeline() {
                     "div"
                 );
 
+
             item.className =
                 "timeline-item";
 
@@ -908,8 +931,10 @@ function renderTimeline() {
                     "div"
                 );
 
+
             icon.className =
                 "timeline-icon";
+
 
             icon.textContent =
                 getLogIcon(log);
@@ -920,6 +945,7 @@ function renderTimeline() {
                     "div"
                 );
 
+
             info.className =
                 "timeline-info";
 
@@ -928,6 +954,7 @@ function renderTimeline() {
                 document.createElement(
                     "strong"
                 );
+
 
             title.textContent =
                 getLogTitle(log);
@@ -938,11 +965,14 @@ function renderTimeline() {
                     "span"
                 );
 
+
             details.textContent =
                 getLogDetails(log);
 
 
-            info.appendChild(title);
+            info.appendChild(
+                title
+            );
 
 
             if (
@@ -961,8 +991,10 @@ function renderTimeline() {
                     "div"
                 );
 
+
             time.className =
                 "timeline-time";
+
 
             time.textContent =
                 formatTime(
@@ -975,14 +1007,23 @@ function renderTimeline() {
                     "button"
                 );
 
+
             deleteButton.className =
                 "timeline-delete";
+
 
             deleteButton.type =
                 "button";
 
+
             deleteButton.textContent =
                 "×";
+
+
+            deleteButton.setAttribute(
+                "aria-label",
+                "Delete log"
+            );
 
 
             deleteButton.addEventListener(
@@ -1004,6 +1045,7 @@ function renderTimeline() {
                 deleteButton
             );
 
+
             timeline.appendChild(item);
 
         }
@@ -1022,6 +1064,7 @@ function createEmptyState() {
         document.createElement(
             "div"
         );
+
 
     wrapper.className =
         "empty-state";
@@ -1065,15 +1108,18 @@ function renderSummary() {
             "totalLogs"
         );
 
+
     const feeds =
         document.getElementById(
             "feedCount"
         );
 
+
     const diapers =
         document.getElementById(
             "diaperCount"
         );
+
 
     const sleep =
         document.getElementById(
@@ -1160,7 +1206,9 @@ async function deleteLog(id) {
 
     await dbDeleteLog(id);
 
+
     render();
+
 
     showToast(
         "✓",
@@ -1380,6 +1428,7 @@ function openFeedModal() {
             </button>
 
         </div>
+
     `);
 
 
@@ -1669,6 +1718,7 @@ function openDiaperModal() {
                             }
                         );
 
+
                         closeModal();
 
                     }
@@ -1783,6 +1833,7 @@ async function endSleep() {
             activeSleep.startedAt
         );
 
+
     const end =
         new Date();
 
@@ -1798,6 +1849,10 @@ async function endSleep() {
         );
 
 
+    /*
+       Save sleep before clearing
+       activeSleep.
+    */
     await addLog(
         "sleep",
         {
@@ -1816,6 +1871,7 @@ async function endSleep() {
 
 
     stopSleepTimer();
+
 
     renderSleepState();
 
@@ -1858,6 +1914,7 @@ function renderSleepState() {
         "hidden"
     );
 
+
     updateSleepTimer();
 
 }
@@ -1892,6 +1949,7 @@ function stopSleepTimer() {
         clearInterval(
             sleepTimerInterval
         );
+
 
         sleepTimerInterval =
             null;
@@ -2021,7 +2079,9 @@ function openNoteModal() {
 
                 await addLog(
                     "note",
-                    { text }
+                    {
+                        text
+                    }
                 );
 
 
@@ -2037,6 +2097,22 @@ function openNoteModal() {
    VOICE RECOGNITION
 ========================================================= */
 
+/*
+   IMPORTANT:
+
+   SpeechRecognition is not supported consistently
+   across all browsers.
+
+   We support both:
+
+       window.SpeechRecognition
+
+   and:
+
+       window.webkitSpeechRecognition
+*/
+
+
 function setupVoiceRecognition() {
 
     const SpeechRecognition =
@@ -2044,9 +2120,29 @@ function setupVoiceRecognition() {
         window.webkitSpeechRecognition;
 
 
+    /*
+       Browser does not support speech recognition.
+    */
     if (!SpeechRecognition) {
 
+        recognition = null;
+
+        console.warn(
+            "Speech Recognition is not supported in this browser."
+        );
+
         return false;
+
+    }
+
+
+    /*
+       Don't create multiple recognition
+       instances.
+    */
+    if (recognition) {
+
+        return true;
 
     }
 
@@ -2055,8 +2151,12 @@ function setupVoiceRecognition() {
         new SpeechRecognition();
 
 
+    /*
+       Change this to "fr-CA" if you want
+       French Canadian voice commands.
+    */
     recognition.lang =
-        navigator.language || "en-US";
+        "en-US";
 
 
     recognition.continuous =
@@ -2068,56 +2168,130 @@ function setupVoiceRecognition() {
 
 
     recognition.maxAlternatives =
-        3;
+        1;
 
+
+    /* --------------------------------
+       START
+    -------------------------------- */
 
     recognition.onstart = () => {
 
-        isListening = true;
+        console.log(
+            "🎙️ Speech recognition started"
+        );
 
-        updateVoiceUI(true);
+
+        isListening =
+            true;
+
+
+        updateVoiceUI(
+            true
+        );
+
+
+        showToast(
+            "🎙️",
+            "Listening..."
+        );
 
     };
 
 
+    /* --------------------------------
+       RESULT
+    -------------------------------- */
+
     recognition.onresult =
         event => {
 
-            const result =
-                event.results[
-                    event.results.length - 1
-                ];
+            console.log(
+                "🎙️ Speech result received:",
+                event
+            );
 
 
-            const text =
-                result[0]
-                    .transcript
-                    .trim();
+            let transcript =
+                "";
 
 
-            if (!text) {
+            /*
+               Collect all final results.
+            */
+            for (
+                let i = event.resultIndex;
+                i < event.results.length;
+                i++
+            ) {
+
+                if (
+                    event.results[i].isFinal
+                ) {
+
+                    transcript +=
+                        event.results[i][0]
+                            .transcript;
+
+                }
+
+            }
+
+
+            transcript =
+                transcript.trim();
+
+
+            console.log(
+                "🎙️ Transcript:",
+                transcript
+            );
+
+
+            if (!transcript) {
 
                 showToast(
                     "🎙️",
                     "I didn't hear anything"
                 );
 
+
                 return;
 
             }
 
 
-            processVoiceCommand(text);
+            /*
+               Process recognized speech.
+            */
+            processVoiceCommand(
+                transcript
+            );
 
         };
 
 
+    /* --------------------------------
+       ERROR
+    -------------------------------- */
+
     recognition.onerror =
         event => {
 
-            isListening = false;
+            console.error(
+                "🎙️ Speech recognition error:",
+                event.error,
+                event
+            );
 
-            updateVoiceUI(false);
+
+            isListening =
+                false;
+
+
+            updateVoiceUI(
+                false
+            );
 
 
             const errors = {
@@ -2126,7 +2300,7 @@ function setupVoiceRecognition() {
                     "Please allow microphone access",
 
                 "service-not-allowed":
-                    "Voice service isn't available",
+                    "Speech recognition service isn't available",
 
                 "audio-capture":
                     "I can't access your microphone",
@@ -2135,10 +2309,19 @@ function setupVoiceRecognition() {
                     "I didn't hear anything",
 
                 "network":
-                    "Voice recognition needs a connection",
+                    "Voice recognition needs an internet connection",
 
                 "aborted":
-                    "Voice logging stopped"
+                    "Voice logging stopped",
+
+                "language-not-supported":
+                    "This voice language isn't supported",
+
+                "bad-grammar":
+                    "Voice recognition configuration failed",
+
+                "phrases-not-supported":
+                    "Voice phrases aren't supported"
 
             };
 
@@ -2146,17 +2329,30 @@ function setupVoiceRecognition() {
             showToast(
                 "🎙️",
                 errors[event.error] ||
-                "Voice logging didn't work"
+                `Voice error: ${event.error}`
             );
 
         };
 
 
+    /* --------------------------------
+       END
+    -------------------------------- */
+
     recognition.onend = () => {
 
-        isListening = false;
+        console.log(
+            "🎙️ Speech recognition ended"
+        );
 
-        updateVoiceUI(false);
+
+        isListening =
+            false;
+
+
+        updateVoiceUI(
+            false
+        );
 
     };
 
@@ -2170,7 +2366,9 @@ function setupVoiceRecognition() {
    VOICE UI
 ========================================================= */
 
-function updateVoiceUI(listening) {
+function updateVoiceUI(
+    listening
+) {
 
     const button =
         document.getElementById(
@@ -2219,6 +2417,14 @@ function updateVoiceUI(listening) {
 
 function toggleVoice() {
 
+    console.log(
+        "🎙️ Voice button pressed"
+    );
+
+
+    /*
+       Initialize if necessary.
+    */
     if (!recognition) {
 
         const supported =
@@ -2229,8 +2435,9 @@ function toggleVoice() {
 
             showToast(
                 "🎙️",
-                "Voice logging isn't supported in this browser"
+                "Voice recognition isn't supported in this browser"
             );
+
 
             return;
 
@@ -2239,28 +2446,70 @@ function toggleVoice() {
     }
 
 
+    /*
+       Stop if already listening.
+    */
     if (isListening) {
+
+        console.log(
+            "🎙️ Stopping recognition"
+        );
+
 
         try {
 
             recognition.stop();
 
-        } catch {}
+        } catch (error) {
+
+            console.error(
+                "Error stopping recognition:",
+                error
+            );
+
+        }
+
 
         return;
 
     }
 
 
+    /*
+       Start listening.
+    */
     try {
+
+        console.log(
+            "🎙️ Starting recognition..."
+        );
+
 
         recognition.start();
 
     } catch (error) {
 
-        console.log(
-            "Voice start:",
+        console.error(
+            "Error starting recognition:",
             error
+        );
+
+
+        /*
+           Reset state if browser rejects start().
+        */
+        isListening =
+            false;
+
+
+        updateVoiceUI(
+            false
+        );
+
+
+        showToast(
+            "🎙️",
+            "Couldn't start voice recognition. Try again."
         );
 
     }
@@ -2277,9 +2526,20 @@ async function processVoiceCommand(
 ) {
 
     const lower =
-        normalizeSpeech(text);
+        normalizeSpeech(
+            text
+        );
 
 
+    console.log(
+        "🎙️ Processing voice command:",
+        text
+    );
+
+
+    /*
+       Show recognized speech.
+    */
     showToast(
         "🎙️",
         `"${text}"`
@@ -2292,20 +2552,20 @@ async function processVoiceCommand(
 
     if (
         activeSleep &&
-        (
-            includesAny(
-                lower,
-                [
-                    "woke up",
-                    "awake",
-                    "is awake",
-                    "got up",
-                    "wake up",
-                    "finished sleeping",
-                    "finished nap",
-                    "nap is over"
-                ]
-            )
+        includesAny(
+            lower,
+            [
+                "woke up",
+                "wake up",
+                "awake",
+                "is awake",
+                "got up",
+                "finished sleeping",
+                "finished nap",
+                "nap is over",
+                "nap finished",
+                "sleep is over"
+            ]
         )
     ) {
 
@@ -2332,7 +2592,9 @@ async function processVoiceCommand(
                 "started nap",
                 "went down for a nap",
                 "is sleeping",
-                "is asleep"
+                "is asleep",
+                "baby is sleeping",
+                "baby fell asleep"
             ]
         )
     ) {
@@ -2349,6 +2611,7 @@ async function processVoiceCommand(
             );
 
         }
+
 
         return;
 
@@ -2368,12 +2631,15 @@ async function processVoiceCommand(
                 "changed diaper",
                 "changed his diaper",
                 "changed her diaper",
-                "change diaper"
+                "change diaper",
+                "change the diaper",
+                "changed the diaper"
             ]
         )
     ) {
 
-        let kind = "wet";
+        let kind =
+            "wet";
 
 
         const dirty =
@@ -2383,9 +2649,11 @@ async function processVoiceCommand(
                     "dirty",
                     "poop",
                     "poopy",
+                    "pooped",
                     "stool",
                     "number two",
-                    "number 2"
+                    "number 2",
+                    "bm"
                 ]
             );
 
@@ -2396,8 +2664,9 @@ async function processVoiceCommand(
                 [
                     "wet",
                     "pee",
-                    "piss",
-                    "urine"
+                    "peed",
+                    "urine",
+                    "piss"
                 ]
             );
 
@@ -2407,22 +2676,29 @@ async function processVoiceCommand(
             wet
         ) {
 
-            kind = "both";
+            kind =
+                "both";
 
-        } else if (dirty) {
+        } else if (
+            dirty
+        ) {
 
-            kind = "dirty";
+            kind =
+                "dirty";
 
         } else {
 
-            kind = "wet";
+            kind =
+                "wet";
 
         }
 
 
         await addLog(
             "diaper",
-            { kind }
+            {
+                kind
+            }
         );
 
 
@@ -2441,13 +2717,19 @@ async function processVoiceCommand(
             [
                 "bottle",
                 "formula",
-                "milk bottle"
+                "milk bottle",
+                "had a bottle",
+                "drank a bottle",
+                "gave a bottle",
+                "gave baby a bottle"
             ]
         )
     ) {
 
         const amount =
-            extractAmount(text);
+            extractAmount(
+                text
+            );
 
 
         await addLog(
@@ -2458,10 +2740,12 @@ async function processVoiceCommand(
                     "bottle",
 
                 amount:
-                    amount?.value || null,
+                    amount?.value ??
+                    null,
 
                 unit:
-                    amount?.unit || "ml"
+                    amount?.unit ||
+                    "ml"
 
             }
         );
@@ -2486,12 +2770,16 @@ async function processVoiceCommand(
                 "breastfed",
                 "nursed",
                 "nursing",
-                "nurse"
+                "nurse",
+                "nursed baby",
+                "breastfed baby",
+                "fed from the breast"
             ]
         )
     ) {
 
-        let side = "Both";
+        let side =
+            "Both";
 
 
         if (
@@ -2499,24 +2787,28 @@ async function processVoiceCommand(
                 lower,
                 [
                     "left breast",
-                    "left side"
+                    "left side",
+                    "left boob"
                 ]
             )
         ) {
 
-            side = "Left";
+            side =
+                "Left";
 
         } else if (
             includesAny(
                 lower,
                 [
                     "right breast",
-                    "right side"
+                    "right side",
+                    "right boob"
                 ]
             )
         ) {
 
-            side = "Right";
+            side =
+                "Right";
 
         }
 
@@ -2559,7 +2851,8 @@ async function processVoiceCommand(
                 "baby ate",
                 "baby had a feed",
                 "baby had milk",
-                "feeding"
+                "feeding",
+                "fed the baby"
             ]
         )
     ) {
@@ -2567,8 +2860,13 @@ async function processVoiceCommand(
         await addLog(
             "feed",
             {
-                method: "breast",
-                side: "Both"
+
+                method:
+                    "breast",
+
+                side:
+                    "Both"
+
             }
         );
 
@@ -2579,7 +2877,7 @@ async function processVoiceCommand(
 
 
     /* --------------------------------
-       NOTE
+       NOTE FALLBACK
     -------------------------------- */
 
     await addLog(
@@ -2596,12 +2894,20 @@ async function processVoiceCommand(
    SPEECH NORMALIZATION
 ========================================================= */
 
-function normalizeSpeech(text) {
+function normalizeSpeech(
+    text
+) {
 
-    return text
+    return String(text)
         .toLowerCase()
-        .replace(/[.,!?]/g, " ")
-        .replace(/\s+/g, " ")
+        .replace(
+            /[.,!?]/g,
+            " "
+        )
+        .replace(
+            /\s+/g,
+            " "
+        )
         .trim();
 
 }
@@ -2614,7 +2920,9 @@ function includesAny(
 
     return phrases.some(
         phrase =>
-            text.includes(phrase)
+            text.includes(
+                phrase
+            )
     );
 
 }
@@ -2624,7 +2932,9 @@ function includesAny(
    EXTRACT NUMBER
 ========================================================= */
 
-function extractNumber(text) {
+function extractNumber(
+    text
+) {
 
     const match =
         text.match(
@@ -2643,19 +2953,63 @@ function extractNumber(text) {
    EXTRACT AMOUNT
 ========================================================= */
 
-function extractAmount(text) {
+function extractAmount(
+    text
+) {
 
     const lower =
-        normalizeSpeech(text);
-
-
-    const match =
-        lower.match(
-            /(\d+(?:\.\d+)?)\s*(ml|milliliters?|millilitres?|ounces?|oz)?/
+        normalizeSpeech(
+            text
         );
 
 
+    /*
+       Match things like:
+
+       120 ml
+       120 milliliters
+       4 oz
+       4 ounces
+
+       Also handles:
+
+       120ml
+       4oz
+    */
+    const match =
+        lower.match(
+            /(\d+(?:\.\d+)?)\s*(ml|milliliters?|millilitres?|ounces?|oz)\b/
+        );
+
+
+    /*
+       If there is no explicit unit,
+       try to extract a number.
+    */
     if (!match) {
+
+        const number =
+            extractNumber(
+                lower
+            );
+
+
+        if (
+            number !== null
+        ) {
+
+            return {
+
+                value:
+                    number,
+
+                unit:
+                    "ml"
+
+            };
+
+        }
+
 
         return null;
 
@@ -2663,11 +3017,13 @@ function extractAmount(text) {
 
 
     let value =
-        Number(match[1]);
+        Number(
+            match[1]
+        );
 
 
     let unit =
-        match[2] || "ml";
+        match[2];
 
 
     if (
@@ -2675,18 +3031,23 @@ function extractAmount(text) {
         unit === "oz"
     ) {
 
-        unit = "oz";
+        unit =
+            "oz";
 
     } else {
 
-        unit = "ml";
+        unit =
+            "ml";
 
     }
 
 
     return {
+
         value,
+
         unit
+
     };
 
 }
@@ -2696,15 +3057,19 @@ function extractAmount(text) {
    EXTRACT BREASTFEEDING DURATION
 ========================================================= */
 
-function extractDuration(text) {
+function extractDuration(
+    text
+) {
 
     const lower =
-        normalizeSpeech(text);
+        normalizeSpeech(
+            text
+        );
 
 
     const match =
         lower.match(
-            /(\d+(?:\.\d+)?)\s*(minutes?|mins?|min|hours?|hrs?|hr)/
+            /(\d+(?:\.\d+)?)\s*(minutes?|mins?|min|hours?|hrs?|hr)\b/
         );
 
 
@@ -2716,7 +3081,9 @@ function extractDuration(text) {
 
 
     const value =
-        Number(match[1]);
+        Number(
+            match[1]
+        );
 
 
     const unit =
@@ -2822,7 +3189,14 @@ function setupBackupControls() {
         );
 
 
-    if (exportButton) {
+    if (
+        exportButton &&
+        !exportButton.dataset.bound
+    ) {
+
+        exportButton.dataset.bound =
+            "true";
+
 
         exportButton.addEventListener(
             "click",
@@ -2834,12 +3208,18 @@ function setupBackupControls() {
 
     if (
         importButton &&
-        importInput
+        importInput &&
+        !importButton.dataset.bound
     ) {
+
+        importButton.dataset.bound =
+            "true";
+
 
         importButton.addEventListener(
             "click",
-            () => importInput.click()
+            () =>
+                importInput.click()
         );
 
 
@@ -2924,7 +3304,9 @@ async function exportBackup() {
         todayKey();
 
 
-    link.href = url;
+    link.href =
+        url;
+
 
     link.download =
         `momyouneedthis-baby-tracker-${date}.json`;
@@ -2932,10 +3314,13 @@ async function exportBackup() {
 
     document
         .body
-        .appendChild(link);
+        .appendChild(
+            link
+        );
 
 
     link.click();
+
 
     link.remove();
 
@@ -2975,7 +3360,9 @@ async function handleImport(
 
 
         const backup =
-            JSON.parse(text);
+            JSON.parse(
+                text
+            );
 
 
         if (
@@ -3000,7 +3387,9 @@ async function handleImport(
 
         if (!confirmed) {
 
-            event.target.value = "";
+            event.target.value =
+                "";
+
 
             return;
 
@@ -3029,9 +3418,14 @@ async function handleImport(
             }
 
 
-            await dbPutLog(log);
+            await dbPutLog(
+                log
+            );
 
-            logs.push(log);
+
+            logs.push(
+                log
+            );
 
         }
 
@@ -3080,6 +3474,7 @@ async function handleImport(
     } catch (error) {
 
         console.error(
+            "Import failed:",
             error
         );
 
@@ -3092,7 +3487,8 @@ async function handleImport(
     }
 
 
-    event.target.value = "";
+    event.target.value =
+        "";
 
 }
 
@@ -3188,6 +3584,7 @@ async function openSettings() {
 
         </form>
 
+
         <div class="settings-backup">
 
             <h3>
@@ -3200,6 +3597,7 @@ async function openSettings() {
                 before changing devices.
             </p>
 
+
             <button
                 id="exportDataButton"
                 type="button">
@@ -3208,6 +3606,7 @@ async function openSettings() {
 
             </button>
 
+
             <button
                 id="importDataButton"
                 type="button">
@@ -3215,6 +3614,7 @@ async function openSettings() {
                 Import Backup
 
             </button>
+
 
             <input
                 id="importDataInput"
@@ -3279,6 +3679,10 @@ async function openSettings() {
         );
 
 
+    /*
+       Bind the dynamically-created
+       backup buttons.
+    */
     setupBackupControls();
 
 }
@@ -3288,7 +3692,9 @@ async function openSettings() {
    HTML ESCAPE
 ========================================================= */
 
-function escapeHtml(value) {
+function escapeHtml(
+    value
+) {
 
     return String(value)
         .replace(
