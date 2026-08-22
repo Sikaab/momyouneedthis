@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<meta name="theme-color" content="#fffaf8">
+
+<title>Free Baby Tracker | Feed, Diaper & Sleep Log | MomYouNeedThis</title>
+
+<meta
+    name="description"
+    content="A simple, beautiful baby tracker for logging feeds, diapers and sleep in seconds. No account required."
+>
+
+<link rel="stylesheet" href="style.css">
+
+<link
+    href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap"
+    rel="stylesheet"
+>
+
+</head>
+
+<body>
+
+<div class="page baby-tracker-page">
+
+    <!-- HEADER -->
+
+    <header class="tracker-header">
+
+        <a href="index.html" class="tracker-logo-link">
+
+            <img
+                src="assets/logo.svg"
+                class="tracker-logo"
+                alt="MomYouNeedThis"
+            >
+
+        </a>
+
+        <div class="tracker-header-text">
+
+            <span>FREE MOM TOOL</span>
+
+            <strong>Baby Tracker</strong>
+
+        </div>
+
+    </header>
+
+
+    <!-- BABY INTRO -->
+
+    <section class="tracker-intro">
+
+        <p class="tracker-greeting" id="trackerGreeting">
+            Good afternoon 🤍
+        </p>
+
+        <h1>
+            What happened?
+        </h1>
+
+        <p>
+            Log feeds, diapers and sleep in seconds.
+        </p>
+
+    </section>
+
+
+    <!-- VOICE LOGGER -->
+
+    <section class="voice-card">
+
+        <button
+            type="button"
+            id="voiceButton"
+            class="voice-button"
+            aria-label="Tap to log using your voice"
+        >
+
+            <span class="voice-icon" id="voiceIcon">
+                🎙️
+            </span>
+
+            <span class="voice-button-text">
+
+                <strong id="voiceButtonTitle">
+                    TAP TO LOG
+                </strong>
+
+                <small id="voiceButtonSubtitle">
+                    Say what happened
+                </small>
+
+            </span>
+
+        </button>
+
+        <p
+            class="voice-status"
+            id="voiceStatus"
+            aria-live="polite"
+        >
+            Try saying “4 ounces” or “wet diaper”
+        </p>
+
+    </section>
+
+
+    <!-- QUICK ACTIONS -->
+
+    <section class="quick-actions">
+
+        <button
+            type="button"
+            class="quick-action feed-action"
+            data-action="feed"
+        >
+
+            <span class="quick-action-icon">
+                🍼
+            </span>
+
+            <strong>Feed</strong>
+
+        </button>
+
+
+        <button
+            type="button"
+            class="quick-action wet-action"
+            data-action="wet"
+        >
+
+            <span class="quick-action-icon">
+                💧
+            </span>
+
+            <strong>Wet</strong>
+
+        </button>
+
+
+        <button
+            type="button"
+            class="quick-action dirty-action"
+            data-action="dirty"
+        >
+
+            <span class="quick-action-icon">
+                💩
+            </span>
+
+            <strong>Dirty</strong>
+
+        </button>
+
+
+        <button
+            type="button"
+            class="quick-action sleep-action"
+            data-action="sleep"
+            id="sleepQuickButton"
+        >
+
+            <span class="quick-action-icon" id="sleepIcon">
+                😴
+            </span>
+
+            <strong id="sleepButtonText">
+                Sleep
+            </strong>
+
+        </button>
+
+    </section>
+
+
+    <!-- TODAY SUMMARY -->
+
+    <section class="today-summary">
+
+        <div class="section-heading">
+
+            <div>
+
+                <span class="section-eyebrow">
+                    TODAY
+                </span>
+
+                <h2>
+                    At a glance
+                </h2>
+
+            </div>
+
+            <span
+                class="today-date"
+                id="todayDate"
+            ></span>
+
+        </div>
+
+
+        <div class="summary-grid">
+
+            <div class="summary-card">
+
+                <span>🍼</span>
+
+                <strong id="feedTotal">
+                    0
+                </strong>
+
+                <small>
+                    feeds
+                </small>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <span>💧</span>
+
+                <strong id="wetTotal">
+                    0
+                </strong>
+
+                <small>
+                    wet
+                </small>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <span>💩</span>
+
+                <strong id="dirtyTotal">
+                    0
+                </strong>
+
+                <small>
+                    dirty
+                </small>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <span>😴</span>
+
+                <strong id="sleepTotal">
+                    0m
+                </strong>
+
+                <small>
+                    sleep
+                </small>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- TIMELINE -->
+
+    <section class="timeline-section">
+
+        <div class="section-heading">
+
+            <div>
+
+                <span class="section-eyebrow">
+                    TODAY
+                </span>
+
+                <h2>
+                    Your baby's day
+                </h2>
+
+            </div>
+
+            <button
+                type="button"
+                id="clearTodayButton"
+                class="text-button"
+            >
+                Clear
+            </button>
+
+        </div>
+
+
+        <div
+            class="timeline"
+            id="timeline"
+        >
+
+            <div
+                class="empty-state"
+                id="emptyState"
+            >
+
+                <div class="empty-state-icon">
+                    🤍
+                </div>
+
+                <h3>
+                    Nothing logged yet
+                </h3>
+
+                <p>
+                    Tap a button above and we'll keep track of the rest.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- PRIVACY / BACKUP -->
+
+    <section class="tracker-tools">
+
+        <div class="privacy-note">
+
+            <span>
+                🔒
+            </span>
+
+            <div>
+
+                <strong>
+                    Your baby's data stays on this device
+                </strong>
+
+                <p>
+                    No account is required. Your tracker is stored in your browser.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="backup-actions">
+
+            <button
+                type="button"
+                id="exportButton"
+                class="small-outline-button"
+            >
+                Export
+            </button>
+
+            <label
+                for="importInput"
+                class="small-outline-button"
+            >
+                Restore
+            </label>
+
+            <input
+                type="file"
+                id="importInput"
+                accept=".json,application/json"
+                hidden
+            >
+
+        </div>
+
+    </section>
+
+
+    <!-- SLEEP TOOL CTA -->
+
+    <section class="tracker-sleep-cta">
+
+        <span>
+            🌓
+        </span>
+
+        <div>
+
+            <h2>
+                Want to know when your baby should sleep next?
+            </h2>
+
+            <p>
+                Use today's sleep data with our Baby Sleep Sweet Spot Calculator.
+            </p>
+
+            <a href="sleep-schedule-generator.html">
+                Find Their Sleep Sweet Spot →
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <div class="footer-logo">
+
+            <img
+                src="assets/logo.svg"
+                alt="MomYouNeedThis"
+            >
+
+        </div>
+
+        <h3>
+            MomYouNeedThis
+        </h3>
+
+        <p>
+            Helping moms find tools that make everyday life easier.
+        </p>
+
+        <div class="footer-links">
+
+            <a href="free-mom-resources.html">
+                Free Resources
+            </a>
+
+            <a href="about.html">
+                About
+            </a>
+
+            <a href="privacy-policy.html">
+                Privacy Policy
+            </a>
+
+            <a href="terms-of-use.html">
+                Terms of Use
+            </a>
+
+            <a href="contact.html">
+                Contact
+            </a>
+
+        </div>
+
+        <div class="footer-bottom">
+
+            <p>
+                © 2026 MomYouNeedThis. All rights reserved.
+            </p>
+
+        </div>
+
+    </footer>
+
+</div>
+
+
+<!-- FEED MODAL -->
+
+<div
+    class="tracker-modal"
+    id="feedModal"
+    aria-hidden="true"
+>
+
+    <div class="modal-overlay"></div>
+
+    <div class="modal-card">
+
+        <button
+            type="button"
+            class="modal-close"
+            data-close-modal
+        >
+            ×
+        </button>
+
+        <span class="modal-icon">
+            🍼
+        </span>
+
+        <h2>
+            What kind of feed?
+        </h2>
+
+        <div class="modal-options">
+
+            <button
+                type="button"
+                data-feed-type="breast"
+            >
+                🤱 Breast
+            </button>
+
+            <button
+                type="button"
+                data-feed-type="bottle"
+            >
+                🍼 Bottle
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- BOTTLE MODAL -->
+
+<div
+    class="tracker-modal"
+    id="bottleModal"
+    aria-hidden="true"
+>
+
+    <div class="modal-overlay"></div>
+
+    <div class="modal-card">
+
+        <button
+            type="button"
+            class="modal-close"
+            data-close-modal
+        >
+            ×
+        </button>
+
+        <span class="modal-icon">
+            🍼
+        </span>
+
+        <h2>
+            How much?
+        </h2>
+
+        <div class="amount-grid">
+
+            <button data-amount="2">2 oz</button>
+            <button data-amount="3">3 oz</button>
+            <button data-amount="4">4 oz</button>
+            <button data-amount="5">5 oz</button>
+            <button data-amount="6">6 oz</button>
+            <button data-amount="8">8 oz</button>
+
+        </div>
+
+        <button
+            type="button"
+            class="modal-secondary-button"
+            id="customBottleButton"
+        >
+            Enter another amount
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- TOAST -->
+
+<div
+    class="tracker-toast"
+    id="trackerToast"
+    aria-live="polite"
+>
+    <span id="toastIcon">✓</span>
+    <span id="toastText">Logged</span>
+</div>
+
+
+<script src="baby-tracker.js"></script>
+
+</body>
+
+</html>
