@@ -1,31 +1,41 @@
 /* =========================================================
    MOMYOURENEEDTHIS
    BABY TRACKER
+   IndexedDB + Voice-First Logging
 ========================================================= */
 
 
-/* =========================
-   STORAGE
-========================= */
+/* =========================================================
+   DATABASE
+========================================================= */
 
-const STORAGE_KEY = "momyouneedthis_baby_tracker";
+const DB_NAME = "MomYouNeedThisBabyTracker";
+const DB_VERSION = 1;
 
-let logs = loadLogs();
+const LOG_STORE = "logs";
+const SETTINGS_STORE = "settings";
+
+let db = null;
+
+let logs = [];
 
 let activeSleep = null;
 
 let sleepTimerInterval = null;
 
+let recognition = null;
 
-/* =========================
+let isListening = false;
+
+let toastTimeout;
+
+
+/* =========================================================
    ELEMENTS
-========================= */
+========================================================= */
 
 const timeline =
     document.getElementById("timeline");
-
-const emptyState =
-    document.getElementById("emptyState");
 
 const actionModal =
     document.getElementById("actionModal");
@@ -46,73 +56,440 @@ const toastIcon =
     document.getElementById("toastIcon");
 
 
-/* =========================
-   LOAD / SAVE
-========================= */
+/* =========================================================
+   DATABASE
+========================================================= */
 
-function loadLogs() {
+function openDatabase() {
+
+    return new Promise((resolve, reject) => {
+
+        const request =
+            indexedDB.open(
+                DB_NAME,
+                DB_VERSION
+            );
+
+
+        request.onupgradeneeded = event => {
+
+            const database =
+                event.target.result;
+
+
+            if (
+                !database.objectStoreNames.contains(
+                    LOG_STORE
+                )
+            ) {
+
+                const logStore =
+                    database.createObjectStore(
+                        LOG_STORE,
+                        {
+                            keyPath: "id"
+                        }
+                    );
+
+                logStore.createIndex(
+                    "date",
+                    "date",
+                    {
+                        unique: false
+                    }
+                );
+
+                logStore.createIndex(
+                    "timestamp",
+                    "timestamp",
+                    {
+                        unique: false
+                    }
+                );
+
+            }
+
+
+            if (
+                !database.objectStoreNames.contains(
+                    SETTINGS_STORE
+                )
+            ) {
+
+                database.createObjectStore(
+                    SETTINGS_STORE,
+                    {
+                        keyPath: "key"
+                    }
+                );
+
+            }
+
+        };
+
+
+        request.onsuccess = event => {
+
+            db = event.target.result;
+
+            resolve(db);
+
+        };
+
+
+        request.onerror = () => {
+
+            reject(
+                request.error
+            );
+
+        };
+
+    });
+
+}
+
+
+/* =========================================================
+   DATABASE HELPERS
+========================================================= */
+
+function dbGetAllLogs() {
+
+    return new Promise((resolve, reject) => {
+
+        const transaction =
+            db.transaction(
+                LOG_STORE,
+                "readonly"
+            );
+
+        const store =
+            transaction.objectStore(
+                LOG_STORE
+            );
+
+        const request =
+            store.getAll();
+
+
+        request.onsuccess = () => {
+
+            resolve(
+                request.result || []
+            );
+
+        };
+
+
+        request.onerror = () => {
+
+            reject(
+                request.error
+            );
+
+        };
+
+    });
+
+}
+
+
+function dbPutLog(log) {
+
+    return new Promise((resolve, reject) => {
+
+        const transaction =
+            db.transaction(
+                LOG_STORE,
+                "readwrite"
+            );
+
+        const store =
+            transaction.objectStore(
+                LOG_STORE
+            );
+
+        const request =
+            store.put(log);
+
+
+        request.onsuccess = () => {
+
+            resolve();
+
+        };
+
+
+        request.onerror = () => {
+
+            reject(
+                request.error
+            );
+
+        };
+
+    });
+
+}
+
+
+function dbDeleteLog(id) {
+
+    return new Promise((resolve, reject) => {
+
+        const transaction =
+            db.transaction(
+                LOG_STORE,
+                "readwrite"
+            );
+
+        const store =
+            transaction.objectStore(
+                LOG_STORE
+            );
+
+        const request =
+            store.delete(id);
+
+
+        request.onsuccess = () => {
+
+            resolve();
+
+        };
+
+
+        request.onerror = () => {
+
+            reject(
+                request.error
+            );
+
+        };
+
+    });
+
+}
+
+
+function dbClearLogs() {
+
+    return new Promise((resolve, reject) => {
+
+        const transaction =
+            db.transaction(
+                LOG_STORE,
+                "readwrite"
+            );
+
+        const store =
+            transaction.objectStore(
+                LOG_STORE
+            );
+
+        const request =
+            store.clear();
+
+
+        request.onsuccess = () => {
+
+            resolve();
+
+        };
+
+
+        request.onerror = () => {
+
+            reject(
+                request.error
+            );
+
+        };
+
+    });
+
+}
+
+
+function dbGetSetting(key) {
+
+    return new Promise((resolve, reject) => {
+
+        const transaction =
+            db.transaction(
+                SETTINGS_STORE,
+                "readonly"
+            );
+
+        const store =
+            transaction.objectStore(
+                SETTINGS_STORE
+            );
+
+        const request =
+            store.get(key);
+
+
+        request.onsuccess = () => {
+
+            resolve(
+                request.result?.value ?? null
+            );
+
+        };
+
+
+        request.onerror = () => {
+
+            reject(
+                request.error
+            );
+
+        };
+
+    });
+
+}
+
+
+function dbSetSetting(key, value) {
+
+    return new Promise((resolve, reject) => {
+
+        const transaction =
+            db.transaction(
+                SETTINGS_STORE,
+                "readwrite"
+            );
+
+        const store =
+            transaction.objectStore(
+                SETTINGS_STORE
+            );
+
+
+        const request =
+            store.put({
+                key,
+                value
+            });
+
+
+        request.onsuccess = () => {
+
+            resolve();
+
+        };
+
+
+        request.onerror = () => {
+
+            reject(
+                request.error
+            );
+
+        };
+
+    });
+
+}
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+async function initializeTracker() {
 
     try {
 
-        const saved =
-            localStorage.getItem(STORAGE_KEY);
+        await openDatabase();
 
-        return saved
-            ? JSON.parse(saved)
-            : [];
+        logs =
+            await dbGetAllLogs();
+
+        const savedSleep =
+            await dbGetSetting(
+                "activeSleep"
+            );
+
+
+        if (savedSleep) {
+
+            activeSleep =
+                savedSleep;
+
+        }
+
+
+        render();
+
+        restoreActiveSleep();
+
+        setupVoiceRecognition();
+
+        setupButtons();
+
+        setupBackupControls();
+
+        setupSettings();
+
 
     } catch (error) {
 
         console.error(
-            "Unable to load baby tracker data.",
+            "Baby Tracker initialization failed:",
             error
         );
 
-        return [];
+        showToast(
+            "⚠️",
+            "Unable to load your tracker"
+        );
 
     }
 
 }
 
 
-function saveLogs() {
+/* =========================================================
+   ID
+========================================================= */
 
-    localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify(logs)
+function createId() {
+
+    return (
+        Date.now().toString(36) +
+        Math.random()
+            .toString(36)
+            .substring(2)
     );
 
 }
 
 
-/* =========================
-   ID
-========================= */
-
-function createId() {
-
-    return Date.now().toString(36) +
-        Math.random().toString(36).substring(2);
-
-}
-
-
-/* =========================
+/* =========================================================
    DATE
-========================= */
+========================================================= */
 
-function todayKey(date = new Date()) {
+function todayKey(
+    date = new Date()
+) {
 
     const year =
         date.getFullYear();
 
     const month =
-        String(date.getMonth() + 1)
-            .padStart(2, "0");
+        String(
+            date.getMonth() + 1
+        ).padStart(2, "0");
 
     const day =
-        String(date.getDate())
-            .padStart(2, "0");
+        String(
+            date.getDate()
+        ).padStart(2, "0");
+
 
     return `${year}-${month}-${day}`;
 
@@ -122,10 +499,13 @@ function todayKey(date = new Date()) {
 function formatTime(date) {
 
     return new Date(date)
-        .toLocaleTimeString([], {
-            hour: "numeric",
-            minute: "2-digit"
-        });
+        .toLocaleTimeString(
+            [],
+            {
+                hour: "numeric",
+                minute: "2-digit"
+            }
+        );
 
 }
 
@@ -133,22 +513,30 @@ function formatTime(date) {
 function formatToday() {
 
     return new Date()
-        .toLocaleDateString([], {
-            weekday: "long",
-            month: "long",
-            day: "numeric"
-        });
+        .toLocaleDateString(
+            [],
+            {
+                weekday: "long",
+                month: "long",
+                day: "numeric"
+            }
+        );
 
 }
 
 
-/* =========================
+/* =========================================================
    ADD LOG
-========================= */
+========================================================= */
 
-function addLog(type, details = {}) {
+async function addLog(
+    type,
+    details = {}
+) {
 
-    const now = new Date();
+    const now =
+        new Date();
+
 
     const log = {
 
@@ -156,17 +544,20 @@ function addLog(type, details = {}) {
 
         type,
 
-        timestamp: now.toISOString(),
+        timestamp:
+            now.toISOString(),
 
-        date: todayKey(now),
+        date:
+            todayKey(now),
 
         ...details
 
     };
 
+
     logs.push(log);
 
-    saveLogs();
+    await dbPutLog(log);
 
     render();
 
@@ -178,9 +569,9 @@ function addLog(type, details = {}) {
 }
 
 
-/* =========================
+/* =========================================================
    LOG HELPERS
-========================= */
+========================================================= */
 
 function getLogIcon(log) {
 
@@ -196,49 +587,82 @@ function getLogIcon(log) {
 
     };
 
-    return icons[log.type] || "💗";
+
+    return (
+        icons[log.type] ||
+        "💗"
+    );
 
 }
 
 
 function getLogTitle(log) {
 
-    if (log.type === "feed") {
+    if (
+        log.type === "feed"
+    ) {
 
-        if (log.method === "breast") {
+        if (
+            log.method === "breast"
+        ) {
 
-            return `Breastfeeding · ${log.side || "Both"}`;
+            return (
+                `Breastfeeding · ${
+                    log.side || "Both"
+                }`
+            );
 
         }
 
-        if (log.method === "bottle") {
 
-            return `Bottle · ${log.amount || 0} ml`;
+        if (
+            log.method === "bottle"
+        ) {
+
+            return (
+                `Bottle · ${
+                    log.amount || 0
+                } ${
+                    log.unit || "ml"
+                }`
+            );
 
         }
+
 
         return "Feeding";
 
     }
 
 
-    if (log.type === "diaper") {
+    if (
+        log.type === "diaper"
+    ) {
 
-        return `${capitalize(log.kind)} diaper`;
+        return (
+            `${capitalize(log.kind)} diaper`
+        );
 
     }
 
 
-    if (log.type === "sleep") {
+    if (
+        log.type === "sleep"
+    ) {
 
         return "Nap";
 
     }
 
 
-    if (log.type === "note") {
+    if (
+        log.type === "note"
+    ) {
 
-        return log.text || "Note";
+        return (
+            log.text ||
+            "Note"
+        );
 
     }
 
@@ -250,48 +674,76 @@ function getLogTitle(log) {
 
 function getLogDetails(log) {
 
-    if (log.type === "feed") {
+    if (
+        log.type === "feed"
+    ) {
 
-        if (log.method === "breast") {
+        if (
+            log.method === "breast"
+        ) {
 
-            return `${log.side || "Both"}${log.duration ? ` · ${log.duration} min` : ""}`;
+            return (
+                `${log.side || "Both"}${
+                    log.duration
+                        ? ` · ${log.duration} min`
+                        : ""
+                }`
+            );
 
         }
 
-        if (log.method === "bottle") {
 
-            return `${log.amount || 0} ml`;
+        if (
+            log.method === "bottle"
+        ) {
+
+            return (
+                `${log.amount || 0} ${
+                    log.unit || "ml"
+                }`
+            );
 
         }
-
-        return "";
 
     }
 
 
-    if (log.type === "diaper") {
+    if (
+        log.type === "diaper"
+    ) {
 
-        return log.kind === "wet"
-            ? "Wet"
-            : log.kind === "dirty"
-                ? "Dirty"
-                : "Wet + dirty";
+        if (
+            log.kind === "wet"
+        ) {
+
+            return "Wet";
+
+        }
+
+
+        if (
+            log.kind === "dirty"
+        ) {
+
+            return "Dirty";
+
+        }
+
+
+        return "Wet + dirty";
 
     }
 
 
-    if (log.type === "sleep") {
+    if (
+        log.type === "sleep"
+    ) {
 
         return log.duration
-            ? formatDuration(log.duration)
+            ? formatDuration(
+                log.duration
+            )
             : "Sleep";
-
-    }
-
-
-    if (log.type === "note") {
-
-        return "";
 
     }
 
@@ -301,33 +753,39 @@ function getLogDetails(log) {
 }
 
 
-/* =========================
-   CAPITALIZE
-========================= */
+/* =========================================================
+   UTILITIES
+========================================================= */
 
 function capitalize(value) {
 
     if (!value) return "";
 
-    return value.charAt(0).toUpperCase() +
-        value.slice(1);
+    return (
+        value.charAt(0).toUpperCase() +
+        value.slice(1)
+    );
 
 }
 
 
-/* =========================
-   FORMAT DURATION
-========================= */
-
 function formatDuration(minutes) {
 
-    if (!minutes) return "0m";
+    if (!minutes) {
+
+        return "0m";
+
+    }
+
 
     const hours =
-        Math.floor(minutes / 60);
+        Math.floor(
+            minutes / 60
+        );
 
     const mins =
         minutes % 60;
+
 
     if (hours) {
 
@@ -335,34 +793,45 @@ function formatDuration(minutes) {
 
     }
 
+
     return `${mins}m`;
 
 }
 
 
-/* =========================
-   TODAY LOGS
-========================= */
+/* =========================================================
+   TODAY
+========================================================= */
 
 function getTodayLogs() {
 
     const today =
         todayKey();
 
+
     return logs
-        .filter(log => log.date === today)
+
+        .filter(
+            log =>
+                log.date === today
+        )
+
         .sort(
             (a, b) =>
-                new Date(b.timestamp) -
-                new Date(a.timestamp)
+                new Date(
+                    b.timestamp
+                ) -
+                new Date(
+                    a.timestamp
+                )
         );
 
 }
 
 
-/* =========================
+/* =========================================================
    RENDER
-========================= */
+========================================================= */
 
 function render() {
 
@@ -377,14 +846,13 @@ function render() {
 }
 
 
-/* =========================
-   DATE
-========================= */
-
 function renderDate() {
 
     const date =
-        document.getElementById("todayDate");
+        document.getElementById(
+            "todayDate"
+        );
+
 
     if (date) {
 
@@ -396,16 +864,21 @@ function renderDate() {
 }
 
 
-/* =========================
+/* =========================================================
    TIMELINE
-========================= */
+========================================================= */
 
 function renderTimeline() {
+
+    if (!timeline) return;
+
 
     const todayLogs =
         getTodayLogs();
 
+
     timeline.innerHTML = "";
+
 
     if (!todayLogs.length) {
 
@@ -418,112 +891,141 @@ function renderTimeline() {
     }
 
 
-    todayLogs.forEach(log => {
+    todayLogs.forEach(
+        log => {
 
-        const item =
-            document.createElement("div");
+            const item =
+                document.createElement(
+                    "div"
+                );
 
-        item.className =
-            "timeline-item";
-
-        const icon =
-            document.createElement("div");
-
-        icon.className =
-            "timeline-icon";
-
-        icon.textContent =
-            getLogIcon(log);
+            item.className =
+                "timeline-item";
 
 
-        const info =
-            document.createElement("div");
+            const icon =
+                document.createElement(
+                    "div"
+                );
 
-        info.className =
-            "timeline-info";
+            icon.className =
+                "timeline-icon";
 
-        const title =
-            document.createElement("strong");
-
-        title.textContent =
-            getLogTitle(log);
-
-
-        const details =
-            document.createElement("span");
-
-        details.textContent =
-            getLogDetails(log);
+            icon.textContent =
+                getLogIcon(log);
 
 
-        info.appendChild(title);
+            const info =
+                document.createElement(
+                    "div"
+                );
 
-        if (details.textContent) {
+            info.className =
+                "timeline-info";
 
-            info.appendChild(details);
+
+            const title =
+                document.createElement(
+                    "strong"
+                );
+
+            title.textContent =
+                getLogTitle(log);
+
+
+            const details =
+                document.createElement(
+                    "span"
+                );
+
+            details.textContent =
+                getLogDetails(log);
+
+
+            info.appendChild(title);
+
+
+            if (
+                details.textContent
+            ) {
+
+                info.appendChild(
+                    details
+                );
+
+            }
+
+
+            const time =
+                document.createElement(
+                    "div"
+                );
+
+            time.className =
+                "timeline-time";
+
+            time.textContent =
+                formatTime(
+                    log.timestamp
+                );
+
+
+            const deleteButton =
+                document.createElement(
+                    "button"
+                );
+
+            deleteButton.className =
+                "timeline-delete";
+
+            deleteButton.type =
+                "button";
+
+            deleteButton.textContent =
+                "×";
+
+
+            deleteButton.addEventListener(
+                "click",
+                () =>
+                    deleteLog(
+                        log.id
+                    )
+            );
+
+
+            item.appendChild(icon);
+
+            item.appendChild(info);
+
+            item.appendChild(time);
+
+            item.appendChild(
+                deleteButton
+            );
+
+            timeline.appendChild(item);
 
         }
-
-
-        const time =
-            document.createElement("div");
-
-        time.className =
-            "timeline-time";
-
-        time.textContent =
-            formatTime(log.timestamp);
-
-
-        const deleteButton =
-            document.createElement("button");
-
-        deleteButton.className =
-            "timeline-delete";
-
-        deleteButton.type =
-            "button";
-
-        deleteButton.textContent =
-            "×";
-
-        deleteButton.setAttribute(
-            "aria-label",
-            "Delete log"
-        );
-
-        deleteButton.addEventListener(
-            "click",
-            () => deleteLog(log.id)
-        );
-
-
-        item.appendChild(icon);
-
-        item.appendChild(info);
-
-        item.appendChild(time);
-
-        item.appendChild(deleteButton);
-
-        timeline.appendChild(item);
-
-    });
+    );
 
 }
 
 
-/* =========================
+/* =========================================================
    EMPTY STATE
-========================= */
+========================================================= */
 
 function createEmptyState() {
 
     const wrapper =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
     wrapper.className =
         "empty-state";
+
 
     wrapper.innerHTML = `
 
@@ -536,20 +1038,21 @@ function createEmptyState() {
         </h3>
 
         <p>
-            Tap an activity above and
-            we'll remember it for you.
+            Tap the microphone and simply
+            tell me what happened.
         </p>
 
     `;
+
 
     return wrapper;
 
 }
 
 
-/* =========================
+/* =========================================================
    SUMMARY
-========================= */
+========================================================= */
 
 function renderSummary() {
 
@@ -557,68 +1060,105 @@ function renderSummary() {
         getTodayLogs();
 
 
-    document.getElementById(
-        "totalLogs"
-    ).textContent =
-        todayLogs.length;
-
+    const total =
+        document.getElementById(
+            "totalLogs"
+        );
 
     const feeds =
-        todayLogs.filter(
-            log => log.type === "feed"
-        ).length;
-
+        document.getElementById(
+            "feedCount"
+        );
 
     const diapers =
-        todayLogs.filter(
-            log => log.type === "diaper"
-        ).length;
-
+        document.getElementById(
+            "diaperCount"
+        );
 
     const sleep =
+        document.getElementById(
+            "sleepTotal"
+        );
+
+
+    if (total) {
+
+        total.textContent =
+            todayLogs.length;
+
+    }
+
+
+    if (feeds) {
+
+        feeds.textContent =
+            todayLogs.filter(
+                log =>
+                    log.type === "feed"
+            ).length;
+
+    }
+
+
+    if (diapers) {
+
+        diapers.textContent =
+            todayLogs.filter(
+                log =>
+                    log.type === "diaper"
+            ).length;
+
+    }
+
+
+    const sleepMinutes =
         todayLogs
 
             .filter(
-                log => log.type === "sleep"
+                log =>
+                    log.type === "sleep"
             )
 
             .reduce(
-                (total, log) =>
-                    total + (log.duration || 0),
+                (
+                    total,
+                    log
+                ) =>
+                    total +
+                    (
+                        log.duration ||
+                        0
+                    ),
                 0
             );
 
 
-    document.getElementById(
-        "feedCount"
-    ).textContent = feeds;
+    if (sleep) {
 
+        sleep.textContent =
+            formatDuration(
+                sleepMinutes
+            );
 
-    document.getElementById(
-        "diaperCount"
-    ).textContent = diapers;
-
-
-    document.getElementById(
-        "sleepTotal"
-    ).textContent =
-        formatDuration(sleep);
+    }
 
 }
 
 
-/* =========================
+/* =========================================================
    DELETE
-========================= */
+========================================================= */
 
-function deleteLog(id) {
+async function deleteLog(id) {
 
     logs =
         logs.filter(
-            log => log.id !== id
+            log =>
+                log.id !== id
         );
 
-    saveLogs();
+
+    await dbDeleteLog(id);
 
     render();
 
@@ -630,14 +1170,18 @@ function deleteLog(id) {
 }
 
 
-/* =========================
+/* =========================================================
    MODAL
-========================= */
+========================================================= */
 
 function openModal(content) {
 
+    if (!actionModal) return;
+
+
     modalContent.innerHTML =
         content;
+
 
     actionModal.classList.remove(
         "hidden"
@@ -648,6 +1192,9 @@ function openModal(content) {
 
 function closeModal() {
 
+    if (!actionModal) return;
+
+
     actionModal.classList.add(
         "hidden"
     );
@@ -655,78 +1202,154 @@ function closeModal() {
 }
 
 
-modalClose.addEventListener(
-    "click",
-    closeModal
-);
+if (modalClose) {
+
+    modalClose.addEventListener(
+        "click",
+        closeModal
+    );
+
+}
 
 
-actionModal.addEventListener(
-    "click",
-    event => {
+if (actionModal) {
 
-        if (
-            event.target.hasAttribute(
-                "data-close-modal"
-            )
-        ) {
+    actionModal.addEventListener(
+        "click",
+        event => {
 
-            closeModal();
+            if (
+                event.target.hasAttribute(
+                    "data-close-modal"
+                )
+            ) {
+
+                closeModal();
+
+            }
 
         }
+    );
 
-    }
-);
+}
 
 
-/* =========================
+/* =========================================================
    QUICK ACTIONS
-========================= */
+========================================================= */
 
-document
-    .querySelectorAll(".quick-action")
-    .forEach(button => {
+function setupButtons() {
 
-        button.addEventListener(
-            "click",
-            () => {
+    document
+        .querySelectorAll(
+            ".quick-action"
+        )
+        .forEach(
+            button => {
 
-                const action =
-                    button.dataset.action;
+                button.addEventListener(
+                    "click",
+                    () => {
 
-                if (action === "feed") {
+                        const action =
+                            button.dataset.action;
 
-                    openFeedModal();
 
-                }
+                        if (
+                            action === "feed"
+                        ) {
 
-                if (action === "diaper") {
+                            openFeedModal();
 
-                    openDiaperModal();
+                        }
 
-                }
 
-                if (action === "sleep") {
+                        if (
+                            action === "diaper"
+                        ) {
 
-                    openSleepModal();
+                            openDiaperModal();
 
-                }
+                        }
 
-                if (action === "note") {
 
-                    openNoteModal();
+                        if (
+                            action === "sleep"
+                        ) {
 
-                }
+                            openSleepModal();
+
+                        }
+
+
+                        if (
+                            action === "note"
+                        ) {
+
+                            openNoteModal();
+
+                        }
+
+                    }
+                );
 
             }
         );
 
-    });
+
+    const voiceButton =
+        document.getElementById(
+            "voiceButton"
+        );
 
 
-/* =========================
-   FEED MODAL
-========================= */
+    if (voiceButton) {
+
+        voiceButton.addEventListener(
+            "click",
+            toggleVoice
+        );
+
+    }
+
+
+    const endSleepButton =
+        document.getElementById(
+            "endSleepButton"
+        );
+
+
+    if (endSleepButton) {
+
+        endSleepButton.addEventListener(
+            "click",
+            endSleep
+        );
+
+    }
+
+
+    const clearButton =
+        document.getElementById(
+            "clearTodayButton"
+        );
+
+
+    if (clearButton) {
+
+        clearButton.addEventListener(
+            "click",
+            clearToday
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   FEED
+========================================================= */
 
 function openFeedModal() {
 
@@ -743,54 +1366,59 @@ function openFeedModal() {
             <button
                 class="modal-option"
                 data-feed="breast">
+
                 🤱 Breastfeeding
+
             </button>
 
             <button
                 class="modal-option"
                 data-feed="bottle">
+
                 🍼 Bottle
+
             </button>
 
         </div>
-
     `);
 
 
     document
-        .querySelectorAll("[data-feed]")
-        .forEach(button => {
+        .querySelectorAll(
+            "[data-feed]"
+        )
+        .forEach(
+            button => {
 
-            button.addEventListener(
-                "click",
-                () => {
+                button.addEventListener(
+                    "click",
+                    () => {
 
-                    const method =
-                        button.dataset.feed;
+                        if (
+                            button.dataset.feed ===
+                            "breast"
+                        ) {
 
-                    if (
-                        method === "breast"
-                    ) {
+                            openBreastModal();
 
-                        openBreastModal();
+                        } else {
 
-                    } else {
+                            openBottleModal();
 
-                        openBottleModal();
+                        }
 
                     }
+                );
 
-                }
-            );
-
-        });
+            }
+        );
 
 }
 
 
-/* =========================
+/* =========================================================
    BREAST
-========================= */
+========================================================= */
 
 function openBreastModal() {
 
@@ -798,53 +1426,41 @@ function openBreastModal() {
 
         <h2>🤱 Breastfeeding</h2>
 
-        <p class="modal-subtitle">
-            A few quick details.
-        </p>
-
         <form
             class="tracker-form"
             id="breastForm">
 
-            <div>
+            <label>
+                Side
+            </label>
 
-                <label>
-                    Side
-                </label>
+            <select id="breastSide">
 
-                <select id="breastSide">
+                <option value="Left">
+                    Left
+                </option>
 
-                    <option value="Left">
-                        Left
-                    </option>
+                <option value="Right">
+                    Right
+                </option>
 
-                    <option value="Right">
-                        Right
-                    </option>
+                <option value="Both">
+                    Both
+                </option>
 
-                    <option value="Both">
-                        Both
-                    </option>
-
-                </select>
-
-            </div>
+            </select>
 
 
-            <div>
+            <label>
+                Duration
+            </label>
 
-                <label>
-                    Duration (optional)
-                </label>
-
-                <input
-                    id="breastDuration"
-                    type="number"
-                    min="0"
-                    inputmode="numeric"
-                    placeholder="Minutes">
-
-            </div>
+            <input
+                id="breastDuration"
+                type="number"
+                min="0"
+                inputmode="numeric"
+                placeholder="Minutes">
 
 
             <button
@@ -861,33 +1477,42 @@ function openBreastModal() {
 
 
     document
-        .getElementById("breastForm")
+        .getElementById(
+            "breastForm"
+        )
         .addEventListener(
             "submit",
-            event => {
+            async event => {
 
                 event.preventDefault();
 
-                addLog(
+
+                await addLog(
                     "feed",
                     {
 
-                        method: "breast",
+                        method:
+                            "breast",
 
                         side:
-                            document.getElementById(
-                                "breastSide"
-                            ).value,
+                            document
+                                .getElementById(
+                                    "breastSide"
+                                )
+                                .value,
 
                         duration:
                             Number(
-                                document.getElementById(
-                                    "breastDuration"
-                                ).value
+                                document
+                                    .getElementById(
+                                        "breastDuration"
+                                    )
+                                    .value
                             ) || null
 
                     }
                 );
+
 
                 closeModal();
 
@@ -897,9 +1522,9 @@ function openBreastModal() {
 }
 
 
-/* =========================
+/* =========================================================
    BOTTLE
-========================= */
+========================================================= */
 
 function openBottleModal() {
 
@@ -907,29 +1532,21 @@ function openBottleModal() {
 
         <h2>🍼 Bottle</h2>
 
-        <p class="modal-subtitle">
-            How much did baby have?
-        </p>
-
         <form
             class="tracker-form"
             id="bottleForm">
 
-            <div>
+            <label>
+                Amount
+            </label>
 
-                <label>
-                    Amount
-                </label>
-
-                <input
-                    id="bottleAmount"
-                    type="number"
-                    min="0"
-                    inputmode="decimal"
-                    placeholder="ml"
-                    required>
-
-            </div>
+            <input
+                id="bottleAmount"
+                type="number"
+                min="0"
+                inputmode="decimal"
+                placeholder="ml"
+                required>
 
 
             <button
@@ -946,28 +1563,38 @@ function openBottleModal() {
 
 
     document
-        .getElementById("bottleForm")
+        .getElementById(
+            "bottleForm"
+        )
         .addEventListener(
             "submit",
-            event => {
+            async event => {
 
                 event.preventDefault();
 
-                addLog(
+
+                await addLog(
                     "feed",
                     {
 
-                        method: "bottle",
+                        method:
+                            "bottle",
 
                         amount:
                             Number(
-                                document.getElementById(
-                                    "bottleAmount"
-                                ).value
-                            )
+                                document
+                                    .getElementById(
+                                        "bottleAmount"
+                                    )
+                                    .value
+                            ),
+
+                        unit:
+                            "ml"
 
                     }
                 );
+
 
                 closeModal();
 
@@ -977,9 +1604,9 @@ function openBottleModal() {
 }
 
 
-/* =========================
+/* =========================================================
    DIAPER
-========================= */
+========================================================= */
 
 function openDiaperModal() {
 
@@ -996,19 +1623,25 @@ function openDiaperModal() {
             <button
                 class="modal-option"
                 data-diaper="wet">
+
                 💧 Wet
+
             </button>
 
             <button
                 class="modal-option"
                 data-diaper="dirty">
+
                 💩 Dirty
+
             </button>
 
             <button
                 class="modal-option"
                 data-diaper="both">
+
                 💧💩 Wet + Dirty
+
             </button>
 
         </div>
@@ -1017,34 +1650,39 @@ function openDiaperModal() {
 
 
     document
-        .querySelectorAll("[data-diaper]")
-        .forEach(button => {
+        .querySelectorAll(
+            "[data-diaper]"
+        )
+        .forEach(
+            button => {
 
-            button.addEventListener(
-                "click",
-                () => {
+                button.addEventListener(
+                    "click",
+                    async () => {
 
-                    addLog(
-                        "diaper",
-                        {
-                            kind:
-                                button.dataset.diaper
-                        }
-                    );
+                        await addLog(
+                            "diaper",
+                            {
+                                kind:
+                                    button.dataset
+                                        .diaper
+                            }
+                        );
 
-                    closeModal();
+                        closeModal();
 
-                }
-            );
+                    }
+                );
 
-        });
+            }
+        );
 
 }
 
 
-/* =========================
+/* =========================================================
    SLEEP
-========================= */
+========================================================= */
 
 function openSleepModal() {
 
@@ -1062,7 +1700,7 @@ function openSleepModal() {
         <h2>😴 Sleep</h2>
 
         <p class="modal-subtitle">
-            Start tracking baby's nap.
+            Start baby's nap.
         </p>
 
         <button
@@ -1078,7 +1716,9 @@ function openSleepModal() {
 
 
     document
-        .getElementById("startSleepButton")
+        .getElementById(
+            "startSleepButton"
+        )
         .addEventListener(
             "click",
             () => {
@@ -1093,11 +1733,14 @@ function openSleepModal() {
 }
 
 
-/* =========================
+/* =========================================================
    START SLEEP
-========================= */
+========================================================= */
 
-function startSleep() {
+async function startSleep() {
+
+    if (activeSleep) return;
+
 
     activeSleep = {
 
@@ -1107,30 +1750,30 @@ function startSleep() {
     };
 
 
-    localStorage.setItem(
-        "momyouneedthis_active_sleep",
-        JSON.stringify(activeSleep)
+    await dbSetSetting(
+        "activeSleep",
+        activeSleep
     );
 
 
     renderSleepState();
+
+    startSleepTimer();
+
 
     showToast(
         "😴",
         "Nap started"
     );
 
-
-    startSleepTimer();
-
 }
 
 
-/* =========================
+/* =========================================================
    END SLEEP
-========================= */
+========================================================= */
 
-function endSleep() {
+async function endSleep() {
 
     if (!activeSleep) return;
 
@@ -1148,12 +1791,14 @@ function endSleep() {
         Math.max(
             1,
             Math.round(
-                (end - start) / 60000
+                (
+                    end - start
+                ) / 60000
             )
         );
 
 
-    addLog(
+    await addLog(
         "sleep",
         {
             duration
@@ -1164,8 +1809,9 @@ function endSleep() {
     activeSleep = null;
 
 
-    localStorage.removeItem(
-        "momyouneedthis_active_sleep"
+    await dbSetSetting(
+        "activeSleep",
+        null
     );
 
 
@@ -1173,12 +1819,18 @@ function endSleep() {
 
     renderSleepState();
 
+
+    showToast(
+        "😴",
+        `Nap · ${formatDuration(duration)}`
+    );
+
 }
 
 
-/* =========================
+/* =========================================================
    SLEEP STATE
-========================= */
+========================================================= */
 
 function renderSleepState() {
 
@@ -1186,6 +1838,7 @@ function renderSleepState() {
         document.getElementById(
             "activeSleepCard"
         );
+
 
     if (!card) return;
 
@@ -1205,17 +1858,18 @@ function renderSleepState() {
         "hidden"
     );
 
+    updateSleepTimer();
+
 }
 
 
-/* =========================
-   SLEEP TIMER
-========================= */
+/* =========================================================
+   TIMER
+========================================================= */
 
 function startSleepTimer() {
 
     stopSleepTimer();
-
 
     updateSleepTimer();
 
@@ -1239,7 +1893,8 @@ function stopSleepTimer() {
             sleepTimerInterval
         );
 
-        sleepTimerInterval = null;
+        sleepTimerInterval =
+            null;
 
     }
 
@@ -1258,8 +1913,14 @@ function updateSleepTimer() {
 
 
     const elapsed =
-        Math.floor(
-            (Date.now() - start) / 1000
+        Math.max(
+            0,
+            Math.floor(
+                (
+                    Date.now() -
+                    start.getTime()
+                ) / 1000
+            )
         );
 
 
@@ -1271,7 +1932,9 @@ function updateSleepTimer() {
 
     const minutes =
         Math.floor(
-            (elapsed % 3600) / 60
+            (
+                elapsed % 3600
+            ) / 60
         );
 
 
@@ -1279,34 +1942,30 @@ function updateSleepTimer() {
         elapsed % 60;
 
 
-    document.getElementById(
-        "sleepTimer"
-    ).textContent =
+    const timer =
+        document.getElementById(
+            "sleepTimer"
+        );
 
-        `${String(hours).padStart(2,"0")}:` +
 
-        `${String(minutes).padStart(2,"0")}:` +
+    if (timer) {
 
-        `${String(seconds).padStart(2,"0")}`;
+        timer.textContent =
+
+            `${String(hours).padStart(2, "0")}:` +
+
+            `${String(minutes).padStart(2, "0")}:` +
+
+            `${String(seconds).padStart(2, "0")}`;
+
+    }
 
 }
 
 
-/* =========================
-   END SLEEP BUTTON
-========================= */
-
-document
-    .getElementById("endSleepButton")
-    .addEventListener(
-        "click",
-        endSleep
-    );
-
-
-/* =========================
+/* =========================================================
    NOTE
-========================= */
+========================================================= */
 
 function openNoteModal() {
 
@@ -1314,24 +1973,15 @@ function openNoteModal() {
 
         <h2>📝 Quick Note</h2>
 
-        <p class="modal-subtitle">
-            Save something you'll want to remember.
-        </p>
-
         <form
             class="tracker-form"
             id="noteForm">
 
-            <div>
-
-                <textarea
-                    id="noteText"
-                    rows="4"
-                    placeholder="Type your note..."
-                    required></textarea>
-
-            </div>
-
+            <textarea
+                id="noteText"
+                rows="4"
+                placeholder="Type your note..."
+                required></textarea>
 
             <button
                 class="form-submit"
@@ -1347,12 +1997,15 @@ function openNoteModal() {
 
 
     document
-        .getElementById("noteForm")
+        .getElementById(
+            "noteForm"
+        )
         .addEventListener(
             "submit",
-            event => {
+            async event => {
 
                 event.preventDefault();
+
 
                 const text =
                     document
@@ -1366,10 +2019,11 @@ function openNoteModal() {
                 if (!text) return;
 
 
-                addLog(
+                await addLog(
                     "note",
                     { text }
                 );
+
 
                 closeModal();
 
@@ -1379,14 +2033,11 @@ function openNoteModal() {
 }
 
 
-/* =========================
+/* =========================================================
    VOICE RECOGNITION
-========================= */
+========================================================= */
 
-let recognition = null;
-
-
-function setupSpeechRecognition() {
+function setupVoiceRecognition() {
 
     const SpeechRecognition =
         window.SpeechRecognition ||
@@ -1408,21 +2059,53 @@ function setupSpeechRecognition() {
         navigator.language || "en-US";
 
 
+    recognition.continuous =
+        false;
+
+
     recognition.interimResults =
         false;
 
 
     recognition.maxAlternatives =
-        1;
+        3;
+
+
+    recognition.onstart = () => {
+
+        isListening = true;
+
+        updateVoiceUI(true);
+
+    };
 
 
     recognition.onresult =
         event => {
 
+            const result =
+                event.results[
+                    event.results.length - 1
+                ];
+
+
             const text =
-                event.results[0][0]
+                result[0]
                     .transcript
                     .trim();
+
+
+            if (!text) {
+
+                showToast(
+                    "🎙️",
+                    "I didn't hear anything"
+                );
+
+                return;
+
+            }
+
 
             processVoiceCommand(text);
 
@@ -1430,28 +2113,52 @@ function setupSpeechRecognition() {
 
 
     recognition.onerror =
-        () => {
+        event => {
+
+            isListening = false;
+
+            updateVoiceUI(false);
+
+
+            const errors = {
+
+                "not-allowed":
+                    "Please allow microphone access",
+
+                "service-not-allowed":
+                    "Voice service isn't available",
+
+                "audio-capture":
+                    "I can't access your microphone",
+
+                "no-speech":
+                    "I didn't hear anything",
+
+                "network":
+                    "Voice recognition needs a connection",
+
+                "aborted":
+                    "Voice logging stopped"
+
+            };
+
 
             showToast(
                 "🎙️",
-                "I couldn't hear that"
+                errors[event.error] ||
+                "Voice logging didn't work"
             );
 
         };
 
 
-    recognition.onend =
-        () => {
+    recognition.onend = () => {
 
-            document
-                .getElementById(
-                    "voiceButton"
-                )
-                .classList.remove(
-                    "recording"
-                );
+        isListening = false;
 
-        };
+        updateVoiceUI(false);
+
+    };
 
 
     return true;
@@ -1459,23 +2166,88 @@ function setupSpeechRecognition() {
 }
 
 
-function startVoice() {
+/* =========================================================
+   VOICE UI
+========================================================= */
+
+function updateVoiceUI(listening) {
+
+    const button =
+        document.getElementById(
+            "voiceButton"
+        );
+
+
+    if (!button) return;
+
+
+    button.classList.toggle(
+        "recording",
+        listening
+    );
+
+
+    button.setAttribute(
+        "aria-pressed",
+        listening
+            ? "true"
+            : "false"
+    );
+
+
+    const label =
+        button.querySelector(
+            ".voice-button-label"
+        );
+
+
+    if (label) {
+
+        label.textContent =
+            listening
+                ? "Listening..."
+                : "Tap to tell me";
+
+    }
+
+}
+
+
+/* =========================================================
+   VOICE TOGGLE
+========================================================= */
+
+function toggleVoice() {
 
     if (!recognition) {
 
         const supported =
-            setupSpeechRecognition();
+            setupVoiceRecognition();
+
 
         if (!supported) {
 
             showToast(
                 "🎙️",
-                "Voice logging isn't supported here"
+                "Voice logging isn't supported in this browser"
             );
 
             return;
 
         }
+
+    }
+
+
+    if (isListening) {
+
+        try {
+
+            recognition.stop();
+
+        } catch {}
+
+        return;
 
     }
 
@@ -1484,125 +2256,264 @@ function startVoice() {
 
         recognition.start();
 
-        document
-            .getElementById(
-                "voiceButton"
-            )
-            .classList.add(
-                "recording"
-            );
-
-
-        showToast(
-            "🎙️",
-            "Listening..."
-        );
-
     } catch (error) {
 
-        console.log(error);
+        console.log(
+            "Voice start:",
+            error
+        );
 
     }
 
 }
 
 
-function processVoiceCommand(text) {
+/* =========================================================
+   VOICE COMMAND PARSER
+========================================================= */
+
+async function processVoiceCommand(
+    text
+) {
 
     const lower =
-        text.toLowerCase();
+        normalizeSpeech(text);
 
 
-    /* DIAPER */
+    showToast(
+        "🎙️",
+        `"${text}"`
+    );
+
+
+    /* --------------------------------
+       SLEEP END
+    -------------------------------- */
 
     if (
-        lower.includes("diaper") ||
-        lower.includes("nappy")
+        activeSleep &&
+        (
+            includesAny(
+                lower,
+                [
+                    "woke up",
+                    "awake",
+                    "is awake",
+                    "got up",
+                    "wake up",
+                    "finished sleeping",
+                    "finished nap",
+                    "nap is over"
+                ]
+            )
+        )
     ) {
 
-        let kind = "wet";
-
-
-        if (
-            lower.includes("dirty") ||
-            lower.includes("poop") ||
-            lower.includes("poopy")
-        ) {
-
-            kind = "dirty";
-
-        }
-
-
-        if (
-            (
-                lower.includes("wet") &&
-                (
-                    lower.includes("dirty") ||
-                    lower.includes("poop")
-                )
-            )
-        ) {
-
-            kind = "both";
-
-        }
-
-
-        addLog(
-            "diaper",
-            { kind }
-        );
+        await endSleep();
 
         return;
 
     }
 
 
-    /* FEED */
+    /* --------------------------------
+       SLEEP START
+    -------------------------------- */
 
     if (
-        lower.includes("feed") ||
-        lower.includes("breast") ||
-        lower.includes("nurse") ||
-        lower.includes("bottle")
+        includesAny(
+            lower,
+            [
+                "started sleeping",
+                "went to sleep",
+                "fell asleep",
+                "going to sleep",
+                "start nap",
+                "started nap",
+                "went down for a nap",
+                "is sleeping",
+                "is asleep"
+            ]
+        )
     ) {
 
-        if (
-            lower.includes("bottle")
-        ) {
+        if (!activeSleep) {
 
-            const amount =
-                extractNumber(text);
+            await startSleep();
 
+        } else {
 
-            addLog(
-                "feed",
-                {
-                    method: "bottle",
-                    amount: amount || null
-                }
+            showToast(
+                "😴",
+                "Nap is already running"
             );
-
-            return;
 
         }
 
+        return;
+
+    }
+
+
+    /* --------------------------------
+       DIAPER
+    -------------------------------- */
+
+    if (
+        includesAny(
+            lower,
+            [
+                "diaper",
+                "nappy",
+                "changed diaper",
+                "changed his diaper",
+                "changed her diaper",
+                "change diaper"
+            ]
+        )
+    ) {
+
+        let kind = "wet";
+
+
+        const dirty =
+            includesAny(
+                lower,
+                [
+                    "dirty",
+                    "poop",
+                    "poopy",
+                    "stool",
+                    "number two",
+                    "number 2"
+                ]
+            );
+
+
+        const wet =
+            includesAny(
+                lower,
+                [
+                    "wet",
+                    "pee",
+                    "piss",
+                    "urine"
+                ]
+            );
+
+
+        if (
+            dirty &&
+            wet
+        ) {
+
+            kind = "both";
+
+        } else if (dirty) {
+
+            kind = "dirty";
+
+        } else {
+
+            kind = "wet";
+
+        }
+
+
+        await addLog(
+            "diaper",
+            { kind }
+        );
+
+
+        return;
+
+    }
+
+
+    /* --------------------------------
+       BOTTLE
+    -------------------------------- */
+
+    if (
+        includesAny(
+            lower,
+            [
+                "bottle",
+                "formula",
+                "milk bottle"
+            ]
+        )
+    ) {
+
+        const amount =
+            extractAmount(text);
+
+
+        await addLog(
+            "feed",
+            {
+
+                method:
+                    "bottle",
+
+                amount:
+                    amount?.value || null,
+
+                unit:
+                    amount?.unit || "ml"
+
+            }
+        );
+
+
+        return;
+
+    }
+
+
+    /* --------------------------------
+       BREASTFEEDING
+    -------------------------------- */
+
+    if (
+        includesAny(
+            lower,
+            [
+                "breast",
+                "breastfeeding",
+                "breast fed",
+                "breastfed",
+                "nursed",
+                "nursing",
+                "nurse"
+            ]
+        )
+    ) {
 
         let side = "Both";
 
 
         if (
-            lower.includes("left")
+            includesAny(
+                lower,
+                [
+                    "left breast",
+                    "left side"
+                ]
+            )
         ) {
 
             side = "Left";
 
-        }
-
-
-        if (
-            lower.includes("right")
+        } else if (
+            includesAny(
+                lower,
+                [
+                    "right breast",
+                    "right side"
+                ]
+            )
         ) {
 
             side = "Right";
@@ -1610,44 +2521,68 @@ function processVoiceCommand(text) {
         }
 
 
-        addLog(
+        const duration =
+            extractDuration(
+                text
+            );
+
+
+        await addLog(
             "feed",
             {
-                method: "breast",
-                side
+
+                method:
+                    "breast",
+
+                side,
+
+                duration
+
             }
         );
 
+
         return;
 
     }
 
 
-    /* SLEEP */
+    /* --------------------------------
+       GENERIC FEED
+    -------------------------------- */
 
     if (
-        lower.includes("sleep") ||
-        lower.includes("nap")
+        includesAny(
+            lower,
+            [
+                "fed baby",
+                "baby ate",
+                "baby had a feed",
+                "baby had milk",
+                "feeding"
+            ]
+        )
     ) {
 
-        if (!activeSleep) {
+        await addLog(
+            "feed",
+            {
+                method: "breast",
+                side: "Both"
+            }
+        );
 
-            startSleep();
-
-        } else {
-
-            endSleep();
-
-        }
 
         return;
 
     }
 
 
-    /* FALLBACK NOTE */
+    /* --------------------------------
+       NOTE
+    -------------------------------- */
 
-    addLog(
+    await addLog(
         "note",
         {
             text
@@ -1657,83 +2592,764 @@ function processVoiceCommand(text) {
 }
 
 
+/* =========================================================
+   SPEECH NORMALIZATION
+========================================================= */
+
+function normalizeSpeech(text) {
+
+    return text
+        .toLowerCase()
+        .replace(/[.,!?]/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+
+}
+
+
+function includesAny(
+    text,
+    phrases
+) {
+
+    return phrases.some(
+        phrase =>
+            text.includes(phrase)
+    );
+
+}
+
+
+/* =========================================================
+   EXTRACT NUMBER
+========================================================= */
+
 function extractNumber(text) {
 
     const match =
         text.match(
-            /\d+(\.\d+)?/
+            /\b(\d+(?:\.\d+)?)\b/
         );
 
+
     return match
-        ? Number(match[0])
+        ? Number(match[1])
         : null;
 
 }
 
 
-document
-    .getElementById("voiceButton")
-    .addEventListener(
-        "click",
-        startVoice
+/* =========================================================
+   EXTRACT AMOUNT
+========================================================= */
+
+function extractAmount(text) {
+
+    const lower =
+        normalizeSpeech(text);
+
+
+    const match =
+        lower.match(
+            /(\d+(?:\.\d+)?)\s*(ml|milliliters?|millilitres?|ounces?|oz)?/
+        );
+
+
+    if (!match) {
+
+        return null;
+
+    }
+
+
+    let value =
+        Number(match[1]);
+
+
+    let unit =
+        match[2] || "ml";
+
+
+    if (
+        unit.includes("ounce") ||
+        unit === "oz"
+    ) {
+
+        unit = "oz";
+
+    } else {
+
+        unit = "ml";
+
+    }
+
+
+    return {
+        value,
+        unit
+    };
+
+}
+
+
+/* =========================================================
+   EXTRACT BREASTFEEDING DURATION
+========================================================= */
+
+function extractDuration(text) {
+
+    const lower =
+        normalizeSpeech(text);
+
+
+    const match =
+        lower.match(
+            /(\d+(?:\.\d+)?)\s*(minutes?|mins?|min|hours?|hrs?|hr)/
+        );
+
+
+    if (!match) {
+
+        return null;
+
+    }
+
+
+    const value =
+        Number(match[1]);
+
+
+    const unit =
+        match[2];
+
+
+    if (
+        unit.startsWith("hour") ||
+        unit.startsWith("hr")
+    ) {
+
+        return Math.round(
+            value * 60
+        );
+
+    }
+
+
+    return Math.round(
+        value
+    );
+
+}
+
+
+/* =========================================================
+   CLEAR TODAY
+========================================================= */
+
+async function clearToday() {
+
+    const confirmed =
+        confirm(
+            "Clear all of today's baby tracker logs?"
+        );
+
+
+    if (!confirmed) return;
+
+
+    const today =
+        todayKey();
+
+
+    const todayLogs =
+        logs.filter(
+            log =>
+                log.date === today
+        );
+
+
+    for (
+        const log
+        of todayLogs
+    ) {
+
+        await dbDeleteLog(
+            log.id
+        );
+
+    }
+
+
+    logs =
+        logs.filter(
+            log =>
+                log.date !== today
+        );
+
+
+    render();
+
+
+    showToast(
+        "✓",
+        "Today's logs cleared"
+    );
+
+}
+
+
+/* =========================================================
+   BACKUP / EXPORT
+========================================================= */
+
+function setupBackupControls() {
+
+    const exportButton =
+        document.getElementById(
+            "exportDataButton"
+        );
+
+
+    const importButton =
+        document.getElementById(
+            "importDataButton"
+        );
+
+
+    const importInput =
+        document.getElementById(
+            "importDataInput"
+        );
+
+
+    if (exportButton) {
+
+        exportButton.addEventListener(
+            "click",
+            exportBackup
+        );
+
+    }
+
+
+    if (
+        importButton &&
+        importInput
+    ) {
+
+        importButton.addEventListener(
+            "click",
+            () => importInput.click()
+        );
+
+
+        importInput.addEventListener(
+            "change",
+            handleImport
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   EXPORT
+========================================================= */
+
+async function exportBackup() {
+
+    const settings = {
+
+        babyName:
+            await dbGetSetting(
+                "babyName"
+            ),
+
+        units:
+            await dbGetSetting(
+                "units"
+            )
+
+    };
+
+
+    const backup = {
+
+        app:
+            "MomYouNeedThis Baby Tracker",
+
+        version:
+            1,
+
+        exportedAt:
+            new Date().toISOString(),
+
+        logs,
+
+        settings
+
+    };
+
+
+    const blob =
+        new Blob(
+            [
+                JSON.stringify(
+                    backup,
+                    null,
+                    2
+                )
+            ],
+            {
+                type:
+                    "application/json"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(
+            blob
+        );
+
+
+    const link =
+        document.createElement(
+            "a"
+        );
+
+
+    const date =
+        todayKey();
+
+
+    link.href = url;
+
+    link.download =
+        `momyouneedthis-baby-tracker-${date}.json`;
+
+
+    document
+        .body
+        .appendChild(link);
+
+
+    link.click();
+
+    link.remove();
+
+
+    URL.revokeObjectURL(
+        url
     );
 
 
-/* =========================
-   CLEAR TODAY
-========================= */
+    showToast(
+        "💾",
+        "Backup exported"
+    );
 
-document
-    .getElementById(
-        "clearTodayButton"
-    )
-    .addEventListener(
-        "click",
-        () => {
-
-            const confirmed =
-                confirm(
-                    "Clear all of today's baby tracker logs?"
-                );
+}
 
 
-            if (!confirmed) return;
+/* =========================================================
+   IMPORT
+========================================================= */
+
+async function handleImport(
+    event
+) {
+
+    const file =
+        event.target.files[0];
 
 
-            const today =
-                todayKey();
+    if (!file) return;
 
 
-            logs =
-                logs.filter(
-                    log => log.date !== today
-                );
+    try {
+
+        const text =
+            await file.text();
 
 
-            saveLogs();
+        const backup =
+            JSON.parse(text);
 
-            render();
 
-            showToast(
-                "✓",
-                "Today's logs cleared"
+        if (
+            !backup ||
+            !Array.isArray(
+                backup.logs
+            )
+        ) {
+
+            throw new Error(
+                "Invalid backup"
             );
 
         }
+
+
+        const confirmed =
+            confirm(
+                "Import this backup? This will replace the tracker data currently on this device."
+            );
+
+
+        if (!confirmed) {
+
+            event.target.value = "";
+
+            return;
+
+        }
+
+
+        await dbClearLogs();
+
+
+        logs = [];
+
+
+        for (
+            const log
+            of backup.logs
+        ) {
+
+            if (
+                !log.id ||
+                !log.type ||
+                !log.timestamp
+            ) {
+
+                continue;
+
+            }
+
+
+            await dbPutLog(log);
+
+            logs.push(log);
+
+        }
+
+
+        if (
+            backup.settings
+        ) {
+
+            if (
+                "babyName"
+                in backup.settings
+            ) {
+
+                await dbSetSetting(
+                    "babyName",
+                    backup.settings.babyName
+                );
+
+            }
+
+
+            if (
+                "units"
+                in backup.settings
+            ) {
+
+                await dbSetSetting(
+                    "units",
+                    backup.settings.units
+                );
+
+            }
+
+        }
+
+
+        render();
+
+
+        showToast(
+            "✓",
+            "Backup restored"
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            error
+        );
+
+
+        showToast(
+            "⚠️",
+            "That backup file isn't valid"
+        );
+
+    }
+
+
+    event.target.value = "";
+
+}
+
+
+/* =========================================================
+   SETTINGS
+========================================================= */
+
+function setupSettings() {
+
+    const settingsButton =
+        document.getElementById(
+            "settingsButton"
+        );
+
+
+    if (!settingsButton) return;
+
+
+    settingsButton.addEventListener(
+        "click",
+        openSettings
     );
 
+}
 
-/* =========================
+
+async function openSettings() {
+
+    const babyName =
+        await dbGetSetting(
+            "babyName"
+        ) || "";
+
+
+    const units =
+        await dbGetSetting(
+            "units"
+        ) || "ml";
+
+
+    openModal(`
+
+        <h2>⚙️ Settings</h2>
+
+        <p class="modal-subtitle">
+            Your tracker stays on this device.
+        </p>
+
+        <form
+            class="tracker-form"
+            id="settingsForm">
+
+            <label>
+                Baby's name
+            </label>
+
+            <input
+                id="babyNameInput"
+                type="text"
+                value="${escapeHtml(babyName)}"
+                placeholder="Baby">
+
+
+            <label>
+                Bottle units
+            </label>
+
+            <select id="unitsInput">
+
+                <option
+                    value="ml"
+                    ${units === "ml" ? "selected" : ""}>
+                    Milliliters (ml)
+                </option>
+
+                <option
+                    value="oz"
+                    ${units === "oz" ? "selected" : ""}>
+                    Ounces (oz)
+                </option>
+
+            </select>
+
+
+            <button
+                class="form-submit"
+                type="submit">
+
+                Save Settings
+
+            </button>
+
+        </form>
+
+        <div class="settings-backup">
+
+            <h3>
+                💾 Your Data
+            </h3>
+
+            <p>
+                Your tracker data is stored locally
+                in this browser. Export a backup
+                before changing devices.
+            </p>
+
+            <button
+                id="exportDataButton"
+                type="button">
+
+                Export Backup
+
+            </button>
+
+            <button
+                id="importDataButton"
+                type="button">
+
+                Import Backup
+
+            </button>
+
+            <input
+                id="importDataInput"
+                type="file"
+                accept=".json,application/json"
+                hidden>
+
+        </div>
+
+    `);
+
+
+    document
+        .getElementById(
+            "settingsForm"
+        )
+        .addEventListener(
+            "submit",
+            async event => {
+
+                event.preventDefault();
+
+
+                const name =
+                    document
+                        .getElementById(
+                            "babyNameInput"
+                        )
+                        .value
+                        .trim();
+
+
+                const units =
+                    document
+                        .getElementById(
+                            "unitsInput"
+                        )
+                        .value;
+
+
+                await dbSetSetting(
+                    "babyName",
+                    name
+                );
+
+
+                await dbSetSetting(
+                    "units",
+                    units
+                );
+
+
+                closeModal();
+
+
+                showToast(
+                    "✓",
+                    "Settings saved"
+                );
+
+            }
+        );
+
+
+    setupBackupControls();
+
+}
+
+
+/* =========================================================
+   HTML ESCAPE
+========================================================= */
+
+function escapeHtml(value) {
+
+    return String(value)
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+/* =========================================================
+   RESTORE ACTIVE SLEEP
+========================================================= */
+
+function restoreActiveSleep() {
+
+    if (!activeSleep) return;
+
+
+    renderSleepState();
+
+    startSleepTimer();
+
+}
+
+
+/* =========================================================
    TOAST
-========================= */
+========================================================= */
 
-let toastTimeout;
+function showToast(
+    icon,
+    message
+) {
 
+    if (
+        !toast ||
+        !toastMessage ||
+        !toastIcon
+    ) return;
 
-function showToast(icon, message) {
 
     toastIcon.textContent =
         icon;
+
 
     toastMessage.textContent =
         message;
@@ -1758,50 +3374,14 @@ function showToast(icon, message) {
                 );
 
             },
-            2200
+            2500
         );
 
 }
 
 
-/* =========================
-   RESTORE ACTIVE SLEEP
-========================= */
+/* =========================================================
+   START
+========================================================= */
 
-function restoreActiveSleep() {
-
-    try {
-
-        const saved =
-            localStorage.getItem(
-                "momyouneedthis_active_sleep"
-            );
-
-
-        if (saved) {
-
-            activeSleep =
-                JSON.parse(saved);
-
-            renderSleepState();
-
-            startSleepTimer();
-
-        }
-
-    } catch (error) {
-
-        console.error(error);
-
-    }
-
-}
-
-
-/* =========================
-   INITIALIZE
-========================= */
-
-restoreActiveSleep();
-
-render();
+initializeTracker();
