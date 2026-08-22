@@ -2,35 +2,34 @@
 
 const chartButton = document.querySelector("button");
 
+if (chartButton) {
 
-chartButton.addEventListener("click", function () {
+    chartButton.addEventListener("click", function () {
 
-    chartButton.innerHTML = "✅ Chart Ready!";
+        chartButton.innerHTML = "✅ Chart Ready!";
 
-    chartButton.style.transform = "scale(0.96)";
+        chartButton.style.transform = "scale(0.96)";
 
+        setTimeout(() => {
 
-    setTimeout(() => {
+            chartButton.style.transform = "scale(1)";
 
-        chartButton.style.transform = "scale(1)";
+            window.location.href = "#download";
 
-        // Replace this with your actual freebie link later
-        window.location.href = "#download";
+        }, 200);
 
+    });
 
-    }, 200);
-
-
-});
-
-
-
-// Small animation when page loads
+}
 
 window.addEventListener("load", () => {
 
+    const page = document.querySelector(".page");
 
-    document.querySelector(".page").style.opacity = "1";
+    if (page) {
 
+        page.style.opacity = "1";
+
+    }
 
 });
