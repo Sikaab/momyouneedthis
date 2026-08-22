@@ -2,28 +2,15 @@
 <html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="UTF-8">
+    <title>Baby Tracker | MomYouNeedThis</title>
 
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
 
-<meta name="theme-color" content="#fffaf8">
-
-<title>Free Baby Tracker | Feed, Diaper & Sleep Log | MomYouNeedThis</title>
-
-<meta
-    name="description"
-    content="A simple, beautiful baby tracker for logging feeds, diapers and sleep in seconds. No account required."
->
-
-<link rel="stylesheet" href="style.css">
-
-<link
-    href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap"
-    rel="stylesheet"
->
-
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
@@ -35,239 +22,82 @@
     <header class="tracker-header">
 
         <a href="index.html" class="tracker-logo-link">
-
-            <img
-                src="assets/logo.svg"
-                class="tracker-logo"
-                alt="MomYouNeedThis"
-            >
-
+            <img src="assets/logo.svg" class="tracker-logo" alt="MomYouNeedThis">
         </a>
 
-        <div class="tracker-header-text">
-
-            <span>FREE MOM TOOL</span>
-
-            <strong>Baby Tracker</strong>
-
+        <div class="tracker-header-title">
+            <span class="tracker-mini-label">BABY TRACKER</span>
+            <h1>Baby's Day</h1>
         </div>
+
+        <button class="tracker-settings-button" id="settingsButton" aria-label="Settings">
+            ⚙️
+        </button>
 
     </header>
 
 
-    <!-- BABY INTRO -->
+    <!-- GREETING -->
 
     <section class="tracker-intro">
 
-        <p class="tracker-greeting" id="trackerGreeting">
-            Good afternoon 🤍
-        </p>
+        <div>
 
-        <h1>
-            What happened?
-        </h1>
-
-        <p>
-            Log feeds, diapers and sleep in seconds.
-        </p>
-
-    </section>
-
-
-    <!-- VOICE LOGGER -->
-
-    <section class="voice-card">
-
-        <button
-            type="button"
-            id="voiceButton"
-            class="voice-button"
-            aria-label="Tap to log using your voice"
-        >
-
-            <span class="voice-icon" id="voiceIcon">
-                🎙️
+            <span class="tracker-badge">
+                💗 YOUR LITTLE ONE
             </span>
 
-            <span class="voice-button-text">
+            <h2>
+                Keep track without<br>
+                <span>keeping track.</span>
+            </h2>
 
-                <strong id="voiceButtonTitle">
-                    TAP TO LOG
-                </strong>
+            <p>
+                Quick taps for the moments you don't want to forget.
+            </p>
 
-                <small id="voiceButtonSubtitle">
-                    Say what happened
-                </small>
-
-            </span>
-
-        </button>
-
-        <p
-            class="voice-status"
-            id="voiceStatus"
-            aria-live="polite"
-        >
-            Try saying “4 ounces” or “wet diaper”
-        </p>
-
-    </section>
-
-
-    <!-- QUICK ACTIONS -->
-
-    <section class="quick-actions">
-
-        <button
-            type="button"
-            class="quick-action feed-action"
-            data-action="feed"
-        >
-
-            <span class="quick-action-icon">
-                🍼
-            </span>
-
-            <strong>Feed</strong>
-
-        </button>
-
-
-        <button
-            type="button"
-            class="quick-action wet-action"
-            data-action="wet"
-        >
-
-            <span class="quick-action-icon">
-                💧
-            </span>
-
-            <strong>Wet</strong>
-
-        </button>
-
-
-        <button
-            type="button"
-            class="quick-action dirty-action"
-            data-action="dirty"
-        >
-
-            <span class="quick-action-icon">
-                💩
-            </span>
-
-            <strong>Dirty</strong>
-
-        </button>
-
-
-        <button
-            type="button"
-            class="quick-action sleep-action"
-            data-action="sleep"
-            id="sleepQuickButton"
-        >
-
-            <span class="quick-action-icon" id="sleepIcon">
-                😴
-            </span>
-
-            <strong id="sleepButtonText">
-                Sleep
-            </strong>
-
-        </button>
+        </div>
 
     </section>
 
 
     <!-- TODAY SUMMARY -->
 
-    <section class="today-summary">
+    <section class="tracker-summary">
 
-        <div class="section-heading">
+        <div class="summary-header">
 
             <div>
-
-                <span class="section-eyebrow">
-                    TODAY
-                </span>
-
-                <h2>
-                    At a glance
-                </h2>
-
+                <span class="summary-label">TODAY</span>
+                <h2 id="todayDate">Today</h2>
             </div>
 
-            <span
-                class="today-date"
-                id="todayDate"
-            ></span>
+            <div class="summary-count">
+                <strong id="totalLogs">0</strong>
+                <span>logs</span>
+            </div>
 
         </div>
 
 
-        <div class="summary-grid">
+        <div class="summary-stats">
 
-            <div class="summary-card">
-
+            <div class="summary-stat">
                 <span>🍼</span>
-
-                <strong id="feedTotal">
-                    0
-                </strong>
-
-                <small>
-                    feeds
-                </small>
-
+                <strong id="feedCount">0</strong>
+                <small>Feeds</small>
             </div>
 
-
-            <div class="summary-card">
-
+            <div class="summary-stat">
                 <span>💧</span>
-
-                <strong id="wetTotal">
-                    0
-                </strong>
-
-                <small>
-                    wet
-                </small>
-
+                <strong id="diaperCount">0</strong>
+                <small>Diapers</small>
             </div>
 
-
-            <div class="summary-card">
-
-                <span>💩</span>
-
-                <strong id="dirtyTotal">
-                    0
-                </strong>
-
-                <small>
-                    dirty
-                </small>
-
-            </div>
-
-
-            <div class="summary-card">
-
+            <div class="summary-stat">
                 <span>😴</span>
-
-                <strong id="sleepTotal">
-                    0m
-                </strong>
-
-                <small>
-                    sleep
-                </small>
-
+                <strong id="sleepTotal">0m</strong>
+                <small>Sleep</small>
             </div>
 
         </div>
@@ -275,55 +105,158 @@
     </section>
 
 
-    <!-- TIMELINE -->
+    <!-- QUICK LOG -->
+
+    <section class="quick-log-section">
+
+        <div class="section-heading">
+
+            <div>
+                <span class="section-kicker">QUICK LOG</span>
+                <h2>What happened?</h2>
+            </div>
+
+            <button id="voiceButton" class="voice-button" type="button">
+                🎙️
+            </button>
+
+        </div>
+
+
+        <div class="quick-actions">
+
+            <button
+                class="quick-action feed-action"
+                data-action="feed"
+                type="button">
+
+                <span class="quick-action-icon">🍼</span>
+
+                <span class="quick-action-text">
+                    <strong>Feed</strong>
+                    <small>Milk or nursing</small>
+                </span>
+
+                <span class="quick-action-arrow">›</span>
+
+            </button>
+
+
+            <button
+                class="quick-action diaper-action"
+                data-action="diaper"
+                type="button">
+
+                <span class="quick-action-icon">💧</span>
+
+                <span class="quick-action-text">
+                    <strong>Diaper</strong>
+                    <small>Wet or dirty</small>
+                </span>
+
+                <span class="quick-action-arrow">›</span>
+
+            </button>
+
+
+            <button
+                class="quick-action sleep-action"
+                data-action="sleep"
+                type="button">
+
+                <span class="quick-action-icon">😴</span>
+
+                <span class="quick-action-text">
+                    <strong>Sleep</strong>
+                    <small>Start or end a nap</small>
+                </span>
+
+                <span class="quick-action-arrow">›</span>
+
+            </button>
+
+
+            <button
+                class="quick-action note-action"
+                data-action="note"
+                type="button">
+
+                <span class="quick-action-icon">📝</span>
+
+                <span class="quick-action-text">
+                    <strong>Note</strong>
+                    <small>Something to remember</small>
+                </span>
+
+                <span class="quick-action-arrow">›</span>
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- ACTIVE SLEEP -->
+
+    <section id="activeSleepCard" class="active-sleep-card hidden">
+
+        <div class="active-sleep-icon">
+            😴
+        </div>
+
+        <div class="active-sleep-info">
+
+            <span>NAP IN PROGRESS</span>
+
+            <strong id="sleepTimer">
+                00:00
+            </strong>
+
+        </div>
+
+        <button id="endSleepButton" type="button">
+            End Nap
+        </button>
+
+    </section>
+
+
+    <!-- TODAY TIMELINE -->
 
     <section class="timeline-section">
 
         <div class="section-heading">
 
             <div>
-
-                <span class="section-eyebrow">
-                    TODAY
-                </span>
-
-                <h2>
-                    Your baby's day
-                </h2>
-
+                <span class="section-kicker">YOUR DAY</span>
+                <h2>Recent activity</h2>
             </div>
 
             <button
-                type="button"
                 id="clearTodayButton"
                 class="text-button"
-            >
-                Clear
+                type="button">
+
+                Clear today
+
             </button>
 
         </div>
 
 
-        <div
-            class="timeline"
-            id="timeline"
-        >
+        <div id="timeline" class="timeline">
 
-            <div
-                class="empty-state"
-                id="emptyState"
-            >
+            <div id="emptyState" class="empty-state">
 
                 <div class="empty-state-icon">
-                    🤍
+                    🌸
                 </div>
 
-                <h3>
-                    Nothing logged yet
-                </h3>
+                <h3>Your day starts here</h3>
 
                 <p>
-                    Tap a button above and we'll keep track of the rest.
+                    Tap an activity above and we'll remember it for you.
                 </p>
 
             </div>
@@ -333,81 +266,50 @@
     </section>
 
 
-    <!-- PRIVACY / BACKUP -->
+    <!-- VOICE HELP -->
 
-    <section class="tracker-tools">
+    <section class="voice-card">
 
-        <div class="privacy-note">
-
-            <span>
-                🔒
-            </span>
-
-            <div>
-
-                <strong>
-                    Your baby's data stays on this device
-                </strong>
-
-                <p>
-                    No account is required. Your tracker is stored in your browser.
-                </p>
-
-            </div>
-
+        <div class="voice-card-icon">
+            🎙️
         </div>
-
-
-        <div class="backup-actions">
-
-            <button
-                type="button"
-                id="exportButton"
-                class="small-outline-button"
-            >
-                Export
-            </button>
-
-            <label
-                for="importInput"
-                class="small-outline-button"
-            >
-                Restore
-            </label>
-
-            <input
-                type="file"
-                id="importInput"
-                accept=".json,application/json"
-                hidden
-            >
-
-        </div>
-
-    </section>
-
-
-    <!-- SLEEP TOOL CTA -->
-
-    <section class="tracker-sleep-cta">
-
-        <span>
-            🌓
-        </span>
 
         <div>
 
-            <h2>
-                Want to know when your baby should sleep next?
-            </h2>
+            <span class="section-kicker">
+                TOO TIRED TO TYPE?
+            </span>
+
+            <h3>
+                Just tell me what happened.
+            </h3>
 
             <p>
-                Use today's sleep data with our Baby Sleep Sweet Spot Calculator.
+                Try saying “baby had a wet diaper” or
+                “baby fed at 2:30.”
             </p>
 
-            <a href="sleep-schedule-generator.html">
-                Find Their Sleep Sweet Spot →
-            </a>
+        </div>
+
+    </section>
+
+
+    <!-- PRIVACY -->
+
+    <section class="tracker-privacy">
+
+        <span>🔒</span>
+
+        <div>
+
+            <strong>
+                Your baby's data stays on this device.
+            </strong>
+
+            <p>
+                Your logs are stored locally in your browser.
+                We don't send them to a server.
+            </p>
 
         </div>
 
@@ -420,10 +322,7 @@
 
         <div class="footer-logo">
 
-            <img
-                src="assets/logo.svg"
-                alt="MomYouNeedThis"
-            >
+            <img src="assets/logo.svg" alt="MomYouNeedThis">
 
         </div>
 
@@ -437,20 +336,16 @@
 
         <div class="footer-links">
 
+            <a href="index.html">
+                Home
+            </a>
+
             <a href="free-mom-resources.html">
                 Free Resources
             </a>
 
-            <a href="about.html">
-                About
-            </a>
-
             <a href="privacy-policy.html">
                 Privacy Policy
-            </a>
-
-            <a href="terms-of-use.html">
-                Terms of Use
             </a>
 
             <a href="contact.html">
@@ -472,103 +367,24 @@
 </div>
 
 
-<!-- FEED MODAL -->
+<!-- ACTION MODAL -->
 
-<div
-    class="tracker-modal"
-    id="feedModal"
-    aria-hidden="true"
->
+<div id="actionModal" class="tracker-modal hidden">
 
-    <div class="modal-overlay"></div>
+    <div class="modal-overlay" data-close-modal></div>
 
-    <div class="modal-card">
+    <div class="tracker-modal-content">
 
         <button
-            type="button"
             class="modal-close"
-            data-close-modal
-        >
+            id="modalClose"
+            type="button">
+
             ×
+
         </button>
 
-        <span class="modal-icon">
-            🍼
-        </span>
-
-        <h2>
-            What kind of feed?
-        </h2>
-
-        <div class="modal-options">
-
-            <button
-                type="button"
-                data-feed-type="breast"
-            >
-                🤱 Breast
-            </button>
-
-            <button
-                type="button"
-                data-feed-type="bottle"
-            >
-                🍼 Bottle
-            </button>
-
-        </div>
-
-    </div>
-
-</div>
-
-
-<!-- BOTTLE MODAL -->
-
-<div
-    class="tracker-modal"
-    id="bottleModal"
-    aria-hidden="true"
->
-
-    <div class="modal-overlay"></div>
-
-    <div class="modal-card">
-
-        <button
-            type="button"
-            class="modal-close"
-            data-close-modal
-        >
-            ×
-        </button>
-
-        <span class="modal-icon">
-            🍼
-        </span>
-
-        <h2>
-            How much?
-        </h2>
-
-        <div class="amount-grid">
-
-            <button data-amount="2">2 oz</button>
-            <button data-amount="3">3 oz</button>
-            <button data-amount="4">4 oz</button>
-            <button data-amount="5">5 oz</button>
-            <button data-amount="6">6 oz</button>
-            <button data-amount="8">8 oz</button>
-
-        </div>
-
-        <button
-            type="button"
-            class="modal-secondary-button"
-            id="customBottleButton"
-        >
-            Enter another amount
-        </button>
+        <div id="modalContent"></div>
 
     </div>
 
@@ -577,13 +393,14 @@
 
 <!-- TOAST -->
 
-<div
-    class="tracker-toast"
-    id="trackerToast"
-    aria-live="polite"
->
+<div id="trackerToast" class="tracker-toast">
+
     <span id="toastIcon">✓</span>
-    <span id="toastText">Logged</span>
+
+    <span id="toastMessage">
+        Saved
+    </span>
+
 </div>
 
 
