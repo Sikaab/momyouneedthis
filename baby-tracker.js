@@ -1,536 +1,365 @@
 /* =========================================================
    MOMYOURENEEDTHIS
    BABY TRACKER
+   COMPLETE JAVASCRIPT
 ========================================================= */
 
+(() => {
+    "use strict";
 
-/* =========================================================
-   DATABASE
-========================================================= */
+    /* =====================================================
+       CONFIG
+    ===================================================== */
 
-const DB_NAME = "MomYouNeedThisBabyTracker";
-const DB_VERSION = 1;
+    const DB_NAME = "MomYouNeedThisBabyTracker";
+    const DB_VERSION = 1;
 
-const LOG_STORE = "logs";
-const SETTINGS_STORE = "settings";
+    const LOG_STORE = "logs";
+    const SETTINGS_STORE = "settings";
 
-let db = null;
-let logs = [];
+    const DEFAULT_SETTINGS = {
+        babyName: "My Baby",
+        voiceLanguage: "en-US",
+        voiceConfirmation: true
+    };
 
-let activeSleep = null;
-let sleepTimerInterval = null;
+    let db = null;
 
-let recognition = null;
-let isListening = false;
+    let settings = {
+        ...DEFAULT_SETTINGS
+    };
 
-let toastTimeout;
+    let logs = [];
 
+    let recognition = null;
+    let isListening = false;
 
-/* =========================================================
-   ELEMENTS
-========================================================= */
+    let activeSleep = null;
+    let sleepTimerInterval = null;
 
-const timeline =
-    document.getElementById("timeline");
+    let currentModal = null;
 
-const actionModal =
-    document.getElementById("actionModal");
+    /* =====================================================
+       DOM HELPERS
+    ===================================================== */
 
-const modalContent =
-    document.getElementById("modalContent");
+    const $ = (id) => document.getElementById(id);
 
-const modalClose =
-    document.getElementById("modalClose");
+    const $$ = (selector) => document.querySelectorAll(selector);
 
-const toast =
-    document.getElementById("trackerToast");
+    function safeText(value) {
+        return String(value ?? "").trim();
+    }
 
-const toastMessage =
-    document.getElementById("toastMessage");
+    function escapeHTML(value) {
+        return String(value ?? "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
 
-const toastIcon =
-    document.getElementById("toastIcon");
+    /* =====================================================
+       INITIALIZATION
+    ===================================================== */
 
+    document.addEventListener("DOMContentLoaded", init);
 
-/* =========================================================
-   DATABASE
-========================================================= */
+    async function init() {
+        try {
+            await openDatabase();
+            await loadSettings();
+            await loadLogs();
 
-function openDatabase() {
+            initializeSpeechRecognition();
+            bindEvents();
 
-    return new Promise((resolve, reject) => {
+            updateBabyProfile();
+            updateTodayDate();
+            renderTimeline();
+            updateSummary();
+            restoreActiveSleep();
 
-        const request =
-            indexedDB.open(
-                DB_NAME,
-                DB_VERSION
-            );
+        } catch (error) {
+            console.error("Baby Tracker initialization error:", error);
+            showToast("Unable to load your tracker", "⚠️");
+        }
+    }
 
+    /* =====================================================
+       INDEXED DB
+    ===================================================== */
 
-        request.onupgradeneeded = event => {
+    function openDatabase() {
+        return new Promise((resolve, reject) => {
 
-            const database =
-                event.target.result;
+            if (!("indexedDB" in window)) {
+                reject(new Error("IndexedDB is not supported."));
+                return;
+            }
 
+            const request = indexedDB.open(DB_NAME, DB_VERSION);
 
-            if (
-                !database.objectStoreNames.contains(
-                    LOG_STORE
-                )
-            ) {
+            request.onupgradeneeded = (event) => {
 
-                const logStore =
-                    database.createObjectStore(
+                const database = event.target.result;
+
+                if (!database.objectStoreNames.contains(LOG_STORE)) {
+                    const logStore = database.createObjectStore(
                         LOG_STORE,
                         {
-                            keyPath: "id"
+                            keyPath: "id",
+                            autoIncrement: true
                         }
                     );
 
+                    logStore.createIndex(
+                        "date",
+                        "date",
+                        { unique: false }
+                    );
+
+                    logStore.createIndex(
+                        "type",
+                        "type",
+                        { unique: false }
+                    );
+
+                    logStore.createIndex(
+                        "timestamp",
+                        "timestamp",
+                        { unique: false }
+                    );
+                }
 
-                logStore.createIndex(
-                    "date",
-                    "date",
-                    {
-                        unique: false
-                    }
-                );
+                if (!database.objectStoreNames.contains(SETTINGS_STORE)) {
+                    database.createObjectStore(
+                        SETTINGS_STORE,
+                        {
+                            keyPath: "key"
+                        }
+                    );
+                }
+            };
 
+            request.onsuccess = () => {
+                db = request.result;
+                resolve(db);
+            };
 
-                logStore.createIndex(
-                    "timestamp",
-                    "timestamp",
-                    {
-                        unique: false
-                    }
-                );
+            request.onerror = () => {
+                reject(request.error);
+            };
+        });
+    }
 
-            }
+    function dbTransaction(storeName, mode = "readonly") {
+        return db
+            .transaction(storeName, mode)
+            .objectStore(storeName);
+    }
 
+    function saveLog(log) {
+        return new Promise((resolve, reject) => {
 
-            if (
-                !database.objectStoreNames.contains(
-                    SETTINGS_STORE
-                )
-            ) {
+            const store = dbTransaction(LOG_STORE, "readwrite");
 
-                database.createObjectStore(
-                    SETTINGS_STORE,
-                    {
-                        keyPath: "key"
-                    }
-                );
+            const request = store.add(log);
 
-            }
+            request.onsuccess = () => {
+                resolve(request.result);
+            };
 
-        };
+            request.onerror = () => {
+                reject(request.error);
+            };
+        });
+    }
 
+    function updateLog(log) {
+        return new Promise((resolve, reject) => {
 
-        request.onsuccess = event => {
+            const store = dbTransaction(LOG_STORE, "readwrite");
 
-            db =
-                event.target.result;
+            const request = store.put(log);
 
-            resolve(db);
+            request.onsuccess = () => {
+                resolve();
+            };
 
-        };
+            request.onerror = () => {
+                reject(request.error);
+            };
+        });
+    }
 
+    function deleteLogFromDB(id) {
+        return new Promise((resolve, reject) => {
 
-        request.onerror = () => {
+            const store = dbTransaction(LOG_STORE, "readwrite");
 
-            reject(
-                request.error
-            );
+            const request = store.delete(id);
 
-        };
+            request.onsuccess = () => resolve();
 
-    });
+            request.onerror = () => reject(request.error);
+        });
+    }
 
-}
+    function getAllLogs() {
+        return new Promise((resolve, reject) => {
 
+            const store = dbTransaction(LOG_STORE);
 
-/* =========================================================
-   DATABASE HELPERS
-========================================================= */
+            const request = store.getAll();
 
-function dbGetAllLogs() {
+            request.onsuccess = () => {
+                resolve(request.result || []);
+            };
 
-    return new Promise((resolve, reject) => {
+            request.onerror = () => {
+                reject(request.error);
+            };
+        });
+    }
 
-        const transaction =
-            db.transaction(
-                LOG_STORE,
-                "readonly"
-            );
+    function clearLogsDB() {
+        return new Promise((resolve, reject) => {
 
+            const store = dbTransaction(LOG_STORE, "readwrite");
 
-        const store =
-            transaction.objectStore(
-                LOG_STORE
-            );
+            const request = store.clear();
 
+            request.onsuccess = () => resolve();
 
-        const request =
-            store.getAll();
+            request.onerror = () => reject(request.error);
+        });
+    }
 
+    function saveSetting(key, value) {
+        return new Promise((resolve, reject) => {
 
-        request.onsuccess = () => {
+            const store = dbTransaction(SETTINGS_STORE, "readwrite");
 
-            resolve(
-                request.result || []
-            );
-
-        };
-
-
-        request.onerror = () => {
-
-            reject(
-                request.error
-            );
-
-        };
-
-    });
-
-}
-
-
-function dbPutLog(log) {
-
-    return new Promise((resolve, reject) => {
-
-        const transaction =
-            db.transaction(
-                LOG_STORE,
-                "readwrite"
-            );
-
-
-        const store =
-            transaction.objectStore(
-                LOG_STORE
-            );
-
-
-        const request =
-            store.put(log);
-
-
-        request.onsuccess = () => {
-
-            resolve();
-
-        };
-
-
-        request.onerror = () => {
-
-            reject(
-                request.error
-            );
-
-        };
-
-    });
-
-}
-
-
-function dbDeleteLog(id) {
-
-    return new Promise((resolve, reject) => {
-
-        const transaction =
-            db.transaction(
-                LOG_STORE,
-                "readwrite"
-            );
-
-
-        const store =
-            transaction.objectStore(
-                LOG_STORE
-            );
-
-
-        const request =
-            store.delete(id);
-
-
-        request.onsuccess = () => {
-
-            resolve();
-
-        };
-
-
-        request.onerror = () => {
-
-            reject(
-                request.error
-            );
-
-        };
-
-    });
-
-}
-
-
-function dbClearLogs() {
-
-    return new Promise((resolve, reject) => {
-
-        const transaction =
-            db.transaction(
-                LOG_STORE,
-                "readwrite"
-            );
-
-
-        const store =
-            transaction.objectStore(
-                LOG_STORE
-            );
-
-
-        const request =
-            store.clear();
-
-
-        request.onsuccess = () => {
-
-            resolve();
-
-        };
-
-
-        request.onerror = () => {
-
-            reject(
-                request.error
-            );
-
-        };
-
-    });
-
-}
-
-
-function dbGetSetting(key) {
-
-    return new Promise((resolve, reject) => {
-
-        const transaction =
-            db.transaction(
-                SETTINGS_STORE,
-                "readonly"
-            );
-
-
-        const store =
-            transaction.objectStore(
-                SETTINGS_STORE
-            );
-
-
-        const request =
-            store.get(key);
-
-
-        request.onsuccess = () => {
-
-            resolve(
-                request.result?.value ?? null
-            );
-
-        };
-
-
-        request.onerror = () => {
-
-            reject(
-                request.error
-            );
-
-        };
-
-    });
-
-}
-
-
-function dbSetSetting(key, value) {
-
-    return new Promise((resolve, reject) => {
-
-        const transaction =
-            db.transaction(
-                SETTINGS_STORE,
-                "readwrite"
-            );
-
-
-        const store =
-            transaction.objectStore(
-                SETTINGS_STORE
-            );
-
-
-        const request =
-            store.put({
+            const request = store.put({
                 key,
                 value
             });
 
+            request.onsuccess = () => resolve();
 
-        request.onsuccess = () => {
-
-            resolve();
-
-        };
-
-
-        request.onerror = () => {
-
-            reject(
-                request.error
-            );
-
-        };
-
-    });
-
-}
-
-
-/* =========================================================
-   INITIALIZE
-========================================================= */
-
-async function initializeTracker() {
-
-    try {
-
-        await openDatabase();
-
-
-        logs =
-            await dbGetAllLogs();
-
-
-        const savedSleep =
-            await dbGetSetting(
-                "activeSleep"
-            );
-
-
-        if (savedSleep) {
-
-            activeSleep =
-                savedSleep;
-
-        }
-
-
-        render();
-
-        restoreActiveSleep();
-
-        setupVoiceRecognition();
-
-        setupButtons();
-
-        setupSettings();
-
-        /*
-           Backup controls are NOT initialized here.
-           They are initialized when Settings is opened.
-        */
-
-    } catch (error) {
-
-        console.error(
-            "Baby Tracker initialization failed:",
-            error
-        );
-
-
-        showToast(
-            "⚠️",
-            "Unable to load your tracker"
-        );
-
+            request.onerror = () => reject(request.error);
+        });
     }
 
-}
+    function getSetting(key) {
+        return new Promise((resolve, reject) => {
 
+            const store = dbTransaction(SETTINGS_STORE);
 
-/* =========================================================
-   ID
-========================================================= */
+            const request = store.get(key);
 
-function createId() {
+            request.onsuccess = () => {
+                resolve(request.result?.value);
+            };
 
-    return (
-        Date.now().toString(36) +
-        Math.random()
-            .toString(36)
-            .substring(2)
-    );
+            request.onerror = () => {
+                reject(request.error);
+            };
+        });
+    }
 
-}
+    async function loadSettings() {
 
+        const babyName = await getSetting("babyName");
+        const voiceLanguage = await getSetting("voiceLanguage");
+        const voiceConfirmation = await getSetting("voiceConfirmation");
 
-/* =========================================================
-   DATE
-========================================================= */
+        settings = {
+            babyName:
+                babyName !== undefined
+                    ? babyName
+                    : DEFAULT_SETTINGS.babyName,
 
-function todayKey(
-    date = new Date()
-) {
+            voiceLanguage:
+                voiceLanguage !== undefined
+                    ? voiceLanguage
+                    : DEFAULT_SETTINGS.voiceLanguage,
 
-    const year =
-        date.getFullYear();
+            voiceConfirmation:
+                voiceConfirmation !== undefined
+                    ? voiceConfirmation
+                    : DEFAULT_SETTINGS.voiceConfirmation
+        };
 
+        syncSettingsInputs();
+    }
 
-    const month =
-        String(
+    async function loadLogs() {
+        logs = await getAllLogs();
+
+        logs.sort((a, b) => {
+            return new Date(b.timestamp) - new Date(a.timestamp);
+        });
+    }
+
+    /* =====================================================
+       DATE HELPERS
+    ===================================================== */
+
+    function dateKey(date = new Date()) {
+
+        const year = date.getFullYear();
+
+        const month = String(
             date.getMonth() + 1
         ).padStart(2, "0");
 
-
-    const day =
-        String(
+        const day = String(
             date.getDate()
         ).padStart(2, "0");
 
+        return `${year}-${month}-${day}`;
+    }
 
-    return `${year}-${month}-${day}`;
+    function isToday(timestamp) {
+        return dateKey(new Date(timestamp)) === dateKey();
+    }
 
-}
+    function formatTime(timestamp) {
 
+        const date = new Date(timestamp);
 
-function formatTime(date) {
-
-    return new Date(date)
-        .toLocaleTimeString(
+        return date.toLocaleTimeString(
             [],
             {
                 hour: "numeric",
                 minute: "2-digit"
             }
         );
+    }
 
-}
+    function formatDate(timestamp) {
 
+        const date = new Date(timestamp);
 
-function formatToday() {
+        return date.toLocaleDateString(
+            [],
+            {
+                month: "short",
+                day: "numeric"
+            }
+        );
+    }
 
-    return new Date()
-        .toLocaleDateString(
+    function updateTodayDate() {
+
+        const element = $("todayDate");
+
+        if (!element) return;
+
+        element.textContent = new Date().toLocaleDateString(
             [],
             {
                 weekday: "long",
@@ -538,3256 +367,2934 @@ function formatToday() {
                 day: "numeric"
             }
         );
+    }
 
-}
+    /* =====================================================
+       BABY PROFILE
+    ===================================================== */
 
+    function updateBabyProfile() {
 
-/* =========================================================
-   ADD LOG
-========================================================= */
+        const display = $("babyNameDisplay");
 
-async function addLog(
-    type,
-    details = {}
-) {
+        if (display) {
+            display.textContent =
+                settings.babyName || "My Baby";
+        }
 
-    const now =
-        new Date();
+        const input = $("babyNameInput");
 
+        if (input) {
+            input.value =
+                settings.babyName === "My Baby"
+                    ? ""
+                    : settings.babyName;
+        }
 
-    const log = {
+        const modalInput = $("babyNameModalInput");
 
-        id:
-            createId(),
+        if (modalInput) {
+            modalInput.value =
+                settings.babyName === "My Baby"
+                    ? ""
+                    : settings.babyName;
+        }
+    }
 
+    function syncSettingsInputs() {
+
+        const language = $("voiceLanguage");
+
+        if (language) {
+            language.value = settings.voiceLanguage;
+        }
+
+        const confirmation = $("voiceConfirmationToggle");
+
+        if (confirmation) {
+            confirmation.checked =
+                Boolean(settings.voiceConfirmation);
+        }
+
+        updateBabyProfile();
+    }
+
+    async function saveBabyName(name) {
+
+        const cleaned = safeText(name);
+
+        settings.babyName =
+            cleaned || "My Baby";
+
+        await saveSetting(
+            "babyName",
+            settings.babyName
+        );
+
+        updateBabyProfile();
+
+        showToast("Baby's name saved", "💗");
+    }
+
+    /* =====================================================
+       LOG CREATION
+    ===================================================== */
+
+    function createLog({
         type,
+        subtype = null,
+        title,
+        details = "",
+        value = null,
+        unit = null,
+        timestamp = new Date(),
+        source = "tap"
+    }) {
 
-        timestamp:
-            now.toISOString(),
+        const date = new Date(timestamp);
 
-        date:
-            todayKey(now),
-
-        ...details
-
-    };
-
-
-    logs.push(log);
-
-
-    await dbPutLog(log);
-
-
-    render();
-
-
-    showToast(
-        getLogIcon(log),
-        getLogTitle(log)
-    );
-
-}
-
-
-/* =========================================================
-   LOG HELPERS
-========================================================= */
-
-function getLogIcon(log) {
-
-    const icons = {
-
-        feed: "🍼",
-
-        diaper: "💧",
-
-        sleep: "😴",
-
-        note: "📝"
-
-    };
-
-
-    return (
-        icons[log.type] ||
-        "💗"
-    );
-
-}
-
-
-function getLogTitle(log) {
-
-    if (
-        log.type === "feed"
-    ) {
-
-        if (
-            log.method === "breast"
-        ) {
-
-            return (
-                `Breastfeeding · ${
-                    log.side || "Both"
-                }`
-            );
-
-        }
-
-
-        if (
-            log.method === "bottle"
-        ) {
-
-            return (
-                `Bottle · ${
-                    log.amount || 0
-                } ${
-                    log.unit || "ml"
-                }`
-            );
-
-        }
-
-
-        return "Feeding";
-
+        return {
+            type,
+            subtype,
+            title,
+            details,
+            value,
+            unit,
+            timestamp: date.toISOString(),
+            date: dateKey(date),
+            source
+        };
     }
 
+    async function addLog(data) {
 
-    if (
-        log.type === "diaper"
-    ) {
+        const log = createLog(data);
 
-        return (
-            `${capitalize(log.kind)} diaper`
+        await saveLog(log);
+
+        await loadLogs();
+
+        renderTimeline();
+        updateSummary();
+
+        showToast(
+            `${log.title} logged`,
+            iconForType(log.type)
         );
 
+        return log;
     }
 
+    /* =====================================================
+       LOG ICONS
+    ===================================================== */
 
-    if (
-        log.type === "sleep"
-    ) {
+    function iconForType(type, subtype = null) {
 
-        return "Nap";
+        if (type === "feed") return "🍼";
 
+        if (type === "diaper") {
+            if (subtype === "dirty") return "💩";
+            return "💧";
+        }
+
+        if (type === "sleep") return "😴";
+
+        if (type === "note") return "📝";
+
+        return "💗";
     }
 
+    /* =====================================================
+       QUICK ACTIONS
+    ===================================================== */
 
-    if (
-        log.type === "note"
-    ) {
+    function handleQuickAction(action) {
 
-        return (
-            log.text ||
-            "Note"
+        switch (action) {
+
+            case "feed":
+                openFeedModal();
+                break;
+
+            case "diaper":
+                openDiaperModal();
+                break;
+
+            case "sleep":
+                handleSleepAction();
+                break;
+
+            case "note":
+                openNoteModal();
+                break;
+        }
+    }
+
+    /* =====================================================
+       FEED MODAL
+    ===================================================== */
+
+    function openFeedModal() {
+
+        openActionModal(`
+            <div class="settings-header">
+
+                <span class="tracker-badge">
+                    🍼 FEEDING
+                </span>
+
+                <h2 id="modalContentTitle">
+                    Log a feed
+                </h2>
+
+                <p>
+                    Quickly record what your baby had.
+                </p>
+
+            </div>
+
+            <form
+                class="tracker-form"
+                id="feedForm"
+            >
+
+                <div>
+                    <label for="feedType">
+                        What kind?
+                    </label>
+
+                    <select id="feedType">
+
+                        <option value="bottle">
+                            Bottle
+                        </option>
+
+                        <option value="breast">
+                            Breastfeeding
+                        </option>
+
+                        <option value="solid">
+                            Solid food
+                        </option>
+
+                    </select>
+                </div>
+
+                <div id="feedAmountGroup">
+
+                    <label for="feedAmount">
+                        Amount
+                    </label>
+
+                    <input
+                        id="feedAmount"
+                        type="number"
+                        min="0"
+                        step="1"
+                        placeholder="120"
+                    >
+
+                </div>
+
+                <div id="feedUnitGroup">
+
+                    <label for="feedUnit">
+                        Unit
+                    </label>
+
+                    <select id="feedUnit">
+
+                        <option value="ml">
+                            ml
+                        </option>
+
+                        <option value="oz">
+                            oz
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div id="breastSideGroup" class="hidden">
+
+                    <label for="breastSide">
+                        Side
+                    </label>
+
+                    <select id="breastSide">
+
+                        <option value="left">
+                            Left
+                        </option>
+
+                        <option value="right">
+                            Right
+                        </option>
+
+                        <option value="both">
+                            Both
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div id="breastDurationGroup" class="hidden">
+
+                    <label for="breastDuration">
+                        Duration in minutes
+                    </label>
+
+                    <input
+                        id="breastDuration"
+                        type="number"
+                        min="1"
+                        placeholder="15"
+                    >
+
+                </div>
+
+                <div>
+                    <label for="feedNotes">
+                        Note <span>(optional)</span>
+                    </label>
+
+                    <textarea
+                        id="feedNotes"
+                        rows="2"
+                        placeholder="Anything else?"
+                    ></textarea>
+                </div>
+
+                <button
+                    class="form-submit settings-primary-button"
+                    type="submit"
+                >
+                    💗 Save Feed
+                </button>
+
+            </form>
+        `);
+
+        const feedType = $("feedType");
+
+        feedType.addEventListener(
+            "change",
+            updateFeedForm
         );
 
-    }
-
-
-    return "Activity";
-
-}
-
-
-function getLogDetails(log) {
-
-    if (
-        log.type === "feed"
-    ) {
-
-        if (
-            log.method === "breast"
-        ) {
-
-            return (
-                `${log.side || "Both"}${
-                    log.duration
-                        ? ` · ${log.duration} min`
-                        : ""
-                }`
-            );
-
-        }
-
-
-        if (
-            log.method === "bottle"
-        ) {
-
-            return (
-                `${log.amount || 0} ${
-                    log.unit || "ml"
-                }`
-            );
-
-        }
-
-    }
-
-
-    if (
-        log.type === "diaper"
-    ) {
-
-        if (
-            log.kind === "wet"
-        ) {
-
-            return "Wet";
-
-        }
-
-
-        if (
-            log.kind === "dirty"
-        ) {
-
-            return "Dirty";
-
-        }
-
-
-        return "Wet + dirty";
-
-    }
-
-
-    if (
-        log.type === "sleep"
-    ) {
-
-        return log.duration
-            ? formatDuration(
-                log.duration
-            )
-            : "Sleep";
-
-    }
-
-
-    return "";
-
-}
-
-
-/* =========================================================
-   UTILITIES
-========================================================= */
-
-function capitalize(value) {
-
-    if (!value) return "";
-
-    return (
-        value.charAt(0).toUpperCase() +
-        value.slice(1)
-    );
-
-}
-
-
-function formatDuration(minutes) {
-
-    if (!minutes) {
-
-        return "0m";
-
-    }
-
-
-    const hours =
-        Math.floor(
-            minutes / 60
+        $("feedForm").addEventListener(
+            "submit",
+            submitFeedForm
         );
 
-
-    const mins =
-        minutes % 60;
-
-
-    if (hours) {
-
-        return `${hours}h ${mins}m`;
-
+        updateFeedForm();
     }
 
+    function updateFeedForm() {
 
-    return `${mins}m`;
+        const type = $("feedType")?.value;
 
-}
+        const amountGroup = $("feedAmountGroup");
+        const unitGroup = $("feedUnitGroup");
+        const sideGroup = $("breastSideGroup");
+        const durationGroup = $("breastDurationGroup");
 
+        if (!amountGroup) return;
 
-/* =========================================================
-   TODAY
-========================================================= */
+        if (type === "breast") {
 
-function getTodayLogs() {
+            amountGroup.classList.add("hidden");
+            unitGroup.classList.add("hidden");
 
-    const today =
-        todayKey();
+            sideGroup.classList.remove("hidden");
+            durationGroup.classList.remove("hidden");
 
+        } else {
 
-    return logs
+            amountGroup.classList.remove("hidden");
+            unitGroup.classList.remove("hidden");
 
-        .filter(
-            log =>
-                log.date === today
-        )
+            sideGroup.classList.add("hidden");
+            durationGroup.classList.add("hidden");
+        }
+    }
 
-        .sort(
-            (a, b) =>
-                new Date(
-                    b.timestamp
-                ) -
-                new Date(
-                    a.timestamp
+    async function submitFeedForm(event) {
+
+        event.preventDefault();
+
+        const type = $("feedType").value;
+
+        const notes =
+            safeText($("feedNotes").value);
+
+        if (type === "breast") {
+
+            const side =
+                $("breastSide").value;
+
+            const duration =
+                Number($("breastDuration").value);
+
+            if (!duration) {
+                showToast(
+                    "Enter the feeding duration",
+                    "⚠️"
+                );
+                return;
+            }
+
+            await addLog({
+                type: "feed",
+                subtype: "breast",
+                title: "Breastfeeding",
+                details:
+                    `${capitalize(side)} side • ${duration} min` +
+                    (notes ? ` • ${notes}` : ""),
+                value: duration,
+                unit: "min"
+            });
+
+        } else {
+
+            const amount =
+                Number($("feedAmount").value);
+
+            const unit =
+                $("feedUnit").value;
+
+            if (!amount) {
+
+                await addLog({
+                    type: "feed",
+                    subtype: type,
+                    title:
+                        type === "bottle"
+                            ? "Bottle feed"
+                            : "Solid food",
+                    details:
+                        notes || "Feed logged"
+                });
+
+            } else {
+
+                await addLog({
+                    type: "feed",
+                    subtype: type,
+                    title:
+                        type === "bottle"
+                            ? "Bottle feed"
+                            : "Solid food",
+                    details:
+                        `${amount} ${unit}` +
+                        (notes ? ` • ${notes}` : ""),
+                    value: amount,
+                    unit
+                });
+            }
+        }
+
+        closeActionModal();
+    }
+
+    /* =====================================================
+       DIAPER MODAL
+    ===================================================== */
+
+    function openDiaperModal() {
+
+        openActionModal(`
+            <div class="settings-header">
+
+                <span class="tracker-badge">
+                    💧 DIAPER
+                </span>
+
+                <h2 id="modalContentTitle">
+                    Log a diaper
+                </h2>
+
+                <p>
+                    Record a wet or dirty diaper.
+                </p>
+
+            </div>
+
+            <form
+                class="tracker-form"
+                id="diaperForm"
+            >
+
+                <div>
+
+                    <label for="diaperType">
+                        Type
+                    </label>
+
+                    <select id="diaperType">
+
+                        <option value="wet">
+                            💧 Wet
+                        </option>
+
+                        <option value="dirty">
+                            💩 Dirty
+                        </option>
+
+                        <option value="both">
+                            💧💩 Wet + Dirty
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div>
+
+                    <label for="diaperNotes">
+                        Note <span>(optional)</span>
+                    </label>
+
+                    <textarea
+                        id="diaperNotes"
+                        rows="3"
+                        placeholder="Anything to remember?"
+                    ></textarea>
+
+                </div>
+
+                <button
+                    class="form-submit settings-primary-button"
+                    type="submit"
+                >
+                    💗 Save Diaper
+                </button>
+
+            </form>
+        `);
+
+        $("diaperForm").addEventListener(
+            "submit",
+            submitDiaperForm
+        );
+    }
+
+    async function submitDiaperForm(event) {
+
+        event.preventDefault();
+
+        const type =
+            $("diaperType").value;
+
+        const notes =
+            safeText($("diaperNotes").value);
+
+        let title = "Wet diaper";
+        let subtype = "wet";
+
+        if (type === "dirty") {
+            title = "Dirty diaper";
+            subtype = "dirty";
+        }
+
+        if (type === "both") {
+            title = "Wet + dirty diaper";
+            subtype = "both";
+        }
+
+        await addLog({
+            type: "diaper",
+            subtype,
+            title,
+            details: notes
+        });
+
+        closeActionModal();
+    }
+
+    /* =====================================================
+       NOTE MODAL
+    ===================================================== */
+
+    function openNoteModal() {
+
+        openActionModal(`
+            <div class="settings-header">
+
+                <span class="tracker-badge">
+                    📝 NOTE
+                </span>
+
+                <h2 id="modalContentTitle">
+                    Add a note
+                </h2>
+
+                <p>
+                    Save something you want to remember.
+                </p>
+
+            </div>
+
+            <form
+                class="tracker-form"
+                id="noteForm"
+            >
+
+                <div>
+
+                    <label for="noteText">
+                        What happened?
+                    </label>
+
+                    <textarea
+                        id="noteText"
+                        rows="5"
+                        placeholder="Write a quick note..."
+                        required
+                    ></textarea>
+
+                </div>
+
+                <button
+                    class="form-submit settings-primary-button"
+                    type="submit"
+                >
+                    📝 Save Note
+                </button>
+
+            </form>
+        `);
+
+        $("noteForm").addEventListener(
+            "submit",
+            submitNoteForm
+        );
+
+        setTimeout(() => {
+            $("noteText")?.focus();
+        }, 100);
+    }
+
+    async function submitNoteForm(event) {
+
+        event.preventDefault();
+
+        const text =
+            safeText($("noteText").value);
+
+        if (!text) return;
+
+        await addLog({
+            type: "note",
+            title: "Note",
+            details: text
+        });
+
+        closeActionModal();
+    }
+
+    /* =====================================================
+       SLEEP
+    ===================================================== */
+
+    function handleSleepAction() {
+
+        if (activeSleep) {
+
+            endSleep();
+
+        } else {
+
+            startSleep();
+
+        }
+    }
+
+    async function startSleep() {
+
+        if (activeSleep) return;
+
+        activeSleep = {
+            startTime: new Date().toISOString()
+        };
+
+        localStorage.setItem(
+            "momTrackerActiveSleep",
+            JSON.stringify(activeSleep)
+        );
+
+        renderActiveSleep();
+
+        showToast(
+            "Nap started",
+            "😴"
+        );
+    }
+
+    async function endSleep() {
+
+        if (!activeSleep) return;
+
+        const start =
+            new Date(activeSleep.startTime);
+
+        const end =
+            new Date();
+
+        const duration =
+            Math.max(
+                1,
+                Math.round(
+                    (end - start) / 60000
                 )
+            );
+
+        await addLog({
+            type: "sleep",
+            subtype: "nap",
+            title: "Nap",
+            details:
+                `${formatDuration(duration)}`,
+            value: duration,
+            unit: "min",
+            timestamp: end
+        });
+
+        activeSleep = null;
+
+        localStorage.removeItem(
+            "momTrackerActiveSleep"
         );
 
-}
+        renderActiveSleep();
 
-
-/* =========================================================
-   RENDER
-========================================================= */
-
-function render() {
-
-    renderDate();
-
-    renderTimeline();
-
-    renderSummary();
-
-    renderSleepState();
-
-}
-
-
-function renderDate() {
-
-    const date =
-        document.getElementById(
-            "todayDate"
+        showToast(
+            `Nap ended • ${formatDuration(duration)}`,
+            "😴"
         );
-
-
-    if (date) {
-
-        date.textContent =
-            formatToday();
-
     }
 
-}
+    function restoreActiveSleep() {
 
+        try {
 
-/* =========================================================
-   TIMELINE
-========================================================= */
-
-function renderTimeline() {
-
-    if (!timeline) return;
-
-
-    const todayLogs =
-        getTodayLogs();
-
-
-    timeline.innerHTML = "";
-
-
-    if (!todayLogs.length) {
-
-        timeline.appendChild(
-            createEmptyState()
-        );
-
-        return;
-
-    }
-
-
-    todayLogs.forEach(
-        log => {
-
-            const item =
-                document.createElement(
-                    "div"
+            const stored =
+                localStorage.getItem(
+                    "momTrackerActiveSleep"
                 );
 
+            if (!stored) return;
+
+            const parsed =
+                JSON.parse(stored);
+
+            if (!parsed?.startTime) return;
+
+            activeSleep = parsed;
+
+            renderActiveSleep();
+
+        } catch (error) {
+
+            console.error(
+                "Unable to restore sleep:",
+                error
+            );
+        }
+    }
+
+    function renderActiveSleep() {
+
+        const card =
+            $("activeSleepCard");
+
+        if (!card) return;
+
+        if (!activeSleep) {
+
+            card.classList.add("hidden");
+
+            if (sleepTimerInterval) {
+                clearInterval(sleepTimerInterval);
+                sleepTimerInterval = null;
+            }
+
+            return;
+        }
+
+        card.classList.remove("hidden");
+
+        updateSleepTimer();
+
+        if (!sleepTimerInterval) {
+
+            sleepTimerInterval =
+                setInterval(
+                    updateSleepTimer,
+                    1000
+                );
+        }
+    }
+
+    function updateSleepTimer() {
+
+        if (!activeSleep) return;
+
+        const start =
+            new Date(activeSleep.startTime);
+
+        const seconds =
+            Math.max(
+                0,
+                Math.floor(
+                    (Date.now() - start.getTime()) / 1000
+                )
+            );
+
+        const hours =
+            Math.floor(seconds / 3600);
+
+        const minutes =
+            Math.floor(
+                (seconds % 3600) / 60
+            );
+
+        const secs =
+            seconds % 60;
+
+        const element =
+            $("sleepTimer");
+
+        if (!element) return;
+
+        element.textContent =
+            [
+                hours,
+                minutes,
+                secs
+            ]
+                .map(
+                    number =>
+                        String(number).padStart(2, "0")
+                )
+                .join(":");
+    }
+
+    function formatDuration(minutes) {
+
+        const mins =
+            Math.max(
+                0,
+                Math.round(Number(minutes) || 0)
+            );
+
+        const hours =
+            Math.floor(mins / 60);
+
+        const remaining =
+            mins % 60;
+
+        if (hours > 0) {
+
+            return `${hours}h ${remaining}m`;
+
+        }
+
+        return `${remaining} min`;
+    }
+
+    /* =====================================================
+       TIMELINE
+    ===================================================== */
+
+    function renderTimeline() {
+
+        const timeline =
+            $("timeline");
+
+        const empty =
+            $("emptyState");
+
+        if (!timeline) return;
+
+        const todayLogs =
+            logs.filter(log => isToday(log.timestamp));
+
+        const oldItems =
+            timeline.querySelectorAll(
+                ".timeline-item"
+            );
+
+        oldItems.forEach(item => item.remove());
+
+        if (!todayLogs.length) {
+
+            if (empty) {
+                empty.classList.remove("hidden");
+            }
+
+            return;
+        }
+
+        if (empty) {
+            empty.classList.add("hidden");
+        }
+
+        todayLogs.forEach(log => {
+
+            const item =
+                document.createElement("div");
 
             item.className =
                 "timeline-item";
 
+            item.dataset.id =
+                String(log.id);
 
-            const icon =
-                document.createElement(
-                    "div"
-                );
+            item.innerHTML = `
 
+                <div
+                    class="timeline-icon"
+                    aria-hidden="true"
+                >
+                    ${iconForType(
+                        log.type,
+                        log.subtype
+                    )}
+                </div>
 
-            icon.className =
-                "timeline-icon";
+                <div class="timeline-info">
 
+                    <strong>
+                        ${escapeHTML(log.title)}
+                    </strong>
 
-            icon.textContent =
-                getLogIcon(log);
+                    <span>
+                        ${escapeHTML(
+                            log.details || ""
+                        )}
+                    </span>
 
+                </div>
 
-            const info =
-                document.createElement(
-                    "div"
-                );
+                <div class="timeline-time">
 
+                    ${formatTime(
+                        log.timestamp
+                    )}
 
-            info.className =
-                "timeline-info";
+                </div>
 
-
-            const title =
-                document.createElement(
-                    "strong"
-                );
-
-
-            title.textContent =
-                getLogTitle(log);
-
-
-            const details =
-                document.createElement(
-                    "span"
-                );
-
-
-            details.textContent =
-                getLogDetails(log);
-
-
-            info.appendChild(
-                title
-            );
-
-
-            if (
-                details.textContent
-            ) {
-
-                info.appendChild(
-                    details
-                );
-
-            }
-
-
-            const time =
-                document.createElement(
-                    "div"
-                );
-
-
-            time.className =
-                "timeline-time";
-
-
-            time.textContent =
-                formatTime(
-                    log.timestamp
-                );
-
-
-            const deleteButton =
-                document.createElement(
-                    "button"
-                );
-
-
-            deleteButton.className =
-                "timeline-delete";
-
-
-            deleteButton.type =
-                "button";
-
-
-            deleteButton.textContent =
-                "×";
-
-
-            deleteButton.setAttribute(
-                "aria-label",
-                "Delete log"
-            );
-
-
-            deleteButton.addEventListener(
-                "click",
-                () =>
-                    deleteLog(
-                        log.id
-                    )
-            );
-
-
-            item.appendChild(icon);
-
-            item.appendChild(info);
-
-            item.appendChild(time);
-
-            item.appendChild(
-                deleteButton
-            );
-
+                <button
+                    type="button"
+                    class="timeline-delete"
+                    data-delete-log="${log.id}"
+                    aria-label="Delete ${escapeHTML(log.title)}"
+                >
+                    ×
+                </button>
+            `;
 
             timeline.appendChild(item);
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   EMPTY STATE
-========================================================= */
-
-function createEmptyState() {
-
-    const wrapper =
-        document.createElement(
-            "div"
-        );
-
-
-    wrapper.className =
-        "empty-state";
-
-
-    wrapper.innerHTML = `
-
-        <div class="empty-state-icon">
-            🌸
-        </div>
-
-        <h3>
-            Your day starts here
-        </h3>
-
-        <p>
-            Tap the microphone and simply
-            tell me what happened.
-        </p>
-
-    `;
-
-
-    return wrapper;
-
-}
-
-
-/* =========================================================
-   SUMMARY
-========================================================= */
-
-function renderSummary() {
-
-    const todayLogs =
-        getTodayLogs();
-
-
-    const total =
-        document.getElementById(
-            "totalLogs"
-        );
-
-
-    const feeds =
-        document.getElementById(
-            "feedCount"
-        );
-
-
-    const diapers =
-        document.getElementById(
-            "diaperCount"
-        );
-
-
-    const sleep =
-        document.getElementById(
-            "sleepTotal"
-        );
-
-
-    if (total) {
-
-        total.textContent =
-            todayLogs.length;
-
+        });
     }
 
+    /* =====================================================
+       SUMMARY
+    ===================================================== */
 
-    if (feeds) {
+    function updateSummary() {
 
-        feeds.textContent =
-            todayLogs.filter(
-                log =>
-                    log.type === "feed"
-            ).length;
-
-    }
-
-
-    if (diapers) {
-
-        diapers.textContent =
-            todayLogs.filter(
-                log =>
-                    log.type === "diaper"
-            ).length;
-
-    }
-
-
-    const sleepMinutes =
-        todayLogs
-
-            .filter(
-                log =>
-                    log.type === "sleep"
-            )
-
-            .reduce(
-                (
-                    total,
-                    log
-                ) =>
-                    total +
-                    (
-                        log.duration ||
-                        0
-                    ),
-                0
+        const todayLogs =
+            logs.filter(
+                log => isToday(log.timestamp)
             );
 
-
-    if (sleep) {
-
-        sleep.textContent =
-            formatDuration(
-                sleepMinutes
+        const feeds =
+            todayLogs.filter(
+                log => log.type === "feed"
             );
 
-    }
+        const diapers =
+            todayLogs.filter(
+                log => log.type === "diaper"
+            );
 
-}
-
-
-/* =========================================================
-   DELETE
-========================================================= */
-
-async function deleteLog(id) {
-
-    logs =
-        logs.filter(
-            log =>
-                log.id !== id
-        );
-
-
-    await dbDeleteLog(id);
-
-
-    render();
-
-
-    showToast(
-        "✓",
-        "Log removed"
-    );
-
-}
-
-
-/* =========================================================
-   MODAL
-========================================================= */
-
-function openModal(content) {
-
-    if (!actionModal) return;
-
-
-    modalContent.innerHTML =
-        content;
-
-
-    actionModal.classList.remove(
-        "hidden"
-    );
-
-}
-
-
-function closeModal() {
-
-    if (!actionModal) return;
-
-
-    actionModal.classList.add(
-        "hidden"
-    );
-
-}
-
-
-if (modalClose) {
-
-    modalClose.addEventListener(
-        "click",
-        closeModal
-    );
-
-}
-
-
-if (actionModal) {
-
-    actionModal.addEventListener(
-        "click",
-        event => {
-
-            if (
-                event.target.hasAttribute(
-                    "data-close-modal"
+        const sleepMinutes =
+            todayLogs
+                .filter(
+                    log => log.type === "sleep"
                 )
-            ) {
+                .reduce(
+                    (total, log) =>
+                        total +
+                        Number(log.value || 0),
+                    0
+                );
 
-                closeModal();
-
-            }
-
+        if ($("totalLogs")) {
+            $("totalLogs").textContent =
+                todayLogs.length;
         }
-    );
 
-}
-
-
-/* =========================================================
-   QUICK ACTIONS
-========================================================= */
-
-function setupButtons() {
-
-    document
-        .querySelectorAll(
-            ".quick-action"
-        )
-        .forEach(
-            button => {
-
-                button.addEventListener(
-                    "click",
-                    () => {
-
-                        const action =
-                            button.dataset.action;
-
-
-                        if (
-                            action === "feed"
-                        ) {
-
-                            openFeedModal();
-
-                        }
-
-
-                        if (
-                            action === "diaper"
-                        ) {
-
-                            openDiaperModal();
-
-                        }
-
-
-                        if (
-                            action === "sleep"
-                        ) {
-
-                            openSleepModal();
-
-                        }
-
-
-                        if (
-                            action === "note"
-                        ) {
-
-                            openNoteModal();
-
-                        }
-
-                    }
-                );
-
-            }
-        );
-
-
-    const voiceButton =
-        document.getElementById(
-            "voiceButton"
-        );
-
-
-    if (voiceButton) {
-
-        voiceButton.addEventListener(
-            "click",
-            toggleVoice
-        );
-
-    }
-
-
-    const endSleepButton =
-        document.getElementById(
-            "endSleepButton"
-        );
-
-
-    if (endSleepButton) {
-
-        endSleepButton.addEventListener(
-            "click",
-            endSleep
-        );
-
-    }
-
-
-    const clearButton =
-        document.getElementById(
-            "clearTodayButton"
-        );
-
-
-    if (clearButton) {
-
-        clearButton.addEventListener(
-            "click",
-            clearToday
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   FEED
-========================================================= */
-
-function openFeedModal() {
-
-    openModal(`
-
-        <h2>🍼 Feeding</h2>
-
-        <p class="modal-subtitle">
-            What kind of feed?
-        </p>
-
-        <div class="modal-options">
-
-            <button
-                class="modal-option"
-                data-feed="breast">
-
-                🤱 Breastfeeding
-
-            </button>
-
-            <button
-                class="modal-option"
-                data-feed="bottle">
-
-                🍼 Bottle
-
-            </button>
-
-        </div>
-
-    `);
-
-
-    document
-        .querySelectorAll(
-            "[data-feed]"
-        )
-        .forEach(
-            button => {
-
-                button.addEventListener(
-                    "click",
-                    () => {
-
-                        if (
-                            button.dataset.feed ===
-                            "breast"
-                        ) {
-
-                            openBreastModal();
-
-                        } else {
-
-                            openBottleModal();
-
-                        }
-
-                    }
-                );
-
-            }
-        );
-
-}
-
-
-/* =========================================================
-   BREAST
-========================================================= */
-
-function openBreastModal() {
-
-    openModal(`
-
-        <h2>🤱 Breastfeeding</h2>
-
-        <form
-            class="tracker-form"
-            id="breastForm">
-
-            <label>
-                Side
-            </label>
-
-            <select id="breastSide">
-
-                <option value="Left">
-                    Left
-                </option>
-
-                <option value="Right">
-                    Right
-                </option>
-
-                <option value="Both">
-                    Both
-                </option>
-
-            </select>
-
-
-            <label>
-                Duration
-            </label>
-
-            <input
-                id="breastDuration"
-                type="number"
-                min="0"
-                inputmode="numeric"
-                placeholder="Minutes">
-
-
-            <button
-                class="form-submit"
-                type="submit">
-
-                💗 Save Feed
-
-            </button>
-
-        </form>
-
-    `);
-
-
-    document
-        .getElementById(
-            "breastForm"
-        )
-        .addEventListener(
-            "submit",
-            async event => {
-
-                event.preventDefault();
-
-
-                await addLog(
-                    "feed",
-                    {
-
-                        method:
-                            "breast",
-
-                        side:
-                            document
-                                .getElementById(
-                                    "breastSide"
-                                )
-                                .value,
-
-                        duration:
-                            Number(
-                                document
-                                    .getElementById(
-                                        "breastDuration"
-                                    )
-                                    .value
-                            ) || null
-
-                    }
-                );
-
-
-                closeModal();
-
-            }
-        );
-
-}
-
-
-/* =========================================================
-   BOTTLE
-========================================================= */
-
-function openBottleModal() {
-
-    openModal(`
-
-        <h2>🍼 Bottle</h2>
-
-        <form
-            class="tracker-form"
-            id="bottleForm">
-
-            <label>
-                Amount
-            </label>
-
-            <input
-                id="bottleAmount"
-                type="number"
-                min="0"
-                inputmode="decimal"
-                placeholder="ml"
-                required>
-
-
-            <button
-                class="form-submit"
-                type="submit">
-
-                💗 Save Feed
-
-            </button>
-
-        </form>
-
-    `);
-
-
-    document
-        .getElementById(
-            "bottleForm"
-        )
-        .addEventListener(
-            "submit",
-            async event => {
-
-                event.preventDefault();
-
-
-                await addLog(
-                    "feed",
-                    {
-
-                        method:
-                            "bottle",
-
-                        amount:
-                            Number(
-                                document
-                                    .getElementById(
-                                        "bottleAmount"
-                                    )
-                                    .value
-                            ),
-
-                        unit:
-                            "ml"
-
-                    }
-                );
-
-
-                closeModal();
-
-            }
-        );
-
-}
-
-
-/* =========================================================
-   DIAPER
-========================================================= */
-
-function openDiaperModal() {
-
-    openModal(`
-
-        <h2>💧 Diaper</h2>
-
-        <p class="modal-subtitle">
-            What kind?
-        </p>
-
-        <div class="modal-options">
-
-            <button
-                class="modal-option"
-                data-diaper="wet">
-
-                💧 Wet
-
-            </button>
-
-            <button
-                class="modal-option"
-                data-diaper="dirty">
-
-                💩 Dirty
-
-            </button>
-
-            <button
-                class="modal-option"
-                data-diaper="both">
-
-                💧💩 Wet + Dirty
-
-            </button>
-
-        </div>
-
-    `);
-
-
-    document
-        .querySelectorAll(
-            "[data-diaper]"
-        )
-        .forEach(
-            button => {
-
-                button.addEventListener(
-                    "click",
-                    async () => {
-
-                        await addLog(
-                            "diaper",
-                            {
-                                kind:
-                                    button.dataset
-                                        .diaper
-                            }
-                        );
-
-
-                        closeModal();
-
-                    }
-                );
-
-            }
-        );
-
-}
-
-
-/* =========================================================
-   SLEEP
-========================================================= */
-
-function openSleepModal() {
-
-    if (activeSleep) {
-
-        endSleep();
-
-        return;
-
-    }
-
-
-    openModal(`
-
-        <h2>😴 Sleep</h2>
-
-        <p class="modal-subtitle">
-            Start baby's nap.
-        </p>
-
-        <button
-            id="startSleepButton"
-            class="form-submit"
-            type="button">
-
-            😴 Start Nap Now
-
-        </button>
-
-    `);
-
-
-    document
-        .getElementById(
-            "startSleepButton"
-        )
-        .addEventListener(
-            "click",
-            () => {
-
-                startSleep();
-
-                closeModal();
-
-            }
-        );
-
-}
-
-
-/* =========================================================
-   START SLEEP
-========================================================= */
-
-async function startSleep() {
-
-    if (activeSleep) return;
-
-
-    activeSleep = {
-
-        startedAt:
-            new Date().toISOString()
-
-    };
-
-
-    await dbSetSetting(
-        "activeSleep",
-        activeSleep
-    );
-
-
-    renderSleepState();
-
-    startSleepTimer();
-
-
-    showToast(
-        "😴",
-        "Nap started"
-    );
-
-}
-
-
-/* =========================================================
-   END SLEEP
-========================================================= */
-
-async function endSleep() {
-
-    if (!activeSleep) return;
-
-
-    const start =
-        new Date(
-            activeSleep.startedAt
-        );
-
-
-    const end =
-        new Date();
-
-
-    const duration =
-        Math.max(
-            1,
-            Math.round(
-                (
-                    end - start
-                ) / 60000
-            )
-        );
-
-
-    /*
-       Save sleep before clearing
-       activeSleep.
-    */
-    await addLog(
-        "sleep",
-        {
-            duration
+        if ($("feedCount")) {
+            $("feedCount").textContent =
+                feeds.length;
         }
-    );
 
+        if ($("diaperCount")) {
+            $("diaperCount").textContent =
+                diapers.length;
+        }
 
-    activeSleep = null;
+        if ($("sleepTotal")) {
 
-
-    await dbSetSetting(
-        "activeSleep",
-        null
-    );
-
-
-    stopSleepTimer();
-
-
-    renderSleepState();
-
-
-    showToast(
-        "😴",
-        `Nap · ${formatDuration(duration)}`
-    );
-
-}
-
-
-/* =========================================================
-   SLEEP STATE
-========================================================= */
-
-function renderSleepState() {
-
-    const card =
-        document.getElementById(
-            "activeSleepCard"
-        );
-
-
-    if (!card) return;
-
-
-    if (!activeSleep) {
-
-        card.classList.add(
-            "hidden"
-        );
-
-        return;
-
-    }
-
-
-    card.classList.remove(
-        "hidden"
-    );
-
-
-    updateSleepTimer();
-
-}
-
-
-/* =========================================================
-   TIMER
-========================================================= */
-
-function startSleepTimer() {
-
-    stopSleepTimer();
-
-    updateSleepTimer();
-
-
-    sleepTimerInterval =
-        setInterval(
-            updateSleepTimer,
-            1000
-        );
-
-}
-
-
-function stopSleepTimer() {
-
-    if (
-        sleepTimerInterval
-    ) {
-
-        clearInterval(
-            sleepTimerInterval
-        );
-
-
-        sleepTimerInterval =
-            null;
-
-    }
-
-}
-
-
-function updateSleepTimer() {
-
-    if (!activeSleep) return;
-
-
-    const start =
-        new Date(
-            activeSleep.startedAt
-        );
-
-
-    const elapsed =
-        Math.max(
-            0,
-            Math.floor(
-                (
-                    Date.now() -
-                    start.getTime()
-                ) / 1000
-            )
-        );
-
-
-    const hours =
-        Math.floor(
-            elapsed / 3600
-        );
-
-
-    const minutes =
-        Math.floor(
-            (
-                elapsed % 3600
-            ) / 60
-        );
-
-
-    const seconds =
-        elapsed % 60;
-
-
-    const timer =
-        document.getElementById(
-            "sleepTimer"
-        );
-
-
-    if (timer) {
-
-        timer.textContent =
-
-            `${String(hours).padStart(2, "0")}:` +
-
-            `${String(minutes).padStart(2, "0")}:` +
-
-            `${String(seconds).padStart(2, "0")}`;
-
-    }
-
-}
-
-
-/* =========================================================
-   NOTE
-========================================================= */
-
-function openNoteModal() {
-
-    openModal(`
-
-        <h2>📝 Quick Note</h2>
-
-        <form
-            class="tracker-form"
-            id="noteForm">
-
-            <textarea
-                id="noteText"
-                rows="4"
-                placeholder="Type your note..."
-                required></textarea>
-
-            <button
-                class="form-submit"
-                type="submit">
-
-                💗 Save Note
-
-            </button>
-
-        </form>
-
-    `);
-
-
-    document
-        .getElementById(
-            "noteForm"
-        )
-        .addEventListener(
-            "submit",
-            async event => {
-
-                event.preventDefault();
-
-
-                const text =
-                    document
-                        .getElementById(
-                            "noteText"
-                        )
-                        .value
-                        .trim();
-
-
-                if (!text) return;
-
-
-                await addLog(
-                    "note",
-                    {
-                        text
-                    }
+            $("sleepTotal").textContent =
+                formatShortDuration(
+                    sleepMinutes
                 );
-
-
-                closeModal();
-
-            }
-        );
-
-}
-
-
-/* =========================================================
-   VOICE RECOGNITION
-========================================================= */
-
-/*
-   IMPORTANT:
-
-   SpeechRecognition is not supported consistently
-   across all browsers.
-
-   We support both:
-
-       window.SpeechRecognition
-
-   and:
-
-       window.webkitSpeechRecognition
-*/
-
-
-function setupVoiceRecognition() {
-
-    const SpeechRecognition =
-        window.SpeechRecognition ||
-        window.webkitSpeechRecognition;
-
-
-    /*
-       Browser does not support speech recognition.
-    */
-    if (!SpeechRecognition) {
-
-        recognition = null;
-
-        console.warn(
-            "Speech Recognition is not supported in this browser."
-        );
-
-        return false;
-
+        }
     }
 
+    function formatShortDuration(minutes) {
 
-    /*
-       Don't create multiple recognition
-       instances.
-    */
-    if (recognition) {
+        const total =
+            Number(minutes) || 0;
 
-        return true;
+        if (total < 60) {
+            return `${Math.round(total)}m`;
+        }
 
+        const hours =
+            Math.floor(total / 60);
+
+        const mins =
+            Math.round(total % 60);
+
+        if (!mins) {
+            return `${hours}h`;
+        }
+
+        return `${hours}h ${mins}m`;
     }
 
+    /* =====================================================
+       DELETE INDIVIDUAL LOG
+    ===================================================== */
 
-    recognition =
-        new SpeechRecognition();
+    async function deleteLog(id) {
 
+        const log =
+            logs.find(
+                item => Number(item.id) === Number(id)
+            );
 
-    /*
-       Change this to "fr-CA" if you want
-       French Canadian voice commands.
-    */
-    recognition.lang =
-        "en-US";
+        if (!log) return;
 
+        const confirmed =
+            window.confirm(
+                `Delete "${log.title}" from today's tracker?`
+            );
 
-    recognition.continuous =
-        false;
+        if (!confirmed) return;
 
-
-    recognition.interimResults =
-        false;
-
-
-    recognition.maxAlternatives =
-        1;
-
-
-    /* --------------------------------
-       START
-    -------------------------------- */
-
-    recognition.onstart = () => {
-
-        console.log(
-            "🎙️ Speech recognition started"
+        await deleteLogFromDB(
+            Number(id)
         );
 
+        await loadLogs();
 
-        isListening =
-            true;
-
-
-        updateVoiceUI(
-            true
-        );
-
+        renderTimeline();
+        updateSummary();
 
         showToast(
-            "🎙️",
-            "Listening..."
+            "Log deleted",
+            "✓"
         );
+    }
 
-    };
+    /* =====================================================
+       CLEAR TODAY
+    ===================================================== */
 
+    async function clearToday() {
 
-    /* --------------------------------
-       RESULT
-    -------------------------------- */
-
-    recognition.onresult =
-        event => {
-
-            console.log(
-                "🎙️ Speech result received:",
-                event
+        const todayLogs =
+            logs.filter(
+                log => isToday(log.timestamp)
             );
 
+        if (!todayLogs.length) {
 
-            let transcript =
-                "";
+            showToast(
+                "Nothing to clear",
+                "ℹ️"
+            );
 
+            return;
+        }
 
-            /*
-               Collect all final results.
-            */
+        const confirmed =
+            window.confirm(
+                `Clear all ${todayLogs.length} logs from today?\n\nThis cannot be undone.`
+            );
+
+        if (!confirmed) return;
+
+        for (const log of todayLogs) {
+            await deleteLogFromDB(log.id);
+        }
+
+        await loadLogs();
+
+        renderTimeline();
+        updateSummary();
+
+        showToast(
+            "Today's logs cleared",
+            "✓"
+        );
+    }
+
+    /* =====================================================
+       VOICE RECOGNITION
+    ===================================================== */
+
+    function initializeSpeechRecognition() {
+
+        const SpeechRecognition =
+            window.SpeechRecognition ||
+            window.webkitSpeechRecognition;
+
+        if (!SpeechRecognition) {
+
+            disableVoiceButton();
+
+            return;
+        }
+
+        recognition =
+            new SpeechRecognition();
+
+        recognition.continuous = false;
+        recognition.interimResults = true;
+        recognition.maxAlternatives = 1;
+
+        recognition.lang =
+            settings.voiceLanguage;
+
+        recognition.onstart = () => {
+
+            isListening = true;
+
+            updateVoiceUI(
+                true
+            );
+        };
+
+        recognition.onresult = (event) => {
+
+            let transcript = "";
+
             for (
                 let i = event.resultIndex;
                 i < event.results.length;
                 i++
             ) {
 
-                if (
-                    event.results[i].isFinal
-                ) {
-
-                    transcript +=
-                        event.results[i][0]
-                            .transcript;
-
-                }
-
+                transcript +=
+                    event.results[i][0].transcript;
             }
-
 
             transcript =
                 transcript.trim();
 
-
-            console.log(
-                "🎙️ Transcript:",
+            showTranscript(
                 transcript
             );
 
+            const latestResult =
+                event.results[
+                    event.results.length - 1
+                ];
 
-            if (!transcript) {
+            if (latestResult?.isFinal) {
 
-                showToast(
-                    "🎙️",
-                    "I didn't hear anything"
+                handleVoiceTranscript(
+                    transcript
                 );
-
-
-                return;
-
             }
-
-
-            /*
-               Process recognized speech.
-            */
-            processVoiceCommand(
-                transcript
-            );
-
         };
 
-
-    /* --------------------------------
-       ERROR
-    -------------------------------- */
-
-    recognition.onerror =
-        event => {
+        recognition.onerror = (event) => {
 
             console.error(
-                "🎙️ Speech recognition error:",
-                event.error,
-                event
+                "Speech recognition error:",
+                event.error
             );
 
+            isListening = false;
 
-            isListening =
-                false;
+            updateVoiceUI(false);
 
-
-            updateVoiceUI(
-                false
+            handleVoiceError(
+                event.error
             );
-
-
-            const errors = {
-
-                "not-allowed":
-                    "Please allow microphone access",
-
-                "service-not-allowed":
-                    "Speech recognition service isn't available",
-
-                "audio-capture":
-                    "I can't access your microphone",
-
-                "no-speech":
-                    "I didn't hear anything",
-
-                "network":
-                    "Voice recognition needs an internet connection",
-
-                "aborted":
-                    "Voice logging stopped",
-
-                "language-not-supported":
-                    "This voice language isn't supported",
-
-                "bad-grammar":
-                    "Voice recognition configuration failed",
-
-                "phrases-not-supported":
-                    "Voice phrases aren't supported"
-
-            };
-
-
-            showToast(
-                "🎙️",
-                errors[event.error] ||
-                `Voice error: ${event.error}`
-            );
-
         };
 
+        recognition.onend = () => {
 
-    /* --------------------------------
-       END
-    -------------------------------- */
+            isListening = false;
 
-    recognition.onend = () => {
-
-        console.log(
-            "🎙️ Speech recognition ended"
-        );
-
-
-        isListening =
-            false;
-
-
-        updateVoiceUI(
-            false
-        );
-
-    };
-
-
-    return true;
-
-}
-
-
-/* =========================================================
-   VOICE UI
-========================================================= */
-
-function updateVoiceUI(
-    listening
-) {
-
-    const button =
-        document.getElementById(
-            "voiceButton"
-        );
-
-
-    if (!button) return;
-
-
-    button.classList.toggle(
-        "recording",
-        listening
-    );
-
-
-    button.setAttribute(
-        "aria-pressed",
-        listening
-            ? "true"
-            : "false"
-    );
-
-
-    const label =
-        button.querySelector(
-            ".voice-button-label"
-        );
-
-
-    if (label) {
-
-        label.textContent =
-            listening
-                ? "Listening..."
-                : "Tap to tell me";
-
+            updateVoiceUI(false);
+        };
     }
 
-}
+    function disableVoiceButton() {
 
+        const button =
+            $("voiceButton");
 
-/* =========================================================
-   VOICE TOGGLE
-========================================================= */
+        if (!button) return;
 
-function toggleVoice() {
+        button.disabled = true;
 
-    console.log(
-        "🎙️ Voice button pressed"
-    );
+        button.setAttribute(
+            "aria-label",
+            "Voice logging is not supported in this browser"
+        );
 
+        if ($("voiceStatusTitle")) {
 
-    /*
-       Initialize if necessary.
-    */
-    if (!recognition) {
-
-        const supported =
-            setupVoiceRecognition();
-
-
-        if (!supported) {
-
-            showToast(
-                "🎙️",
-                "Voice recognition isn't supported in this browser"
-            );
-
-
-            return;
-
+            $("voiceStatusTitle")
+                .textContent =
+                "Voice logging unavailable";
         }
 
+        if ($("voiceStatusText")) {
+
+            $("voiceStatusText")
+                .textContent =
+                "Try Chrome or Safari on a supported device";
+        }
     }
 
+    function startVoiceRecognition() {
 
-    /*
-       Stop if already listening.
-    */
-    if (isListening) {
+        if (!recognition) {
 
-        console.log(
-            "🎙️ Stopping recognition"
-        );
+            showVoicePermission(
+                "Your browser does not support voice recognition. Try a recent version of Chrome or Safari."
+            );
 
+            return;
+        }
+
+        if (isListening) {
+
+            recognition.stop();
+
+            return;
+        }
+
+        recognition.lang =
+            settings.voiceLanguage;
+
+        clearVoiceTranscript();
 
         try {
 
-            recognition.stop();
+            recognition.start();
 
         } catch (error) {
 
             console.error(
-                "Error stopping recognition:",
+                "Could not start recognition:",
                 error
             );
+        }
+    }
 
+    function updateVoiceUI(listening) {
+
+        const button =
+            $("voiceButton");
+
+        const icon =
+            $("voiceButtonIcon");
+
+        const status =
+            $("voiceStatus");
+
+        const wave =
+            $("voiceWave");
+
+        if (!button) return;
+
+        button.classList.toggle(
+            "recording",
+            listening
+        );
+
+        button.setAttribute(
+            "aria-pressed",
+            listening
+                ? "true"
+                : "false"
+        );
+
+        if (icon) {
+
+            icon.textContent =
+                listening
+                    ? "⏹️"
+                    : "🎙️";
         }
 
+        if (status) {
 
-        return;
+            status.classList.toggle(
+                "active",
+                listening
+            );
+        }
 
+        if (wave) {
+
+            wave.classList.toggle(
+                "active",
+                listening
+            );
+        }
+
+        if ($("voiceStatusTitle")) {
+
+            $("voiceStatusTitle")
+                .textContent =
+                listening
+                    ? "Listening..."
+                    : "Tap & tell me";
+        }
+
+        if ($("voiceStatusText")) {
+
+            $("voiceStatusText")
+                .textContent =
+                listening
+                    ? "Tell me what happened"
+                    : "“Baby had a wet diaper”";
+        }
     }
 
+    function showTranscript(text) {
 
-    /*
-       Start listening.
-    */
-    try {
+        const container =
+            $("voiceTranscript");
 
-        console.log(
-            "🎙️ Starting recognition..."
+        const textElement =
+            $("voiceTranscriptText");
+
+        if (!container || !textElement) return;
+
+        if (!text) return;
+
+        container.classList.remove(
+            "hidden"
         );
 
-
-        recognition.start();
-
-    } catch (error) {
-
-        console.error(
-            "Error starting recognition:",
-            error
-        );
-
-
-        /*
-           Reset state if browser rejects start().
-        */
-        isListening =
-            false;
-
-
-        updateVoiceUI(
-            false
-        );
-
-
-        showToast(
-            "🎙️",
-            "Couldn't start voice recognition. Try again."
-        );
-
+        textElement.textContent =
+            text;
     }
 
-}
+    function clearVoiceTranscript() {
 
+        const container =
+            $("voiceTranscript");
 
-/* =========================================================
-   VOICE COMMAND PARSER
-========================================================= */
+        const textElement =
+            $("voiceTranscriptText");
 
-async function processVoiceCommand(
-    text
-) {
+        if (container) {
+            container.classList.add(
+                "hidden"
+            );
+        }
 
-    const lower =
-        normalizeSpeech(
-            text
-        );
+        if (textElement) {
+            textElement.textContent = "—";
+        }
+    }
 
+    /* =====================================================
+       VOICE PARSER
+    ===================================================== */
 
-    console.log(
-        "🎙️ Processing voice command:",
-        text
-    );
-
-
-    /*
-       Show recognized speech.
-    */
-    showToast(
-        "🎙️",
-        `"${text}"`
-    );
-
-
-    /* --------------------------------
-       SLEEP END
-    -------------------------------- */
-
-    if (
-        activeSleep &&
-        includesAny(
-            lower,
-            [
-                "woke up",
-                "wake up",
-                "awake",
-                "is awake",
-                "got up",
-                "finished sleeping",
-                "finished nap",
-                "nap is over",
-                "nap finished",
-                "sleep is over"
-            ]
-        )
+    async function handleVoiceTranscript(
+        transcript
     ) {
 
-        await endSleep();
+        const text =
+            safeText(transcript);
 
-        return;
+        if (!text) return;
 
+        if (settings.voiceConfirmation) {
+
+            const confirmed =
+                await showVoiceConfirmation(
+                    text
+                );
+
+            if (!confirmed) {
+                return;
+            }
+        }
+
+        const parsed =
+            parseVoiceCommand(text);
+
+        if (!parsed) {
+
+            await addLog({
+                type: "note",
+                title: "Voice note",
+                details: text,
+                source: "voice"
+            });
+
+            return;
+        }
+
+        await addLog({
+            ...parsed,
+            source: "voice"
+        });
     }
 
+    function parseVoiceCommand(originalText) {
 
-    /* --------------------------------
-       SLEEP START
-    -------------------------------- */
+        const original =
+            safeText(originalText);
 
-    if (
-        includesAny(
-            lower,
-            [
-                "started sleeping",
-                "went to sleep",
-                "fell asleep",
-                "going to sleep",
-                "start nap",
-                "started nap",
-                "went down for a nap",
-                "is sleeping",
-                "is asleep",
-                "baby is sleeping",
-                "baby fell asleep"
-            ]
-        )
-    ) {
+        const lower =
+            original.toLowerCase();
 
-        if (!activeSleep) {
+        const normalized =
+            lower
+                .replace(/,/g, ".")
+                .replace(/\s+/g, " ")
+                .trim();
 
-            await startSleep();
+        /* ---------------------------------------------
+           DIAPER
+        --------------------------------------------- */
 
-        } else {
+        const diaperWords = [
+            "diaper",
+            "nappy",
+            "wet diaper",
+            "dirty diaper",
+            "poop",
+            "pooped",
+            "poopy",
+            "caca",
+            "couche",
+            "mouillée",
+            "mouillee",
+            "sale",
+            "pipi"
+        ];
 
-            showToast(
-                "😴",
-                "Nap is already running"
+        const hasDiaper =
+            diaperWords.some(
+                word =>
+                    normalized.includes(word)
             );
 
-        }
+        if (hasDiaper) {
 
+            let subtype = "wet";
+            let title = "Wet diaper";
 
-        return;
-
-    }
-
-
-    /* --------------------------------
-       DIAPER
-    -------------------------------- */
-
-    if (
-        includesAny(
-            lower,
-            [
-                "diaper",
-                "nappy",
-                "changed diaper",
-                "changed his diaper",
-                "changed her diaper",
-                "change diaper",
-                "change the diaper",
-                "changed the diaper"
-            ]
-        )
-    ) {
-
-        let kind =
-            "wet";
-
-
-        const dirty =
-            includesAny(
-                lower,
+            const dirty =
                 [
                     "dirty",
                     "poop",
-                    "poopy",
                     "pooped",
-                    "stool",
-                    "number two",
-                    "number 2",
-                    "bm"
-                ]
-            );
+                    "poopy",
+                    "caca",
+                    "sale"
+                ].some(
+                    word =>
+                        normalized.includes(word)
+                );
 
-
-        const wet =
-            includesAny(
-                lower,
+            const wet =
                 [
                     "wet",
-                    "pee",
-                    "peed",
-                    "urine",
-                    "piss"
-                ]
-            );
+                    "pipi",
+                    "mouille",
+                    "mouillée"
+                ].some(
+                    word =>
+                        normalized.includes(word)
+                );
 
+            if (dirty && wet) {
 
-        if (
-            dirty &&
-            wet
-        ) {
+                subtype = "both";
+                title = "Wet + dirty diaper";
 
-            kind =
-                "both";
+            } else if (dirty) {
 
-        } else if (
-            dirty
-        ) {
+                subtype = "dirty";
+                title = "Dirty diaper";
+            }
 
-            kind =
-                "dirty";
-
-        } else {
-
-            kind =
-                "wet";
-
+            return {
+                type: "diaper",
+                subtype,
+                title,
+                details: cleanVoiceDetails(
+                    original,
+                    [
+                        "diaper",
+                        "nappy",
+                        "wet",
+                        "dirty",
+                        "poop",
+                        "pooped",
+                        "poopy",
+                        "couche",
+                        "sale",
+                        "pipi"
+                    ]
+                )
+            };
         }
 
+        /* ---------------------------------------------
+           BREASTFEEDING
+        --------------------------------------------- */
 
-        await addLog(
-            "diaper",
-            {
-                kind
-            }
-        );
+        const breastfeedingWords = [
+            "nursed",
+            "nursing",
+            "breastfed",
+            "breastfeeding",
+            "breast fed",
+            "breast feeding",
+            "nursed on",
+            "nourri au sein",
+            "allaité",
+            "allaite",
+            "tété",
+            "tete"
+        ];
 
-
-        return;
-
-    }
-
-
-    /* --------------------------------
-       BOTTLE
-    -------------------------------- */
-
-    if (
-        includesAny(
-            lower,
-            [
-                "bottle",
-                "formula",
-                "milk bottle",
-                "had a bottle",
-                "drank a bottle",
-                "gave a bottle",
-                "gave baby a bottle"
-            ]
-        )
-    ) {
-
-        const amount =
-            extractAmount(
-                text
+        const breastfeeding =
+            breastfeedingWords.some(
+                word =>
+                    normalized.includes(word)
             );
 
+        if (breastfeeding) {
 
-        await addLog(
-            "feed",
-            {
+            const minutes =
+                extractMinutes(normalized);
 
-                method:
-                    "bottle",
+            const side =
+                extractBreastSide(normalized);
 
-                amount:
-                    amount?.value ??
-                    null,
+            let details = "";
 
-                unit:
-                    amount?.unit ||
-                    "ml"
-
+            if (side) {
+                details +=
+                    `${capitalize(side)} side`;
             }
-        );
 
+            if (minutes) {
 
-        return;
+                if (details) {
+                    details += " • ";
+                }
 
-    }
+                details +=
+                    `${minutes} min`;
+            }
 
+            if (!details) {
+                details = original;
+            }
 
-    /* --------------------------------
-       BREASTFEEDING
-    -------------------------------- */
-
-    if (
-        includesAny(
-            lower,
-            [
-                "breast",
-                "breastfeeding",
-                "breast fed",
-                "breastfed",
-                "nursed",
-                "nursing",
-                "nurse",
-                "nursed baby",
-                "breastfed baby",
-                "fed from the breast"
-            ]
-        )
-    ) {
-
-        let side =
-            "Both";
-
-
-        if (
-            includesAny(
-                lower,
-                [
-                    "left breast",
-                    "left side",
-                    "left boob"
-                ]
-            )
-        ) {
-
-            side =
-                "Left";
-
-        } else if (
-            includesAny(
-                lower,
-                [
-                    "right breast",
-                    "right side",
-                    "right boob"
-                ]
-            )
-        ) {
-
-            side =
-                "Right";
-
+            return {
+                type: "feed",
+                subtype: "breast",
+                title: "Breastfeeding",
+                details
+            };
         }
 
+        /* ---------------------------------------------
+           BOTTLE / MILK
+        --------------------------------------------- */
 
-        const duration =
-            extractDuration(
-                text
+        const bottleWords = [
+            "bottle",
+            "formula",
+            "milk",
+            "ml",
+            "milliliter",
+            "milliliters",
+            "millilitre",
+            "millilitres",
+            "ounce",
+            "ounces",
+            " oz"
+        ];
+
+        const hasBottle =
+            bottleWords.some(
+                word =>
+                    normalized.includes(word)
             );
 
+        if (hasBottle) {
 
-        await addLog(
-            "feed",
-            {
+            const amount =
+                extractAmount(normalized);
 
-                method:
-                    "breast",
+            const unit =
+                extractUnit(normalized);
 
-                side,
+            let details = "";
 
-                duration
+            if (amount) {
 
+                details =
+                    `${amount} ${unit || "ml"}`;
+
+            } else {
+
+                details =
+                    original;
             }
-        );
 
-
-        return;
-
-    }
-
-
-    /* --------------------------------
-       GENERIC FEED
-    -------------------------------- */
-
-    if (
-        includesAny(
-            lower,
-            [
-                "fed baby",
-                "baby ate",
-                "baby had a feed",
-                "baby had milk",
-                "feeding",
-                "fed the baby"
-            ]
-        )
-    ) {
-
-        await addLog(
-            "feed",
-            {
-
-                method:
-                    "breast",
-
-                side:
-                    "Both"
-
-            }
-        );
-
-
-        return;
-
-    }
-
-
-    /* --------------------------------
-       NOTE FALLBACK
-    -------------------------------- */
-
-    await addLog(
-        "note",
-        {
-            text
+            return {
+                type: "feed",
+                subtype: "bottle",
+                title: "Bottle feed",
+                details,
+                value: amount || null,
+                unit: unit || null
+            };
         }
-    );
 
-}
+        /* ---------------------------------------------
+           FOOD / SOLIDS
+        --------------------------------------------- */
 
-
-/* =========================================================
-   SPEECH NORMALIZATION
-========================================================= */
-
-function normalizeSpeech(
-    text
-) {
-
-    return String(text)
-        .toLowerCase()
-        .replace(
-            /[.,!?]/g,
-            " "
-        )
-        .replace(
-            /\s+/g,
-            " "
-        )
-        .trim();
-
-}
-
-
-function includesAny(
-    text,
-    phrases
-) {
-
-    return phrases.some(
-        phrase =>
-            text.includes(
-                phrase
-            )
-    );
-
-}
-
-
-/* =========================================================
-   EXTRACT NUMBER
-========================================================= */
-
-function extractNumber(
-    text
-) {
-
-    const match =
-        text.match(
-            /\b(\d+(?:\.\d+)?)\b/
-        );
-
-
-    return match
-        ? Number(match[1])
-        : null;
-
-}
-
-
-/* =========================================================
-   EXTRACT AMOUNT
-========================================================= */
-
-function extractAmount(
-    text
-) {
-
-    const lower =
-        normalizeSpeech(
-            text
-        );
-
-
-    /*
-       Match things like:
-
-       120 ml
-       120 milliliters
-       4 oz
-       4 ounces
-
-       Also handles:
-
-       120ml
-       4oz
-    */
-    const match =
-        lower.match(
-            /(\d+(?:\.\d+)?)\s*(ml|milliliters?|millilitres?|ounces?|oz)\b/
-        );
-
-
-    /*
-       If there is no explicit unit,
-       try to extract a number.
-    */
-    if (!match) {
-
-        const number =
-            extractNumber(
-                lower
-            );
-
+        const foodWords = [
+            "ate",
+            "eating",
+            "food",
+            "solid",
+            "solids",
+            "déjeuner",
+            "mangé",
+            "mange"
+        ];
 
         if (
-            number !== null
+            foodWords.some(
+                word =>
+                    normalized.includes(word)
+            )
         ) {
 
             return {
-
-                value:
-                    number,
-
-                unit:
-                    "ml"
-
+                type: "feed",
+                subtype: "solid",
+                title: "Solid food",
+                details: original
             };
-
         }
 
-
-        return null;
-
-    }
-
-
-    let value =
-        Number(
-            match[1]
-        );
-
-
-    let unit =
-        match[2];
-
-
-    if (
-        unit.includes("ounce") ||
-        unit === "oz"
-    ) {
-
-        unit =
-            "oz";
-
-    } else {
-
-        unit =
-            "ml";
-
-    }
-
-
-    return {
-
-        value,
-
-        unit
-
-    };
-
-}
-
-
-/* =========================================================
-   EXTRACT BREASTFEEDING DURATION
-========================================================= */
-
-function extractDuration(
-    text
-) {
-
-    const lower =
-        normalizeSpeech(
-            text
-        );
-
-
-    const match =
-        lower.match(
-            /(\d+(?:\.\d+)?)\s*(minutes?|mins?|min|hours?|hrs?|hr)\b/
-        );
-
-
-    if (!match) {
-
-        return null;
-
-    }
-
-
-    const value =
-        Number(
-            match[1]
-        );
-
-
-    const unit =
-        match[2];
-
-
-    if (
-        unit.startsWith("hour") ||
-        unit.startsWith("hr")
-    ) {
-
-        return Math.round(
-            value * 60
-        );
-
-    }
-
-
-    return Math.round(
-        value
-    );
-
-}
-
-
-/* =========================================================
-   CLEAR TODAY
-========================================================= */
-
-async function clearToday() {
-
-    const confirmed =
-        confirm(
-            "Clear all of today's baby tracker logs?"
-        );
-
-
-    if (!confirmed) return;
-
-
-    const today =
-        todayKey();
-
-
-    const todayLogs =
-        logs.filter(
-            log =>
-                log.date === today
-        );
-
-
-    for (
-        const log
-        of todayLogs
-    ) {
-
-        await dbDeleteLog(
-            log.id
-        );
-
-    }
-
-
-    logs =
-        logs.filter(
-            log =>
-                log.date !== today
-        );
-
-
-    render();
-
-
-    showToast(
-        "✓",
-        "Today's logs cleared"
-    );
-
-}
-
-
-/* =========================================================
-   BACKUP / EXPORT
-========================================================= */
-
-function setupBackupControls() {
-
-    const exportButton =
-        document.getElementById(
-            "exportDataButton"
-        );
-
-
-    const importButton =
-        document.getElementById(
-            "importDataButton"
-        );
-
-
-    const importInput =
-        document.getElementById(
-            "importDataInput"
-        );
-
-
-    if (
-        exportButton &&
-        !exportButton.dataset.bound
-    ) {
-
-        exportButton.dataset.bound =
-            "true";
-
-
-        exportButton.addEventListener(
-            "click",
-            exportBackup
-        );
-
-    }
-
-
-    if (
-        importButton &&
-        importInput &&
-        !importButton.dataset.bound
-    ) {
-
-        importButton.dataset.bound =
-            "true";
-
-
-        importButton.addEventListener(
-            "click",
-            () =>
-                importInput.click()
-        );
-
-
-        importInput.addEventListener(
-            "change",
-            handleImport
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   EXPORT
-========================================================= */
-
-async function exportBackup() {
-
-    const settings = {
-
-        babyName:
-            await dbGetSetting(
-                "babyName"
-            ),
-
-        units:
-            await dbGetSetting(
-                "units"
-            )
-
-    };
-
-
-    const backup = {
-
-        app:
-            "MomYouNeedThis Baby Tracker",
-
-        version:
-            1,
-
-        exportedAt:
-            new Date().toISOString(),
-
-        logs,
-
-        settings
-
-    };
-
-
-    const blob =
-        new Blob(
-            [
-                JSON.stringify(
-                    backup,
-                    null,
-                    2
-                )
-            ],
-            {
-                type:
-                    "application/json"
-            }
-        );
-
-
-    const url =
-        URL.createObjectURL(
-            blob
-        );
-
-
-    const link =
-        document.createElement(
-            "a"
-        );
-
-
-    const date =
-        todayKey();
-
-
-    link.href =
-        url;
-
-
-    link.download =
-        `momyouneedthis-baby-tracker-${date}.json`;
-
-
-    document
-        .body
-        .appendChild(
-            link
-        );
-
-
-    link.click();
-
-
-    link.remove();
-
-
-    URL.revokeObjectURL(
-        url
-    );
-
-
-    showToast(
-        "💾",
-        "Backup exported"
-    );
-
-}
-
-
-/* =========================================================
-   IMPORT
-========================================================= */
-
-async function handleImport(
-    event
-) {
-
-    const file =
-        event.target.files[0];
-
-
-    if (!file) return;
-
-
-    try {
-
-        const text =
-            await file.text();
-
-
-        const backup =
-            JSON.parse(
-                text
-            );
-
+        /* ---------------------------------------------
+           SLEEP
+        --------------------------------------------- */
+
+        const sleepWords = [
+            "sleep",
+            "slept",
+            "nap",
+            "napped",
+            "asleep",
+            "sieste",
+            "dormi",
+            "dort",
+            "endormi",
+            "sommeil"
+        ];
 
         if (
-            !backup ||
-            !Array.isArray(
-                backup.logs
+            sleepWords.some(
+                word =>
+                    normalized.includes(word)
             )
         ) {
 
-            throw new Error(
-                "Invalid backup"
-            );
+            const minutes =
+                extractMinutes(normalized);
 
+            if (
+                normalized.includes("started") ||
+                normalized.includes("start") ||
+                normalized.includes("going to sleep") ||
+                normalized.includes("s'endort") ||
+                normalized.includes("commencé")
+            ) {
+
+                if (!activeSleep) {
+                    startSleep();
+                }
+
+                return null;
+            }
+
+            if (
+                normalized.includes("woke") ||
+                normalized.includes("wake") ||
+                normalized.includes("ended") ||
+                normalized.includes("finished") ||
+                normalized.includes("réveillé") ||
+                normalized.includes("reveillé")
+            ) {
+
+                if (activeSleep) {
+                    endSleep();
+                }
+
+                return null;
+            }
+
+            if (minutes) {
+
+                return {
+                    type: "sleep",
+                    subtype: "nap",
+                    title: "Nap",
+                    details:
+                        formatDuration(minutes),
+                    value: minutes,
+                    unit: "min"
+                };
+            }
+
+            return {
+                type: "note",
+                title: "Sleep note",
+                details: original
+            };
         }
 
+        /* ---------------------------------------------
+           NOTE FALLBACK
+        --------------------------------------------- */
+
+        return {
+            type: "note",
+            title: "Voice note",
+            details: original
+        };
+    }
+
+    function extractMinutes(text) {
+
+        const match =
+            text.match(
+                /(\d+(?:\.\d+)?)\s*(minutes?|mins?|min|minute|minutes)/i
+            );
+
+        if (!match) return null;
+
+        return Number(match[1]);
+    }
+
+    function extractAmount(text) {
+
+        const match =
+            text.match(
+                /(\d+(?:\.\d+)?)\s*(ml|milliliters?|millilitres?|oz|ounces?)/i
+            );
+
+        if (match) {
+            return Number(match[1]);
+        }
+
+        return null;
+    }
+
+    function extractUnit(text) {
+
+        if (
+            /\b(oz|ounce|ounces)\b/i.test(text)
+        ) {
+            return "oz";
+        }
+
+        if (
+            /\b(ml|milliliter|milliliters|millilitre|millilitres)\b/i.test(text)
+        ) {
+            return "ml";
+        }
+
+        return null;
+    }
+
+    function extractBreastSide(text) {
+
+        if (
+            /\b(left|gauche)\b/i.test(text)
+        ) {
+            return "left";
+        }
+
+        if (
+            /\b(right|droite)\b/i.test(text)
+        ) {
+            return "right";
+        }
+
+        if (
+            /\b(both|les deux|deux)\b/i.test(text)
+        ) {
+            return "both";
+        }
+
+        return null;
+    }
+
+    function cleanVoiceDetails(
+        text,
+        words
+    ) {
+
+        let result =
+            safeText(text);
+
+        words.forEach(word => {
+
+            result =
+                result.replace(
+                    new RegExp(
+                        `\\b${escapeRegex(word)}\\b`,
+                        "gi"
+                    ),
+                    ""
+                );
+        });
+
+        result =
+            result
+                .replace(/\s+/g, " ")
+                .replace(/^[\s•,.-]+|[\s•,.-]+$/g, "");
+
+        return result || "";
+    }
+
+    function escapeRegex(value) {
+
+        return String(value)
+            .replace(
+                /[.*+?^${}()|[\]\\]/g,
+                "\\$&"
+            );
+    }
+
+    /* =====================================================
+       VOICE CONFIRMATION
+    ===================================================== */
+
+    function showVoiceConfirmation(
+        transcript
+    ) {
+
+        return new Promise(resolve => {
+
+            const confirmed =
+                window.confirm(
+                    `I heard:\n\n“${transcript}”\n\nSave this to the tracker?`
+                );
+
+            resolve(confirmed);
+        });
+    }
+
+    function handleVoiceError(error) {
+
+        let message =
+            "Something went wrong with voice logging.";
+
+        if (
+            error === "not-allowed" ||
+            error === "service-not-allowed"
+        ) {
+
+            message =
+                "Please allow microphone access in your browser.";
+        }
+
+        if (error === "no-speech") {
+
+            message =
+                "I didn't hear anything. Try again.";
+        }
+
+        if (error === "audio-capture") {
+
+            message =
+                "Your microphone could not be accessed.";
+        }
+
+        showVoicePermission(message);
+    }
+
+    function showVoicePermission(message) {
+
+        const box =
+            $("voicePermissionMessage");
+
+        const text =
+            $("voicePermissionText");
+
+        if (!box) return;
+
+        if (text) {
+            text.textContent = message;
+        }
+
+        box.classList.remove(
+            "hidden"
+        );
+    }
+
+    /* =====================================================
+       VOICE EXAMPLE BUTTONS
+    ===================================================== */
+
+    function handleVoiceExample(text) {
+
+        if (!text) return;
+
+        showTranscript(text);
+
+        handleVoiceTranscript(
+            text
+        );
+    }
+
+    /* =====================================================
+       MODALS
+    ===================================================== */
+
+    function openActionModal(html) {
+
+        const modal =
+            $("actionModal");
+
+        const content =
+            $("modalContent");
+
+        if (!modal || !content) return;
+
+        content.innerHTML = html;
+
+        modal.classList.remove(
+            "hidden"
+        );
+
+        modal.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+        currentModal =
+            "action";
+
+        document.body.classList.add(
+            "modal-open"
+        );
+    }
+
+    function closeActionModal() {
+
+        const modal =
+            $("actionModal");
+
+        if (!modal) return;
+
+        modal.classList.add(
+            "hidden"
+        );
+
+        modal.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+        $("modalContent").innerHTML = "";
+
+        currentModal = null;
+
+        updateBodyModalState();
+    }
+
+    function openSettings() {
+
+        const modal =
+            $("settingsModal");
+
+        if (!modal) return;
+
+        syncSettingsInputs();
+
+        modal.classList.remove(
+            "hidden"
+        );
+
+        modal.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+        $("settingsButton")?.setAttribute(
+            "aria-expanded",
+            "true"
+        );
+
+        currentModal =
+            "settings";
+
+        document.body.classList.add(
+            "modal-open"
+        );
+    }
+
+    function closeSettings() {
+
+        const modal =
+            $("settingsModal");
+
+        if (!modal) return;
+
+        modal.classList.add(
+            "hidden"
+        );
+
+        modal.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+        $("settingsButton")?.setAttribute(
+            "aria-expanded",
+            "false"
+        );
+
+        currentModal = null;
+
+        updateBodyModalState();
+    }
+
+    function openBabyNameModal() {
+
+        const modal =
+            $("babyNameModal");
+
+        if (!modal) return;
+
+        const input =
+            $("babyNameModalInput");
+
+        if (input) {
+            input.value =
+                settings.babyName === "My Baby"
+                    ? ""
+                    : settings.babyName;
+        }
+
+        modal.classList.remove(
+            "hidden"
+        );
+
+        modal.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+        currentModal =
+            "babyName";
+
+        document.body.classList.add(
+            "modal-open"
+        );
+
+        setTimeout(() => {
+            input?.focus();
+        }, 100);
+    }
+
+    function closeBabyNameModal() {
+
+        const modal =
+            $("babyNameModal");
+
+        if (!modal) return;
+
+        modal.classList.add(
+            "hidden"
+        );
+
+        modal.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+        currentModal = null;
+
+        updateBodyModalState();
+    }
+
+    function openDeleteModal() {
+
+        const modal =
+            $("deleteDataModal");
+
+        if (!modal) return;
+
+        modal.classList.remove(
+            "hidden"
+        );
+
+        modal.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+        currentModal =
+            "delete";
+
+        document.body.classList.add(
+            "modal-open"
+        );
+    }
+
+    function closeDeleteModal() {
+
+        const modal =
+            $("deleteDataModal");
+
+        if (!modal) return;
+
+        modal.classList.add(
+            "hidden"
+        );
+
+        modal.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+        currentModal = null;
+
+        updateBodyModalState();
+    }
+
+    function updateBodyModalState() {
+
+        const anyOpen =
+            [
+                "actionModal",
+                "settingsModal",
+                "babyNameModal",
+                "deleteDataModal"
+            ]
+                .some(id => {
+                    const element = $(id);
+
+                    return (
+                        element &&
+                        !element.classList.contains(
+                            "hidden"
+                        )
+                    );
+                });
+
+        document.body.classList.toggle(
+            "modal-open",
+            anyOpen
+        );
+    }
+
+    /* =====================================================
+       SETTINGS
+    ===================================================== */
+
+    async function saveVoiceLanguage() {
+
+        const select =
+            $("voiceLanguage");
+
+        if (!select) return;
+
+        settings.voiceLanguage =
+            select.value;
+
+        await saveSetting(
+            "voiceLanguage",
+            settings.voiceLanguage
+        );
+
+        if (recognition) {
+            recognition.lang =
+                settings.voiceLanguage;
+        }
+
+        showToast(
+            "Voice language updated",
+            "🎙️"
+        );
+    }
+
+    async function saveVoiceConfirmation() {
+
+        const toggle =
+            $("voiceConfirmationToggle");
+
+        if (!toggle) return;
+
+        settings.voiceConfirmation =
+            toggle.checked;
+
+        await saveSetting(
+            "voiceConfirmation",
+            settings.voiceConfirmation
+        );
+
+        showToast(
+            settings.voiceConfirmation
+                ? "Voice confirmation on"
+                : "Voice confirmation off",
+            "✓"
+        );
+    }
+
+    /* =====================================================
+       EXPORT
+    ===================================================== */
+
+    async function exportData() {
+
+        await loadLogs();
+
+        const backup = {
+            app: "MomYouNeedThis Baby Tracker",
+            version: 1,
+            exportedAt:
+                new Date().toISOString(),
+
+            settings: {
+                ...settings
+            },
+
+            logs: logs
+        };
+
+        const blob =
+            new Blob(
+                [
+                    JSON.stringify(
+                        backup,
+                        null,
+                        2
+                    )
+                ],
+                {
+                    type:
+                        "application/json"
+                }
+            );
+
+        const url =
+            URL.createObjectURL(blob);
+
+        const link =
+            document.createElement("a");
+
+        const date =
+            dateKey();
+
+        link.href = url;
+
+        link.download =
+            `baby-tracker-backup-${date}.json`;
+
+        document.body.appendChild(link);
+
+        link.click();
+
+        link.remove();
+
+        URL.revokeObjectURL(url);
+
+        showToast(
+            "Backup exported",
+            "⬇️"
+        );
+    }
+
+    /* =====================================================
+       IMPORT
+    ===================================================== */
+
+    function triggerImport() {
+
+        const input =
+            $("importDataInput");
+
+        input?.click();
+    }
+
+    async function importDataFile(file) {
+
+        if (!file) return;
+
+        try {
+
+            const text =
+                await file.text();
+
+            const backup =
+                JSON.parse(text);
+
+            if (
+                !backup ||
+                !Array.isArray(
+                    backup.logs
+                )
+            ) {
+
+                throw new Error(
+                    "Invalid backup file."
+                );
+            }
+
+            const confirmed =
+                window.confirm(
+                    `Import ${backup.logs.length} logs?\n\nThis will add them to your existing tracker data.`
+                );
+
+            if (!confirmed) return;
+
+            if (backup.settings) {
+
+                if (
+                    typeof backup.settings.babyName ===
+                    "string"
+                ) {
+
+                    settings.babyName =
+                        backup.settings.babyName;
+
+                    await saveSetting(
+                        "babyName",
+                        settings.babyName
+                    );
+                }
+
+                if (
+                    typeof backup.settings.voiceLanguage ===
+                    "string"
+                ) {
+
+                    settings.voiceLanguage =
+                        backup.settings.voiceLanguage;
+
+                    await saveSetting(
+                        "voiceLanguage",
+                        settings.voiceLanguage
+                    );
+                }
+
+                if (
+                    typeof backup.settings.voiceConfirmation ===
+                    "boolean"
+                ) {
+
+                    settings.voiceConfirmation =
+                        backup.settings.voiceConfirmation;
+
+                    await saveSetting(
+                        "voiceConfirmation",
+                        settings.voiceConfirmation
+                    );
+                }
+            }
+
+            let imported = 0;
+
+            for (
+                const backupLog of backup.logs
+            ) {
+
+                if (!backupLog.timestamp) {
+                    continue;
+                }
+
+                const timestamp =
+                    new Date(
+                        backupLog.timestamp
+                    );
+
+                if (
+                    Number.isNaN(
+                        timestamp.getTime()
+                    )
+                ) {
+                    continue;
+                }
+
+                await saveLog({
+                    type:
+                        backupLog.type ||
+                        "note",
+
+                    subtype:
+                        backupLog.subtype ||
+                        null,
+
+                    title:
+                        backupLog.title ||
+                        "Imported note",
+
+                    details:
+                        backupLog.details ||
+                        "",
+
+                    value:
+                        backupLog.value ??
+                        null,
+
+                    unit:
+                        backupLog.unit ??
+                        null,
+
+                    timestamp:
+                        timestamp.toISOString(),
+
+                    date:
+                        dateKey(timestamp),
+
+                    source:
+                        backupLog.source ||
+                        "import"
+                });
+
+                imported++;
+            }
+
+            await loadSettings();
+            await loadLogs();
+
+            updateBabyProfile();
+            updateTodayDate();
+            renderTimeline();
+            updateSummary();
+
+            showToast(
+                `${imported} logs imported`,
+                "⬆️"
+            );
+
+        } catch (error) {
+
+            console.error(
+                "Import error:",
+                error
+            );
+
+            showToast(
+                "Invalid backup file",
+                "⚠️"
+            );
+        }
+    }
+
+    /* =====================================================
+       DELETE ALL DATA
+    ===================================================== */
+
+    async function deleteAllData() {
 
         const confirmed =
-            confirm(
-                "Import this backup? This will replace the tracker data currently on this device."
+            window.confirm(
+                "Delete ALL baby tracker data from this device?\n\nThis cannot be undone."
             );
 
+        if (!confirmed) return;
 
-        if (!confirmed) {
+        await clearLogsDB();
 
-            event.target.value =
-                "";
+        const store =
+            dbTransaction(
+                SETTINGS_STORE,
+                "readwrite"
+            );
 
+        await new Promise(
+            (resolve, reject) => {
 
-            return;
+                const request =
+                    store.clear();
 
-        }
+                request.onsuccess =
+                    () => resolve();
 
+                request.onerror =
+                    () => reject(
+                        request.error
+                    );
+            }
+        );
 
-        await dbClearLogs();
+        localStorage.removeItem(
+            "momTrackerActiveSleep"
+        );
 
+        settings = {
+            ...DEFAULT_SETTINGS
+        };
 
         logs = [];
 
+        activeSleep = null;
 
-        for (
-            const log
-            of backup.logs
-        ) {
+        renderActiveSleep();
+        updateBabyProfile();
+        renderTimeline();
+        updateSummary();
+        syncSettingsInputs();
 
-            if (
-                !log.id ||
-                !log.type ||
-                !log.timestamp
-            ) {
-
-                continue;
-
-            }
-
-
-            await dbPutLog(
-                log
-            );
-
-
-            logs.push(
-                log
-            );
-
-        }
-
-
-        if (
-            backup.settings
-        ) {
-
-            if (
-                "babyName"
-                in backup.settings
-            ) {
-
-                await dbSetSetting(
-                    "babyName",
-                    backup.settings.babyName
-                );
-
-            }
-
-
-            if (
-                "units"
-                in backup.settings
-            ) {
-
-                await dbSetSetting(
-                    "units",
-                    backup.settings.units
-                );
-
-            }
-
-        }
-
-
-        render();
-
+        closeDeleteModal();
+        closeSettings();
 
         showToast(
-            "✓",
-            "Backup restored"
+            "All tracker data deleted",
+            "✓"
         );
-
-
-    } catch (error) {
-
-        console.error(
-            "Import failed:",
-            error
-        );
-
-
-        showToast(
-            "⚠️",
-            "That backup file isn't valid"
-        );
-
     }
 
+    /* =====================================================
+       TOAST
+    ===================================================== */
 
-    event.target.value =
-        "";
+    let toastTimeout = null;
 
-}
+    function showToast(
+        message,
+        icon = "✓"
+    ) {
 
+        const toast =
+            $("trackerToast");
 
-/* =========================================================
-   SETTINGS
-========================================================= */
+        const messageElement =
+            $("toastMessage");
 
-function setupSettings() {
+        const iconElement =
+            $("toastIcon");
 
-    const settingsButton =
-        document.getElementById(
-            "settingsButton"
+        if (!toast) return;
+
+        if (messageElement) {
+            messageElement.textContent =
+                message;
+        }
+
+        if (iconElement) {
+            iconElement.textContent =
+                icon;
+        }
+
+        toast.classList.add(
+            "show"
         );
 
+        clearTimeout(
+            toastTimeout
+        );
 
-    if (!settingsButton) return;
+        toastTimeout =
+            setTimeout(
+                () => {
+                    toast.classList.remove(
+                        "show"
+                    );
+                },
+                3000
+            );
+    }
 
+    /* =====================================================
+       EVENT BINDING
+    ===================================================== */
 
-    settingsButton.addEventListener(
-        "click",
-        openSettings
-    );
+    function bindEvents() {
 
-}
+        /* ---------------------------------------------
+           VOICE
+        --------------------------------------------- */
 
+        $("voiceButton")?.addEventListener(
+            "click",
+            startVoiceRecognition
+        );
 
-async function openSettings() {
+        $$(
+            ".voice-example"
+        ).forEach(button => {
 
-    const babyName =
-        await dbGetSetting(
-            "babyName"
-        ) || "";
+            button.addEventListener(
+                "click",
+                () => {
 
+                    handleVoiceExample(
+                        button.dataset.voiceExample
+                    );
+                }
+            );
+        });
 
-    const units =
-        await dbGetSetting(
-            "units"
-        ) || "ml";
+        $("voicePermissionClose")
+            ?.addEventListener(
+                "click",
+                () => {
 
+                    $("voicePermissionMessage")
+                        ?.classList.add(
+                            "hidden"
+                        );
+                }
+            );
 
-    openModal(`
+        /* ---------------------------------------------
+           QUICK ACTIONS
+        --------------------------------------------- */
 
-        <h2>⚙️ Settings</h2>
+        $$(
+            ".quick-action"
+        ).forEach(button => {
 
-        <p class="modal-subtitle">
-            Your tracker stays on this device.
-        </p>
+            button.addEventListener(
+                "click",
+                () => {
 
-        <form
-            class="tracker-form"
-            id="settingsForm">
+                    handleQuickAction(
+                        button.dataset.action
+                    );
+                }
+            );
+        });
 
-            <label>
-                Baby's name
-            </label>
+        /* ---------------------------------------------
+           ACTIVE SLEEP
+        --------------------------------------------- */
 
-            <input
-                id="babyNameInput"
-                type="text"
-                value="${escapeHtml(babyName)}"
-                placeholder="Baby">
+        $("endSleepButton")
+            ?.addEventListener(
+                "click",
+                endSleep
+            );
 
+        /* ---------------------------------------------
+           TIMELINE
+        --------------------------------------------- */
 
-            <label>
-                Bottle units
-            </label>
+        $("clearTodayButton")
+            ?.addEventListener(
+                "click",
+                clearToday
+            );
 
-            <select id="unitsInput">
+        $("timeline")
+            ?.addEventListener(
+                "click",
+                event => {
 
-                <option
-                    value="ml"
-                    ${units === "ml" ? "selected" : ""}>
-                    Milliliters (ml)
-                </option>
+                    const button =
+                        event.target.closest(
+                            "[data-delete-log]"
+                        );
 
-                <option
-                    value="oz"
-                    ${units === "oz" ? "selected" : ""}>
-                    Ounces (oz)
-                </option>
+                    if (!button) return;
 
-            </select>
-
-
-            <button
-                class="form-submit"
-                type="submit">
-
-                Save Settings
-
-            </button>
-
-        </form>
-
-
-        <div class="settings-backup">
-
-            <h3>
-                💾 Your Data
-            </h3>
-
-            <p>
-                Your tracker data is stored locally
-                in this browser. Export a backup
-                before changing devices.
-            </p>
-
-
-            <button
-                id="exportDataButton"
-                type="button">
-
-                Export Backup
-
-            </button>
-
-
-            <button
-                id="importDataButton"
-                type="button">
-
-                Import Backup
-
-            </button>
-
-
-            <input
-                id="importDataInput"
-                type="file"
-                accept=".json,application/json"
-                hidden>
-
-        </div>
-
-    `);
-
-
-    document
-        .getElementById(
-            "settingsForm"
-        )
-        .addEventListener(
-            "submit",
-            async event => {
-
-                event.preventDefault();
-
-
-                const name =
-                    document
-                        .getElementById(
-                            "babyNameInput"
+                    deleteLog(
+                        Number(
+                            button.dataset.deleteLog
                         )
-                        .value
-                        .trim();
+                    );
+                }
+            );
 
+        /* ---------------------------------------------
+           SETTINGS
+        --------------------------------------------- */
 
-                const units =
-                    document
-                        .getElementById(
-                            "unitsInput"
-                        )
-                        .value;
+        $("settingsButton")
+            ?.addEventListener(
+                "click",
+                openSettings
+            );
 
+        $("settingsClose")
+            ?.addEventListener(
+                "click",
+                closeSettings
+            );
 
-                await dbSetSetting(
-                    "babyName",
-                    name
-                );
+        $$(
+            "[data-close-settings]"
+        ).forEach(element => {
 
+            element.addEventListener(
+                "click",
+                closeSettings
+            );
+        });
 
-                await dbSetSetting(
-                    "units",
-                    units
-                );
+        $("saveBabyNameButton")
+            ?.addEventListener(
+                "click",
+                async () => {
 
+                    await saveBabyName(
+                        $("babyNameInput")?.value
+                    );
+                }
+            );
 
-                closeModal();
+        $("voiceLanguage")
+            ?.addEventListener(
+                "change",
+                saveVoiceLanguage
+            );
 
+        $("voiceConfirmationToggle")
+            ?.addEventListener(
+                "change",
+                saveVoiceConfirmation
+            );
 
-                showToast(
-                    "✓",
-                    "Settings saved"
-                );
+        $("settingsExportButton")
+            ?.addEventListener(
+                "click",
+                exportData
+            );
 
+        $("settingsImportButton")
+            ?.addEventListener(
+                "click",
+                triggerImport
+            );
+
+        $("deleteAllDataButton")
+            ?.addEventListener(
+                "click",
+                openDeleteModal
+            );
+
+        /* ---------------------------------------------
+           BABY PROFILE
+        --------------------------------------------- */
+
+        $("editBabyButton")
+            ?.addEventListener(
+                "click",
+                openBabyNameModal
+            );
+
+        $("babyNameModalClose")
+            ?.addEventListener(
+                "click",
+                closeBabyNameModal
+            );
+
+        $$(
+            "[data-close-baby-name]"
+        ).forEach(element => {
+
+            element.addEventListener(
+                "click",
+                closeBabyNameModal
+            );
+        });
+
+        $("babyNameForm")
+            ?.addEventListener(
+                "submit",
+                async event => {
+
+                    event.preventDefault();
+
+                    await saveBabyName(
+                        $("babyNameModalInput")
+                            ?.value
+                    );
+
+                    closeBabyNameModal();
+                }
+            );
+
+        /* ---------------------------------------------
+           ACTION MODAL
+        --------------------------------------------- */
+
+        $("modalClose")
+            ?.addEventListener(
+                "click",
+                closeActionModal
+            );
+
+        $$(
+            "[data-close-modal]"
+        ).forEach(element => {
+
+            element.addEventListener(
+                "click",
+                closeActionModal
+            );
+        });
+
+        /* ---------------------------------------------
+           DELETE MODAL
+        --------------------------------------------- */
+
+        $("cancelDeleteButton")
+            ?.addEventListener(
+                "click",
+                closeDeleteModal
+            );
+
+        $("confirmDeleteButton")
+            ?.addEventListener(
+                "click",
+                deleteAllData
+            );
+
+        $$(
+            "[data-close-delete]"
+        ).forEach(element => {
+
+            element.addEventListener(
+                "click",
+                closeDeleteModal
+            );
+        });
+
+        /* ---------------------------------------------
+           BACKUP
+        --------------------------------------------- */
+
+        $("exportDataButton")
+            ?.addEventListener(
+                "click",
+                exportData
+            );
+
+        $("importDataButton")
+            ?.addEventListener(
+                "click",
+                triggerImport
+            );
+
+        $("importDataInput")
+            ?.addEventListener(
+                "change",
+                async event => {
+
+                    const file =
+                        event.target.files?.[0];
+
+                    await importDataFile(file);
+
+                    event.target.value = "";
+                }
+            );
+
+        /* ---------------------------------------------
+           ESCAPE
+        --------------------------------------------- */
+
+        document.addEventListener(
+            "keydown",
+            event => {
+
+                if (
+                    event.key !== "Escape"
+                ) {
+                    return;
+                }
+
+                if (
+                    currentModal ===
+                    "action"
+                ) {
+                    closeActionModal();
+                }
+
+                else if (
+                    currentModal ===
+                    "settings"
+                ) {
+                    closeSettings();
+                }
+
+                else if (
+                    currentModal ===
+                    "babyName"
+                ) {
+                    closeBabyNameModal();
+                }
+
+                else if (
+                    currentModal ===
+                    "delete"
+                ) {
+                    closeDeleteModal();
+                }
             }
         );
+    }
 
+    /* =====================================================
+       UTILITY
+    ===================================================== */
 
-    /*
-       Bind the dynamically-created
-       backup buttons.
-    */
-    setupBackupControls();
+    function capitalize(value) {
 
-}
+        const text =
+            safeText(value);
 
+        if (!text) return "";
 
-/* =========================================================
-   HTML ESCAPE
-========================================================= */
-
-function escapeHtml(
-    value
-) {
-
-    return String(value)
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-        .replace(
-            /</g,
-            "&lt;"
-        )
-        .replace(
-            />/g,
-            "&gt;"
-        )
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-        .replace(
-            /'/g,
-            "&#039;"
+        return (
+            text.charAt(0).toUpperCase() +
+            text.slice(1)
         );
+    }
 
-}
-
-
-/* =========================================================
-   RESTORE ACTIVE SLEEP
-========================================================= */
-
-function restoreActiveSleep() {
-
-    if (!activeSleep) return;
-
-
-    renderSleepState();
-
-    startSleepTimer();
-
-}
-
-
-/* =========================================================
-   TOAST
-========================================================= */
-
-function showToast(
-    icon,
-    message
-) {
-
-    if (
-        !toast ||
-        !toastMessage ||
-        !toastIcon
-    ) return;
-
-
-    toastIcon.textContent =
-        icon;
-
-
-    toastMessage.textContent =
-        message;
-
-
-    toast.classList.add(
-        "show"
-    );
-
-
-    clearTimeout(
-        toastTimeout
-    );
-
-
-    toastTimeout =
-        setTimeout(
-            () => {
-
-                toast.classList.remove(
-                    "show"
-                );
-
-            },
-            2500
-        );
-
-}
-
-
-/* =========================================================
-   START
-========================================================= */
-
-initializeTracker();
+})();
