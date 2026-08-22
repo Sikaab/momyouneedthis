@@ -1,256 +1,25 @@
 /* =========================================================
-   MOMYOuNEEDTHIS BABY TRACKER
+   MOMYOURENEEDTHIS
+   BABY TRACKER
 ========================================================= */
 
-(() => {
 
-"use strict";
+/* =========================
+   STORAGE
+========================= */
 
+const STORAGE_KEY = "momyouneedthis_baby_tracker";
 
-/* =========================================================
-   DATABASE
-========================================================= */
+let logs = loadLogs();
 
-const DB_NAME = "MomYouNeedThisBabyTracker";
-const DB_VERSION = 1;
-const STORE_NAME = "events";
+let activeSleep = null;
 
-let db = null;
+let sleepTimerInterval = null;
 
-function openDatabase() {
 
-    return new Promise((resolve, reject) => {
-
-        const request = indexedDB.open(DB_NAME, DB_VERSION);
-
-        request.onupgradeneeded = (event) => {
-
-            const database = event.target.result;
-
-            if (!database.objectStoreNames.contains(STORE_NAME)) {
-
-                const store = database.createObjectStore(
-                    STORE_NAME,
-                    {
-                        keyPath: "id",
-                        autoIncrement: true
-                    }
-                );
-
-                store.createIndex(
-                    "timestamp",
-                    "timestamp",
-                    { unique: false }
-                );
-
-            }
-
-        };
-
-        request.onsuccess = () => {
-
-            db = request.result;
-
-            resolve(db);
-
-        };
-
-        request.onerror = () => {
-
-            reject(request.error);
-
-        };
-
-    });
-
-}
-
-
-/* =========================================================
-   DATABASE HELPERS
-========================================================= */
-
-function addEvent(event) {
-
-    return new Promise((resolve, reject) => {
-
-        const transaction =
-            db.transaction(STORE_NAME, "readwrite");
-
-        const store =
-            transaction.objectStore(STORE_NAME);
-
-        const request = store.add(event);
-
-        request.onsuccess = () => {
-
-            resolve(request.result);
-
-        };
-
-        request.onerror = () => {
-
-            reject(request.error);
-
-        };
-
-    });
-
-}
-
-
-function getAllEvents() {
-
-    return new Promise((resolve, reject) => {
-
-        const transaction =
-            db.transaction(STORE_NAME, "readonly");
-
-        const store =
-            transaction.objectStore(STORE_NAME);
-
-        const request = store.getAll();
-
-        request.onsuccess = () => {
-
-            resolve(request.result);
-
-        };
-
-        request.onerror = () => {
-
-            reject(request.error);
-
-        };
-
-    });
-
-}
-
-
-function deleteEvent(id) {
-
-    return new Promise((resolve, reject) => {
-
-        const transaction =
-            db.transaction(STORE_NAME, "readwrite");
-
-        const store =
-            transaction.objectStore(STORE_NAME);
-
-        const request = store.delete(id);
-
-        request.onsuccess = () => {
-
-            resolve();
-
-        };
-
-        request.onerror = () => {
-
-            reject(request.error);
-
-        };
-
-    });
-
-}
-
-
-function clearEvents() {
-
-    return new Promise((resolve, reject) => {
-
-        const transaction =
-            db.transaction(STORE_NAME, "readwrite");
-
-        const store =
-            transaction.objectStore(STORE_NAME);
-
-        const request = store.clear();
-
-        request.onsuccess = () => {
-
-            resolve();
-
-        };
-
-        request.onerror = () => {
-
-            reject(request.error);
-
-        };
-
-    });
-
-}
-
-
-/* =========================================================
-   DATE HELPERS
-========================================================= */
-
-function isToday(timestamp) {
-
-    const date = new Date(timestamp);
-    const now = new Date();
-
-    return (
-        date.getFullYear() === now.getFullYear() &&
-        date.getMonth() === now.getMonth() &&
-        date.getDate() === now.getDate()
-    );
-
-}
-
-
-function formatTime(timestamp) {
-
-    return new Intl.DateTimeFormat(
-        undefined,
-        {
-            hour: "numeric",
-            minute: "2-digit"
-        }
-    ).format(new Date(timestamp));
-
-}
-
-
-function formatDate() {
-
-    return new Intl.DateTimeFormat(
-        undefined,
-        {
-            weekday: "short",
-            month: "short",
-            day: "numeric"
-        }
-    ).format(new Date());
-
-}
-
-
-function getGreeting() {
-
-    const hour = new Date().getHours();
-
-    if (hour < 12) {
-        return "Good morning 🤍";
-    }
-
-    if (hour < 18) {
-        return "Good afternoon 🤍";
-    }
-
-    return "Good evening 🤍";
-
-}
-
-
-/* =========================================================
-   UI
-========================================================= */
+/* =========================
+   ELEMENTS
+========================= */
 
 const timeline =
     document.getElementById("timeline");
@@ -258,335 +27,661 @@ const timeline =
 const emptyState =
     document.getElementById("emptyState");
 
-const feedTotal =
-    document.getElementById("feedTotal");
+const actionModal =
+    document.getElementById("actionModal");
 
-const wetTotal =
-    document.getElementById("wetTotal");
+const modalContent =
+    document.getElementById("modalContent");
 
-const dirtyTotal =
-    document.getElementById("dirtyTotal");
-
-const sleepTotal =
-    document.getElementById("sleepTotal");
-
-const todayDate =
-    document.getElementById("todayDate");
-
-const greeting =
-    document.getElementById("trackerGreeting");
+const modalClose =
+    document.getElementById("modalClose");
 
 const toast =
     document.getElementById("trackerToast");
 
-const toastText =
-    document.getElementById("toastText");
+const toastMessage =
+    document.getElementById("toastMessage");
 
 const toastIcon =
     document.getElementById("toastIcon");
 
 
-greeting.textContent = getGreeting();
-todayDate.textContent = formatDate();
+/* =========================
+   LOAD / SAVE
+========================= */
 
+function loadLogs() {
 
-/* =========================================================
-   EVENT DEFINITIONS
-========================================================= */
+    try {
 
-const EVENT_INFO = {
+        const saved =
+            localStorage.getItem(STORAGE_KEY);
 
-    feed: {
-        icon: "🍼",
-        label: "Feed",
-        className: "event-feed"
-    },
+        return saved
+            ? JSON.parse(saved)
+            : [];
 
-    wet: {
-        icon: "💧",
-        label: "Wet diaper",
-        className: "event-wet"
-    },
+    } catch (error) {
 
-    dirty: {
-        icon: "💩",
-        label: "Dirty diaper",
-        className: "event-dirty"
-    },
+        console.error(
+            "Unable to load baby tracker data.",
+            error
+        );
 
-    sleep: {
-        icon: "😴",
-        label: "Sleep",
-        className: "event-sleep"
+        return [];
+
     }
 
-};
+}
 
 
-/* =========================================================
-   LOG EVENT
-========================================================= */
+function saveLogs() {
 
-async function logEvent(type, details = "") {
-
-    const event = {
-
-        type,
-
-        details,
-
-        timestamp: Date.now()
-
-    };
-
-    await addEvent(event);
-
-    await render();
-
-    showToast(
-        EVENT_INFO[type]?.icon || "✓",
-        buildEventLabel(event)
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(logs)
     );
 
 }
 
 
-/* =========================================================
-   EVENT LABEL
-========================================================= */
+/* =========================
+   ID
+========================= */
 
-function buildEventLabel(event) {
+function createId() {
 
-    const info = EVENT_INFO[event.type];
-
-    if (!info) {
-        return "Logged";
-    }
-
-    if (event.type === "feed" && event.details) {
-
-        return `Feed · ${event.details}`;
-
-    }
-
-    return info.label;
+    return Date.now().toString(36) +
+        Math.random().toString(36).substring(2);
 
 }
 
 
-/* =========================================================
+/* =========================
+   DATE
+========================= */
+
+function todayKey(date = new Date()) {
+
+    const year =
+        date.getFullYear();
+
+    const month =
+        String(date.getMonth() + 1)
+            .padStart(2, "0");
+
+    const day =
+        String(date.getDate())
+            .padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+
+}
+
+
+function formatTime(date) {
+
+    return new Date(date)
+        .toLocaleTimeString([], {
+            hour: "numeric",
+            minute: "2-digit"
+        });
+
+}
+
+
+function formatToday() {
+
+    return new Date()
+        .toLocaleDateString([], {
+            weekday: "long",
+            month: "long",
+            day: "numeric"
+        });
+
+}
+
+
+/* =========================
+   ADD LOG
+========================= */
+
+function addLog(type, details = {}) {
+
+    const now = new Date();
+
+    const log = {
+
+        id: createId(),
+
+        type,
+
+        timestamp: now.toISOString(),
+
+        date: todayKey(now),
+
+        ...details
+
+    };
+
+    logs.push(log);
+
+    saveLogs();
+
+    render();
+
+    showToast(
+        getLogIcon(log),
+        getLogTitle(log)
+    );
+
+}
+
+
+/* =========================
+   LOG HELPERS
+========================= */
+
+function getLogIcon(log) {
+
+    const icons = {
+
+        feed: "🍼",
+
+        diaper: "💧",
+
+        sleep: "😴",
+
+        note: "📝"
+
+    };
+
+    return icons[log.type] || "💗";
+
+}
+
+
+function getLogTitle(log) {
+
+    if (log.type === "feed") {
+
+        if (log.method === "breast") {
+
+            return `Breastfeeding · ${log.side || "Both"}`;
+
+        }
+
+        if (log.method === "bottle") {
+
+            return `Bottle · ${log.amount || 0} ml`;
+
+        }
+
+        return "Feeding";
+
+    }
+
+
+    if (log.type === "diaper") {
+
+        return `${capitalize(log.kind)} diaper`;
+
+    }
+
+
+    if (log.type === "sleep") {
+
+        return "Nap";
+
+    }
+
+
+    if (log.type === "note") {
+
+        return log.text || "Note";
+
+    }
+
+
+    return "Activity";
+
+}
+
+
+function getLogDetails(log) {
+
+    if (log.type === "feed") {
+
+        if (log.method === "breast") {
+
+            return `${log.side || "Both"}${log.duration ? ` · ${log.duration} min` : ""}`;
+
+        }
+
+        if (log.method === "bottle") {
+
+            return `${log.amount || 0} ml`;
+
+        }
+
+        return "";
+
+    }
+
+
+    if (log.type === "diaper") {
+
+        return log.kind === "wet"
+            ? "Wet"
+            : log.kind === "dirty"
+                ? "Dirty"
+                : "Wet + dirty";
+
+    }
+
+
+    if (log.type === "sleep") {
+
+        return log.duration
+            ? formatDuration(log.duration)
+            : "Sleep";
+
+    }
+
+
+    if (log.type === "note") {
+
+        return "";
+
+    }
+
+
+    return "";
+
+}
+
+
+/* =========================
+   CAPITALIZE
+========================= */
+
+function capitalize(value) {
+
+    if (!value) return "";
+
+    return value.charAt(0).toUpperCase() +
+        value.slice(1);
+
+}
+
+
+/* =========================
+   FORMAT DURATION
+========================= */
+
+function formatDuration(minutes) {
+
+    if (!minutes) return "0m";
+
+    const hours =
+        Math.floor(minutes / 60);
+
+    const mins =
+        minutes % 60;
+
+    if (hours) {
+
+        return `${hours}h ${mins}m`;
+
+    }
+
+    return `${mins}m`;
+
+}
+
+
+/* =========================
+   TODAY LOGS
+========================= */
+
+function getTodayLogs() {
+
+    const today =
+        todayKey();
+
+    return logs
+        .filter(log => log.date === today)
+        .sort(
+            (a, b) =>
+                new Date(b.timestamp) -
+                new Date(a.timestamp)
+        );
+
+}
+
+
+/* =========================
    RENDER
-========================================================= */
+========================= */
 
-async function render() {
+function render() {
 
-    const events = await getAllEvents();
+    renderDate();
 
-    const todaysEvents =
-        events
-            .filter(event => isToday(event.timestamp))
-            .sort(
-                (a, b) =>
-                    b.timestamp - a.timestamp
-            );
+    renderTimeline();
 
+    renderSummary();
 
-    renderTimeline(todaysEvents);
-
-    renderSummary(todaysEvents);
+    renderSleepState();
 
 }
 
 
-function renderTimeline(events) {
+/* =========================
+   DATE
+========================= */
+
+function renderDate() {
+
+    const date =
+        document.getElementById("todayDate");
+
+    if (date) {
+
+        date.textContent =
+            formatToday();
+
+    }
+
+}
+
+
+/* =========================
+   TIMELINE
+========================= */
+
+function renderTimeline() {
+
+    const todayLogs =
+        getTodayLogs();
 
     timeline.innerHTML = "";
 
-    if (!events.length) {
+    if (!todayLogs.length) {
 
-        timeline.appendChild(emptyState);
+        timeline.appendChild(
+            createEmptyState()
+        );
 
         return;
 
     }
 
 
-    events.forEach(event => {
+    todayLogs.forEach(log => {
 
-        const info =
-            EVENT_INFO[event.type];
-
-        if (!info) return;
-
-
-        const row =
+        const item =
             document.createElement("div");
 
-        row.className =
-            `timeline-event ${info.className}`;
-
+        item.className =
+            "timeline-item";
 
         const icon =
             document.createElement("div");
 
-        icon.className = "event-icon";
+        icon.className =
+            "timeline-icon";
 
-        icon.textContent = info.icon;
+        icon.textContent =
+            getLogIcon(log);
 
 
-        const content =
+        const info =
             document.createElement("div");
 
-        content.className =
-            "event-content";
-
+        info.className =
+            "timeline-info";
 
         const title =
-            document.createElement("div");
-
-        title.className =
-            "event-title";
+            document.createElement("strong");
 
         title.textContent =
-            buildEventLabel(event);
+            getLogTitle(log);
+
+
+        const details =
+            document.createElement("span");
+
+        details.textContent =
+            getLogDetails(log);
+
+
+        info.appendChild(title);
+
+        if (details.textContent) {
+
+            info.appendChild(details);
+
+        }
 
 
         const time =
             document.createElement("div");
 
         time.className =
-            "event-time";
+            "timeline-time";
 
         time.textContent =
-            formatTime(event.timestamp);
-
-
-        content.appendChild(title);
-        content.appendChild(time);
+            formatTime(log.timestamp);
 
 
         const deleteButton =
             document.createElement("button");
 
-        deleteButton.type = "button";
-
         deleteButton.className =
-            "event-delete";
+            "timeline-delete";
+
+        deleteButton.type =
+            "button";
 
         deleteButton.textContent =
             "×";
 
         deleteButton.setAttribute(
             "aria-label",
-            "Delete event"
+            "Delete log"
         );
-
 
         deleteButton.addEventListener(
             "click",
-            async () => {
-
-                await deleteEvent(event.id);
-
-                await render();
-
-                showToast(
-                    "↩",
-                    "Entry removed"
-                );
-
-            }
+            () => deleteLog(log.id)
         );
 
 
-        row.appendChild(icon);
-        row.appendChild(content);
-        row.appendChild(deleteButton);
+        item.appendChild(icon);
 
+        item.appendChild(info);
 
-        timeline.appendChild(row);
+        item.appendChild(time);
+
+        item.appendChild(deleteButton);
+
+        timeline.appendChild(item);
 
     });
 
 }
 
 
-function renderSummary(events) {
+/* =========================
+   EMPTY STATE
+========================= */
+
+function createEmptyState() {
+
+    const wrapper =
+        document.createElement("div");
+
+    wrapper.className =
+        "empty-state";
+
+    wrapper.innerHTML = `
+
+        <div class="empty-state-icon">
+            🌸
+        </div>
+
+        <h3>
+            Your day starts here
+        </h3>
+
+        <p>
+            Tap an activity above and
+            we'll remember it for you.
+        </p>
+
+    `;
+
+    return wrapper;
+
+}
+
+
+/* =========================
+   SUMMARY
+========================= */
+
+function renderSummary() {
+
+    const todayLogs =
+        getTodayLogs();
+
+
+    document.getElementById(
+        "totalLogs"
+    ).textContent =
+        todayLogs.length;
+
 
     const feeds =
-        events.filter(
-            event => event.type === "feed"
-        ).length;
-
-    const wet =
-        events.filter(
-            event => event.type === "wet"
-        ).length;
-
-    const dirty =
-        events.filter(
-            event => event.type === "dirty"
+        todayLogs.filter(
+            log => log.type === "feed"
         ).length;
 
 
-    const sleepEvents =
-        events.filter(
-            event => event.type === "sleep"
+    const diapers =
+        todayLogs.filter(
+            log => log.type === "diaper"
+        ).length;
+
+
+    const sleep =
+        todayLogs
+
+            .filter(
+                log => log.type === "sleep"
+            )
+
+            .reduce(
+                (total, log) =>
+                    total + (log.duration || 0),
+                0
+            );
+
+
+    document.getElementById(
+        "feedCount"
+    ).textContent = feeds;
+
+
+    document.getElementById(
+        "diaperCount"
+    ).textContent = diapers;
+
+
+    document.getElementById(
+        "sleepTotal"
+    ).textContent =
+        formatDuration(sleep);
+
+}
+
+
+/* =========================
+   DELETE
+========================= */
+
+function deleteLog(id) {
+
+    logs =
+        logs.filter(
+            log => log.id !== id
         );
 
+    saveLogs();
 
-    let sleepMinutes = 0;
+    render();
 
-    sleepEvents.forEach(event => {
+    showToast(
+        "✓",
+        "Log removed"
+    );
 
-        if (event.duration) {
+}
 
-            sleepMinutes +=
-                event.duration;
+
+/* =========================
+   MODAL
+========================= */
+
+function openModal(content) {
+
+    modalContent.innerHTML =
+        content;
+
+    actionModal.classList.remove(
+        "hidden"
+    );
+
+}
+
+
+function closeModal() {
+
+    actionModal.classList.add(
+        "hidden"
+    );
+
+}
+
+
+modalClose.addEventListener(
+    "click",
+    closeModal
+);
+
+
+actionModal.addEventListener(
+    "click",
+    event => {
+
+        if (
+            event.target.hasAttribute(
+                "data-close-modal"
+            )
+        ) {
+
+            closeModal();
 
         }
 
-    });
-
-
-    feedTotal.textContent = feeds;
-    wetTotal.textContent = wet;
-    dirtyTotal.textContent = dirty;
-
-    sleepTotal.textContent =
-        formatDuration(sleepMinutes);
-
-}
-
-
-function formatDuration(minutes) {
-
-    if (!minutes) {
-        return "0m";
     }
-
-    const hours =
-        Math.floor(minutes / 60);
-
-    const remaining =
-        minutes % 60;
-
-    if (hours === 0) {
-        return `${remaining}m`;
-    }
-
-    if (remaining === 0) {
-        return `${hours}h`;
-    }
-
-    return `${hours}h ${remaining}m`;
-
-}
+);
 
 
-/* =========================================================
+/* =========================
    QUICK ACTIONS
-========================================================= */
+========================= */
 
 document
     .querySelectorAll(".quick-action")
@@ -601,21 +696,27 @@ document
 
                 if (action === "feed") {
 
-                    openModal("feedModal");
+                    openFeedModal();
 
-                    return;
+                }
+
+                if (action === "diaper") {
+
+                    openDiaperModal();
 
                 }
 
                 if (action === "sleep") {
 
-                    handleSleep();
-
-                    return;
+                    openSleepModal();
 
                 }
 
-                logEvent(action);
+                if (action === "note") {
+
+                    openNoteModal();
+
+                }
 
             }
         );
@@ -623,139 +724,476 @@ document
     });
 
 
-/* =========================================================
+/* =========================
    FEED MODAL
-========================================================= */
+========================= */
 
-document
-    .querySelectorAll("[data-feed-type]")
-    .forEach(button => {
+function openFeedModal() {
 
-        button.addEventListener(
-            "click",
-            () => {
+    openModal(`
 
-                const type =
-                    button.dataset.feedType;
+        <h2>🍼 Feeding</h2>
 
-                closeAllModals();
+        <p class="modal-subtitle">
+            What kind of feed?
+        </p>
 
-                if (type === "breast") {
+        <div class="modal-options">
 
-                    logEvent(
-                        "feed",
-                        "Breast"
-                    );
+            <button
+                class="modal-option"
+                data-feed="breast">
+                🤱 Breastfeeding
+            </button>
 
-                    return;
+            <button
+                class="modal-option"
+                data-feed="bottle">
+                🍼 Bottle
+            </button>
+
+        </div>
+
+    `);
+
+
+    document
+        .querySelectorAll("[data-feed]")
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    const method =
+                        button.dataset.feed;
+
+                    if (
+                        method === "breast"
+                    ) {
+
+                        openBreastModal();
+
+                    } else {
+
+                        openBottleModal();
+
+                    }
 
                 }
-
-                openModal("bottleModal");
-
-            }
-        );
-
-    });
-
-
-/* =========================================================
-   BOTTLE
-========================================================= */
-
-document
-    .querySelectorAll("[data-amount]")
-    .forEach(button => {
-
-        button.addEventListener(
-            "click",
-            () => {
-
-                const amount =
-                    button.dataset.amount;
-
-                closeAllModals();
-
-                logEvent(
-                    "feed",
-                    `${amount} oz`
-                );
-
-            }
-        );
-
-    });
-
-
-document
-    .getElementById("customBottleButton")
-    .addEventListener(
-        "click",
-        () => {
-
-            const amount =
-                prompt(
-                    "How many ounces?"
-                );
-
-            if (!amount) {
-                return;
-            }
-
-            const numericAmount =
-                Number(amount);
-
-            if (
-                !Number.isFinite(
-                    numericAmount
-                ) ||
-                numericAmount <= 0
-            ) {
-
-                showToast(
-                    "!",
-                    "Please enter a valid amount"
-                );
-
-                return;
-
-            }
-
-            closeAllModals();
-
-            logEvent(
-                "feed",
-                `${numericAmount} oz`
             );
 
+        });
+
+}
+
+
+/* =========================
+   BREAST
+========================= */
+
+function openBreastModal() {
+
+    openModal(`
+
+        <h2>🤱 Breastfeeding</h2>
+
+        <p class="modal-subtitle">
+            A few quick details.
+        </p>
+
+        <form
+            class="tracker-form"
+            id="breastForm">
+
+            <div>
+
+                <label>
+                    Side
+                </label>
+
+                <select id="breastSide">
+
+                    <option value="Left">
+                        Left
+                    </option>
+
+                    <option value="Right">
+                        Right
+                    </option>
+
+                    <option value="Both">
+                        Both
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div>
+
+                <label>
+                    Duration (optional)
+                </label>
+
+                <input
+                    id="breastDuration"
+                    type="number"
+                    min="0"
+                    inputmode="numeric"
+                    placeholder="Minutes">
+
+            </div>
+
+
+            <button
+                class="form-submit"
+                type="submit">
+
+                💗 Save Feed
+
+            </button>
+
+        </form>
+
+    `);
+
+
+    document
+        .getElementById("breastForm")
+        .addEventListener(
+            "submit",
+            event => {
+
+                event.preventDefault();
+
+                addLog(
+                    "feed",
+                    {
+
+                        method: "breast",
+
+                        side:
+                            document.getElementById(
+                                "breastSide"
+                            ).value,
+
+                        duration:
+                            Number(
+                                document.getElementById(
+                                    "breastDuration"
+                                ).value
+                            ) || null
+
+                    }
+                );
+
+                closeModal();
+
+            }
+        );
+
+}
+
+
+/* =========================
+   BOTTLE
+========================= */
+
+function openBottleModal() {
+
+    openModal(`
+
+        <h2>🍼 Bottle</h2>
+
+        <p class="modal-subtitle">
+            How much did baby have?
+        </p>
+
+        <form
+            class="tracker-form"
+            id="bottleForm">
+
+            <div>
+
+                <label>
+                    Amount
+                </label>
+
+                <input
+                    id="bottleAmount"
+                    type="number"
+                    min="0"
+                    inputmode="decimal"
+                    placeholder="ml"
+                    required>
+
+            </div>
+
+
+            <button
+                class="form-submit"
+                type="submit">
+
+                💗 Save Feed
+
+            </button>
+
+        </form>
+
+    `);
+
+
+    document
+        .getElementById("bottleForm")
+        .addEventListener(
+            "submit",
+            event => {
+
+                event.preventDefault();
+
+                addLog(
+                    "feed",
+                    {
+
+                        method: "bottle",
+
+                        amount:
+                            Number(
+                                document.getElementById(
+                                    "bottleAmount"
+                                ).value
+                            )
+
+                    }
+                );
+
+                closeModal();
+
+            }
+        );
+
+}
+
+
+/* =========================
+   DIAPER
+========================= */
+
+function openDiaperModal() {
+
+    openModal(`
+
+        <h2>💧 Diaper</h2>
+
+        <p class="modal-subtitle">
+            What kind?
+        </p>
+
+        <div class="modal-options">
+
+            <button
+                class="modal-option"
+                data-diaper="wet">
+                💧 Wet
+            </button>
+
+            <button
+                class="modal-option"
+                data-diaper="dirty">
+                💩 Dirty
+            </button>
+
+            <button
+                class="modal-option"
+                data-diaper="both">
+                💧💩 Wet + Dirty
+            </button>
+
+        </div>
+
+    `);
+
+
+    document
+        .querySelectorAll("[data-diaper]")
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    addLog(
+                        "diaper",
+                        {
+                            kind:
+                                button.dataset.diaper
+                        }
+                    );
+
+                    closeModal();
+
+                }
+            );
+
+        });
+
+}
+
+
+/* =========================
+   SLEEP
+========================= */
+
+function openSleepModal() {
+
+    if (activeSleep) {
+
+        endSleep();
+
+        return;
+
+    }
+
+
+    openModal(`
+
+        <h2>😴 Sleep</h2>
+
+        <p class="modal-subtitle">
+            Start tracking baby's nap.
+        </p>
+
+        <button
+            id="startSleepButton"
+            class="form-submit"
+            type="button">
+
+            😴 Start Nap Now
+
+        </button>
+
+    `);
+
+
+    document
+        .getElementById("startSleepButton")
+        .addEventListener(
+            "click",
+            () => {
+
+                startSleep();
+
+                closeModal();
+
+            }
+        );
+
+}
+
+
+/* =========================
+   START SLEEP
+========================= */
+
+function startSleep() {
+
+    activeSleep = {
+
+        startedAt:
+            new Date().toISOString()
+
+    };
+
+
+    localStorage.setItem(
+        "momyouneedthis_active_sleep",
+        JSON.stringify(activeSleep)
+    );
+
+
+    renderSleepState();
+
+    showToast(
+        "😴",
+        "Nap started"
+    );
+
+
+    startSleepTimer();
+
+}
+
+
+/* =========================
+   END SLEEP
+========================= */
+
+function endSleep() {
+
+    if (!activeSleep) return;
+
+
+    const start =
+        new Date(
+            activeSleep.startedAt
+        );
+
+    const end =
+        new Date();
+
+
+    const duration =
+        Math.max(
+            1,
+            Math.round(
+                (end - start) / 60000
+            )
+        );
+
+
+    addLog(
+        "sleep",
+        {
+            duration
         }
     );
 
 
-/* =========================================================
-   SLEEP
-========================================================= */
-
-let sleepStartedAt = null;
+    activeSleep = null;
 
 
-function handleSleep() {
+    localStorage.removeItem(
+        "momyouneedthis_active_sleep"
+    );
 
-    if (!sleepStartedAt) {
 
-        sleepStartedAt =
-            Date.now();
+    stopSleepTimer();
 
-        localStorage.setItem(
-            "babyTrackerSleepStarted",
-            String(sleepStartedAt)
+    renderSleepState();
+
+}
+
+
+/* =========================
+   SLEEP STATE
+========================= */
+
+function renderSleepState() {
+
+    const card =
+        document.getElementById(
+            "activeSleepCard"
         );
 
-        updateSleepButton();
+    if (!card) return;
 
-        showToast(
-            "😴",
-            "Sleep started"
+
+    if (!activeSleep) {
+
+        card.classList.add(
+            "hidden"
         );
 
         return;
@@ -763,455 +1201,357 @@ function handleSleep() {
     }
 
 
-    const end =
-        Date.now();
-
-    const duration =
-        Math.round(
-            (end - sleepStartedAt)
-            / 60000
-        );
-
-
-    const event = {
-
-        type: "sleep",
-
-        details:
-            `${formatDuration(duration)}`,
-
-        duration,
-
-        timestamp: sleepStartedAt,
-
-        endedAt: end
-
-    };
-
-
-    addEvent(event)
-        .then(render)
-        .then(() => {
-
-            showToast(
-                "😴",
-                `Sleep · ${formatDuration(duration)}`
-            );
-
-        });
-
-
-    sleepStartedAt = null;
-
-    localStorage.removeItem(
-        "babyTrackerSleepStarted"
+    card.classList.remove(
+        "hidden"
     );
-
-    updateSleepButton();
 
 }
 
 
-function updateSleepButton() {
+/* =========================
+   SLEEP TIMER
+========================= */
 
-    const button =
-        document.getElementById(
-            "sleepQuickButton"
+function startSleepTimer() {
+
+    stopSleepTimer();
+
+
+    updateSleepTimer();
+
+
+    sleepTimerInterval =
+        setInterval(
+            updateSleepTimer,
+            1000
         );
 
-    const text =
-        document.getElementById(
-            "sleepButtonText"
+}
+
+
+function stopSleepTimer() {
+
+    if (
+        sleepTimerInterval
+    ) {
+
+        clearInterval(
+            sleepTimerInterval
         );
 
-    const icon =
-        document.getElementById(
-            "sleepIcon"
-        );
-
-
-    if (sleepStartedAt) {
-
-        text.textContent =
-            "Wake";
-
-        icon.textContent =
-            "☀️";
-
-        button.classList.add(
-            "sleep-active"
-        );
-
-    } else {
-
-        text.textContent =
-            "Sleep";
-
-        icon.textContent =
-            "😴";
-
-        button.classList.remove(
-            "sleep-active"
-        );
+        sleepTimerInterval = null;
 
     }
 
 }
 
 
-const savedSleep =
-    localStorage.getItem(
-        "babyTrackerSleepStarted"
-    );
+function updateSleepTimer() {
 
-if (savedSleep) {
+    if (!activeSleep) return;
 
-    sleepStartedAt =
-        Number(savedSleep);
+
+    const start =
+        new Date(
+            activeSleep.startedAt
+        );
+
+
+    const elapsed =
+        Math.floor(
+            (Date.now() - start) / 1000
+        );
+
+
+    const hours =
+        Math.floor(
+            elapsed / 3600
+        );
+
+
+    const minutes =
+        Math.floor(
+            (elapsed % 3600) / 60
+        );
+
+
+    const seconds =
+        elapsed % 60;
+
+
+    document.getElementById(
+        "sleepTimer"
+    ).textContent =
+
+        `${String(hours).padStart(2,"0")}:` +
+
+        `${String(minutes).padStart(2,"0")}:` +
+
+        `${String(seconds).padStart(2,"0")}`;
 
 }
 
-updateSleepButton();
 
+/* =========================
+   END SLEEP BUTTON
+========================= */
 
-/* =========================================================
-   MODALS
-========================================================= */
-
-function openModal(id) {
-
-    const modal =
-        document.getElementById(id);
-
-    if (!modal) return;
-
-    modal.classList.add("active");
-
-    modal.setAttribute(
-        "aria-hidden",
-        "false"
+document
+    .getElementById("endSleepButton")
+    .addEventListener(
+        "click",
+        endSleep
     );
 
-}
+
+/* =========================
+   NOTE
+========================= */
+
+function openNoteModal() {
+
+    openModal(`
+
+        <h2>📝 Quick Note</h2>
+
+        <p class="modal-subtitle">
+            Save something you'll want to remember.
+        </p>
+
+        <form
+            class="tracker-form"
+            id="noteForm">
+
+            <div>
+
+                <textarea
+                    id="noteText"
+                    rows="4"
+                    placeholder="Type your note..."
+                    required></textarea>
+
+            </div>
 
 
-function closeAllModals() {
+            <button
+                class="form-submit"
+                type="submit">
+
+                💗 Save Note
+
+            </button>
+
+        </form>
+
+    `);
+
 
     document
-        .querySelectorAll(".tracker-modal")
-        .forEach(modal => {
+        .getElementById("noteForm")
+        .addEventListener(
+            "submit",
+            event => {
 
-            modal.classList.remove(
-                "active"
-            );
+                event.preventDefault();
 
-            modal.setAttribute(
-                "aria-hidden",
-                "true"
-            );
+                const text =
+                    document
+                        .getElementById(
+                            "noteText"
+                        )
+                        .value
+                        .trim();
 
-        });
+
+                if (!text) return;
+
+
+                addLog(
+                    "note",
+                    { text }
+                );
+
+                closeModal();
+
+            }
+        );
 
 }
 
 
-document
-    .querySelectorAll("[data-close-modal]")
-    .forEach(button => {
-
-        button.addEventListener(
-            "click",
-            closeAllModals
-        );
-
-    });
-
-
-document
-    .querySelectorAll(".modal-overlay")
-    .forEach(overlay => {
-
-        overlay.addEventListener(
-            "click",
-            closeAllModals
-        );
-
-    });
-
-
-document.addEventListener(
-    "keydown",
-    event => {
-
-        if (event.key === "Escape") {
-
-            closeAllModals();
-
-        }
-
-    }
-);
-
-
-/* =========================================================
+/* =========================
    VOICE RECOGNITION
-========================================================= */
-
-const voiceButton =
-    document.getElementById(
-        "voiceButton"
-    );
-
-const voiceIcon =
-    document.getElementById(
-        "voiceIcon"
-    );
-
-const voiceTitle =
-    document.getElementById(
-        "voiceButtonTitle"
-    );
-
-const voiceSubtitle =
-    document.getElementById(
-        "voiceButtonSubtitle"
-    );
-
-const voiceStatus =
-    document.getElementById(
-        "voiceStatus"
-    );
-
-
-const SpeechRecognition =
-    window.SpeechRecognition ||
-    window.webkitSpeechRecognition;
-
+========================= */
 
 let recognition = null;
 
 
-if (SpeechRecognition) {
+function setupSpeechRecognition() {
+
+    const SpeechRecognition =
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition;
+
+
+    if (!SpeechRecognition) {
+
+        return false;
+
+    }
+
 
     recognition =
         new SpeechRecognition();
 
-    recognition.lang = "en-US";
 
-    recognition.continuous = false;
-
-    recognition.interimResults = false;
-
-    recognition.maxAlternatives = 1;
+    recognition.lang =
+        navigator.language || "en-US";
 
 
-    recognition.onstart = () => {
-
-        voiceButton.classList.add(
-            "listening"
-        );
-
-        voiceIcon.textContent =
-            "🔴";
-
-        voiceTitle.textContent =
-            "LISTENING...";
-
-        voiceSubtitle.textContent =
-            "Tell me what happened";
-
-        voiceStatus.textContent =
-            "I'm listening";
-
-    };
+    recognition.interimResults =
+        false;
 
 
-    recognition.onresult = event => {
-
-        const transcript =
-            event.results[0][0]
-                .transcript
-                .trim();
-
-        voiceStatus.textContent =
-            `"${transcript}"`;
-
-        processVoiceInput(
-            transcript
-        );
-
-    };
+    recognition.maxAlternatives =
+        1;
 
 
-    recognition.onerror = event => {
+    recognition.onresult =
+        event => {
 
-        voiceStatus.textContent =
-            getSpeechErrorMessage(
-                event.error
+            const text =
+                event.results[0][0]
+                    .transcript
+                    .trim();
+
+            processVoiceCommand(text);
+
+        };
+
+
+    recognition.onerror =
+        () => {
+
+            showToast(
+                "🎙️",
+                "I couldn't hear that"
             );
 
-    };
+        };
 
 
-    recognition.onend = () => {
-
-        voiceButton.classList.remove(
-            "listening"
-        );
-
-        voiceIcon.textContent =
-            "🎙️";
-
-        voiceTitle.textContent =
-            "TAP TO LOG";
-
-        voiceSubtitle.textContent =
-            "Say what happened";
-
-    };
-
-
-} else {
-
-    voiceButton.addEventListener(
-        "click",
+    recognition.onend =
         () => {
 
-            voiceStatus.textContent =
-                "Voice logging isn't supported in this browser yet. Use the quick buttons below.";
-
-        }
-    );
-
-}
-
-
-if (recognition) {
-
-    voiceButton.addEventListener(
-        "click",
-        () => {
-
-            if (
-                voiceButton.classList.contains(
-                    "listening"
+            document
+                .getElementById(
+                    "voiceButton"
                 )
-            ) {
-
-                recognition.stop();
-
-                return;
-
-            }
-
-            try {
-
-                recognition.start();
-
-            } catch (error) {
-
-                console.log(
-                    "Speech recognition:",
-                    error
+                .classList.remove(
+                    "recording"
                 );
 
-            }
+        };
 
-        }
-    );
+
+    return true;
 
 }
 
 
-/* =========================================================
-   VOICE PARSER
-========================================================= */
+function startVoice() {
 
-function processVoiceInput(text) {
+    if (!recognition) {
 
-    const normalized =
+        const supported =
+            setupSpeechRecognition();
+
+        if (!supported) {
+
+            showToast(
+                "🎙️",
+                "Voice logging isn't supported here"
+            );
+
+            return;
+
+        }
+
+    }
+
+
+    try {
+
+        recognition.start();
+
+        document
+            .getElementById(
+                "voiceButton"
+            )
+            .classList.add(
+                "recording"
+            );
+
+
+        showToast(
+            "🎙️",
+            "Listening..."
+        );
+
+    } catch (error) {
+
+        console.log(error);
+
+    }
+
+}
+
+
+function processVoiceCommand(text) {
+
+    const lower =
         text.toLowerCase();
 
 
     /* DIAPER */
 
     if (
-        normalized.includes("wet diaper") ||
-        normalized.includes("wet")
+        lower.includes("diaper") ||
+        lower.includes("nappy")
     ) {
 
-        logEvent("wet");
-
-        return;
-
-    }
+        let kind = "wet";
 
 
-    if (
-        normalized.includes("dirty diaper") ||
-        normalized.includes("dirty") ||
-        normalized.includes("poopy") ||
-        normalized.includes("poop")
-    ) {
+        if (
+            lower.includes("dirty") ||
+            lower.includes("poop") ||
+            lower.includes("poopy")
+        ) {
 
-        logEvent("dirty");
-
-        return;
-
-    }
-
-
-    /* SLEEP */
-
-    if (
-        normalized.includes("start nap") ||
-        normalized.includes("started nap") ||
-        normalized.includes("going to sleep") ||
-        normalized.includes("start sleep")
-    ) {
-
-        if (!sleepStartedAt) {
-
-            handleSleep();
+            kind = "dirty";
 
         }
 
-        return;
 
-    }
+        if (
+            (
+                lower.includes("wet") &&
+                (
+                    lower.includes("dirty") ||
+                    lower.includes("poop")
+                )
+            )
+        ) {
 
+            kind = "both";
 
-    /* BREAST */
-
-    if (
-        normalized.includes("breast") ||
-        normalized.includes("nursed") ||
-        normalized.includes("nursing")
-    ) {
-
-        logEvent(
-            "feed",
-            "Breast"
-        );
-
-        return;
-
-    }
+        }
 
 
-    /* BOTTLE / OUNCES */
-
-    const ounceMatch =
-        normalized.match(
-            /(\d+(?:\.\d+)?)\s*(?:ounces|ounce|oz)/
-        );
-
-
-    if (ounceMatch) {
-
-        logEvent(
-            "feed",
-            `${ounceMatch[1]} oz`
+        addLog(
+            "diaper",
+            { kind }
         );
 
         return;
@@ -1222,13 +1562,60 @@ function processVoiceInput(text) {
     /* FEED */
 
     if (
-        normalized.includes("feed") ||
-        normalized.includes("bottle")
+        lower.includes("feed") ||
+        lower.includes("breast") ||
+        lower.includes("nurse") ||
+        lower.includes("bottle")
     ) {
 
-        logEvent(
+        if (
+            lower.includes("bottle")
+        ) {
+
+            const amount =
+                extractNumber(text);
+
+
+            addLog(
+                "feed",
+                {
+                    method: "bottle",
+                    amount: amount || null
+                }
+            );
+
+            return;
+
+        }
+
+
+        let side = "Both";
+
+
+        if (
+            lower.includes("left")
+        ) {
+
+            side = "Left";
+
+        }
+
+
+        if (
+            lower.includes("right")
+        ) {
+
+            side = "Right";
+
+        }
+
+
+        addLog(
             "feed",
-            "Feed"
+            {
+                method: "breast",
+                side
+            }
         );
 
         return;
@@ -1236,42 +1623,111 @@ function processVoiceInput(text) {
     }
 
 
-    voiceStatus.textContent =
-        "I didn't quite catch that. Try “4 ounces”, “wet diaper”, or “breastfed”.";
+    /* SLEEP */
 
-}
+    if (
+        lower.includes("sleep") ||
+        lower.includes("nap")
+    ) {
 
+        if (!activeSleep) {
 
-/* =========================================================
-   SPEECH ERROR
-========================================================= */
+            startSleep();
 
-function getSpeechErrorMessage(error) {
+        } else {
 
-    switch (error) {
+            endSleep();
 
-        case "not-allowed":
-            return "Microphone permission was blocked.";
+        }
 
-        case "no-speech":
-            return "I didn't hear anything. Try again.";
-
-        case "network":
-            return "Voice recognition isn't available right now.";
-
-        default:
-            return "Something went wrong. Try again.";
+        return;
 
     }
 
+
+    /* FALLBACK NOTE */
+
+    addLog(
+        "note",
+        {
+            text
+        }
+    );
+
 }
 
 
-/* =========================================================
-   TOAST
-========================================================= */
+function extractNumber(text) {
 
-let toastTimer = null;
+    const match =
+        text.match(
+            /\d+(\.\d+)?/
+        );
+
+    return match
+        ? Number(match[0])
+        : null;
+
+}
+
+
+document
+    .getElementById("voiceButton")
+    .addEventListener(
+        "click",
+        startVoice
+    );
+
+
+/* =========================
+   CLEAR TODAY
+========================= */
+
+document
+    .getElementById(
+        "clearTodayButton"
+    )
+    .addEventListener(
+        "click",
+        () => {
+
+            const confirmed =
+                confirm(
+                    "Clear all of today's baby tracker logs?"
+                );
+
+
+            if (!confirmed) return;
+
+
+            const today =
+                todayKey();
+
+
+            logs =
+                logs.filter(
+                    log => log.date !== today
+                );
+
+
+            saveLogs();
+
+            render();
+
+            showToast(
+                "✓",
+                "Today's logs cleared"
+            );
+
+        }
+    );
+
+
+/* =========================
+   TOAST
+========================= */
+
+let toastTimeout;
 
 
 function showToast(icon, message) {
@@ -1279,8 +1735,9 @@ function showToast(icon, message) {
     toastIcon.textContent =
         icon;
 
-    toastText.textContent =
+    toastMessage.textContent =
         message;
+
 
     toast.classList.add(
         "show"
@@ -1288,11 +1745,11 @@ function showToast(icon, message) {
 
 
     clearTimeout(
-        toastTimer
+        toastTimeout
     );
 
 
-    toastTimer =
+    toastTimeout =
         setTimeout(
             () => {
 
@@ -1307,269 +1764,44 @@ function showToast(icon, message) {
 }
 
 
-/* =========================================================
-   CLEAR TODAY
-========================================================= */
-
-document
-    .getElementById("clearTodayButton")
-    .addEventListener(
-        "click",
-        async () => {
-
-            const events =
-                await getAllEvents();
-
-            const todaysEvents =
-                events.filter(
-                    event =>
-                        isToday(
-                            event.timestamp
-                        )
-                );
-
-
-            if (!todaysEvents.length) {
-
-                return;
-
-            }
-
-
-            const confirmed =
-                confirm(
-                    "Clear today's baby tracker entries?"
-                );
-
-
-            if (!confirmed) {
-
-                return;
-
-            }
-
-
-            for (
-                const event
-                of todaysEvents
-            ) {
-
-                await deleteEvent(
-                    event.id
-                );
-
-            }
-
-
-            await render();
-
-            showToast(
-                "✓",
-                "Today's entries cleared"
-            );
-
-        }
-    );
-
-
-/* =========================================================
-   EXPORT
-========================================================= */
-
-document
-    .getElementById("exportButton")
-    .addEventListener(
-        "click",
-        async () => {
-
-            const events =
-                await getAllEvents();
-
-
-            const backup = {
-
-                app:
-                    "MomYouNeedThis Baby Tracker",
-
-                version: 1,
-
-                exportedAt:
-                    new Date().toISOString(),
-
-                events
-
-            };
-
-
-            const blob =
-                new Blob(
-                    [
-                        JSON.stringify(
-                            backup,
-                            null,
-                            2
-                        )
-                    ],
-                    {
-                        type:
-                            "application/json"
-                    }
-                );
-
-
-            const url =
-                URL.createObjectURL(
-                    blob
-                );
-
-
-            const link =
-                document.createElement(
-                    "a"
-                );
-
-            link.href = url;
-
-            link.download =
-                `baby-tracker-backup-${new Date().toISOString().slice(0,10)}.json`;
-
-            link.click();
-
-
-            URL.revokeObjectURL(
-                url
-            );
-
-
-            showToast(
-                "💾",
-                "Backup downloaded"
-            );
-
-        }
-    );
-
-
-/* =========================================================
-   IMPORT
-========================================================= */
-
-document
-    .getElementById("importInput")
-    .addEventListener(
-        "change",
-        event => {
-
-            const file =
-                event.target.files[0];
-
-            if (!file) return;
-
-
-            const reader =
-                new FileReader();
-
-
-            reader.onload =
-                async () => {
-
-                    try {
-
-                        const backup =
-                            JSON.parse(
-                                reader.result
-                            );
-
-
-                        if (
-                            !backup.events ||
-                            !Array.isArray(
-                                backup.events
-                            )
-                        ) {
-
-                            throw new Error(
-                                "Invalid backup"
-                            );
-
-                        }
-
-
-                        for (
-                            const event
-                            of backup.events
-                        ) {
-
-                            const restored = {
-                                ...event
-                            };
-
-                            delete restored.id;
-
-                            await addEvent(
-                                restored
-                            );
-
-                        }
-
-
-                        await render();
-
-                        showToast(
-                            "↩️",
-                            "Backup restored"
-                        );
-
-
-                    } catch (error) {
-
-                        showToast(
-                            "!",
-                            "That backup file isn't valid"
-                        );
-
-                    }
-
-                };
-
-
-            reader.readAsText(file);
-
-            event.target.value = "";
-
-        }
-    );
-
-
-/* =========================================================
-   INITIALIZE
-========================================================= */
-
-async function init() {
+/* =========================
+   RESTORE ACTIVE SLEEP
+========================= */
+
+function restoreActiveSleep() {
 
     try {
 
-        await openDatabase();
+        const saved =
+            localStorage.getItem(
+                "momyouneedthis_active_sleep"
+            );
 
-        await render();
+
+        if (saved) {
+
+            activeSleep =
+                JSON.parse(saved);
+
+            renderSleepState();
+
+            startSleepTimer();
+
+        }
 
     } catch (error) {
 
-        console.error(
-            "Baby tracker database error:",
-            error
-        );
-
-        showToast(
-            "!",
-            "Unable to open local storage"
-        );
+        console.error(error);
 
     }
 
 }
 
 
-init();
+/* =========================
+   INITIALIZE
+========================= */
 
-})();
+restoreActiveSleep();
+
+render();
