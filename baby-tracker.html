@@ -2,43 +2,131 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    >
+
+    <meta
+        name="theme-color"
+        content="#fffaf8"
+    >
 
     <title>Baby Tracker | MomYouNeedThis</title>
 
     <link rel="stylesheet" href="style.css">
-     <link rel="stylesheet" href="baby-tracker.css">
+    <link rel="stylesheet" href="baby-tracker.css">
 
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap"
-        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap"
+        rel="stylesheet"
+    >
+
 </head>
+
 
 <body>
 
+
 <div class="page baby-tracker-page">
 
-    <!-- HEADER -->
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
 
     <header class="tracker-header">
 
-        <a href="index.html" class="tracker-logo-link">
-            <img src="assets/logo.svg" class="tracker-logo" alt="MomYouNeedThis">
+        <a
+            href="index.html"
+            class="tracker-logo-link"
+            aria-label="MomYouNeedThis home"
+        >
+
+            <img
+                src="assets/logo.svg"
+                class="tracker-logo"
+                alt="MomYouNeedThis"
+            >
+
         </a>
 
+
         <div class="tracker-header-title">
-            <span class="tracker-mini-label">BABY TRACKER</span>
-            <h1>Baby's Day</h1>
+
+            <span class="tracker-mini-label">
+                BABY TRACKER
+            </span>
+
+            <h1>
+                Baby's Day
+            </h1>
+
         </div>
 
-        <button class="tracker-settings-button" id="settingsButton" aria-label="Settings">
+
+        <button
+            class="tracker-settings-button"
+            id="settingsButton"
+            type="button"
+            aria-label="Open tracker settings"
+            aria-controls="settingsModal"
+            aria-expanded="false"
+        >
+
             ⚙️
+
         </button>
 
     </header>
 
 
-    <!-- GREETING -->
+
+    <!-- =====================================================
+         BABY PROFILE
+    ====================================================== -->
+
+    <section class="tracker-baby-profile">
+
+        <div class="baby-profile-avatar">
+            👶
+        </div>
+
+
+        <div class="baby-profile-info">
+
+            <span>
+                TRACKING
+            </span>
+
+            <strong id="babyNameDisplay">
+                My Baby
+            </strong>
+
+        </div>
+
+
+        <button
+            type="button"
+            class="baby-profile-edit"
+            id="editBabyButton"
+            aria-label="Edit baby's name"
+        >
+
+            ✏️
+
+        </button>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         INTRO
+    ====================================================== -->
 
     <section class="tracker-intro">
 
@@ -49,12 +137,14 @@
             </span>
 
             <h2>
-                Keep track without<br>
+                Keep track without
+                <br>
                 <span>keeping track.</span>
             </h2>
 
             <p>
-                Quick taps for the moments you don't want to forget.
+                Just tell me what happened.
+                I'll log it for you.
             </p>
 
         </div>
@@ -62,43 +152,240 @@
     </section>
 
 
-    <!-- TODAY SUMMARY -->
+
+    <!-- =====================================================
+         VOICE LOGGER — MAIN FEATURE
+    ====================================================== -->
+
+    <section
+        class="voice-logger-section"
+        id="voiceLoggerSection"
+    >
+
+        <div class="voice-logger-header">
+
+            <span class="section-kicker">
+                FASTEST WAY TO LOG
+            </span>
+
+            <h2>
+                What happened?
+            </h2>
+
+            <p>
+                Tap the button and tell me.
+            </p>
+
+        </div>
+
+
+
+        <!-- MAIN VOICE BUTTON -->
+
+        <button
+            id="voiceButton"
+            class="voice-main-button"
+            type="button"
+            aria-label="Start voice logging"
+            aria-pressed="false"
+        >
+
+            <span class="voice-main-button-ring"></span>
+
+            <span
+                class="voice-main-icon"
+                id="voiceButtonIcon"
+            >
+                🎙️
+            </span>
+
+        </button>
+
+
+
+        <div
+            class="voice-status"
+            id="voiceStatus"
+            aria-live="polite"
+        >
+
+            <strong id="voiceStatusTitle">
+                Tap & tell me
+            </strong>
+
+            <span id="voiceStatusText">
+                “Baby had a wet diaper”
+            </span>
+
+        </div>
+
+
+
+        <!-- LISTENING VISUALIZER -->
+
+        <div
+            class="voice-wave"
+            id="voiceWave"
+            aria-hidden="true"
+        >
+
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+
+        </div>
+
+
+
+        <!-- TRANSCRIPT -->
+
+        <div
+            class="voice-transcript hidden"
+            id="voiceTranscript"
+            aria-live="polite"
+        >
+
+            <span class="voice-transcript-label">
+                I HEARD
+            </span>
+
+            <p id="voiceTranscriptText">
+                —
+            </p>
+
+        </div>
+
+
+
+        <!-- VOICE EXAMPLES -->
+
+        <div class="voice-examples">
+
+            <span>
+                Try:
+            </span>
+
+            <button
+                type="button"
+                class="voice-example"
+                data-voice-example="Baby had a wet diaper"
+            >
+                “Wet diaper”
+            </button>
+
+            <button
+                type="button"
+                class="voice-example"
+                data-voice-example="Baby drank 120 milliliters"
+            >
+                “Drank 120 ml”
+            </button>
+
+            <button
+                type="button"
+                class="voice-example"
+                data-voice-example="Baby nursed on the left for 15 minutes"
+            >
+                “Nursed left 15 minutes”
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         TODAY SUMMARY
+    ====================================================== -->
 
     <section class="tracker-summary">
 
         <div class="summary-header">
 
             <div>
-                <span class="summary-label">TODAY</span>
-                <h2 id="todayDate">Today</h2>
+
+                <span class="summary-label">
+                    TODAY
+                </span>
+
+                <h2 id="todayDate">
+                    Today
+                </h2>
+
             </div>
 
+
             <div class="summary-count">
-                <strong id="totalLogs">0</strong>
-                <span>logs</span>
+
+                <strong id="totalLogs">
+                    0
+                </strong>
+
+                <span>
+                    logs
+                </span>
+
             </div>
 
         </div>
 
 
+
         <div class="summary-stats">
 
             <div class="summary-stat">
-                <span>🍼</span>
-                <strong id="feedCount">0</strong>
-                <small>Feeds</small>
+
+                <span>
+                    🍼
+                </span>
+
+                <strong id="feedCount">
+                    0
+                </strong>
+
+                <small>
+                    Feeds
+                </small>
+
             </div>
 
-            <div class="summary-stat">
-                <span>💧</span>
-                <strong id="diaperCount">0</strong>
-                <small>Diapers</small>
-            </div>
 
             <div class="summary-stat">
-                <span>😴</span>
-                <strong id="sleepTotal">0m</strong>
-                <small>Sleep</small>
+
+                <span>
+                    💧
+                </span>
+
+                <strong id="diaperCount">
+                    0
+                </strong>
+
+                <small>
+                    Diapers
+                </small>
+
+            </div>
+
+
+            <div class="summary-stat">
+
+                <span>
+                    😴
+                </span>
+
+                <strong id="sleepTotal">
+                    0m
+                </strong>
+
+                <small>
+                    Sleep
+                </small>
+
             </div>
 
         </div>
@@ -106,90 +393,157 @@
     </section>
 
 
-    <!-- QUICK LOG -->
+
+    <!-- =====================================================
+         QUICK TAP LOGGING
+    ====================================================== -->
 
     <section class="quick-log-section">
 
         <div class="section-heading">
 
             <div>
-                <span class="section-kicker">QUICK LOG</span>
-                <h2>What happened?</h2>
-            </div>
 
-            <button id="voiceButton" class="voice-button" type="button">
-                🎙️
-            </button>
+                <span class="section-kicker">
+                    QUICK TAP
+                </span>
+
+                <h2>
+                    Prefer tapping?
+                </h2>
+
+            </div>
 
         </div>
 
 
+
         <div class="quick-actions">
+
+
+            <!-- FEED -->
 
             <button
                 class="quick-action feed-action"
                 data-action="feed"
-                type="button">
+                type="button"
+            >
 
-                <span class="quick-action-icon">🍼</span>
-
-                <span class="quick-action-text">
-                    <strong>Feed</strong>
-                    <small>Milk or nursing</small>
+                <span class="quick-action-icon">
+                    🍼
                 </span>
 
-                <span class="quick-action-arrow">›</span>
+                <span class="quick-action-text">
+
+                    <strong>
+                        Feed
+                    </strong>
+
+                    <small>
+                        Milk or nursing
+                    </small>
+
+                </span>
+
+                <span class="quick-action-arrow">
+                    ›
+                </span>
 
             </button>
 
+
+
+            <!-- DIAPER -->
 
             <button
                 class="quick-action diaper-action"
                 data-action="diaper"
-                type="button">
+                type="button"
+            >
 
-                <span class="quick-action-icon">💧</span>
-
-                <span class="quick-action-text">
-                    <strong>Diaper</strong>
-                    <small>Wet or dirty</small>
+                <span class="quick-action-icon">
+                    💧
                 </span>
 
-                <span class="quick-action-arrow">›</span>
+                <span class="quick-action-text">
+
+                    <strong>
+                        Diaper
+                    </strong>
+
+                    <small>
+                        Wet or dirty
+                    </small>
+
+                </span>
+
+                <span class="quick-action-arrow">
+                    ›
+                </span>
 
             </button>
 
+
+
+            <!-- SLEEP -->
 
             <button
                 class="quick-action sleep-action"
                 data-action="sleep"
-                type="button">
+                type="button"
+            >
 
-                <span class="quick-action-icon">😴</span>
-
-                <span class="quick-action-text">
-                    <strong>Sleep</strong>
-                    <small>Start or end a nap</small>
+                <span class="quick-action-icon">
+                    😴
                 </span>
 
-                <span class="quick-action-arrow">›</span>
+                <span class="quick-action-text">
+
+                    <strong>
+                        Sleep
+                    </strong>
+
+                    <small>
+                        Start or end a nap
+                    </small>
+
+                </span>
+
+                <span class="quick-action-arrow">
+                    ›
+                </span>
 
             </button>
 
 
+
+            <!-- NOTE -->
+
             <button
                 class="quick-action note-action"
                 data-action="note"
-                type="button">
+                type="button"
+            >
 
-                <span class="quick-action-icon">📝</span>
-
-                <span class="quick-action-text">
-                    <strong>Note</strong>
-                    <small>Something to remember</small>
+                <span class="quick-action-icon">
+                    📝
                 </span>
 
-                <span class="quick-action-arrow">›</span>
+                <span class="quick-action-text">
+
+                    <strong>
+                        Note
+                    </strong>
+
+                    <small>
+                        Something to remember
+                    </small>
+
+                </span>
+
+                <span class="quick-action-arrow">
+                    ›
+                </span>
 
             </button>
 
@@ -198,66 +552,99 @@
     </section>
 
 
-    <!-- ACTIVE SLEEP -->
 
-    <section id="activeSleepCard" class="active-sleep-card hidden">
+    <!-- =====================================================
+         ACTIVE SLEEP
+    ====================================================== -->
+
+    <section
+        id="activeSleepCard"
+        class="active-sleep-card hidden"
+    >
 
         <div class="active-sleep-icon">
             😴
         </div>
 
+
         <div class="active-sleep-info">
 
-            <span>NAP IN PROGRESS</span>
+            <span>
+                NAP IN PROGRESS
+            </span>
 
             <strong id="sleepTimer">
-                00:00
+                00:00:00
             </strong>
 
         </div>
 
-        <button id="endSleepButton" type="button">
+
+        <button
+            id="endSleepButton"
+            type="button"
+        >
             End Nap
         </button>
 
     </section>
 
 
-    <!-- TODAY TIMELINE -->
+
+    <!-- =====================================================
+         TODAY TIMELINE
+    ====================================================== -->
 
     <section class="timeline-section">
 
         <div class="section-heading">
 
             <div>
-                <span class="section-kicker">YOUR DAY</span>
-                <h2>Recent activity</h2>
+
+                <span class="section-kicker">
+                    YOUR DAY
+                </span>
+
+                <h2>
+                    Recent activity
+                </h2>
+
             </div>
+
 
             <button
                 id="clearTodayButton"
                 class="text-button"
-                type="button">
-
+                type="button"
+            >
                 Clear today
-
             </button>
 
         </div>
 
 
-        <div id="timeline" class="timeline">
 
-            <div id="emptyState" class="empty-state">
+        <div
+            id="timeline"
+            class="timeline"
+        >
+
+            <div
+                id="emptyState"
+                class="empty-state"
+            >
 
                 <div class="empty-state-icon">
                     🌸
                 </div>
 
-                <h3>Your day starts here</h3>
+                <h3>
+                    Your day starts here
+                </h3>
 
                 <p>
-                    Tap an activity above and we'll remember it for you.
+                    Tell me what happened and
+                    I'll keep track for you.
                 </p>
 
             </div>
@@ -267,27 +654,32 @@
     </section>
 
 
-    <!-- VOICE HELP -->
+
+    <!-- =====================================================
+         VOICE EXPLANATION
+    ====================================================== -->
 
     <section class="voice-card">
 
         <div class="voice-card-icon">
-            🎙️
+            💗
         </div>
+
 
         <div>
 
             <span class="section-kicker">
-                TOO TIRED TO TYPE?
+                MADE FOR TIRED MOMS
             </span>
 
             <h3>
-                Just tell me what happened.
+                No typing. No forms.
             </h3>
 
             <p>
-                Try saying “baby had a wet diaper” or
-                “baby fed at 2:30.”
+                When your hands are full,
+                just say what happened.
+                Your tracker does the rest.
             </p>
 
         </div>
@@ -295,45 +687,89 @@
     </section>
 
 
-    <!-- PRIVACY -->
+
+    <!-- =====================================================
+         BACKUP / PRIVACY
+    ====================================================== -->
 
     <section class="tracker-privacy">
 
-        <span>🔒</span>
+        <span>
+            🔒
+        </span>
+
 
         <div>
 
             <strong>
-                Your baby's data stays on this device.
+                Your baby's data stays with you.
             </strong>
 
             <p>
-                Your logs are stored locally in your browser.
-                We don't send them to a server.
+                Your tracker uses your browser's
+                local IndexedDB storage.
+                Your logs are not stored on our server.
             </p>
+
+            <div class="privacy-actions">
+
+                <button
+                    type="button"
+                    id="exportDataButton"
+                    class="privacy-action-button"
+                >
+                    ⬇️ Export Backup
+                </button>
+
+
+                <button
+                    type="button"
+                    id="importDataButton"
+                    class="privacy-action-button"
+                >
+                    ⬆️ Import Backup
+                </button>
+
+                <input
+                    type="file"
+                    id="importDataInput"
+                    accept=".json,application/json"
+                    hidden
+                >
+
+            </div>
 
         </div>
 
     </section>
 
 
-    <!-- FOOTER -->
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
 
     <footer>
 
         <div class="footer-logo">
 
-            <img src="assets/logo.svg" alt="MomYouNeedThis">
+            <img
+                src="assets/logo.svg"
+                alt="MomYouNeedThis"
+            >
 
         </div>
+
 
         <h3>
             MomYouNeedThis
         </h3>
 
+
         <p>
             Helping moms find tools that make everyday life easier.
         </p>
+
 
         <div class="footer-links">
 
@@ -355,6 +791,7 @@
 
         </div>
 
+
         <div class="footer-bottom">
 
             <p>
@@ -365,25 +802,43 @@
 
     </footer>
 
+
 </div>
 
 
-<!-- ACTION MODAL -->
 
-<div id="actionModal" class="tracker-modal hidden">
+<!-- =========================================================
+     ACTION MODAL
+========================================================= -->
 
-    <div class="modal-overlay" data-close-modal></div>
+<div
+    id="actionModal"
+    class="tracker-modal hidden"
+    aria-hidden="true"
+>
 
-    <div class="tracker-modal-content">
+    <div
+        class="modal-overlay"
+        data-close-modal
+    ></div>
+
+
+    <div
+        class="tracker-modal-content"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modalContentTitle"
+    >
 
         <button
             class="modal-close"
             id="modalClose"
-            type="button">
-
+            type="button"
+            aria-label="Close"
+        >
             ×
-
         </button>
+
 
         <div id="modalContent"></div>
 
@@ -392,11 +847,381 @@
 </div>
 
 
-<!-- TOAST -->
 
-<div id="trackerToast" class="tracker-toast">
+<!-- =========================================================
+     SETTINGS MODAL
+========================================================= -->
 
-    <span id="toastIcon">✓</span>
+<div
+    id="settingsModal"
+    class="tracker-modal hidden"
+    aria-hidden="true"
+>
+
+    <div
+        class="modal-overlay"
+        data-close-settings
+    ></div>
+
+
+    <div
+        class="tracker-modal-content tracker-settings-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="settingsTitle"
+    >
+
+        <button
+            class="modal-close"
+            id="settingsClose"
+            type="button"
+            aria-label="Close settings"
+        >
+            ×
+        </button>
+
+
+        <div class="settings-header">
+
+            <span class="tracker-badge">
+                ⚙️ SETTINGS
+            </span>
+
+            <h2 id="settingsTitle">
+                Baby Tracker
+            </h2>
+
+            <p>
+                Customize your tracker and manage your data.
+            </p>
+
+        </div>
+
+
+
+        <!-- BABY NAME -->
+
+        <div class="settings-group">
+
+            <label for="babyNameInput">
+                Baby's name
+            </label>
+
+            <input
+                type="text"
+                id="babyNameInput"
+                placeholder="My Baby"
+                maxlength="40"
+                autocomplete="off"
+            >
+
+            <button
+                type="button"
+                id="saveBabyNameButton"
+                class="settings-primary-button"
+            >
+                Save Name
+            </button>
+
+        </div>
+
+
+
+        <!-- VOICE LANGUAGE -->
+
+        <div class="settings-group">
+
+            <label for="voiceLanguage">
+                Voice language
+            </label>
+
+            <select id="voiceLanguage">
+
+                <option value="en-US">
+                    English — United States
+                </option>
+
+                <option value="en-CA">
+                    English — Canada
+                </option>
+
+                <option value="fr-CA">
+                    Français — Canada
+                </option>
+
+                <option value="fr-FR">
+                    Français — France
+                </option>
+
+            </select>
+
+            <small>
+                Choose the language you normally speak when logging.
+            </small>
+
+        </div>
+
+
+
+        <!-- VOICE SETTINGS -->
+
+        <div class="settings-group">
+
+            <div class="settings-toggle-row">
+
+                <div>
+
+                    <strong>
+                        Voice confirmation
+                    </strong>
+
+                    <small>
+                        Show what the tracker heard before saving.
+                    </small>
+
+                </div>
+
+
+                <label class="toggle">
+
+                    <input
+                        type="checkbox"
+                        id="voiceConfirmationToggle"
+                        checked
+                    >
+
+                    <span class="toggle-slider"></span>
+
+                </label>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- DATA -->
+
+        <div class="settings-group settings-data-group">
+
+            <h3>
+                Your data
+            </h3>
+
+
+            <button
+                type="button"
+                id="settingsExportButton"
+                class="settings-secondary-button"
+            >
+                ⬇️ Export All Data
+            </button>
+
+
+            <button
+                type="button"
+                id="settingsImportButton"
+                class="settings-secondary-button"
+            >
+                ⬆️ Import Backup
+            </button>
+
+
+            <button
+                type="button"
+                id="deleteAllDataButton"
+                class="settings-danger-button"
+            >
+                🗑️ Delete All Tracker Data
+            </button>
+
+        </div>
+
+
+
+        <div class="settings-storage-note">
+
+            🔒
+
+            <span>
+                Data is stored locally on this device using IndexedDB.
+                There is no baby-tracker account or cloud database.
+            </span>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     BABY NAME MODAL
+========================================================= -->
+
+<div
+    id="babyNameModal"
+    class="tracker-modal hidden"
+    aria-hidden="true"
+>
+
+    <div
+        class="modal-overlay"
+        data-close-baby-name
+    ></div>
+
+
+    <div
+        class="tracker-modal-content"
+        role="dialog"
+        aria-modal="true"
+    >
+
+        <button
+            class="modal-close"
+            id="babyNameModalClose"
+            type="button"
+            aria-label="Close"
+        >
+            ×
+        </button>
+
+
+        <div class="settings-header">
+
+            <span class="tracker-badge">
+                👶 BABY PROFILE
+            </span>
+
+            <h2>
+                Who are we tracking?
+            </h2>
+
+            <p>
+                Give your little one's tracker a name.
+            </p>
+
+        </div>
+
+
+        <form id="babyNameForm">
+
+            <div class="settings-group">
+
+                <label for="babyNameModalInput">
+                    Baby's name
+                </label>
+
+                <input
+                    type="text"
+                    id="babyNameModalInput"
+                    placeholder="Baby"
+                    maxlength="40"
+                    autocomplete="off"
+                >
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="settings-primary-button"
+            >
+                💗 Save
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     DELETE CONFIRMATION
+========================================================= -->
+
+<div
+    id="deleteDataModal"
+    class="tracker-modal hidden"
+    aria-hidden="true"
+>
+
+    <div
+        class="modal-overlay"
+        data-close-delete
+    ></div>
+
+
+    <div
+        class="tracker-modal-content delete-confirmation"
+        role="dialog"
+        aria-modal="true"
+    >
+
+        <div class="delete-icon">
+            🗑️
+        </div>
+
+        <h2>
+            Delete everything?
+        </h2>
+
+        <p>
+            This permanently removes all baby tracker
+            data stored on this device.
+        </p>
+
+        <p>
+            <strong>
+                This cannot be undone.
+            </strong>
+        </p>
+
+
+        <div class="delete-actions">
+
+            <button
+                type="button"
+                id="cancelDeleteButton"
+                class="settings-secondary-button"
+            >
+                Keep My Data
+            </button>
+
+
+            <button
+                type="button"
+                id="confirmDeleteButton"
+                class="settings-danger-button"
+            >
+                Delete Everything
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     TOAST
+========================================================= -->
+
+<div
+    id="trackerToast"
+    class="tracker-toast"
+    role="status"
+    aria-live="polite"
+>
+
+    <span id="toastIcon">
+        ✓
+    </span>
 
     <span id="toastMessage">
         Saved
@@ -405,7 +1230,49 @@
 </div>
 
 
+
+<!-- =========================================================
+     VOICE ERROR / PERMISSION MESSAGE
+========================================================= -->
+
+<div
+    id="voicePermissionMessage"
+    class="voice-permission-message hidden"
+    role="alert"
+>
+
+    <div class="voice-permission-icon">
+        🎙️
+    </div>
+
+
+    <div>
+
+        <strong>
+            Voice logging needs microphone access
+        </strong>
+
+        <p id="voicePermissionText">
+            Allow microphone access in your browser to use voice logging.
+        </p>
+
+    </div>
+
+
+    <button
+        type="button"
+        id="voicePermissionClose"
+        aria-label="Close"
+    >
+        ×
+    </button>
+
+</div>
+
+
+
 <script src="baby-tracker.js"></script>
+
 
 </body>
 
