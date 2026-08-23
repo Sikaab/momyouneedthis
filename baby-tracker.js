@@ -7,77 +7,60 @@
     "use strict";
 
     /* =====================================================
-       CONFIG
+       GLOBAL STATE
     ===================================================== */
 
-    const DB_NAME = "MomYouNeedThisBabyTracker";
-    const DB_VERSION = 1;
-    const STORE_NAME = "tracker";
+    const STORAGE_KEY = "momyouneedthis_baby_tracker_v1";
 
-    const STORAGE_KEY = "momyouneedthis_baby_tracker";
-
-    const DEFAULT_STATE = {
+    let state = {
         babyName: "My Baby",
         voiceLanguage: "en-US",
         voiceConfirmation: true,
-        logs: []
+        logs: [],
+        activeSleep: null
     };
-
-
-    /* =====================================================
-       STATE
-    ===================================================== */
-
-    let state = {
-        ...DEFAULT_STATE
-    };
-
-    let db = null;
 
     let recognition = null;
     let isListening = false;
-    let recognitionManuallyStopped = false;
-
-    let activeSleep = null;
+    let speechSupported = false;
     let sleepTimerInterval = null;
 
-    let currentModal = null;
-
-
     /* =====================================================
-       DOM HELPER
+       DOM HELPERS
     ===================================================== */
 
     function $(id) {
         return document.getElementById(id);
     }
 
-
     function $all(selector) {
-        return Array.from(document.querySelectorAll(selector));
+        try {
+            return document.querySelectorAll(selector);
+        } catch (error) {
+            return [];
+        }
     }
 
-
-    /* =====================================================
-       SAFE EVENT LISTENER
-    ===================================================== */
-
-    function on(element, event, handler) {
-        if (!element) return;
-
-        element.addEventListener(event, function (e) {
-            try {
-                handler(e);
-            } catch (error) {
-                console.error("Baby Tracker event error:", error);
-                showToast("Something went wrong.");
-            }
-        });
+    function safeText(element, value) {
+        if (element) {
+            element.textContent = value;
+        }
     }
 
+    function show(element) {
+        if (element) {
+            element.classList.remove("hidden");
+        }
+    }
+
+    function hide(element) {
+        if (element) {
+            element.classList.add("hidden");
+        }
+    }
 
     /* =====================================================
-       INITIALIZE
+       STARTUP
     ===================================================== */
 
     document.addEventListener("DOMContentLoaded", function () {
@@ -85,58 +68,62 @@
         try {
             initializeTracker();
         } catch (error) {
-            console.error("Baby Tracker initialization error:", error);
-            showFatalError();
+            console.error("Baby Tracker startup error:", error);
+
+            /*
+             * IMPORTANT:
+             * Never let one feature prevent the whole tracker
+             * from loading.
+             */
+            try {
+                loadFallbackState();
+                updateAllUI();
+                setupBasicEvents();
+            } catch (fallbackError) {
+                console.error(
+                    "Baby Tracker fallback error:",
+                    fallbackError
+                );
+            }
         }
 
     });
 
+    /* =====================================================
+       INITIALIZE
+    ===================================================== */
 
-    async function initializeTracker() {
+    function initializeTracker() {
 
-        /*
-         * IMPORTANT:
-         * Nothing here is allowed to assume that IndexedDB,
-         * SpeechRecognition, or optional DOM elements exist.
-         */
+        loadState();
 
-        loadLocalState();
+        updateBabyName();
 
-        await initializeIndexedDB();
+        updateTodayDate();
 
-        await loadDatabaseState();
+        initializeVoice();
 
-        initializeUI();
-
-        initializeVoiceRecognition();
+        setupEvents();
 
         updateAllUI();
 
-        initializeEventListeners();
-
         restoreActiveSleep();
 
-        console.log("MomYouNeedThis Baby Tracker loaded successfully.");
+        console.log("Baby Tracker loaded successfully.");
 
     }
 
-
     /* =====================================================
-       LOCAL STORAGE
-       SAFE FALLBACK
+       STATE
     ===================================================== */
 
-    function loadLocalState() {
+    function loadState() {
 
         try {
 
             const saved = localStorage.getItem(STORAGE_KEY);
 
             if (!saved) {
-                state = {
-                    ...DEFAULT_STATE
-                };
-
                 return;
             }
 
@@ -147,31 +134,56 @@
             }
 
             state = {
-                ...DEFAULT_STATE,
-                ...parsed
-            };
+                babyName:
+                    typeof parsed.babyName === "string"
+                        ? parsed.babyName
+                        : "My Baby",
 
-            if (!Array.isArray(state.logs)) {
-                state.logs = [];
-            }
+                voiceLanguage:
+                    typeof parsed.voiceLanguage === "string"
+                        ? parsed.voiceLanguage
+                        : "en-US",
+
+                voiceConfirmation:
+                    typeof parsed.voiceConfirmation === "boolean"
+                        ? parsed.voiceConfirmation
+                        : true,
+
+                logs:
+                    Array.isArray(parsed.logs)
+                        ? parsed.logs
+                        : [],
+
+                activeSleep:
+                    parsed.activeSleep || null
+            };
 
         } catch (error) {
 
             console.warn(
-                "Could not read local storage:",
+                "Could not load saved tracker data.",
                 error
             );
 
-            state = {
-                ...DEFAULT_STATE
-            };
+            loadFallbackState();
 
         }
 
     }
 
+    function loadFallbackState() {
 
-    function saveLocalState() {
+        state = {
+            babyName: "My Baby",
+            voiceLanguage: "en-US",
+            voiceConfirmation: true,
+            logs: [],
+            activeSleep: null
+        };
+
+    }
+
+    function saveState() {
 
         try {
 
@@ -180,401 +192,224 @@
                 JSON.stringify(state)
             );
 
+            return true;
+
         } catch (error) {
 
-            console.warn(
-                "Could not save local state:",
+            console.error(
+                "Could not save tracker data:",
                 error
             );
 
-        }
-
-    }
-
-
-    /* =====================================================
-       INDEXED DB
-    ===================================================== */
-
-    function initializeIndexedDB() {
-
-        return new Promise(function (resolve) {
-
-            if (!("indexedDB" in window)) {
-
-                console.warn(
-                    "IndexedDB is not supported. Using localStorage."
-                );
-
-                resolve(null);
-                return;
-            }
-
-
-            let request;
-
-            try {
-
-                request = indexedDB.open(
-                    DB_NAME,
-                    DB_VERSION
-                );
-
-            } catch (error) {
-
-                console.warn(
-                    "IndexedDB could not be opened:",
-                    error
-                );
-
-                resolve(null);
-                return;
-            }
-
-
-            request.onupgradeneeded = function (event) {
-
-                try {
-
-                    const database = event.target.result;
-
-                    if (!database.objectStoreNames.contains(STORE_NAME)) {
-
-                        database.createObjectStore(
-                            STORE_NAME,
-                            {
-                                keyPath: "id"
-                            }
-                        );
-
-                    }
-
-                } catch (error) {
-
-                    console.warn(
-                        "IndexedDB upgrade error:",
-                        error
-                    );
-
-                }
-
-            };
-
-
-            request.onsuccess = function (event) {
-
-                db = event.target.result;
-
-                db.onerror = function (error) {
-
-                    console.warn(
-                        "IndexedDB runtime error:",
-                        error
-                    );
-
-                };
-
-                resolve(db);
-
-            };
-
-
-            request.onerror = function (event) {
-
-                console.warn(
-                    "IndexedDB unavailable:",
-                    event.target.error
-                );
-
-                db = null;
-
-                resolve(null);
-
-            };
-
-
-            request.onblocked = function () {
-
-                console.warn(
-                    "IndexedDB request blocked."
-                );
-
-                resolve(null);
-
-            };
-
-        });
-
-    }
-
-
-    /* =====================================================
-       LOAD DATABASE STATE
-    ===================================================== */
-
-    async function loadDatabaseState() {
-
-        if (!db) {
-            return;
-        }
-
-        try {
-
-            const databaseState = await idbGet(
-                "state"
+            showToast(
+                "Couldn't save data on this device",
+                "⚠️"
             );
+
+            return false;
+
+        }
+
+    }
+
+    /* =====================================================
+       BASIC EVENTS
+    ===================================================== */
+
+    function setupBasicEvents() {
+
+        const settingsButton = $("settingsButton");
+
+        if (settingsButton) {
+            settingsButton.addEventListener(
+                "click",
+                openSettings
+            );
+        }
+
+    }
+
+    function setupEvents() {
+
+        setupBasicEvents();
+
+        /* -----------------------------------------------
+           SETTINGS
+        ------------------------------------------------ */
+
+        const settingsClose = $("settingsClose");
+
+        if (settingsClose) {
+            settingsClose.addEventListener(
+                "click",
+                closeSettings
+            );
+        }
+
+        document.addEventListener("click", function (event) {
+
+            const target = event.target;
+
+            if (!target) {
+                return;
+            }
 
             if (
-                databaseState &&
-                databaseState.value &&
-                typeof databaseState.value === "object"
+                target.matches &&
+                target.matches("[data-close-settings]")
             ) {
+                closeSettings();
+            }
 
-                state = {
-                    ...DEFAULT_STATE,
-                    ...databaseState.value
-                };
+            if (
+                target.matches &&
+                target.matches("[data-close-modal]")
+            ) {
+                closeActionModal();
+            }
 
-                if (!Array.isArray(state.logs)) {
-                    state.logs = [];
+            if (
+                target.matches &&
+                target.matches("[data-close-baby-name]")
+            ) {
+                closeBabyNameModal();
+            }
+
+            if (
+                target.matches &&
+                target.matches("[data-close-delete]")
+            ) {
+                closeDeleteModal();
+            }
+
+        });
+
+        /* -----------------------------------------------
+           BABY NAME
+        ------------------------------------------------ */
+
+        const editBabyButton = $("editBabyButton");
+
+        if (editBabyButton) {
+            editBabyButton.addEventListener(
+                "click",
+                openBabyNameModal
+            );
+        }
+
+        const babyNameModalClose = $("babyNameModalClose");
+
+        if (babyNameModalClose) {
+            babyNameModalClose.addEventListener(
+                "click",
+                closeBabyNameModal
+            );
+        }
+
+        const babyNameForm = $("babyNameForm");
+
+        if (babyNameForm) {
+
+            babyNameForm.addEventListener(
+                "submit",
+                function (event) {
+
+                    event.preventDefault();
+
+                    saveBabyName(
+                        $("babyNameModalInput")
+                    );
+
                 }
-
-                saveLocalState();
-
-            } else {
-
-                await saveDatabaseState();
-
-            }
-
-        } catch (error) {
-
-            console.warn(
-                "Could not load IndexedDB state:",
-                error
             );
 
         }
 
-    }
+        const saveBabyNameButton =
+            $("saveBabyNameButton");
 
+        if (saveBabyNameButton) {
 
-    function saveDatabaseState() {
+            saveBabyNameButton.addEventListener(
+                "click",
+                function () {
 
-        if (!db) {
-            return Promise.resolve();
-        }
+                    saveBabyName(
+                        $("babyNameInput")
+                    );
 
-        return idbPut({
-            id: "state",
-            value: state
-        });
-
-    }
-
-
-    function persistState() {
-
-        saveLocalState();
-
-        saveDatabaseState().catch(function (error) {
-
-            console.warn(
-                "Could not save IndexedDB state:",
-                error
+                }
             );
 
-        });
-
-    }
-
-
-    function idbGet(id) {
-
-        return new Promise(function (resolve, reject) {
-
-            if (!db) {
-                resolve(null);
-                return;
-            }
-
-            try {
-
-                const transaction =
-                    db.transaction(
-                        STORE_NAME,
-                        "readonly"
-                    );
-
-                const store =
-                    transaction.objectStore(
-                        STORE_NAME
-                    );
-
-                const request =
-                    store.get(id);
-
-                request.onsuccess =
-                    function () {
-                        resolve(request.result || null);
-                    };
-
-                request.onerror =
-                    function () {
-                        reject(
-                            request.error ||
-                            new Error("IndexedDB read failed")
-                        );
-                    };
-
-            } catch (error) {
-
-                reject(error);
-
-            }
-
-        });
-
-    }
-
-
-    function idbPut(value) {
-
-        return new Promise(function (resolve, reject) {
-
-            if (!db) {
-                resolve();
-                return;
-            }
-
-            try {
-
-                const transaction =
-                    db.transaction(
-                        STORE_NAME,
-                        "readwrite"
-                    );
-
-                const store =
-                    transaction.objectStore(
-                        STORE_NAME
-                    );
-
-                const request =
-                    store.put(value);
-
-                request.onsuccess =
-                    function () {
-                        resolve();
-                    };
-
-                request.onerror =
-                    function () {
-                        reject(
-                            request.error ||
-                            new Error("IndexedDB write failed")
-                        );
-                    };
-
-            } catch (error) {
-
-                reject(error);
-
-            }
-
-        });
-
-    }
-
-
-    /* =====================================================
-       UI INITIALIZATION
-    ===================================================== */
-
-    function initializeUI() {
-
-        const babyNameDisplay =
-            $("babyNameDisplay");
-
-        const babyNameInput =
-            $("babyNameInput");
-
-        const babyNameModalInput =
-            $("babyNameModalInput");
-
-        const voiceLanguage =
-            $("voiceLanguage");
-
-        const confirmationToggle =
-            $("voiceConfirmationToggle");
-
-
-        if (babyNameDisplay) {
-            babyNameDisplay.textContent =
-                state.babyName || "My Baby";
         }
 
-
-        if (babyNameInput) {
-            babyNameInput.value =
-                state.babyName || "";
-        }
-
-
-        if (babyNameModalInput) {
-            babyNameModalInput.value =
-                state.babyName || "";
-        }
-
-
-        if (voiceLanguage) {
-
-            voiceLanguage.value =
-                state.voiceLanguage || "en-US";
-
-        }
-
-
-        if (confirmationToggle) {
-
-            confirmationToggle.checked =
-                state.voiceConfirmation !== false;
-
-        }
-
-    }
-
-
-    /* =====================================================
-       EVENT LISTENERS
-    ===================================================== */
-
-    function initializeEventListeners() {
-
-        /* ---------------------------------------------
+        /* -----------------------------------------------
            VOICE
-        --------------------------------------------- */
+        ------------------------------------------------ */
 
-        on(
-            $("voiceButton"),
-            "click",
-            toggleVoiceRecognition
-        );
+        const voiceButton = $("voiceButton");
 
+        if (voiceButton) {
 
-        /* ---------------------------------------------
+            voiceButton.addEventListener(
+                "click",
+                toggleVoice
+            );
+
+        }
+
+        $all(".voice-example").forEach(function (button) {
+
+            button.addEventListener(
+                "click",
+                function () {
+
+                    const text =
+                        button.getAttribute(
+                            "data-voice-example"
+                        );
+
+                    if (text) {
+                        processVoiceText(text);
+                    }
+
+                }
+            );
+
+        });
+
+        const voicePermissionClose =
+            $("voicePermissionClose");
+
+        if (voicePermissionClose) {
+
+            voicePermissionClose.addEventListener(
+                "click",
+                function () {
+
+                    hide(
+                        $("voicePermissionMessage")
+                    );
+
+                }
+            );
+
+        }
+
+        /* -----------------------------------------------
            QUICK ACTIONS
-        --------------------------------------------- */
+        ------------------------------------------------ */
 
         $all(".quick-action").forEach(function (button) {
 
-            on(
-                button,
+            button.addEventListener(
                 "click",
                 function () {
 
                     const action =
-                        button.dataset.action;
+                        button.getAttribute(
+                            "data-action"
+                        );
 
                     handleQuickAction(action);
 
@@ -583,323 +418,215 @@
 
         });
 
+        /* -----------------------------------------------
+           SLEEP
+        ------------------------------------------------ */
 
-        /* ---------------------------------------------
-           EXAMPLE VOICE BUTTONS
-        --------------------------------------------- */
+        const endSleepButton =
+            $("endSleepButton");
 
-        $all(".voice-example").forEach(function (button) {
+        if (endSleepButton) {
 
-            on(
-                button,
+            endSleepButton.addEventListener(
                 "click",
+                endSleep
+            );
+
+        }
+
+        /* -----------------------------------------------
+           CLEAR
+        ------------------------------------------------ */
+
+        const clearTodayButton =
+            $("clearTodayButton");
+
+        if (clearTodayButton) {
+
+            clearTodayButton.addEventListener(
+                "click",
+                clearToday
+            );
+
+        }
+
+        /* -----------------------------------------------
+           MODAL
+        ------------------------------------------------ */
+
+        const modalClose = $("modalClose");
+
+        if (modalClose) {
+
+            modalClose.addEventListener(
+                "click",
+                closeActionModal
+            );
+
+        }
+
+        /* -----------------------------------------------
+           SETTINGS
+        ------------------------------------------------ */
+
+        const voiceLanguage =
+            $("voiceLanguage");
+
+        if (voiceLanguage) {
+
+            voiceLanguage.value =
+                state.voiceLanguage;
+
+            voiceLanguage.addEventListener(
+                "change",
                 function () {
 
-                    const example =
-                        button.dataset.voiceExample;
+                    state.voiceLanguage =
+                        voiceLanguage.value;
 
-                    if (!example) {
-                        return;
-                    }
+                    saveState();
 
-                    handleVoiceTranscript(
-                        example
+                    initializeVoice();
+
+                    showToast(
+                        "Voice language updated",
+                        "✓"
                     );
 
                 }
             );
 
-        });
+        }
 
+        const voiceConfirmationToggle =
+            $("voiceConfirmationToggle");
 
-        /* ---------------------------------------------
-           SETTINGS
-        --------------------------------------------- */
+        if (voiceConfirmationToggle) {
 
-        on(
-            $("settingsButton"),
-            "click",
-            openSettings
-        );
+            voiceConfirmationToggle.checked =
+                state.voiceConfirmation;
 
+            voiceConfirmationToggle.addEventListener(
+                "change",
+                function () {
 
-        on(
-            $("settingsClose"),
-            "click",
-            closeSettings
-        );
+                    state.voiceConfirmation =
+                        voiceConfirmationToggle.checked;
 
+                    saveState();
 
-        $all("[data-close-settings]")
-            .forEach(function (element) {
-
-                on(
-                    element,
-                    "click",
-                    closeSettings
-                );
-
-            });
-
-
-        /* ---------------------------------------------
-           BABY PROFILE
-        --------------------------------------------- */
-
-        on(
-            $("editBabyButton"),
-            "click",
-            openBabyNameModal
-        );
-
-
-        on(
-            $("babyNameModalClose"),
-            "click",
-            closeBabyNameModal
-        );
-
-
-        $all("[data-close-baby-name]")
-            .forEach(function (element) {
-
-                on(
-                    element,
-                    "click",
-                    closeBabyNameModal
-                );
-
-            });
-
-
-        on(
-            $("babyNameForm"),
-            "submit",
-            function (event) {
-
-                event.preventDefault();
-
-                saveBabyName(
-                    $("babyNameModalInput")
-                        ? $("babyNameModalInput").value
-                        : ""
-                );
-
-            }
-        );
-
-
-        on(
-            $("saveBabyNameButton"),
-            "click",
-            function () {
-
-                saveBabyName(
-                    $("babyNameInput")
-                        ? $("babyNameInput").value
-                        : ""
-                );
-
-            }
-        );
-
-
-        /* ---------------------------------------------
-           VOICE SETTINGS
-        --------------------------------------------- */
-
-        on(
-            $("voiceLanguage"),
-            "change",
-            function (event) {
-
-                state.voiceLanguage =
-                    event.target.value ||
-                    "en-US";
-
-                persistState();
-
-                initializeVoiceRecognition();
-
-                showToast(
-                    "Voice language updated"
-                );
-
-            }
-        );
-
-
-        on(
-            $("voiceConfirmationToggle"),
-            "change",
-            function (event) {
-
-                state.voiceConfirmation =
-                    event.target.checked;
-
-                persistState();
-
-            }
-        );
-
-
-        /* ---------------------------------------------
-           MODAL
-        --------------------------------------------- */
-
-        on(
-            $("modalClose"),
-            "click",
-            closeActionModal
-        );
-
-
-        $all("[data-close-modal]")
-            .forEach(function (element) {
-
-                on(
-                    element,
-                    "click",
-                    closeActionModal
-                );
-
-            });
-
-
-        /* ---------------------------------------------
-           ACTIVE SLEEP
-        --------------------------------------------- */
-
-        on(
-            $("endSleepButton"),
-            "click",
-            endSleep
-        );
-
-
-        /* ---------------------------------------------
-           CLEAR TODAY
-        --------------------------------------------- */
-
-        on(
-            $("clearTodayButton"),
-            "click",
-            clearToday
-        );
-
-
-        /* ---------------------------------------------
-           EXPORT
-        --------------------------------------------- */
-
-        on(
-            $("exportDataButton"),
-            "click",
-            exportData
-        );
-
-
-        on(
-            $("settingsExportButton"),
-            "click",
-            exportData
-        );
-
-
-        /* ---------------------------------------------
-           IMPORT
-        --------------------------------------------- */
-
-        on(
-            $("importDataButton"),
-            "click",
-            function () {
-
-                const input =
-                    $("importDataInput");
-
-                if (input) {
-                    input.click();
                 }
+            );
 
-            }
-        );
+        }
 
+        /* -----------------------------------------------
+           EXPORT / IMPORT
+        ------------------------------------------------ */
 
-        on(
-            $("settingsImportButton"),
-            "click",
-            function () {
+        const exportDataButton =
+            $("exportDataButton");
 
-                const input =
-                    $("importDataInput");
+        if (exportDataButton) {
 
-                if (input) {
-                    input.click();
-                }
+            exportDataButton.addEventListener(
+                "click",
+                exportData
+            );
 
-            }
-        );
+        }
 
+        const settingsExportButton =
+            $("settingsExportButton");
 
-        on(
-            $("importDataInput"),
-            "change",
-            handleImport
-        );
+        if (settingsExportButton) {
 
+            settingsExportButton.addEventListener(
+                "click",
+                exportData
+            );
 
-        /* ---------------------------------------------
+        }
+
+        const importDataButton =
+            $("importDataButton");
+
+        if (importDataButton) {
+
+            importDataButton.addEventListener(
+                "click",
+                openImportPicker
+            );
+
+        }
+
+        const settingsImportButton =
+            $("settingsImportButton");
+
+        if (settingsImportButton) {
+
+            settingsImportButton.addEventListener(
+                "click",
+                openImportPicker
+            );
+
+        }
+
+        const importDataInput =
+            $("importDataInput");
+
+        if (importDataInput) {
+
+            importDataInput.addEventListener(
+                "change",
+                handleImport
+            );
+
+        }
+
+        /* -----------------------------------------------
            DELETE
-        --------------------------------------------- */
+        ------------------------------------------------ */
 
-        on(
-            $("deleteAllDataButton"),
-            "click",
-            openDeleteModal
-        );
+        const deleteAllDataButton =
+            $("deleteAllDataButton");
 
+        if (deleteAllDataButton) {
 
-        on(
-            $("cancelDeleteButton"),
-            "click",
-            closeDeleteModal
-        );
+            deleteAllDataButton.addEventListener(
+                "click",
+                openDeleteModal
+            );
 
+        }
 
-        on(
-            $("confirmDeleteButton"),
-            "click",
-            deleteAllData
-        );
+        const cancelDeleteButton =
+            $("cancelDeleteButton");
 
+        if (cancelDeleteButton) {
 
-        $all("[data-close-delete]")
-            .forEach(function (element) {
+            cancelDeleteButton.addEventListener(
+                "click",
+                closeDeleteModal
+            );
 
-                on(
-                    element,
-                    "click",
-                    closeDeleteModal
-                );
+        }
 
-            });
+        const confirmDeleteButton =
+            $("confirmDeleteButton");
 
+        if (confirmDeleteButton) {
 
-        /* ---------------------------------------------
-           PERMISSION MESSAGE
-        --------------------------------------------- */
+            confirmDeleteButton.addEventListener(
+                "click",
+                deleteEverything
+            );
 
-        on(
-            $("voicePermissionClose"),
-            "click",
-            hideVoicePermissionMessage
-        );
+        }
 
-
-        /* ---------------------------------------------
-           ESC KEY
-        --------------------------------------------- */
+        /* -----------------------------------------------
+           ESCAPE KEY
+        ------------------------------------------------ */
 
         document.addEventListener(
             "keydown",
@@ -914,18 +641,117 @@
                 closeBabyNameModal();
                 closeDeleteModal();
 
+                if (isListening) {
+                    stopVoice();
+                }
+
             }
         );
 
     }
 
+    /* =====================================================
+       BABY NAME
+    ===================================================== */
+
+    function updateBabyName() {
+
+        const name =
+            state.babyName || "My Baby";
+
+        safeText(
+            $("babyNameDisplay"),
+            name
+        );
+
+        const input =
+            $("babyNameInput");
+
+        if (input) {
+            input.value = name === "My Baby"
+                ? ""
+                : name;
+        }
+
+        const modalInput =
+            $("babyNameModalInput");
+
+        if (modalInput) {
+            modalInput.value = name === "My Baby"
+                ? ""
+                : name;
+        }
+
+    }
+
+    function saveBabyName(input) {
+
+        if (!input) {
+            return;
+        }
+
+        let name =
+            input.value.trim();
+
+        if (!name) {
+            name = "My Baby";
+        }
+
+        name = name.substring(0, 40);
+
+        state.babyName = name;
+
+        saveState();
+
+        updateBabyName();
+
+        closeSettings();
+        closeBabyNameModal();
+
+        showToast(
+            "Baby's name saved",
+            "💗"
+        );
+
+    }
+
+    /* =====================================================
+       DATE
+    ===================================================== */
+
+    function updateTodayDate() {
+
+        const dateElement =
+            $("todayDate");
+
+        if (!dateElement) {
+            return;
+        }
+
+        const now = new Date();
+
+        const formatted =
+            now.toLocaleDateString(
+                undefined,
+                {
+                    weekday: "long",
+                    month: "long",
+                    day: "numeric"
+                }
+            );
+
+        dateElement.textContent =
+            formatted;
+
+    }
 
     /* =====================================================
        VOICE RECOGNITION
     ===================================================== */
 
-    function initializeVoiceRecognition() {
+    function initializeVoice() {
 
+        speechSupported = false;
         recognition = null;
 
         const SpeechRecognition =
@@ -934,165 +760,76 @@
 
         if (!SpeechRecognition) {
 
-            console.warn(
-                "Speech recognition is not available in this browser."
+            console.info(
+                "Speech recognition is not supported in this browser."
             );
-
-            updateVoiceUnavailableUI();
 
             return;
 
         }
-
 
         try {
 
             recognition =
                 new SpeechRecognition();
 
+            speechSupported = true;
+
             recognition.continuous = false;
 
             recognition.interimResults = true;
-
-            recognition.maxAlternatives = 1;
 
             recognition.lang =
                 state.voiceLanguage ||
                 "en-US";
 
+            recognition.maxAlternatives = 1;
 
             recognition.onstart =
-                function () {
-
-                    isListening = true;
-
-                    updateVoiceListeningUI();
-
-                };
-
+                handleVoiceStart;
 
             recognition.onresult =
-                function (event) {
-
-                    let transcript = "";
-
-                    for (
-                        let i = event.resultIndex;
-                        i < event.results.length;
-                        i++
-                    ) {
-
-                        transcript +=
-                            event.results[i][0]
-                                .transcript;
-
-                    }
-
-                    transcript =
-                        transcript.trim();
-
-                    if (!transcript) {
-                        return;
-                    }
-
-                    showTranscript(
-                        transcript
-                    );
-
-                    /*
-                     * With confirmation enabled, we wait
-                     * briefly and then save the recognized
-                     * command.
-                     */
-                    if (
-                        event.results[
-                            event.results.length - 1
-                        ].isFinal
-                    ) {
-
-                        handleVoiceTranscript(
-                            transcript
-                        );
-
-                    }
-
-                };
-
+                handleVoiceResult;
 
             recognition.onerror =
-                function (event) {
-
-                    console.warn(
-                        "Speech recognition error:",
-                        event.error
-                    );
-
-                    isListening = false;
-
-                    updateVoiceIdleUI();
-
-                    handleVoiceError(
-                        event.error
-                    );
-
-                };
-
+                handleVoiceError;
 
             recognition.onend =
-                function () {
-
-                    isListening = false;
-
-                    updateVoiceIdleUI();
-
-                };
-
+                handleVoiceEnd;
 
         } catch (error) {
 
             console.warn(
-                "Could not initialize speech recognition:",
+                "Could not initialize speech recognition.",
                 error
             );
 
             recognition = null;
-
-            updateVoiceUnavailableUI();
+            speechSupported = false;
 
         }
 
     }
 
+    function toggleVoice() {
 
-    function toggleVoiceRecognition() {
+        if (isListening) {
 
-        if (!recognition) {
+            stopVoice();
+
+            return;
+
+        }
+
+        if (!speechSupported || !recognition) {
 
             showVoicePermissionMessage(
-                "Voice recognition is not available in this browser. You can still use Quick Tap logging."
+                "Voice recognition is not available in this browser. Try Chrome on desktop/Android, or use the Quick Tap buttons."
             );
 
             return;
 
         }
-
-
-        if (isListening) {
-
-            recognitionManuallyStopped = true;
-
-            try {
-                recognition.stop();
-            } catch (error) {
-                console.warn(error);
-            }
-
-            return;
-
-        }
-
-
-        recognitionManuallyStopped = false;
 
         try {
 
@@ -1105,412 +842,504 @@
         } catch (error) {
 
             console.warn(
-                "Could not start speech recognition:",
+                "Could not start voice recognition:",
                 error
             );
 
             /*
-             * Chrome/Safari can throw if start() is called
-             * while recognition is already starting.
+             * Calling start() twice can throw an error.
+             * Reset and let the user try again.
              */
-            if (
-                error &&
-                error.name === "InvalidStateError"
-            ) {
 
-                return;
+            isListening = false;
 
-            }
-
-            showVoicePermissionMessage(
-                "Your browser could not start voice recognition. Please check microphone permissions."
-            );
+            updateVoiceUI();
 
         }
 
     }
 
+    function stopVoice() {
 
-    /* =====================================================
-       VOICE UI
-    ===================================================== */
-
-    function updateVoiceListeningUI() {
-
-        const button =
-            $("voiceButton");
-
-        const icon =
-            $("voiceButtonIcon");
-
-        const status =
-            $("voiceStatus");
-
-        const title =
-            $("voiceStatusTitle");
-
-        const text =
-            $("voiceStatusText");
-
-        const wave =
-            $("voiceWave");
-
-
-        if (button) {
-
-            button.classList.add(
-                "recording"
-            );
-
-            button.setAttribute(
-                "aria-pressed",
-                "true"
-            );
-
-        }
-
-
-        if (icon) {
-            icon.textContent = "⏹️";
-        }
-
-
-        if (status) {
-            status.classList.add("active");
-        }
-
-
-        if (title) {
-            title.textContent =
-                "Listening…";
-        }
-
-
-        if (text) {
-            text.textContent =
-                "Tell me what happened";
-        }
-
-
-        if (wave) {
-            wave.classList.add("active");
-        }
-
-    }
-
-
-    function updateVoiceIdleUI() {
-
-        const button =
-            $("voiceButton");
-
-        const icon =
-            $("voiceButtonIcon");
-
-        const status =
-            $("voiceStatus");
-
-        const title =
-            $("voiceStatusTitle");
-
-        const text =
-            $("voiceStatusText");
-
-        const wave =
-            $("voiceWave");
-
-
-        if (button) {
-
-            button.classList.remove(
-                "recording"
-            );
-
-            button.setAttribute(
-                "aria-pressed",
-                "false"
-            );
-
-        }
-
-
-        if (icon) {
-            icon.textContent = "🎙️";
-        }
-
-
-        if (status) {
-            status.classList.remove(
-                "active"
-            );
-        }
-
-
-        if (title) {
-            title.textContent =
-                "Tap & tell me";
-        }
-
-
-        if (text) {
-            text.textContent =
-                "“Baby had a wet diaper”";
-        }
-
-
-        if (wave) {
-            wave.classList.remove(
-                "active"
-            );
-        }
-
-    }
-
-
-    function updateVoiceUnavailableUI() {
-
-        const status =
-            $("voiceStatus");
-
-        const title =
-            $("voiceStatusTitle");
-
-        const text =
-            $("voiceStatusText");
-
-
-        if (status) {
-            status.classList.add("active");
-        }
-
-
-        if (title) {
-            title.textContent =
-                "Voice logging unavailable";
-        }
-
-
-        if (text) {
-            text.textContent =
-                "Use Quick Tap instead";
-        }
-
-    }
-
-
-    function showTranscript(text) {
-
-        const container =
-            $("voiceTranscript");
-
-        const output =
-            $("voiceTranscriptText");
-
-
-        if (!container || !output) {
+        if (!recognition) {
             return;
         }
 
+        try {
+            recognition.stop();
+        } catch (error) {
+            console.warn(
+                "Could not stop speech recognition:",
+                error
+            );
+        }
 
-        output.textContent =
-            text;
+        isListening = false;
 
-        container.classList.remove(
-            "hidden"
+        updateVoiceUI();
+
+    }
+
+    function handleVoiceStart() {
+
+        isListening = true;
+
+        updateVoiceUI();
+
+        const statusTitle =
+            $("voiceStatusTitle");
+
+        const statusText =
+            $("voiceStatusText");
+
+        safeText(
+            statusTitle,
+            "Listening…"
+        );
+
+        safeText(
+            statusText,
+            "Tell me what happened"
+        );
+
+        show(
+            $("voiceStatus")
         );
 
     }
 
+    function handleVoiceResult(event) {
 
-    /* =====================================================
-       VOICE COMMAND PARSER
-    ===================================================== */
+        try {
 
-    function handleVoiceTranscript(transcript) {
+            let finalText = "";
+
+            let interimText = "";
+
+            for (
+                let i = event.resultIndex;
+                i < event.results.length;
+                i++
+            ) {
+
+                const transcript =
+                    event.results[i][0]
+                        .transcript;
+
+                if (
+                    event.results[i].isFinal
+                ) {
+
+                    finalText +=
+                        transcript;
+
+                } else {
+
+                    interimText +=
+                        transcript;
+
+                }
+
+            }
+
+            const text =
+                (
+                    finalText ||
+                    interimText
+                ).trim();
+
+            if (!text) {
+                return;
+            }
+
+            showTranscript(text);
+
+            if (finalText) {
+
+                processVoiceText(
+                    finalText.trim()
+                );
+
+            }
+
+        } catch (error) {
+
+            console.error(
+                "Voice result error:",
+                error
+            );
+
+        }
+
+    }
+
+    function handleVoiceError(event) {
+
+        console.warn(
+            "Speech recognition error:",
+            event
+        );
+
+        isListening = false;
+
+        updateVoiceUI();
+
+        let message =
+            "Voice logging could not start.";
+
+        if (
+            event &&
+            event.error === "not-allowed"
+        ) {
+
+            message =
+                "Microphone access was denied. Please allow microphone access in your browser.";
+
+        } else if (
+            event &&
+            event.error === "no-speech"
+        ) {
+
+            message =
+                "I didn't hear anything. Try again.";
+
+        } else if (
+            event &&
+            event.error === "network"
+        ) {
+
+            message =
+                "Voice recognition needs an internet connection in this browser.";
+
+        }
+
+        showVoicePermissionMessage(
+            message
+        );
+
+    }
+
+    function handleVoiceEnd() {
+
+        isListening = false;
+
+        updateVoiceUI();
+
+    }
+
+    function updateVoiceUI() {
+
+        const button =
+            $("voiceButton");
+
+        const icon =
+            $("voiceButtonIcon");
+
+        const wave =
+            $("voiceWave");
+
+        if (button) {
+
+            button.classList.toggle(
+                "recording",
+                isListening
+            );
+
+            button.setAttribute(
+                "aria-pressed",
+                isListening
+                    ? "true"
+                    : "false"
+            );
+
+            button.setAttribute(
+                "aria-label",
+                isListening
+                    ? "Stop voice logging"
+                    : "Start voice logging"
+            );
+
+        }
+
+        if (icon) {
+
+            icon.textContent =
+                isListening
+                    ? "⏹️"
+                    : "🎙️";
+
+        }
+
+        if (wave) {
+
+            wave.classList.toggle(
+                "active",
+                isListening
+            );
+
+        }
+
+    }
+
+    function showTranscript(text) {
+
+        const transcript =
+            $("voiceTranscript");
+
+        const transcriptText =
+            $("voiceTranscriptText");
 
         if (!transcript) {
             return;
         }
 
+        safeText(
+            transcriptText,
+            text
+        );
 
-        const clean =
-            transcript
-                .trim()
-                .toLowerCase();
+        show(transcript);
 
+    }
 
-        showTranscript(transcript);
+    function showVoicePermissionMessage(
+        message
+    ) {
 
+        const messageElement =
+            $("voicePermissionMessage");
 
-        /*
-         * DIAPER
-         */
+        const textElement =
+            $("voicePermissionText");
+
+        if (!messageElement) {
+            return;
+        }
+
+        safeText(
+            textElement,
+            message
+        );
+
+        show(messageElement);
+
+    }
+
+    /* =====================================================
+       VOICE PARSING
+    ===================================================== */
+
+    function processVoiceText(text) {
+
+        if (!text) {
+            return;
+        }
+
+        const lower =
+            text.toLowerCase();
+
+        let type = "note";
+
+        /* -----------------------------------------------
+           DIAPER
+        ------------------------------------------------ */
 
         if (
-            clean.includes("diaper") ||
-            clean.includes("nappy") ||
-            clean.includes("couche")
+            lower.includes("diaper") ||
+            lower.includes("nappy")
         ) {
 
-            let type = "wet";
+            type = "diaper";
+
+            let diaperType = "wet";
 
             if (
-                clean.includes("dirty") ||
-                clean.includes("poop") ||
-                clean.includes("poopy") ||
-                clean.includes("stool") ||
-                clean.includes("feces") ||
-                clean.includes("selle") ||
-                clean.includes("caca")
+                lower.includes("dirty") ||
+                lower.includes("poop") ||
+                lower.includes("poopy") ||
+                lower.includes("stool")
             ) {
 
-                type = "dirty";
+                diaperType = "dirty";
 
             }
 
             addLog({
                 type: "diaper",
-                subtype: type,
-                note: transcript
+                subtype: diaperType,
+                title:
+                    diaperType === "dirty"
+                        ? "Dirty diaper"
+                        : "Wet diaper",
+                details:
+                    text,
+                timestamp:
+                    new Date().toISOString()
             });
 
             return;
+
         }
 
-
-        /*
-         * FEEDING
-         */
+        /* -----------------------------------------------
+           FEEDING
+        ------------------------------------------------ */
 
         if (
-            clean.includes("feed") ||
-            clean.includes("fed") ||
-            clean.includes("milk") ||
-            clean.includes("nursed") ||
-            clean.includes("nursing") ||
-            clean.includes("breast") ||
-            clean.includes("bottle") ||
-            clean.includes("formula") ||
-            clean.includes("milk")
+            lower.includes("feed") ||
+            lower.includes("fed") ||
+            lower.includes("drank") ||
+            lower.includes("milk") ||
+            lower.includes("bottle") ||
+            lower.includes("nursed") ||
+            lower.includes("nursing") ||
+            lower.includes("breast")
         ) {
 
-            const amount =
-                extractAmount(
-                    clean
-                );
+            type = "feed";
 
-            const side =
-                extractNursingSide(
-                    clean
-                );
+            const amount =
+                extractAmount(text);
+
+            const duration =
+                extractDuration(text);
+
+            let title =
+                "Feed";
+
+            if (
+                lower.includes("nursed") ||
+                lower.includes("nursing") ||
+                lower.includes("breast")
+            ) {
+
+                title =
+                    "Nursing";
+
+            } else if (
+                lower.includes("bottle")
+            ) {
+
+                title =
+                    "Bottle";
+
+            }
+
+            let details = text;
+
+            if (amount) {
+                details +=
+                    " • " + amount + " ml";
+            }
+
+            if (duration) {
+                details +=
+                    " • " + duration + " min";
+            }
 
             addLog({
                 type: "feed",
-                amount: amount,
-                side: side,
-                note: transcript
+                title: title,
+                details: details,
+                timestamp:
+                    new Date().toISOString()
             });
 
             return;
+
         }
 
-
-        /*
-         * SLEEP
-         */
+        /* -----------------------------------------------
+           SLEEP
+        ------------------------------------------------ */
 
         if (
-            clean.includes("sleep") ||
-            clean.includes("nap") ||
-            clean.includes("slept") ||
-            clean.includes("asleep") ||
-            clean.includes("dormi") ||
-            clean.includes("sieste")
+            lower.includes("sleep") ||
+            lower.includes("nap") ||
+            lower.includes("asleep") ||
+            lower.includes("woke up") ||
+            lower.includes("woke")
         ) {
 
             if (
-                clean.includes("woke") ||
-                clean.includes("wake") ||
-                clean.includes("awake") ||
-                clean.includes("réve")
+                lower.includes("woke") ||
+                lower.includes("awake")
             ) {
 
-                if (activeSleep) {
+                if (state.activeSleep) {
                     endSleep();
                 } else {
 
                     addLog({
                         type: "sleep",
-                        duration: 0,
-                        note: transcript
+                        title: "Woke up",
+                        details: text,
+                        timestamp:
+                            new Date().toISOString()
                     });
 
                 }
 
             } else {
 
-                if (!activeSleep) {
-                    startSleep();
-                }
+                startSleep();
 
             }
 
             return;
+
         }
 
-
-        /*
-         * NOTE
-         */
+        /* -----------------------------------------------
+           NOTE
+        ------------------------------------------------ */
 
         addLog({
             type: "note",
-            note: transcript
+            title: "Note",
+            details: text,
+            timestamp:
+                new Date().toISOString()
         });
 
     }
-
 
     function extractAmount(text) {
 
         const match =
             text.match(
-                /(\d+(?:\.\d+)?)\s*(ml|milliliter|milliliters|oz|ounce|ounces|minutes|minute|min)/i
+                /(\d+(?:[.,]\d+)?)\s*(?:ml|milliliters?|mL)/i
             );
 
         if (!match) {
             return null;
         }
 
-        return {
-            value: Number(match[1]),
-            unit: match[2]
-        };
+        return Math.round(
+            parseFloat(
+                match[1].replace(",", ".")
+            )
+        );
 
     }
 
+    function extractDuration(text) {
 
-    function extractNursingSide(text) {
+        const match =
+            text.match(
+                /(\d+)\s*(?:minutes?|mins?|min)/i
+            );
 
-        if (
-            text.includes("left") ||
-            text.includes("gauche")
-        ) {
-            return "left";
+        if (!match) {
+            return null;
         }
 
-        if (
-            text.includes("right") ||
-            text.includes("droite") ||
-            text.includes("droit")
-        ) {
-            return "right";
-        }
-
-        return null;
+        return parseInt(
+            match[1],
+            10
+        );
 
     }
-
 
     /* =====================================================
        QUICK ACTIONS
@@ -1529,13 +1358,7 @@
                 break;
 
             case "sleep":
-
-                if (activeSleep) {
-                    endSleep();
-                } else {
-                    startSleep();
-                }
-
+                handleSleepAction();
                 break;
 
             case "note":
@@ -1552,418 +1375,358 @@
 
     }
 
-
     /* =====================================================
-       FEED MODAL
+       FEED
     ===================================================== */
 
     function openFeedModal() {
 
         openActionModal(`
-            <span class="tracker-badge">🍼 FEEDING</span>
-
-            <h2 id="modalContentTitle">
-                Log a feed
-            </h2>
-
-            <p class="modal-subtitle">
-                What kind of feeding was it?
-            </p>
-
-            <div class="modal-options">
-
-                <button
-                    type="button"
-                    class="modal-option"
-                    data-feed-type="nursing"
-                >
-                    🤱 Nursing
-                </button>
-
-                <button
-                    type="button"
-                    class="modal-option"
-                    data-feed-type="bottle"
-                >
-                    🍼 Bottle
-                </button>
-
-                <button
-                    type="button"
-                    class="modal-option"
-                    data-feed-type="formula"
-                >
-                    🥛 Formula
-                </button>
-
+            <div class="settings-header">
+                <span class="tracker-badge">🍼 FEED</span>
+                <h2>Log a feed</h2>
+                <p>What did baby have?</p>
             </div>
-        `);
 
-
-        $all("[data-feed-type]")
-            .forEach(function (button) {
-
-                on(
-                    button,
-                    "click",
-                    function () {
-
-                        const type =
-                            button.dataset.feedType;
-
-                        closeActionModal();
-
-                        if (
-                            type === "nursing"
-                        ) {
-
-                            addLog({
-                                type: "feed",
-                                subtype: "nursing"
-                            });
-
-                        } else {
-
-                            addLog({
-                                type: "feed",
-                                subtype: type
-                            });
-
-                        }
-
-                    }
-                );
-
-            });
-
-    }
-
-
-    /* =====================================================
-       DIAPER MODAL
-    ===================================================== */
-
-    function openDiaperModal() {
-
-        openActionModal(`
-            <span class="tracker-badge">💧 DIAPER</span>
-
-            <h2 id="modalContentTitle">
-                Log a diaper
-            </h2>
-
-            <p class="modal-subtitle">
-                What did you change?
-            </p>
-
-            <div class="modal-options">
-
-                <button
-                    type="button"
-                    class="modal-option"
-                    data-diaper-type="wet"
-                >
-                    💧 Wet
-                </button>
-
-                <button
-                    type="button"
-                    class="modal-option"
-                    data-diaper-type="dirty"
-                >
-                    💩 Dirty
-                </button>
-
-                <button
-                    type="button"
-                    class="modal-option"
-                    data-diaper-type="both"
-                >
-                    💧💩 Both
-                </button>
-
-            </div>
-        `);
-
-
-        $all("[data-diaper-type]")
-            .forEach(function (button) {
-
-                on(
-                    button,
-                    "click",
-                    function () {
-
-                        addLog({
-                            type: "diaper",
-                            subtype:
-                                button.dataset.diaperType
-                        });
-
-                        closeActionModal();
-
-                    }
-                );
-
-            });
-
-    }
-
-
-    /* =====================================================
-       NOTE MODAL
-    ===================================================== */
-
-    function openNoteModal() {
-
-        openActionModal(`
-            <span class="tracker-badge">📝 NOTE</span>
-
-            <h2 id="modalContentTitle">
-                Add a note
-            </h2>
-
-            <p class="modal-subtitle">
-                Anything you want to remember.
-            </p>
-
-            <form id="noteForm" class="tracker-form">
+            <form id="feedForm" class="tracker-form">
 
                 <div>
+                    <label for="feedType">
+                        Type
+                    </label>
 
-                    <label for="noteInput">
-                        Note
+                    <select id="feedType">
+                        <option value="Bottle">
+                            Bottle
+                        </option>
+                        <option value="Nursing">
+                            Nursing
+                        </option>
+                        <option value="Solids">
+                            Solids
+                        </option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="feedAmount">
+                        Amount (optional)
+                    </label>
+
+                    <input
+                        id="feedAmount"
+                        type="number"
+                        min="0"
+                        placeholder="120"
+                        inputmode="numeric"
+                    >
+                </div>
+
+                <div>
+                    <label for="feedNotes">
+                        Note (optional)
                     </label>
 
                     <textarea
-                        id="noteInput"
-                        rows="4"
-                        placeholder="Baby was especially happy today..."
+                        id="feedNotes"
+                        rows="3"
+                        placeholder="Anything else?"
                     ></textarea>
-
                 </div>
 
                 <button
                     type="submit"
                     class="form-submit"
                 >
-                    Save Note
+                    🍼 Save Feed
                 </button>
 
             </form>
         `);
 
+        const form =
+            $("feedForm");
 
-        on(
-            $("noteForm"),
-            "submit",
-            function (event) {
+        if (form) {
 
-                event.preventDefault();
+            form.addEventListener(
+                "submit",
+                function (event) {
 
-                const input =
-                    $("noteInput");
+                    event.preventDefault();
 
-                if (!input) {
-                    return;
+                    const type =
+                        $("feedType").value;
+
+                    const amount =
+                        $("feedAmount").value;
+
+                    const notes =
+                        $("feedNotes").value.trim();
+
+                    let details =
+                        type;
+
+                    if (amount) {
+                        details +=
+                            " • " +
+                            amount +
+                            " ml";
+                    }
+
+                    if (notes) {
+                        details +=
+                            " • " +
+                            notes;
+                    }
+
+                    addLog({
+                        type: "feed",
+                        title: type,
+                        details: details,
+                        timestamp:
+                            new Date().toISOString()
+                    });
+
+                    closeActionModal();
+
                 }
+            );
 
-                const note =
-                    input.value.trim();
-
-                if (!note) {
-
-                    showToast(
-                        "Write something first."
-                    );
-
-                    return;
-
-                }
-
-                addLog({
-                    type: "note",
-                    note: note
-                });
-
-                closeActionModal();
-
-            }
-        );
+        }
 
     }
-
 
     /* =====================================================
-       LOG CREATION
+       DIAPER
     ===================================================== */
 
-    function addLog(data) {
+    function openDiaperModal() {
 
-        const log = {
-            id:
-                createId(),
+        openActionModal(`
+            <div class="settings-header">
+                <span class="tracker-badge">💧 DIAPER</span>
+                <h2>Log a diaper</h2>
+                <p>What kind was it?</p>
+            </div>
 
-            type:
-                data.type || "note",
+            <form id="diaperForm" class="tracker-form">
 
-            subtype:
-                data.subtype || null,
+                <div>
+                    <label for="diaperType">
+                        Type
+                    </label>
 
-            amount:
-                data.amount || null,
+                    <select id="diaperType">
+                        <option value="Wet">
+                            Wet
+                        </option>
+                        <option value="Dirty">
+                            Dirty
+                        </option>
+                        <option value="Wet + Dirty">
+                            Wet + Dirty
+                        </option>
+                    </select>
+                </div>
 
-            side:
-                data.side || null,
+                <button
+                    type="submit"
+                    class="form-submit"
+                >
+                    💧 Save Diaper
+                </button>
 
-            note:
-                data.note || "",
+            </form>
+        `);
 
-            timestamp:
-                new Date().toISOString()
-        };
+        const form =
+            $("diaperForm");
 
+        if (form) {
 
-        state.logs.unshift(log);
+            form.addEventListener(
+                "submit",
+                function (event) {
 
-        persistState();
+                    event.preventDefault();
 
-        updateAllUI();
+                    const type =
+                        $("diaperType").value;
 
-        showToast(
-            getLogSavedMessage(log)
-        );
+                    addLog({
+                        type: "diaper",
+                        title:
+                            type + " diaper",
+                        details: "",
+                        timestamp:
+                            new Date().toISOString()
+                    });
 
-    }
+                    closeActionModal();
 
-
-    function createId() {
-
-        if (
-            window.crypto &&
-            typeof window.crypto.randomUUID ===
-                "function"
-        ) {
-
-            return window.crypto.randomUUID();
-
-        }
-
-        return (
-            Date.now().toString(36) +
-            Math.random()
-                .toString(36)
-                .substring(2)
-        );
-
-    }
-
-
-    function getLogSavedMessage(log) {
-
-        switch (log.type) {
-
-            case "feed":
-                return "Feed logged";
-
-            case "diaper":
-                return "Diaper logged";
-
-            case "sleep":
-                return "Sleep logged";
-
-            case "note":
-                return "Note saved";
-
-            default:
-                return "Saved";
+                }
+            );
 
         }
 
     }
-
 
     /* =====================================================
        SLEEP
     ===================================================== */
 
+    function handleSleepAction() {
+
+        if (state.activeSleep) {
+
+            endSleep();
+
+        } else {
+
+            startSleep();
+
+        }
+
+    }
+
     function startSleep() {
 
-        if (activeSleep) {
+        if (state.activeSleep) {
             return;
         }
 
-
-        activeSleep = {
-            startTime:
-                Date.now()
+        state.activeSleep = {
+            start:
+                new Date().toISOString()
         };
 
+        saveState();
 
-        try {
-
-            localStorage.setItem(
-                "momyouneedthis_active_sleep",
-                JSON.stringify(activeSleep)
-            );
-
-        } catch (error) {
-            console.warn(error);
-        }
-
-
-        updateSleepUI();
+        updateActiveSleep();
 
         startSleepTimer();
 
         showToast(
-            "Nap started"
+            "Nap started",
+            "😴"
         );
 
     }
 
+    function endSleep() {
 
-    function restoreActiveSleep() {
+        if (!state.activeSleep) {
+            return;
+        }
 
-        try {
-
-            const saved =
-                localStorage.getItem(
-                    "momyouneedthis_active_sleep"
-                );
-
-            if (!saved) {
-                return;
-            }
-
-            const parsed =
-                JSON.parse(saved);
-
-            if (
-                parsed &&
-                parsed.startTime
-            ) {
-
-                activeSleep =
-                    parsed;
-
-                updateSleepUI();
-
-                startSleepTimer();
-
-            }
-
-        } catch (error) {
-
-            console.warn(
-                "Could not restore active sleep:",
-                error
+        const start =
+            new Date(
+                state.activeSleep.start
             );
 
-        }
+        const end =
+            new Date();
+
+        const duration =
+            Math.max(
+                0,
+                Math.round(
+                    (
+                        end.getTime() -
+                        start.getTime()
+                    ) / 60000
+                )
+            );
+
+        addLog({
+            type: "sleep",
+            title: "Nap",
+            details:
+                duration +
+                " minute" +
+                (
+                    duration === 1
+                        ? ""
+                        : "s"
+                ),
+            duration: duration,
+            start:
+                state.activeSleep.start,
+            timestamp:
+                end.toISOString()
+        }, false);
+
+        state.activeSleep = null;
+
+        saveState();
+
+        stopSleepTimer();
+
+        updateActiveSleep();
+
+        updateAllUI();
+
+        showToast(
+            "Nap saved",
+            "😴"
+        );
 
     }
 
+    function restoreActiveSleep() {
+
+        if (!state.activeSleep) {
+            return;
+        }
+
+        const start =
+            new Date(
+                state.activeSleep.start
+            );
+
+        if (
+            Number.isNaN(
+                start.getTime()
+            )
+        ) {
+
+            state.activeSleep = null;
+
+            saveState();
+
+            return;
+
+        }
+
+        updateActiveSleep();
+
+        startSleepTimer();
+
+    }
+
+    function updateActiveSleep() {
+
+        const card =
+            $("activeSleepCard");
+
+        if (!card) {
+            return;
+        }
+
+        if (!state.activeSleep) {
+
+            hide(card);
+
+            return;
+
+        }
+
+        show(card);
+
+        updateSleepTimer();
+
+    }
 
     function startSleepTimer() {
 
@@ -1979,7 +1742,6 @@
 
     }
 
-
     function stopSleepTimer() {
 
         if (sleepTimerInterval) {
@@ -1994,149 +1756,219 @@
 
     }
 
-
     function updateSleepTimer() {
 
-        if (!activeSleep) {
+        const timer =
+            $("sleepTimer");
+
+        if (
+            !timer ||
+            !state.activeSleep
+        ) {
             return;
         }
 
-
-        const elapsed =
-            Math.max(
-                0,
-                Date.now() -
-                activeSleep.startTime
+        const start =
+            new Date(
+                state.activeSleep.start
             );
-
 
         const seconds =
-            Math.floor(
-                elapsed / 1000
+            Math.max(
+                0,
+                Math.floor(
+                    (
+                        Date.now() -
+                        start.getTime()
+                    ) / 1000
+                )
             );
 
+        timer.textContent =
+            formatClock(
+                seconds
+            );
+
+    }
+
+    function formatClock(seconds) {
 
         const hours =
             Math.floor(
                 seconds / 3600
             );
 
-
         const minutes =
             Math.floor(
                 (seconds % 3600) / 60
             );
 
-
-        const remainingSeconds =
+        const secs =
             seconds % 60;
 
+        return [
+            String(hours).padStart(2, "0"),
+            String(minutes).padStart(2, "0"),
+            String(secs).padStart(2, "0")
+        ].join(":");
 
-        const formatted =
-            String(hours).padStart(2, "0") +
-            ":" +
-            String(minutes).padStart(2, "0") +
-            ":" +
-            String(remainingSeconds)
-                .padStart(2, "0");
+    }
 
+    /* =====================================================
+       NOTE
+    ===================================================== */
 
-        const timer =
-            $("sleepTimer");
+    function openNoteModal() {
 
-        if (timer) {
-            timer.textContent =
-                formatted;
+        openActionModal(`
+            <div class="settings-header">
+                <span class="tracker-badge">📝 NOTE</span>
+                <h2>Add a note</h2>
+                <p>Write something you want to remember.</p>
+            </div>
+
+            <form id="noteForm" class="tracker-form">
+
+                <div>
+                    <label for="noteText">
+                        Note
+                    </label>
+
+                    <textarea
+                        id="noteText"
+                        rows="5"
+                        placeholder="Baby seemed extra happy today..."
+                        required
+                    ></textarea>
+                </div>
+
+                <button
+                    type="submit"
+                    class="form-submit"
+                >
+                    📝 Save Note
+                </button>
+
+            </form>
+        `);
+
+        const form =
+            $("noteForm");
+
+        if (form) {
+
+            form.addEventListener(
+                "submit",
+                function (event) {
+
+                    event.preventDefault();
+
+                    const note =
+                        $("noteText")
+                            .value
+                            .trim();
+
+                    if (!note) {
+                        return;
+                    }
+
+                    addLog({
+                        type: "note",
+                        title: "Note",
+                        details: note,
+                        timestamp:
+                            new Date().toISOString()
+                    });
+
+                    closeActionModal();
+
+                }
+            );
+
         }
 
     }
 
+    /* =====================================================
+       LOGGING
+    ===================================================== */
 
-    function updateSleepUI() {
+    function addLog(log, showMessage = true) {
 
-        const card =
-            $("activeSleepCard");
+        const newLog = {
+            id:
+                Date.now().toString() +
+                "-" +
+                Math.random()
+                    .toString(36)
+                    .substring(2, 9),
 
+            type:
+                log.type || "note",
 
-        if (!card) {
-            return;
-        }
+            title:
+                log.title || "Note",
 
+            details:
+                log.details || "",
 
-        if (activeSleep) {
+            subtype:
+                log.subtype || "",
 
-            card.classList.remove(
-                "hidden"
-            );
-
-            updateSleepTimer();
-
-        } else {
-
-            card.classList.add(
-                "hidden"
-            );
-
-        }
-
-    }
-
-
-    function endSleep() {
-
-        if (!activeSleep) {
-            return;
-        }
-
-
-        const endTime =
-            Date.now();
-
-
-        const durationMs =
-            Math.max(
-                0,
-                endTime -
-                activeSleep.startTime
-            );
-
-
-        const durationMinutes =
-            Math.max(
-                1,
-                Math.round(
-                    durationMs /
-                    60000
-                )
-            );
-
-
-        addLog({
-            type: "sleep",
             duration:
-                durationMinutes
-        });
+                Number.isFinite(log.duration)
+                    ? log.duration
+                    : null,
 
+            start:
+                log.start || null,
 
-        activeSleep = null;
+            timestamp:
+                log.timestamp ||
+                new Date().toISOString()
+        };
 
-        stopSleepTimer();
+        state.logs.push(newLog);
 
-        try {
+        saveState();
 
-            localStorage.removeItem(
-                "momyouneedthis_active_sleep"
+        updateAllUI();
+
+        if (showMessage) {
+
+            showToast(
+                getSavedMessage(
+                    newLog.type
+                ),
+                "✓"
             );
 
-        } catch (error) {
-            console.warn(error);
         }
-
-
-        updateSleepUI();
 
     }
 
+    function getSavedMessage(type) {
+
+        switch (type) {
+
+            case "feed":
+                return "Feed saved";
+
+            case "diaper":
+                return "Diaper saved";
+
+            case "sleep":
+                return "Sleep saved";
+
+            case "note":
+                return "Note saved";
+
+            default:
+                return "Saved";
+
+        }
+
+    }
 
     /* =====================================================
        UI UPDATE
@@ -2146,157 +1978,24 @@
 
         updateBabyName();
 
-        updateDate();
-
-        updateSummary();
+        updateTodayDate();
 
         renderTimeline();
 
-        updateSleepUI();
+        updateSummary();
+
+        updateActiveSleep();
 
     }
 
-
-    function updateBabyName() {
-
-        const display =
-            $("babyNameDisplay");
-
-        if (display) {
-
-            display.textContent =
-                state.babyName ||
-                "My Baby";
-
-        }
-
-    }
-
-
-    function updateDate() {
-
-        const element =
-            $("todayDate");
-
-        if (!element) {
-            return;
-        }
-
-
-        const today =
-            new Date();
-
-
-        try {
-
-            element.textContent =
-                today.toLocaleDateString(
-                    undefined,
-                    {
-                        weekday: "long",
-                        month: "long",
-                        day: "numeric"
-                    }
-                );
-
-        } catch (error) {
-
-            element.textContent =
-                "Today";
-
-        }
-
-    }
-
-
-    function updateSummary() {
-
-        const todayLogs =
-            getTodayLogs();
-
-
-        const totalLogs =
-            $("totalLogs");
-
-        const feedCount =
-            $("feedCount");
-
-        const diaperCount =
-            $("diaperCount");
-
-        const sleepTotal =
-            $("sleepTotal");
-
-
-        if (totalLogs) {
-
-            totalLogs.textContent =
-                todayLogs.length;
-
-        }
-
-
-        if (feedCount) {
-
-            feedCount.textContent =
-                todayLogs.filter(
-                    function (log) {
-                        return log.type === "feed";
-                    }
-                ).length;
-
-        }
-
-
-        if (diaperCount) {
-
-            diaperCount.textContent =
-                todayLogs.filter(
-                    function (log) {
-                        return log.type === "diaper";
-                    }
-                ).length;
-
-        }
-
-
-        if (sleepTotal) {
-
-            const minutes =
-                todayLogs
-                    .filter(
-                        function (log) {
-                            return log.type === "sleep";
-                        }
-                    )
-                    .reduce(
-                        function (total, log) {
-
-                            return (
-                                total +
-                                Number(
-                                    log.duration || 0
-                                )
-                            );
-
-                        },
-                        0
-                    );
-
-
-            sleepTotal.textContent =
-                formatMinutes(minutes);
-
-        }
-
-    }
-
+    /* =====================================================
+       TODAY LOGS
+    ===================================================== */
 
     function getTodayLogs() {
 
         const now =
             new Date();
-
 
         const year =
             now.getFullYear();
@@ -2306,7 +2005,6 @@
 
         const day =
             now.getDate();
-
 
         return state.logs.filter(
             function (log) {
@@ -2327,54 +2025,100 @@
 
     }
 
+    /* =====================================================
+       SUMMARY
+    ===================================================== */
 
-    function formatMinutes(minutes) {
+    function updateSummary() {
 
-        minutes =
-            Number(minutes) || 0;
+        const logs =
+            getTodayLogs();
 
+        safeText(
+            $("totalLogs"),
+            String(logs.length)
+        );
 
-        if (minutes < 60) {
+        const feeds =
+            logs.filter(
+                function (log) {
+                    return log.type === "feed";
+                }
+            ).length;
 
-            return (
-                Math.round(minutes) +
-                "m"
-            );
+        const diapers =
+            logs.filter(
+                function (log) {
+                    return log.type === "diaper";
+                }
+            ).length;
 
+        const sleep =
+            logs
+                .filter(
+                    function (log) {
+                        return log.type === "sleep";
+                    }
+                )
+                .reduce(
+                    function (total, log) {
+                        return total +
+                            (
+                                Number(
+                                    log.duration
+                                ) || 0
+                            );
+                    },
+                    0
+                );
+
+        safeText(
+            $("feedCount"),
+            String(feeds)
+        );
+
+        safeText(
+            $("diaperCount"),
+            String(diapers)
+        );
+
+        safeText(
+            $("sleepTotal"),
+            formatSleepTotal(sleep)
+        );
+
+    }
+
+    function formatSleepTotal(minutes) {
+
+        if (!minutes) {
+            return "0m";
         }
-
 
         const hours =
             Math.floor(
                 minutes / 60
             );
 
+        const mins =
+            minutes % 60;
 
-        const remaining =
-            Math.round(
-                minutes % 60
-            );
-
-
-        if (!remaining) {
-
-            return (
-                hours +
-                "h"
-            );
-
+        if (!hours) {
+            return mins + "m";
         }
 
+        if (!mins) {
+            return hours + "h";
+        }
 
         return (
             hours +
             "h " +
-            remaining +
+            mins +
             "m"
         );
 
     }
-
 
     /* =====================================================
        TIMELINE
@@ -2385,48 +2129,73 @@
         const timeline =
             $("timeline");
 
+        const emptyState =
+            $("emptyState");
+
         if (!timeline) {
             return;
         }
 
+        /*
+         * Remove previous timeline items
+         * but keep empty state.
+         */
 
-        const todayLogs =
-            getTodayLogs();
+        Array.from(
+            timeline.children
+        ).forEach(
+            function (child) {
 
+                if (
+                    child.id !==
+                    "emptyState"
+                ) {
 
-        timeline.innerHTML = "";
+                    child.remove();
 
+                }
 
-        if (!todayLogs.length) {
+            }
+        );
 
-            timeline.innerHTML = `
-                <div class="empty-state" id="emptyState">
+        const logs =
+            getTodayLogs()
+                .slice()
+                .sort(
+                    function (a, b) {
 
-                    <div class="empty-state-icon">
-                        🌸
-                    </div>
+                        return (
+                            new Date(b.timestamp) -
+                            new Date(a.timestamp)
+                        );
 
-                    <h3>
-                        Your day starts here
-                    </h3>
+                    }
+                );
 
-                    <p>
-                        Tell me what happened and
-                        I'll keep track for you.
-                    </p>
+        if (!logs.length) {
 
-                </div>
-            `;
+            if (emptyState) {
+                show(emptyState);
+            }
 
             return;
+
         }
 
+        if (emptyState) {
+            hide(emptyState);
+        }
 
-        todayLogs.forEach(
+        logs.forEach(
             function (log) {
 
+                const item =
+                    createTimelineItem(
+                        log
+                    );
+
                 timeline.appendChild(
-                    createTimelineItem(log)
+                    item
                 );
 
             }
@@ -2434,74 +2203,97 @@
 
     }
 
-
     function createTimelineItem(log) {
 
         const item =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
         item.className =
             "timeline-item";
 
+        item.dataset.id =
+            log.id;
 
         const icon =
+            document.createElement(
+                "div"
+            );
+
+        icon.className =
+            "timeline-icon";
+
+        icon.textContent =
             getLogIcon(log);
 
+        const info =
+            document.createElement(
+                "div"
+            );
+
+        info.className =
+            "timeline-info";
 
         const title =
-            getLogTitle(log);
+            document.createElement(
+                "strong"
+            );
 
+        title.textContent =
+            log.title;
 
-        const subtitle =
-            getLogSubtitle(log);
+        const details =
+            document.createElement(
+                "span"
+            );
 
+        details.textContent =
+            log.details || "";
+
+        info.appendChild(
+            title
+        );
+
+        if (log.details) {
+            info.appendChild(
+                details
+            );
+        }
 
         const time =
+            document.createElement(
+                "div"
+            );
+
+        time.className =
+            "timeline-time";
+
+        time.textContent =
             formatTime(
                 log.timestamp
             );
 
-
-        item.innerHTML = `
-            <div class="timeline-icon">
-                ${icon}
-            </div>
-
-            <div class="timeline-info">
-
-                <strong>
-                    ${escapeHTML(title)}
-                </strong>
-
-                <span>
-                    ${escapeHTML(subtitle)}
-                </span>
-
-            </div>
-
-            <div class="timeline-time">
-                ${escapeHTML(time)}
-            </div>
-
-            <button
-                type="button"
-                class="timeline-delete"
-                aria-label="Delete log"
-                data-delete-log="${escapeHTML(log.id)}"
-            >
-                ×
-            </button>
-        `;
-
-
         const deleteButton =
-            item.querySelector(
-                "[data-delete-log]"
+            document.createElement(
+                "button"
             );
 
+        deleteButton.type =
+            "button";
 
-        on(
-            deleteButton,
+        deleteButton.className =
+            "timeline-delete";
+
+        deleteButton.textContent =
+            "×";
+
+        deleteButton.setAttribute(
+            "aria-label",
+            "Delete log"
+        );
+
+        deleteButton.addEventListener(
             "click",
             function () {
 
@@ -2512,11 +2304,14 @@
             }
         );
 
+        item.appendChild(icon);
+        item.appendChild(info);
+        item.appendChild(time);
+        item.appendChild(deleteButton);
 
         return item;
 
     }
-
 
     function getLogIcon(log) {
 
@@ -2541,202 +2336,28 @@
 
     }
 
-
-    function getLogTitle(log) {
-
-        if (log.type === "feed") {
-
-            if (
-                log.subtype === "nursing"
-            ) {
-                return "Nursing";
-            }
-
-            if (
-                log.subtype === "bottle"
-            ) {
-                return "Bottle";
-            }
-
-            if (
-                log.subtype === "formula"
-            ) {
-                return "Formula";
-            }
-
-            return "Feed";
-
-        }
-
-
-        if (log.type === "diaper") {
-
-            if (
-                log.subtype === "wet"
-            ) {
-                return "Wet diaper";
-            }
-
-            if (
-                log.subtype === "dirty"
-            ) {
-                return "Dirty diaper";
-            }
-
-            if (
-                log.subtype === "both"
-            ) {
-                return "Wet + dirty diaper";
-            }
-
-            return "Diaper";
-
-        }
-
-
-        if (log.type === "sleep") {
-
-            return "Sleep";
-
-        }
-
-
-        if (log.type === "note") {
-
-            return "Note";
-
-        }
-
-
-        return "Activity";
-
-    }
-
-
-    function getLogSubtitle(log) {
-
-        if (log.note) {
-
-            return log.note;
-
-        }
-
-
-        if (
-            log.type === "sleep" &&
-            log.duration
-        ) {
-
-            return (
-                "Duration: " +
-                formatMinutes(
-                    log.duration
-                )
-            );
-
-        }
-
-
-        if (
-            log.type === "feed"
-        ) {
-
-            const parts = [];
-
-
-            if (log.side) {
-
-                parts.push(
-                    log.side === "left"
-                        ? "Left"
-                        : "Right"
-                );
-
-            }
-
-
-            if (
-                log.amount &&
-                log.amount.value
-            ) {
-
-                parts.push(
-                    log.amount.value +
-                    " " +
-                    log.amount.unit
-                );
-
-            }
-
-
-            if (parts.length) {
-                return parts.join(" • ");
-            }
-
-
-            return "Logged";
-
-        }
-
-
-        return "Logged";
-
-    }
-
-
     function formatTime(timestamp) {
 
-        try {
+        const date =
+            new Date(timestamp);
 
-            return new Date(
-                timestamp
-            ).toLocaleTimeString(
-                undefined,
-                {
-                    hour: "numeric",
-                    minute: "2-digit"
-                }
-            );
-
-        } catch (error) {
-
+        if (
+            Number.isNaN(
+                date.getTime()
+            )
+        ) {
             return "";
-
         }
 
-    }
-
-
-    function escapeHTML(value) {
-
-        return String(
-            value == null
-                ? ""
-                : value
-        )
-            .replace(
-                /&/g,
-                "&amp;"
-            )
-            .replace(
-                /</g,
-                "&lt;"
-            )
-            .replace(
-                />/g,
-                "&gt;"
-            )
-            .replace(
-                /"/g,
-                "&quot;"
-            )
-            .replace(
-                /'/g,
-                "&#039;"
-            );
+        return date.toLocaleTimeString(
+            undefined,
+            {
+                hour: "numeric",
+                minute: "2-digit"
+            }
+        );
 
     }
-
 
     /* =====================================================
        DELETE LOG
@@ -2749,11 +2370,9 @@
                 "Delete this log?"
             );
 
-
         if (!confirmed) {
             return;
         }
-
 
         state.logs =
             state.logs.filter(
@@ -2762,17 +2381,16 @@
                 }
             );
 
-
-        persistState();
+        saveState();
 
         updateAllUI();
 
         showToast(
-            "Log deleted"
+            "Log deleted",
+            "✓"
         );
 
     }
-
 
     /* =====================================================
        CLEAR TODAY
@@ -2780,41 +2398,37 @@
 
     function clearToday() {
 
-        const todayLogs =
+        const today =
             getTodayLogs();
 
-
-        if (!todayLogs.length) {
+        if (!today.length) {
 
             showToast(
-                "Nothing to clear"
+                "Nothing to clear",
+                "✓"
             );
 
             return;
 
         }
 
-
         const confirmed =
             window.confirm(
-                "Clear all of today's logs?"
+                "Clear all of today's tracker logs?"
             );
-
 
         if (!confirmed) {
             return;
         }
 
-
         const todayIds =
             new Set(
-                todayLogs.map(
+                today.map(
                     function (log) {
                         return log.id;
                     }
                 )
             );
-
 
         state.logs =
             state.logs.filter(
@@ -2825,181 +2439,184 @@
                 }
             );
 
-
-        persistState();
+        saveState();
 
         updateAllUI();
 
         showToast(
-            "Today's logs cleared"
+            "Today's logs cleared",
+            "✓"
         );
 
     }
-
 
     /* =====================================================
-       BABY NAME
-    ===================================================== */
-
-    function saveBabyName(name) {
-
-        name =
-            String(name || "")
-                .trim();
-
-
-        if (!name) {
-            name = "My Baby";
-        }
-
-
-        state.babyName =
-            name.substring(0, 40);
-
-
-        persistState();
-
-        updateBabyName();
-
-        closeBabyNameModal();
-
-        showToast(
-            "Baby's name saved"
-        );
-
-    }
-
-
-    function openBabyNameModal() {
-
-        const input =
-            $("babyNameModalInput");
-
-
-        if (input) {
-
-            input.value =
-                state.babyName || "";
-
-            setTimeout(
-                function () {
-                    input.focus();
-                },
-                100
-            );
-
-        }
-
-
-        showModal(
-            "babyNameModal"
-        );
-
-    }
-
-
-    function closeBabyNameModal() {
-
-        hideModal(
-            "babyNameModal"
-        );
-
-    }
-
-
-    /* =====================================================
-       SETTINGS
-    ===================================================== */
-
-    function openSettings() {
-
-        const input =
-            $("babyNameInput");
-
-
-        if (input) {
-
-            input.value =
-                state.babyName || "";
-
-        }
-
-
-        const language =
-            $("voiceLanguage");
-
-
-        if (language) {
-
-            language.value =
-                state.voiceLanguage ||
-                "en-US";
-
-        }
-
-
-        const toggle =
-            $("voiceConfirmationToggle");
-
-
-        if (toggle) {
-
-            toggle.checked =
-                state.voiceConfirmation !== false;
-
-        }
-
-
-        showModal(
-            "settingsModal"
-        );
-
-    }
-
-
-    function closeSettings() {
-
-        hideModal(
-            "settingsModal"
-        );
-
-    }
-
-
-    /* =====================================================
-       ACTION MODAL
+       MODALS
     ===================================================== */
 
     function openActionModal(content) {
 
+        const modal =
+            $("actionModal");
+
         const container =
             $("modalContent");
 
-
-        if (!container) {
+        if (!modal || !container) {
             return;
         }
-
 
         container.innerHTML =
             content;
 
+        show(modal);
 
-        showModal(
-            "actionModal"
+        modal.setAttribute(
+            "aria-hidden",
+            "false"
         );
 
     }
-
 
     function closeActionModal() {
 
-        hideModal(
-            "actionModal"
+        const modal =
+            $("actionModal");
+
+        if (!modal) {
+            return;
+        }
+
+        hide(modal);
+
+        modal.setAttribute(
+            "aria-hidden",
+            "true"
         );
 
     }
 
+    function openSettings() {
+
+        const modal =
+            $("settingsModal");
+
+        if (!modal) {
+            return;
+        }
+
+        updateBabyName();
+
+        const language =
+            $("voiceLanguage");
+
+        if (language) {
+            language.value =
+                state.voiceLanguage;
+        }
+
+        const confirmation =
+            $("voiceConfirmationToggle");
+
+        if (confirmation) {
+            confirmation.checked =
+                state.voiceConfirmation;
+        }
+
+        show(modal);
+
+        modal.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+        const button =
+            $("settingsButton");
+
+        if (button) {
+            button.setAttribute(
+                "aria-expanded",
+                "true"
+            );
+        }
+
+    }
+
+    function closeSettings() {
+
+        const modal =
+            $("settingsModal");
+
+        if (!modal) {
+            return;
+        }
+
+        hide(modal);
+
+        modal.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+        const button =
+            $("settingsButton");
+
+        if (button) {
+            button.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+        }
+
+    }
+
+    function openBabyNameModal() {
+
+        const modal =
+            $("babyNameModal");
+
+        if (!modal) {
+            return;
+        }
+
+        const input =
+            $("babyNameModalInput");
+
+        if (input) {
+
+            input.value =
+                state.babyName === "My Baby"
+                    ? ""
+                    : state.babyName;
+
+        }
+
+        show(modal);
+
+        modal.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+    }
+
+    function closeBabyNameModal() {
+
+        const modal =
+            $("babyNameModal");
+
+        if (!modal) {
+            return;
+        }
+
+        hide(modal);
+
+        modal.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+    }
 
     /* =====================================================
        DELETE MODAL
@@ -3007,150 +2624,79 @@
 
     function openDeleteModal() {
 
-        showModal(
-            "deleteDataModal"
-        );
-
-    }
-
-
-    function closeDeleteModal() {
-
-        hideModal(
-            "deleteDataModal"
-        );
-
-    }
-
-
-    function deleteAllData() {
-
-        state = {
-            ...DEFAULT_STATE
-        };
-
-
-        persistState();
-
-        activeSleep = null;
-
-        stopSleepTimer();
-
-
-        try {
-
-            localStorage.removeItem(
-                "momyouneedthis_active_sleep"
-            );
-
-        } catch (error) {
-            console.warn(error);
-        }
-
-
-        updateAllUI();
-
-        closeDeleteModal();
-
-        closeSettings();
-
-        showToast(
-            "All tracker data deleted"
-        );
-
-    }
-
-
-    /* =====================================================
-       MODALS
-    ===================================================== */
-
-    function showModal(id) {
-
         const modal =
-            $(id);
+            $("deleteDataModal");
 
         if (!modal) {
             return;
         }
 
-
-        modal.classList.remove(
-            "hidden"
-        );
+        show(modal);
 
         modal.setAttribute(
             "aria-hidden",
             "false"
         );
 
-
-        if (id === "settingsModal") {
-
-            const button =
-                $("settingsButton");
-
-            if (button) {
-
-                button.setAttribute(
-                    "aria-expanded",
-                    "true"
-                );
-
-            }
-
-        }
-
-
-        currentModal =
-            id;
-
     }
 
-
-    function hideModal(id) {
+    function closeDeleteModal() {
 
         const modal =
-            $(id);
+            $("deleteDataModal");
 
         if (!modal) {
             return;
         }
 
-
-        modal.classList.add(
-            "hidden"
-        );
+        hide(modal);
 
         modal.setAttribute(
             "aria-hidden",
             "true"
         );
 
-
-        if (id === "settingsModal") {
-
-            const button =
-                $("settingsButton");
-
-            if (button) {
-
-                button.setAttribute(
-                    "aria-expanded",
-                    "false"
-                );
-
-            }
-
-        }
-
-
-        if (currentModal === id) {
-            currentModal = null;
-        }
-
     }
 
+    function deleteEverything() {
+
+        try {
+
+            localStorage.removeItem(
+                STORAGE_KEY
+            );
+
+        } catch (error) {
+
+            console.warn(
+                "Could not clear localStorage.",
+                error
+            );
+
+        }
+
+        state = {
+            babyName: "My Baby",
+            voiceLanguage: "en-US",
+            voiceConfirmation: true,
+            logs: [],
+            activeSleep: null
+        };
+
+        stopSleepTimer();
+
+        closeDeleteModal();
+
+        closeSettings();
+
+        updateAllUI();
+
+        showToast(
+            "All tracker data deleted",
+            "✓"
+        );
+
+    }
 
     /* =====================================================
        EXPORT
@@ -3158,24 +2704,21 @@
 
     function exportData() {
 
-        const backup = {
-
-            app:
-                "MomYouNeedThis Baby Tracker",
-
-            version:
-                1,
-
-            exportedAt:
-                new Date().toISOString(),
-
-            state:
-                state
-
-        };
-
-
         try {
+
+            const backup = {
+                app:
+                    "MomYouNeedThis Baby Tracker",
+
+                version:
+                    1,
+
+                exportedAt:
+                    new Date().toISOString(),
+
+                data:
+                    state
+            };
 
             const blob =
                 new Blob(
@@ -3192,39 +2735,33 @@
                     }
                 );
 
-
             const url =
                 URL.createObjectURL(
                     blob
                 );
-
 
             const link =
                 document.createElement(
                     "a"
                 );
 
-
             link.href =
                 url;
 
-
             link.download =
                 "baby-tracker-backup-" +
-                getDateForFilename() +
+                new Date()
+                    .toISOString()
+                    .slice(0, 10) +
                 ".json";
-
 
             document.body.appendChild(
                 link
             );
 
-
             link.click();
 
-
             link.remove();
-
 
             setTimeout(
                 function () {
@@ -3235,51 +2772,45 @@
                 1000
             );
 
-
             showToast(
-                "Backup exported"
+                "Backup exported",
+                "⬇️"
             );
 
         } catch (error) {
 
             console.error(
-                "Export failed:",
+                "Export error:",
                 error
             );
 
             showToast(
-                "Could not export backup"
+                "Could not export data",
+                "⚠️"
             );
 
         }
 
     }
 
-
-    function getDateForFilename() {
-
-        const date =
-            new Date();
-
-
-        return (
-            date.getFullYear() +
-            "-" +
-            String(
-                date.getMonth() + 1
-            ).padStart(2, "0") +
-            "-" +
-            String(
-                date.getDate()
-            ).padStart(2, "0")
-        );
-
-    }
-
-
     /* =====================================================
        IMPORT
     ===================================================== */
+
+    function openImportPicker() {
+
+        const input =
+            $("importDataInput");
+
+        if (!input) {
+            return;
+        }
+
+        input.value = "";
+
+        input.click();
+
+    }
 
     function handleImport(event) {
 
@@ -3287,15 +2818,12 @@
             event.target.files &&
             event.target.files[0];
 
-
         if (!file) {
             return;
         }
 
-
         const reader =
             new FileReader();
-
 
         reader.onload =
             function () {
@@ -3307,193 +2835,95 @@
                             reader.result
                         );
 
-
-                    const importedState =
-                        parsed.state ||
+                    const imported =
+                        parsed.data ||
                         parsed;
 
-
                     if (
-                        !importedState ||
-                        typeof importedState !==
-                            "object"
+                        !imported ||
+                        typeof imported !==
+                        "object"
                     ) {
-
                         throw new Error(
                             "Invalid backup"
                         );
-
                     }
-
 
                     state = {
-                        ...DEFAULT_STATE,
-                        ...importedState
+                        babyName:
+                            typeof imported.babyName ===
+                            "string"
+                                ? imported.babyName
+                                : "My Baby",
+
+                        voiceLanguage:
+                            typeof imported.voiceLanguage ===
+                            "string"
+                                ? imported.voiceLanguage
+                                : "en-US",
+
+                        voiceConfirmation:
+                            typeof imported.voiceConfirmation ===
+                            "boolean"
+                                ? imported.voiceConfirmation
+                                : true,
+
+                        logs:
+                            Array.isArray(
+                                imported.logs
+                            )
+                                ? imported.logs
+                                : [],
+
+                        activeSleep:
+                            imported.activeSleep ||
+                            null
                     };
 
+                    saveState();
 
-                    if (
-                        !Array.isArray(
-                            state.logs
-                        )
-                    ) {
-
-                        state.logs = [];
-
-                    }
-
-
-                    persistState();
-
-                    initializeUI();
+                    initializeVoice();
 
                     updateAllUI();
 
+                    closeSettings();
+
                     showToast(
-                        "Backup imported"
+                        "Backup imported",
+                        "⬆️"
                     );
 
                 } catch (error) {
 
                     console.error(
-                        "Import failed:",
+                        "Import error:",
                         error
                     );
 
                     showToast(
-                        "Invalid backup file"
+                        "Invalid backup file",
+                        "⚠️"
                     );
 
                 }
 
             };
 
-
         reader.onerror =
             function () {
 
                 showToast(
-                    "Could not read backup"
+                    "Could not read backup",
+                    "⚠️"
                 );
 
             };
-
 
         reader.readAsText(
             file
         );
 
-
-        event.target.value = "";
-
     }
-
-
-    /* =====================================================
-       VOICE ERRORS
-    ===================================================== */
-
-    function handleVoiceError(error) {
-
-        switch (error) {
-
-            case "not-allowed":
-
-            case "service-not-allowed":
-
-                showVoicePermissionMessage(
-                    "Microphone access was blocked. Check your browser's microphone permissions and try again."
-                );
-
-                break;
-
-
-            case "no-speech":
-
-                showToast(
-                    "I didn't hear anything."
-                );
-
-                break;
-
-
-            case "audio-capture":
-
-                showVoicePermissionMessage(
-                    "Your microphone could not be accessed."
-                );
-
-                break;
-
-
-            case "network":
-
-                showVoicePermissionMessage(
-                    "Voice recognition needs a connection to the speech recognition service."
-                );
-
-                break;
-
-
-            default:
-
-                showToast(
-                    "Voice recognition stopped."
-                );
-
-        }
-
-    }
-
-
-    function showVoicePermissionMessage(
-        message
-    ) {
-
-        const container =
-            $("voicePermissionMessage");
-
-        const text =
-            $("voicePermissionText");
-
-
-        if (!container) {
-
-            showToast(message);
-
-            return;
-
-        }
-
-
-        if (text) {
-            text.textContent =
-                message;
-        }
-
-
-        container.classList.remove(
-            "hidden"
-        );
-
-    }
-
-
-    function hideVoicePermissionMessage() {
-
-        const container =
-            $("voicePermissionMessage");
-
-        if (container) {
-
-            container.classList.add(
-                "hidden"
-            );
-
-        }
-
-    }
-
 
     /* =====================================================
        TOAST
@@ -3501,29 +2931,37 @@
 
     let toastTimeout = null;
 
-
-    function showToast(message) {
+    function showToast(
+        message,
+        icon = "✓"
+    ) {
 
         const toast =
             $("trackerToast");
 
-        const text =
+        const toastMessage =
             $("toastMessage");
 
+        const toastIcon =
+            $("toastIcon");
 
-        if (!toast || !text) {
+        if (!toast) {
             return;
         }
 
+        safeText(
+            toastMessage,
+            message
+        );
 
-        text.textContent =
-            message;
-
+        safeText(
+            toastIcon,
+            icon
+        );
 
         toast.classList.add(
             "show"
         );
-
 
         if (toastTimeout) {
 
@@ -3532,7 +2970,6 @@
             );
 
         }
-
 
         toastTimeout =
             setTimeout(
@@ -3543,60 +2980,8 @@
                     );
 
                 },
-                2600
+                2500
             );
-
-    }
-
-
-    /* =====================================================
-       FATAL ERROR
-    ===================================================== */
-
-    function showFatalError() {
-
-        /*
-         * Do NOT destroy the whole page if something fails.
-         * The user can still see the tracker and get an
-         * understandable message.
-         */
-
-        const existing =
-            document.querySelector(
-                ".tracker-fatal-error"
-            );
-
-
-        if (existing) {
-            return;
-        }
-
-
-        const message =
-            document.createElement(
-                "div"
-            );
-
-
-        message.className =
-            "tracker-fatal-error";
-
-
-        message.innerHTML = `
-            <strong>
-                The tracker could not finish loading.
-            </strong>
-
-            <p>
-                Please refresh the page.
-                Your existing saved data has not been deleted.
-            </p>
-        `;
-
-
-        document.body.appendChild(
-            message
-        );
 
     }
 
