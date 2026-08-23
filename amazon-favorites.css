@@ -1,0 +1,1019 @@
+/* =========================================================
+   MOM-VOTED PRODUCT PAGE
+========================================================= */
+
+.mom-voted-page {
+    max-width: 1050px;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.mom-voted-logo-link {
+    display: inline-block;
+}
+
+.community-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+
+    margin-top: 14px;
+    padding: 8px 15px;
+
+    border-radius: 999px;
+
+    background: #fff0f5;
+    color: #d94d7a;
+
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: .5px;
+}
+
+
+.mom-voted-page h1 {
+    max-width: 760px;
+    margin: 22px auto 0;
+
+    font-size: clamp(40px, 7vw, 72px);
+    line-height: .98;
+    letter-spacing: -2.5px;
+}
+
+
+.mom-voted-page h1 span {
+    display: block;
+}
+
+
+.mom-voted-intro {
+    max-width: 680px;
+    margin: 25px auto 35px;
+
+    font-size: 18px;
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   HOLY GRAIL BANNER
+========================================================= */
+
+.holy-grail-banner {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    max-width: 780px;
+    margin: 0 auto 42px;
+
+    padding: 18px 20px;
+
+    background: linear-gradient(
+        135deg,
+        #fff8fb,
+        #fff2f7
+    );
+
+    border: 1px solid #f5d8e3;
+    border-radius: 18px;
+
+    text-align: left;
+}
+
+
+.holy-grail-banner-icon {
+    flex: 0 0 44px;
+
+    width: 44px;
+    height: 44px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: white;
+
+    font-size: 22px;
+
+    box-shadow:
+        0 4px 14px rgba(0,0,0,.06);
+}
+
+
+.holy-grail-banner-content {
+    flex: 1;
+}
+
+
+.holy-grail-banner-content strong {
+    display: block;
+
+    margin-bottom: 3px;
+
+    font-size: 16px;
+    font-weight: 900;
+}
+
+
+.holy-grail-banner-content span {
+    display: block;
+
+    color: #777;
+
+    font-size: 13px;
+    line-height: 1.45;
+}
+
+
+.holy-grail-link {
+    flex-shrink: 0;
+
+    color: #d94d7a;
+
+    font-size: 13px;
+    font-weight: 900;
+
+    text-decoration: none;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   CATEGORY NAVIGATION
+========================================================= */
+
+.voting-categories {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 9px;
+
+    margin: 0 auto 70px;
+}
+
+
+.voting-categories a {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 10px 16px;
+
+    border-radius: 999px;
+
+    background: #f8f8f8;
+    border: 1px solid #ededed;
+
+    color: #444;
+
+    font-size: 13px;
+    font-weight: 800;
+
+    text-decoration: none;
+
+    transition:
+        transform .2s ease,
+        background .2s ease,
+        border-color .2s ease;
+}
+
+
+.voting-categories a:hover {
+    transform: translateY(-2px);
+
+    background: #fff1f6;
+    border-color: #f3ccd9;
+
+    color: #d94d7a;
+}
+
+
+/* =========================================================
+   BATTLE SECTION
+========================================================= */
+
+.product-battle {
+    margin-bottom: 85px;
+    scroll-margin-top: 30px;
+}
+
+
+.battle-heading {
+    margin-bottom: 22px;
+    text-align: center;
+}
+
+
+.battle-eyebrow {
+    display: inline-block;
+
+    margin-bottom: 8px;
+
+    color: #d94d7a;
+
+    font-size: 12px;
+    font-weight: 900;
+
+    letter-spacing: 1px;
+}
+
+
+.battle-heading h2 {
+    margin: 0 0 7px;
+
+    font-size: clamp(27px, 4vw, 38px);
+    line-height: 1.1;
+}
+
+
+.battle-heading p {
+    margin: 0;
+
+    color: #777;
+
+    font-size: 15px;
+}
+
+
+/* =========================================================
+   MAIN BATTLE CARD
+========================================================= */
+
+.battle-card {
+    overflow: hidden;
+
+    background: white;
+
+    border: 1px solid #ededed;
+
+    border-radius: 28px;
+
+    box-shadow:
+        0 14px 45px rgba(0,0,0,.07);
+}
+
+
+.battle-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 18px 24px;
+
+    border-bottom: 1px solid #f0f0f0;
+}
+
+
+.battle-category {
+    color: #999;
+
+    font-size: 11px;
+    font-weight: 900;
+
+    letter-spacing: 1px;
+}
+
+
+.battle-position {
+    padding: 5px 10px;
+
+    border-radius: 999px;
+
+    background: #f7f7f7;
+
+    color: #777;
+
+    font-size: 11px;
+    font-weight: 900;
+}
+
+
+/* =========================================================
+   PRODUCT VIEWER
+========================================================= */
+
+.product-viewer {
+    display: flex;
+    align-items: center;
+
+    min-height: 450px;
+
+    position: relative;
+}
+
+
+.product-slide-area {
+    display: grid;
+
+    grid-template-columns:
+        minmax(280px, 48%)
+        minmax(280px, 52%);
+
+    align-items: center;
+
+    width: 100%;
+
+    padding: 45px 65px;
+}
+
+
+.product-image-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 330px;
+
+    padding: 25px;
+}
+
+
+.battle-product-image {
+    display: block;
+
+    width: 100%;
+    max-width: 330px;
+    height: 330px;
+
+    object-fit: contain;
+
+    transition:
+        opacity .12s ease,
+        transform .12s ease;
+}
+
+
+.product-changing {
+    opacity: 0;
+
+    transform: scale(.96);
+}
+
+
+/* =========================================================
+   PRODUCT INFORMATION
+========================================================= */
+
+.battle-product-info {
+    padding: 25px 30px;
+}
+
+
+.product-label {
+    display: inline-block;
+
+    margin-bottom: 12px;
+
+    color: #d94d7a;
+
+    font-size: 11px;
+    font-weight: 900;
+
+    letter-spacing: 1px;
+}
+
+
+.battle-product-info h3 {
+    margin: 0;
+
+    font-size: clamp(28px, 4vw, 42px);
+    line-height: 1.05;
+
+    letter-spacing: -1px;
+}
+
+
+.product-brand {
+    margin: 9px 0 17px;
+
+    color: #888;
+
+    font-size: 14px;
+    font-weight: 800;
+}
+
+
+.battle-description {
+    max-width: 420px;
+
+    margin: 0 0 25px;
+
+    color: #666;
+
+    font-size: 15px;
+    line-height: 1.65;
+}
+
+
+/* =========================================================
+   VOTE BUTTON
+========================================================= */
+
+.recommend-button {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    min-height: 56px;
+
+    padding: 13px 18px;
+
+    border: 0;
+    border-radius: 14px;
+
+    background: #d94d7a;
+
+    color: white;
+
+    font-family: inherit;
+
+    font-size: 13px;
+    font-weight: 900;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 20px rgba(217,77,122,.2);
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        background .2s ease;
+}
+
+
+.recommend-button:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 12px 25px rgba(217,77,122,.28);
+}
+
+
+.recommend-button:active {
+    transform: translateY(0);
+}
+
+
+.recommend-button.has-voted {
+    background: #2f9d73;
+
+    box-shadow:
+        0 8px 20px rgba(47,157,115,.18);
+}
+
+
+.recommend-heart {
+    font-size: 18px;
+
+    line-height: 1;
+}
+
+
+.vote-confirmation {
+    min-height: 19px;
+
+    margin: 10px 0 0;
+
+    color: #2f9d73;
+
+    font-size: 12px;
+    font-weight: 800;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   PRODUCT LINK
+========================================================= */
+
+.product-shop-link {
+    display: block;
+
+    margin-top: 18px;
+
+    color: #555;
+
+    font-size: 13px;
+    font-weight: 900;
+
+    text-align: center;
+
+    text-decoration: none;
+}
+
+
+.product-shop-link:hover {
+    color: #d94d7a;
+}
+
+
+/* =========================================================
+   ARROWS
+========================================================= */
+
+.product-arrow {
+    flex: 0 0 auto;
+
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #e8e8e8;
+    border-radius: 50%;
+
+    background: white;
+
+    color: #444;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 34px;
+    font-weight: 300;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    z-index: 3;
+
+    box-shadow:
+        0 5px 18px rgba(0,0,0,.08);
+
+    transition:
+        transform .2s ease,
+        background .2s ease,
+        color .2s ease;
+}
+
+
+.product-arrow:hover:not(:disabled) {
+    transform: scale(1.08);
+
+    background: #fff1f6;
+
+    color: #d94d7a;
+}
+
+
+.product-arrow:disabled {
+    opacity: .25;
+
+    cursor: default;
+
+    box-shadow: none;
+}
+
+
+.product-arrow-left {
+    margin-left: 18px;
+}
+
+
+.product-arrow-right {
+    margin-right: 18px;
+}
+
+
+/* =========================================================
+   DOTS
+========================================================= */
+
+.battle-dots {
+    display: flex;
+    justify-content: center;
+    gap: 7px;
+
+    padding: 0 20px 20px;
+}
+
+
+.battle-dot {
+    width: 7px;
+    height: 7px;
+
+    padding: 0;
+
+    border: 0;
+    border-radius: 50%;
+
+    background: #ddd;
+
+    cursor: pointer;
+
+    transition:
+        width .2s ease,
+        background .2s ease;
+}
+
+
+.battle-dot.active {
+    width: 22px;
+
+    border-radius: 999px;
+
+    background: #d94d7a;
+}
+
+
+/* =========================================================
+   BATTLE FOOTER
+========================================================= */
+
+.battle-footer {
+    display: flex;
+    justify-content: center;
+
+    padding: 15px 20px;
+
+    background: #fafafa;
+
+    border-top: 1px solid #f0f0f0;
+
+    color: #888;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   HOW IT WORKS
+========================================================= */
+
+.voting-explainer {
+    max-width: 850px;
+
+    margin: 20px auto 80px;
+
+    padding: 50px 40px;
+
+    border-radius: 28px;
+
+    background: #fafafa;
+
+    text-align: center;
+}
+
+
+.voting-explainer h2 {
+    margin: 18px 0 10px;
+
+    font-size: 34px;
+}
+
+
+.voting-explainer > p {
+    max-width: 600px;
+
+    margin: 0 auto 40px;
+
+    color: #777;
+
+    line-height: 1.65;
+}
+
+
+.explainer-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 25px;
+}
+
+
+.explainer-item {
+    padding: 10px;
+}
+
+
+.explainer-item > span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 38px;
+    height: 38px;
+
+    margin-bottom: 13px;
+
+    border-radius: 50%;
+
+    background: white;
+
+    color: #d94d7a;
+
+    font-size: 12px;
+    font-weight: 900;
+}
+
+
+.explainer-item h3 {
+    margin: 0 0 7px;
+
+    font-size: 17px;
+}
+
+
+.explainer-item p {
+    margin: 0;
+
+    color: #777;
+
+    font-size: 13px;
+    line-height: 1.55;
+}
+
+
+/* =========================================================
+   FINAL HOLY GRAIL CTA
+========================================================= */
+
+.holy-grail-final {
+    max-width: 720px;
+
+    margin: 0 auto 80px;
+
+    padding: 45px 30px;
+
+    border-radius: 28px;
+
+    background: linear-gradient(
+        135deg,
+        #fff3f7,
+        #fff9fb
+    );
+
+    border: 1px solid #f5dce5;
+
+    text-align: center;
+}
+
+
+.holy-grail-final-icon {
+    font-size: 35px;
+
+    margin-bottom: 10px;
+}
+
+
+.holy-grail-final h2 {
+    margin: 0 0 10px;
+
+    font-size: 32px;
+}
+
+
+.holy-grail-final p {
+    max-width: 500px;
+
+    margin: 0 auto 23px;
+
+    color: #777;
+
+    line-height: 1.6;
+}
+
+
+.holy-grail-final-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 13px 23px;
+
+    border-radius: 12px;
+
+    background: #d94d7a;
+
+    color: white;
+
+    font-size: 13px;
+    font-weight: 900;
+
+    text-decoration: none;
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+}
+
+
+.holy-grail-final-button:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 24px rgba(217,77,122,.2);
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+
+    .mom-voted-page h1 {
+        font-size: 43px;
+
+        letter-spacing: -1.7px;
+    }
+
+
+    .mom-voted-intro {
+        font-size: 16px;
+    }
+
+
+    .holy-grail-banner {
+        align-items: flex-start;
+
+        flex-wrap: wrap;
+
+        padding: 16px;
+    }
+
+
+    .holy-grail-banner-content {
+        min-width: 0;
+        flex: 1;
+    }
+
+
+    .holy-grail-link {
+        width: 100%;
+
+        padding-top: 8px;
+
+        border-top: 1px solid #f0dce4;
+
+        text-align: center;
+    }
+
+
+    .voting-categories {
+        gap: 7px;
+
+        margin-bottom: 50px;
+    }
+
+
+    .voting-categories a {
+        padding: 8px 12px;
+
+        font-size: 12px;
+    }
+
+
+    .product-battle {
+        margin-bottom: 65px;
+    }
+
+
+    .battle-card {
+        border-radius: 22px;
+    }
+
+
+    .battle-top {
+        padding: 14px 16px;
+    }
+
+
+    .product-viewer {
+        min-height: auto;
+    }
+
+
+    .product-slide-area {
+        display: flex;
+
+        flex-direction: column;
+
+        width: 100%;
+
+        padding: 20px 20px 28px;
+    }
+
+
+    .product-image-wrap {
+        width: 100%;
+
+        min-height: 250px;
+
+        padding: 10px 30px;
+    }
+
+
+    .battle-product-image {
+        width: 100%;
+        max-width: 270px;
+        height: 250px;
+    }
+
+
+    .battle-product-info {
+        width: 100%;
+
+        padding: 10px 8px 0;
+
+        text-align: center;
+    }
+
+
+    .battle-product-info h3 {
+        font-size: 30px;
+    }
+
+
+    .battle-description {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+
+    .product-arrow {
+        position: absolute;
+
+        top: 150px;
+
+        width: 42px;
+        height: 42px;
+
+        font-size: 30px;
+
+        background: rgba(255,255,255,.95);
+    }
+
+
+    .product-arrow-left {
+        left: 9px;
+
+        margin: 0;
+    }
+
+
+    .product-arrow-right {
+        right: 9px;
+
+        margin: 0;
+    }
+
+
+    .recommend-button {
+        min-height: 54px;
+
+        font-size: 12px;
+    }
+
+
+    .voting-explainer {
+        padding: 35px 22px;
+
+        border-radius: 22px;
+    }
+
+
+    .voting-explainer h2 {
+        font-size: 28px;
+    }
+
+
+    .explainer-grid {
+        grid-template-columns: 1fr;
+
+        gap: 20px;
+    }
+
+
+    .holy-grail-final {
+        padding: 35px 22px;
+
+        border-radius: 22px;
+    }
+
+
+    .holy-grail-final h2 {
+        font-size: 28px;
+    }
+
+}
