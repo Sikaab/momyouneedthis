@@ -6,17 +6,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>MomYouNeedThis | Mom-Voted Baby & Toddler Products</title>
+<title>Mom-Voted Baby & Toddler Products | MomYouNeedThis</title>
 
 <meta
     name="description"
-    content="See the baby, toddler and parenting products moms are choosing. Compare favorites, vote for your pick and discover the products moms recommend."
+    content="Discover products moms are recommending and vote for the products you would choose for your family."
 >
 
 <link rel="stylesheet" href="style.css">
 
 <link
-    href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap"
     rel="stylesheet"
 >
 
@@ -27,12 +27,14 @@
 
 <div class="page">
 
-<section class="resource-page">
+<section class="resource-page mom-voted-page">
 
 
-<!-- LOGO -->
+<!-- ========================================= -->
+<!-- HEADER -->
+<!-- ========================================= -->
 
-<a href="index.html" aria-label="MomYouNeedThis home">
+<a href="index.html" class="mom-voted-logo-link">
 
 <img
     src="assets/logo.svg"
@@ -43,67 +45,63 @@
 </a>
 
 
-<!-- BADGE -->
-
-<span class="amazon-badge">
-
-🗳️ MOM-VOTED RECOMMENDATIONS
-
+<span class="community-badge">
+    🗳️ MOMS ARE VOTING
 </span>
 
-
-<!-- HERO -->
 
 <h1>
 
-Which One Would
-
-<span>
-You Recommend?
-</span>
+What Do Moms
+<span>Actually Recommend?</span>
 
 </h1>
 
 
-<p class="intro">
+<p class="mom-voted-intro">
 
-There are hundreds of products claiming to make mom life
-easier. But which ones do moms actually choose?
+Forget endless reviews and scrolling through hundreds
+of nearly identical products.
 
 <br><br>
 
 <strong>
-Vote for the products you would genuinely recommend
-to another mom.
+See what moms are choosing — and cast your own vote.
 </strong>
 
 </p>
 
 
-<!-- HOLY GRAIL CTA -->
 
-<div class="holy-grail-cta">
+<!-- ========================================= -->
+<!-- HOLY GRAIL BUTTON -->
+<!-- ========================================= -->
 
-<div>
+<div class="holy-grail-banner">
 
-<h3>
-💗 Have a Mom Holy Grail?
-</h3>
-
-<p>
-Tell us about the one baby, toddler or parenting product
-you absolutely love. We may put it up against the competition.
-</p>
-
+<div class="holy-grail-banner-icon">
+    💗
 </div>
 
+<div class="holy-grail-banner-content">
+
+<strong>
+Know a Mom Holy Grail?
+</strong>
+
+<span>
+Tell us about the one product you would recommend
+to another mom.
+</span>
+
+</div>
 
 <a
     href="submit-holy-grail.html"
-    class="holy-grail-button"
+    class="holy-grail-link"
 >
 
-SUBMIT YOUR FAVORITE
+Recommend One →
 
 </a>
 
@@ -111,314 +109,562 @@ SUBMIT YOUR FAVORITE
 
 
 
-<!-- CATEGORY NAVIGATION -->
+<!-- ========================================= -->
+<!-- CATEGORY NAV -->
+<!-- ========================================= -->
 
-<div class="shop-categories">
+<nav class="voting-categories" aria-label="Product categories">
 
 <a href="#baby">
-👶 Baby
+    👶 Baby
 </a>
 
 <a href="#toddler">
-🧸 Toddler
-</a>
-
-<a href="#potty">
-🚽 Potty
+    🧸 Toddler
 </a>
 
 <a href="#sleep">
-😴 Sleep
+    😴 Sleep
+</a>
+
+<a href="#potty">
+    🚽 Potty
 </a>
 
 <a href="#feeding">
-🍽️ Feeding
+    🍽️ Feeding
 </a>
 
 <a href="#under25">
-💰 Under $25
+    💰 Under $25
 </a>
 
-</div>
+</nav>
 
 
 
-<!-- ========================= -->
+<!-- ========================================= -->
 <!-- BABY -->
-<!-- ========================= -->
+<!-- ========================================= -->
 
-<h2 id="baby">
-
-👶 Baby Favorites
-
-</h2>
-
-
-<p class="section-intro">
-
-<strong>
-Help decide which product deserves the top spot.
-</strong>
-
-</p>
-
-
-<div class="competition-card">
-
-
-<div class="competition-header">
-
-<span class="competition-label">
-🔥 CURRENTLY COMPETING
-</span>
-
-<h3>
-Best Baby Soother
-</h3>
-
-<p>
-Which one would you recommend to another mom?
-</p>
-
-</div>
-
-
-<div class="product-grid">
-
-
-<!-- PRODUCT 1 -->
-
-<div class="product-card">
-
-<img
-    src="assets/babyeinstein-aquarium.jpeg"
-    alt="Baby Einstein Soother Musical Crib Toy"
+<section
+    class="product-battle"
+    id="baby"
+    data-category="baby"
 >
 
-<div class="competition-position">
-CONTENDER
-</div>
 
-<h3>
-Soother Musical Crib Toy
-</h3>
+<div class="battle-heading">
+
+<span class="battle-eyebrow">
+    👶 BABY
+</span>
+
+<h2>
+    Best Baby Must-Have
+</h2>
 
 <p>
-A popular option for keeping little ones entertained
-during quiet time.
+    Which one would you recommend to another mom?
 </p>
+
+</div>
+
+
+
+<div class="battle-card">
+
+
+<!-- PROGRESS -->
+
+<div class="battle-top">
+
+<span class="battle-category">
+    COMMUNITY VOTE
+</span>
+
+<span
+    class="battle-position"
+    data-position
+>
+    1 / 2
+</span>
+
+</div>
+
+
+
+<!-- PRODUCT VIEWER -->
+
+<div class="product-viewer">
 
 
 <button
+    class="product-arrow product-arrow-left"
     type="button"
-    class="vote-button"
-    data-product="musical-crib-toy"
+    aria-label="Previous product"
+    data-prev
+>
+    ‹
+</button>
+
+
+<div class="product-slide-area">
+
+
+<!-- PRODUCT IMAGE -->
+
+<div class="product-image-wrap">
+
+<img
+    class="battle-product-image"
+    src="assets/babyeinstein-aquarium.jpeg"
+    alt="Baby Einstein Soother Musical Crib Toy"
+    data-image
 >
 
-❤️ I WOULD RECOMMEND THIS
+</div>
+
+
+
+<!-- PRODUCT INFO -->
+
+<div class="battle-product-info">
+
+
+<span
+    class="product-label"
+    data-label
+>
+    PRODUCT 1
+</span>
+
+
+<h3 data-name>
+    Soother Musical Crib Toy
+</h3>
+
+
+<p
+    class="product-brand"
+    data-brand
+>
+    Baby Einstein
+</p>
+
+
+<p
+    class="battle-description"
+    data-description
+>
+    A popular option for keeping little ones entertained
+    during quiet moments and daily routines.
+</p>
+
+
+
+<!-- VOTE -->
+
+<button
+    type="button"
+    class="recommend-button"
+    data-vote
+>
+
+<span class="recommend-heart">
+    ♥
+</span>
+
+<span>
+    I WOULD RECOMMEND THIS
+</span>
 
 </button>
 
+
+<p
+    class="vote-confirmation"
+    data-confirmation
+    aria-live="polite"
+></p>
+
+
+
+<!-- SHOP -->
 
 <a
     href="https://amzn.to/4fNqr9j"
     target="_blank"
     rel="noopener noreferrer"
-    class="amazon-product-button"
+    class="product-shop-link"
+    data-link
 >
 
-SEE PRODUCT
+See product details →
 
 </a>
 
+
 </div>
 
-
-
-<!-- PRODUCT 2 -->
-
-<div class="product-card">
-
-<img
-    src="assets/white-noise-machine.jpeg"
-    alt="White noise machine for babies"
->
-
-<div class="competition-position">
-CONTENDER
 </div>
-
-<h3>
-White Noise Machine
-</h3>
-
-<p>
-A popular choice for parents looking to create
-a more consistent sleep environment.
-</p>
 
 
 <button
+    class="product-arrow product-arrow-right"
     type="button"
-    class="vote-button"
-    data-product="white-noise-machine"
+    aria-label="Next product"
+    data-next
 >
-
-❤️ I WOULD RECOMMEND THIS
-
+    ›
 </button>
 
-
-<a
-    href="https://amzn.to/4z8LxGC"
-    target="_blank"
-    rel="noopener noreferrer"
-    class="amazon-product-button"
->
-
-SEE PRODUCT
-
-</a>
-
-</div>
-
-</div>
-
-
-<div class="competition-footer">
-
-🗳️ Vote for the product you would recommend.
-
-</div>
-
 </div>
 
 
 
-<!-- ========================= -->
-<!-- TODDLER -->
-<!-- ========================= -->
+<!-- DOTS -->
 
-<h2 id="toddler">
-
-🧸 Toddler Favorites
-
-</h2>
+<div
+    class="battle-dots"
+    data-dots
+></div>
 
 
-<div class="competition-card">
 
+<div class="battle-footer">
 
-<div class="competition-header">
-
-<span class="competition-label">
-🔥 CURRENTLY COMPETING
+<span>
+    🗳️ Your vote helps another mom decide.
 </span>
 
-<h3>
-Best Toddler Everyday Essential
-</h3>
+</div>
+
+
+</div>
+
+</section>
+
+
+
+<!-- ========================================= -->
+<!-- TODDLER -->
+<!-- ========================================= -->
+
+<section
+    class="product-battle"
+    id="toddler"
+    data-category="toddler"
+>
+
+
+<div class="battle-heading">
+
+<span class="battle-eyebrow">
+    🧸 TODDLER
+</span>
+
+<h2>
+    Toddler Favorites
+</h2>
 
 <p>
-Which one has earned a place in your home?
+    Which product would earn a spot in your home?
 </p>
 
 </div>
 
 
-<div class="product-grid">
 
+<div class="battle-card">
 
-<!-- PRODUCT 3 -->
+<div class="battle-top">
 
-<div class="product-card">
+<span class="battle-category">
+    COMMUNITY VOTE
+</span>
 
-<img
-    src="assets/product2.jpg"
-    alt="Toddler product"
+<span
+    class="battle-position"
+    data-position
 >
+    1 / 2
+</span>
 
-<div class="competition-position">
-CONTENDER
 </div>
 
-<h3>
-Toddler Favorite
+
+
+<div class="product-viewer">
+
+<button
+    class="product-arrow product-arrow-left"
+    type="button"
+    aria-label="Previous product"
+    data-prev
+>
+    ‹
+</button>
+
+
+<div class="product-slide-area">
+
+<div class="product-image-wrap">
+
+<img
+    class="battle-product-image"
+    src="assets/product2.jpg"
+    alt="Toddler favorite product"
+    data-image
+>
+
+</div>
+
+
+<div class="battle-product-info">
+
+<span
+    class="product-label"
+    data-label
+>
+    PRODUCT 1
+</span>
+
+
+<h3 data-name>
+    Toddler Favorite
 </h3>
 
-<p>
-A practical product designed to make everyday
-toddler life a little easier.
+
+<p
+    class="product-brand"
+    data-brand
+>
+    MomYouNeedThis Pick
+</p>
+
+
+<p
+    class="battle-description"
+    data-description
+>
+    A practical everyday product designed to make
+    life with toddlers a little easier.
 </p>
 
 
 <button
     type="button"
-    class="vote-button"
-    data-product="toddler-favorite"
+    class="recommend-button"
+    data-vote
 >
 
-❤️ I WOULD RECOMMEND THIS
+<span class="recommend-heart">
+    ♥
+</span>
+
+<span>
+    I WOULD RECOMMEND THIS
+</span>
 
 </button>
+
+
+<p
+    class="vote-confirmation"
+    data-confirmation
+    aria-live="polite"
+></p>
 
 
 <a
     href="YOUR-AMAZON-LINK-HERE"
     target="_blank"
     rel="noopener noreferrer"
-    class="amazon-product-button"
+    class="product-shop-link"
+    data-link
 >
 
-SEE PRODUCT
+See product details →
 
 </a>
 
 </div>
 
-
-
-<!-- PRODUCT 4 -->
-
-<div class="product-card">
-
-<img
-    src="assets/redlight.jpeg"
-    alt="Red light for baby and toddler routines"
->
-
-<div class="competition-position">
-CONTENDER
 </div>
 
-<h3>
-Red Light
-</h3>
+
+<button
+    class="product-arrow product-arrow-right"
+    type="button"
+    aria-label="Next product"
+    data-next
+>
+    ›
+</button>
+
+</div>
+
+
+<div
+    class="battle-dots"
+    data-dots
+></div>
+
+
+<div class="battle-footer">
+
+<span>
+    🗳️ Vote for the one you would actually recommend.
+</span>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- ========================================= -->
+<!-- SLEEP -->
+<!-- ========================================= -->
+
+<section
+    class="product-battle"
+    id="sleep"
+    data-category="sleep"
+>
+
+
+<div class="battle-heading">
+
+<span class="battle-eyebrow">
+    😴 SLEEP
+</span>
+
+<h2>
+    Sleep Helpers
+</h2>
 
 <p>
-A useful addition to bedtime and nighttime routines.
+    Which one would you tell another tired mom about?
+</p>
+
+</div>
+
+
+
+<div class="battle-card">
+
+<div class="battle-top">
+
+<span class="battle-category">
+    COMMUNITY VOTE
+</span>
+
+<span
+    class="battle-position"
+    data-position
+>
+    1 / 2
+</span>
+
+</div>
+
+
+
+<div class="product-viewer">
+
+<button
+    class="product-arrow product-arrow-left"
+    type="button"
+    aria-label="Previous product"
+    data-prev
+>
+    ‹
+</button>
+
+
+<div class="product-slide-area">
+
+<div class="product-image-wrap">
+
+<img
+    class="battle-product-image"
+    src="assets/white-noise-machine.jpeg"
+    alt="White noise machine"
+    data-image
+>
+
+</div>
+
+
+<div class="battle-product-info">
+
+<span
+    class="product-label"
+    data-label
+>
+    PRODUCT 1
+</span>
+
+
+<h3 data-name>
+    White Noise Machine
+</h3>
+
+
+<p
+    class="product-brand"
+    data-brand
+>
+    Parent Favorite
+</p>
+
+
+<p
+    class="battle-description"
+    data-description
+>
+    A popular choice for creating a consistent sleep
+    environment for little ones.
 </p>
 
 
 <button
     type="button"
-    class="vote-button"
-    data-product="red-light"
+    class="recommend-button"
+    data-vote
 >
 
-❤️ I WOULD RECOMMEND THIS
+<span class="recommend-heart">
+    ♥
+</span>
+
+<span>
+    I WOULD RECOMMEND THIS
+</span>
 
 </button>
+
+
+<p
+    class="vote-confirmation"
+    data-confirmation
+    aria-live="polite"
+></p>
 
 
 <a
-    href="https://amzn.to/3U5XzAB"
+    href="https://amzn.to/4z8LxGC"
     target="_blank"
     rel="noopener noreferrer"
-    class="amazon-product-button"
+    class="product-shop-link"
+    data-link
 >
 
-SEE PRODUCT
+See product details →
 
 </a>
 
@@ -427,128 +673,176 @@ SEE PRODUCT
 </div>
 
 
-<div class="competition-footer">
-
-🗳️ Which one would you tell another mom to buy?
+<button
+    class="product-arrow product-arrow-right"
+    type="button"
+    aria-label="Next product"
+    data-next
+>
+    ›
+</button>
 
 </div>
 
-</div>
+
+<div
+    class="battle-dots"
+    data-dots
+></div>
 
 
+<div class="battle-footer">
 
-<!-- ========================= -->
-<!-- POTTY -->
-<!-- ========================= -->
-
-<h2 id="potty">
-
-🚽 Potty Training
-
-</h2>
-
-
-<div class="competition-card">
-
-
-<div class="competition-header">
-
-<span class="competition-label">
-🔥 CURRENTLY COMPETING
+<span>
+    💗 What works for your family might help another.
 </span>
 
-<h3>
-Best Potty Training Seat
-</h3>
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- ========================================= -->
+<!-- POTTY -->
+<!-- ========================================= -->
+
+<section
+    class="product-battle"
+    id="potty"
+    data-category="potty"
+>
+
+
+<div class="battle-heading">
+
+<span class="battle-eyebrow">
+    🚽 POTTY TRAINING
+</span>
+
+<h2>
+    Potty Training Favorites
+</h2>
 
 <p>
-Help another mom choose the one you prefer.
+    Which one would you recommend to a parent starting out?
 </p>
 
 </div>
 
 
-<div class="product-grid">
 
+<div class="battle-card">
 
-<!-- PRODUCT 5 -->
+<div class="battle-top">
 
-<div class="product-card">
+<span class="battle-category">
+    COMMUNITY VOTE
+</span>
 
-<img
-    src="assets/babybjorn-potty-toilet.jpeg"
-    alt="BabyBjorn potty training toilet"
+<span
+    class="battle-position"
+    data-position
 >
+    1 / 2
+</span>
 
-<div class="competition-position">
-CONTENDER
 </div>
 
-<h3>
-BabyBjörn Potty
+
+<div class="product-viewer">
+
+<button
+    class="product-arrow product-arrow-left"
+    type="button"
+    aria-label="Previous product"
+    data-prev
+>
+    ‹
+</button>
+
+
+<div class="product-slide-area">
+
+<div class="product-image-wrap">
+
+<img
+    class="battle-product-image"
+    src="assets/babybjorn-potty-toilet.jpeg"
+    alt="BabyBjorn potty"
+    data-image
+>
+
+</div>
+
+
+<div class="battle-product-info">
+
+<span
+    class="product-label"
+    data-label
+>
+    PRODUCT 1
+</span>
+
+
+<h3 data-name>
+    Potty Training Seat
 </h3>
 
-<p>
-A simple potty designed with toddlers in mind.
+
+<p
+    class="product-brand"
+    data-brand
+>
+    BabyBjörn
+</p>
+
+
+<p
+    class="battle-description"
+    data-description
+>
+    A simple potty-training option designed to help
+    toddlers feel comfortable and confident.
 </p>
 
 
 <button
     type="button"
-    class="vote-button"
-    data-product="babybjorn-potty"
+    class="recommend-button"
+    data-vote
 >
 
-❤️ I WOULD RECOMMEND THIS
+<span class="recommend-heart">
+    ♥
+</span>
+
+<span>
+    I WOULD RECOMMEND THIS
+</span>
 
 </button>
+
+
+<p
+    class="vote-confirmation"
+    data-confirmation
+    aria-live="polite"
+></p>
 
 
 <a
     href="https://amzn.to/3S23eqS"
     target="_blank"
     rel="noopener noreferrer"
-    class="amazon-product-button"
+    class="product-shop-link"
+    data-link
 >
 
-SEE PRODUCT
-
-</a>
-
-</div>
-
-
-
-<!-- PLACEHOLDER FOR SECOND PRODUCT -->
-
-<div class="product-card">
-
-<div class="product-placeholder">
-
-🏆
-
-</div>
-
-<div class="competition-position">
-NEXT CONTENDER
-</div>
-
-<h3>
-Your Recommendation Could Be Here
-</h3>
-
-<p>
-Know a potty you absolutely love?
-Submit your mom holy grail.
-</p>
-
-
-<a
-    href="submit-holy-grail.html"
-    class="amazon-product-button"
->
-
-💗 SUBMIT A PRODUCT
+See product details →
 
 </a>
 
@@ -557,159 +851,159 @@ Submit your mom holy grail.
 </div>
 
 
-<div class="competition-footer">
+<button
+    class="product-arrow product-arrow-right"
+    type="button"
+    aria-label="Next product"
+    data-next
+>
+    ›
+</button>
 
-🗳️ More products will be added as moms recommend them.
+</div>
+
+
+<div
+    class="battle-dots"
+    data-dots
+></div>
+
+
+<div class="battle-footer">
+
+<span>
+    🗳️ Help another parent skip the guesswork.
+</span>
 
 </div>
 
 </div>
 
+</section>
 
 
-<!-- ========================= -->
+
+<!-- ========================================= -->
 <!-- HOW IT WORKS -->
-<!-- ========================= -->
+<!-- ========================================= -->
 
-<div class="how-it-works">
+<section class="voting-explainer">
+
+<span class="community-badge">
+    HOW IT WORKS
+</span>
+
 
 <h2>
-
-💗 How Mom Voting Works
-
+    Moms Decide. Not Brands.
 </h2>
 
 
-<div class="how-step">
+<p>
+    We're building a place where parents can discover
+    products through recommendations from other moms.
+</p>
 
-<strong>
-01
-</strong>
 
-<div>
+<div class="explainer-grid">
+
+
+<div class="explainer-item">
+
+<span>
+    01
+</span>
 
 <h3>
-Moms recommend products.
+    Discover
 </h3>
 
 <p>
-Products come from the things moms genuinely love
-and recommend.
+    Browse products competing in the same category.
 </p>
 
 </div>
 
-</div>
 
+<div class="explainer-item">
 
-<div class="how-step">
-
-<strong>
-02
-</strong>
-
-<div>
+<span>
+    02
+</span>
 
 <h3>
-We put them head-to-head.
+    Vote
 </h3>
 
 <p>
-We organize products into categories so you're
-comparing similar things.
+    Pick the one you would genuinely recommend.
 </p>
 
 </div>
 
-</div>
 
+<div class="explainer-item">
 
-<div class="how-step">
-
-<strong>
-03
-</strong>
-
-<div>
+<span>
+    03
+</span>
 
 <h3>
-Moms decide.
+    Help Moms
 </h3>
 
 <p>
-Vote for the product you'd actually recommend
-to another mom.
+    Your recommendation can make another mom's
+    decision a little easier.
 </p>
 
 </div>
 
-</div>
-
-
-<div class="how-step">
-
-<strong>
-04
-</strong>
-
-<div>
-
-<h3>
-The community picks the favorites.
-</h3>
-
-<p>
-The products receiving the most recommendations
-rise to the top.
-</p>
 
 </div>
 
-</div>
-
-</div>
+</section>
 
 
 
+<!-- ========================================= -->
 <!-- FINAL CTA -->
+<!-- ========================================= -->
 
-<div class="final-cta">
+<section class="holy-grail-final">
+
+<div class="holy-grail-final-icon">
+    💗
+</div>
+
 
 <h2>
-
-💗 Know a Product Moms Need to Know About?
-
+    What's Your Mom Holy Grail?
 </h2>
 
 
 <p>
-
-You know that one product you recommend every time
-another mom asks?
-
-<br><br>
-
-<strong>
-We want to know about it.
-</strong>
-
+    Know a product you recommend every time another
+    mom asks what to buy?
 </p>
 
 
 <a
     href="submit-holy-grail.html"
-    class="amazon-product-button"
+    class="holy-grail-final-button"
 >
 
-SUBMIT YOUR MOM HOLY GRAIL
+Recommend a Product →
 
 </a>
 
-</div>
+</section>
 
 
 
+<!-- ========================================= -->
 <!-- FOOTER -->
+<!-- ========================================= -->
 
 <footer>
 
@@ -724,25 +1018,26 @@ SUBMIT YOUR MOM HOLY GRAIL
 
 
 <h3>
-MomYouNeedThis
+    MomYouNeedThis
 </h3>
 
 
 <p>
-Helping moms discover products and resources
-that actually make everyday life easier.
+    Helping moms discover products and resources
+    that make everyday life easier.
 </p>
 
 
 <div class="footer-bottom">
 
 <p>
-© 2026 MomYouNeedThis
+    © 2026 MomYouNeedThis
 </p>
 
+
 <p>
-Some product links may be affiliate links.
-As an Amazon Associate, I earn from qualifying purchases.
+    Some product links may be affiliate links.
+    As an Amazon Associate, I earn from qualifying purchases.
 </p>
 
 </div>
@@ -758,73 +1053,430 @@ As an Amazon Associate, I earn from qualifying purchases.
 
 <script>
 
+/* =========================================
+   PRODUCT DATA
+========================================= */
+
+const competitions = {
+
+    baby: [
+
+        {
+            name: "Soother Musical Crib Toy",
+            brand: "Baby Einstein",
+            image: "assets/babyeinstein-aquarium.jpeg",
+            alt: "Baby Einstein Soother Musical Crib Toy",
+            description:
+                "A popular option for keeping little ones entertained during quiet moments and daily routines.",
+            link: "https://amzn.to/4fNqr9j"
+        },
+
+        {
+            name: "White Noise Machine",
+            brand: "Parent Favorite",
+            image: "assets/white-noise-machine.jpeg",
+            alt: "White noise machine",
+            description:
+                "A popular choice for creating a consistent sleep environment for little ones.",
+            link: "https://amzn.to/4z8LxGC"
+        }
+
+    ],
+
+
+    toddler: [
+
+        {
+            name: "Toddler Favorite",
+            brand: "MomYouNeedThis Pick",
+            image: "assets/product2.jpg",
+            alt: "Toddler favorite product",
+            description:
+                "A practical everyday product designed to make life with toddlers a little easier.",
+            link: "YOUR-AMAZON-LINK-HERE"
+        },
+
+        {
+            name: "Red Light",
+            brand: "Parent Favorite",
+            image: "assets/redlight.jpeg",
+            alt: "Red light for baby and toddler routines",
+            description:
+                "A useful addition to bedtime and nighttime routines.",
+            link: "https://amzn.to/3U5XzAB"
+        }
+
+    ],
+
+
+    sleep: [
+
+        {
+            name: "White Noise Machine",
+            brand: "Parent Favorite",
+            image: "assets/white-noise-machine.jpeg",
+            alt: "White noise machine",
+            description:
+                "A popular choice for creating a consistent sleep environment for little ones.",
+            link: "https://amzn.to/4z8LxGC"
+        },
+
+        {
+            name: "Red Light",
+            brand: "Parent Favorite",
+            image: "assets/redlight.jpeg",
+            alt: "Red light",
+            description:
+                "A simple option some parents incorporate into nighttime routines.",
+            link: "https://amzn.to/3U5XzAB"
+        }
+
+    ],
+
+
+    potty: [
+
+        {
+            name: "Potty Training Seat",
+            brand: "BabyBjörn",
+            image: "assets/babybjorn-potty-toilet.jpeg",
+            alt: "BabyBjorn potty",
+            description:
+                "A simple potty-training option designed to help toddlers feel comfortable and confident.",
+            link: "https://amzn.to/3S23eqS"
+        },
+
+        {
+            name: "Potty Training Favorite",
+            brand: "Mom Favorite",
+            image: "assets/babybjorn-potty-toilet.jpeg",
+            alt: "Potty training product",
+            description:
+                "Another contender will be added as more moms submit their favorite products.",
+            link: "submit-holy-grail.html"
+        }
+
+    ]
+
+};
+
+
+
+/* =========================================
+   CAROUSEL
+========================================= */
+
 document.addEventListener("DOMContentLoaded", function () {
 
-    const voteButtons =
-        document.querySelectorAll(".vote-button");
+    const battles =
+        document.querySelectorAll(".product-battle");
 
 
-    voteButtons.forEach(function (button) {
+    battles.forEach(function (battle) {
 
-        const product =
-            button.dataset.product;
+        const category =
+            battle.dataset.category;
 
-
-        const storageKey =
-            "momYouNeedThisVote-" + product;
-
-
-        const hasVoted =
-            localStorage.getItem(storageKey);
+        const products =
+            competitions[category];
 
 
-        if (hasVoted) {
+        if (!products || !products.length) {
+            return;
+        }
 
-            button.textContent =
-                "❤️ YOU RECOMMENDED THIS";
 
-            button.classList.add("voted");
+        let currentIndex = 0;
+
+
+        const image =
+            battle.querySelector("[data-image]");
+
+        const name =
+            battle.querySelector("[data-name]");
+
+        const brand =
+            battle.querySelector("[data-brand]");
+
+        const description =
+            battle.querySelector("[data-description]");
+
+        const link =
+            battle.querySelector("[data-link]");
+
+        const label =
+            battle.querySelector("[data-label]");
+
+        const position =
+            battle.querySelector("[data-position]");
+
+        const voteButton =
+            battle.querySelector("[data-vote]");
+
+        const confirmation =
+            battle.querySelector("[data-confirmation]");
+
+        const dotsContainer =
+            battle.querySelector("[data-dots]");
+
+        const previousButton =
+            battle.querySelector("[data-prev]");
+
+        const nextButton =
+            battle.querySelector("[data-next]");
+
+
+        /* CREATE DOTS */
+
+        products.forEach(function (_, index) {
+
+            const dot =
+                document.createElement("button");
+
+            dot.type = "button";
+
+            dot.className = "battle-dot";
+
+            dot.setAttribute(
+                "aria-label",
+                "Show product " + (index + 1)
+            );
+
+
+            dot.addEventListener(
+                "click",
+                function () {
+
+                    currentIndex = index;
+
+                    updateProduct();
+
+                }
+            );
+
+
+            dotsContainer.appendChild(dot);
+
+        });
+
+
+        const dots =
+            dotsContainer.querySelectorAll(
+                ".battle-dot"
+            );
+
+
+        /* UPDATE PRODUCT */
+
+        function updateProduct() {
+
+            const product =
+                products[currentIndex];
+
+
+            image.classList.add(
+                "product-changing"
+            );
+
+
+            setTimeout(function () {
+
+                image.src =
+                    product.image;
+
+                image.alt =
+                    product.alt;
+
+                name.textContent =
+                    product.name;
+
+                brand.textContent =
+                    product.brand;
+
+                description.textContent =
+                    product.description;
+
+                link.href =
+                    product.link;
+
+                label.textContent =
+                    "PRODUCT " +
+                    (currentIndex + 1);
+
+                position.textContent =
+                    (currentIndex + 1) +
+                    " / " +
+                    products.length;
+
+
+                confirmation.textContent =
+                    "";
+
+
+                image.classList.remove(
+                    "product-changing"
+                );
+
+
+                updateVoteState(product);
+
+            }, 120);
+
+
+            dots.forEach(function (dot, index) {
+
+                dot.classList.toggle(
+                    "active",
+                    index === currentIndex
+                );
+
+            });
+
+
+            previousButton.disabled =
+                currentIndex === 0;
+
+
+            nextButton.disabled =
+                currentIndex ===
+                products.length - 1;
 
         }
 
 
-        button.addEventListener("click", function () {
 
-            if (
-                localStorage.getItem(storageKey)
-            ) {
+        /* VOTE STATE */
 
-                return;
+        function updateVoteState(product) {
+
+            const voteKey =
+                "momYouNeedThisVote-" +
+                category +
+                "-" +
+                product.name;
+
+
+            const hasVoted =
+                localStorage.getItem(voteKey);
+
+
+            if (hasVoted) {
+
+                voteButton.classList.add(
+                    "has-voted"
+                );
+
+                voteButton.innerHTML =
+                    '<span class="recommend-heart">♥</span>' +
+                    '<span>YOU RECOMMENDED THIS</span>';
+
+            } else {
+
+                voteButton.classList.remove(
+                    "has-voted"
+                );
+
+                voteButton.innerHTML =
+                    '<span class="recommend-heart">♥</span>' +
+                    '<span>I WOULD RECOMMEND THIS</span>';
 
             }
 
-
-            localStorage.setItem(
-                storageKey,
-                "true"
-            );
+        }
 
 
-            button.textContent =
-                "❤️ YOU RECOMMENDED THIS";
 
-            button.classList.add("voted");
+        /* VOTE */
+
+        voteButton.addEventListener(
+            "click",
+            function () {
+
+                const product =
+                    products[currentIndex];
 
 
-            const footer =
-                button
-                    .closest(".competition-card")
-                    .querySelector(".competition-footer");
+                const voteKey =
+                    "momYouNeedThisVote-" +
+                    category +
+                    "-" +
+                    product.name;
 
 
-            if (footer) {
+                if (
+                    localStorage.getItem(voteKey)
+                ) {
 
-                footer.textContent =
+                    return;
+
+                }
+
+
+                localStorage.setItem(
+                    voteKey,
+                    "true"
+                );
+
+
+                voteButton.classList.add(
+                    "has-voted"
+                );
+
+
+                voteButton.innerHTML =
+                    '<span class="recommend-heart">♥</span>' +
+                    '<span>YOU RECOMMENDED THIS</span>';
+
+
+                confirmation.textContent =
                     "💗 Thanks! Your recommendation has been recorded.";
 
             }
+        );
 
-        });
+
+
+        /* PREVIOUS */
+
+        previousButton.addEventListener(
+            "click",
+            function () {
+
+                if (currentIndex > 0) {
+
+                    currentIndex--;
+
+                    updateProduct();
+
+                }
+
+            }
+        );
+
+
+
+        /* NEXT */
+
+        nextButton.addEventListener(
+            "click",
+            function () {
+
+                if (
+                    currentIndex <
+                    products.length - 1
+                ) {
+
+                    currentIndex++;
+
+                    updateProduct();
+
+                }
+
+            }
+        );
+
+
+        updateProduct();
 
     });
 
