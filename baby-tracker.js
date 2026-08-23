@@ -1,7 +1,6 @@
 /* =========================================================
    MOMYOURENEEDTHIS
    BABY TRACKER
-   COMPLETE JAVASCRIPT
 ========================================================= */
 
 (() => {
@@ -13,9 +12,7 @@
 
     const DB_NAME = "MomYouNeedThisBabyTracker";
     const DB_VERSION = 1;
-
-    const LOG_STORE = "logs";
-    const SETTINGS_STORE = "settings";
+    const STORE_NAME = "trackerData";
 
     const DEFAULT_SETTINGS = {
         babyName: "My Baby",
@@ -23,21 +20,31 @@
         voiceConfirmation: true
     };
 
+
+    /* =====================================================
+       STATE
+    ===================================================== */
+
     let db = null;
+
+    let logs = [];
 
     let settings = {
         ...DEFAULT_SETTINGS
     };
 
-    let logs = [];
+    let activeSleepLog = null;
 
-    let recognition = null;
-    let isListening = false;
-
-    let activeSleep = null;
     let sleepTimerInterval = null;
 
+    let recognition = null;
+
+    let isListening = false;
+
+    let lastTranscript = "";
+
     let currentModal = null;
+
 
     /* =====================================================
        DOM HELPERS
@@ -47,18 +54,6 @@
 
     const $$ = (selector) => document.querySelectorAll(selector);
 
-    function safeText(value) {
-        return String(value ?? "").trim();
-    }
-
-    function escapeHTML(value) {
-        return String(value ?? "")
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#039;");
-    }
 
     /* =====================================================
        INITIALIZATION
@@ -66,76 +61,167 @@
 
     document.addEventListener("DOMContentLoaded", init);
 
+
     async function init() {
+
         try {
-            await openDatabase();
+
+            cacheElements();
+
+            await initializeDatabase();
+
             await loadSettings();
+
             await loadLogs();
 
-            initializeSpeechRecognition();
+            initializeVoiceRecognition();
+
             bindEvents();
 
-            updateBabyProfile();
-            updateTodayDate();
-            renderTimeline();
-            updateSummary();
-            restoreActiveSleep();
+            renderEverything();
+
+            startSleepTimerIfNeeded();
 
         } catch (error) {
-            console.error("Baby Tracker initialization error:", error);
-            showToast("Unable to load your tracker", "⚠️");
+
+            console.error(
+                "Baby Tracker initialization error:",
+                error
+            );
+
+            showToast(
+                "The tracker could not finish loading.",
+                "⚠️"
+            );
         }
     }
+
+
+    /* =====================================================
+       ELEMENT CACHE
+    ===================================================== */
+
+    let elements = {};
+
+
+    function cacheElements() {
+
+        const ids = [
+
+            "settingsButton",
+            "settingsModal",
+            "settingsClose",
+
+            "actionModal",
+            "modalClose",
+            "modalContent",
+
+            "babyNameModal",
+            "babyNameModalClose",
+            "babyNameForm",
+
+            "babyNameDisplay",
+            "editBabyButton",
+
+            "babyNameInput",
+            "saveBabyNameButton",
+
+            "babyNameModalInput",
+
+            "voiceLanguage",
+            "voiceConfirmationToggle",
+
+            "voiceButton",
+            "voiceButtonIcon",
+            "voiceStatus",
+            "voiceStatusTitle",
+            "voiceStatusText",
+
+            "voiceWave",
+
+            "voiceTranscript",
+            "voiceTranscriptText",
+
+            "activeSleepCard",
+            "sleepTimer",
+            "endSleepButton",
+
+            "timeline",
+            "emptyState",
+
+            "todayDate",
+            "totalLogs",
+
+            "feedCount",
+            "diaperCount",
+            "sleepTotal",
+
+            "clearTodayButton",
+
+            "trackerToast",
+            "toastIcon",
+            "toastMessage",
+
+            "exportDataButton",
+            "importDataButton",
+            "importDataInput",
+
+            "settingsExportButton",
+            "settingsImportButton",
+
+            "deleteAllDataButton",
+
+            "deleteDataModal",
+            "cancelDeleteButton",
+            "confirmDeleteButton",
+
+            "voicePermissionMessage",
+            "voicePermissionText",
+            "voicePermissionClose"
+        ];
+
+        ids.forEach(id => {
+
+            elements[id] = $(id);
+
+        });
+    }
+
 
     /* =====================================================
        INDEXED DB
     ===================================================== */
 
-    function openDatabase() {
+    function initializeDatabase() {
+
         return new Promise((resolve, reject) => {
 
             if (!("indexedDB" in window)) {
-                reject(new Error("IndexedDB is not supported."));
+
+                reject(
+                    new Error(
+                        "IndexedDB is not supported by this browser."
+                    )
+                );
+
                 return;
             }
 
-            const request = indexedDB.open(DB_NAME, DB_VERSION);
+
+            const request = indexedDB.open(
+                DB_NAME,
+                DB_VERSION
+            );
+
 
             request.onupgradeneeded = (event) => {
 
                 const database = event.target.result;
 
-                if (!database.objectStoreNames.contains(LOG_STORE)) {
-                    const logStore = database.createObjectStore(
-                        LOG_STORE,
-                        {
-                            keyPath: "id",
-                            autoIncrement: true
-                        }
-                    );
+                if (!database.objectStoreNames.contains(STORE_NAME)) {
 
-                    logStore.createIndex(
-                        "date",
-                        "date",
-                        { unique: false }
-                    );
-
-                    logStore.createIndex(
-                        "type",
-                        "type",
-                        { unique: false }
-                    );
-
-                    logStore.createIndex(
-                        "timestamp",
-                        "timestamp",
-                        { unique: false }
-                    );
-                }
-
-                if (!database.objectStoreNames.contains(SETTINGS_STORE)) {
                     database.createObjectStore(
-                        SETTINGS_STORE,
+                        STORE_NAME,
                         {
                             keyPath: "key"
                         }
@@ -143,933 +229,1503 @@
                 }
             };
 
+
             request.onsuccess = () => {
+
                 db = request.result;
-                resolve(db);
-            };
 
-            request.onerror = () => {
-                reject(request.error);
-            };
-        });
-    }
+                db.onerror = (event) => {
 
-    function dbTransaction(storeName, mode = "readonly") {
-        return db
-            .transaction(storeName, mode)
-            .objectStore(storeName);
-    }
+                    console.error(
+                        "IndexedDB error:",
+                        event.target.error
+                    );
+                };
 
-    function saveLog(log) {
-        return new Promise((resolve, reject) => {
-
-            const store = dbTransaction(LOG_STORE, "readwrite");
-
-            const request = store.add(log);
-
-            request.onsuccess = () => {
-                resolve(request.result);
-            };
-
-            request.onerror = () => {
-                reject(request.error);
-            };
-        });
-    }
-
-    function updateLog(log) {
-        return new Promise((resolve, reject) => {
-
-            const store = dbTransaction(LOG_STORE, "readwrite");
-
-            const request = store.put(log);
-
-            request.onsuccess = () => {
                 resolve();
+
             };
+
 
             request.onerror = () => {
+
                 reject(request.error);
-            };
-        });
-    }
 
-    function deleteLogFromDB(id) {
-        return new Promise((resolve, reject) => {
-
-            const store = dbTransaction(LOG_STORE, "readwrite");
-
-            const request = store.delete(id);
-
-            request.onsuccess = () => resolve();
-
-            request.onerror = () => reject(request.error);
-        });
-    }
-
-    function getAllLogs() {
-        return new Promise((resolve, reject) => {
-
-            const store = dbTransaction(LOG_STORE);
-
-            const request = store.getAll();
-
-            request.onsuccess = () => {
-                resolve(request.result || []);
             };
 
-            request.onerror = () => {
-                reject(request.error);
-            };
         });
     }
 
-    function clearLogsDB() {
+
+    /* =====================================================
+       DATABASE SAVE
+    ===================================================== */
+
+    function dbSet(key, value) {
+
         return new Promise((resolve, reject) => {
 
-            const store = dbTransaction(LOG_STORE, "readwrite");
+            if (!db) {
 
-            const request = store.clear();
+                reject(
+                    new Error("Database is not initialized.")
+                );
 
-            request.onsuccess = () => resolve();
+                return;
+            }
 
-            request.onerror = () => reject(request.error);
-        });
-    }
 
-    function saveSetting(key, value) {
-        return new Promise((resolve, reject) => {
+            const transaction = db.transaction(
+                STORE_NAME,
+                "readwrite"
+            );
 
-            const store = dbTransaction(SETTINGS_STORE, "readwrite");
+            const store = transaction.objectStore(
+                STORE_NAME
+            );
 
             const request = store.put({
                 key,
                 value
             });
 
+
             request.onsuccess = () => resolve();
 
             request.onerror = () => reject(request.error);
+
         });
     }
 
-    function getSetting(key) {
+
+    /* =====================================================
+       DATABASE GET
+    ===================================================== */
+
+    function dbGet(key) {
+
         return new Promise((resolve, reject) => {
 
-            const store = dbTransaction(SETTINGS_STORE);
+            if (!db) {
 
-            const request = store.get(key);
-
-            request.onsuccess = () => {
-                resolve(request.result?.value);
-            };
-
-            request.onerror = () => {
-                reject(request.error);
-            };
-        });
-    }
-
-    async function loadSettings() {
-
-        const babyName = await getSetting("babyName");
-        const voiceLanguage = await getSetting("voiceLanguage");
-        const voiceConfirmation = await getSetting("voiceConfirmation");
-
-        settings = {
-            babyName:
-                babyName !== undefined
-                    ? babyName
-                    : DEFAULT_SETTINGS.babyName,
-
-            voiceLanguage:
-                voiceLanguage !== undefined
-                    ? voiceLanguage
-                    : DEFAULT_SETTINGS.voiceLanguage,
-
-            voiceConfirmation:
-                voiceConfirmation !== undefined
-                    ? voiceConfirmation
-                    : DEFAULT_SETTINGS.voiceConfirmation
-        };
-
-        syncSettingsInputs();
-    }
-
-    async function loadLogs() {
-        logs = await getAllLogs();
-
-        logs.sort((a, b) => {
-            return new Date(b.timestamp) - new Date(a.timestamp);
-        });
-    }
-
-    /* =====================================================
-       DATE HELPERS
-    ===================================================== */
-
-    function dateKey(date = new Date()) {
-
-        const year = date.getFullYear();
-
-        const month = String(
-            date.getMonth() + 1
-        ).padStart(2, "0");
-
-        const day = String(
-            date.getDate()
-        ).padStart(2, "0");
-
-        return `${year}-${month}-${day}`;
-    }
-
-    function isToday(timestamp) {
-        return dateKey(new Date(timestamp)) === dateKey();
-    }
-
-    function formatTime(timestamp) {
-
-        const date = new Date(timestamp);
-
-        return date.toLocaleTimeString(
-            [],
-            {
-                hour: "numeric",
-                minute: "2-digit"
-            }
-        );
-    }
-
-    function formatDate(timestamp) {
-
-        const date = new Date(timestamp);
-
-        return date.toLocaleDateString(
-            [],
-            {
-                month: "short",
-                day: "numeric"
-            }
-        );
-    }
-
-    function updateTodayDate() {
-
-        const element = $("todayDate");
-
-        if (!element) return;
-
-        element.textContent = new Date().toLocaleDateString(
-            [],
-            {
-                weekday: "long",
-                month: "long",
-                day: "numeric"
-            }
-        );
-    }
-
-    /* =====================================================
-       BABY PROFILE
-    ===================================================== */
-
-    function updateBabyProfile() {
-
-        const display = $("babyNameDisplay");
-
-        if (display) {
-            display.textContent =
-                settings.babyName || "My Baby";
-        }
-
-        const input = $("babyNameInput");
-
-        if (input) {
-            input.value =
-                settings.babyName === "My Baby"
-                    ? ""
-                    : settings.babyName;
-        }
-
-        const modalInput = $("babyNameModalInput");
-
-        if (modalInput) {
-            modalInput.value =
-                settings.babyName === "My Baby"
-                    ? ""
-                    : settings.babyName;
-        }
-    }
-
-    function syncSettingsInputs() {
-
-        const language = $("voiceLanguage");
-
-        if (language) {
-            language.value = settings.voiceLanguage;
-        }
-
-        const confirmation = $("voiceConfirmationToggle");
-
-        if (confirmation) {
-            confirmation.checked =
-                Boolean(settings.voiceConfirmation);
-        }
-
-        updateBabyProfile();
-    }
-
-    async function saveBabyName(name) {
-
-        const cleaned = safeText(name);
-
-        settings.babyName =
-            cleaned || "My Baby";
-
-        await saveSetting(
-            "babyName",
-            settings.babyName
-        );
-
-        updateBabyProfile();
-
-        showToast("Baby's name saved", "💗");
-    }
-
-    /* =====================================================
-       LOG CREATION
-    ===================================================== */
-
-    function createLog({
-        type,
-        subtype = null,
-        title,
-        details = "",
-        value = null,
-        unit = null,
-        timestamp = new Date(),
-        source = "tap"
-    }) {
-
-        const date = new Date(timestamp);
-
-        return {
-            type,
-            subtype,
-            title,
-            details,
-            value,
-            unit,
-            timestamp: date.toISOString(),
-            date: dateKey(date),
-            source
-        };
-    }
-
-    async function addLog(data) {
-
-        const log = createLog(data);
-
-        await saveLog(log);
-
-        await loadLogs();
-
-        renderTimeline();
-        updateSummary();
-
-        showToast(
-            `${log.title} logged`,
-            iconForType(log.type)
-        );
-
-        return log;
-    }
-
-    /* =====================================================
-       LOG ICONS
-    ===================================================== */
-
-    function iconForType(type, subtype = null) {
-
-        if (type === "feed") return "🍼";
-
-        if (type === "diaper") {
-            if (subtype === "dirty") return "💩";
-            return "💧";
-        }
-
-        if (type === "sleep") return "😴";
-
-        if (type === "note") return "📝";
-
-        return "💗";
-    }
-
-    /* =====================================================
-       QUICK ACTIONS
-    ===================================================== */
-
-    function handleQuickAction(action) {
-
-        switch (action) {
-
-            case "feed":
-                openFeedModal();
-                break;
-
-            case "diaper":
-                openDiaperModal();
-                break;
-
-            case "sleep":
-                handleSleepAction();
-                break;
-
-            case "note":
-                openNoteModal();
-                break;
-        }
-    }
-
-    /* =====================================================
-       FEED MODAL
-    ===================================================== */
-
-    function openFeedModal() {
-
-        openActionModal(`
-            <div class="settings-header">
-
-                <span class="tracker-badge">
-                    🍼 FEEDING
-                </span>
-
-                <h2 id="modalContentTitle">
-                    Log a feed
-                </h2>
-
-                <p>
-                    Quickly record what your baby had.
-                </p>
-
-            </div>
-
-            <form
-                class="tracker-form"
-                id="feedForm"
-            >
-
-                <div>
-                    <label for="feedType">
-                        What kind?
-                    </label>
-
-                    <select id="feedType">
-
-                        <option value="bottle">
-                            Bottle
-                        </option>
-
-                        <option value="breast">
-                            Breastfeeding
-                        </option>
-
-                        <option value="solid">
-                            Solid food
-                        </option>
-
-                    </select>
-                </div>
-
-                <div id="feedAmountGroup">
-
-                    <label for="feedAmount">
-                        Amount
-                    </label>
-
-                    <input
-                        id="feedAmount"
-                        type="number"
-                        min="0"
-                        step="1"
-                        placeholder="120"
-                    >
-
-                </div>
-
-                <div id="feedUnitGroup">
-
-                    <label for="feedUnit">
-                        Unit
-                    </label>
-
-                    <select id="feedUnit">
-
-                        <option value="ml">
-                            ml
-                        </option>
-
-                        <option value="oz">
-                            oz
-                        </option>
-
-                    </select>
-
-                </div>
-
-                <div id="breastSideGroup" class="hidden">
-
-                    <label for="breastSide">
-                        Side
-                    </label>
-
-                    <select id="breastSide">
-
-                        <option value="left">
-                            Left
-                        </option>
-
-                        <option value="right">
-                            Right
-                        </option>
-
-                        <option value="both">
-                            Both
-                        </option>
-
-                    </select>
-
-                </div>
-
-                <div id="breastDurationGroup" class="hidden">
-
-                    <label for="breastDuration">
-                        Duration in minutes
-                    </label>
-
-                    <input
-                        id="breastDuration"
-                        type="number"
-                        min="1"
-                        placeholder="15"
-                    >
-
-                </div>
-
-                <div>
-                    <label for="feedNotes">
-                        Note <span>(optional)</span>
-                    </label>
-
-                    <textarea
-                        id="feedNotes"
-                        rows="2"
-                        placeholder="Anything else?"
-                    ></textarea>
-                </div>
-
-                <button
-                    class="form-submit settings-primary-button"
-                    type="submit"
-                >
-                    💗 Save Feed
-                </button>
-
-            </form>
-        `);
-
-        const feedType = $("feedType");
-
-        feedType.addEventListener(
-            "change",
-            updateFeedForm
-        );
-
-        $("feedForm").addEventListener(
-            "submit",
-            submitFeedForm
-        );
-
-        updateFeedForm();
-    }
-
-    function updateFeedForm() {
-
-        const type = $("feedType")?.value;
-
-        const amountGroup = $("feedAmountGroup");
-        const unitGroup = $("feedUnitGroup");
-        const sideGroup = $("breastSideGroup");
-        const durationGroup = $("breastDurationGroup");
-
-        if (!amountGroup) return;
-
-        if (type === "breast") {
-
-            amountGroup.classList.add("hidden");
-            unitGroup.classList.add("hidden");
-
-            sideGroup.classList.remove("hidden");
-            durationGroup.classList.remove("hidden");
-
-        } else {
-
-            amountGroup.classList.remove("hidden");
-            unitGroup.classList.remove("hidden");
-
-            sideGroup.classList.add("hidden");
-            durationGroup.classList.add("hidden");
-        }
-    }
-
-    async function submitFeedForm(event) {
-
-        event.preventDefault();
-
-        const type = $("feedType").value;
-
-        const notes =
-            safeText($("feedNotes").value);
-
-        if (type === "breast") {
-
-            const side =
-                $("breastSide").value;
-
-            const duration =
-                Number($("breastDuration").value);
-
-            if (!duration) {
-                showToast(
-                    "Enter the feeding duration",
-                    "⚠️"
+                reject(
+                    new Error("Database is not initialized.")
                 );
+
                 return;
             }
 
-            await addLog({
-                type: "feed",
-                subtype: "breast",
-                title: "Breastfeeding",
-                details:
-                    `${capitalize(side)} side • ${duration} min` +
-                    (notes ? ` • ${notes}` : ""),
-                value: duration,
-                unit: "min"
-            });
 
-        } else {
+            const transaction = db.transaction(
+                STORE_NAME,
+                "readonly"
+            );
 
-            const amount =
-                Number($("feedAmount").value);
+            const store = transaction.objectStore(
+                STORE_NAME
+            );
 
-            const unit =
-                $("feedUnit").value;
+            const request = store.get(key);
 
-            if (!amount) {
 
-                await addLog({
-                    type: "feed",
-                    subtype: type,
-                    title:
-                        type === "bottle"
-                            ? "Bottle feed"
-                            : "Solid food",
-                    details:
-                        notes || "Feed logged"
-                });
+            request.onsuccess = () => {
 
-            } else {
+                resolve(
+                    request.result
+                        ? request.result.value
+                        : null
+                );
 
-                await addLog({
-                    type: "feed",
-                    subtype: type,
-                    title:
-                        type === "bottle"
-                            ? "Bottle feed"
-                            : "Solid food",
-                    details:
-                        `${amount} ${unit}` +
-                        (notes ? ` • ${notes}` : ""),
-                    value: amount,
-                    unit
-                });
+            };
+
+
+            request.onerror = () => reject(request.error);
+
+        });
+    }
+
+
+    /* =====================================================
+       DATABASE DELETE
+    ===================================================== */
+
+    function dbDelete(key) {
+
+        return new Promise((resolve, reject) => {
+
+            if (!db) {
+
+                reject(
+                    new Error("Database is not initialized.")
+                );
+
+                return;
             }
-        }
 
-        closeActionModal();
-    }
 
-    /* =====================================================
-       DIAPER MODAL
-    ===================================================== */
+            const transaction = db.transaction(
+                STORE_NAME,
+                "readwrite"
+            );
 
-    function openDiaperModal() {
+            const store = transaction.objectStore(
+                STORE_NAME
+            );
 
-        openActionModal(`
-            <div class="settings-header">
+            const request = store.delete(key);
 
-                <span class="tracker-badge">
-                    💧 DIAPER
-                </span>
 
-                <h2 id="modalContentTitle">
-                    Log a diaper
-                </h2>
+            request.onsuccess = () => resolve();
 
-                <p>
-                    Record a wet or dirty diaper.
-                </p>
+            request.onerror = () => reject(request.error);
 
-            </div>
-
-            <form
-                class="tracker-form"
-                id="diaperForm"
-            >
-
-                <div>
-
-                    <label for="diaperType">
-                        Type
-                    </label>
-
-                    <select id="diaperType">
-
-                        <option value="wet">
-                            💧 Wet
-                        </option>
-
-                        <option value="dirty">
-                            💩 Dirty
-                        </option>
-
-                        <option value="both">
-                            💧💩 Wet + Dirty
-                        </option>
-
-                    </select>
-
-                </div>
-
-                <div>
-
-                    <label for="diaperNotes">
-                        Note <span>(optional)</span>
-                    </label>
-
-                    <textarea
-                        id="diaperNotes"
-                        rows="3"
-                        placeholder="Anything to remember?"
-                    ></textarea>
-
-                </div>
-
-                <button
-                    class="form-submit settings-primary-button"
-                    type="submit"
-                >
-                    💗 Save Diaper
-                </button>
-
-            </form>
-        `);
-
-        $("diaperForm").addEventListener(
-            "submit",
-            submitDiaperForm
-        );
-    }
-
-    async function submitDiaperForm(event) {
-
-        event.preventDefault();
-
-        const type =
-            $("diaperType").value;
-
-        const notes =
-            safeText($("diaperNotes").value);
-
-        let title = "Wet diaper";
-        let subtype = "wet";
-
-        if (type === "dirty") {
-            title = "Dirty diaper";
-            subtype = "dirty";
-        }
-
-        if (type === "both") {
-            title = "Wet + dirty diaper";
-            subtype = "both";
-        }
-
-        await addLog({
-            type: "diaper",
-            subtype,
-            title,
-            details: notes
         });
-
-        closeActionModal();
     }
+
 
     /* =====================================================
-       NOTE MODAL
+       LOAD SETTINGS
     ===================================================== */
 
-    function openNoteModal() {
+    async function loadSettings() {
 
-        openActionModal(`
-            <div class="settings-header">
+        const storedSettings =
+            await dbGet("settings");
 
-                <span class="tracker-badge">
-                    📝 NOTE
-                </span>
 
-                <h2 id="modalContentTitle">
-                    Add a note
-                </h2>
+        if (
+            storedSettings &&
+            typeof storedSettings === "object"
+        ) {
 
-                <p>
-                    Save something you want to remember.
-                </p>
-
-            </div>
-
-            <form
-                class="tracker-form"
-                id="noteForm"
-            >
-
-                <div>
-
-                    <label for="noteText">
-                        What happened?
-                    </label>
-
-                    <textarea
-                        id="noteText"
-                        rows="5"
-                        placeholder="Write a quick note..."
-                        required
-                    ></textarea>
-
-                </div>
-
-                <button
-                    class="form-submit settings-primary-button"
-                    type="submit"
-                >
-                    📝 Save Note
-                </button>
-
-            </form>
-        `);
-
-        $("noteForm").addEventListener(
-            "submit",
-            submitNoteForm
-        );
-
-        setTimeout(() => {
-            $("noteText")?.focus();
-        }, 100);
-    }
-
-    async function submitNoteForm(event) {
-
-        event.preventDefault();
-
-        const text =
-            safeText($("noteText").value);
-
-        if (!text) return;
-
-        await addLog({
-            type: "note",
-            title: "Note",
-            details: text
-        });
-
-        closeActionModal();
-    }
-
-    /* =====================================================
-       SLEEP
-    ===================================================== */
-
-    function handleSleepAction() {
-
-        if (activeSleep) {
-
-            endSleep();
+            settings = {
+                ...DEFAULT_SETTINGS,
+                ...storedSettings
+            };
 
         } else {
 
-            startSleep();
+            settings = {
+                ...DEFAULT_SETTINGS
+            };
 
+            await dbSet(
+                "settings",
+                settings
+            );
         }
     }
 
-    async function startSleep() {
 
-        if (activeSleep) return;
+    /* =====================================================
+       SAVE SETTINGS
+    ===================================================== */
 
-        activeSleep = {
-            startTime: new Date().toISOString()
-        };
+    async function saveSettings() {
 
-        localStorage.setItem(
-            "momTrackerActiveSleep",
-            JSON.stringify(activeSleep)
+        await dbSet(
+            "settings",
+            settings
         );
+    }
+
+
+    /* =====================================================
+       LOAD LOGS
+    ===================================================== */
+
+    async function loadLogs() {
+
+        const storedLogs =
+            await dbGet("logs");
+
+
+        if (Array.isArray(storedLogs)) {
+
+            logs = storedLogs;
+
+        } else {
+
+            logs = [];
+
+            await dbSet(
+                "logs",
+                logs
+            );
+        }
+
+
+        activeSleepLog =
+            logs.find(
+                log =>
+                    log.type === "sleep" &&
+                    log.status === "active"
+            ) || null;
+    }
+
+
+    /* =====================================================
+       SAVE LOGS
+    ===================================================== */
+
+    async function saveLogs() {
+
+        await dbSet(
+            "logs",
+            logs
+        );
+    }
+
+
+    /* =====================================================
+       EVENTS
+    ===================================================== */
+
+    function bindEvents() {
+
+        /* Settings */
+
+        elements.settingsButton?.addEventListener(
+            "click",
+            openSettings
+        );
+
+        elements.settingsClose?.addEventListener(
+            "click",
+            closeSettings
+        );
+
+
+        /* Baby profile */
+
+        elements.editBabyButton?.addEventListener(
+            "click",
+            openBabyNameModal
+        );
+
+
+        /* Baby name */
+
+        elements.babyNameModalClose?.addEventListener(
+            "click",
+            closeBabyNameModal
+        );
+
+
+        elements.babyNameForm?.addEventListener(
+            "submit",
+            saveBabyNameFromModal
+        );
+
+
+        elements.saveBabyNameButton?.addEventListener(
+            "click",
+            saveBabyNameFromSettings
+        );
+
+
+        /* Voice */
+
+        elements.voiceButton?.addEventListener(
+            "click",
+            toggleVoiceRecognition
+        );
+
+
+        /* Voice examples */
+
+        $$(".voice-example").forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    const text =
+                        button.dataset.voiceExample || "";
+
+                    handleVoiceText(
+                        text,
+                        true
+                    );
+                }
+            );
+
+        });
+
+
+        /* Quick actions */
+
+        $$(".quick-action").forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    const action =
+                        button.dataset.action;
+
+                    openActionModal(action);
+
+                }
+            );
+
+        });
+
+
+        /* Action modal */
+
+        elements.modalClose?.addEventListener(
+            "click",
+            closeActionModal
+        );
+
+
+        /* Sleep */
+
+        elements.endSleepButton?.addEventListener(
+            "click",
+            endSleep
+        );
+
+
+        /* Clear */
+
+        elements.clearTodayButton?.addEventListener(
+            "click",
+            clearToday
+        );
+
+
+        /* Voice settings */
+
+        elements.voiceLanguage?.addEventListener(
+            "change",
+            async () => {
+
+                settings.voiceLanguage =
+                    elements.voiceLanguage.value;
+
+                await saveSettings();
+
+                initializeVoiceRecognition();
+
+                showToast(
+                    "Voice language updated.",
+                    "✓"
+                );
+            }
+        );
+
+
+        elements.voiceConfirmationToggle?.addEventListener(
+            "change",
+            async () => {
+
+                settings.voiceConfirmation =
+                    elements.voiceConfirmationToggle.checked;
+
+                await saveSettings();
+
+            }
+        );
+
+
+        /* Export */
+
+        elements.exportDataButton?.addEventListener(
+            "click",
+            exportData
+        );
+
+        elements.settingsExportButton?.addEventListener(
+            "click",
+            exportData
+        );
+
+
+        /* Import */
+
+        elements.importDataButton?.addEventListener(
+            "click",
+            () => {
+
+                elements.importDataInput?.click();
+
+            }
+        );
+
+
+        elements.settingsImportButton?.addEventListener(
+            "click",
+            () => {
+
+                elements.importDataInput?.click();
+
+            }
+        );
+
+
+        elements.importDataInput?.addEventListener(
+            "change",
+            handleImport
+        );
+
+
+        /* Delete */
+
+        elements.deleteAllDataButton?.addEventListener(
+            "click",
+            openDeleteModal
+        );
+
+
+        elements.cancelDeleteButton?.addEventListener(
+            "click",
+            closeDeleteModal
+        );
+
+
+        elements.confirmDeleteButton?.addEventListener(
+            "click",
+            deleteEverything
+        );
+
+
+        /* Close modals */
+
+        $$("[data-close-modal]").forEach(
+            element => {
+
+                element.addEventListener(
+                    "click",
+                    closeActionModal
+                );
+
+            }
+        );
+
+
+        $$("[data-close-settings]").forEach(
+            element => {
+
+                element.addEventListener(
+                    "click",
+                    closeSettings
+                );
+
+            }
+        );
+
+
+        $$("[data-close-baby-name]").forEach(
+            element => {
+
+                element.addEventListener(
+                    "click",
+                    closeBabyNameModal
+                );
+
+            }
+        );
+
+
+        $$("[data-close-delete]").forEach(
+            element => {
+
+                element.addEventListener(
+                    "click",
+                    closeDeleteModal
+                );
+
+            }
+        );
+
+
+        elements.voicePermissionClose?.addEventListener(
+            "click",
+            hideVoicePermissionMessage
+        );
+
+
+        /* Escape key */
+
+        document.addEventListener(
+            "keydown",
+            event => {
+
+                if (event.key !== "Escape") {
+                    return;
+                }
+
+                closeActionModal();
+                closeSettings();
+                closeBabyNameModal();
+                closeDeleteModal();
+
+            }
+        );
+    }
+
+
+    /* =====================================================
+       RENDER EVERYTHING
+    ===================================================== */
+
+    function renderEverything() {
+
+        renderBabyName();
+
+        renderSettings();
+
+        renderDate();
+
+        renderSummary();
+
+        renderTimeline();
 
         renderActiveSleep();
 
+    }
+
+
+    /* =====================================================
+       BABY NAME
+    ===================================================== */
+
+    function renderBabyName() {
+
+        if (elements.babyNameDisplay) {
+
+            elements.babyNameDisplay.textContent =
+                settings.babyName || "My Baby";
+        }
+
+
+        if (elements.babyNameInput) {
+
+            elements.babyNameInput.value =
+                settings.babyName || "";
+        }
+
+
+        if (elements.babyNameModalInput) {
+
+            elements.babyNameModalInput.value =
+                settings.babyName === "My Baby"
+                    ? ""
+                    : settings.babyName;
+        }
+    }
+
+
+    /* =====================================================
+       SAVE BABY NAME — SETTINGS
+    ===================================================== */
+
+    async function saveBabyNameFromSettings() {
+
+        const input =
+            elements.babyNameInput;
+
+        if (!input) return;
+
+
+        const name =
+            input.value.trim();
+
+
+        settings.babyName =
+            name || "My Baby";
+
+
+        await saveSettings();
+
+        renderBabyName();
+
         showToast(
-            "Nap started",
+            "Baby's name saved.",
+            "✓"
+        );
+    }
+
+
+    /* =====================================================
+       SAVE BABY NAME — MODAL
+    ===================================================== */
+
+    async function saveBabyNameFromModal(event) {
+
+        event.preventDefault();
+
+
+        const input =
+            elements.babyNameModalInput;
+
+
+        const name =
+            input?.value.trim() || "";
+
+
+        settings.babyName =
+            name || "My Baby";
+
+
+        await saveSettings();
+
+        renderBabyName();
+
+        closeBabyNameModal();
+
+        showToast(
+            "Baby's profile saved.",
+            "💗"
+        );
+    }
+
+
+    /* =====================================================
+       SETTINGS
+    ===================================================== */
+
+    function renderSettings() {
+
+        if (elements.voiceLanguage) {
+
+            elements.voiceLanguage.value =
+                settings.voiceLanguage ||
+                "en-US";
+        }
+
+
+        if (elements.voiceConfirmationToggle) {
+
+            elements.voiceConfirmationToggle.checked =
+                settings.voiceConfirmation !== false;
+        }
+    }
+
+
+    function openSettings() {
+
+        closeAllModalsExcept("settings");
+
+        elements.settingsModal?.classList.remove(
+            "hidden"
+        );
+
+        elements.settingsModal?.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+        elements.settingsButton?.setAttribute(
+            "aria-expanded",
+            "true"
+        );
+
+        currentModal = "settings";
+
+        renderSettings();
+    }
+
+
+    function closeSettings() {
+
+        elements.settingsModal?.classList.add(
+            "hidden"
+        );
+
+        elements.settingsModal?.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+        elements.settingsButton?.setAttribute(
+            "aria-expanded",
+            "false"
+        );
+
+        if (currentModal === "settings") {
+            currentModal = null;
+        }
+    }
+
+
+    /* =====================================================
+       BABY NAME MODAL
+    ===================================================== */
+
+    function openBabyNameModal() {
+
+        closeAllModalsExcept("baby");
+
+        elements.babyNameModal?.classList.remove(
+            "hidden"
+        );
+
+        elements.babyNameModal?.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+        currentModal = "baby";
+
+
+        setTimeout(() => {
+
+            elements.babyNameModalInput?.focus();
+
+        }, 100);
+    }
+
+
+    function closeBabyNameModal() {
+
+        elements.babyNameModal?.classList.add(
+            "hidden"
+        );
+
+        elements.babyNameModal?.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+        if (currentModal === "baby") {
+            currentModal = null;
+        }
+    }
+
+
+    /* =====================================================
+       MODAL MANAGEMENT
+    ===================================================== */
+
+    function closeAllModalsExcept(type) {
+
+        if (type !== "settings") {
+            closeSettings();
+        }
+
+        if (type !== "action") {
+            closeActionModal();
+        }
+
+        if (type !== "baby") {
+            closeBabyNameModal();
+        }
+
+        if (type !== "delete") {
+            closeDeleteModal();
+        }
+    }
+
+
+    /* =====================================================
+       ACTION MODAL
+    ===================================================== */
+
+    function openActionModal(action) {
+
+        closeAllModalsExcept("action");
+
+
+        if (!elements.modalContent) {
+            return;
+        }
+
+
+        const content =
+            getActionForm(action);
+
+
+        elements.modalContent.innerHTML =
+            content;
+
+
+        elements.actionModal?.classList.remove(
+            "hidden"
+        );
+
+        elements.actionModal?.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+        currentModal = "action";
+
+
+        bindActionForm(action);
+
+    }
+
+
+    function closeActionModal() {
+
+        elements.actionModal?.classList.add(
+            "hidden"
+        );
+
+        elements.actionModal?.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+        if (currentModal === "action") {
+            currentModal = null;
+        }
+    }
+
+
+    /* =====================================================
+       ACTION FORMS
+    ===================================================== */
+
+    function getActionForm(action) {
+
+        if (action === "feed") {
+
+            return `
+                <span class="tracker-badge">🍼 FEEDING</span>
+
+                <h2>Log a feed</h2>
+
+                <p class="modal-subtitle">
+                    What kind of feeding was it?
+                </p>
+
+                <form class="tracker-form" id="feedForm">
+
+                    <div>
+                        <label for="feedType">
+                            Type
+                        </label>
+
+                        <select id="feedType">
+                            <option value="Bottle">Bottle</option>
+                            <option value="Nursing">Nursing</option>
+                            <option value="Formula">Formula</option>
+                            <option value="Solid food">Solid food</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="feedAmount">
+                            Amount / details
+                        </label>
+
+                        <input
+                            id="feedAmount"
+                            type="text"
+                            placeholder="e.g. 120 ml or 15 min"
+                        >
+                    </div>
+
+                    <div>
+                        <label for="feedSide">
+                            Side
+                        </label>
+
+                        <select id="feedSide">
+                            <option value="">Not applicable</option>
+                            <option value="Left">Left</option>
+                            <option value="Right">Right</option>
+                            <option value="Both">Both</option>
+                        </select>
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="form-submit settings-primary-button"
+                    >
+                        🍼 Save Feed
+                    </button>
+
+                </form>
+            `;
+        }
+
+
+        if (action === "diaper") {
+
+            return `
+                <span class="tracker-badge">💧 DIAPER</span>
+
+                <h2>Log a diaper</h2>
+
+                <p class="modal-subtitle">
+                    What kind was it?
+                </p>
+
+                <form class="tracker-form" id="diaperForm">
+
+                    <div>
+                        <label for="diaperType">
+                            Type
+                        </label>
+
+                        <select id="diaperType">
+                            <option value="Wet">Wet</option>
+                            <option value="Dirty">Dirty</option>
+                            <option value="Wet + Dirty">
+                                Wet + Dirty
+                            </option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="diaperNote">
+                            Note (optional)
+                        </label>
+
+                        <input
+                            id="diaperNote"
+                            type="text"
+                            placeholder="Anything to remember?"
+                        >
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="form-submit settings-primary-button"
+                    >
+                        💧 Save Diaper
+                    </button>
+
+                </form>
+            `;
+        }
+
+
+        if (action === "sleep") {
+
+            return `
+                <span class="tracker-badge">😴 SLEEP</span>
+
+                <h2>Sleep</h2>
+
+                <p class="modal-subtitle">
+                    Start a nap now or log a completed sleep.
+                </p>
+
+                <div class="modal-options">
+
+                    <button
+                        type="button"
+                        class="modal-option"
+                        id="startSleepModalButton"
+                    >
+                        😴 Start Nap Now
+                    </button>
+
+                    <button
+                        type="button"
+                        class="modal-option"
+                        id="manualSleepButton"
+                    >
+                        📝 Log Completed Sleep
+                    </button>
+
+                </div>
+            `;
+        }
+
+
+        if (action === "note") {
+
+            return `
+                <span class="tracker-badge">📝 NOTE</span>
+
+                <h2>Add a note</h2>
+
+                <p class="modal-subtitle">
+                    Save something you want to remember.
+                </p>
+
+                <form class="tracker-form" id="noteForm">
+
+                    <div>
+                        <label for="noteText">
+                            Note
+                        </label>
+
+                        <textarea
+                            id="noteText"
+                            rows="5"
+                            placeholder="e.g. Baby seemed extra sleepy today..."
+                        ></textarea>
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="form-submit settings-primary-button"
+                    >
+                        📝 Save Note
+                    </button>
+
+                </form>
+            `;
+        }
+
+
+        return "";
+    }
+
+
+    /* =====================================================
+       BIND ACTION FORM
+    ===================================================== */
+
+    function bindActionForm(action) {
+
+        if (action === "feed") {
+
+            $("feedForm")?.addEventListener(
+                "submit",
+                saveFeed
+            );
+        }
+
+
+        if (action === "diaper") {
+
+            $("diaperForm")?.addEventListener(
+                "submit",
+                saveDiaper
+            );
+        }
+
+
+        if (action === "note") {
+
+            $("noteForm")?.addEventListener(
+                "submit",
+                saveNote
+            );
+        }
+
+
+        if (action === "sleep") {
+
+            $("startSleepModalButton")?.addEventListener(
+                "click",
+                async () => {
+
+                    closeActionModal();
+
+                    await startSleep();
+
+                }
+            );
+
+
+            $("manualSleepButton")?.addEventListener(
+                "click",
+                openManualSleepForm
+            );
+        }
+    }
+
+
+    /* =====================================================
+       FEED
+    ===================================================== */
+
+    async function saveFeed(event) {
+
+        event.preventDefault();
+
+
+        const type =
+            $("feedType")?.value || "Feed";
+
+
+        const amount =
+            $("feedAmount")?.value.trim() || "";
+
+
+        const side =
+            $("feedSide")?.value || "";
+
+
+        const details =
+            [amount, side]
+                .filter(Boolean)
+                .join(" • ");
+
+
+        await addLog({
+
+            type: "feed",
+
+            title: type,
+
+            details:
+                details ||
+                "Feeding logged",
+
+            icon: "🍼"
+        });
+
+
+        closeActionModal();
+
+        showToast(
+            "Feed logged.",
+            "🍼"
+        );
+    }
+
+
+    /* =====================================================
+       DIAPER
+    ===================================================== */
+
+    async function saveDiaper(event) {
+
+        event.preventDefault();
+
+
+        const type =
+            $("diaperType")?.value ||
+            "Diaper";
+
+
+        const note =
+            $("diaperNote")?.value.trim() ||
+            "";
+
+
+        await addLog({
+
+            type: "diaper",
+
+            title: `${type} diaper`,
+
+            details:
+                note ||
+                "Diaper change logged",
+
+            icon: "💧"
+        });
+
+
+        closeActionModal();
+
+        showToast(
+            "Diaper logged.",
+            "💧"
+        );
+    }
+
+
+    /* =====================================================
+       NOTE
+    ===================================================== */
+
+    async function saveNote(event) {
+
+        event.preventDefault();
+
+
+        const text =
+            $("noteText")?.value.trim();
+
+
+        if (!text) {
+
+            showToast(
+                "Please enter a note.",
+                "⚠️"
+            );
+
+            return;
+        }
+
+
+        await addLog({
+
+            type: "note",
+
+            title: "Note",
+
+            details: text,
+
+            icon: "📝"
+        });
+
+
+        closeActionModal();
+
+        showToast(
+            "Note saved.",
+            "📝"
+        );
+    }
+
+
+    /* =====================================================
+       MANUAL SLEEP FORM
+    ===================================================== */
+
+    function openManualSleepForm() {
+
+        if (!elements.modalContent) {
+            return;
+        }
+
+
+        elements.modalContent.innerHTML = `
+
+            <span class="tracker-badge">
+                😴 SLEEP
+            </span>
+
+            <h2>
+                Log completed sleep
+            </h2>
+
+            <p class="modal-subtitle">
+                Enter when the nap started and ended.
+            </p>
+
+            <form
+                class="tracker-form"
+                id="manualSleepForm"
+            >
+
+                <div>
+
+                    <label for="sleepStart">
+                        Started
+                    </label>
+
+                    <input
+                        type="time"
+                        id="sleepStart"
+                        required
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label for="sleepEnd">
+                        Ended
+                    </label>
+
+                    <input
+                        type="time"
+                        id="sleepEnd"
+                        required
+                    >
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="form-submit settings-primary-button"
+                >
+                    😴 Save Sleep
+                </button>
+
+            </form>
+        `;
+
+
+        $("manualSleepForm")?.addEventListener(
+            "submit",
+            saveManualSleep
+        );
+    }
+
+
+    async function saveManualSleep(event) {
+
+        event.preventDefault();
+
+
+        const start =
+            $("sleepStart")?.value;
+
+
+        const end =
+            $("sleepEnd")?.value;
+
+
+        if (!start || !end) {
+            return;
+        }
+
+
+        const duration =
+            calculateTimeDifference(
+                start,
+                end
+            );
+
+
+        if (duration <= 0) {
+
+            showToast(
+                "Please check the sleep times.",
+                "⚠️"
+            );
+
+            return;
+        }
+
+
+        await addLog({
+
+            type: "sleep",
+
+            title: "Nap",
+
+            details:
+                formatDuration(duration),
+
+            icon: "😴",
+
+            duration
+
+        });
+
+
+        closeActionModal();
+
+        showToast(
+            "Sleep logged.",
             "😴"
         );
     }
 
+
+    /* =====================================================
+       START SLEEP
+    ===================================================== */
+
+    async function startSleep() {
+
+        if (activeSleepLog) {
+
+            showToast(
+                "A nap is already in progress.",
+                "😴"
+            );
+
+            return;
+        }
+
+
+        const log = {
+
+            id: generateId(),
+
+            type: "sleep",
+
+            title: "Nap",
+
+            details: "Nap in progress",
+
+            icon: "😴",
+
+            timestamp: Date.now(),
+
+            status: "active",
+
+            startTime: Date.now()
+
+        };
+
+
+        logs.push(log);
+
+        activeSleepLog = log;
+
+
+        await saveLogs();
+
+        renderEverything();
+
+        startSleepTimer();
+
+
+        showToast(
+            "Nap started.",
+            "😴"
+        );
+    }
+
+
+    /* =====================================================
+       END SLEEP
+    ===================================================== */
+
     async function endSleep() {
 
-        if (!activeSleep) return;
+        if (!activeSleepLog) {
+            return;
+        }
+
+
+        const now = Date.now();
 
         const start =
-            new Date(activeSleep.startTime);
+            activeSleepLog.startTime;
 
-        const end =
-            new Date();
 
         const duration =
             Math.max(
-                1,
-                Math.round(
-                    (end - start) / 60000
-                )
+                0,
+                now - start
             );
 
-        await addLog({
-            type: "sleep",
-            subtype: "nap",
-            title: "Nap",
-            details:
-                `${formatDuration(duration)}`,
-            value: duration,
-            unit: "min",
-            timestamp: end
-        });
 
-        activeSleep = null;
+        activeSleepLog.status =
+            "completed";
 
-        localStorage.removeItem(
-            "momTrackerActiveSleep"
-        );
 
-        renderActiveSleep();
+        activeSleepLog.endTime =
+            now;
+
+
+        activeSleepLog.timestamp =
+            now;
+
+
+        activeSleepLog.duration =
+            duration;
+
+
+        activeSleepLog.details =
+            formatDuration(duration);
+
+
+        const index =
+            logs.findIndex(
+                log =>
+                    log.id === activeSleepLog.id
+            );
+
+
+        if (index !== -1) {
+
+            logs[index] =
+                activeSleepLog;
+        }
+
+
+        activeSleepLog = null;
+
+
+        stopSleepTimer();
+
+        await saveLogs();
+
+        renderEverything();
+
 
         showToast(
             `Nap ended • ${formatDuration(duration)}`,
@@ -1077,344 +1733,505 @@
         );
     }
 
-    function restoreActiveSleep() {
 
-        try {
+    /* =====================================================
+       SLEEP TIMER
+    ===================================================== */
 
-            const stored =
-                localStorage.getItem(
-                    "momTrackerActiveSleep"
-                );
+    function startSleepTimerIfNeeded() {
 
-            if (!stored) return;
+        if (activeSleepLog) {
 
-            const parsed =
-                JSON.parse(stored);
+            startSleepTimer();
 
-            if (!parsed?.startTime) return;
-
-            activeSleep = parsed;
-
-            renderActiveSleep();
-
-        } catch (error) {
-
-            console.error(
-                "Unable to restore sleep:",
-                error
-            );
         }
     }
 
-    function renderActiveSleep() {
 
-        const card =
-            $("activeSleepCard");
+    function startSleepTimer() {
 
-        if (!card) return;
+        stopSleepTimer();
 
-        if (!activeSleep) {
-
-            card.classList.add("hidden");
-
-            if (sleepTimerInterval) {
-                clearInterval(sleepTimerInterval);
-                sleepTimerInterval = null;
-            }
-
-            return;
-        }
-
-        card.classList.remove("hidden");
 
         updateSleepTimer();
 
-        if (!sleepTimerInterval) {
 
-            sleepTimerInterval =
-                setInterval(
-                    updateSleepTimer,
-                    1000
+        sleepTimerInterval =
+            setInterval(
+                updateSleepTimer,
+                1000
+            );
+    }
+
+
+    function stopSleepTimer() {
+
+        if (sleepTimerInterval) {
+
+            clearInterval(
+                sleepTimerInterval
+            );
+
+            sleepTimerInterval = null;
+        }
+    }
+
+
+    function updateSleepTimer() {
+
+        if (
+            !activeSleepLog ||
+            !elements.sleepTimer
+        ) {
+            return;
+        }
+
+
+        const elapsed =
+            Date.now() -
+            activeSleepLog.startTime;
+
+
+        elements.sleepTimer.textContent =
+            formatClockDuration(
+                elapsed
+            );
+    }
+
+
+    /* =====================================================
+       ADD LOG
+    ===================================================== */
+
+    async function addLog(data) {
+
+        const log = {
+
+            id:
+                data.id ||
+                generateId(),
+
+            type:
+                data.type,
+
+            title:
+                data.title,
+
+            details:
+                data.details || "",
+
+            icon:
+                data.icon || "📝",
+
+            timestamp:
+                data.timestamp ||
+                Date.now(),
+
+            duration:
+                data.duration ||
+                0,
+
+            status:
+                data.status ||
+                "completed"
+
+        };
+
+
+        logs.push(log);
+
+
+        await saveLogs();
+
+        renderEverything();
+
+    }
+
+
+    /* =====================================================
+       RENDER ACTIVE SLEEP
+    ===================================================== */
+
+    function renderActiveSleep() {
+
+        if (
+            !elements.activeSleepCard
+        ) {
+            return;
+        }
+
+
+        if (activeSleepLog) {
+
+            elements.activeSleepCard.classList.remove(
+                "hidden"
+            );
+
+            updateSleepTimer();
+
+        } else {
+
+            elements.activeSleepCard.classList.add(
+                "hidden"
+            );
+        }
+    }
+
+
+    /* =====================================================
+       RENDER DATE
+    ===================================================== */
+
+    function renderDate() {
+
+        if (!elements.todayDate) {
+            return;
+        }
+
+
+        const today =
+            new Date();
+
+
+        elements.todayDate.textContent =
+            today.toLocaleDateString(
+                undefined,
+                {
+                    weekday: "long",
+                    month: "long",
+                    day: "numeric"
+                }
+            );
+    }
+
+
+    /* =====================================================
+       TODAY LOGS
+    ===================================================== */
+
+    function getTodayLogs() {
+
+        const start =
+            new Date();
+
+        start.setHours(
+            0,
+            0,
+            0,
+            0
+        );
+
+
+        const end =
+            new Date();
+
+        end.setHours(
+            23,
+            59,
+            59,
+            999
+        );
+
+
+        return logs.filter(
+            log =>
+                log.timestamp >= start.getTime() &&
+                log.timestamp <= end.getTime()
+        );
+    }
+
+
+    /* =====================================================
+       RENDER SUMMARY
+    ===================================================== */
+
+    function renderSummary() {
+
+        const todayLogs =
+            getTodayLogs();
+
+
+        const feedCount =
+            todayLogs.filter(
+                log =>
+                    log.type === "feed"
+            ).length;
+
+
+        const diaperCount =
+            todayLogs.filter(
+                log =>
+                    log.type === "diaper"
+            ).length;
+
+
+        const sleepTotal =
+            todayLogs
+                .filter(
+                    log =>
+                        log.type === "sleep" &&
+                        log.status !== "active"
+                )
+                .reduce(
+                    (
+                        total,
+                        log
+                    ) =>
+                        total +
+                        (Number(log.duration) || 0),
+                    0
+                );
+
+
+        if (elements.totalLogs) {
+
+            elements.totalLogs.textContent =
+                todayLogs.length;
+        }
+
+
+        if (elements.feedCount) {
+
+            elements.feedCount.textContent =
+                feedCount;
+        }
+
+
+        if (elements.diaperCount) {
+
+            elements.diaperCount.textContent =
+                diaperCount;
+        }
+
+
+        if (elements.sleepTotal) {
+
+            elements.sleepTotal.textContent =
+                formatShortDuration(
+                    sleepTotal
                 );
         }
     }
 
-    function updateSleepTimer() {
-
-        if (!activeSleep) return;
-
-        const start =
-            new Date(activeSleep.startTime);
-
-        const seconds =
-            Math.max(
-                0,
-                Math.floor(
-                    (Date.now() - start.getTime()) / 1000
-                )
-            );
-
-        const hours =
-            Math.floor(seconds / 3600);
-
-        const minutes =
-            Math.floor(
-                (seconds % 3600) / 60
-            );
-
-        const secs =
-            seconds % 60;
-
-        const element =
-            $("sleepTimer");
-
-        if (!element) return;
-
-        element.textContent =
-            [
-                hours,
-                minutes,
-                secs
-            ]
-                .map(
-                    number =>
-                        String(number).padStart(2, "0")
-                )
-                .join(":");
-    }
-
-    function formatDuration(minutes) {
-
-        const mins =
-            Math.max(
-                0,
-                Math.round(Number(minutes) || 0)
-            );
-
-        const hours =
-            Math.floor(mins / 60);
-
-        const remaining =
-            mins % 60;
-
-        if (hours > 0) {
-
-            return `${hours}h ${remaining}m`;
-
-        }
-
-        return `${remaining} min`;
-    }
 
     /* =====================================================
-       TIMELINE
+       RENDER TIMELINE
     ===================================================== */
 
     function renderTimeline() {
 
-        const timeline =
-            $("timeline");
+        if (!elements.timeline) {
+            return;
+        }
 
-        const empty =
-            $("emptyState");
-
-        if (!timeline) return;
 
         const todayLogs =
-            logs.filter(log => isToday(log.timestamp));
+            getTodayLogs()
+                .sort(
+                    (a, b) =>
+                        b.timestamp -
+                        a.timestamp
+                );
 
-        const oldItems =
-            timeline.querySelectorAll(
-                ".timeline-item"
-            );
 
-        oldItems.forEach(item => item.remove());
+        elements.timeline.innerHTML = "";
+
 
         if (!todayLogs.length) {
 
-            if (empty) {
-                empty.classList.remove("hidden");
-            }
+            elements.timeline.appendChild(
+                createEmptyState()
+            );
 
             return;
         }
 
-        if (empty) {
-            empty.classList.add("hidden");
-        }
 
-        todayLogs.forEach(log => {
+        todayLogs.forEach(
+            log => {
 
-            const item =
-                document.createElement("div");
+                const item =
+                    createTimelineItem(log);
 
-            item.className =
-                "timeline-item";
+                elements.timeline.appendChild(
+                    item
+                );
 
-            item.dataset.id =
-                String(log.id);
-
-            item.innerHTML = `
-
-                <div
-                    class="timeline-icon"
-                    aria-hidden="true"
-                >
-                    ${iconForType(
-                        log.type,
-                        log.subtype
-                    )}
-                </div>
-
-                <div class="timeline-info">
-
-                    <strong>
-                        ${escapeHTML(log.title)}
-                    </strong>
-
-                    <span>
-                        ${escapeHTML(
-                            log.details || ""
-                        )}
-                    </span>
-
-                </div>
-
-                <div class="timeline-time">
-
-                    ${formatTime(
-                        log.timestamp
-                    )}
-
-                </div>
-
-                <button
-                    type="button"
-                    class="timeline-delete"
-                    data-delete-log="${log.id}"
-                    aria-label="Delete ${escapeHTML(log.title)}"
-                >
-                    ×
-                </button>
-            `;
-
-            timeline.appendChild(item);
-        });
+            }
+        );
     }
 
+
     /* =====================================================
-       SUMMARY
+       EMPTY STATE
     ===================================================== */
 
-    function updateSummary() {
+    function createEmptyState() {
 
-        const todayLogs =
-            logs.filter(
-                log => isToday(log.timestamp)
+        const div =
+            document.createElement(
+                "div"
             );
 
-        const feeds =
-            todayLogs.filter(
-                log => log.type === "feed"
-            );
 
-        const diapers =
-            todayLogs.filter(
-                log => log.type === "diaper"
-            );
+        div.className =
+            "empty-state";
 
-        const sleepMinutes =
-            todayLogs
-                .filter(
-                    log => log.type === "sleep"
-                )
-                .reduce(
-                    (total, log) =>
-                        total +
-                        Number(log.value || 0),
-                    0
-                );
 
-        if ($("totalLogs")) {
-            $("totalLogs").textContent =
-                todayLogs.length;
-        }
+        div.innerHTML = `
 
-        if ($("feedCount")) {
-            $("feedCount").textContent =
-                feeds.length;
-        }
+            <div class="empty-state-icon">
+                🌸
+            </div>
 
-        if ($("diaperCount")) {
-            $("diaperCount").textContent =
-                diapers.length;
-        }
+            <h3>
+                Your day starts here
+            </h3>
 
-        if ($("sleepTotal")) {
+            <p>
+                Tell me what happened and
+                I'll keep track for you.
+            </p>
 
-            $("sleepTotal").textContent =
-                formatShortDuration(
-                    sleepMinutes
-                );
-        }
+        `;
+
+
+        return div;
     }
 
-    function formatShortDuration(minutes) {
-
-        const total =
-            Number(minutes) || 0;
-
-        if (total < 60) {
-            return `${Math.round(total)}m`;
-        }
-
-        const hours =
-            Math.floor(total / 60);
-
-        const mins =
-            Math.round(total % 60);
-
-        if (!mins) {
-            return `${hours}h`;
-        }
-
-        return `${hours}h ${mins}m`;
-    }
 
     /* =====================================================
-       DELETE INDIVIDUAL LOG
+       TIMELINE ITEM
+    ===================================================== */
+
+    function createTimelineItem(log) {
+
+        const item =
+            document.createElement(
+                "div"
+            );
+
+
+        item.className =
+            "timeline-item";
+
+
+        const time =
+            formatTime(
+                log.timestamp
+            );
+
+
+        const details =
+            escapeHtml(
+                log.details || ""
+            );
+
+
+        item.innerHTML = `
+
+            <div class="timeline-icon">
+                ${log.icon || "📝"}
+            </div>
+
+            <div class="timeline-info">
+
+                <strong>
+                    ${escapeHtml(
+                        log.title || "Activity"
+                    )}
+                </strong>
+
+                <span>
+                    ${details}
+                </span>
+
+            </div>
+
+            <div class="timeline-time">
+                ${time}
+            </div>
+
+            <button
+                type="button"
+                class="timeline-delete"
+                aria-label="Delete log"
+                title="Delete log"
+            >
+                ×
+            </button>
+
+        `;
+
+
+        const deleteButton =
+            item.querySelector(
+                ".timeline-delete"
+            );
+
+
+        deleteButton?.addEventListener(
+            "click",
+            async () => {
+
+                await deleteLog(
+                    log.id
+                );
+
+            }
+        );
+
+
+        return item;
+    }
+
+
+    /* =====================================================
+       DELETE SINGLE LOG
     ===================================================== */
 
     async function deleteLog(id) {
 
-        const log =
-            logs.find(
-                item => Number(item.id) === Number(id)
-            );
-
-        if (!log) return;
-
         const confirmed =
             window.confirm(
-                `Delete "${log.title}" from today's tracker?`
+                "Delete this log?"
             );
 
-        if (!confirmed) return;
 
-        await deleteLogFromDB(
-            Number(id)
-        );
+        if (!confirmed) {
+            return;
+        }
 
-        await loadLogs();
 
-        renderTimeline();
-        updateSummary();
+        logs =
+            logs.filter(
+                log =>
+                    log.id !== id
+            );
+
+
+        if (
+            activeSleepLog &&
+            activeSleepLog.id === id
+        ) {
+
+            activeSleepLog = null;
+
+            stopSleepTimer();
+        }
+
+
+        await saveLogs();
+
+        renderEverything();
+
 
         showToast(
-            "Log deleted",
+            "Log deleted.",
             "✓"
         );
     }
+
 
     /* =====================================================
        CLEAR TODAY
@@ -1423,1175 +2240,893 @@
     async function clearToday() {
 
         const todayLogs =
-            logs.filter(
-                log => isToday(log.timestamp)
-            );
+            getTodayLogs();
+
 
         if (!todayLogs.length) {
 
             showToast(
-                "Nothing to clear",
+                "There are no logs to clear.",
                 "ℹ️"
             );
 
             return;
         }
 
+
         const confirmed =
             window.confirm(
-                `Clear all ${todayLogs.length} logs from today?\n\nThis cannot be undone.`
+                "Clear all of today's tracker logs?"
             );
 
-        if (!confirmed) return;
 
-        for (const log of todayLogs) {
-            await deleteLogFromDB(log.id);
+        if (!confirmed) {
+            return;
         }
 
-        await loadLogs();
 
-        renderTimeline();
-        updateSummary();
+        const ids =
+            new Set(
+                todayLogs.map(
+                    log =>
+                        log.id
+                )
+            );
+
+
+        logs =
+            logs.filter(
+                log =>
+                    !ids.has(log.id)
+            );
+
+
+        if (
+            activeSleepLog &&
+            ids.has(activeSleepLog.id)
+        ) {
+
+            activeSleepLog = null;
+
+            stopSleepTimer();
+        }
+
+
+        await saveLogs();
+
+        renderEverything();
+
 
         showToast(
-            "Today's logs cleared",
+            "Today's logs cleared.",
             "✓"
         );
     }
+
 
     /* =====================================================
        VOICE RECOGNITION
     ===================================================== */
 
-    function initializeSpeechRecognition() {
+    function initializeVoiceRecognition() {
+
+        recognition = null;
+
 
         const SpeechRecognition =
             window.SpeechRecognition ||
             window.webkitSpeechRecognition;
 
+
         if (!SpeechRecognition) {
 
-            disableVoiceButton();
+            showVoiceUnsupportedState();
 
             return;
         }
 
-        recognition =
-            new SpeechRecognition();
 
-        recognition.continuous = false;
-        recognition.interimResults = true;
-        recognition.maxAlternatives = 1;
+        try {
 
-        recognition.lang =
-            settings.voiceLanguage;
+            recognition =
+                new SpeechRecognition();
 
-        recognition.onstart = () => {
 
-            isListening = true;
+            recognition.continuous =
+                false;
 
-            updateVoiceUI(
-                true
-            );
-        };
 
-        recognition.onresult = (event) => {
+            recognition.interimResults =
+                true;
 
-            let transcript = "";
 
-            for (
-                let i = event.resultIndex;
-                i < event.results.length;
-                i++
-            ) {
+            recognition.lang =
+                settings.voiceLanguage ||
+                "en-US";
 
-                transcript +=
-                    event.results[i][0].transcript;
-            }
 
-            transcript =
-                transcript.trim();
+            recognition.maxAlternatives =
+                1;
 
-            showTranscript(
-                transcript
-            );
 
-            const latestResult =
-                event.results[
-                    event.results.length - 1
-                ];
+            recognition.onstart =
+                handleRecognitionStart;
 
-            if (latestResult?.isFinal) {
 
-                handleVoiceTranscript(
-                    transcript
-                );
-            }
-        };
+            recognition.onresult =
+                handleRecognitionResult;
 
-        recognition.onerror = (event) => {
+
+            recognition.onerror =
+                handleRecognitionError;
+
+
+            recognition.onend =
+                handleRecognitionEnd;
+
+        } catch (error) {
 
             console.error(
-                "Speech recognition error:",
-                event.error
+                "Could not initialize speech recognition:",
+                error
             );
 
-            isListening = false;
+            recognition = null;
 
-            updateVoiceUI(false);
-
-            handleVoiceError(
-                event.error
-            );
-        };
-
-        recognition.onend = () => {
-
-            isListening = false;
-
-            updateVoiceUI(false);
-        };
+            showVoiceUnsupportedState();
+        }
     }
 
-    function disableVoiceButton() {
 
-        const button =
-            $("voiceButton");
+    /* =====================================================
+       VOICE SUPPORT
+    ===================================================== */
 
-        if (!button) return;
+    function showVoiceUnsupportedState() {
 
-        button.disabled = true;
+        if (!elements.voiceButton) {
+            return;
+        }
 
-        button.setAttribute(
+
+        elements.voiceButton.disabled =
+            true;
+
+
+        elements.voiceButton.setAttribute(
             "aria-label",
             "Voice logging is not supported in this browser"
         );
 
-        if ($("voiceStatusTitle")) {
 
-            $("voiceStatusTitle")
-                .textContent =
-                "Voice logging unavailable";
+        if (elements.voiceButtonIcon) {
+
+            elements.voiceButtonIcon.textContent =
+                "⌨️";
         }
 
-        if ($("voiceStatusText")) {
 
-            $("voiceStatusText")
-                .textContent =
-                "Try Chrome or Safari on a supported device";
+        if (elements.voiceStatus) {
+
+            elements.voiceStatus.classList.add(
+                "active"
+            );
+
+
+            if (elements.voiceStatusTitle) {
+
+                elements.voiceStatusTitle.textContent =
+                    "Voice unavailable";
+            }
+
+
+            if (elements.voiceStatusText) {
+
+                elements.voiceStatusText.textContent =
+                    "Use Chrome on desktop or Android for voice logging.";
+            }
         }
     }
+
+
+    /* =====================================================
+       TOGGLE VOICE
+    ===================================================== */
+
+    function toggleVoiceRecognition() {
+
+        if (!recognition) {
+
+            showVoicePermission();
+
+            return;
+        }
+
+
+        if (isListening) {
+
+            stopVoiceRecognition();
+
+        } else {
+
+            startVoiceRecognition();
+
+        }
+    }
+
+
+    /* =====================================================
+       START VOICE
+    ===================================================== */
 
     function startVoiceRecognition() {
 
         if (!recognition) {
 
-            showVoicePermission(
-                "Your browser does not support voice recognition. Try a recent version of Chrome or Safari."
-            );
+            showVoicePermission();
 
             return;
         }
 
-        if (isListening) {
-
-            recognition.stop();
-
-            return;
-        }
-
-        recognition.lang =
-            settings.voiceLanguage;
-
-        clearVoiceTranscript();
 
         try {
+
+            lastTranscript = "";
 
             recognition.start();
 
         } catch (error) {
 
-            console.error(
-                "Could not start recognition:",
+            /*
+             Chrome can throw InvalidStateError if start()
+             is called while recognition is already active.
+            */
+
+            console.warn(
+                "Speech recognition could not start:",
                 error
             );
+
+            if (
+                error.name ===
+                "InvalidStateError"
+            ) {
+                return;
+            }
+
+            showVoicePermission();
+
         }
     }
 
-    function updateVoiceUI(listening) {
 
-        const button =
-            $("voiceButton");
+    /* =====================================================
+       STOP VOICE
+    ===================================================== */
 
-        const icon =
-            $("voiceButtonIcon");
+    function stopVoiceRecognition() {
 
-        const status =
-            $("voiceStatus");
+        if (!recognition) {
+            return;
+        }
 
-        const wave =
-            $("voiceWave");
 
-        if (!button) return;
+        try {
 
-        button.classList.toggle(
-            "recording",
-            listening
+            recognition.stop();
+
+        } catch (error) {
+
+            console.warn(
+                "Speech recognition stop error:",
+                error
+            );
+
+        }
+    }
+
+
+    /* =====================================================
+       RECOGNITION START
+    ===================================================== */
+
+    function handleRecognitionStart() {
+
+        isListening = true;
+
+
+        elements.voiceButton?.classList.add(
+            "recording"
         );
 
-        button.setAttribute(
+
+        elements.voiceButton?.setAttribute(
             "aria-pressed",
-            listening
-                ? "true"
-                : "false"
+            "true"
         );
 
-        if (icon) {
 
-            icon.textContent =
-                listening
-                    ? "⏹️"
-                    : "🎙️";
+        if (elements.voiceButtonIcon) {
+
+            elements.voiceButtonIcon.textContent =
+                "⏹️";
         }
 
-        if (status) {
 
-            status.classList.toggle(
-                "active",
-                listening
-            );
-        }
-
-        if (wave) {
-
-            wave.classList.toggle(
-                "active",
-                listening
-            );
-        }
-
-        if ($("voiceStatusTitle")) {
-
-            $("voiceStatusTitle")
-                .textContent =
-                listening
-                    ? "Listening..."
-                    : "Tap & tell me";
-        }
-
-        if ($("voiceStatusText")) {
-
-            $("voiceStatusText")
-                .textContent =
-                listening
-                    ? "Tell me what happened"
-                    : "“Baby had a wet diaper”";
-        }
-    }
-
-    function showTranscript(text) {
-
-        const container =
-            $("voiceTranscript");
-
-        const textElement =
-            $("voiceTranscriptText");
-
-        if (!container || !textElement) return;
-
-        if (!text) return;
-
-        container.classList.remove(
-            "hidden"
+        elements.voiceStatus?.classList.add(
+            "active"
         );
 
-        textElement.textContent =
-            text;
+
+        if (elements.voiceStatusTitle) {
+
+            elements.voiceStatusTitle.textContent =
+                "Listening…";
+        }
+
+
+        if (elements.voiceStatusText) {
+
+            elements.voiceStatusText.textContent =
+                "Tell me what happened.";
+        }
+
+
+        elements.voiceWave?.classList.add(
+            "active"
+        );
     }
 
-    function clearVoiceTranscript() {
 
-        const container =
-            $("voiceTranscript");
+    /* =====================================================
+       RECOGNITION RESULT
+    ===================================================== */
 
-        const textElement =
-            $("voiceTranscriptText");
+    function handleRecognitionResult(event) {
 
-        if (container) {
-            container.classList.add(
+        let transcript = "";
+
+
+        for (
+            let i = event.resultIndex;
+            i < event.results.length;
+            i++
+        ) {
+
+            transcript +=
+                event.results[i][0].transcript;
+
+        }
+
+
+        transcript =
+            transcript.trim();
+
+
+        if (!transcript) {
+            return;
+        }
+
+
+        lastTranscript =
+            transcript;
+
+
+        if (elements.voiceTranscript) {
+
+            elements.voiceTranscript.classList.remove(
                 "hidden"
             );
         }
 
-        if (textElement) {
-            textElement.textContent = "—";
+
+        if (elements.voiceTranscriptText) {
+
+            elements.voiceTranscriptText.textContent =
+                transcript;
+        }
+
+
+        const result =
+            event.results[
+                event.results.length - 1
+            ];
+
+
+        if (
+            result &&
+            result.isFinal
+        ) {
+
+            handleVoiceText(
+                transcript,
+                false
+            );
         }
     }
 
+
     /* =====================================================
-       VOICE PARSER
+       RECOGNITION ERROR
     ===================================================== */
 
-    async function handleVoiceTranscript(
-        transcript
-    ) {
+    function handleRecognitionError(event) {
 
-        const text =
-            safeText(transcript);
+        console.warn(
+            "Speech recognition error:",
+            event.error
+        );
 
-        if (!text) return;
 
-        if (settings.voiceConfirmation) {
+        isListening = false;
 
-            const confirmed =
-                await showVoiceConfirmation(
-                    text
-                );
 
-            if (!confirmed) {
-                return;
-            }
-        }
+        if (
+            event.error ===
+            "not-allowed" ||
+            event.error ===
+            "service-not-allowed"
+        ) {
 
-        const parsed =
-            parseVoiceCommand(text);
-
-        if (!parsed) {
-
-            await addLog({
-                type: "note",
-                title: "Voice note",
-                details: text,
-                source: "voice"
-            });
+            showVoicePermission();
 
             return;
         }
 
-        await addLog({
-            ...parsed,
-            source: "voice"
-        });
-    }
 
-    function parseVoiceCommand(originalText) {
+        if (
+            event.error ===
+            "no-speech"
+        ) {
 
-        const original =
-            safeText(originalText);
-
-        const lower =
-            original.toLowerCase();
-
-        const normalized =
-            lower
-                .replace(/,/g, ".")
-                .replace(/\s+/g, " ")
-                .trim();
-
-        /* ---------------------------------------------
-           DIAPER
-        --------------------------------------------- */
-
-        const diaperWords = [
-            "diaper",
-            "nappy",
-            "wet diaper",
-            "dirty diaper",
-            "poop",
-            "pooped",
-            "poopy",
-            "caca",
-            "couche",
-            "mouillée",
-            "mouillee",
-            "sale",
-            "pipi"
-        ];
-
-        const hasDiaper =
-            diaperWords.some(
-                word =>
-                    normalized.includes(word)
+            showToast(
+                "I didn't hear anything. Try again.",
+                "🎙️"
             );
 
-        if (hasDiaper) {
-
-            let subtype = "wet";
-            let title = "Wet diaper";
-
-            const dirty =
-                [
-                    "dirty",
-                    "poop",
-                    "pooped",
-                    "poopy",
-                    "caca",
-                    "sale"
-                ].some(
-                    word =>
-                        normalized.includes(word)
-                );
-
-            const wet =
-                [
-                    "wet",
-                    "pipi",
-                    "mouille",
-                    "mouillée"
-                ].some(
-                    word =>
-                        normalized.includes(word)
-                );
-
-            if (dirty && wet) {
-
-                subtype = "both";
-                title = "Wet + dirty diaper";
-
-            } else if (dirty) {
-
-                subtype = "dirty";
-                title = "Dirty diaper";
-            }
-
-            return {
-                type: "diaper",
-                subtype,
-                title,
-                details: cleanVoiceDetails(
-                    original,
-                    [
-                        "diaper",
-                        "nappy",
-                        "wet",
-                        "dirty",
-                        "poop",
-                        "pooped",
-                        "poopy",
-                        "couche",
-                        "sale",
-                        "pipi"
-                    ]
-                )
-            };
+            return;
         }
 
-        /* ---------------------------------------------
-           BREASTFEEDING
-        --------------------------------------------- */
 
-        const breastfeedingWords = [
-            "nursed",
-            "nursing",
-            "breastfed",
-            "breastfeeding",
-            "breast fed",
-            "breast feeding",
-            "nursed on",
-            "nourri au sein",
-            "allaité",
-            "allaite",
-            "tété",
-            "tete"
-        ];
+        if (
+            event.error ===
+            "audio-capture"
+        ) {
 
-        const breastfeeding =
-            breastfeedingWords.some(
-                word =>
-                    normalized.includes(word)
+            showToast(
+                "Chrome could not access your microphone.",
+                "🎙️"
             );
 
-        if (breastfeeding) {
-
-            const minutes =
-                extractMinutes(normalized);
-
-            const side =
-                extractBreastSide(normalized);
-
-            let details = "";
-
-            if (side) {
-                details +=
-                    `${capitalize(side)} side`;
-            }
-
-            if (minutes) {
-
-                if (details) {
-                    details += " • ";
-                }
-
-                details +=
-                    `${minutes} min`;
-            }
-
-            if (!details) {
-                details = original;
-            }
-
-            return {
-                type: "feed",
-                subtype: "breast",
-                title: "Breastfeeding",
-                details
-            };
+            return;
         }
 
-        /* ---------------------------------------------
-           BOTTLE / MILK
-        --------------------------------------------- */
 
-        const bottleWords = [
-            "bottle",
-            "formula",
-            "milk",
-            "ml",
-            "milliliter",
-            "milliliters",
-            "millilitre",
-            "millilitres",
-            "ounce",
-            "ounces",
-            " oz"
-        ];
-
-        const hasBottle =
-            bottleWords.some(
-                word =>
-                    normalized.includes(word)
-            );
-
-        if (hasBottle) {
-
-            const amount =
-                extractAmount(normalized);
-
-            const unit =
-                extractUnit(normalized);
-
-            let details = "";
-
-            if (amount) {
-
-                details =
-                    `${amount} ${unit || "ml"}`;
-
-            } else {
-
-                details =
-                    original;
-            }
-
-            return {
-                type: "feed",
-                subtype: "bottle",
-                title: "Bottle feed",
-                details,
-                value: amount || null,
-                unit: unit || null
-            };
-        }
-
-        /* ---------------------------------------------
-           FOOD / SOLIDS
-        --------------------------------------------- */
-
-        const foodWords = [
-            "ate",
-            "eating",
-            "food",
-            "solid",
-            "solids",
-            "déjeuner",
-            "mangé",
-            "mange"
-        ];
-
-        if (
-            foodWords.some(
-                word =>
-                    normalized.includes(word)
-            )
-        ) {
-
-            return {
-                type: "feed",
-                subtype: "solid",
-                title: "Solid food",
-                details: original
-            };
-        }
-
-        /* ---------------------------------------------
-           SLEEP
-        --------------------------------------------- */
-
-        const sleepWords = [
-            "sleep",
-            "slept",
-            "nap",
-            "napped",
-            "asleep",
-            "sieste",
-            "dormi",
-            "dort",
-            "endormi",
-            "sommeil"
-        ];
-
-        if (
-            sleepWords.some(
-                word =>
-                    normalized.includes(word)
-            )
-        ) {
-
-            const minutes =
-                extractMinutes(normalized);
-
-            if (
-                normalized.includes("started") ||
-                normalized.includes("start") ||
-                normalized.includes("going to sleep") ||
-                normalized.includes("s'endort") ||
-                normalized.includes("commencé")
-            ) {
-
-                if (!activeSleep) {
-                    startSleep();
-                }
-
-                return null;
-            }
-
-            if (
-                normalized.includes("woke") ||
-                normalized.includes("wake") ||
-                normalized.includes("ended") ||
-                normalized.includes("finished") ||
-                normalized.includes("réveillé") ||
-                normalized.includes("reveillé")
-            ) {
-
-                if (activeSleep) {
-                    endSleep();
-                }
-
-                return null;
-            }
-
-            if (minutes) {
-
-                return {
-                    type: "sleep",
-                    subtype: "nap",
-                    title: "Nap",
-                    details:
-                        formatDuration(minutes),
-                    value: minutes,
-                    unit: "min"
-                };
-            }
-
-            return {
-                type: "note",
-                title: "Sleep note",
-                details: original
-            };
-        }
-
-        /* ---------------------------------------------
-           NOTE FALLBACK
-        --------------------------------------------- */
-
-        return {
-            type: "note",
-            title: "Voice note",
-            details: original
-        };
+        showToast(
+            "Voice recognition had a problem. Try again.",
+            "⚠️"
+        );
     }
 
-    function extractMinutes(text) {
 
-        const match =
-            text.match(
-                /(\d+(?:\.\d+)?)\s*(minutes?|mins?|min|minute|minutes)/i
-            );
+    /* =====================================================
+       RECOGNITION END
+    ===================================================== */
 
-        if (!match) return null;
+    function handleRecognitionEnd() {
 
-        return Number(match[1]);
+        isListening = false;
+
+
+        elements.voiceButton?.classList.remove(
+            "recording"
+        );
+
+
+        elements.voiceButton?.setAttribute(
+            "aria-pressed",
+            "false"
+        );
+
+
+        if (elements.voiceButtonIcon) {
+
+            elements.voiceButtonIcon.textContent =
+                "🎙️";
+        }
+
+
+        elements.voiceWave?.classList.remove(
+            "active"
+        );
+
+
+        if (
+            !lastTranscript &&
+            elements.voiceStatusTitle
+        ) {
+
+            elements.voiceStatusTitle.textContent =
+                "Tap & tell me";
+        }
     }
 
-    function extractAmount(text) {
 
-        const match =
-            text.match(
-                /(\d+(?:\.\d+)?)\s*(ml|milliliters?|millilitres?|oz|ounces?)/i
-            );
+    /* =====================================================
+       HANDLE VOICE TEXT
+    ===================================================== */
 
-        if (match) {
-            return Number(match[1]);
-        }
-
-        return null;
-    }
-
-    function extractUnit(text) {
-
-        if (
-            /\b(oz|ounce|ounces)\b/i.test(text)
-        ) {
-            return "oz";
-        }
-
-        if (
-            /\b(ml|milliliter|milliliters|millilitre|millilitres)\b/i.test(text)
-        ) {
-            return "ml";
-        }
-
-        return null;
-    }
-
-    function extractBreastSide(text) {
-
-        if (
-            /\b(left|gauche)\b/i.test(text)
-        ) {
-            return "left";
-        }
-
-        if (
-            /\b(right|droite)\b/i.test(text)
-        ) {
-            return "right";
-        }
-
-        if (
-            /\b(both|les deux|deux)\b/i.test(text)
-        ) {
-            return "both";
-        }
-
-        return null;
-    }
-
-    function cleanVoiceDetails(
-        text,
-        words
+    async function handleVoiceText(
+        transcript,
+        isExample = false
     ) {
 
-        let result =
-            safeText(text);
+        const text =
+            String(
+                transcript || ""
+            ).trim();
 
-        words.forEach(word => {
 
-            result =
-                result.replace(
-                    new RegExp(
-                        `\\b${escapeRegex(word)}\\b`,
-                        "gi"
-                    ),
-                    ""
-                );
-        });
+        if (!text) {
+            return;
+        }
 
-        result =
-            result
-                .replace(/\s+/g, " ")
-                .replace(/^[\s•,.-]+|[\s•,.-]+$/g, "");
 
-        return result || "";
-    }
+        if (
+            settings.voiceConfirmation &&
+            !isExample
+        ) {
 
-    function escapeRegex(value) {
-
-        return String(value)
-            .replace(
-                /[.*+?^${}()|[\]\\]/g,
-                "\\$&"
+            showVoiceConfirmation(
+                text
             );
+
+            return;
+        }
+
+
+        await parseAndSaveVoiceText(
+            text
+        );
     }
+
 
     /* =====================================================
        VOICE CONFIRMATION
     ===================================================== */
 
-    function showVoiceConfirmation(
-        transcript
-    ) {
+    function showVoiceConfirmation(text) {
 
-        return new Promise(resolve => {
+        if (!elements.modalContent) {
+            return;
+        }
 
-            const confirmed =
-                window.confirm(
-                    `I heard:\n\n“${transcript}”\n\nSave this to the tracker?`
+
+        closeAllModalsExcept("action");
+
+
+        elements.modalContent.innerHTML = `
+
+            <span class="tracker-badge">
+                🎙️ I HEARD
+            </span>
+
+            <h2>
+                Does this look right?
+            </h2>
+
+            <p class="modal-subtitle">
+                ${escapeHtml(text)}
+            </p>
+
+            <div class="modal-options">
+
+                <button
+                    type="button"
+                    class="modal-option"
+                    id="confirmVoiceLogButton"
+                >
+                    ✓ Save this
+                </button>
+
+                <button
+                    type="button"
+                    class="modal-option"
+                    id="cancelVoiceLogButton"
+                >
+                    Try again
+                </button>
+
+            </div>
+
+        `;
+
+
+        elements.actionModal?.classList.remove(
+            "hidden"
+        );
+
+        elements.actionModal?.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+
+        currentModal = "action";
+
+
+        $("confirmVoiceLogButton")?.addEventListener(
+            "click",
+            async () => {
+
+                closeActionModal();
+
+                await parseAndSaveVoiceText(
+                    text
                 );
 
-            resolve(confirmed);
-        });
+            }
+        );
+
+
+        $("cancelVoiceLogButton")?.addEventListener(
+            "click",
+            closeActionModal
+        );
     }
 
-    function handleVoiceError(error) {
 
-        let message =
-            "Something went wrong with voice logging.";
+    /* =====================================================
+       PARSE VOICE
+    ===================================================== */
+
+    async function parseAndSaveVoiceText(text) {
+
+        const lower =
+            text.toLowerCase();
+
+
+        let type =
+            "note";
+
+
+        let title =
+            "Note";
+
+
+        let icon =
+            "📝";
+
+
+        let details =
+            text;
+
+
+        /* ---------------------------------------------
+           DIAPER
+        --------------------------------------------- */
 
         if (
-            error === "not-allowed" ||
-            error === "service-not-allowed"
+            lower.includes("diaper") ||
+            lower.includes("nappy") ||
+            lower.includes("wet") ||
+            lower.includes("poop") ||
+            lower.includes("poopy") ||
+            lower.includes("dirty")
         ) {
 
-            message =
-                "Please allow microphone access in your browser.";
+            type =
+                "diaper";
+
+            icon =
+                "💧";
+
+
+            if (
+                lower.includes("dirty") ||
+                lower.includes("poop") ||
+                lower.includes("poopy")
+            ) {
+
+                title =
+                    lower.includes("wet")
+                        ? "Wet + Dirty diaper"
+                        : "Dirty diaper";
+
+            } else {
+
+                title =
+                    "Wet diaper";
+            }
+
+
+            details =
+                text;
         }
 
-        if (error === "no-speech") {
 
-            message =
-                "I didn't hear anything. Try again.";
+        /* ---------------------------------------------
+           FEED
+        --------------------------------------------- */
+
+        else if (
+            lower.includes("feed") ||
+            lower.includes("fed") ||
+            lower.includes("drank") ||
+            lower.includes("drink") ||
+            lower.includes("bottle") ||
+            lower.includes("nursed") ||
+            lower.includes("nursing") ||
+            lower.includes("breastfed") ||
+            lower.includes("breast")
+        ) {
+
+            type =
+                "feed";
+
+            icon =
+                "🍼";
+
+
+            if (
+                lower.includes("nursed") ||
+                lower.includes("nursing") ||
+                lower.includes("breastfed")
+            ) {
+
+                title =
+                    "Nursing";
+
+            } else {
+
+                title =
+                    "Feed";
+            }
+
+
+            details =
+                text;
         }
 
-        if (error === "audio-capture") {
 
-            message =
-                "Your microphone could not be accessed.";
+        /* ---------------------------------------------
+           SLEEP
+        --------------------------------------------- */
+
+        else if (
+            lower.includes("sleep") ||
+            lower.includes("nap") ||
+            lower.includes("slept") ||
+            lower.includes("asleep")
+        ) {
+
+            type =
+                "sleep";
+
+            icon =
+                "😴";
+
+            title =
+                "Sleep";
+
+            details =
+                text;
         }
 
-        showVoicePermission(message);
+
+        /* ---------------------------------------------
+           SAVE
+        --------------------------------------------- */
+
+        await addLog({
+
+            type,
+
+            title,
+
+            details,
+
+            icon
+
+        });
+
+
+        renderEverything();
+
+
+        if (elements.voiceTranscript) {
+
+            elements.voiceTranscript.classList.remove(
+                "hidden"
+            );
+        }
+
+
+        if (elements.voiceTranscriptText) {
+
+            elements.voiceTranscriptText.textContent =
+                text;
+        }
+
+
+        if (
+            type === "diaper"
+        ) {
+
+            showToast(
+                "Diaper logged.",
+                "💧"
+            );
+
+        } else if (
+            type === "feed"
+        ) {
+
+            showToast(
+                "Feed logged.",
+                "🍼"
+            );
+
+        } else if (
+            type === "sleep"
+        ) {
+
+            showToast(
+                "Sleep note logged.",
+                "😴"
+            );
+
+        } else {
+
+            showToast(
+                "Note saved.",
+                "📝"
+            );
+        }
     }
 
-    function showVoicePermission(message) {
-
-        const box =
-            $("voicePermissionMessage");
-
-        const text =
-            $("voicePermissionText");
-
-        if (!box) return;
-
-        if (text) {
-            text.textContent = message;
-        }
-
-        box.classList.remove(
-            "hidden"
-        );
-    }
 
     /* =====================================================
-       VOICE EXAMPLE BUTTONS
+       VOICE PERMISSION
     ===================================================== */
 
-    function handleVoiceExample(text) {
+    function showVoicePermission() {
 
-        if (!text) return;
-
-        showTranscript(text);
-
-        handleVoiceTranscript(
-            text
-        );
-    }
-
-    /* =====================================================
-       MODALS
-    ===================================================== */
-
-    function openActionModal(html) {
-
-        const modal =
-            $("actionModal");
-
-        const content =
-            $("modalContent");
-
-        if (!modal || !content) return;
-
-        content.innerHTML = html;
-
-        modal.classList.remove(
+        elements.voicePermissionMessage?.classList.remove(
             "hidden"
         );
 
-        modal.setAttribute(
-            "aria-hidden",
-            "false"
-        );
 
-        currentModal =
-            "action";
+        if (
+            elements.voicePermissionText
+        ) {
 
-        document.body.classList.add(
-            "modal-open"
-        );
-    }
+            if (
+                window.location.protocol !==
+                "https:" &&
+                window.location.hostname !==
+                "localhost"
+            ) {
 
-    function closeActionModal() {
+                elements.voicePermissionText.textContent =
+                    "Voice logging requires HTTPS or localhost. Open this site through your secure HTTPS address.";
 
-        const modal =
-            $("actionModal");
+            } else {
 
-        if (!modal) return;
-
-        modal.classList.add(
-            "hidden"
-        );
-
-        modal.setAttribute(
-            "aria-hidden",
-            "true"
-        );
-
-        $("modalContent").innerHTML = "";
-
-        currentModal = null;
-
-        updateBodyModalState();
-    }
-
-    function openSettings() {
-
-        const modal =
-            $("settingsModal");
-
-        if (!modal) return;
-
-        syncSettingsInputs();
-
-        modal.classList.remove(
-            "hidden"
-        );
-
-        modal.setAttribute(
-            "aria-hidden",
-            "false"
-        );
-
-        $("settingsButton")?.setAttribute(
-            "aria-expanded",
-            "true"
-        );
-
-        currentModal =
-            "settings";
-
-        document.body.classList.add(
-            "modal-open"
-        );
-    }
-
-    function closeSettings() {
-
-        const modal =
-            $("settingsModal");
-
-        if (!modal) return;
-
-        modal.classList.add(
-            "hidden"
-        );
-
-        modal.setAttribute(
-            "aria-hidden",
-            "true"
-        );
-
-        $("settingsButton")?.setAttribute(
-            "aria-expanded",
-            "false"
-        );
-
-        currentModal = null;
-
-        updateBodyModalState();
-    }
-
-    function openBabyNameModal() {
-
-        const modal =
-            $("babyNameModal");
-
-        if (!modal) return;
-
-        const input =
-            $("babyNameModalInput");
-
-        if (input) {
-            input.value =
-                settings.babyName === "My Baby"
-                    ? ""
-                    : settings.babyName;
+                elements.voicePermissionText.textContent =
+                    "Please allow microphone access in Chrome, then try again.";
+            }
         }
+    }
 
-        modal.classList.remove(
+
+    function hideVoicePermissionMessage() {
+
+        elements.voicePermissionMessage?.classList.add(
             "hidden"
         );
-
-        modal.setAttribute(
-            "aria-hidden",
-            "false"
-        );
-
-        currentModal =
-            "babyName";
-
-        document.body.classList.add(
-            "modal-open"
-        );
-
-        setTimeout(() => {
-            input?.focus();
-        }, 100);
     }
 
-    function closeBabyNameModal() {
-
-        const modal =
-            $("babyNameModal");
-
-        if (!modal) return;
-
-        modal.classList.add(
-            "hidden"
-        );
-
-        modal.setAttribute(
-            "aria-hidden",
-            "true"
-        );
-
-        currentModal = null;
-
-        updateBodyModalState();
-    }
-
-    function openDeleteModal() {
-
-        const modal =
-            $("deleteDataModal");
-
-        if (!modal) return;
-
-        modal.classList.remove(
-            "hidden"
-        );
-
-        modal.setAttribute(
-            "aria-hidden",
-            "false"
-        );
-
-        currentModal =
-            "delete";
-
-        document.body.classList.add(
-            "modal-open"
-        );
-    }
-
-    function closeDeleteModal() {
-
-        const modal =
-            $("deleteDataModal");
-
-        if (!modal) return;
-
-        modal.classList.add(
-            "hidden"
-        );
-
-        modal.setAttribute(
-            "aria-hidden",
-            "true"
-        );
-
-        currentModal = null;
-
-        updateBodyModalState();
-    }
-
-    function updateBodyModalState() {
-
-        const anyOpen =
-            [
-                "actionModal",
-                "settingsModal",
-                "babyNameModal",
-                "deleteDataModal"
-            ]
-                .some(id => {
-                    const element = $(id);
-
-                    return (
-                        element &&
-                        !element.classList.contains(
-                            "hidden"
-                        )
-                    );
-                });
-
-        document.body.classList.toggle(
-            "modal-open",
-            anyOpen
-        );
-    }
-
-    /* =====================================================
-       SETTINGS
-    ===================================================== */
-
-    async function saveVoiceLanguage() {
-
-        const select =
-            $("voiceLanguage");
-
-        if (!select) return;
-
-        settings.voiceLanguage =
-            select.value;
-
-        await saveSetting(
-            "voiceLanguage",
-            settings.voiceLanguage
-        );
-
-        if (recognition) {
-            recognition.lang =
-                settings.voiceLanguage;
-        }
-
-        showToast(
-            "Voice language updated",
-            "🎙️"
-        );
-    }
-
-    async function saveVoiceConfirmation() {
-
-        const toggle =
-            $("voiceConfirmationToggle");
-
-        if (!toggle) return;
-
-        settings.voiceConfirmation =
-            toggle.checked;
-
-        await saveSetting(
-            "voiceConfirmation",
-            settings.voiceConfirmation
-        );
-
-        showToast(
-            settings.voiceConfirmation
-                ? "Voice confirmation on"
-                : "Voice confirmation off",
-            "✓"
-        );
-    }
 
     /* =====================================================
        EXPORT
@@ -2599,93 +3134,136 @@
 
     async function exportData() {
 
-        await loadLogs();
+        try {
 
-        const backup = {
-            app: "MomYouNeedThis Baby Tracker",
-            version: 1,
-            exportedAt:
-                new Date().toISOString(),
+            const backup = {
 
-            settings: {
-                ...settings
-            },
+                version: 1,
 
-            logs: logs
-        };
+                exportedAt:
+                    new Date().toISOString(),
 
-        const blob =
-            new Blob(
-                [
-                    JSON.stringify(
-                        backup,
-                        null,
-                        2
-                    )
-                ],
-                {
-                    type:
-                        "application/json"
-                }
+                settings: {
+                    ...settings
+                },
+
+                logs: [
+                    ...logs
+                ]
+
+            };
+
+
+            const json =
+                JSON.stringify(
+                    backup,
+                    null,
+                    2
+                );
+
+
+            const blob =
+                new Blob(
+                    [json],
+                    {
+                        type:
+                            "application/json"
+                    }
+                );
+
+
+            const url =
+                URL.createObjectURL(
+                    blob
+                );
+
+
+            const link =
+                document.createElement(
+                    "a"
+                );
+
+
+            const date =
+                new Date()
+                    .toISOString()
+                    .slice(0, 10);
+
+
+            link.href =
+                url;
+
+
+            link.download =
+                `baby-tracker-backup-${date}.json`;
+
+
+            document.body.appendChild(
+                link
             );
 
-        const url =
-            URL.createObjectURL(blob);
 
-        const link =
-            document.createElement("a");
+            link.click();
 
-        const date =
-            dateKey();
 
-        link.href = url;
+            link.remove();
 
-        link.download =
-            `baby-tracker-backup-${date}.json`;
 
-        document.body.appendChild(link);
+            setTimeout(
+                () =>
+                    URL.revokeObjectURL(url),
+                1000
+            );
 
-        link.click();
 
-        link.remove();
+            showToast(
+                "Backup exported.",
+                "⬇️"
+            );
 
-        URL.revokeObjectURL(url);
+        } catch (error) {
 
-        showToast(
-            "Backup exported",
-            "⬇️"
-        );
+            console.error(
+                "Export error:",
+                error
+            );
+
+            showToast(
+                "Could not export backup.",
+                "⚠️"
+            );
+        }
     }
+
 
     /* =====================================================
        IMPORT
     ===================================================== */
 
-    function triggerImport() {
+    async function handleImport(event) {
 
-        const input =
-            $("importDataInput");
+        const file =
+            event.target.files?.[0];
 
-        input?.click();
-    }
 
-    async function importDataFile(file) {
+        if (!file) {
+            return;
+        }
 
-        if (!file) return;
 
         try {
 
             const text =
                 await file.text();
 
-            const backup =
+
+            const data =
                 JSON.parse(text);
 
+
             if (
-                !backup ||
-                !Array.isArray(
-                    backup.logs
-                )
+                !data ||
+                !Array.isArray(data.logs)
             ) {
 
                 throw new Error(
@@ -2693,130 +3271,75 @@
                 );
             }
 
+
             const confirmed =
                 window.confirm(
-                    `Import ${backup.logs.length} logs?\n\nThis will add them to your existing tracker data.`
+                    "Import this backup? Your current tracker data will be replaced."
                 );
 
-            if (!confirmed) return;
 
-            if (backup.settings) {
+            if (!confirmed) {
 
-                if (
-                    typeof backup.settings.babyName ===
-                    "string"
-                ) {
+                event.target.value =
+                    "";
 
-                    settings.babyName =
-                        backup.settings.babyName;
-
-                    await saveSetting(
-                        "babyName",
-                        settings.babyName
-                    );
-                }
-
-                if (
-                    typeof backup.settings.voiceLanguage ===
-                    "string"
-                ) {
-
-                    settings.voiceLanguage =
-                        backup.settings.voiceLanguage;
-
-                    await saveSetting(
-                        "voiceLanguage",
-                        settings.voiceLanguage
-                    );
-                }
-
-                if (
-                    typeof backup.settings.voiceConfirmation ===
-                    "boolean"
-                ) {
-
-                    settings.voiceConfirmation =
-                        backup.settings.voiceConfirmation;
-
-                    await saveSetting(
-                        "voiceConfirmation",
-                        settings.voiceConfirmation
-                    );
-                }
+                return;
             }
 
-            let imported = 0;
 
-            for (
-                const backupLog of backup.logs
+            logs =
+                data.logs;
+
+
+            if (
+                data.settings &&
+                typeof data.settings ===
+                "object"
             ) {
 
-                if (!backupLog.timestamp) {
-                    continue;
-                }
+                settings = {
 
-                const timestamp =
-                    new Date(
-                        backupLog.timestamp
-                    );
+                    ...DEFAULT_SETTINGS,
 
-                if (
-                    Number.isNaN(
-                        timestamp.getTime()
-                    )
-                ) {
-                    continue;
-                }
+                    ...data.settings
 
-                await saveLog({
-                    type:
-                        backupLog.type ||
-                        "note",
+                };
 
-                    subtype:
-                        backupLog.subtype ||
-                        null,
-
-                    title:
-                        backupLog.title ||
-                        "Imported note",
-
-                    details:
-                        backupLog.details ||
-                        "",
-
-                    value:
-                        backupLog.value ??
-                        null,
-
-                    unit:
-                        backupLog.unit ??
-                        null,
-
-                    timestamp:
-                        timestamp.toISOString(),
-
-                    date:
-                        dateKey(timestamp),
-
-                    source:
-                        backupLog.source ||
-                        "import"
-                });
-
-                imported++;
             }
 
-            await loadSettings();
-            await loadLogs();
 
-            updateBabyProfile();
-            updateTodayDate();
-            renderTimeline();
-            updateSummary();
+            await saveSettings();
+
+            await saveLogs();
+
+
+            activeSleepLog =
+                logs.find(
+                    log =>
+                        log.type === "sleep" &&
+                        log.status === "active"
+                ) || null;
+
+
+            renderEverything();
+
+
+            initializeVoiceRecognition();
+
+
+            if (activeSleepLog) {
+
+                startSleepTimer();
+
+            } else {
+
+                stopSleepTimer();
+
+            }
+
 
             showToast(
-                `${imported} logs imported`,
+                "Backup imported.",
                 "⬆️"
             );
 
@@ -2827,76 +3350,126 @@
                 error
             );
 
+
             showToast(
-                "Invalid backup file",
+                "That backup file is not valid.",
                 "⚠️"
             );
+
+        } finally {
+
+            event.target.value =
+                "";
         }
     }
+
 
     /* =====================================================
        DELETE ALL DATA
     ===================================================== */
 
-    async function deleteAllData() {
+    function openDeleteModal() {
 
-        const confirmed =
-            window.confirm(
-                "Delete ALL baby tracker data from this device?\n\nThis cannot be undone."
-            );
-
-        if (!confirmed) return;
-
-        await clearLogsDB();
-
-        const store =
-            dbTransaction(
-                SETTINGS_STORE,
-                "readwrite"
-            );
-
-        await new Promise(
-            (resolve, reject) => {
-
-                const request =
-                    store.clear();
-
-                request.onsuccess =
-                    () => resolve();
-
-                request.onerror =
-                    () => reject(
-                        request.error
-                    );
-            }
+        closeAllModalsExcept(
+            "delete"
         );
 
-        localStorage.removeItem(
-            "momTrackerActiveSleep"
+
+        elements.deleteDataModal?.classList.remove(
+            "hidden"
         );
 
-        settings = {
-            ...DEFAULT_SETTINGS
-        };
-
-        logs = [];
-
-        activeSleep = null;
-
-        renderActiveSleep();
-        updateBabyProfile();
-        renderTimeline();
-        updateSummary();
-        syncSettingsInputs();
-
-        closeDeleteModal();
-        closeSettings();
-
-        showToast(
-            "All tracker data deleted",
-            "✓"
+        elements.deleteDataModal?.setAttribute(
+            "aria-hidden",
+            "false"
         );
+
+
+        currentModal =
+            "delete";
     }
+
+
+    function closeDeleteModal() {
+
+        elements.deleteDataModal?.classList.add(
+            "hidden"
+        );
+
+        elements.deleteDataModal?.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+
+        if (
+            currentModal ===
+            "delete"
+        ) {
+
+            currentModal =
+                null;
+        }
+    }
+
+
+    async function deleteEverything() {
+
+        try {
+
+            logs = [];
+
+            activeSleepLog = null;
+
+
+            stopSleepTimer();
+
+
+            settings = {
+                ...DEFAULT_SETTINGS
+            };
+
+
+            await dbDelete("logs");
+
+            await dbDelete("settings");
+
+
+            await saveLogs();
+
+            await saveSettings();
+
+
+            renderEverything();
+
+            initializeVoiceRecognition();
+
+
+            closeDeleteModal();
+
+            closeSettings();
+
+
+            showToast(
+                "All tracker data deleted.",
+                "✓"
+            );
+
+        } catch (error) {
+
+            console.error(
+                "Delete error:",
+                error
+            );
+
+
+            showToast(
+                "Could not delete the data.",
+                "⚠️"
+            );
+        }
+    }
+
 
     /* =====================================================
        TOAST
@@ -2904,397 +3477,323 @@
 
     let toastTimeout = null;
 
+
     function showToast(
         message,
         icon = "✓"
     ) {
 
-        const toast =
-            $("trackerToast");
+        if (
+            !elements.trackerToast
+        ) {
+            return;
+        }
 
-        const messageElement =
-            $("toastMessage");
 
-        const iconElement =
-            $("toastIcon");
+        if (
+            elements.toastMessage
+        ) {
 
-        if (!toast) return;
-
-        if (messageElement) {
-            messageElement.textContent =
+            elements.toastMessage.textContent =
                 message;
         }
 
-        if (iconElement) {
-            iconElement.textContent =
+
+        if (
+            elements.toastIcon
+        ) {
+
+            elements.toastIcon.textContent =
                 icon;
         }
 
-        toast.classList.add(
+
+        elements.trackerToast.classList.add(
             "show"
         );
+
 
         clearTimeout(
             toastTimeout
         );
 
+
         toastTimeout =
             setTimeout(
                 () => {
-                    toast.classList.remove(
+
+                    elements.trackerToast.classList.remove(
                         "show"
                     );
+
                 },
                 3000
             );
     }
 
+
     /* =====================================================
-       EVENT BINDING
+       TIME HELPERS
     ===================================================== */
 
-    function bindEvents() {
+    function formatTime(timestamp) {
 
-        /* ---------------------------------------------
-           VOICE
-        --------------------------------------------- */
-
-        $("voiceButton")?.addEventListener(
-            "click",
-            startVoiceRecognition
-        );
-
-        $$(
-            ".voice-example"
-        ).forEach(button => {
-
-            button.addEventListener(
-                "click",
-                () => {
-
-                    handleVoiceExample(
-                        button.dataset.voiceExample
-                    );
-                }
-            );
-        });
-
-        $("voicePermissionClose")
-            ?.addEventListener(
-                "click",
-                () => {
-
-                    $("voicePermissionMessage")
-                        ?.classList.add(
-                            "hidden"
-                        );
-                }
-            );
-
-        /* ---------------------------------------------
-           QUICK ACTIONS
-        --------------------------------------------- */
-
-        $$(
-            ".quick-action"
-        ).forEach(button => {
-
-            button.addEventListener(
-                "click",
-                () => {
-
-                    handleQuickAction(
-                        button.dataset.action
-                    );
-                }
-            );
-        });
-
-        /* ---------------------------------------------
-           ACTIVE SLEEP
-        --------------------------------------------- */
-
-        $("endSleepButton")
-            ?.addEventListener(
-                "click",
-                endSleep
-            );
-
-        /* ---------------------------------------------
-           TIMELINE
-        --------------------------------------------- */
-
-        $("clearTodayButton")
-            ?.addEventListener(
-                "click",
-                clearToday
-            );
-
-        $("timeline")
-            ?.addEventListener(
-                "click",
-                event => {
-
-                    const button =
-                        event.target.closest(
-                            "[data-delete-log]"
-                        );
-
-                    if (!button) return;
-
-                    deleteLog(
-                        Number(
-                            button.dataset.deleteLog
-                        )
-                    );
-                }
-            );
-
-        /* ---------------------------------------------
-           SETTINGS
-        --------------------------------------------- */
-
-        $("settingsButton")
-            ?.addEventListener(
-                "click",
-                openSettings
-            );
-
-        $("settingsClose")
-            ?.addEventListener(
-                "click",
-                closeSettings
-            );
-
-        $$(
-            "[data-close-settings]"
-        ).forEach(element => {
-
-            element.addEventListener(
-                "click",
-                closeSettings
-            );
-        });
-
-        $("saveBabyNameButton")
-            ?.addEventListener(
-                "click",
-                async () => {
-
-                    await saveBabyName(
-                        $("babyNameInput")?.value
-                    );
-                }
-            );
-
-        $("voiceLanguage")
-            ?.addEventListener(
-                "change",
-                saveVoiceLanguage
-            );
-
-        $("voiceConfirmationToggle")
-            ?.addEventListener(
-                "change",
-                saveVoiceConfirmation
-            );
-
-        $("settingsExportButton")
-            ?.addEventListener(
-                "click",
-                exportData
-            );
-
-        $("settingsImportButton")
-            ?.addEventListener(
-                "click",
-                triggerImport
-            );
-
-        $("deleteAllDataButton")
-            ?.addEventListener(
-                "click",
-                openDeleteModal
-            );
-
-        /* ---------------------------------------------
-           BABY PROFILE
-        --------------------------------------------- */
-
-        $("editBabyButton")
-            ?.addEventListener(
-                "click",
-                openBabyNameModal
-            );
-
-        $("babyNameModalClose")
-            ?.addEventListener(
-                "click",
-                closeBabyNameModal
-            );
-
-        $$(
-            "[data-close-baby-name]"
-        ).forEach(element => {
-
-            element.addEventListener(
-                "click",
-                closeBabyNameModal
-            );
-        });
-
-        $("babyNameForm")
-            ?.addEventListener(
-                "submit",
-                async event => {
-
-                    event.preventDefault();
-
-                    await saveBabyName(
-                        $("babyNameModalInput")
-                            ?.value
-                    );
-
-                    closeBabyNameModal();
-                }
-            );
-
-        /* ---------------------------------------------
-           ACTION MODAL
-        --------------------------------------------- */
-
-        $("modalClose")
-            ?.addEventListener(
-                "click",
-                closeActionModal
-            );
-
-        $$(
-            "[data-close-modal]"
-        ).forEach(element => {
-
-            element.addEventListener(
-                "click",
-                closeActionModal
-            );
-        });
-
-        /* ---------------------------------------------
-           DELETE MODAL
-        --------------------------------------------- */
-
-        $("cancelDeleteButton")
-            ?.addEventListener(
-                "click",
-                closeDeleteModal
-            );
-
-        $("confirmDeleteButton")
-            ?.addEventListener(
-                "click",
-                deleteAllData
-            );
-
-        $$(
-            "[data-close-delete]"
-        ).forEach(element => {
-
-            element.addEventListener(
-                "click",
-                closeDeleteModal
-            );
-        });
-
-        /* ---------------------------------------------
-           BACKUP
-        --------------------------------------------- */
-
-        $("exportDataButton")
-            ?.addEventListener(
-                "click",
-                exportData
-            );
-
-        $("importDataButton")
-            ?.addEventListener(
-                "click",
-                triggerImport
-            );
-
-        $("importDataInput")
-            ?.addEventListener(
-                "change",
-                async event => {
-
-                    const file =
-                        event.target.files?.[0];
-
-                    await importDataFile(file);
-
-                    event.target.value = "";
-                }
-            );
-
-        /* ---------------------------------------------
-           ESCAPE
-        --------------------------------------------- */
-
-        document.addEventListener(
-            "keydown",
-            event => {
-
-                if (
-                    event.key !== "Escape"
-                ) {
-                    return;
-                }
-
-                if (
-                    currentModal ===
-                    "action"
-                ) {
-                    closeActionModal();
-                }
-
-                else if (
-                    currentModal ===
-                    "settings"
-                ) {
-                    closeSettings();
-                }
-
-                else if (
-                    currentModal ===
-                    "babyName"
-                ) {
-                    closeBabyNameModal();
-                }
-
-                else if (
-                    currentModal ===
-                    "delete"
-                ) {
-                    closeDeleteModal();
-                }
+        return new Date(
+            timestamp
+        ).toLocaleTimeString(
+            undefined,
+            {
+                hour: "numeric",
+                minute: "2-digit"
             }
         );
     }
 
-    /* =====================================================
-       UTILITY
-    ===================================================== */
 
-    function capitalize(value) {
+    function calculateTimeDifference(
+        start,
+        end
+    ) {
 
-        const text =
-            safeText(value);
+        const [
+            startHours,
+            startMinutes
+        ] =
+            start.split(":")
+                .map(Number);
 
-        if (!text) return "";
+
+        const [
+            endHours,
+            endMinutes
+        ] =
+            end.split(":")
+                .map(Number);
+
+
+        let startTotal =
+            startHours * 60 +
+            startMinutes;
+
+
+        let endTotal =
+            endHours * 60 +
+            endMinutes;
+
+
+        /*
+         Handles naps crossing midnight.
+        */
+
+        if (
+            endTotal <= startTotal
+        ) {
+
+            endTotal +=
+                24 * 60;
+        }
+
 
         return (
-            text.charAt(0).toUpperCase() +
-            text.slice(1)
+            endTotal -
+            startTotal
+        ) * 60 * 1000;
+    }
+
+
+    function formatDuration(
+        milliseconds
+    ) {
+
+        const totalMinutes =
+            Math.floor(
+                milliseconds /
+                60000
+            );
+
+
+        const hours =
+            Math.floor(
+                totalMinutes /
+                60
+            );
+
+
+        const minutes =
+            totalMinutes %
+            60;
+
+
+        if (hours > 0) {
+
+            return `${hours}h ${minutes}m`;
+
+        }
+
+
+        return `${minutes}m`;
+    }
+
+
+    function formatShortDuration(
+        milliseconds
+    ) {
+
+        if (
+            !milliseconds ||
+            milliseconds <= 0
+        ) {
+
+            return "0m";
+        }
+
+
+        const minutes =
+            Math.floor(
+                milliseconds /
+                60000
+            );
+
+
+        const hours =
+            Math.floor(
+                minutes /
+                60
+            );
+
+
+        const remainingMinutes =
+            minutes %
+            60;
+
+
+        if (hours > 0) {
+
+            return `${hours}h ${remainingMinutes}m`;
+
+        }
+
+
+        return `${minutes}m`;
+    }
+
+
+    function formatClockDuration(
+        milliseconds
+    ) {
+
+        const totalSeconds =
+            Math.floor(
+                milliseconds /
+                1000
+            );
+
+
+        const hours =
+            Math.floor(
+                totalSeconds /
+                3600
+            );
+
+
+        const minutes =
+            Math.floor(
+                (totalSeconds % 3600) /
+                60
+            );
+
+
+        const seconds =
+            totalSeconds %
+            60;
+
+
+        return [
+
+            String(hours)
+                .padStart(2, "0"),
+
+            String(minutes)
+                .padStart(2, "0"),
+
+            String(seconds)
+                .padStart(2, "0")
+
+        ].join(":");
+    }
+
+
+    /* =====================================================
+       ID
+    ===================================================== */
+
+    function generateId() {
+
+        if (
+            window.crypto &&
+            typeof window.crypto.randomUUID ===
+            "function"
+        ) {
+
+            return window.crypto.randomUUID();
+
+        }
+
+
+        return (
+            Date.now().toString(36) +
+            "-" +
+            Math.random()
+                .toString(36)
+                .slice(2)
         );
     }
+
+
+    /* =====================================================
+       ESCAPE HTML
+    ===================================================== */
+
+    function escapeHtml(value) {
+
+        return String(value)
+            .replaceAll("&", "&amp;")
+            .replaceAll("<", "&lt;")
+            .replaceAll(">", "&gt;")
+            .replaceAll('"', "&quot;")
+            .replaceAll("'", "&#039;");
+    }
+
+
+    /* =====================================================
+       GLOBAL ERROR PROTECTION
+       Prevent one unrelated error from killing the tracker.
+    ===================================================== */
+
+    window.addEventListener(
+        "error",
+        event => {
+
+            console.error(
+                "Baby Tracker runtime error:",
+                event.error ||
+                event.message
+            );
+
+        }
+    );
+
+
+    window.addEventListener(
+        "unhandledrejection",
+        event => {
+
+            console.error(
+                "Baby Tracker promise error:",
+                event.reason
+            );
+
+        }
+    );
 
 })();
