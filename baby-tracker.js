@@ -3,7 +3,7 @@
    BABY TRACKER
 ========================================================= */
 
-(() => {
+(function () {
     "use strict";
 
     /* =====================================================
@@ -12,12 +12,15 @@
 
     const DB_NAME = "MomYouNeedThisBabyTracker";
     const DB_VERSION = 1;
-    const STORE_NAME = "trackerData";
+    const STORE_NAME = "tracker";
 
-    const DEFAULT_SETTINGS = {
+    const STORAGE_KEY = "momyouneedthis_baby_tracker";
+
+    const DEFAULT_STATE = {
         babyName: "My Baby",
         voiceLanguage: "en-US",
-        voiceConfirmation: true
+        voiceConfirmation: true,
+        logs: []
     };
 
 
@@ -25,166 +28,167 @@
        STATE
     ===================================================== */
 
-    let db = null;
-
-    let logs = [];
-
-    let settings = {
-        ...DEFAULT_SETTINGS
+    let state = {
+        ...DEFAULT_STATE
     };
 
-    let activeSleepLog = null;
-
-    let sleepTimerInterval = null;
+    let db = null;
 
     let recognition = null;
-
     let isListening = false;
+    let recognitionManuallyStopped = false;
 
-    let lastTranscript = "";
+    let activeSleep = null;
+    let sleepTimerInterval = null;
 
     let currentModal = null;
 
 
     /* =====================================================
-       DOM HELPERS
+       DOM HELPER
     ===================================================== */
 
-    const $ = (id) => document.getElementById(id);
-
-    const $$ = (selector) => document.querySelectorAll(selector);
-
-
-    /* =====================================================
-       INITIALIZATION
-    ===================================================== */
-
-    document.addEventListener("DOMContentLoaded", init);
+    function $(id) {
+        return document.getElementById(id);
+    }
 
 
-    async function init() {
-
-        try {
-
-            cacheElements();
-
-            await initializeDatabase();
-
-            await loadSettings();
-
-            await loadLogs();
-
-            initializeVoiceRecognition();
-
-            bindEvents();
-
-            renderEverything();
-
-            startSleepTimerIfNeeded();
-
-        } catch (error) {
-
-            console.error(
-                "Baby Tracker initialization error:",
-                error
-            );
-
-            showToast(
-                "The tracker could not finish loading.",
-                "⚠️"
-            );
-        }
+    function $all(selector) {
+        return Array.from(document.querySelectorAll(selector));
     }
 
 
     /* =====================================================
-       ELEMENT CACHE
+       SAFE EVENT LISTENER
     ===================================================== */
 
-    let elements = {};
+    function on(element, event, handler) {
+        if (!element) return;
 
-
-    function cacheElements() {
-
-        const ids = [
-
-            "settingsButton",
-            "settingsModal",
-            "settingsClose",
-
-            "actionModal",
-            "modalClose",
-            "modalContent",
-
-            "babyNameModal",
-            "babyNameModalClose",
-            "babyNameForm",
-
-            "babyNameDisplay",
-            "editBabyButton",
-
-            "babyNameInput",
-            "saveBabyNameButton",
-
-            "babyNameModalInput",
-
-            "voiceLanguage",
-            "voiceConfirmationToggle",
-
-            "voiceButton",
-            "voiceButtonIcon",
-            "voiceStatus",
-            "voiceStatusTitle",
-            "voiceStatusText",
-
-            "voiceWave",
-
-            "voiceTranscript",
-            "voiceTranscriptText",
-
-            "activeSleepCard",
-            "sleepTimer",
-            "endSleepButton",
-
-            "timeline",
-            "emptyState",
-
-            "todayDate",
-            "totalLogs",
-
-            "feedCount",
-            "diaperCount",
-            "sleepTotal",
-
-            "clearTodayButton",
-
-            "trackerToast",
-            "toastIcon",
-            "toastMessage",
-
-            "exportDataButton",
-            "importDataButton",
-            "importDataInput",
-
-            "settingsExportButton",
-            "settingsImportButton",
-
-            "deleteAllDataButton",
-
-            "deleteDataModal",
-            "cancelDeleteButton",
-            "confirmDeleteButton",
-
-            "voicePermissionMessage",
-            "voicePermissionText",
-            "voicePermissionClose"
-        ];
-
-        ids.forEach(id => {
-
-            elements[id] = $(id);
-
+        element.addEventListener(event, function (e) {
+            try {
+                handler(e);
+            } catch (error) {
+                console.error("Baby Tracker event error:", error);
+                showToast("Something went wrong.");
+            }
         });
+    }
+
+
+    /* =====================================================
+       INITIALIZE
+    ===================================================== */
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+        try {
+            initializeTracker();
+        } catch (error) {
+            console.error("Baby Tracker initialization error:", error);
+            showFatalError();
+        }
+
+    });
+
+
+    async function initializeTracker() {
+
+        /*
+         * IMPORTANT:
+         * Nothing here is allowed to assume that IndexedDB,
+         * SpeechRecognition, or optional DOM elements exist.
+         */
+
+        loadLocalState();
+
+        await initializeIndexedDB();
+
+        await loadDatabaseState();
+
+        initializeUI();
+
+        initializeVoiceRecognition();
+
+        updateAllUI();
+
+        initializeEventListeners();
+
+        restoreActiveSleep();
+
+        console.log("MomYouNeedThis Baby Tracker loaded successfully.");
+
+    }
+
+
+    /* =====================================================
+       LOCAL STORAGE
+       SAFE FALLBACK
+    ===================================================== */
+
+    function loadLocalState() {
+
+        try {
+
+            const saved = localStorage.getItem(STORAGE_KEY);
+
+            if (!saved) {
+                state = {
+                    ...DEFAULT_STATE
+                };
+
+                return;
+            }
+
+            const parsed = JSON.parse(saved);
+
+            if (!parsed || typeof parsed !== "object") {
+                return;
+            }
+
+            state = {
+                ...DEFAULT_STATE,
+                ...parsed
+            };
+
+            if (!Array.isArray(state.logs)) {
+                state.logs = [];
+            }
+
+        } catch (error) {
+
+            console.warn(
+                "Could not read local storage:",
+                error
+            );
+
+            state = {
+                ...DEFAULT_STATE
+            };
+
+        }
+
+    }
+
+
+    function saveLocalState() {
+
+        try {
+
+            localStorage.setItem(
+                STORAGE_KEY,
+                JSON.stringify(state)
+            );
+
+        } catch (error) {
+
+            console.warn(
+                "Could not save local state:",
+                error
+            );
+
+        }
+
     }
 
 
@@ -192,379 +196,387 @@
        INDEXED DB
     ===================================================== */
 
-    function initializeDatabase() {
+    function initializeIndexedDB() {
 
-        return new Promise((resolve, reject) => {
+        return new Promise(function (resolve) {
 
             if (!("indexedDB" in window)) {
 
-                reject(
-                    new Error(
-                        "IndexedDB is not supported by this browser."
-                    )
+                console.warn(
+                    "IndexedDB is not supported. Using localStorage."
                 );
 
+                resolve(null);
                 return;
             }
 
 
-            const request = indexedDB.open(
-                DB_NAME,
-                DB_VERSION
-            );
+            let request;
+
+            try {
+
+                request = indexedDB.open(
+                    DB_NAME,
+                    DB_VERSION
+                );
+
+            } catch (error) {
+
+                console.warn(
+                    "IndexedDB could not be opened:",
+                    error
+                );
+
+                resolve(null);
+                return;
+            }
 
 
-            request.onupgradeneeded = (event) => {
+            request.onupgradeneeded = function (event) {
 
-                const database = event.target.result;
+                try {
 
-                if (!database.objectStoreNames.contains(STORE_NAME)) {
+                    const database = event.target.result;
 
-                    database.createObjectStore(
-                        STORE_NAME,
-                        {
-                            keyPath: "key"
-                        }
+                    if (!database.objectStoreNames.contains(STORE_NAME)) {
+
+                        database.createObjectStore(
+                            STORE_NAME,
+                            {
+                                keyPath: "id"
+                            }
+                        );
+
+                    }
+
+                } catch (error) {
+
+                    console.warn(
+                        "IndexedDB upgrade error:",
+                        error
                     );
+
                 }
+
             };
 
 
-            request.onsuccess = () => {
+            request.onsuccess = function (event) {
 
-                db = request.result;
+                db = event.target.result;
 
-                db.onerror = (event) => {
+                db.onerror = function (error) {
 
-                    console.error(
-                        "IndexedDB error:",
-                        event.target.error
+                    console.warn(
+                        "IndexedDB runtime error:",
+                        error
                     );
+
                 };
 
+                resolve(db);
+
+            };
+
+
+            request.onerror = function (event) {
+
+                console.warn(
+                    "IndexedDB unavailable:",
+                    event.target.error
+                );
+
+                db = null;
+
+                resolve(null);
+
+            };
+
+
+            request.onblocked = function () {
+
+                console.warn(
+                    "IndexedDB request blocked."
+                );
+
+                resolve(null);
+
+            };
+
+        });
+
+    }
+
+
+    /* =====================================================
+       LOAD DATABASE STATE
+    ===================================================== */
+
+    async function loadDatabaseState() {
+
+        if (!db) {
+            return;
+        }
+
+        try {
+
+            const databaseState = await idbGet(
+                "state"
+            );
+
+            if (
+                databaseState &&
+                databaseState.value &&
+                typeof databaseState.value === "object"
+            ) {
+
+                state = {
+                    ...DEFAULT_STATE,
+                    ...databaseState.value
+                };
+
+                if (!Array.isArray(state.logs)) {
+                    state.logs = [];
+                }
+
+                saveLocalState();
+
+            } else {
+
+                await saveDatabaseState();
+
+            }
+
+        } catch (error) {
+
+            console.warn(
+                "Could not load IndexedDB state:",
+                error
+            );
+
+        }
+
+    }
+
+
+    function saveDatabaseState() {
+
+        if (!db) {
+            return Promise.resolve();
+        }
+
+        return idbPut({
+            id: "state",
+            value: state
+        });
+
+    }
+
+
+    function persistState() {
+
+        saveLocalState();
+
+        saveDatabaseState().catch(function (error) {
+
+            console.warn(
+                "Could not save IndexedDB state:",
+                error
+            );
+
+        });
+
+    }
+
+
+    function idbGet(id) {
+
+        return new Promise(function (resolve, reject) {
+
+            if (!db) {
+                resolve(null);
+                return;
+            }
+
+            try {
+
+                const transaction =
+                    db.transaction(
+                        STORE_NAME,
+                        "readonly"
+                    );
+
+                const store =
+                    transaction.objectStore(
+                        STORE_NAME
+                    );
+
+                const request =
+                    store.get(id);
+
+                request.onsuccess =
+                    function () {
+                        resolve(request.result || null);
+                    };
+
+                request.onerror =
+                    function () {
+                        reject(
+                            request.error ||
+                            new Error("IndexedDB read failed")
+                        );
+                    };
+
+            } catch (error) {
+
+                reject(error);
+
+            }
+
+        });
+
+    }
+
+
+    function idbPut(value) {
+
+        return new Promise(function (resolve, reject) {
+
+            if (!db) {
                 resolve();
-
-            };
-
-
-            request.onerror = () => {
-
-                reject(request.error);
-
-            };
-
-        });
-    }
-
-
-    /* =====================================================
-       DATABASE SAVE
-    ===================================================== */
-
-    function dbSet(key, value) {
-
-        return new Promise((resolve, reject) => {
-
-            if (!db) {
-
-                reject(
-                    new Error("Database is not initialized.")
-                );
-
                 return;
             }
 
+            try {
 
-            const transaction = db.transaction(
-                STORE_NAME,
-                "readwrite"
-            );
+                const transaction =
+                    db.transaction(
+                        STORE_NAME,
+                        "readwrite"
+                    );
 
-            const store = transaction.objectStore(
-                STORE_NAME
-            );
+                const store =
+                    transaction.objectStore(
+                        STORE_NAME
+                    );
 
-            const request = store.put({
-                key,
-                value
-            });
+                const request =
+                    store.put(value);
 
+                request.onsuccess =
+                    function () {
+                        resolve();
+                    };
 
-            request.onsuccess = () => resolve();
+                request.onerror =
+                    function () {
+                        reject(
+                            request.error ||
+                            new Error("IndexedDB write failed")
+                        );
+                    };
 
-            request.onerror = () => reject(request.error);
+            } catch (error) {
 
-        });
-    }
+                reject(error);
 
-
-    /* =====================================================
-       DATABASE GET
-    ===================================================== */
-
-    function dbGet(key) {
-
-        return new Promise((resolve, reject) => {
-
-            if (!db) {
-
-                reject(
-                    new Error("Database is not initialized.")
-                );
-
-                return;
             }
 
-
-            const transaction = db.transaction(
-                STORE_NAME,
-                "readonly"
-            );
-
-            const store = transaction.objectStore(
-                STORE_NAME
-            );
-
-            const request = store.get(key);
-
-
-            request.onsuccess = () => {
-
-                resolve(
-                    request.result
-                        ? request.result.value
-                        : null
-                );
-
-            };
-
-
-            request.onerror = () => reject(request.error);
-
         });
+
     }
 
 
     /* =====================================================
-       DATABASE DELETE
+       UI INITIALIZATION
     ===================================================== */
 
-    function dbDelete(key) {
+    function initializeUI() {
 
-        return new Promise((resolve, reject) => {
+        const babyNameDisplay =
+            $("babyNameDisplay");
 
-            if (!db) {
+        const babyNameInput =
+            $("babyNameInput");
 
-                reject(
-                    new Error("Database is not initialized.")
-                );
+        const babyNameModalInput =
+            $("babyNameModalInput");
 
-                return;
-            }
+        const voiceLanguage =
+            $("voiceLanguage");
 
-
-            const transaction = db.transaction(
-                STORE_NAME,
-                "readwrite"
-            );
-
-            const store = transaction.objectStore(
-                STORE_NAME
-            );
-
-            const request = store.delete(key);
+        const confirmationToggle =
+            $("voiceConfirmationToggle");
 
 
-            request.onsuccess = () => resolve();
-
-            request.onerror = () => reject(request.error);
-
-        });
-    }
-
-
-    /* =====================================================
-       LOAD SETTINGS
-    ===================================================== */
-
-    async function loadSettings() {
-
-        const storedSettings =
-            await dbGet("settings");
-
-
-        if (
-            storedSettings &&
-            typeof storedSettings === "object"
-        ) {
-
-            settings = {
-                ...DEFAULT_SETTINGS,
-                ...storedSettings
-            };
-
-        } else {
-
-            settings = {
-                ...DEFAULT_SETTINGS
-            };
-
-            await dbSet(
-                "settings",
-                settings
-            );
-        }
-    }
-
-
-    /* =====================================================
-       SAVE SETTINGS
-    ===================================================== */
-
-    async function saveSettings() {
-
-        await dbSet(
-            "settings",
-            settings
-        );
-    }
-
-
-    /* =====================================================
-       LOAD LOGS
-    ===================================================== */
-
-    async function loadLogs() {
-
-        const storedLogs =
-            await dbGet("logs");
-
-
-        if (Array.isArray(storedLogs)) {
-
-            logs = storedLogs;
-
-        } else {
-
-            logs = [];
-
-            await dbSet(
-                "logs",
-                logs
-            );
+        if (babyNameDisplay) {
+            babyNameDisplay.textContent =
+                state.babyName || "My Baby";
         }
 
 
-        activeSleepLog =
-            logs.find(
-                log =>
-                    log.type === "sleep" &&
-                    log.status === "active"
-            ) || null;
+        if (babyNameInput) {
+            babyNameInput.value =
+                state.babyName || "";
+        }
+
+
+        if (babyNameModalInput) {
+            babyNameModalInput.value =
+                state.babyName || "";
+        }
+
+
+        if (voiceLanguage) {
+
+            voiceLanguage.value =
+                state.voiceLanguage || "en-US";
+
+        }
+
+
+        if (confirmationToggle) {
+
+            confirmationToggle.checked =
+                state.voiceConfirmation !== false;
+
+        }
+
     }
 
 
     /* =====================================================
-       SAVE LOGS
+       EVENT LISTENERS
     ===================================================== */
 
-    async function saveLogs() {
+    function initializeEventListeners() {
 
-        await dbSet(
-            "logs",
-            logs
-        );
-    }
+        /* ---------------------------------------------
+           VOICE
+        --------------------------------------------- */
 
-
-    /* =====================================================
-       EVENTS
-    ===================================================== */
-
-    function bindEvents() {
-
-        /* Settings */
-
-        elements.settingsButton?.addEventListener(
-            "click",
-            openSettings
-        );
-
-        elements.settingsClose?.addEventListener(
-            "click",
-            closeSettings
-        );
-
-
-        /* Baby profile */
-
-        elements.editBabyButton?.addEventListener(
-            "click",
-            openBabyNameModal
-        );
-
-
-        /* Baby name */
-
-        elements.babyNameModalClose?.addEventListener(
-            "click",
-            closeBabyNameModal
-        );
-
-
-        elements.babyNameForm?.addEventListener(
-            "submit",
-            saveBabyNameFromModal
-        );
-
-
-        elements.saveBabyNameButton?.addEventListener(
-            "click",
-            saveBabyNameFromSettings
-        );
-
-
-        /* Voice */
-
-        elements.voiceButton?.addEventListener(
+        on(
+            $("voiceButton"),
             "click",
             toggleVoiceRecognition
         );
 
 
-        /* Voice examples */
+        /* ---------------------------------------------
+           QUICK ACTIONS
+        --------------------------------------------- */
 
-        $$(".voice-example").forEach(button => {
+        $all(".quick-action").forEach(function (button) {
 
-            button.addEventListener(
+            on(
+                button,
                 "click",
-                () => {
-
-                    const text =
-                        button.dataset.voiceExample || "";
-
-                    handleVoiceText(
-                        text,
-                        true
-                    );
-                }
-            );
-
-        });
-
-
-        /* Quick actions */
-
-        $$(".quick-action").forEach(button => {
-
-            button.addEventListener(
-                "click",
-                () => {
+                function () {
 
                     const action =
                         button.dataset.action;
 
-                    openActionModal(action);
+                    handleQuickAction(action);
 
                 }
             );
@@ -572,186 +584,326 @@
         });
 
 
-        /* Action modal */
+        /* ---------------------------------------------
+           EXAMPLE VOICE BUTTONS
+        --------------------------------------------- */
 
-        elements.modalClose?.addEventListener(
+        $all(".voice-example").forEach(function (button) {
+
+            on(
+                button,
+                "click",
+                function () {
+
+                    const example =
+                        button.dataset.voiceExample;
+
+                    if (!example) {
+                        return;
+                    }
+
+                    handleVoiceTranscript(
+                        example
+                    );
+
+                }
+            );
+
+        });
+
+
+        /* ---------------------------------------------
+           SETTINGS
+        --------------------------------------------- */
+
+        on(
+            $("settingsButton"),
+            "click",
+            openSettings
+        );
+
+
+        on(
+            $("settingsClose"),
+            "click",
+            closeSettings
+        );
+
+
+        $all("[data-close-settings]")
+            .forEach(function (element) {
+
+                on(
+                    element,
+                    "click",
+                    closeSettings
+                );
+
+            });
+
+
+        /* ---------------------------------------------
+           BABY PROFILE
+        --------------------------------------------- */
+
+        on(
+            $("editBabyButton"),
+            "click",
+            openBabyNameModal
+        );
+
+
+        on(
+            $("babyNameModalClose"),
+            "click",
+            closeBabyNameModal
+        );
+
+
+        $all("[data-close-baby-name]")
+            .forEach(function (element) {
+
+                on(
+                    element,
+                    "click",
+                    closeBabyNameModal
+                );
+
+            });
+
+
+        on(
+            $("babyNameForm"),
+            "submit",
+            function (event) {
+
+                event.preventDefault();
+
+                saveBabyName(
+                    $("babyNameModalInput")
+                        ? $("babyNameModalInput").value
+                        : ""
+                );
+
+            }
+        );
+
+
+        on(
+            $("saveBabyNameButton"),
+            "click",
+            function () {
+
+                saveBabyName(
+                    $("babyNameInput")
+                        ? $("babyNameInput").value
+                        : ""
+                );
+
+            }
+        );
+
+
+        /* ---------------------------------------------
+           VOICE SETTINGS
+        --------------------------------------------- */
+
+        on(
+            $("voiceLanguage"),
+            "change",
+            function (event) {
+
+                state.voiceLanguage =
+                    event.target.value ||
+                    "en-US";
+
+                persistState();
+
+                initializeVoiceRecognition();
+
+                showToast(
+                    "Voice language updated"
+                );
+
+            }
+        );
+
+
+        on(
+            $("voiceConfirmationToggle"),
+            "change",
+            function (event) {
+
+                state.voiceConfirmation =
+                    event.target.checked;
+
+                persistState();
+
+            }
+        );
+
+
+        /* ---------------------------------------------
+           MODAL
+        --------------------------------------------- */
+
+        on(
+            $("modalClose"),
             "click",
             closeActionModal
         );
 
 
-        /* Sleep */
+        $all("[data-close-modal]")
+            .forEach(function (element) {
 
-        elements.endSleepButton?.addEventListener(
+                on(
+                    element,
+                    "click",
+                    closeActionModal
+                );
+
+            });
+
+
+        /* ---------------------------------------------
+           ACTIVE SLEEP
+        --------------------------------------------- */
+
+        on(
+            $("endSleepButton"),
             "click",
             endSleep
         );
 
 
-        /* Clear */
+        /* ---------------------------------------------
+           CLEAR TODAY
+        --------------------------------------------- */
 
-        elements.clearTodayButton?.addEventListener(
+        on(
+            $("clearTodayButton"),
             "click",
             clearToday
         );
 
 
-        /* Voice settings */
+        /* ---------------------------------------------
+           EXPORT
+        --------------------------------------------- */
 
-        elements.voiceLanguage?.addEventListener(
-            "change",
-            async () => {
-
-                settings.voiceLanguage =
-                    elements.voiceLanguage.value;
-
-                await saveSettings();
-
-                initializeVoiceRecognition();
-
-                showToast(
-                    "Voice language updated.",
-                    "✓"
-                );
-            }
-        );
-
-
-        elements.voiceConfirmationToggle?.addEventListener(
-            "change",
-            async () => {
-
-                settings.voiceConfirmation =
-                    elements.voiceConfirmationToggle.checked;
-
-                await saveSettings();
-
-            }
-        );
-
-
-        /* Export */
-
-        elements.exportDataButton?.addEventListener(
-            "click",
-            exportData
-        );
-
-        elements.settingsExportButton?.addEventListener(
+        on(
+            $("exportDataButton"),
             "click",
             exportData
         );
 
 
-        /* Import */
-
-        elements.importDataButton?.addEventListener(
+        on(
+            $("settingsExportButton"),
             "click",
-            () => {
+            exportData
+        );
 
-                elements.importDataInput?.click();
+
+        /* ---------------------------------------------
+           IMPORT
+        --------------------------------------------- */
+
+        on(
+            $("importDataButton"),
+            "click",
+            function () {
+
+                const input =
+                    $("importDataInput");
+
+                if (input) {
+                    input.click();
+                }
 
             }
         );
 
 
-        elements.settingsImportButton?.addEventListener(
+        on(
+            $("settingsImportButton"),
             "click",
-            () => {
+            function () {
 
-                elements.importDataInput?.click();
+                const input =
+                    $("importDataInput");
+
+                if (input) {
+                    input.click();
+                }
 
             }
         );
 
 
-        elements.importDataInput?.addEventListener(
+        on(
+            $("importDataInput"),
             "change",
             handleImport
         );
 
 
-        /* Delete */
+        /* ---------------------------------------------
+           DELETE
+        --------------------------------------------- */
 
-        elements.deleteAllDataButton?.addEventListener(
+        on(
+            $("deleteAllDataButton"),
             "click",
             openDeleteModal
         );
 
 
-        elements.cancelDeleteButton?.addEventListener(
+        on(
+            $("cancelDeleteButton"),
             "click",
             closeDeleteModal
         );
 
 
-        elements.confirmDeleteButton?.addEventListener(
+        on(
+            $("confirmDeleteButton"),
             "click",
-            deleteEverything
+            deleteAllData
         );
 
 
-        /* Close modals */
+        $all("[data-close-delete]")
+            .forEach(function (element) {
 
-        $$("[data-close-modal]").forEach(
-            element => {
-
-                element.addEventListener(
-                    "click",
-                    closeActionModal
-                );
-
-            }
-        );
-
-
-        $$("[data-close-settings]").forEach(
-            element => {
-
-                element.addEventListener(
-                    "click",
-                    closeSettings
-                );
-
-            }
-        );
-
-
-        $$("[data-close-baby-name]").forEach(
-            element => {
-
-                element.addEventListener(
-                    "click",
-                    closeBabyNameModal
-                );
-
-            }
-        );
-
-
-        $$("[data-close-delete]").forEach(
-            element => {
-
-                element.addEventListener(
+                on(
+                    element,
                     "click",
                     closeDeleteModal
                 );
 
-            }
-        );
+            });
 
 
-        elements.voicePermissionClose?.addEventListener(
+        /* ---------------------------------------------
+           PERMISSION MESSAGE
+        --------------------------------------------- */
+
+        on(
+            $("voicePermissionClose"),
             "click",
             hideVoicePermissionMessage
         );
 
 
-        /* Escape key */
+        /* ---------------------------------------------
+           ESC KEY
+        --------------------------------------------- */
 
         document.addEventListener(
             "keydown",
-            event => {
+            function (event) {
 
                 if (event.key !== "Escape") {
                     return;
@@ -764,987 +916,1052 @@
 
             }
         );
-    }
-
-
-    /* =====================================================
-       RENDER EVERYTHING
-    ===================================================== */
-
-    function renderEverything() {
-
-        renderBabyName();
-
-        renderSettings();
-
-        renderDate();
-
-        renderSummary();
-
-        renderTimeline();
-
-        renderActiveSleep();
 
     }
 
 
     /* =====================================================
-       BABY NAME
+       VOICE RECOGNITION
     ===================================================== */
 
-    function renderBabyName() {
+    function initializeVoiceRecognition() {
 
-        if (elements.babyNameDisplay) {
+        recognition = null;
 
-            elements.babyNameDisplay.textContent =
-                settings.babyName || "My Baby";
-        }
+        const SpeechRecognition =
+            window.SpeechRecognition ||
+            window.webkitSpeechRecognition;
 
+        if (!SpeechRecognition) {
 
-        if (elements.babyNameInput) {
+            console.warn(
+                "Speech recognition is not available in this browser."
+            );
 
-            elements.babyNameInput.value =
-                settings.babyName || "";
-        }
+            updateVoiceUnavailableUI();
 
-
-        if (elements.babyNameModalInput) {
-
-            elements.babyNameModalInput.value =
-                settings.babyName === "My Baby"
-                    ? ""
-                    : settings.babyName;
-        }
-    }
-
-
-    /* =====================================================
-       SAVE BABY NAME — SETTINGS
-    ===================================================== */
-
-    async function saveBabyNameFromSettings() {
-
-        const input =
-            elements.babyNameInput;
-
-        if (!input) return;
-
-
-        const name =
-            input.value.trim();
-
-
-        settings.babyName =
-            name || "My Baby";
-
-
-        await saveSettings();
-
-        renderBabyName();
-
-        showToast(
-            "Baby's name saved.",
-            "✓"
-        );
-    }
-
-
-    /* =====================================================
-       SAVE BABY NAME — MODAL
-    ===================================================== */
-
-    async function saveBabyNameFromModal(event) {
-
-        event.preventDefault();
-
-
-        const input =
-            elements.babyNameModalInput;
-
-
-        const name =
-            input?.value.trim() || "";
-
-
-        settings.babyName =
-            name || "My Baby";
-
-
-        await saveSettings();
-
-        renderBabyName();
-
-        closeBabyNameModal();
-
-        showToast(
-            "Baby's profile saved.",
-            "💗"
-        );
-    }
-
-
-    /* =====================================================
-       SETTINGS
-    ===================================================== */
-
-    function renderSettings() {
-
-        if (elements.voiceLanguage) {
-
-            elements.voiceLanguage.value =
-                settings.voiceLanguage ||
-                "en-US";
-        }
-
-
-        if (elements.voiceConfirmationToggle) {
-
-            elements.voiceConfirmationToggle.checked =
-                settings.voiceConfirmation !== false;
-        }
-    }
-
-
-    function openSettings() {
-
-        closeAllModalsExcept("settings");
-
-        elements.settingsModal?.classList.remove(
-            "hidden"
-        );
-
-        elements.settingsModal?.setAttribute(
-            "aria-hidden",
-            "false"
-        );
-
-        elements.settingsButton?.setAttribute(
-            "aria-expanded",
-            "true"
-        );
-
-        currentModal = "settings";
-
-        renderSettings();
-    }
-
-
-    function closeSettings() {
-
-        elements.settingsModal?.classList.add(
-            "hidden"
-        );
-
-        elements.settingsModal?.setAttribute(
-            "aria-hidden",
-            "true"
-        );
-
-        elements.settingsButton?.setAttribute(
-            "aria-expanded",
-            "false"
-        );
-
-        if (currentModal === "settings") {
-            currentModal = null;
-        }
-    }
-
-
-    /* =====================================================
-       BABY NAME MODAL
-    ===================================================== */
-
-    function openBabyNameModal() {
-
-        closeAllModalsExcept("baby");
-
-        elements.babyNameModal?.classList.remove(
-            "hidden"
-        );
-
-        elements.babyNameModal?.setAttribute(
-            "aria-hidden",
-            "false"
-        );
-
-        currentModal = "baby";
-
-
-        setTimeout(() => {
-
-            elements.babyNameModalInput?.focus();
-
-        }, 100);
-    }
-
-
-    function closeBabyNameModal() {
-
-        elements.babyNameModal?.classList.add(
-            "hidden"
-        );
-
-        elements.babyNameModal?.setAttribute(
-            "aria-hidden",
-            "true"
-        );
-
-        if (currentModal === "baby") {
-            currentModal = null;
-        }
-    }
-
-
-    /* =====================================================
-       MODAL MANAGEMENT
-    ===================================================== */
-
-    function closeAllModalsExcept(type) {
-
-        if (type !== "settings") {
-            closeSettings();
-        }
-
-        if (type !== "action") {
-            closeActionModal();
-        }
-
-        if (type !== "baby") {
-            closeBabyNameModal();
-        }
-
-        if (type !== "delete") {
-            closeDeleteModal();
-        }
-    }
-
-
-    /* =====================================================
-       ACTION MODAL
-    ===================================================== */
-
-    function openActionModal(action) {
-
-        closeAllModalsExcept("action");
-
-
-        if (!elements.modalContent) {
             return;
+
         }
 
 
-        const content =
-            getActionForm(action);
+        try {
+
+            recognition =
+                new SpeechRecognition();
+
+            recognition.continuous = false;
+
+            recognition.interimResults = true;
+
+            recognition.maxAlternatives = 1;
+
+            recognition.lang =
+                state.voiceLanguage ||
+                "en-US";
 
 
-        elements.modalContent.innerHTML =
-            content;
+            recognition.onstart =
+                function () {
+
+                    isListening = true;
+
+                    updateVoiceListeningUI();
+
+                };
 
 
-        elements.actionModal?.classList.remove(
-            "hidden"
-        );
+            recognition.onresult =
+                function (event) {
 
-        elements.actionModal?.setAttribute(
-            "aria-hidden",
-            "false"
-        );
+                    let transcript = "";
 
-        currentModal = "action";
+                    for (
+                        let i = event.resultIndex;
+                        i < event.results.length;
+                        i++
+                    ) {
+
+                        transcript +=
+                            event.results[i][0]
+                                .transcript;
+
+                    }
+
+                    transcript =
+                        transcript.trim();
+
+                    if (!transcript) {
+                        return;
+                    }
+
+                    showTranscript(
+                        transcript
+                    );
+
+                    /*
+                     * With confirmation enabled, we wait
+                     * briefly and then save the recognized
+                     * command.
+                     */
+                    if (
+                        event.results[
+                            event.results.length - 1
+                        ].isFinal
+                    ) {
+
+                        handleVoiceTranscript(
+                            transcript
+                        );
+
+                    }
+
+                };
 
 
-        bindActionForm(action);
+            recognition.onerror =
+                function (event) {
+
+                    console.warn(
+                        "Speech recognition error:",
+                        event.error
+                    );
+
+                    isListening = false;
+
+                    updateVoiceIdleUI();
+
+                    handleVoiceError(
+                        event.error
+                    );
+
+                };
+
+
+            recognition.onend =
+                function () {
+
+                    isListening = false;
+
+                    updateVoiceIdleUI();
+
+                };
+
+
+        } catch (error) {
+
+            console.warn(
+                "Could not initialize speech recognition:",
+                error
+            );
+
+            recognition = null;
+
+            updateVoiceUnavailableUI();
+
+        }
 
     }
 
 
-    function closeActionModal() {
+    function toggleVoiceRecognition() {
 
-        elements.actionModal?.classList.add(
-            "hidden"
-        );
+        if (!recognition) {
 
-        elements.actionModal?.setAttribute(
-            "aria-hidden",
-            "true"
-        );
+            showVoicePermissionMessage(
+                "Voice recognition is not available in this browser. You can still use Quick Tap logging."
+            );
 
-        if (currentModal === "action") {
-            currentModal = null;
+            return;
+
         }
+
+
+        if (isListening) {
+
+            recognitionManuallyStopped = true;
+
+            try {
+                recognition.stop();
+            } catch (error) {
+                console.warn(error);
+            }
+
+            return;
+
+        }
+
+
+        recognitionManuallyStopped = false;
+
+        try {
+
+            recognition.lang =
+                state.voiceLanguage ||
+                "en-US";
+
+            recognition.start();
+
+        } catch (error) {
+
+            console.warn(
+                "Could not start speech recognition:",
+                error
+            );
+
+            /*
+             * Chrome/Safari can throw if start() is called
+             * while recognition is already starting.
+             */
+            if (
+                error &&
+                error.name === "InvalidStateError"
+            ) {
+
+                return;
+
+            }
+
+            showVoicePermissionMessage(
+                "Your browser could not start voice recognition. Please check microphone permissions."
+            );
+
+        }
+
     }
 
 
     /* =====================================================
-       ACTION FORMS
+       VOICE UI
     ===================================================== */
 
-    function getActionForm(action) {
+    function updateVoiceListeningUI() {
 
-        if (action === "feed") {
+        const button =
+            $("voiceButton");
 
-            return `
-                <span class="tracker-badge">🍼 FEEDING</span>
+        const icon =
+            $("voiceButtonIcon");
 
-                <h2>Log a feed</h2>
+        const status =
+            $("voiceStatus");
 
-                <p class="modal-subtitle">
-                    What kind of feeding was it?
-                </p>
-
-                <form class="tracker-form" id="feedForm">
-
-                    <div>
-                        <label for="feedType">
-                            Type
-                        </label>
-
-                        <select id="feedType">
-                            <option value="Bottle">Bottle</option>
-                            <option value="Nursing">Nursing</option>
-                            <option value="Formula">Formula</option>
-                            <option value="Solid food">Solid food</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label for="feedAmount">
-                            Amount / details
-                        </label>
-
-                        <input
-                            id="feedAmount"
-                            type="text"
-                            placeholder="e.g. 120 ml or 15 min"
-                        >
-                    </div>
-
-                    <div>
-                        <label for="feedSide">
-                            Side
-                        </label>
-
-                        <select id="feedSide">
-                            <option value="">Not applicable</option>
-                            <option value="Left">Left</option>
-                            <option value="Right">Right</option>
-                            <option value="Both">Both</option>
-                        </select>
-                    </div>
-
-                    <button
-                        type="submit"
-                        class="form-submit settings-primary-button"
-                    >
-                        🍼 Save Feed
-                    </button>
-
-                </form>
-            `;
-        }
-
-
-        if (action === "diaper") {
-
-            return `
-                <span class="tracker-badge">💧 DIAPER</span>
-
-                <h2>Log a diaper</h2>
-
-                <p class="modal-subtitle">
-                    What kind was it?
-                </p>
-
-                <form class="tracker-form" id="diaperForm">
-
-                    <div>
-                        <label for="diaperType">
-                            Type
-                        </label>
-
-                        <select id="diaperType">
-                            <option value="Wet">Wet</option>
-                            <option value="Dirty">Dirty</option>
-                            <option value="Wet + Dirty">
-                                Wet + Dirty
-                            </option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label for="diaperNote">
-                            Note (optional)
-                        </label>
-
-                        <input
-                            id="diaperNote"
-                            type="text"
-                            placeholder="Anything to remember?"
-                        >
-                    </div>
-
-                    <button
-                        type="submit"
-                        class="form-submit settings-primary-button"
-                    >
-                        💧 Save Diaper
-                    </button>
-
-                </form>
-            `;
-        }
-
-
-        if (action === "sleep") {
-
-            return `
-                <span class="tracker-badge">😴 SLEEP</span>
-
-                <h2>Sleep</h2>
-
-                <p class="modal-subtitle">
-                    Start a nap now or log a completed sleep.
-                </p>
-
-                <div class="modal-options">
-
-                    <button
-                        type="button"
-                        class="modal-option"
-                        id="startSleepModalButton"
-                    >
-                        😴 Start Nap Now
-                    </button>
-
-                    <button
-                        type="button"
-                        class="modal-option"
-                        id="manualSleepButton"
-                    >
-                        📝 Log Completed Sleep
-                    </button>
-
-                </div>
-            `;
-        }
-
-
-        if (action === "note") {
-
-            return `
-                <span class="tracker-badge">📝 NOTE</span>
-
-                <h2>Add a note</h2>
-
-                <p class="modal-subtitle">
-                    Save something you want to remember.
-                </p>
-
-                <form class="tracker-form" id="noteForm">
-
-                    <div>
-                        <label for="noteText">
-                            Note
-                        </label>
-
-                        <textarea
-                            id="noteText"
-                            rows="5"
-                            placeholder="e.g. Baby seemed extra sleepy today..."
-                        ></textarea>
-                    </div>
-
-                    <button
-                        type="submit"
-                        class="form-submit settings-primary-button"
-                    >
-                        📝 Save Note
-                    </button>
-
-                </form>
-            `;
-        }
-
-
-        return "";
-    }
-
-
-    /* =====================================================
-       BIND ACTION FORM
-    ===================================================== */
-
-    function bindActionForm(action) {
-
-        if (action === "feed") {
-
-            $("feedForm")?.addEventListener(
-                "submit",
-                saveFeed
-            );
-        }
-
-
-        if (action === "diaper") {
-
-            $("diaperForm")?.addEventListener(
-                "submit",
-                saveDiaper
-            );
-        }
-
-
-        if (action === "note") {
-
-            $("noteForm")?.addEventListener(
-                "submit",
-                saveNote
-            );
-        }
-
-
-        if (action === "sleep") {
-
-            $("startSleepModalButton")?.addEventListener(
-                "click",
-                async () => {
-
-                    closeActionModal();
-
-                    await startSleep();
-
-                }
-            );
-
-
-            $("manualSleepButton")?.addEventListener(
-                "click",
-                openManualSleepForm
-            );
-        }
-    }
-
-
-    /* =====================================================
-       FEED
-    ===================================================== */
-
-    async function saveFeed(event) {
-
-        event.preventDefault();
-
-
-        const type =
-            $("feedType")?.value || "Feed";
-
-
-        const amount =
-            $("feedAmount")?.value.trim() || "";
-
-
-        const side =
-            $("feedSide")?.value || "";
-
-
-        const details =
-            [amount, side]
-                .filter(Boolean)
-                .join(" • ");
-
-
-        await addLog({
-
-            type: "feed",
-
-            title: type,
-
-            details:
-                details ||
-                "Feeding logged",
-
-            icon: "🍼"
-        });
-
-
-        closeActionModal();
-
-        showToast(
-            "Feed logged.",
-            "🍼"
-        );
-    }
-
-
-    /* =====================================================
-       DIAPER
-    ===================================================== */
-
-    async function saveDiaper(event) {
-
-        event.preventDefault();
-
-
-        const type =
-            $("diaperType")?.value ||
-            "Diaper";
-
-
-        const note =
-            $("diaperNote")?.value.trim() ||
-            "";
-
-
-        await addLog({
-
-            type: "diaper",
-
-            title: `${type} diaper`,
-
-            details:
-                note ||
-                "Diaper change logged",
-
-            icon: "💧"
-        });
-
-
-        closeActionModal();
-
-        showToast(
-            "Diaper logged.",
-            "💧"
-        );
-    }
-
-
-    /* =====================================================
-       NOTE
-    ===================================================== */
-
-    async function saveNote(event) {
-
-        event.preventDefault();
-
+        const title =
+            $("voiceStatusTitle");
 
         const text =
-            $("noteText")?.value.trim();
+            $("voiceStatusText");
+
+        const wave =
+            $("voiceWave");
 
 
-        if (!text) {
+        if (button) {
 
-            showToast(
-                "Please enter a note.",
-                "⚠️"
+            button.classList.add(
+                "recording"
             );
 
+            button.setAttribute(
+                "aria-pressed",
+                "true"
+            );
+
+        }
+
+
+        if (icon) {
+            icon.textContent = "⏹️";
+        }
+
+
+        if (status) {
+            status.classList.add("active");
+        }
+
+
+        if (title) {
+            title.textContent =
+                "Listening…";
+        }
+
+
+        if (text) {
+            text.textContent =
+                "Tell me what happened";
+        }
+
+
+        if (wave) {
+            wave.classList.add("active");
+        }
+
+    }
+
+
+    function updateVoiceIdleUI() {
+
+        const button =
+            $("voiceButton");
+
+        const icon =
+            $("voiceButtonIcon");
+
+        const status =
+            $("voiceStatus");
+
+        const title =
+            $("voiceStatusTitle");
+
+        const text =
+            $("voiceStatusText");
+
+        const wave =
+            $("voiceWave");
+
+
+        if (button) {
+
+            button.classList.remove(
+                "recording"
+            );
+
+            button.setAttribute(
+                "aria-pressed",
+                "false"
+            );
+
+        }
+
+
+        if (icon) {
+            icon.textContent = "🎙️";
+        }
+
+
+        if (status) {
+            status.classList.remove(
+                "active"
+            );
+        }
+
+
+        if (title) {
+            title.textContent =
+                "Tap & tell me";
+        }
+
+
+        if (text) {
+            text.textContent =
+                "“Baby had a wet diaper”";
+        }
+
+
+        if (wave) {
+            wave.classList.remove(
+                "active"
+            );
+        }
+
+    }
+
+
+    function updateVoiceUnavailableUI() {
+
+        const status =
+            $("voiceStatus");
+
+        const title =
+            $("voiceStatusTitle");
+
+        const text =
+            $("voiceStatusText");
+
+
+        if (status) {
+            status.classList.add("active");
+        }
+
+
+        if (title) {
+            title.textContent =
+                "Voice logging unavailable";
+        }
+
+
+        if (text) {
+            text.textContent =
+                "Use Quick Tap instead";
+        }
+
+    }
+
+
+    function showTranscript(text) {
+
+        const container =
+            $("voiceTranscript");
+
+        const output =
+            $("voiceTranscriptText");
+
+
+        if (!container || !output) {
             return;
         }
 
 
-        await addLog({
+        output.textContent =
+            text;
 
-            type: "note",
-
-            title: "Note",
-
-            details: text,
-
-            icon: "📝"
-        });
-
-
-        closeActionModal();
-
-        showToast(
-            "Note saved.",
-            "📝"
+        container.classList.remove(
+            "hidden"
         );
+
     }
 
 
     /* =====================================================
-       MANUAL SLEEP FORM
+       VOICE COMMAND PARSER
     ===================================================== */
 
-    function openManualSleepForm() {
+    function handleVoiceTranscript(transcript) {
 
-        if (!elements.modalContent) {
+        if (!transcript) {
             return;
         }
 
 
-        elements.modalContent.innerHTML = `
+        const clean =
+            transcript
+                .trim()
+                .toLowerCase();
 
-            <span class="tracker-badge">
-                😴 SLEEP
-            </span>
 
-            <h2>
-                Log completed sleep
+        showTranscript(transcript);
+
+
+        /*
+         * DIAPER
+         */
+
+        if (
+            clean.includes("diaper") ||
+            clean.includes("nappy") ||
+            clean.includes("couche")
+        ) {
+
+            let type = "wet";
+
+            if (
+                clean.includes("dirty") ||
+                clean.includes("poop") ||
+                clean.includes("poopy") ||
+                clean.includes("stool") ||
+                clean.includes("feces") ||
+                clean.includes("selle") ||
+                clean.includes("caca")
+            ) {
+
+                type = "dirty";
+
+            }
+
+            addLog({
+                type: "diaper",
+                subtype: type,
+                note: transcript
+            });
+
+            return;
+        }
+
+
+        /*
+         * FEEDING
+         */
+
+        if (
+            clean.includes("feed") ||
+            clean.includes("fed") ||
+            clean.includes("milk") ||
+            clean.includes("nursed") ||
+            clean.includes("nursing") ||
+            clean.includes("breast") ||
+            clean.includes("bottle") ||
+            clean.includes("formula") ||
+            clean.includes("milk")
+        ) {
+
+            const amount =
+                extractAmount(
+                    clean
+                );
+
+            const side =
+                extractNursingSide(
+                    clean
+                );
+
+            addLog({
+                type: "feed",
+                amount: amount,
+                side: side,
+                note: transcript
+            });
+
+            return;
+        }
+
+
+        /*
+         * SLEEP
+         */
+
+        if (
+            clean.includes("sleep") ||
+            clean.includes("nap") ||
+            clean.includes("slept") ||
+            clean.includes("asleep") ||
+            clean.includes("dormi") ||
+            clean.includes("sieste")
+        ) {
+
+            if (
+                clean.includes("woke") ||
+                clean.includes("wake") ||
+                clean.includes("awake") ||
+                clean.includes("réve")
+            ) {
+
+                if (activeSleep) {
+                    endSleep();
+                } else {
+
+                    addLog({
+                        type: "sleep",
+                        duration: 0,
+                        note: transcript
+                    });
+
+                }
+
+            } else {
+
+                if (!activeSleep) {
+                    startSleep();
+                }
+
+            }
+
+            return;
+        }
+
+
+        /*
+         * NOTE
+         */
+
+        addLog({
+            type: "note",
+            note: transcript
+        });
+
+    }
+
+
+    function extractAmount(text) {
+
+        const match =
+            text.match(
+                /(\d+(?:\.\d+)?)\s*(ml|milliliter|milliliters|oz|ounce|ounces|minutes|minute|min)/i
+            );
+
+        if (!match) {
+            return null;
+        }
+
+        return {
+            value: Number(match[1]),
+            unit: match[2]
+        };
+
+    }
+
+
+    function extractNursingSide(text) {
+
+        if (
+            text.includes("left") ||
+            text.includes("gauche")
+        ) {
+            return "left";
+        }
+
+        if (
+            text.includes("right") ||
+            text.includes("droite") ||
+            text.includes("droit")
+        ) {
+            return "right";
+        }
+
+        return null;
+
+    }
+
+
+    /* =====================================================
+       QUICK ACTIONS
+    ===================================================== */
+
+    function handleQuickAction(action) {
+
+        switch (action) {
+
+            case "feed":
+                openFeedModal();
+                break;
+
+            case "diaper":
+                openDiaperModal();
+                break;
+
+            case "sleep":
+
+                if (activeSleep) {
+                    endSleep();
+                } else {
+                    startSleep();
+                }
+
+                break;
+
+            case "note":
+                openNoteModal();
+                break;
+
+            default:
+                console.warn(
+                    "Unknown action:",
+                    action
+                );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       FEED MODAL
+    ===================================================== */
+
+    function openFeedModal() {
+
+        openActionModal(`
+            <span class="tracker-badge">🍼 FEEDING</span>
+
+            <h2 id="modalContentTitle">
+                Log a feed
             </h2>
 
             <p class="modal-subtitle">
-                Enter when the nap started and ended.
+                What kind of feeding was it?
             </p>
 
-            <form
-                class="tracker-form"
-                id="manualSleepForm"
-            >
+            <div class="modal-options">
+
+                <button
+                    type="button"
+                    class="modal-option"
+                    data-feed-type="nursing"
+                >
+                    🤱 Nursing
+                </button>
+
+                <button
+                    type="button"
+                    class="modal-option"
+                    data-feed-type="bottle"
+                >
+                    🍼 Bottle
+                </button>
+
+                <button
+                    type="button"
+                    class="modal-option"
+                    data-feed-type="formula"
+                >
+                    🥛 Formula
+                </button>
+
+            </div>
+        `);
+
+
+        $all("[data-feed-type]")
+            .forEach(function (button) {
+
+                on(
+                    button,
+                    "click",
+                    function () {
+
+                        const type =
+                            button.dataset.feedType;
+
+                        closeActionModal();
+
+                        if (
+                            type === "nursing"
+                        ) {
+
+                            addLog({
+                                type: "feed",
+                                subtype: "nursing"
+                            });
+
+                        } else {
+
+                            addLog({
+                                type: "feed",
+                                subtype: type
+                            });
+
+                        }
+
+                    }
+                );
+
+            });
+
+    }
+
+
+    /* =====================================================
+       DIAPER MODAL
+    ===================================================== */
+
+    function openDiaperModal() {
+
+        openActionModal(`
+            <span class="tracker-badge">💧 DIAPER</span>
+
+            <h2 id="modalContentTitle">
+                Log a diaper
+            </h2>
+
+            <p class="modal-subtitle">
+                What did you change?
+            </p>
+
+            <div class="modal-options">
+
+                <button
+                    type="button"
+                    class="modal-option"
+                    data-diaper-type="wet"
+                >
+                    💧 Wet
+                </button>
+
+                <button
+                    type="button"
+                    class="modal-option"
+                    data-diaper-type="dirty"
+                >
+                    💩 Dirty
+                </button>
+
+                <button
+                    type="button"
+                    class="modal-option"
+                    data-diaper-type="both"
+                >
+                    💧💩 Both
+                </button>
+
+            </div>
+        `);
+
+
+        $all("[data-diaper-type]")
+            .forEach(function (button) {
+
+                on(
+                    button,
+                    "click",
+                    function () {
+
+                        addLog({
+                            type: "diaper",
+                            subtype:
+                                button.dataset.diaperType
+                        });
+
+                        closeActionModal();
+
+                    }
+                );
+
+            });
+
+    }
+
+
+    /* =====================================================
+       NOTE MODAL
+    ===================================================== */
+
+    function openNoteModal() {
+
+        openActionModal(`
+            <span class="tracker-badge">📝 NOTE</span>
+
+            <h2 id="modalContentTitle">
+                Add a note
+            </h2>
+
+            <p class="modal-subtitle">
+                Anything you want to remember.
+            </p>
+
+            <form id="noteForm" class="tracker-form">
 
                 <div>
 
-                    <label for="sleepStart">
-                        Started
+                    <label for="noteInput">
+                        Note
                     </label>
 
-                    <input
-                        type="time"
-                        id="sleepStart"
-                        required
-                    >
+                    <textarea
+                        id="noteInput"
+                        rows="4"
+                        placeholder="Baby was especially happy today..."
+                    ></textarea>
 
                 </div>
-
-
-                <div>
-
-                    <label for="sleepEnd">
-                        Ended
-                    </label>
-
-                    <input
-                        type="time"
-                        id="sleepEnd"
-                        required
-                    >
-
-                </div>
-
 
                 <button
                     type="submit"
-                    class="form-submit settings-primary-button"
+                    class="form-submit"
                 >
-                    😴 Save Sleep
+                    Save Note
                 </button>
 
             </form>
-        `;
+        `);
 
 
-        $("manualSleepForm")?.addEventListener(
+        on(
+            $("noteForm"),
             "submit",
-            saveManualSleep
+            function (event) {
+
+                event.preventDefault();
+
+                const input =
+                    $("noteInput");
+
+                if (!input) {
+                    return;
+                }
+
+                const note =
+                    input.value.trim();
+
+                if (!note) {
+
+                    showToast(
+                        "Write something first."
+                    );
+
+                    return;
+
+                }
+
+                addLog({
+                    type: "note",
+                    note: note
+                });
+
+                closeActionModal();
+
+            }
         );
-    }
 
-
-    async function saveManualSleep(event) {
-
-        event.preventDefault();
-
-
-        const start =
-            $("sleepStart")?.value;
-
-
-        const end =
-            $("sleepEnd")?.value;
-
-
-        if (!start || !end) {
-            return;
-        }
-
-
-        const duration =
-            calculateTimeDifference(
-                start,
-                end
-            );
-
-
-        if (duration <= 0) {
-
-            showToast(
-                "Please check the sleep times.",
-                "⚠️"
-            );
-
-            return;
-        }
-
-
-        await addLog({
-
-            type: "sleep",
-
-            title: "Nap",
-
-            details:
-                formatDuration(duration),
-
-            icon: "😴",
-
-            duration
-
-        });
-
-
-        closeActionModal();
-
-        showToast(
-            "Sleep logged.",
-            "😴"
-        );
     }
 
 
     /* =====================================================
-       START SLEEP
+       LOG CREATION
     ===================================================== */
 
-    async function startSleep() {
-
-        if (activeSleepLog) {
-
-            showToast(
-                "A nap is already in progress.",
-                "😴"
-            );
-
-            return;
-        }
-
+    function addLog(data) {
 
         const log = {
+            id:
+                createId(),
 
-            id: generateId(),
+            type:
+                data.type || "note",
 
-            type: "sleep",
+            subtype:
+                data.subtype || null,
 
-            title: "Nap",
+            amount:
+                data.amount || null,
 
-            details: "Nap in progress",
+            side:
+                data.side || null,
 
-            icon: "😴",
+            note:
+                data.note || "",
 
-            timestamp: Date.now(),
-
-            status: "active",
-
-            startTime: Date.now()
-
+            timestamp:
+                new Date().toISOString()
         };
 
 
-        logs.push(log);
+        state.logs.unshift(log);
 
-        activeSleepLog = log;
+        persistState();
 
-
-        await saveLogs();
-
-        renderEverything();
-
-        startSleepTimer();
-
+        updateAllUI();
 
         showToast(
-            "Nap started.",
-            "😴"
+            getLogSavedMessage(log)
         );
+
+    }
+
+
+    function createId() {
+
+        if (
+            window.crypto &&
+            typeof window.crypto.randomUUID ===
+                "function"
+        ) {
+
+            return window.crypto.randomUUID();
+
+        }
+
+        return (
+            Date.now().toString(36) +
+            Math.random()
+                .toString(36)
+                .substring(2)
+        );
+
+    }
+
+
+    function getLogSavedMessage(log) {
+
+        switch (log.type) {
+
+            case "feed":
+                return "Feed logged";
+
+            case "diaper":
+                return "Diaper logged";
+
+            case "sleep":
+                return "Sleep logged";
+
+            case "note":
+                return "Note saved";
+
+            default:
+                return "Saved";
+
+        }
+
     }
 
 
     /* =====================================================
-       END SLEEP
+       SLEEP
     ===================================================== */
 
-    async function endSleep() {
+    function startSleep() {
 
-        if (!activeSleepLog) {
+        if (activeSleep) {
             return;
         }
 
 
-        const now = Date.now();
+        activeSleep = {
+            startTime:
+                Date.now()
+        };
 
-        const start =
-            activeSleepLog.startTime;
 
+        try {
 
-        const duration =
-            Math.max(
-                0,
-                now - start
+            localStorage.setItem(
+                "momyouneedthis_active_sleep",
+                JSON.stringify(activeSleep)
             );
 
-
-        activeSleepLog.status =
-            "completed";
-
-
-        activeSleepLog.endTime =
-            now;
-
-
-        activeSleepLog.timestamp =
-            now;
-
-
-        activeSleepLog.duration =
-            duration;
-
-
-        activeSleepLog.details =
-            formatDuration(duration);
-
-
-        const index =
-            logs.findIndex(
-                log =>
-                    log.id === activeSleepLog.id
-            );
-
-
-        if (index !== -1) {
-
-            logs[index] =
-                activeSleepLog;
+        } catch (error) {
+            console.warn(error);
         }
 
 
-        activeSleepLog = null;
+        updateSleepUI();
 
-
-        stopSleepTimer();
-
-        await saveLogs();
-
-        renderEverything();
-
+        startSleepTimer();
 
         showToast(
-            `Nap ended • ${formatDuration(duration)}`,
-            "😴"
+            "Nap started"
         );
+
     }
 
 
-    /* =====================================================
-       SLEEP TIMER
-    ===================================================== */
+    function restoreActiveSleep() {
 
-    function startSleepTimerIfNeeded() {
+        try {
 
-        if (activeSleepLog) {
+            const saved =
+                localStorage.getItem(
+                    "momyouneedthis_active_sleep"
+                );
 
-            startSleepTimer();
+            if (!saved) {
+                return;
+            }
+
+            const parsed =
+                JSON.parse(saved);
+
+            if (
+                parsed &&
+                parsed.startTime
+            ) {
+
+                activeSleep =
+                    parsed;
+
+                updateSleepUI();
+
+                startSleepTimer();
+
+            }
+
+        } catch (error) {
+
+            console.warn(
+                "Could not restore active sleep:",
+                error
+            );
 
         }
+
     }
 
 
@@ -1752,15 +1969,14 @@
 
         stopSleepTimer();
 
-
         updateSleepTimer();
-
 
         sleepTimerInterval =
             setInterval(
                 updateSleepTimer,
                 1000
             );
+
     }
 
 
@@ -1773,97 +1989,83 @@
             );
 
             sleepTimerInterval = null;
+
         }
+
     }
 
 
     function updateSleepTimer() {
 
-        if (
-            !activeSleepLog ||
-            !elements.sleepTimer
-        ) {
+        if (!activeSleep) {
             return;
         }
 
 
         const elapsed =
-            Date.now() -
-            activeSleepLog.startTime;
-
-
-        elements.sleepTimer.textContent =
-            formatClockDuration(
-                elapsed
-            );
-    }
-
-
-    /* =====================================================
-       ADD LOG
-    ===================================================== */
-
-    async function addLog(data) {
-
-        const log = {
-
-            id:
-                data.id ||
-                generateId(),
-
-            type:
-                data.type,
-
-            title:
-                data.title,
-
-            details:
-                data.details || "",
-
-            icon:
-                data.icon || "📝",
-
-            timestamp:
-                data.timestamp ||
-                Date.now(),
-
-            duration:
-                data.duration ||
+            Math.max(
                 0,
-
-            status:
-                data.status ||
-                "completed"
-
-        };
+                Date.now() -
+                activeSleep.startTime
+            );
 
 
-        logs.push(log);
+        const seconds =
+            Math.floor(
+                elapsed / 1000
+            );
 
 
-        await saveLogs();
+        const hours =
+            Math.floor(
+                seconds / 3600
+            );
 
-        renderEverything();
+
+        const minutes =
+            Math.floor(
+                (seconds % 3600) / 60
+            );
+
+
+        const remainingSeconds =
+            seconds % 60;
+
+
+        const formatted =
+            String(hours).padStart(2, "0") +
+            ":" +
+            String(minutes).padStart(2, "0") +
+            ":" +
+            String(remainingSeconds)
+                .padStart(2, "0");
+
+
+        const timer =
+            $("sleepTimer");
+
+        if (timer) {
+            timer.textContent =
+                formatted;
+        }
 
     }
 
 
-    /* =====================================================
-       RENDER ACTIVE SLEEP
-    ===================================================== */
+    function updateSleepUI() {
 
-    function renderActiveSleep() {
+        const card =
+            $("activeSleepCard");
 
-        if (
-            !elements.activeSleepCard
-        ) {
+
+        if (!card) {
             return;
         }
 
 
-        if (activeSleepLog) {
+        if (activeSleep) {
 
-            elements.activeSleepCard.classList.remove(
+            card.classList.remove(
                 "hidden"
             );
 
@@ -1871,20 +2073,112 @@
 
         } else {
 
-            elements.activeSleepCard.classList.add(
+            card.classList.add(
                 "hidden"
             );
+
         }
+
+    }
+
+
+    function endSleep() {
+
+        if (!activeSleep) {
+            return;
+        }
+
+
+        const endTime =
+            Date.now();
+
+
+        const durationMs =
+            Math.max(
+                0,
+                endTime -
+                activeSleep.startTime
+            );
+
+
+        const durationMinutes =
+            Math.max(
+                1,
+                Math.round(
+                    durationMs /
+                    60000
+                )
+            );
+
+
+        addLog({
+            type: "sleep",
+            duration:
+                durationMinutes
+        });
+
+
+        activeSleep = null;
+
+        stopSleepTimer();
+
+        try {
+
+            localStorage.removeItem(
+                "momyouneedthis_active_sleep"
+            );
+
+        } catch (error) {
+            console.warn(error);
+        }
+
+
+        updateSleepUI();
+
     }
 
 
     /* =====================================================
-       RENDER DATE
+       UI UPDATE
     ===================================================== */
 
-    function renderDate() {
+    function updateAllUI() {
 
-        if (!elements.todayDate) {
+        updateBabyName();
+
+        updateDate();
+
+        updateSummary();
+
+        renderTimeline();
+
+        updateSleepUI();
+
+    }
+
+
+    function updateBabyName() {
+
+        const display =
+            $("babyNameDisplay");
+
+        if (display) {
+
+            display.textContent =
+                state.babyName ||
+                "My Baby";
+
+        }
+
+    }
+
+
+    function updateDate() {
+
+        const element =
+            $("todayDate");
+
+        if (!element) {
             return;
         }
 
@@ -1893,227 +2187,273 @@
             new Date();
 
 
-        elements.todayDate.textContent =
-            today.toLocaleDateString(
-                undefined,
-                {
-                    weekday: "long",
-                    month: "long",
-                    day: "numeric"
-                }
-            );
+        try {
+
+            element.textContent =
+                today.toLocaleDateString(
+                    undefined,
+                    {
+                        weekday: "long",
+                        month: "long",
+                        day: "numeric"
+                    }
+                );
+
+        } catch (error) {
+
+            element.textContent =
+                "Today";
+
+        }
+
     }
 
 
-    /* =====================================================
-       TODAY LOGS
-    ===================================================== */
-
-    function getTodayLogs() {
-
-        const start =
-            new Date();
-
-        start.setHours(
-            0,
-            0,
-            0,
-            0
-        );
-
-
-        const end =
-            new Date();
-
-        end.setHours(
-            23,
-            59,
-            59,
-            999
-        );
-
-
-        return logs.filter(
-            log =>
-                log.timestamp >= start.getTime() &&
-                log.timestamp <= end.getTime()
-        );
-    }
-
-
-    /* =====================================================
-       RENDER SUMMARY
-    ===================================================== */
-
-    function renderSummary() {
+    function updateSummary() {
 
         const todayLogs =
             getTodayLogs();
 
 
-        const feedCount =
-            todayLogs.filter(
-                log =>
-                    log.type === "feed"
-            ).length;
+        const totalLogs =
+            $("totalLogs");
 
+        const feedCount =
+            $("feedCount");
 
         const diaperCount =
-            todayLogs.filter(
-                log =>
-                    log.type === "diaper"
-            ).length;
-
+            $("diaperCount");
 
         const sleepTotal =
-            todayLogs
-                .filter(
-                    log =>
-                        log.type === "sleep" &&
-                        log.status !== "active"
-                )
-                .reduce(
-                    (
-                        total,
-                        log
-                    ) =>
-                        total +
-                        (Number(log.duration) || 0),
-                    0
-                );
+            $("sleepTotal");
 
 
-        if (elements.totalLogs) {
+        if (totalLogs) {
 
-            elements.totalLogs.textContent =
+            totalLogs.textContent =
                 todayLogs.length;
+
         }
 
 
-        if (elements.feedCount) {
+        if (feedCount) {
 
-            elements.feedCount.textContent =
-                feedCount;
+            feedCount.textContent =
+                todayLogs.filter(
+                    function (log) {
+                        return log.type === "feed";
+                    }
+                ).length;
+
         }
 
 
-        if (elements.diaperCount) {
+        if (diaperCount) {
 
-            elements.diaperCount.textContent =
-                diaperCount;
+            diaperCount.textContent =
+                todayLogs.filter(
+                    function (log) {
+                        return log.type === "diaper";
+                    }
+                ).length;
+
         }
 
 
-        if (elements.sleepTotal) {
+        if (sleepTotal) {
 
-            elements.sleepTotal.textContent =
-                formatShortDuration(
-                    sleepTotal
+            const minutes =
+                todayLogs
+                    .filter(
+                        function (log) {
+                            return log.type === "sleep";
+                        }
+                    )
+                    .reduce(
+                        function (total, log) {
+
+                            return (
+                                total +
+                                Number(
+                                    log.duration || 0
+                                )
+                            );
+
+                        },
+                        0
+                    );
+
+
+            sleepTotal.textContent =
+                formatMinutes(minutes);
+
+        }
+
+    }
+
+
+    function getTodayLogs() {
+
+        const now =
+            new Date();
+
+
+        const year =
+            now.getFullYear();
+
+        const month =
+            now.getMonth();
+
+        const day =
+            now.getDate();
+
+
+        return state.logs.filter(
+            function (log) {
+
+                const date =
+                    new Date(
+                        log.timestamp
+                    );
+
+                return (
+                    date.getFullYear() === year &&
+                    date.getMonth() === month &&
+                    date.getDate() === day
                 );
+
+            }
+        );
+
+    }
+
+
+    function formatMinutes(minutes) {
+
+        minutes =
+            Number(minutes) || 0;
+
+
+        if (minutes < 60) {
+
+            return (
+                Math.round(minutes) +
+                "m"
+            );
+
         }
+
+
+        const hours =
+            Math.floor(
+                minutes / 60
+            );
+
+
+        const remaining =
+            Math.round(
+                minutes % 60
+            );
+
+
+        if (!remaining) {
+
+            return (
+                hours +
+                "h"
+            );
+
+        }
+
+
+        return (
+            hours +
+            "h " +
+            remaining +
+            "m"
+        );
+
     }
 
 
     /* =====================================================
-       RENDER TIMELINE
+       TIMELINE
     ===================================================== */
 
     function renderTimeline() {
 
-        if (!elements.timeline) {
+        const timeline =
+            $("timeline");
+
+        if (!timeline) {
             return;
         }
 
 
         const todayLogs =
-            getTodayLogs()
-                .sort(
-                    (a, b) =>
-                        b.timestamp -
-                        a.timestamp
-                );
+            getTodayLogs();
 
 
-        elements.timeline.innerHTML = "";
+        timeline.innerHTML = "";
 
 
         if (!todayLogs.length) {
 
-            elements.timeline.appendChild(
-                createEmptyState()
-            );
+            timeline.innerHTML = `
+                <div class="empty-state" id="emptyState">
+
+                    <div class="empty-state-icon">
+                        🌸
+                    </div>
+
+                    <h3>
+                        Your day starts here
+                    </h3>
+
+                    <p>
+                        Tell me what happened and
+                        I'll keep track for you.
+                    </p>
+
+                </div>
+            `;
 
             return;
         }
 
 
         todayLogs.forEach(
-            log => {
+            function (log) {
 
-                const item =
-                    createTimelineItem(log);
-
-                elements.timeline.appendChild(
-                    item
+                timeline.appendChild(
+                    createTimelineItem(log)
                 );
 
             }
         );
+
     }
 
-
-    /* =====================================================
-       EMPTY STATE
-    ===================================================== */
-
-    function createEmptyState() {
-
-        const div =
-            document.createElement(
-                "div"
-            );
-
-
-        div.className =
-            "empty-state";
-
-
-        div.innerHTML = `
-
-            <div class="empty-state-icon">
-                🌸
-            </div>
-
-            <h3>
-                Your day starts here
-            </h3>
-
-            <p>
-                Tell me what happened and
-                I'll keep track for you.
-            </p>
-
-        `;
-
-
-        return div;
-    }
-
-
-    /* =====================================================
-       TIMELINE ITEM
-    ===================================================== */
 
     function createTimelineItem(log) {
 
         const item =
-            document.createElement(
-                "div"
-            );
-
+            document.createElement("div");
 
         item.className =
             "timeline-item";
+
+
+        const icon =
+            getLogIcon(log);
+
+
+        const title =
+            getLogTitle(log);
+
+
+        const subtitle =
+            getLogSubtitle(log);
 
 
         const time =
@@ -2122,59 +2462,50 @@
             );
 
 
-        const details =
-            escapeHtml(
-                log.details || ""
-            );
-
-
         item.innerHTML = `
-
             <div class="timeline-icon">
-                ${log.icon || "📝"}
+                ${icon}
             </div>
 
             <div class="timeline-info">
 
                 <strong>
-                    ${escapeHtml(
-                        log.title || "Activity"
-                    )}
+                    ${escapeHTML(title)}
                 </strong>
 
                 <span>
-                    ${details}
+                    ${escapeHTML(subtitle)}
                 </span>
 
             </div>
 
             <div class="timeline-time">
-                ${time}
+                ${escapeHTML(time)}
             </div>
 
             <button
                 type="button"
                 class="timeline-delete"
                 aria-label="Delete log"
-                title="Delete log"
+                data-delete-log="${escapeHTML(log.id)}"
             >
                 ×
             </button>
-
         `;
 
 
         const deleteButton =
             item.querySelector(
-                ".timeline-delete"
+                "[data-delete-log]"
             );
 
 
-        deleteButton?.addEventListener(
+        on(
+            deleteButton,
             "click",
-            async () => {
+            function () {
 
-                await deleteLog(
+                deleteLog(
                     log.id
                 );
 
@@ -2183,14 +2514,235 @@
 
 
         return item;
+
+    }
+
+
+    function getLogIcon(log) {
+
+        switch (log.type) {
+
+            case "feed":
+                return "🍼";
+
+            case "diaper":
+                return "💧";
+
+            case "sleep":
+                return "😴";
+
+            case "note":
+                return "📝";
+
+            default:
+                return "💗";
+
+        }
+
+    }
+
+
+    function getLogTitle(log) {
+
+        if (log.type === "feed") {
+
+            if (
+                log.subtype === "nursing"
+            ) {
+                return "Nursing";
+            }
+
+            if (
+                log.subtype === "bottle"
+            ) {
+                return "Bottle";
+            }
+
+            if (
+                log.subtype === "formula"
+            ) {
+                return "Formula";
+            }
+
+            return "Feed";
+
+        }
+
+
+        if (log.type === "diaper") {
+
+            if (
+                log.subtype === "wet"
+            ) {
+                return "Wet diaper";
+            }
+
+            if (
+                log.subtype === "dirty"
+            ) {
+                return "Dirty diaper";
+            }
+
+            if (
+                log.subtype === "both"
+            ) {
+                return "Wet + dirty diaper";
+            }
+
+            return "Diaper";
+
+        }
+
+
+        if (log.type === "sleep") {
+
+            return "Sleep";
+
+        }
+
+
+        if (log.type === "note") {
+
+            return "Note";
+
+        }
+
+
+        return "Activity";
+
+    }
+
+
+    function getLogSubtitle(log) {
+
+        if (log.note) {
+
+            return log.note;
+
+        }
+
+
+        if (
+            log.type === "sleep" &&
+            log.duration
+        ) {
+
+            return (
+                "Duration: " +
+                formatMinutes(
+                    log.duration
+                )
+            );
+
+        }
+
+
+        if (
+            log.type === "feed"
+        ) {
+
+            const parts = [];
+
+
+            if (log.side) {
+
+                parts.push(
+                    log.side === "left"
+                        ? "Left"
+                        : "Right"
+                );
+
+            }
+
+
+            if (
+                log.amount &&
+                log.amount.value
+            ) {
+
+                parts.push(
+                    log.amount.value +
+                    " " +
+                    log.amount.unit
+                );
+
+            }
+
+
+            if (parts.length) {
+                return parts.join(" • ");
+            }
+
+
+            return "Logged";
+
+        }
+
+
+        return "Logged";
+
+    }
+
+
+    function formatTime(timestamp) {
+
+        try {
+
+            return new Date(
+                timestamp
+            ).toLocaleTimeString(
+                undefined,
+                {
+                    hour: "numeric",
+                    minute: "2-digit"
+                }
+            );
+
+        } catch (error) {
+
+            return "";
+
+        }
+
+    }
+
+
+    function escapeHTML(value) {
+
+        return String(
+            value == null
+                ? ""
+                : value
+        )
+            .replace(
+                /&/g,
+                "&amp;"
+            )
+            .replace(
+                /</g,
+                "&lt;"
+            )
+            .replace(
+                />/g,
+                "&gt;"
+            )
+            .replace(
+                /"/g,
+                "&quot;"
+            )
+            .replace(
+                /'/g,
+                "&#039;"
+            );
+
     }
 
 
     /* =====================================================
-       DELETE SINGLE LOG
+       DELETE LOG
     ===================================================== */
 
-    async function deleteLog(id) {
+    function deleteLog(id) {
 
         const confirmed =
             window.confirm(
@@ -2203,33 +2755,22 @@
         }
 
 
-        logs =
-            logs.filter(
-                log =>
-                    log.id !== id
+        state.logs =
+            state.logs.filter(
+                function (log) {
+                    return log.id !== id;
+                }
             );
 
 
-        if (
-            activeSleepLog &&
-            activeSleepLog.id === id
-        ) {
+        persistState();
 
-            activeSleepLog = null;
-
-            stopSleepTimer();
-        }
-
-
-        await saveLogs();
-
-        renderEverything();
-
+        updateAllUI();
 
         showToast(
-            "Log deleted.",
-            "✓"
+            "Log deleted"
         );
+
     }
 
 
@@ -2237,7 +2778,7 @@
        CLEAR TODAY
     ===================================================== */
 
-    async function clearToday() {
+    function clearToday() {
 
         const todayLogs =
             getTodayLogs();
@@ -2246,17 +2787,17 @@
         if (!todayLogs.length) {
 
             showToast(
-                "There are no logs to clear.",
-                "ℹ️"
+                "Nothing to clear"
             );
 
             return;
+
         }
 
 
         const confirmed =
             window.confirm(
-                "Clear all of today's tracker logs?"
+                "Clear all of today's logs?"
             );
 
 
@@ -2265,866 +2806,349 @@
         }
 
 
-        const ids =
+        const todayIds =
             new Set(
                 todayLogs.map(
-                    log =>
-                        log.id
+                    function (log) {
+                        return log.id;
+                    }
                 )
             );
 
 
-        logs =
-            logs.filter(
-                log =>
-                    !ids.has(log.id)
+        state.logs =
+            state.logs.filter(
+                function (log) {
+                    return !todayIds.has(
+                        log.id
+                    );
+                }
             );
 
 
-        if (
-            activeSleepLog &&
-            ids.has(activeSleepLog.id)
-        ) {
+        persistState();
 
-            activeSleepLog = null;
-
-            stopSleepTimer();
-        }
-
-
-        await saveLogs();
-
-        renderEverything();
-
+        updateAllUI();
 
         showToast(
-            "Today's logs cleared.",
-            "✓"
+            "Today's logs cleared"
         );
+
     }
 
 
     /* =====================================================
-       VOICE RECOGNITION
+       BABY NAME
     ===================================================== */
 
-    function initializeVoiceRecognition() {
+    function saveBabyName(name) {
 
-        recognition = null;
-
-
-        const SpeechRecognition =
-            window.SpeechRecognition ||
-            window.webkitSpeechRecognition;
+        name =
+            String(name || "")
+                .trim();
 
 
-        if (!SpeechRecognition) {
-
-            showVoiceUnsupportedState();
-
-            return;
+        if (!name) {
+            name = "My Baby";
         }
 
 
-        try {
-
-            recognition =
-                new SpeechRecognition();
+        state.babyName =
+            name.substring(0, 40);
 
 
-            recognition.continuous =
-                false;
+        persistState();
+
+        updateBabyName();
+
+        closeBabyNameModal();
+
+        showToast(
+            "Baby's name saved"
+        );
+
+    }
 
 
-            recognition.interimResults =
-                true;
+    function openBabyNameModal() {
+
+        const input =
+            $("babyNameModalInput");
 
 
-            recognition.lang =
-                settings.voiceLanguage ||
+        if (input) {
+
+            input.value =
+                state.babyName || "";
+
+            setTimeout(
+                function () {
+                    input.focus();
+                },
+                100
+            );
+
+        }
+
+
+        showModal(
+            "babyNameModal"
+        );
+
+    }
+
+
+    function closeBabyNameModal() {
+
+        hideModal(
+            "babyNameModal"
+        );
+
+    }
+
+
+    /* =====================================================
+       SETTINGS
+    ===================================================== */
+
+    function openSettings() {
+
+        const input =
+            $("babyNameInput");
+
+
+        if (input) {
+
+            input.value =
+                state.babyName || "";
+
+        }
+
+
+        const language =
+            $("voiceLanguage");
+
+
+        if (language) {
+
+            language.value =
+                state.voiceLanguage ||
                 "en-US";
 
-
-            recognition.maxAlternatives =
-                1;
-
-
-            recognition.onstart =
-                handleRecognitionStart;
-
-
-            recognition.onresult =
-                handleRecognitionResult;
-
-
-            recognition.onerror =
-                handleRecognitionError;
-
-
-            recognition.onend =
-                handleRecognitionEnd;
-
-        } catch (error) {
-
-            console.error(
-                "Could not initialize speech recognition:",
-                error
-            );
-
-            recognition = null;
-
-            showVoiceUnsupportedState();
-        }
-    }
-
-
-    /* =====================================================
-       VOICE SUPPORT
-    ===================================================== */
-
-    function showVoiceUnsupportedState() {
-
-        if (!elements.voiceButton) {
-            return;
         }
 
 
-        elements.voiceButton.disabled =
-            true;
+        const toggle =
+            $("voiceConfirmationToggle");
 
 
-        elements.voiceButton.setAttribute(
-            "aria-label",
-            "Voice logging is not supported in this browser"
+        if (toggle) {
+
+            toggle.checked =
+                state.voiceConfirmation !== false;
+
+        }
+
+
+        showModal(
+            "settingsModal"
         );
 
-
-        if (elements.voiceButtonIcon) {
-
-            elements.voiceButtonIcon.textContent =
-                "⌨️";
-        }
+    }
 
 
-        if (elements.voiceStatus) {
+    function closeSettings() {
 
-            elements.voiceStatus.classList.add(
-                "active"
-            );
+        hideModal(
+            "settingsModal"
+        );
 
-
-            if (elements.voiceStatusTitle) {
-
-                elements.voiceStatusTitle.textContent =
-                    "Voice unavailable";
-            }
-
-
-            if (elements.voiceStatusText) {
-
-                elements.voiceStatusText.textContent =
-                    "Use Chrome on desktop or Android for voice logging.";
-            }
-        }
     }
 
 
     /* =====================================================
-       TOGGLE VOICE
+       ACTION MODAL
     ===================================================== */
 
-    function toggleVoiceRecognition() {
+    function openActionModal(content) {
 
-        if (!recognition) {
+        const container =
+            $("modalContent");
 
-            showVoicePermission();
 
+        if (!container) {
             return;
         }
 
 
-        if (isListening) {
+        container.innerHTML =
+            content;
 
-            stopVoiceRecognition();
 
-        } else {
+        showModal(
+            "actionModal"
+        );
 
-            startVoiceRecognition();
+    }
 
-        }
+
+    function closeActionModal() {
+
+        hideModal(
+            "actionModal"
+        );
+
     }
 
 
     /* =====================================================
-       START VOICE
+       DELETE MODAL
     ===================================================== */
 
-    function startVoiceRecognition() {
+    function openDeleteModal() {
 
-        if (!recognition) {
+        showModal(
+            "deleteDataModal"
+        );
 
-            showVoicePermission();
+    }
 
-            return;
-        }
+
+    function closeDeleteModal() {
+
+        hideModal(
+            "deleteDataModal"
+        );
+
+    }
+
+
+    function deleteAllData() {
+
+        state = {
+            ...DEFAULT_STATE
+        };
+
+
+        persistState();
+
+        activeSleep = null;
+
+        stopSleepTimer();
 
 
         try {
 
-            lastTranscript = "";
-
-            recognition.start();
+            localStorage.removeItem(
+                "momyouneedthis_active_sleep"
+            );
 
         } catch (error) {
-
-            /*
-             Chrome can throw InvalidStateError if start()
-             is called while recognition is already active.
-            */
-
-            console.warn(
-                "Speech recognition could not start:",
-                error
-            );
-
-            if (
-                error.name ===
-                "InvalidStateError"
-            ) {
-                return;
-            }
-
-            showVoicePermission();
-
-        }
-    }
-
-
-    /* =====================================================
-       STOP VOICE
-    ===================================================== */
-
-    function stopVoiceRecognition() {
-
-        if (!recognition) {
-            return;
+            console.warn(error);
         }
 
 
-        try {
+        updateAllUI();
 
-            recognition.stop();
+        closeDeleteModal();
 
-        } catch (error) {
-
-            console.warn(
-                "Speech recognition stop error:",
-                error
-            );
-
-        }
-    }
-
-
-    /* =====================================================
-       RECOGNITION START
-    ===================================================== */
-
-    function handleRecognitionStart() {
-
-        isListening = true;
-
-
-        elements.voiceButton?.classList.add(
-            "recording"
-        );
-
-
-        elements.voiceButton?.setAttribute(
-            "aria-pressed",
-            "true"
-        );
-
-
-        if (elements.voiceButtonIcon) {
-
-            elements.voiceButtonIcon.textContent =
-                "⏹️";
-        }
-
-
-        elements.voiceStatus?.classList.add(
-            "active"
-        );
-
-
-        if (elements.voiceStatusTitle) {
-
-            elements.voiceStatusTitle.textContent =
-                "Listening…";
-        }
-
-
-        if (elements.voiceStatusText) {
-
-            elements.voiceStatusText.textContent =
-                "Tell me what happened.";
-        }
-
-
-        elements.voiceWave?.classList.add(
-            "active"
-        );
-    }
-
-
-    /* =====================================================
-       RECOGNITION RESULT
-    ===================================================== */
-
-    function handleRecognitionResult(event) {
-
-        let transcript = "";
-
-
-        for (
-            let i = event.resultIndex;
-            i < event.results.length;
-            i++
-        ) {
-
-            transcript +=
-                event.results[i][0].transcript;
-
-        }
-
-
-        transcript =
-            transcript.trim();
-
-
-        if (!transcript) {
-            return;
-        }
-
-
-        lastTranscript =
-            transcript;
-
-
-        if (elements.voiceTranscript) {
-
-            elements.voiceTranscript.classList.remove(
-                "hidden"
-            );
-        }
-
-
-        if (elements.voiceTranscriptText) {
-
-            elements.voiceTranscriptText.textContent =
-                transcript;
-        }
-
-
-        const result =
-            event.results[
-                event.results.length - 1
-            ];
-
-
-        if (
-            result &&
-            result.isFinal
-        ) {
-
-            handleVoiceText(
-                transcript,
-                false
-            );
-        }
-    }
-
-
-    /* =====================================================
-       RECOGNITION ERROR
-    ===================================================== */
-
-    function handleRecognitionError(event) {
-
-        console.warn(
-            "Speech recognition error:",
-            event.error
-        );
-
-
-        isListening = false;
-
-
-        if (
-            event.error ===
-            "not-allowed" ||
-            event.error ===
-            "service-not-allowed"
-        ) {
-
-            showVoicePermission();
-
-            return;
-        }
-
-
-        if (
-            event.error ===
-            "no-speech"
-        ) {
-
-            showToast(
-                "I didn't hear anything. Try again.",
-                "🎙️"
-            );
-
-            return;
-        }
-
-
-        if (
-            event.error ===
-            "audio-capture"
-        ) {
-
-            showToast(
-                "Chrome could not access your microphone.",
-                "🎙️"
-            );
-
-            return;
-        }
-
+        closeSettings();
 
         showToast(
-            "Voice recognition had a problem. Try again.",
-            "⚠️"
+            "All tracker data deleted"
         );
+
     }
 
 
     /* =====================================================
-       RECOGNITION END
+       MODALS
     ===================================================== */
 
-    function handleRecognitionEnd() {
+    function showModal(id) {
 
-        isListening = false;
+        const modal =
+            $(id);
 
-
-        elements.voiceButton?.classList.remove(
-            "recording"
-        );
-
-
-        elements.voiceButton?.setAttribute(
-            "aria-pressed",
-            "false"
-        );
-
-
-        if (elements.voiceButtonIcon) {
-
-            elements.voiceButtonIcon.textContent =
-                "🎙️";
-        }
-
-
-        elements.voiceWave?.classList.remove(
-            "active"
-        );
-
-
-        if (
-            !lastTranscript &&
-            elements.voiceStatusTitle
-        ) {
-
-            elements.voiceStatusTitle.textContent =
-                "Tap & tell me";
-        }
-    }
-
-
-    /* =====================================================
-       HANDLE VOICE TEXT
-    ===================================================== */
-
-    async function handleVoiceText(
-        transcript,
-        isExample = false
-    ) {
-
-        const text =
-            String(
-                transcript || ""
-            ).trim();
-
-
-        if (!text) {
+        if (!modal) {
             return;
         }
 
 
-        if (
-            settings.voiceConfirmation &&
-            !isExample
-        ) {
-
-            showVoiceConfirmation(
-                text
-            );
-
-            return;
-        }
-
-
-        await parseAndSaveVoiceText(
-            text
-        );
-    }
-
-
-    /* =====================================================
-       VOICE CONFIRMATION
-    ===================================================== */
-
-    function showVoiceConfirmation(text) {
-
-        if (!elements.modalContent) {
-            return;
-        }
-
-
-        closeAllModalsExcept("action");
-
-
-        elements.modalContent.innerHTML = `
-
-            <span class="tracker-badge">
-                🎙️ I HEARD
-            </span>
-
-            <h2>
-                Does this look right?
-            </h2>
-
-            <p class="modal-subtitle">
-                ${escapeHtml(text)}
-            </p>
-
-            <div class="modal-options">
-
-                <button
-                    type="button"
-                    class="modal-option"
-                    id="confirmVoiceLogButton"
-                >
-                    ✓ Save this
-                </button>
-
-                <button
-                    type="button"
-                    class="modal-option"
-                    id="cancelVoiceLogButton"
-                >
-                    Try again
-                </button>
-
-            </div>
-
-        `;
-
-
-        elements.actionModal?.classList.remove(
+        modal.classList.remove(
             "hidden"
         );
 
-        elements.actionModal?.setAttribute(
+        modal.setAttribute(
             "aria-hidden",
             "false"
         );
 
 
-        currentModal = "action";
+        if (id === "settingsModal") {
 
+            const button =
+                $("settingsButton");
 
-        $("confirmVoiceLogButton")?.addEventListener(
-            "click",
-            async () => {
+            if (button) {
 
-                closeActionModal();
-
-                await parseAndSaveVoiceText(
-                    text
+                button.setAttribute(
+                    "aria-expanded",
+                    "true"
                 );
 
             }
-        );
+
+        }
 
 
-        $("cancelVoiceLogButton")?.addEventListener(
-            "click",
-            closeActionModal
-        );
+        currentModal =
+            id;
+
     }
 
 
-    /* =====================================================
-       PARSE VOICE
-    ===================================================== */
+    function hideModal(id) {
 
-    async function parseAndSaveVoiceText(text) {
+        const modal =
+            $(id);
 
-        const lower =
-            text.toLowerCase();
-
-
-        let type =
-            "note";
-
-
-        let title =
-            "Note";
-
-
-        let icon =
-            "📝";
-
-
-        let details =
-            text;
-
-
-        /* ---------------------------------------------
-           DIAPER
-        --------------------------------------------- */
-
-        if (
-            lower.includes("diaper") ||
-            lower.includes("nappy") ||
-            lower.includes("wet") ||
-            lower.includes("poop") ||
-            lower.includes("poopy") ||
-            lower.includes("dirty")
-        ) {
-
-            type =
-                "diaper";
-
-            icon =
-                "💧";
-
-
-            if (
-                lower.includes("dirty") ||
-                lower.includes("poop") ||
-                lower.includes("poopy")
-            ) {
-
-                title =
-                    lower.includes("wet")
-                        ? "Wet + Dirty diaper"
-                        : "Dirty diaper";
-
-            } else {
-
-                title =
-                    "Wet diaper";
-            }
-
-
-            details =
-                text;
+        if (!modal) {
+            return;
         }
 
 
-        /* ---------------------------------------------
-           FEED
-        --------------------------------------------- */
-
-        else if (
-            lower.includes("feed") ||
-            lower.includes("fed") ||
-            lower.includes("drank") ||
-            lower.includes("drink") ||
-            lower.includes("bottle") ||
-            lower.includes("nursed") ||
-            lower.includes("nursing") ||
-            lower.includes("breastfed") ||
-            lower.includes("breast")
-        ) {
-
-            type =
-                "feed";
-
-            icon =
-                "🍼";
-
-
-            if (
-                lower.includes("nursed") ||
-                lower.includes("nursing") ||
-                lower.includes("breastfed")
-            ) {
-
-                title =
-                    "Nursing";
-
-            } else {
-
-                title =
-                    "Feed";
-            }
-
-
-            details =
-                text;
-        }
-
-
-        /* ---------------------------------------------
-           SLEEP
-        --------------------------------------------- */
-
-        else if (
-            lower.includes("sleep") ||
-            lower.includes("nap") ||
-            lower.includes("slept") ||
-            lower.includes("asleep")
-        ) {
-
-            type =
-                "sleep";
-
-            icon =
-                "😴";
-
-            title =
-                "Sleep";
-
-            details =
-                text;
-        }
-
-
-        /* ---------------------------------------------
-           SAVE
-        --------------------------------------------- */
-
-        await addLog({
-
-            type,
-
-            title,
-
-            details,
-
-            icon
-
-        });
-
-
-        renderEverything();
-
-
-        if (elements.voiceTranscript) {
-
-            elements.voiceTranscript.classList.remove(
-                "hidden"
-            );
-        }
-
-
-        if (elements.voiceTranscriptText) {
-
-            elements.voiceTranscriptText.textContent =
-                text;
-        }
-
-
-        if (
-            type === "diaper"
-        ) {
-
-            showToast(
-                "Diaper logged.",
-                "💧"
-            );
-
-        } else if (
-            type === "feed"
-        ) {
-
-            showToast(
-                "Feed logged.",
-                "🍼"
-            );
-
-        } else if (
-            type === "sleep"
-        ) {
-
-            showToast(
-                "Sleep note logged.",
-                "😴"
-            );
-
-        } else {
-
-            showToast(
-                "Note saved.",
-                "📝"
-            );
-        }
-    }
-
-
-    /* =====================================================
-       VOICE PERMISSION
-    ===================================================== */
-
-    function showVoicePermission() {
-
-        elements.voicePermissionMessage?.classList.remove(
+        modal.classList.add(
             "hidden"
         );
 
-
-        if (
-            elements.voicePermissionText
-        ) {
-
-            if (
-                window.location.protocol !==
-                "https:" &&
-                window.location.hostname !==
-                "localhost"
-            ) {
-
-                elements.voicePermissionText.textContent =
-                    "Voice logging requires HTTPS or localhost. Open this site through your secure HTTPS address.";
-
-            } else {
-
-                elements.voicePermissionText.textContent =
-                    "Please allow microphone access in Chrome, then try again.";
-            }
-        }
-    }
-
-
-    function hideVoicePermissionMessage() {
-
-        elements.voicePermissionMessage?.classList.add(
-            "hidden"
+        modal.setAttribute(
+            "aria-hidden",
+            "true"
         );
+
+
+        if (id === "settingsModal") {
+
+            const button =
+                $("settingsButton");
+
+            if (button) {
+
+                button.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
+
+            }
+
+        }
+
+
+        if (currentModal === id) {
+            currentModal = null;
+        }
+
     }
 
 
@@ -3132,39 +3156,36 @@
        EXPORT
     ===================================================== */
 
-    async function exportData() {
+    function exportData() {
+
+        const backup = {
+
+            app:
+                "MomYouNeedThis Baby Tracker",
+
+            version:
+                1,
+
+            exportedAt:
+                new Date().toISOString(),
+
+            state:
+                state
+
+        };
+
 
         try {
 
-            const backup = {
-
-                version: 1,
-
-                exportedAt:
-                    new Date().toISOString(),
-
-                settings: {
-                    ...settings
-                },
-
-                logs: [
-                    ...logs
-                ]
-
-            };
-
-
-            const json =
-                JSON.stringify(
-                    backup,
-                    null,
-                    2
-                );
-
-
             const blob =
                 new Blob(
-                    [json],
+                    [
+                        JSON.stringify(
+                            backup,
+                            null,
+                            2
+                        )
+                    ],
                     {
                         type:
                             "application/json"
@@ -3184,18 +3205,14 @@
                 );
 
 
-            const date =
-                new Date()
-                    .toISOString()
-                    .slice(0, 10);
-
-
             link.href =
                 url;
 
 
             link.download =
-                `baby-tracker-backup-${date}.json`;
+                "baby-tracker-backup-" +
+                getDateForFilename() +
+                ".json";
 
 
             document.body.appendChild(
@@ -3210,29 +3227,53 @@
 
 
             setTimeout(
-                () =>
-                    URL.revokeObjectURL(url),
+                function () {
+                    URL.revokeObjectURL(
+                        url
+                    );
+                },
                 1000
             );
 
 
             showToast(
-                "Backup exported.",
-                "⬇️"
+                "Backup exported"
             );
 
         } catch (error) {
 
             console.error(
-                "Export error:",
+                "Export failed:",
                 error
             );
 
             showToast(
-                "Could not export backup.",
-                "⚠️"
+                "Could not export backup"
             );
+
         }
+
+    }
+
+
+    function getDateForFilename() {
+
+        const date =
+            new Date();
+
+
+        return (
+            date.getFullYear() +
+            "-" +
+            String(
+                date.getMonth() + 1
+            ).padStart(2, "0") +
+            "-" +
+            String(
+                date.getDate()
+            ).padStart(2, "0")
+        );
+
     }
 
 
@@ -3240,10 +3281,11 @@
        IMPORT
     ===================================================== */
 
-    async function handleImport(event) {
+    function handleImport(event) {
 
         const file =
-            event.target.files?.[0];
+            event.target.files &&
+            event.target.files[0];
 
 
         if (!file) {
@@ -3251,223 +3293,205 @@
         }
 
 
-        try {
-
-            const text =
-                await file.text();
+        const reader =
+            new FileReader();
 
 
-            const data =
-                JSON.parse(text);
+        reader.onload =
+            function () {
+
+                try {
+
+                    const parsed =
+                        JSON.parse(
+                            reader.result
+                        );
 
 
-            if (
-                !data ||
-                !Array.isArray(data.logs)
-            ) {
+                    const importedState =
+                        parsed.state ||
+                        parsed;
 
-                throw new Error(
-                    "Invalid backup file."
+
+                    if (
+                        !importedState ||
+                        typeof importedState !==
+                            "object"
+                    ) {
+
+                        throw new Error(
+                            "Invalid backup"
+                        );
+
+                    }
+
+
+                    state = {
+                        ...DEFAULT_STATE,
+                        ...importedState
+                    };
+
+
+                    if (
+                        !Array.isArray(
+                            state.logs
+                        )
+                    ) {
+
+                        state.logs = [];
+
+                    }
+
+
+                    persistState();
+
+                    initializeUI();
+
+                    updateAllUI();
+
+                    showToast(
+                        "Backup imported"
+                    );
+
+                } catch (error) {
+
+                    console.error(
+                        "Import failed:",
+                        error
+                    );
+
+                    showToast(
+                        "Invalid backup file"
+                    );
+
+                }
+
+            };
+
+
+        reader.onerror =
+            function () {
+
+                showToast(
+                    "Could not read backup"
                 );
-            }
+
+            };
 
 
-            const confirmed =
-                window.confirm(
-                    "Import this backup? Your current tracker data will be replaced."
-                );
+        reader.readAsText(
+            file
+        );
 
 
-            if (!confirmed) {
+        event.target.value = "";
 
-                event.target.value =
-                    "";
-
-                return;
-            }
-
-
-            logs =
-                data.logs;
-
-
-            if (
-                data.settings &&
-                typeof data.settings ===
-                "object"
-            ) {
-
-                settings = {
-
-                    ...DEFAULT_SETTINGS,
-
-                    ...data.settings
-
-                };
-
-            }
-
-
-            await saveSettings();
-
-            await saveLogs();
-
-
-            activeSleepLog =
-                logs.find(
-                    log =>
-                        log.type === "sleep" &&
-                        log.status === "active"
-                ) || null;
-
-
-            renderEverything();
-
-
-            initializeVoiceRecognition();
-
-
-            if (activeSleepLog) {
-
-                startSleepTimer();
-
-            } else {
-
-                stopSleepTimer();
-
-            }
-
-
-            showToast(
-                "Backup imported.",
-                "⬆️"
-            );
-
-        } catch (error) {
-
-            console.error(
-                "Import error:",
-                error
-            );
-
-
-            showToast(
-                "That backup file is not valid.",
-                "⚠️"
-            );
-
-        } finally {
-
-            event.target.value =
-                "";
-        }
     }
 
 
     /* =====================================================
-       DELETE ALL DATA
+       VOICE ERRORS
     ===================================================== */
 
-    function openDeleteModal() {
+    function handleVoiceError(error) {
 
-        closeAllModalsExcept(
-            "delete"
-        );
+        switch (error) {
 
+            case "not-allowed":
 
-        elements.deleteDataModal?.classList.remove(
-            "hidden"
-        );
+            case "service-not-allowed":
 
-        elements.deleteDataModal?.setAttribute(
-            "aria-hidden",
-            "false"
-        );
+                showVoicePermissionMessage(
+                    "Microphone access was blocked. Check your browser's microphone permissions and try again."
+                );
+
+                break;
 
 
-        currentModal =
-            "delete";
+            case "no-speech":
+
+                showToast(
+                    "I didn't hear anything."
+                );
+
+                break;
+
+
+            case "audio-capture":
+
+                showVoicePermissionMessage(
+                    "Your microphone could not be accessed."
+                );
+
+                break;
+
+
+            case "network":
+
+                showVoicePermissionMessage(
+                    "Voice recognition needs a connection to the speech recognition service."
+                );
+
+                break;
+
+
+            default:
+
+                showToast(
+                    "Voice recognition stopped."
+                );
+
+        }
+
     }
 
 
-    function closeDeleteModal() {
+    function showVoicePermissionMessage(
+        message
+    ) {
 
-        elements.deleteDataModal?.classList.add(
+        const container =
+            $("voicePermissionMessage");
+
+        const text =
+            $("voicePermissionText");
+
+
+        if (!container) {
+
+            showToast(message);
+
+            return;
+
+        }
+
+
+        if (text) {
+            text.textContent =
+                message;
+        }
+
+
+        container.classList.remove(
             "hidden"
         );
 
-        elements.deleteDataModal?.setAttribute(
-            "aria-hidden",
-            "true"
-        );
-
-
-        if (
-            currentModal ===
-            "delete"
-        ) {
-
-            currentModal =
-                null;
-        }
     }
 
 
-    async function deleteEverything() {
+    function hideVoicePermissionMessage() {
 
-        try {
+        const container =
+            $("voicePermissionMessage");
 
-            logs = [];
+        if (container) {
 
-            activeSleepLog = null;
-
-
-            stopSleepTimer();
-
-
-            settings = {
-                ...DEFAULT_SETTINGS
-            };
-
-
-            await dbDelete("logs");
-
-            await dbDelete("settings");
-
-
-            await saveLogs();
-
-            await saveSettings();
-
-
-            renderEverything();
-
-            initializeVoiceRecognition();
-
-
-            closeDeleteModal();
-
-            closeSettings();
-
-
-            showToast(
-                "All tracker data deleted.",
-                "✓"
+            container.classList.add(
+                "hidden"
             );
 
-        } catch (error) {
-
-            console.error(
-                "Delete error:",
-                error
-            );
-
-
-            showToast(
-                "Could not delete the data.",
-                "⚠️"
-            );
         }
+
     }
 
 
@@ -3478,322 +3502,102 @@
     let toastTimeout = null;
 
 
-    function showToast(
-        message,
-        icon = "✓"
-    ) {
+    function showToast(message) {
 
-        if (
-            !elements.trackerToast
-        ) {
+        const toast =
+            $("trackerToast");
+
+        const text =
+            $("toastMessage");
+
+
+        if (!toast || !text) {
             return;
         }
 
 
-        if (
-            elements.toastMessage
-        ) {
-
-            elements.toastMessage.textContent =
-                message;
-        }
+        text.textContent =
+            message;
 
 
-        if (
-            elements.toastIcon
-        ) {
-
-            elements.toastIcon.textContent =
-                icon;
-        }
-
-
-        elements.trackerToast.classList.add(
+        toast.classList.add(
             "show"
         );
 
 
-        clearTimeout(
-            toastTimeout
-        );
+        if (toastTimeout) {
+
+            clearTimeout(
+                toastTimeout
+            );
+
+        }
 
 
         toastTimeout =
             setTimeout(
-                () => {
+                function () {
 
-                    elements.trackerToast.classList.remove(
+                    toast.classList.remove(
                         "show"
                     );
 
                 },
-                3000
+                2600
             );
+
     }
 
 
     /* =====================================================
-       TIME HELPERS
+       FATAL ERROR
     ===================================================== */
 
-    function formatTime(timestamp) {
-
-        return new Date(
-            timestamp
-        ).toLocaleTimeString(
-            undefined,
-            {
-                hour: "numeric",
-                minute: "2-digit"
-            }
-        );
-    }
-
-
-    function calculateTimeDifference(
-        start,
-        end
-    ) {
-
-        const [
-            startHours,
-            startMinutes
-        ] =
-            start.split(":")
-                .map(Number);
-
-
-        const [
-            endHours,
-            endMinutes
-        ] =
-            end.split(":")
-                .map(Number);
-
-
-        let startTotal =
-            startHours * 60 +
-            startMinutes;
-
-
-        let endTotal =
-            endHours * 60 +
-            endMinutes;
-
+    function showFatalError() {
 
         /*
-         Handles naps crossing midnight.
-        */
+         * Do NOT destroy the whole page if something fails.
+         * The user can still see the tracker and get an
+         * understandable message.
+         */
 
-        if (
-            endTotal <= startTotal
-        ) {
+        const existing =
+            document.querySelector(
+                ".tracker-fatal-error"
+            );
 
-            endTotal +=
-                24 * 60;
+
+        if (existing) {
+            return;
         }
 
 
-        return (
-            endTotal -
-            startTotal
-        ) * 60 * 1000;
-    }
-
-
-    function formatDuration(
-        milliseconds
-    ) {
-
-        const totalMinutes =
-            Math.floor(
-                milliseconds /
-                60000
+        const message =
+            document.createElement(
+                "div"
             );
 
 
-        const hours =
-            Math.floor(
-                totalMinutes /
-                60
-            );
+        message.className =
+            "tracker-fatal-error";
 
 
-        const minutes =
-            totalMinutes %
-            60;
+        message.innerHTML = `
+            <strong>
+                The tracker could not finish loading.
+            </strong>
+
+            <p>
+                Please refresh the page.
+                Your existing saved data has not been deleted.
+            </p>
+        `;
 
 
-        if (hours > 0) {
-
-            return `${hours}h ${minutes}m`;
-
-        }
-
-
-        return `${minutes}m`;
-    }
-
-
-    function formatShortDuration(
-        milliseconds
-    ) {
-
-        if (
-            !milliseconds ||
-            milliseconds <= 0
-        ) {
-
-            return "0m";
-        }
-
-
-        const minutes =
-            Math.floor(
-                milliseconds /
-                60000
-            );
-
-
-        const hours =
-            Math.floor(
-                minutes /
-                60
-            );
-
-
-        const remainingMinutes =
-            minutes %
-            60;
-
-
-        if (hours > 0) {
-
-            return `${hours}h ${remainingMinutes}m`;
-
-        }
-
-
-        return `${minutes}m`;
-    }
-
-
-    function formatClockDuration(
-        milliseconds
-    ) {
-
-        const totalSeconds =
-            Math.floor(
-                milliseconds /
-                1000
-            );
-
-
-        const hours =
-            Math.floor(
-                totalSeconds /
-                3600
-            );
-
-
-        const minutes =
-            Math.floor(
-                (totalSeconds % 3600) /
-                60
-            );
-
-
-        const seconds =
-            totalSeconds %
-            60;
-
-
-        return [
-
-            String(hours)
-                .padStart(2, "0"),
-
-            String(minutes)
-                .padStart(2, "0"),
-
-            String(seconds)
-                .padStart(2, "0")
-
-        ].join(":");
-    }
-
-
-    /* =====================================================
-       ID
-    ===================================================== */
-
-    function generateId() {
-
-        if (
-            window.crypto &&
-            typeof window.crypto.randomUUID ===
-            "function"
-        ) {
-
-            return window.crypto.randomUUID();
-
-        }
-
-
-        return (
-            Date.now().toString(36) +
-            "-" +
-            Math.random()
-                .toString(36)
-                .slice(2)
+        document.body.appendChild(
+            message
         );
+
     }
-
-
-    /* =====================================================
-       ESCAPE HTML
-    ===================================================== */
-
-    function escapeHtml(value) {
-
-        return String(value)
-            .replaceAll("&", "&amp;")
-            .replaceAll("<", "&lt;")
-            .replaceAll(">", "&gt;")
-            .replaceAll('"', "&quot;")
-            .replaceAll("'", "&#039;");
-    }
-
-
-    /* =====================================================
-       GLOBAL ERROR PROTECTION
-       Prevent one unrelated error from killing the tracker.
-    ===================================================== */
-
-    window.addEventListener(
-        "error",
-        event => {
-
-            console.error(
-                "Baby Tracker runtime error:",
-                event.error ||
-                event.message
-            );
-
-        }
-    );
-
-
-    window.addEventListener(
-        "unhandledrejection",
-        event => {
-
-            console.error(
-                "Baby Tracker promise error:",
-                event.reason
-            );
-
-        }
-    );
 
 })();
