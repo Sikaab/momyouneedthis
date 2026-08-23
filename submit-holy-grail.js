@@ -1,17 +1,23 @@
+/* =====================================
+   HOLY GRAIL PRODUCT SUBMISSION
+   MomYouNeedThis
+===================================== */
+
 import { db } from "./firebase-config.js";
 
 import {
     collection,
     addDoc,
     serverTimestamp
-} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
 
 
-// =========================================================
-// ELEMENTS
-// =========================================================
+/* ===========================
+   ELEMENTS
+=========================== */
 
-const form = document.getElementById("holyGrailForm");
+const form =
+    document.getElementById("holyGrailForm");
 
 const productNameInput =
     document.getElementById("productName");
@@ -38,133 +44,197 @@ const submitAnother =
     document.getElementById("submitAnother");
 
 
-// =========================================================
-// SUBMIT HOLY GRAIL
-// =========================================================
+/* ===========================
+   SAFETY CHECK
+=========================== */
 
-form.addEventListener("submit", async (event) => {
+if (!form) {
 
-    event.preventDefault();
+    console.error(
+        "Holy Grail form was not found."
+    );
 
-    errorMessage.textContent = "";
-
-
-    const productName =
-        productNameInput.value.trim();
-
-    const brand =
-        brandInput.value.trim();
+}
 
 
-    // -----------------------------------------------------
-    // VALIDATION
-    // -----------------------------------------------------
+/* ===========================
+   SUBMIT RECOMMENDATION
+=========================== */
 
-    if (!productName) {
+if (form) {
 
-        errorMessage.textContent =
-            "Please enter the product name.";
+    form.addEventListener(
+        "submit",
+        async (event) => {
 
-        productNameInput.focus();
-
-        return;
-    }
+            event.preventDefault();
 
 
-    if (!brand) {
+            /* Clear previous error */
 
-        errorMessage.textContent =
-            "Please enter the brand.";
-
-        brandInput.focus();
-
-        return;
-    }
+            errorMessage.textContent = "";
 
 
-    // -----------------------------------------------------
-    // LOADING STATE
-    // -----------------------------------------------------
+            /* =========================
+               GET VALUES
+            ========================= */
 
-    submitButton.disabled = true;
+            const productName =
+                productNameInput.value.trim();
 
-    submitText.hidden = true;
+            const brand =
+                brandInput.value.trim();
 
-    submitLoading.hidden = false;
 
+            /* =========================
+               VALIDATION
+            ========================= */
 
-    try {
+            if (!productName) {
 
-        // -------------------------------------------------
-        // SAVE TO FIRESTORE
-        // -------------------------------------------------
+                errorMessage.textContent =
+                    "Please enter the product name.";
 
-        await addDoc(
-            collection(
-                db,
-                "holyGrailRecommendations"
-            ),
-            {
-                productName: productName,
-                brand: brand,
-                submittedAt: serverTimestamp()
+                productNameInput.focus();
+
+                return;
+
             }
-        );
 
 
-        // -------------------------------------------------
-        // SHOW SUCCESS
-        // -------------------------------------------------
+            if (!brand) {
 
-        form.hidden = true;
+                errorMessage.textContent =
+                    "Please enter the brand.";
 
-        successMessage.hidden = false;
+                brandInput.focus();
 
-        productNameInput.value = "";
+                return;
 
-        brandInput.value = "";
-
-
-    } catch (error) {
-
-        console.error(
-            "Holy Grail submission error:",
-            error
-        );
+            }
 
 
-        errorMessage.textContent =
-            "We couldn't send your recommendation. Please try again.";
+            /* =========================
+               LOADING STATE
+            ========================= */
 
-        submitButton.disabled = false;
+            submitButton.disabled = true;
 
-        submitText.hidden = false;
+            submitText.hidden = true;
 
-        submitLoading.hidden = true;
-
-    }
-
-});
+            submitLoading.hidden = false;
 
 
-// =========================================================
-// SUBMIT ANOTHER
-// =========================================================
+            try {
 
-submitAnother.addEventListener("click", () => {
+                console.log(
+                    "Submitting Holy Grail recommendation..."
+                );
 
-    successMessage.hidden = true;
 
-    form.hidden = false;
+                /* =========================
+                   SAVE TO FIRESTORE
+                ========================= */
 
-    submitButton.disabled = false;
+                const docRef =
+                    await addDoc(
+                        collection(
+                            db,
+                            "holyGrailRecommendations"
+                        ),
+                        {
 
-    submitText.hidden = false;
+                            productName:
+                                productName,
 
-    submitLoading.hidden = true;
+                            brand:
+                                brand,
 
-    errorMessage.textContent = "";
+                            createdAt:
+                                serverTimestamp(),
 
-    productNameInput.focus();
+                            status:
+                                "pending"
 
-});
+                        }
+                    );
+
+
+                console.log(
+                    "Holy Grail recommendation saved:",
+                    docRef.id
+                );
+
+
+                /* =========================
+                   SUCCESS
+                ========================= */
+
+                form.hidden = true;
+
+                successMessage.hidden = false;
+
+
+                /* Clear fields */
+
+                productNameInput.value = "";
+
+                brandInput.value = "";
+
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Holy Grail Firebase error:",
+                    error
+                );
+
+
+                errorMessage.textContent =
+                    "We couldn't submit your recommendation right now. Please try again.";
+
+
+                submitButton.disabled = false;
+
+                submitText.hidden = false;
+
+                submitLoading.hidden = true;
+
+            }
+
+        }
+    );
+
+}
+
+
+/* ===========================
+   SUBMIT ANOTHER
+=========================== */
+
+if (submitAnother) {
+
+    submitAnother.addEventListener(
+        "click",
+        () => {
+
+            successMessage.hidden = true;
+
+            form.hidden = false;
+
+            submitButton.disabled = false;
+
+            submitText.hidden = false;
+
+            submitLoading.hidden = true;
+
+            errorMessage.textContent = "";
+
+            productNameInput.focus();
+
+        }
+    );
+
+}
