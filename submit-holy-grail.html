@@ -19,15 +19,21 @@
         content="Tell MomYouNeedThis about the baby, toddler or parenting product you absolutely swear by."
     >
 
+    <!-- Main site styles -->
+
     <link
         rel="stylesheet"
         href="style.css"
     >
 
+    <!-- Mom recommendations / Holy Grail styles -->
+
     <link
         rel="stylesheet"
         href="amazon-favorites.css"
     >
+
+    <!-- Google Font -->
 
     <link
         href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap"
@@ -44,11 +50,14 @@
 <section class="resource-page">
 
 
-    <!-- HEADER -->
+    <!-- =====================================================
+         LOGO
+    ====================================================== -->
 
     <a
         href="index.html"
         class="holy-grail-logo-link"
+        aria-label="MomYouNeedThis home"
     >
 
         <img
@@ -60,6 +69,10 @@
     </a>
 
 
+    <!-- =====================================================
+         BADGE
+    ====================================================== -->
+
     <span class="amazon-badge">
 
         💗 MOM-TO-MOM RECOMMENDATIONS
@@ -67,7 +80,9 @@
     </span>
 
 
-    <!-- HERO -->
+    <!-- =====================================================
+         HERO
+    ====================================================== -->
 
     <h1>
 
@@ -91,10 +106,11 @@
     </p>
 
 
-    <!-- FORM -->
+    <!-- =====================================================
+         SUBMISSION FORM
+    ====================================================== -->
 
     <div class="holy-grail-form">
-
 
         <form
             id="holyGrailForm"
@@ -107,7 +123,9 @@
             <div class="holy-grail-field">
 
                 <label for="productName">
+
                     Product name
+
                 </label>
 
                 <input
@@ -115,8 +133,8 @@
                     id="productName"
                     name="productName"
                     placeholder="e.g. Hatch Rest"
-                    autocomplete="off"
                     maxlength="150"
+                    autocomplete="off"
                     required
                 >
 
@@ -128,7 +146,9 @@
             <div class="holy-grail-field">
 
                 <label for="brandName">
+
                     Brand
+
                 </label>
 
                 <input
@@ -136,15 +156,15 @@
                     id="brandName"
                     name="brandName"
                     placeholder="e.g. Hatch"
-                    autocomplete="off"
                     maxlength="100"
+                    autocomplete="off"
                     required
                 >
 
             </div>
 
 
-            <!-- ERROR -->
+            <!-- ERROR MESSAGE -->
 
             <p
                 id="holyGrailError"
@@ -154,7 +174,7 @@
             ></p>
 
 
-            <!-- SUBMIT -->
+            <!-- SUBMIT BUTTON -->
 
             <button
                 type="submit"
@@ -163,14 +183,18 @@
             >
 
                 <span id="submitText">
+
                     💗 Submit My Holy Grail
+
                 </span>
 
                 <span
                     id="submitLoading"
                     hidden
                 >
+
                     Sending...
+
                 </span>
 
             </button>
@@ -179,7 +203,9 @@
         </form>
 
 
-        <!-- SUCCESS -->
+        <!-- =================================================
+             SUCCESS MESSAGE
+        ================================================== -->
 
         <div
             id="holyGrailSuccess"
@@ -188,18 +214,30 @@
         >
 
             <div class="holy-grail-success-icon">
+
                 💗
+
             </div>
 
+
             <h2>
+
                 Thank you, Mom!
+
             </h2>
 
+
             <p>
+
                 Your recommendation was sent.
+
+                <br>
+
                 We may feature it in a future
                 Mom-Approved Product Battle.
+
             </p>
+
 
             <button
                 type="button"
@@ -213,17 +251,21 @@
 
         </div>
 
-
     </div>
 
 
-    <!-- EXPLANATION -->
+    <!-- =====================================================
+         WHAT HAPPENS NEXT
+    ====================================================== -->
 
     <div class="tips">
 
         <h2>
+
             🏆 What Happens Next?
+
         </h2>
+
 
         <p>
 
@@ -241,7 +283,9 @@
     </div>
 
 
-    <!-- BACK TO RECOMMENDATIONS -->
+    <!-- =====================================================
+         BACK TO RECOMMENDATIONS
+    ====================================================== -->
 
     <div class="holy-grail-back">
 
@@ -257,7 +301,9 @@
     </div>
 
 
-    <!-- FOOTER -->
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
 
     <footer>
 
@@ -270,24 +316,36 @@
 
         </div>
 
+
         <h3>
+
             MomYouNeedThis
+
         </h3>
 
+
         <p>
+
             Helping moms discover things that make
             everyday life a little easier.
+
         </p>
+
 
         <div class="footer-bottom">
 
             <p>
+
                 © 2026 MomYouNeedThis
+
             </p>
 
+
             <p>
+
                 As an Amazon Associate, I earn from
                 qualifying purchases.
+
             </p>
 
         </div>
@@ -300,9 +358,15 @@
 </div>
 
 
-<!-- FIREBASE + PAGE JAVASCRIPT -->
+<!-- =========================================================
+     HOLY GRAIL JAVASCRIPT
+========================================================= -->
 
-<script type="module" src="holy-grail.js"></script>
+<script
+    type="module"
+    src="submit-holy-grail.js"
+></script>
+
 
 </body>
 
