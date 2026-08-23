@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Share Your Mom Holy Grail | MomYouNeedThis
+    </title>
+
+    <meta
+        name="description"
+        content="Tell MomYouNeedThis about the baby, toddler or parenting product you absolutely swear by."
+    >
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="amazon-favorites.css"
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap"
+        rel="stylesheet"
+    >
+
+</head>
+
+
+<body>
+
+<div class="page">
+
+<section class="resource-page">
+
+
+    <!-- HEADER -->
+
+    <a
+        href="index.html"
+        class="holy-grail-logo-link"
+    >
+
+        <img
+            src="assets/logo.svg"
+            class="logo"
+            alt="MomYouNeedThis"
+        >
+
+    </a>
+
+
+    <span class="amazon-badge">
+
+        💗 MOM-TO-MOM RECOMMENDATIONS
+
+    </span>
+
+
+    <!-- HERO -->
+
+    <h1>
+
+        What's Your
+        <span>Mom Holy Grail?</span>
+
+    </h1>
+
+
+    <p class="intro">
+
+        What's the one baby, toddler or parenting product
+        you would recommend to another mom without hesitation?
+
+        <br><br>
+
+        <strong>
+            Tell us about it.
+        </strong>
+
+    </p>
+
+
+    <!-- FORM -->
+
+    <div class="holy-grail-form">
+
+
+        <form
+            id="holyGrailForm"
+            novalidate
+        >
+
+
+            <!-- PRODUCT NAME -->
+
+            <div class="holy-grail-field">
+
+                <label for="productName">
+                    Product name
+                </label>
+
+                <input
+                    type="text"
+                    id="productName"
+                    name="productName"
+                    placeholder="e.g. Hatch Rest"
+                    autocomplete="off"
+                    maxlength="150"
+                    required
+                >
+
+            </div>
+
+
+            <!-- BRAND -->
+
+            <div class="holy-grail-field">
+
+                <label for="brandName">
+                    Brand
+                </label>
+
+                <input
+                    type="text"
+                    id="brandName"
+                    name="brandName"
+                    placeholder="e.g. Hatch"
+                    autocomplete="off"
+                    maxlength="100"
+                    required
+                >
+
+            </div>
+
+
+            <!-- ERROR -->
+
+            <p
+                id="holyGrailError"
+                class="holy-grail-error"
+                role="alert"
+                aria-live="polite"
+            ></p>
+
+
+            <!-- SUBMIT -->
+
+            <button
+                type="submit"
+                id="holyGrailSubmit"
+                class="holy-grail-submit"
+            >
+
+                <span id="submitText">
+                    💗 Submit My Holy Grail
+                </span>
+
+                <span
+                    id="submitLoading"
+                    hidden
+                >
+                    Sending...
+                </span>
+
+            </button>
+
+
+        </form>
+
+
+        <!-- SUCCESS -->
+
+        <div
+            id="holyGrailSuccess"
+            class="holy-grail-success"
+            hidden
+        >
+
+            <div class="holy-grail-success-icon">
+                💗
+            </div>
+
+            <h2>
+                Thank you, Mom!
+            </h2>
+
+            <p>
+                Your recommendation was sent.
+                We may feature it in a future
+                Mom-Approved Product Battle.
+            </p>
+
+            <button
+                type="button"
+                id="submitAnother"
+                class="holy-grail-another"
+            >
+
+                Submit Another Product
+
+            </button>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- EXPLANATION -->
+
+    <div class="tips">
+
+        <h2>
+            🏆 What Happens Next?
+        </h2>
+
+        <p>
+
+            We collect recommendations from moms
+            and look for the products that keep coming up.
+
+            <br><br>
+
+            Those products can then be added to our
+            <strong>Mom-Approved Product Battles</strong>,
+            where moms get to vote for their favorites.
+
+        </p>
+
+    </div>
+
+
+    <!-- BACK TO RECOMMENDATIONS -->
+
+    <div class="holy-grail-back">
+
+        <a
+            href="amazon-favorites.html"
+            class="holy-grail-back-link"
+        >
+
+            🗳️ See Mom-Approved Recommendations
+
+        </a>
+
+    </div>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <div class="footer-logo">
+
+            <img
+                src="assets/logo.svg"
+                alt="MomYouNeedThis"
+            >
+
+        </div>
+
+        <h3>
+            MomYouNeedThis
+        </h3>
+
+        <p>
+            Helping moms discover things that make
+            everyday life a little easier.
+        </p>
+
+        <div class="footer-bottom">
+
+            <p>
+                © 2026 MomYouNeedThis
+            </p>
+
+            <p>
+                As an Amazon Associate, I earn from
+                qualifying purchases.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+</section>
+
+</div>
+
+
+<!-- FIREBASE + PAGE JAVASCRIPT -->
+
+<script type="module" src="holy-grail.js"></script>
+
+</body>
+
+</html>
