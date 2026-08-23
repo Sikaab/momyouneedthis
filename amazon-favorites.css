@@ -1330,3 +1330,388 @@
     }
 
 }
+
+
+/* =========================================================
+   HOLY GRAIL SUBMISSION PAGE
+========================================================= */
+
+.holy-grail-logo-link {
+    display: block;
+    width: fit-content;
+    margin: 0 auto;
+    line-height: 0;
+    text-decoration: none;
+}
+
+
+/* =========================================================
+   FORM CONTAINER
+========================================================= */
+
+.holy-grail-form {
+    width: 100%;
+    max-width: 590px;
+    margin: 38px auto 55px;
+    padding: 34px;
+    box-sizing: border-box;
+
+    background: #ffffff;
+
+    border: 1px solid #eeeeee;
+    border-radius: 24px;
+
+    box-shadow:
+        0 14px 40px rgba(0, 0, 0, 0.06);
+}
+
+
+/* =========================================================
+   FORM FIELDS
+========================================================= */
+
+.holy-grail-field {
+    margin-bottom: 22px;
+}
+
+
+.holy-grail-field label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #333;
+
+    font-family: "Nunito", sans-serif;
+
+    font-size: 14px;
+    font-weight: 900;
+}
+
+
+.holy-grail-field input {
+    display: block;
+
+    width: 100%;
+    height: 54px;
+
+    box-sizing: border-box;
+
+    padding: 0 16px;
+
+    border: 1px solid #dddddd;
+    border-radius: 13px;
+
+    background: #ffffff;
+
+    color: #333;
+
+    font-family: "Nunito", sans-serif;
+
+    font-size: 15px;
+
+    outline: none;
+
+    transition:
+        border-color .2s ease,
+        box-shadow .2s ease,
+        background .2s ease;
+}
+
+
+.holy-grail-field input::placeholder {
+    color: #aaaaaa;
+}
+
+
+.holy-grail-field input:hover {
+    border-color: #cccccc;
+}
+
+
+.holy-grail-field input:focus {
+    border-color: #d94d7a;
+
+    background: #fffafb;
+
+    box-shadow:
+        0 0 0 4px rgba(217, 77, 122, 0.10);
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.holy-grail-error {
+    min-height: 20px;
+
+    margin: -5px 0 12px;
+
+    color: #c43f67;
+
+    font-size: 13px;
+    font-weight: 800;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   SUBMIT BUTTON
+========================================================= */
+
+.holy-grail-submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    min-height: 56px;
+
+    padding: 14px 20px;
+
+    border: 0;
+    border-radius: 14px;
+
+    background: #d94d7a;
+
+    color: #ffffff;
+
+    font-family: "Nunito", sans-serif;
+
+    font-size: 14px;
+    font-weight: 900;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 9px 22px rgba(217, 77, 122, 0.20);
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        background .2s ease,
+        opacity .2s ease;
+}
+
+
+.holy-grail-submit:hover:not(:disabled) {
+    transform: translateY(-2px);
+
+    background: #cf426f;
+
+    box-shadow:
+        0 12px 26px rgba(217, 77, 122, 0.26);
+}
+
+
+.holy-grail-submit:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+
+.holy-grail-submit:disabled {
+    opacity: .65;
+
+    cursor: wait;
+
+    transform: none;
+}
+
+
+/* =========================================================
+   SUCCESS MESSAGE
+========================================================= */
+
+.holy-grail-success {
+    text-align: center;
+}
+
+
+.holy-grail-success-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 64px;
+    height: 64px;
+
+    margin: 0 auto 16px;
+
+    border-radius: 50%;
+
+    background: #fff1f6;
+
+    font-size: 28px;
+}
+
+
+.holy-grail-success h2 {
+    margin: 0 0 10px;
+
+    color: #333;
+
+    font-family: "Nunito", sans-serif;
+
+    font-size: 30px;
+    font-weight: 900;
+}
+
+
+.holy-grail-success p {
+    max-width: 430px;
+
+    margin: 0 auto 24px;
+
+    color: #777;
+
+    font-size: 15px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   SUBMIT ANOTHER BUTTON
+========================================================= */
+
+.holy-grail-another {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 45px;
+
+    padding: 11px 18px;
+
+    border: 1px solid #ead5dd;
+    border-radius: 11px;
+
+    background: #ffffff;
+
+    color: #d94d7a;
+
+    font-family: "Nunito", sans-serif;
+
+    font-size: 13px;
+    font-weight: 900;
+
+    cursor: pointer;
+
+    transition:
+        background .2s ease,
+        transform .2s ease,
+        border-color .2s ease;
+}
+
+
+.holy-grail-another:hover {
+    transform: translateY(-2px);
+
+    background: #fff4f7;
+
+    border-color: #e6bfce;
+}
+
+
+/* =========================================================
+   BACK TO RECOMMENDATIONS
+========================================================= */
+
+.holy-grail-back {
+    margin: 0 auto 75px;
+
+    text-align: center;
+}
+
+
+.holy-grail-back-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 48px;
+
+    padding: 12px 20px;
+
+    border-radius: 12px;
+
+    background: #f8f8f8;
+
+    color: #555;
+
+    font-family: "Nunito", sans-serif;
+
+    font-size: 13px;
+    font-weight: 900;
+
+    text-decoration: none;
+
+    transition:
+        transform .2s ease,
+        background .2s ease,
+        color .2s ease;
+}
+
+
+.holy-grail-back-link:hover {
+    transform: translateY(-2px);
+
+    background: #fff1f6;
+
+    color: #d94d7a;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .holy-grail-form {
+        max-width: 100%;
+
+        margin-top: 30px;
+
+        padding: 25px 20px;
+
+        border-radius: 20px;
+    }
+
+
+    .holy-grail-field {
+        margin-bottom: 19px;
+    }
+
+
+    .holy-grail-field input {
+        height: 52px;
+
+        font-size: 16px;
+    }
+
+
+    .holy-grail-submit {
+        min-height: 54px;
+
+        font-size: 13px;
+    }
+
+
+    .holy-grail-success h2 {
+        font-size: 27px;
+    }
+
+
+    .holy-grail-success p {
+        font-size: 14px;
+    }
+
+
+    .holy-grail-back {
+        margin-bottom: 55px;
+    }
+
+}
