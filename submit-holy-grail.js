@@ -1,5 +1,3 @@
-I’m not posting my firebase config. It only initialize the app. 
-
 /* =====================================
    HOLY GRAIL PRODUCT SUBMISSION
    MomYouNeedThis
