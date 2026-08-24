@@ -1,12 +1,27 @@
 /* =========================================================
-   MOM-VOTED PRODUCT EXPERIENCE
+   MOM VOTED EXPERIENCE
    MomYouNeedThis
 ========================================================= */
 
 .mom-voted-page {
-    width: 100%;
-    max-width: 1050px;
+    --mv-pink: #e85d8f;
+    --mv-pink-dark: #d94378;
+    --mv-pink-light: #fff0f5;
+    --mv-purple: #8b6fc9;
+    --mv-green: #55a982;
+    --mv-red: #dc6670;
+    --mv-text: #302a30;
+    --mv-muted: #77717a;
+    --mv-border: #eee5ea;
+    --mv-bg: #fffafc;
+    --mv-card: #ffffff;
+    --mv-shadow: 0 18px 50px rgba(65, 38, 52, .08);
+
+    max-width: 1120px;
     margin: 0 auto;
+    padding: 24px 20px 70px;
+
+    color: var(--mv-text);
 }
 
 
@@ -16,55 +31,54 @@
 
 .mom-voted-header {
     display: flex;
-    flex-direction: column;
     align-items: center;
-
-    width: 100%;
-    margin: 0 auto 25px;
-
-    text-align: center;
-}
-
-.mom-voted-logo-link {
-    display: block;
-    width: fit-content;
-    margin: 0 auto;
-    line-height: 0;
-    text-decoration: none;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 42px;
 }
 
 .mom-voted-logo {
-    display: block;
-    width: 190px;
-    max-width: 190px;
+    width: 180px;
+    max-width: 100%;
     height: auto;
-    margin: 0 auto;
+    display: block;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
 .community-badge {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-
-    width: fit-content;
-
-    margin-top: 15px;
-    padding: 7px 14px;
-
-    border: 1px solid #f5d5e1;
+    padding: 8px 13px;
     border-radius: 999px;
-
-    background: #fff1f6;
-
-    color: #d94d7a;
-
-    font-family: "Nunito", sans-serif;
-
+    background: var(--mv-pink-light);
+    color: var(--mv-pink-dark);
     font-size: 11px;
     font-weight: 900;
+    letter-spacing: .08em;
+}
 
-    letter-spacing: .6px;
-    line-height: 1.2;
+.live-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: .1em;
+    color: var(--mv-green);
+}
+
+.live-indicator span {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--mv-green);
+    box-shadow: 0 0 0 5px rgba(85, 169, 130, .1);
 }
 
 
@@ -74,181 +88,177 @@
 
 .voting-hero {
     text-align: center;
+    padding: 40px 10px 55px;
+    max-width: 850px;
+    margin: 0 auto;
 }
 
 .hero-kicker {
     display: inline-block;
-
-    margin-bottom: 12px;
-
-    color: #d94d7a;
-
-    font-family: "Nunito", sans-serif;
-
+    margin-bottom: 15px;
     font-size: 11px;
     font-weight: 900;
-
-    letter-spacing: 1.4px;
+    letter-spacing: .16em;
+    color: var(--mv-pink-dark);
 }
 
-.mom-voted-page h1 {
-    max-width: 760px;
-
-    margin: 0 auto;
-
-    text-align: center;
-
-    font-family: "Nunito", sans-serif;
-
-    font-size: clamp(40px, 7vw, 68px);
-    font-weight: 900;
-
+.voting-hero h1 {
+    margin: 0;
+    font-size: clamp(38px, 6vw, 68px);
     line-height: .98;
-
-    letter-spacing: -2.5px;
+    letter-spacing: -.045em;
+    font-weight: 900;
 }
 
-.mom-voted-page h1 span {
+.voting-hero h1 span {
     display: block;
-    margin-top: 5px;
+    color: var(--mv-pink);
+    margin-top: 8px;
 }
 
 .mom-voted-intro {
     max-width: 650px;
-
-    margin: 24px auto 20px;
-
-    text-align: center;
-
-    font-family: "Nunito", sans-serif;
-
+    margin: 24px auto 0;
     font-size: 17px;
-    line-height: 1.65;
-
-    color: #666;
+    line-height: 1.7;
+    color: var(--mv-muted);
 }
 
 .hero-mini-proof {
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 15px;
+    margin-top: 32px;
+}
 
-    flex-wrap: wrap;
+.hero-mini-proof > div:not(.proof-arrow) {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
 
-    gap: 7px;
-
-    margin: 0 auto 35px;
-
-    color: #777;
-
-    font-family: "Nunito", sans-serif;
-
-    font-size: 12px;
+.hero-mini-proof span {
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: .1em;
+    color: var(--mv-pink);
 }
 
 .hero-mini-proof strong {
-    color: #333;
+    font-size: 13px;
+}
+
+.proof-arrow {
+    color: #c9bdc5;
+    font-size: 20px;
+}
+
+.hero-scroll-hint {
+    margin-top: 35px;
+    font-size: 11px;
+    font-weight: 900;
+    color: var(--mv-muted);
+    text-transform: uppercase;
+    letter-spacing: .1em;
+}
+
+.hero-scroll-hint span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 25px;
+    height: 25px;
+    margin-right: 7px;
+    border: 1px solid var(--mv-border);
+    border-radius: 50%;
 }
 
 
 /* =========================================================
-   HOLY GRAIL
+   HOLY GRAIL BANNER
 ========================================================= */
 
 .holy-grail-banner {
     display: flex;
     align-items: center;
-
-    gap: 16px;
-
-    width: 100%;
-    max-width: 780px;
-
-    margin: 0 auto 42px;
-
+    gap: 15px;
     padding: 18px 20px;
+    margin-bottom: 32px;
 
-    box-sizing: border-box;
-
-    background: linear-gradient(
-        135deg,
-        #fff8fb,
-        #fff2f7
-    );
-
-    border: 1px solid #f5d8e3;
-
+    border: 1px solid #f1d9e2;
     border-radius: 18px;
+
+    background:
+        linear-gradient(
+            110deg,
+            #fff5f8,
+            #fffafd
+        );
+
+    box-shadow: 0 8px 30px rgba(80, 40, 60, .05);
 }
 
 .holy-grail-banner-icon {
-    flex: 0 0 44px;
-
-    width: 44px;
-    height: 44px;
+    width: 45px;
+    height: 45px;
+    flex: 0 0 45px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    border-radius: 50%;
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: 0 5px 15px rgba(80, 40, 60, .08);
 
-    background: white;
-
-    font-size: 22px;
-
-    box-shadow:
-        0 4px 14px rgba(0, 0, 0, .06);
+    font-size: 21px;
 }
 
 .holy-grail-banner-content {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
     flex: 1;
-    min-width: 0;
 }
 
 .holy-grail-banner-content strong {
-    display: block;
-
-    margin-bottom: 3px;
-
-    color: #333;
-
-    font-family: "Nunito", sans-serif;
-
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 900;
 }
 
 .holy-grail-banner-content span {
-    display: block;
-
-    color: #777;
-
-    font-family: "Nunito", sans-serif;
-
-    font-size: 13px;
-    line-height: 1.45;
+    font-size: 12px;
+    color: var(--mv-muted);
 }
 
 .holy-grail-link {
-    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 
-    color: #d94d7a;
+    padding: 10px 16px;
 
-    font-family: "Nunito", sans-serif;
+    border-radius: 999px;
 
-    font-size: 13px;
+    background: var(--mv-pink);
+    color: white !important;
+
+    font-size: 12px;
     font-weight: 900;
 
     text-decoration: none;
 
     white-space: nowrap;
 
-    transition: opacity .2s ease;
+    transition:
+        transform .2s ease,
+        background .2s ease;
 }
 
 .holy-grail-link:hover {
-    opacity: .7;
+    background: var(--mv-pink-dark);
+    transform: translateY(-2px);
 }
 
 
@@ -257,153 +267,208 @@
 ========================================================= */
 
 .voting-categories {
+    position: sticky;
+    top: 10px;
+    z-index: 20;
+
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    gap: 8px;
 
-    gap: 9px;
+    overflow-x: auto;
 
-    margin: 0 auto 22px;
+    padding: 7px;
+
+    margin-bottom: 42px;
+
+    background: rgba(255,255,255,.92);
+    border: 1px solid var(--mv-border);
+    border-radius: 999px;
+
+    box-shadow: 0 8px 25px rgba(60, 40, 50, .07);
+
+    backdrop-filter: blur(12px);
+
+    scrollbar-width: none;
 }
 
-.voting-categories a {
+.voting-categories::-webkit-scrollbar {
+    display: none;
+}
+
+.category-link {
+    flex: 0 0 auto;
+
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: 6px;
 
     padding: 10px 16px;
 
-    border: 1px solid #ededed;
     border-radius: 999px;
 
-    background: #f8f8f8;
-
-    color: #444;
-
-    font-family: "Nunito", sans-serif;
-
-    font-size: 13px;
-    font-weight: 800;
-
+    color: var(--mv-muted);
     text-decoration: none;
 
+    font-size: 12px;
+    font-weight: 900;
+
     transition:
-        transform .2s ease,
         background .2s ease,
-        border-color .2s ease,
-        color .2s ease;
+        color .2s ease,
+        transform .2s ease;
 }
 
-.voting-categories a:hover,
-.voting-categories a.active {
-    transform: translateY(-2px);
+.category-link:hover {
+    transform: translateY(-1px);
+    color: var(--mv-text);
+}
 
-    background: #fff1f6;
-
-    border-color: #f3ccd9;
-
-    color: #d94d7a;
+.category-link.active {
+    background: var(--mv-text);
+    color: #fff;
 }
 
 
 /* =========================================================
-   DISCOVERY FILTERS
+   DISCOVERY
 ========================================================= */
+
+.discovery-section {
+    margin-bottom: 55px;
+}
+
+.discovery-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 17px;
+}
+
+.section-eyebrow {
+    display: block;
+    margin-bottom: 6px;
+
+    color: var(--mv-pink-dark);
+
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: .15em;
+}
+
+.discovery-heading h2 {
+    margin: 0;
+    font-size: 25px;
+    line-height: 1.15;
+    font-weight: 900;
+}
+
+.battle-count {
+    padding: 7px 12px;
+    border-radius: 999px;
+    background: #f7f4f6;
+    color: var(--mv-muted);
+    font-size: 11px;
+    font-weight: 800;
+}
 
 .discovery-strip {
     display: flex;
-    align-items: center;
-    justify-content: center;
-
-    flex-wrap: wrap;
-
     gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 3px;
+}
 
-    margin: 0 auto 70px;
+.discovery-strip::-webkit-scrollbar {
+    display: none;
 }
 
 .discovery-filter {
-    padding: 8px 13px;
+    flex: 0 0 auto;
 
-    border: 0;
+    border: 1px solid var(--mv-border);
+    background: white;
 
-    background: transparent;
+    color: var(--mv-muted);
 
-    color: #888;
+    border-radius: 999px;
 
-    font-family: "Nunito", sans-serif;
+    padding: 10px 15px;
 
+    font-family: inherit;
     font-size: 12px;
     font-weight: 900;
 
     cursor: pointer;
 
     transition:
-        color .2s ease,
-        transform .2s ease;
+        all .2s ease;
 }
 
 .discovery-filter:hover {
-    color: #d94d7a;
     transform: translateY(-1px);
 }
 
 .discovery-filter.active {
-    color: #d94d7a;
+    background: var(--mv-pink);
+    border-color: var(--mv-pink);
+    color: white;
 }
 
 
 /* =========================================================
-   BATTLE
+   BATTLE SECTION
 ========================================================= */
 
 .product-battle {
-    margin-bottom: 90px;
+    margin-bottom: 85px;
+    scroll-margin-top: 85px;
+    transition:
+        opacity .3s ease,
+        transform .3s ease;
+}
 
-    scroll-margin-top: 30px;
+.product-battle.filtered-out {
+    display: none;
 }
 
 .battle-heading {
-    margin-bottom: 22px;
-
     text-align: center;
+    margin-bottom: 24px;
 }
 
 .battle-eyebrow {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 
     margin-bottom: 8px;
 
-    color: #d94d7a;
+    color: var(--mv-pink-dark);
 
-    font-family: "Nunito", sans-serif;
-
-    font-size: 12px;
+    font-size: 10px;
     font-weight: 900;
-
-    letter-spacing: 1px;
+    letter-spacing: .14em;
 }
 
 .battle-heading h2 {
-    margin: 0 0 7px;
-
-    font-family: "Nunito", sans-serif;
-
-    font-size: clamp(27px, 4vw, 38px);
-    font-weight: 900;
-
+    margin: 0;
+    font-size: clamp(27px, 4vw, 40px);
     line-height: 1.1;
+    font-weight: 900;
+    letter-spacing: -.025em;
 }
 
 .battle-heading p {
-    margin: 0;
+    margin: 10px auto 0;
+    max-width: 600px;
 
-    color: #777;
+    color: var(--mv-muted);
 
-    font-family: "Nunito", sans-serif;
-
-    font-size: 15px;
-    line-height: 1.5;
+    font-size: 14px;
+    line-height: 1.6;
 }
 
 
@@ -412,56 +477,83 @@
 ========================================================= */
 
 .battle-card {
+    position: relative;
     overflow: hidden;
 
-    width: 100%;
+    background: var(--mv-card);
 
-    box-sizing: border-box;
+    border: 1px solid var(--mv-border);
+    border-radius: 30px;
 
-    background: white;
-
-    border: 1px solid #ededed;
-
-    border-radius: 28px;
-
-    box-shadow:
-        0 14px 45px rgba(0, 0, 0, .07);
+    box-shadow: var(--mv-shadow);
 }
 
 .battle-top {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 15px;
 
-    padding: 18px 24px;
+    padding: 18px 25px;
 
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid var(--mv-border);
 }
 
 .battle-category {
-    color: #999;
-
-    font-family: "Nunito", sans-serif;
-
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 900;
-
-    letter-spacing: 1px;
+    letter-spacing: .1em;
+    color: var(--mv-pink-dark);
 }
 
 .battle-position {
-    padding: 5px 10px;
+    color: var(--mv-muted);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: .08em;
+}
+
+
+/* =========================================================
+   PROGRESS
+========================================================= */
+
+.battle-progress {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 12px 25px 0;
+}
+
+.battle-progress-track {
+    height: 4px;
+    flex: 1;
+
+    overflow: hidden;
 
     border-radius: 999px;
+    background: #f0eaed;
+}
 
-    background: #f7f7f7;
+.battle-progress-fill {
+    width: 50%;
+    height: 100%;
 
-    color: #777;
+    border-radius: inherit;
 
-    font-family: "Nunito", sans-serif;
+    background: var(--mv-pink);
 
-    font-size: 11px;
+    transition: width .3s ease;
+}
+
+.battle-progress > span {
+    min-width: 30px;
+    text-align: right;
+
+    font-size: 9px;
     font-weight: 900;
+    color: var(--mv-muted);
 }
 
 
@@ -470,128 +562,185 @@
 ========================================================= */
 
 .battle-question {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    padding: 23px 20px 0;
-
     text-align: center;
+    padding: 28px 20px 22px;
 }
 
 .battle-question span {
-    margin-bottom: 4px;
+    display: block;
+    margin-bottom: 5px;
 
-    color: #d94d7a;
+    color: var(--mv-pink-dark);
 
-    font-family: "Nunito", sans-serif;
-
-    font-size: 10px;
+    font-size: 9px;
     font-weight: 900;
-
-    letter-spacing: 1.2px;
+    letter-spacing: .16em;
 }
 
 .battle-question strong {
-    color: #333;
-
-    font-family: "Nunito", sans-serif;
-
-    font-size: 21px;
+    display: block;
+    font-size: 20px;
     font-weight: 900;
+}
+
+.battle-question small {
+    display: block;
+    margin-top: 5px;
+
+    color: var(--mv-muted);
+
+    font-size: 11px;
 }
 
 
 /* =========================================================
-   VIEWER
+   PRODUCT VIEWER
 ========================================================= */
 
 .product-viewer {
     display: flex;
     align-items: center;
+    gap: 0;
 
-    position: relative;
-
-    min-height: 450px;
+    padding: 0 20px 20px;
 }
 
 .product-slide-area {
     display: grid;
-
-    grid-template-columns:
-        minmax(280px, 48%)
-        minmax(280px, 52%);
-
+    grid-template-columns: minmax(300px, .95fr) minmax(330px, 1.05fr);
     align-items: center;
 
     width: 100%;
 
-    box-sizing: border-box;
+    min-width: 0;
 
-    padding: 35px 65px 45px;
+    border: 1px solid #f0e8ec;
+    border-radius: 24px;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff,
+            #fff8fb
+        );
 }
 
 
 /* =========================================================
-   IMAGE
+   ARROWS
+========================================================= */
+
+.product-arrow {
+    flex: 0 0 45px;
+
+    width: 45px;
+    height: 45px;
+
+    margin: 0 7px;
+
+    border: 1px solid var(--mv-border);
+    border-radius: 50%;
+
+    background: #fff;
+
+    color: var(--mv-text);
+
+    font-family: Arial, sans-serif;
+    font-size: 30px;
+    line-height: 1;
+
+    cursor: pointer;
+
+    box-shadow: 0 6px 18px rgba(60, 40, 50, .07);
+
+    transition:
+        transform .2s ease,
+        background .2s ease;
+}
+
+.product-arrow:hover {
+    transform: scale(1.07);
+    background: var(--mv-pink-light);
+}
+
+
+/* =========================================================
+   PRODUCT IMAGE
 ========================================================= */
 
 .product-image-wrap {
+    position: relative;
+
+    min-height: 470px;
+
     display: flex;
     align-items: center;
     justify-content: center;
 
+    padding: 35px;
+
+    background:
+        radial-gradient(
+            circle at 50% 45%,
+            #fff,
+            #fff5f8 72%
+        );
+}
+
+.image-glow {
+    position: absolute;
+
+    width: 260px;
+    height: 260px;
+
+    border-radius: 50%;
+
+    background: rgba(232, 93, 143, .08);
+
+    filter: blur(5px);
+}
+
+.battle-product-image {
     position: relative;
+    z-index: 1;
 
-    min-height: 330px;
+    width: 100%;
+    max-width: 350px;
+    height: 380px;
 
-    padding: 25px;
+    object-fit: contain;
 
-    box-sizing: border-box;
+    display: block;
+
+    transition:
+        opacity .15s ease,
+        transform .25s ease;
+}
+
+.battle-product-image.product-changing {
+    opacity: 0;
+    transform: scale(.96);
 }
 
 .product-image-badge {
     position: absolute;
+    z-index: 3;
 
     top: 18px;
     left: 18px;
 
-    padding: 6px 9px;
+    padding: 7px 11px;
 
     border-radius: 999px;
 
-    background: #fff5f8;
-
-    color: #d94d7a;
-
-    font-family: "Nunito", sans-serif;
+    background: var(--mv-text);
+    color: white;
 
     font-size: 9px;
     font-weight: 900;
-
-    letter-spacing: .7px;
-
-    z-index: 2;
-}
-
-.battle-product-image {
-    display: block;
-
-    width: 100%;
-    max-width: 330px;
-
-    height: 330px;
-
-    object-fit: contain;
-
-    transition:
-        opacity .15s ease,
-        transform .15s ease;
-}
-
-.product-changing {
-    opacity: 0;
-    transform: scale(.96);
+    letter-spacing: .07em;
 }
 
 
@@ -600,61 +749,45 @@
 ========================================================= */
 
 .battle-product-info {
-    padding: 25px 30px;
-
-    box-sizing: border-box;
+    padding: 38px 35px;
 }
 
 .product-label {
     display: inline-block;
 
-    margin-bottom: 12px;
+    margin-bottom: 8px;
 
-    color: #d94d7a;
+    color: var(--mv-pink-dark);
 
-    font-family: "Nunito", sans-serif;
-
-    font-size: 11px;
+    font-size: 9px;
     font-weight: 900;
-
-    letter-spacing: 1px;
+    letter-spacing: .13em;
 }
 
 .battle-product-info h3 {
     margin: 0;
 
-    font-family: "Nunito", sans-serif;
-
-    font-size: clamp(28px, 4vw, 42px);
+    font-size: clamp(25px, 3vw, 34px);
+    line-height: 1.08;
     font-weight: 900;
-
-    line-height: 1.05;
-
-    letter-spacing: -1px;
+    letter-spacing: -.025em;
 }
 
 .product-brand {
-    margin: 9px 0 17px;
+    margin: 8px 0 0;
 
-    color: #888;
+    color: var(--mv-pink-dark);
 
-    font-family: "Nunito", sans-serif;
-
-    font-size: 14px;
-    font-weight: 800;
+    font-size: 12px;
+    font-weight: 900;
 }
 
 .battle-description {
-    max-width: 420px;
+    margin: 16px 0 0;
 
-    margin: 0 0 25px;
+    color: var(--mv-muted);
 
-    color: #666;
-
-    font-family: "Nunito", sans-serif;
-
-    font-size: 15px;
-
+    font-size: 13px;
     line-height: 1.65;
 }
 
@@ -664,140 +797,115 @@
 ========================================================= */
 
 .mom-score {
-    margin: 0 0 22px;
+    margin-top: 25px;
+    padding: 16px;
 
-    padding: 15px 0 17px;
+    border: 1px solid #f0e5ea;
+    border-radius: 17px;
 
-    border-top: 1px solid #f0f0f0;
-    border-bottom: 1px solid #f0f0f0;
+    background: #fff;
 }
 
 .mom-score-top {
     display: flex;
-    align-items: baseline;
+    align-items: center;
+    justify-content: space-between;
 
-    gap: 5px;
-
-    margin-bottom: 7px;
+    margin-bottom: 10px;
 }
 
 .mom-score-top > span {
-    margin-right: auto;
-
-    color: #777;
-
-    font-family: "Nunito", sans-serif;
-
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 900;
+    letter-spacing: .08em;
+}
 
-    letter-spacing: .7px;
+.mom-score-top > div {
+    display: flex;
+    align-items: baseline;
+    gap: 2px;
 }
 
 .mom-score-top strong {
-    color: #333;
-
-    font-family: "Nunito", sans-serif;
-
-    font-size: 25px;
+    font-size: 23px;
     font-weight: 900;
 }
 
 .mom-score-top small {
-    color: #999;
-
-    font-size: 11px;
-    font-weight: 800;
+    color: var(--mv-muted);
+    font-size: 10px;
 }
 
 .consensus-label {
     margin-bottom: 8px;
-}
 
-.consensus-label span {
-    color: #d94d7a;
-
-    font-family: "Nunito", sans-serif;
-
-    font-size: 11px;
-    font-weight: 900;
+    font-size: 10px;
+    font-weight: 800;
+    color: var(--mv-muted);
 }
 
 .consensus-bar {
-    width: 100%;
-    height: 5px;
+    height: 7px;
 
     overflow: hidden;
 
-    margin-bottom: 8px;
-
     border-radius: 999px;
 
-    background: #f0f0f0;
+    background: #f2edf0;
 }
 
 .consensus-fill {
-    width: 0;
+    width: 50%;
     height: 100%;
 
     border-radius: inherit;
 
-    background: #d94d7a;
+    background:
+        linear-gradient(
+            90deg,
+            var(--mv-pink),
+            #ef8faf
+        );
 
-    transition: width .7s cubic-bezier(.22, 1, .36, 1);
+    transition: width .4s ease;
 }
 
 .consensus-text {
     display: flex;
-    align-items: baseline;
-
+    align-items: center;
     gap: 5px;
+
+    margin-top: 8px;
+
+    color: var(--mv-muted);
+
+    font-size: 10px;
 }
 
 .consensus-text strong {
-    color: #333;
-
-    font-family: "Nunito", sans-serif;
-
-    font-size: 14px;
-    font-weight: 900;
-}
-
-.consensus-text span {
-    color: #888;
-
-    font-family: "Nunito", sans-serif;
-
-    font-size: 11px;
+    color: var(--mv-text);
+    font-size: 13px;
 }
 
 
 /* =========================================================
-   VOTE
+   VOTING
 ========================================================= */
 
 .vote-area {
-    margin-top: 5px;
+    margin-top: 20px;
 }
 
 .vote-question {
     margin: 0 0 10px;
 
-    color: #333;
-
-    font-family: "Nunito", sans-serif;
-
-    font-size: 13px;
+    font-size: 11px;
     font-weight: 900;
-
-    text-align: center;
 }
 
 .vote-choice-grid {
     display: grid;
-
     grid-template-columns: 1fr 1fr;
-
     gap: 9px;
 }
 
@@ -805,54 +913,42 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 7px;
 
-    min-height: 51px;
+    min-height: 50px;
 
-    gap: 8px;
+    padding: 10px;
 
-    padding: 11px 10px;
+    border: 1px solid var(--mv-border);
+    border-radius: 13px;
 
-    border-radius: 12px;
+    background: white;
 
-    font-family: "Nunito", sans-serif;
-
-    font-size: 11px;
+    font-family: inherit;
+    font-size: 10px;
     font-weight: 900;
 
     cursor: pointer;
 
     transition:
-        transform .2s ease,
-        box-shadow .2s ease,
-        background .2s ease;
-}
-
-.vote-yes {
-    border: 1px solid #d7eee4;
-
-    background: #f4fbf7;
-
-    color: #2f8e6c;
-}
-
-.vote-no {
-    border: 1px solid #eeeeee;
-
-    background: #fafafa;
-
-    color: #777;
+        transform .18s ease,
+        border-color .18s ease,
+        box-shadow .18s ease;
 }
 
 .vote-choice:hover {
     transform: translateY(-2px);
+    box-shadow: 0 7px 20px rgba(60, 40, 50, .08);
 }
 
 .vote-yes:hover {
-    box-shadow: 0 8px 20px rgba(47, 157, 115, .12);
+    border-color: #8bc8aa;
+    background: #f5fcf8;
 }
 
 .vote-no:hover {
-    box-shadow: 0 8px 20px rgba(0, 0, 0, .06);
+    border-color: #e4a0a7;
+    background: #fff8f8;
 }
 
 .vote-choice-icon {
@@ -865,8 +961,27 @@
 
     border-radius: 50%;
 
-    font-size: 13px;
-    font-weight: 900;
+    font-size: 14px;
+}
+
+.vote-yes .vote-choice-icon {
+    background: #eaf8ef;
+    color: #40966c;
+}
+
+.vote-no .vote-choice-icon {
+    background: #fff0f1;
+    color: #c5535e;
+}
+
+.vote-helper {
+    display: block;
+
+    margin-top: 8px;
+
+    color: #a19aa0;
+
+    font-size: 9px;
 }
 
 
@@ -877,27 +992,32 @@
 .vote-result {
     display: none;
 
-    margin-top: 14px;
-
+    margin-top: 18px;
     padding: 15px;
 
-    border-radius: 14px;
+    border-radius: 16px;
 
-    background: #f7fbf9;
+    background:
+        linear-gradient(
+            135deg,
+            #fff4f8,
+            #fffafb
+        );
+
+    border: 1px solid #f2dce5;
 
     text-align: center;
-
-    animation: resultAppear .4s ease;
 }
 
 .vote-result.visible {
     display: block;
+    animation: resultIn .35s ease;
 }
 
-@keyframes resultAppear {
+@keyframes resultIn {
     from {
         opacity: 0;
-        transform: translateY(7px);
+        transform: translateY(8px);
     }
 
     to {
@@ -907,32 +1027,23 @@
 }
 
 .result-icon {
+    font-size: 23px;
     margin-bottom: 3px;
-
-    font-size: 19px;
 }
 
 .vote-result strong {
     display: block;
-
-    color: #2f8e6c;
-
-    font-family: "Nunito", sans-serif;
-
     font-size: 14px;
     font-weight: 900;
 }
 
 .vote-result p {
-    margin: 3px 0 0;
+    margin: 4px 0 0;
 
-    color: #777;
-
-    font-family: "Nunito", sans-serif;
+    color: var(--mv-muted);
 
     font-size: 11px;
-
-    line-height: 1.4;
+    line-height: 1.5;
 }
 
 
@@ -943,29 +1054,28 @@
 .social-comparison {
     display: none;
 
-    margin-top: 10px;
-
+    margin-top: 12px;
     padding: 15px;
 
-    border-radius: 14px;
+    border: 1px solid var(--mv-border);
+    border-radius: 16px;
 
-    background: #fafafa;
-
-    animation: resultAppear .45s ease;
+    background: white;
 }
 
 .social-comparison.visible {
     display: block;
+    animation: resultIn .4s ease;
 }
 
 .social-comparison-title {
-    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
 
-    color: #333;
+    margin-bottom: 12px;
 
-    font-family: "Nunito", sans-serif;
-
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 900;
 }
 
@@ -974,42 +1084,43 @@
     align-items: center;
     justify-content: space-between;
 
-    padding: 5px 0;
+    padding: 8px 0;
 
-    border-bottom: 1px solid #eeeeee;
+    border-bottom: 1px solid #f2edf0;
+}
 
-    font-family: "Nunito", sans-serif;
+.social-result-row:last-of-type {
+    border-bottom: 0;
 }
 
 .social-result-row span {
-    color: #777;
-
-    font-size: 10px;
+    font-size: 9px;
     font-weight: 900;
 }
 
 .social-result-row strong {
-    color: #2f8e6c;
-
     font-size: 13px;
     font-weight: 900;
 }
 
-.social-result-row.no-row strong {
-    color: #888;
+.no-row strong {
+    color: #b96169;
 }
 
 .your-position {
     margin-top: 10px;
+    padding: 9px;
 
-    color: #d94d7a;
+    border-radius: 9px;
 
-    font-family: "Nunito", sans-serif;
-
-    font-size: 11px;
-    font-weight: 900;
+    background: #f8f5f7;
 
     text-align: center;
+
+    color: var(--mv-muted);
+
+    font-size: 10px;
+    font-weight: 800;
 }
 
 
@@ -1018,32 +1129,38 @@
 ========================================================= */
 
 .product-shop-link {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
 
-    margin-top: 19px;
+    width: 100%;
 
-    color: #c48a17;
+    margin-top: 18px;
+    padding: 14px 18px;
 
-    font-family: "Nunito", sans-serif;
+    border-radius: 13px;
 
-    font-size: 14px;
-    font-weight: 900;
-
-    text-align: center;
+    background: var(--mv-text);
+    color: white !important;
 
     text-decoration: none;
 
-    letter-spacing: .1px;
+    font-size: 12px;
+    font-weight: 900;
+
+    box-shadow: 0 8px 20px rgba(48, 42, 48, .14);
 
     transition:
-        color .2s ease,
-        transform .2s ease;
+        transform .2s ease,
+        box-shadow .2s ease,
+        background .2s ease;
 }
 
 .product-shop-link:hover {
-    color: #9f6d0e;
-
-    transform: translateY(-1px);
+    transform: translateY(-2px);
+    background: #19161a;
+    box-shadow: 0 12px 26px rgba(48, 42, 48, .2);
 }
 
 
@@ -1052,26 +1169,21 @@
 ========================================================= */
 
 .next-contender {
-    display: block;
-
     width: 100%;
 
-    margin-top: 14px;
-
-    padding: 0;
+    margin-top: 9px;
+    padding: 11px;
 
     border: 0;
 
     background: transparent;
 
-    color: #888;
+    color: var(--mv-muted);
 
-    font-family: "Nunito", sans-serif;
+    font-family: inherit;
 
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 900;
-
-    text-align: center;
 
     cursor: pointer;
 
@@ -1080,71 +1192,13 @@
         transform .2s ease;
 }
 
+.next-contender span {
+    margin-left: 4px;
+}
+
 .next-contender:hover {
-    color: #d94d7a;
-
+    color: var(--mv-pink-dark);
     transform: translateX(2px);
-}
-
-
-/* =========================================================
-   ARROWS
-========================================================= */
-
-.product-arrow {
-    flex: 0 0 auto;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 48px;
-    height: 48px;
-
-    padding: 0;
-
-    border: 1px solid #e8e8e8;
-
-    border-radius: 50%;
-
-    background: white;
-
-    color: #444;
-
-    font-family: Arial, sans-serif;
-
-    font-size: 34px;
-    font-weight: 300;
-
-    line-height: 1;
-
-    cursor: pointer;
-
-    z-index: 3;
-
-    box-shadow:
-        0 5px 18px rgba(0, 0, 0, .08);
-
-    transition:
-        transform .2s ease,
-        background .2s ease,
-        color .2s ease;
-}
-
-.product-arrow:hover {
-    transform: scale(1.08);
-
-    background: #fff1f6;
-
-    color: #d94d7a;
-}
-
-.product-arrow-left {
-    margin-left: 18px;
-}
-
-.product-arrow-right {
-    margin-right: 18px;
 }
 
 
@@ -1155,10 +1209,9 @@
 .battle-dots {
     display: flex;
     justify-content: center;
+    gap: 6px;
 
-    gap: 7px;
-
-    padding: 0 20px 20px;
+    padding: 15px 0 5px;
 }
 
 .battle-dot {
@@ -1170,7 +1223,7 @@
     border: 0;
     border-radius: 50%;
 
-    background: #ddd;
+    background: #ddd5da;
 
     cursor: pointer;
 
@@ -1181,10 +1234,8 @@
 
 .battle-dot.active {
     width: 22px;
-
     border-radius: 999px;
-
-    background: #d94d7a;
+    background: var(--mv-pink);
 }
 
 
@@ -1196,76 +1247,57 @@
     display: none;
 
     align-items: center;
+    gap: 13px;
 
-    gap: 12px;
+    margin: 15px 20px 0;
+    padding: 14px 17px;
 
-    margin: 0 24px 20px;
+    border: 1px solid #eadfc7;
+    border-radius: 15px;
 
-    padding: 14px 16px;
-
-    border-radius: 14px;
-
-    background: #fffaf0;
-
-    border: 1px solid #f2e3bf;
+    background:
+        linear-gradient(
+            110deg,
+            #fffaf0,
+            #fffdf8
+        );
 }
 
 .battle-winner.visible {
     display: flex;
-
-    animation: resultAppear .45s ease;
+    animation: resultIn .35s ease;
 }
 
-.battle-winner > span {
-    font-size: 24px;
+.winner-icon {
+    font-size: 25px;
 }
 
 .battle-winner strong {
     display: block;
-
-    margin-bottom: 2px;
-
-    color: #9c7218;
-
-    font-family: "Nunito", sans-serif;
-
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 900;
 }
 
 .battle-winner p {
-    margin: 0;
+    margin: 2px 0 0;
 
-    color: #777;
+    color: var(--mv-muted);
 
-    font-family: "Nunito", sans-serif;
-
-    font-size: 11px;
+    font-size: 10px;
+    line-height: 1.4;
 }
 
-
-/* =========================================================
-   FOOTER
-========================================================= */
-
 .battle-footer {
-    display: flex;
-    justify-content: center;
+    padding: 17px 25px;
 
-    padding: 15px 20px;
-
-    background: #fafafa;
-
-    border-top: 1px solid #f0f0f0;
-
-    color: #888;
-
-    font-family: "Nunito", sans-serif;
-
-    font-size: 12px;
-    font-weight: 700;
+    border-top: 1px solid var(--mv-border);
 
     text-align: center;
+
+    color: var(--mv-muted);
+
+    font-size: 10px;
+    font-weight: 800;
 }
 
 
@@ -1274,91 +1306,82 @@
 ========================================================= */
 
 .keep-discovering {
-    max-width: 850px;
+    margin: 95px 0;
 
-    margin: 0 auto 80px;
+    padding: 50px 25px;
 
-    padding: 45px 30px;
+    border-radius: 28px;
 
-    box-sizing: border-box;
+    background:
+        linear-gradient(
+            135deg,
+            #fff5f8,
+            #faf7ff
+        );
 
     text-align: center;
-
-    border-top: 1px solid #eeeeee;
-    border-bottom: 1px solid #eeeeee;
 }
 
 .keep-discovering-kicker {
-    color: #d94d7a;
+    display: block;
 
-    font-family: "Nunito", sans-serif;
+    margin-bottom: 10px;
+
+    color: var(--mv-pink-dark);
 
     font-size: 10px;
     font-weight: 900;
-
-    letter-spacing: 1px;
+    letter-spacing: .15em;
 }
 
 .keep-discovering h2 {
-    margin: 10px 0 7px;
+    margin: 0;
 
-    color: #333;
-
-    font-family: "Nunito", sans-serif;
-
-    font-size: 29px;
+    font-size: 32px;
     font-weight: 900;
+    letter-spacing: -.025em;
 }
 
 .keep-discovering p {
-    margin: 0 0 25px;
+    margin: 10px auto 25px;
 
-    color: #777;
+    color: var(--mv-muted);
 
-    font-family: "Nunito", sans-serif;
-
-    font-size: 14px;
+    font-size: 13px;
 }
 
 .discovery-links {
     display: flex;
     justify-content: center;
-
     flex-wrap: wrap;
-
     gap: 8px;
 }
 
 .discovery-links a {
-    padding: 9px 13px;
+    display: inline-flex;
 
-    border: 1px solid #ededed;
+    padding: 10px 14px;
 
     border-radius: 999px;
 
-    color: #555;
+    background: white;
+    border: 1px solid var(--mv-border);
 
-    background: #fafafa;
+    color: var(--mv-text);
 
-    font-family: "Nunito", sans-serif;
+    text-decoration: none;
 
     font-size: 11px;
     font-weight: 900;
 
-    text-decoration: none;
-
     transition:
         transform .2s ease,
-        color .2s ease,
-        background .2s ease;
+        box-shadow .2s ease;
 }
 
 .discovery-links a:hover {
     transform: translateY(-2px);
-
-    color: #d94d7a;
-
-    background: #fff1f6;
+    box-shadow: 0 7px 18px rgba(60,40,50,.08);
 }
 
 
@@ -1367,95 +1390,85 @@
 ========================================================= */
 
 .voting-explainer {
+    text-align: center;
+
     max-width: 850px;
 
-    margin: 20px auto 80px;
+    margin: 0 auto 95px;
+}
 
-    padding: 50px 40px;
-
-    box-sizing: border-box;
-
-    border-radius: 28px;
-
-    background: #fafafa;
-
-    text-align: center;
+.voting-explainer > .community-badge {
+    margin-bottom: 13px;
 }
 
 .voting-explainer h2 {
-    margin: 18px 0 10px;
-
-    font-family: "Nunito", sans-serif;
+    margin: 0;
 
     font-size: 34px;
     font-weight: 900;
 }
 
 .voting-explainer > p {
-    max-width: 600px;
+    max-width: 550px;
 
-    margin: 0 auto 40px;
+    margin: 12px auto 35px;
 
-    color: #777;
+    color: var(--mv-muted);
 
-    font-family: "Nunito", sans-serif;
-
-    line-height: 1.65;
+    font-size: 13px;
+    line-height: 1.6;
 }
 
 .explainer-grid {
     display: grid;
-
     grid-template-columns: repeat(3, 1fr);
-
-    gap: 25px;
+    gap: 15px;
 }
 
 .explainer-item {
-    padding: 10px;
+    padding: 25px 18px;
+
+    border: 1px solid var(--mv-border);
+    border-radius: 20px;
+
+    background: white;
 }
 
 .explainer-item > span {
     display: inline-flex;
+
     align-items: center;
     justify-content: center;
 
-    width: 38px;
-    height: 38px;
+    width: 34px;
+    height: 34px;
 
-    margin-bottom: 13px;
+    margin-bottom: 10px;
 
     border-radius: 50%;
 
-    background: white;
+    background: var(--mv-pink-light);
 
-    color: #d94d7a;
+    color: var(--mv-pink-dark);
 
-    font-family: "Nunito", sans-serif;
-
-    font-size: 12px;
+    font-size: 10px;
     font-weight: 900;
 }
 
 .explainer-item h3 {
-    margin: 0 0 7px;
+    margin: 0;
 
-    font-family: "Nunito", sans-serif;
-
-    font-size: 17px;
+    font-size: 16px;
     font-weight: 900;
 }
 
 .explainer-item p {
-    margin: 0;
+    margin: 7px 0 0;
 
-    color: #777;
+    color: var(--mv-muted);
 
-    font-family: "Nunito", sans-serif;
-
-    font-size: 13px;
-
-    line-height: 1.55;
+    font-size: 11px;
+    line-height: 1.5;
 }
 
 
@@ -1464,93 +1477,194 @@
 ========================================================= */
 
 .holy-grail-final {
-    max-width: 720px;
+    position: relative;
+    overflow: hidden;
 
-    margin: 0 auto 80px;
+    margin-bottom: 80px;
+    padding: 60px 25px;
 
-    padding: 45px 30px;
+    border-radius: 30px;
 
-    box-sizing: border-box;
-
-    border-radius: 28px;
-
-    background: linear-gradient(
-        135deg,
-        #fff3f7,
-        #fff9fb
-    );
-
-    border: 1px solid #f5dce5;
+    background:
+        linear-gradient(
+            135deg,
+            #fff1f6,
+            #f9f3ff
+        );
 
     text-align: center;
 }
 
-.holy-grail-final-icon {
-    margin-bottom: 10px;
+.holy-grail-final::before {
+    content: "";
 
-    font-size: 35px;
+    position: absolute;
+
+    width: 220px;
+    height: 220px;
+
+    top: -100px;
+    right: -80px;
+
+    border-radius: 50%;
+
+    background: rgba(232,93,143,.08);
+}
+
+.holy-grail-final-icon {
+    position: relative;
+
+    width: 55px;
+    height: 55px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 auto 16px;
+
+    border-radius: 18px;
+
+    background: white;
+
+    font-size: 26px;
+
+    box-shadow: 0 8px 25px rgba(60,40,50,.08);
 }
 
 .holy-grail-final h2 {
-    margin: 0 0 10px;
+    position: relative;
 
-    font-family: "Nunito", sans-serif;
+    margin: 0;
 
-    font-size: 32px;
+    font-size: clamp(28px, 4vw, 40px);
+
     font-weight: 900;
 }
 
 .holy-grail-final p {
-    max-width: 500px;
+    position: relative;
 
-    margin: 0 auto 23px;
+    max-width: 520px;
 
-    color: #777;
+    margin: 12px auto 25px;
 
-    font-family: "Nunito", sans-serif;
+    color: var(--mv-muted);
 
+    font-size: 13px;
     line-height: 1.6;
 }
 
 .holy-grail-final-button {
+    position: relative;
+
     display: inline-flex;
     align-items: center;
     justify-content: center;
 
-    padding: 13px 23px;
+    padding: 14px 21px;
 
-    border-radius: 12px;
+    border-radius: 999px;
 
-    background: #d94d7a;
-
-    color: white;
-
-    font-family: "Nunito", sans-serif;
-
-    font-size: 13px;
-    font-weight: 900;
+    background: var(--mv-pink);
+    color: white !important;
 
     text-decoration: none;
 
+    font-size: 12px;
+    font-weight: 900;
+
+    box-shadow: 0 10px 25px rgba(232,93,143,.2);
+
     transition:
         transform .2s ease,
-        box-shadow .2s ease;
+        background .2s ease;
 }
 
 .holy-grail-final-button:hover {
     transform: translateY(-2px);
-
-    box-shadow:
-        0 10px 24px rgba(217, 77, 122, .20);
+    background: var(--mv-pink-dark);
 }
 
 
 /* =========================================================
-   HIDDEN FILTER STATE
+   FOOTER
 ========================================================= */
 
-.product-battle.filtered-out {
-    display: none;
+.mom-voted-page footer {
+    padding-top: 35px;
+
+    border-top: 1px solid var(--mv-border);
+
+    text-align: center;
+}
+
+.footer-logo img {
+    width: 140px;
+    max-width: 100%;
+}
+
+.mom-voted-page footer h3 {
+    margin: 10px 0 5px;
+
+    font-size: 14px;
+    font-weight: 900;
+}
+
+.mom-voted-page footer > p {
+    max-width: 400px;
+
+    margin: 0 auto;
+
+    color: var(--mv-muted);
+
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 5px 20px;
+
+    margin-top: 25px;
+    padding-top: 18px;
+
+    border-top: 1px solid #f4eef1;
+
+    color: #9a9298;
+
+    font-size: 9px;
+}
+
+.footer-bottom p {
+    margin: 0;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 850px) {
+
+    .product-slide-area {
+        grid-template-columns: 1fr;
+    }
+
+    .product-image-wrap {
+        min-height: 360px;
+    }
+
+    .battle-product-image {
+        height: 310px;
+    }
+
+    .battle-product-info {
+        padding: 30px;
+    }
+
 }
 
 
@@ -1558,210 +1672,248 @@
    MOBILE
 ========================================================= */
 
-@media (max-width: 700px) {
+@media (max-width: 650px) {
+
+    .mom-voted-page {
+        padding: 15px 12px 45px;
+    }
+
 
     .mom-voted-header {
-        margin-bottom: 20px;
+        margin-bottom: 25px;
     }
 
     .mom-voted-logo {
-        width: 130px;
-        max-width: 130px;
+        width: 145px;
+    }
+
+    .header-right {
+        gap: 6px;
     }
 
     .community-badge {
-        margin-top: 12px;
-        padding: 6px 12px;
-        font-size: 9px;
+        padding: 7px 9px;
+        font-size: 8px;
     }
 
-    .mom-voted-page h1 {
-        font-size: 42px;
-        letter-spacing: -1.7px;
+    .live-indicator {
+        font-size: 8px;
+    }
+
+
+    .voting-hero {
+        padding: 30px 5px 40px;
+    }
+
+    .voting-hero h1 {
+        font-size: 39px;
     }
 
     .mom-voted-intro {
-        margin-top: 20px;
-        font-size: 16px;
+        font-size: 14px;
     }
 
+
     .hero-mini-proof {
-        font-size: 11px;
+        gap: 7px;
     }
+
+    .hero-mini-proof strong {
+        font-size: 10px;
+    }
+
+    .hero-mini-proof span {
+        font-size: 8px;
+    }
+
+    .proof-arrow {
+        font-size: 15px;
+    }
+
 
     .holy-grail-banner {
         align-items: flex-start;
         flex-wrap: wrap;
-        padding: 16px;
+        padding: 15px;
+    }
+
+    .holy-grail-banner-icon {
+        width: 38px;
+        height: 38px;
+        flex-basis: 38px;
+        font-size: 18px;
     }
 
     .holy-grail-banner-content {
-        min-width: 0;
-        flex: 1;
+        min-width: calc(100% - 60px);
+    }
+
+    .holy-grail-banner-content span {
+        font-size: 10px;
     }
 
     .holy-grail-link {
         width: 100%;
-        padding-top: 10px;
-        border-top: 1px solid #f0dce4;
-        text-align: center;
+        margin-top: 4px;
     }
+
 
     .voting-categories {
-        gap: 7px;
+        margin-bottom: 30px;
     }
 
-    .voting-categories a {
-        padding: 8px 12px;
-        font-size: 12px;
+    .category-link {
+        padding: 9px 12px;
+        font-size: 10px;
     }
 
-    .discovery-strip {
-        margin-bottom: 50px;
+
+    .discovery-heading {
+        align-items: flex-start;
     }
+
+    .discovery-heading h2 {
+        font-size: 21px;
+    }
+
 
     .product-battle {
         margin-bottom: 65px;
     }
+
 
     .battle-card {
         border-radius: 22px;
     }
 
     .battle-top {
-        padding: 14px 16px;
+        padding: 15px;
+    }
+
+    .battle-progress {
+        padding: 10px 15px 0;
     }
 
     .battle-question {
-        padding-top: 18px;
+        padding: 23px 15px 18px;
     }
 
     .battle-question strong {
-        font-size: 19px;
+        font-size: 18px;
     }
 
+
     .product-viewer {
-        min-height: auto;
+        position: relative;
+
+        display: block;
+
+        padding: 0 10px 15px;
     }
 
     .product-slide-area {
-        display: flex;
-        flex-direction: column;
-
-        width: 100%;
-
-        padding: 15px 20px 28px;
+        border-radius: 18px;
     }
 
-    .product-image-wrap {
-        width: 100%;
-
-        min-height: 250px;
-
-        padding: 10px 30px;
-    }
-
-    .product-image-badge {
-        top: 10px;
-        left: 20px;
-    }
-
-    .battle-product-image {
-        width: 100%;
-
-        max-width: 270px;
-
-        height: 250px;
-    }
-
-    .battle-product-info {
-        width: 100%;
-
-        padding: 10px 8px 0;
-
-        text-align: center;
-    }
-
-    .battle-product-info h3 {
-        font-size: 30px;
-    }
-
-    .battle-description {
-        margin-right: auto;
-        margin-left: auto;
-    }
-
-    .mom-score {
-        text-align: left;
-    }
-
-    .vote-choice-grid {
-        gap: 7px;
-    }
-
-    .vote-choice {
-        min-height: 50px;
-        font-size: 10px;
-    }
 
     .product-arrow {
         position: absolute;
+        z-index: 5;
 
-        top: 145px;
+        top: 155px;
 
-        width: 42px;
-        height: 42px;
+        width: 38px;
+        height: 38px;
 
-        font-size: 30px;
+        margin: 0;
 
-        background: rgba(255, 255, 255, .96);
+        font-size: 25px;
+
+        background: rgba(255,255,255,.95);
     }
 
     .product-arrow-left {
-        left: 9px;
-        margin: 0;
+        left: 17px;
     }
 
     .product-arrow-right {
-        right: 9px;
-        margin: 0;
+        right: 17px;
     }
 
-    .battle-winner {
-        margin-right: 15px;
-        margin-left: 15px;
+
+    .product-image-wrap {
+        min-height: 300px;
+        padding: 25px 45px;
     }
 
-    .keep-discovering {
-        padding: 38px 20px;
+    .battle-product-image {
+        height: 245px;
     }
 
-    .keep-discovering h2 {
+    .product-image-badge {
+        top: 12px;
+        left: 12px;
+        font-size: 8px;
+    }
+
+
+    .battle-product-info {
+        padding: 25px 18px 22px;
+    }
+
+    .battle-product-info h3 {
         font-size: 26px;
     }
 
-    .voting-explainer {
-        padding: 35px 22px;
-        border-radius: 22px;
+    .battle-description {
+        font-size: 12px;
     }
 
-    .voting-explainer h2 {
-        font-size: 28px;
+
+    .vote-choice-grid {
+        grid-template-columns: 1fr;
     }
+
+    .vote-choice {
+        min-height: 48px;
+    }
+
+
+    .battle-footer {
+        padding: 15px;
+    }
+
+
+    .keep-discovering {
+        margin: 65px 0;
+        padding: 40px 15px;
+        border-radius: 23px;
+    }
+
+    .keep-discovering h2 {
+        font-size: 27px;
+    }
+
 
     .explainer-grid {
         grid-template-columns: 1fr;
-        gap: 20px;
     }
 
+    .voting-explainer {
+        margin-bottom: 65px;
+    }
+
+
     .holy-grail-final {
-        padding: 35px 22px;
-        border-radius: 22px;
+        margin-bottom: 55px;
+        padding: 45px 18px;
+        border-radius: 23px;
     }
 
     .holy-grail-final h2 {
         font-size: 28px;
     }
+
 }
 
 
@@ -1769,567 +1921,30 @@
    SMALL PHONES
 ========================================================= */
 
-@media (max-width: 380px) {
+@media (max-width: 400px) {
 
-    .mom-voted-logo {
-        width: 120px;
-        max-width: 120px;
+    .voting-hero h1 {
+        font-size: 34px;
     }
 
-    .mom-voted-page h1 {
-        font-size: 37px;
+    .header-right .community-badge {
+        display: none;
     }
 
-    .mom-voted-intro {
-        font-size: 15px;
-    }
-
-    .battle-product-image {
-        max-width: 235px;
-        height: 225px;
+    .battle-heading h2 {
+        font-size: 26px;
     }
 
     .product-image-wrap {
-        min-height: 225px;
+        min-height: 275px;
     }
 
-    .product-arrow {
-        top: 137px;
-
-        width: 38px;
-        height: 38px;
-
-        font-size: 27px;
+    .battle-product-image {
+        height: 220px;
     }
 
-    .vote-choice {
-        font-size: 9px;
-    }
-}
-
-/* =========================================================
-   HOLY GRAIL SUBMISSION FORM
-   MomYouNeedThis
-========================================================= */
-
-.holy-grail-form {
-    width: 100%;
-    max-width: 620px;
-
-    margin: 35px auto 45px;
-    padding: 34px;
-
-    box-sizing: border-box;
-
-    background: #ffffff;
-
-    border: 1px solid #eeeeee;
-    border-radius: 24px;
-
-    box-shadow:
-        0 14px 45px rgba(0, 0, 0, .06);
-}
-
-
-/* =========================================================
-   FORM FIELDS
-========================================================= */
-
-.holy-grail-field {
-    margin-bottom: 22px;
-}
-
-.holy-grail-field label {
-    display: block;
-
-    margin-bottom: 8px;
-
-    color: #333;
-
-    font-family: "Nunito", sans-serif;
-
-    font-size: 13px;
-    font-weight: 900;
-
-    letter-spacing: .1px;
-}
-
-.holy-grail-field input {
-    display: block;
-
-    width: 100%;
-
-    min-height: 52px;
-
-    padding: 13px 15px;
-
-    box-sizing: border-box;
-
-    border: 1px solid #dedede;
-    border-radius: 12px;
-
-    outline: none;
-
-    background: #fafafa;
-
-    color: #333;
-
-    font-family: "Nunito", sans-serif;
-
-    font-size: 14px;
-    font-weight: 700;
-
-    transition:
-        border-color .2s ease,
-        background .2s ease,
-        box-shadow .2s ease;
-}
-
-.holy-grail-field input::placeholder {
-    color: #aaa;
-
-    font-weight: 600;
-}
-
-.holy-grail-field input:hover {
-    border-color: #d4d4d4;
-
-    background: #fff;
-}
-
-.holy-grail-field input:focus {
-    border-color: #e6a8bd;
-
-    background: #fff;
-
-    box-shadow:
-        0 0 0 4px rgba(217, 77, 122, .08);
-}
-
-
-/* =========================================================
-   VALIDATION
-========================================================= */
-
-.holy-grail-field input.input-error {
-    border-color: #df718f;
-
-    background: #fff8fa;
-
-    box-shadow:
-        0 0 0 4px rgba(217, 77, 122, .06);
-}
-
-.holy-grail-error {
-    min-height: 18px;
-
-    margin: -4px 0 14px;
-
-    color: #c84f70;
-
-    font-family: "Nunito", sans-serif;
-
-    font-size: 12px;
-    font-weight: 800;
-
-    line-height: 1.45;
-
-    text-align: center;
-}
-
-
-/* =========================================================
-   SUBMIT BUTTON
-========================================================= */
-
-.holy-grail-submit {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 100%;
-
-    min-height: 54px;
-
-    padding: 14px 20px;
-
-    border: 0;
-    border-radius: 13px;
-
-    background: #d94d7a;
-
-    color: #fff;
-
-    font-family: "Nunito", sans-serif;
-
-    font-size: 14px;
-    font-weight: 900;
-
-    cursor: pointer;
-
-    box-shadow:
-        0 9px 22px rgba(217, 77, 122, .18);
-
-    transition:
-        transform .2s ease,
-        box-shadow .2s ease,
-        background .2s ease;
-}
-
-.holy-grail-submit:hover {
-    transform: translateY(-2px);
-
-    background: #cf416f;
-
-    box-shadow:
-        0 13px 28px rgba(217, 77, 122, .23);
-}
-
-.holy-grail-submit:active {
-    transform: translateY(0);
-
-    box-shadow:
-        0 6px 14px rgba(217, 77, 122, .16);
-}
-
-.holy-grail-submit:disabled {
-    opacity: .7;
-
-    cursor: not-allowed;
-
-    transform: none;
-
-    box-shadow: none;
-}
-
-
-/* =========================================================
-   LOADING STATE
-========================================================= */
-
-#submitLoading {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    gap: 7px;
-}
-
-#submitLoading::before {
-    content: "";
-
-    width: 14px;
-    height: 14px;
-
-    border: 2px solid rgba(255,255,255,.45);
-    border-top-color: #fff;
-
-    border-radius: 50%;
-
-    animation: holyGrailSpin .7s linear infinite;
-}
-
-@keyframes holyGrailSpin {
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-
-/* =========================================================
-   SUCCESS STATE
-========================================================= */
-
-.holy-grail-success {
-    padding: 12px 5px 4px;
-
-    text-align: center;
-}
-
-.holy-grail-success-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 62px;
-    height: 62px;
-
-    margin: 0 auto 14px;
-
-    border-radius: 50%;
-
-    background: #fff1f6;
-
-    font-size: 28px;
-
-    box-shadow:
-        0 8px 22px rgba(217, 77, 122, .10);
-}
-
-.holy-grail-success h2 {
-    margin: 0 0 9px;
-
-    color: #333;
-
-    font-family: "Nunito", sans-serif;
-
-    font-size: 27px;
-    font-weight: 900;
-}
-
-.holy-grail-success p {
-    max-width: 430px;
-
-    margin: 0 auto 22px;
-
-    color: #777;
-
-    font-family: "Nunito", sans-serif;
-
-    font-size: 14px;
-
-    line-height: 1.65;
-}
-
-
-/* =========================================================
-   SUBMIT ANOTHER
-========================================================= */
-
-.holy-grail-another {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    min-height: 45px;
-
-    padding: 10px 17px;
-
-    border: 1px solid #f0d1dc;
-    border-radius: 11px;
-
-    background: #fff7fa;
-
-    color: #d94d7a;
-
-    font-family: "Nunito", sans-serif;
-
-    font-size: 12px;
-    font-weight: 900;
-
-    cursor: pointer;
-
-    transition:
-        transform .2s ease,
-        background .2s ease,
-        border-color .2s ease;
-}
-
-.holy-grail-another:hover {
-    transform: translateY(-2px);
-
-    background: #fff1f6;
-
-    border-color: #e9bdcc;
-}
-
-
-/* =========================================================
-   WHAT HAPPENS NEXT / TIPS
-========================================================= */
-
-.tips {
-    width: 100%;
-    max-width: 650px;
-
-    margin: 0 auto 45px;
-
-    padding: 30px 30px;
-
-    box-sizing: border-box;
-
-    border-radius: 20px;
-
-    background: #fafafa;
-
-    text-align: center;
-}
-
-.tips h2 {
-    margin: 0 0 12px;
-
-    color: #333;
-
-    font-family: "Nunito", sans-serif;
-
-    font-size: 22px;
-    font-weight: 900;
-}
-
-.tips p {
-    margin: 0;
-
-    color: #777;
-
-    font-family: "Nunito", sans-serif;
-
-    font-size: 14px;
-
-    line-height: 1.65;
-}
-
-.tips strong {
-    color: #555;
-    font-weight: 900;
-}
-
-
-/* =========================================================
-   HOLY GRAIL LOGO
-========================================================= */
-
-.holy-grail-logo-link {
-    display: block;
-
-    width: fit-content;
-
-    margin: 0 auto 18px;
-
-    line-height: 0;
-
-    text-decoration: none;
-}
-
-
-/* =========================================================
-   HOLY GRAIL BACK LINK
-========================================================= */
-
-.holy-grail-back {
-    margin: 0 auto 70px;
-
-    text-align: center;
-}
-
-.holy-grail-back-link {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 12px 18px;
-
-    border: 1px solid #ededed;
-    border-radius: 999px;
-
-    background: #fafafa;
-
-    color: #555;
-
-    font-family: "Nunito", sans-serif;
-
-    font-size: 12px;
-    font-weight: 900;
-
-    text-decoration: none;
-
-    transition:
-        transform .2s ease,
-        color .2s ease,
-        background .2s ease,
-        border-color .2s ease;
-}
-
-.holy-grail-back-link:hover {
-    transform: translateY(-2px);
-
-    color: #d94d7a;
-
-    background: #fff1f6;
-
-    border-color: #f1ccd8;
-}
-
-
-/* =========================================================
-   HOLY GRAIL MOBILE
-========================================================= */
-
-@media (max-width: 700px) {
-
-    .holy-grail-form {
-        margin-top: 28px;
-        padding: 24px 20px;
-
-        border-radius: 20px;
-    }
-
-    .holy-grail-field {
-        margin-bottom: 19px;
-    }
-
-    .holy-grail-field input {
-        min-height: 50px;
-
-        padding: 12px 13px;
-
-        font-size: 14px;
-    }
-
-    .holy-grail-submit {
-        min-height: 52px;
-
-        font-size: 13px;
-    }
-
-    .holy-grail-success h2 {
+    .battle-product-info h3 {
         font-size: 24px;
     }
 
-    .holy-grail-success p {
-        font-size: 13px;
-    }
-
-    .tips {
-        margin-bottom: 38px;
-
-        padding: 26px 20px;
-
-        border-radius: 18px;
-    }
-
-    .tips h2 {
-        font-size: 20px;
-    }
-
-    .tips p {
-        font-size: 13px;
-    }
-
-    .holy-grail-back {
-        margin-bottom: 55px;
-    }
-}
-
-
-/* =========================================================
-   SMALL PHONES
-========================================================= */
-
-@media (max-width: 380px) {
-
-    .holy-grail-form {
-        padding: 21px 16px;
-    }
-
-    .holy-grail-field input {
-        font-size: 13px;
-    }
-
-    .holy-grail-submit {
-        font-size: 12px;
-    }
-
-    .tips {
-        padding: 23px 17px;
-    }
 }
