@@ -1,4 +1,3 @@
-
 /* =========================================================
    MOM-VOTED PRODUCT PAGE
    MomYouNeedThis
@@ -6,7 +5,7 @@
 
 
 /* =========================================================
-   PAGE CONTAINER
+   PAGE
 ========================================================= */
 
 .mom-voted-page {
@@ -27,7 +26,7 @@
 
     width: 100%;
 
-    margin: 0 auto 25px;
+    margin: 0 auto 22px;
 
     text-align: center;
 }
@@ -49,8 +48,8 @@
 .mom-voted-logo {
     display: block;
 
-    width: 190px;
-    max-width: 190px;
+    width: 175px;
+    max-width: 175px;
     height: auto;
 
     margin: 0 auto;
@@ -61,12 +60,11 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
 
     width: fit-content;
 
-    margin-top: 15px;
-    padding: 7px 14px;
+    margin-top: 14px;
+    padding: 7px 13px;
 
     border: 1px solid #f5d5e1;
     border-radius: 999px;
@@ -77,11 +75,10 @@
 
     font-family: "Nunito", sans-serif;
 
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 900;
 
-    letter-spacing: .6px;
-    line-height: 1.2;
+    letter-spacing: .65px;
 }
 
 
@@ -89,44 +86,150 @@
    HERO
 ========================================================= */
 
-.mom-voted-page h1 {
-    max-width: 760px;
-
-    margin: 0 auto;
-
+.voting-hero {
     text-align: center;
+}
+
+
+.hero-kicker {
+    margin: 0 0 10px;
+
+    color: #d94d7a;
 
     font-family: "Nunito", sans-serif;
 
-    font-size: clamp(40px, 7vw, 68px);
+    font-size: 11px;
+    font-weight: 900;
+
+    letter-spacing: 1.5px;
+}
+
+
+.mom-voted-page h1 {
+    max-width: 780px;
+
+    margin: 0 auto;
+
+    font-family: "Nunito", sans-serif;
+
+    font-size: clamp(42px, 7vw, 68px);
     font-weight: 900;
 
     line-height: .98;
 
-    letter-spacing: -2.5px;
+    letter-spacing: -2.8px;
+
+    color: #252525;
 }
 
 
 .mom-voted-page h1 span {
     display: block;
 
-    margin-top: 5px;
+    margin-top: 6px;
 }
 
 
 .mom-voted-intro {
     max-width: 650px;
 
-    margin: 24px auto 34px;
+    margin: 24px auto 24px;
 
     text-align: center;
 
     font-family: "Nunito", sans-serif;
 
     font-size: 17px;
-    line-height: 1.65;
+    line-height: 1.6;
 
     color: #666;
+}
+
+
+/* =========================================================
+   PERSONAL PROGRESS
+========================================================= */
+
+.personal-progress {
+    width: 100%;
+    max-width: 470px;
+
+    margin: 0 auto 34px;
+
+    padding: 13px 16px;
+
+    box-sizing: border-box;
+
+    border: 1px solid #eeeeee;
+    border-radius: 14px;
+
+    background: #fff;
+
+    text-align: left;
+
+    box-shadow:
+        0 5px 20px rgba(0, 0, 0, .035);
+}
+
+
+.progress-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 15px;
+
+    margin-bottom: 8px;
+
+    color: #777;
+
+    font-family: "Nunito", sans-serif;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+
+.progress-top strong {
+    color: #d94d7a;
+
+    font-weight: 900;
+}
+
+
+.progress-track {
+    width: 100%;
+    height: 5px;
+
+    overflow: hidden;
+
+    border-radius: 999px;
+
+    background: #f1f1f1;
+}
+
+
+.progress-fill {
+    width: 0%;
+    height: 100%;
+
+    border-radius: inherit;
+
+    background: #d94d7a;
+
+    transition: width .5s cubic-bezier(.22, 1, .36, 1);
+}
+
+
+.personal-progress p {
+    margin: 7px 0 0;
+
+    color: #999;
+
+    font-family: "Nunito", sans-serif;
+
+    font-size: 10px;
+    line-height: 1.4;
 }
 
 
@@ -194,12 +297,12 @@
 
     margin-bottom: 3px;
 
+    color: #333;
+
     font-family: "Nunito", sans-serif;
 
     font-size: 16px;
     font-weight: 900;
-
-    color: #333;
 }
 
 
@@ -211,6 +314,7 @@
     font-family: "Nunito", sans-serif;
 
     font-size: 13px;
+
     line-height: 1.45;
 }
 
@@ -239,7 +343,7 @@
 
 
 /* =========================================================
-   CATEGORY NAVIGATION
+   CATEGORY NAV
 ========================================================= */
 
 .voting-categories {
@@ -294,11 +398,11 @@
 
 
 /* =========================================================
-   PRODUCT BATTLE SECTION
+   PRODUCT SECTION
 ========================================================= */
 
 .product-battle {
-    margin-bottom: 85px;
+    margin-bottom: 82px;
 
     scroll-margin-top: 30px;
 }
@@ -330,6 +434,8 @@
 .battle-heading h2 {
     margin: 0 0 7px;
 
+    color: #272727;
+
     font-family: "Nunito", sans-serif;
 
     font-size: clamp(27px, 4vw, 38px);
@@ -347,12 +453,13 @@
     font-family: "Nunito", sans-serif;
 
     font-size: 15px;
+
     line-height: 1.5;
 }
 
 
 /* =========================================================
-   BATTLE CARD
+   CARD
 ========================================================= */
 
 .battle-card {
@@ -362,14 +469,14 @@
 
     box-sizing: border-box;
 
-    background: white;
+    background: #fff;
 
     border: 1px solid #ededed;
 
     border-radius: 28px;
 
     box-shadow:
-        0 14px 45px rgba(0, 0, 0, .07);
+        0 14px 45px rgba(0, 0, 0, .065);
 }
 
 
@@ -378,7 +485,7 @@
     align-items: center;
     justify-content: space-between;
 
-    padding: 18px 24px;
+    padding: 17px 24px;
 
     border-bottom: 1px solid #f0f0f0;
 }
@@ -389,7 +496,7 @@
 
     font-family: "Nunito", sans-serif;
 
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 900;
 
     letter-spacing: 1px;
@@ -397,7 +504,7 @@
 
 
 .battle-position {
-    padding: 5px 10px;
+    padding: 5px 9px;
 
     border-radius: 999px;
 
@@ -407,7 +514,7 @@
 
     font-family: "Nunito", sans-serif;
 
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 900;
 }
 
@@ -417,12 +524,9 @@
 ========================================================= */
 
 .product-viewer {
-    display: flex;
-    align-items: center;
-
     position: relative;
 
-    min-height: 450px;
+    width: 100%;
 }
 
 
@@ -439,20 +543,70 @@
 
     box-sizing: border-box;
 
-    padding: 45px 65px;
+    padding: 40px 65px;
+}
+
+
+/* =========================================================
+   IMAGE
+========================================================= */
+
+.product-image-column {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 
 .product-image-wrap {
+    position: relative;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
+    width: 100%;
 
     min-height: 330px;
 
     padding: 25px;
 
     box-sizing: border-box;
+
+    border-radius: 22px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #fff9fb 0%,
+            #fff 70%
+        );
+}
+
+
+.product-discovery-badge {
+    position: absolute;
+
+    top: 12px;
+    left: 12px;
+
+    padding: 6px 9px;
+
+    border-radius: 7px;
+
+    background: #fff;
+
+    color: #d94d7a;
+
+    font-family: "Nunito", sans-serif;
+
+    font-size: 9px;
+    font-weight: 900;
+
+    letter-spacing: .8px;
+
+    box-shadow:
+        0 3px 12px rgba(0, 0, 0, .06);
 }
 
 
@@ -467,20 +621,13 @@
     object-fit: contain;
 
     transition:
-        opacity .12s ease,
-        transform .12s ease;
-}
-
-
-.product-changing {
-    opacity: 0;
-
-    transform: scale(.96);
+        opacity .18s ease,
+        transform .18s ease;
 }
 
 
 /* =========================================================
-   PRODUCT INFORMATION
+   PRODUCT INFO
 ========================================================= */
 
 .battle-product-info {
@@ -493,13 +640,13 @@
 .product-label {
     display: inline-block;
 
-    margin-bottom: 12px;
+    margin-bottom: 11px;
 
     color: #d94d7a;
 
     font-family: "Nunito", sans-serif;
 
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 900;
 
     letter-spacing: 1px;
@@ -508,6 +655,8 @@
 
 .battle-product-info h3 {
     margin: 0;
+
+    color: #272727;
 
     font-family: "Nunito", sans-serif;
 
@@ -521,7 +670,7 @@
 
 
 .product-brand {
-    margin: 9px 0 17px;
+    margin: 9px 0 16px;
 
     color: #888;
 
@@ -535,7 +684,7 @@
 .battle-description {
     max-width: 420px;
 
-    margin: 0 0 22px;
+    margin: 0 0 20px;
 
     color: #666;
 
@@ -548,33 +697,39 @@
 
 
 /* =========================================================
-   MOM RECOMMENDATION PERCENTAGE
-   SOCIAL PROOF — TEXT ONLY
+   RECOMMENDATION RATE
+   INTENTIONALLY NOT A BUTTON
 ========================================================= */
 
-.vote-social-proof {
-    display: block;
+.recommendation-rate {
+    display: flex;
+    align-items: baseline;
 
-    margin: 0 0 17px;
+    gap: 7px;
 
-    padding: 0;
-
-    border: 0;
-
-    background: transparent;
+    margin: 0 0 18px;
 
     color: #777;
 
     font-family: "Nunito", sans-serif;
 
+    line-height: 1.3;
+}
+
+
+.recommendation-rate strong {
+    color: #d94d7a;
+
+    font-size: 24px;
+    font-weight: 900;
+
+    letter-spacing: -.5px;
+}
+
+
+.recommendation-rate span {
     font-size: 12px;
-    font-weight: 800;
-
-    line-height: 1.4;
-
-    text-align: left;
-
-    white-space: normal;
+    font-weight: 700;
 }
 
 
@@ -588,9 +743,9 @@
     justify-content: center;
 
     width: 100%;
-    min-height: 56px;
+    min-height: 55px;
 
-    gap: 9px;
+    gap: 10px;
 
     padding: 13px 18px;
 
@@ -599,11 +754,9 @@
     border: 0;
     border-radius: 14px;
 
-    margin-bottom: 0;
-
     background: #d94d7a;
 
-    color: white;
+    color: #fff;
 
     font-family: "Nunito", sans-serif;
 
@@ -626,12 +779,12 @@
     transform: translateY(-2px);
 
     box-shadow:
-        0 12px 25px rgba(217, 77, 122, .28);
+        0 12px 26px rgba(217, 77, 122, .28);
 }
 
 
 .recommend-button:active {
-    transform: translateY(0);
+    transform: scale(.98);
 }
 
 
@@ -643,29 +796,155 @@
 }
 
 
-.vote-confirmation {
-    min-height: 19px;
+.vote-arrow {
+    font-size: 17px;
 
-    margin: 10px 0 0;
+    transition: transform .2s ease;
+}
 
-    color: #2f9d73;
 
-    font-family: "Nunito", sans-serif;
-
-    font-size: 12px;
-    font-weight: 800;
-
-    text-align: center;
+.recommend-button:hover .vote-arrow {
+    transform: translateX(3px);
 }
 
 
 /* =========================================================
-   PRODUCT DETAILS
-   PRIMARY MONETIZATION TEXT LINK
+   VOTE RESULT
+========================================================= */
+
+.vote-result {
+    display: none;
+
+    margin-top: 11px;
+
+    padding: 13px;
+
+    border-radius: 13px;
+
+    background: #f5fbf8;
+
+    border: 1px solid #d9eee5;
+
+    animation: resultReveal .35s ease both;
+}
+
+
+.vote-result.visible {
+    display: block;
+}
+
+
+@keyframes resultReveal {
+
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+
+.vote-result-main {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+}
+
+
+.result-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 27px;
+
+    width: 27px;
+    height: 27px;
+
+    border-radius: 50%;
+
+    background: #2f9d73;
+
+    color: #fff;
+
+    font-size: 13px;
+    font-weight: 900;
+}
+
+
+.vote-result-main strong {
+    display: block;
+
+    margin-bottom: 2px;
+
+    color: #286f54;
+
+    font-family: "Nunito", sans-serif;
+
+    font-size: 12px;
+    font-weight: 900;
+}
+
+
+.vote-result-main span {
+    color: #6e8b7f;
+
+    font-family: "Nunito", sans-serif;
+
+    font-size: 10px;
+
+    line-height: 1.4;
+}
+
+
+/* =========================================================
+   KEEP DISCOVERING
+========================================================= */
+
+.next-discovery {
+    display: block;
+
+    width: 100%;
+
+    margin-top: 10px;
+    padding: 0;
+
+    border: 0;
+
+    background: transparent;
+
+    color: #2f8061;
+
+    font-family: "Nunito", sans-serif;
+
+    font-size: 11px;
+    font-weight: 900;
+
+    text-align: left;
+
+    cursor: pointer;
+}
+
+
+.next-discovery:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   AMAZON LINK
 ========================================================= */
 
 .product-shop-link {
-    display: inline-block;
+    display: block;
+
+    width: fit-content;
 
     margin-top: 18px;
 
@@ -676,11 +955,9 @@
     font-size: 14px;
     font-weight: 900;
 
-    text-align: center;
-
     text-decoration: none;
 
-    letter-spacing: .15px;
+    letter-spacing: .1px;
 
     transition:
         color .2s ease,
@@ -689,91 +966,14 @@
 
 
 .product-shop-link:hover {
-    color: #b97d12;
+    color: #a9700d;
 
-    text-decoration: underline;
-    text-underline-offset: 3px;
-
-    transform: translateY(-1px);
+    transform: translateX(2px);
 }
 
 
 .product-shop-link:active {
-    color: #a66f0e;
-
-    transform: translateY(0);
-}
-
-
-/* =========================================================
-   ARROWS
-========================================================= */
-
-.product-arrow {
-    flex: 0 0 auto;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 48px;
-    height: 48px;
-
-    padding: 0;
-
-    border: 1px solid #e8e8e8;
-    border-radius: 50%;
-
-    background: white;
-
-    color: #444;
-
-    font-family: Arial, sans-serif;
-
-    font-size: 34px;
-    font-weight: 300;
-
-    line-height: 1;
-
-    cursor: pointer;
-
-    z-index: 3;
-
-    box-shadow:
-        0 5px 18px rgba(0, 0, 0, .08);
-
-    transition:
-        transform .2s ease,
-        background .2s ease,
-        color .2s ease;
-}
-
-
-.product-arrow:hover:not(:disabled) {
-    transform: scale(1.08);
-
-    background: #fff1f6;
-
-    color: #d94d7a;
-}
-
-
-.product-arrow:disabled {
-    opacity: .25;
-
-    cursor: default;
-
-    box-shadow: none;
-}
-
-
-.product-arrow-left {
-    margin-left: 18px;
-}
-
-
-.product-arrow-right {
-    margin-right: 18px;
+    transform: translateX(0);
 }
 
 
@@ -803,10 +1003,6 @@
     background: #ddd;
 
     cursor: pointer;
-
-    transition:
-        width .2s ease,
-        background .2s ease;
 }
 
 
@@ -841,6 +1037,57 @@
     font-weight: 700;
 
     text-align: center;
+}
+
+
+/* =========================================================
+   COMING SOON
+========================================================= */
+
+.coming-soon-categories {
+    max-width: 850px;
+
+    margin: -20px auto 75px;
+
+    text-align: center;
+}
+
+
+.coming-soon-label {
+    margin: 0 0 15px;
+
+    color: #aaa;
+
+    font-family: "Nunito", sans-serif;
+
+    font-size: 10px;
+    font-weight: 900;
+
+    letter-spacing: 1.3px;
+}
+
+
+.coming-soon-grid {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    gap: 9px;
+}
+
+
+.coming-soon-grid span {
+    padding: 9px 13px;
+
+    border: 1px dashed #ddd;
+    border-radius: 999px;
+
+    color: #999;
+
+    font-family: "Nunito", sans-serif;
+
+    font-size: 11px;
+    font-weight: 800;
 }
 
 
@@ -891,8 +1138,7 @@
 .explainer-grid {
     display: grid;
 
-    grid-template-columns:
-        repeat(3, 1fr);
+    grid-template-columns: repeat(3, 1fr);
 
     gap: 25px;
 }
@@ -950,7 +1196,7 @@
 
 
 /* =========================================================
-   FINAL HOLY GRAIL CTA
+   FINAL CTA
 ========================================================= */
 
 .holy-grail-final {
@@ -1041,7 +1287,7 @@
 
 
 /* =========================================================
-   LAPTOP / TABLET
+   TABLET
 ========================================================= */
 
 @media (max-width: 1000px) {
@@ -1080,12 +1326,8 @@
 
 @media (max-width: 700px) {
 
-    /* -----------------------------------------
-       HEADER
-    ----------------------------------------- */
-
     .mom-voted-header {
-        margin-bottom: 20px;
+        margin-bottom: 18px;
     }
 
 
@@ -1096,37 +1338,39 @@
 
 
     .community-badge {
-        margin-top: 12px;
+        margin-top: 11px;
 
-        padding: 6px 12px;
+        padding: 6px 11px;
 
         font-size: 9px;
-
-        letter-spacing: .5px;
     }
 
 
-    /* -----------------------------------------
-       HERO
-    ----------------------------------------- */
+    .hero-kicker {
+        font-size: 9px;
+    }
+
 
     .mom-voted-page h1 {
         font-size: 42px;
 
-        letter-spacing: -1.7px;
+        letter-spacing: -1.8px;
     }
 
 
     .mom-voted-intro {
-        margin-top: 20px;
+        margin-top: 19px;
 
         font-size: 16px;
     }
 
 
-    /* -----------------------------------------
-       HOLY GRAIL BANNER
-    ----------------------------------------- */
+    .personal-progress {
+        margin-bottom: 28px;
+    }
+
+
+    /* HOLY GRAIL */
 
     .holy-grail-banner {
         align-items: flex-start;
@@ -1155,9 +1399,7 @@
     }
 
 
-    /* -----------------------------------------
-       CATEGORY NAV
-    ----------------------------------------- */
+    /* NAV */
 
     .voting-categories {
         gap: 7px;
@@ -1173,9 +1415,7 @@
     }
 
 
-    /* -----------------------------------------
-       BATTLE
-    ----------------------------------------- */
+    /* PRODUCT */
 
     .product-battle {
         margin-bottom: 65px;
@@ -1192,11 +1432,6 @@
     }
 
 
-    .product-viewer {
-        min-height: auto;
-    }
-
-
     .product-slide-area {
         display: flex;
 
@@ -1208,12 +1443,23 @@
     }
 
 
+    .product-image-column {
+        width: 100%;
+    }
+
+
     .product-image-wrap {
         width: 100%;
 
         min-height: 250px;
 
         padding: 10px 30px;
+    }
+
+
+    .product-discovery-badge {
+        top: 8px;
+        left: 8px;
     }
 
 
@@ -1229,7 +1475,7 @@
     .battle-product-info {
         width: 100%;
 
-        padding: 10px 8px 0;
+        padding: 12px 8px 0;
 
         text-align: center;
     }
@@ -1246,76 +1492,18 @@
     }
 
 
-    /* -----------------------------------------
-       SOCIAL PROOF
-    ----------------------------------------- */
-
-    .vote-social-proof {
-        margin-bottom: 17px;
-
-        text-align: center;
-
-        font-size: 12px;
+    .recommendation-rate {
+        justify-content: center;
     }
 
-
-    /* -----------------------------------------
-       MOBILE ARROWS
-    ----------------------------------------- */
-
-    .product-arrow {
-        position: absolute;
-
-        top: 150px;
-
-        width: 42px;
-        height: 42px;
-
-        font-size: 30px;
-
-        background: rgba(255, 255, 255, .95);
-    }
-
-
-    .product-arrow-left {
-        left: 9px;
-
-        margin: 0;
-    }
-
-
-    .product-arrow-right {
-        right: 9px;
-
-        margin: 0;
-    }
-
-
-    /* -----------------------------------------
-       VOTE BUTTON
-    ----------------------------------------- */
-
-    .recommend-button {
-        min-height: 54px;
-
-        font-size: 12px;
-    }
-
-
-    /* -----------------------------------------
-       PRODUCT DETAILS
-    ----------------------------------------- */
 
     .product-shop-link {
-        margin-top: 18px;
-
-        font-size: 14px;
+        margin-right: auto;
+        margin-left: auto;
     }
 
 
-    /* -----------------------------------------
-       HOW IT WORKS
-    ----------------------------------------- */
+    /* EXPLAINER */
 
     .voting-explainer {
         padding: 35px 22px;
@@ -1336,9 +1524,7 @@
     }
 
 
-    /* -----------------------------------------
-       FINAL CTA
-    ----------------------------------------- */
+    /* FINAL CTA */
 
     .holy-grail-final {
         padding: 35px 22px;
@@ -1388,427 +1574,29 @@
     }
 
 
-    .product-arrow {
-        top: 137px;
+    .recommendation-rate strong {
+        font-size: 22px;
+    }
 
-        width: 38px;
-        height: 38px;
 
-        font-size: 27px;
+    .recommendation-rate span {
+        font-size: 11px;
     }
 
 }
 
 
 /* =========================================================
-   HOLY GRAIL SUBMISSION PAGE
+   ACCESSIBILITY
 ========================================================= */
 
-.holy-grail-logo-link {
-    display: block;
-
-    width: fit-content;
-
-    margin: 0 auto;
-
-    line-height: 0;
-
-    text-decoration: none;
-}
-
-
-/* =========================================================
-   FORM CONTAINER
-========================================================= */
-
-.holy-grail-form {
-    width: 100%;
-
-    max-width: 590px;
-
-    margin: 38px auto 55px;
-
-    padding: 34px;
-
-    box-sizing: border-box;
-
-    background: #ffffff;
-
-    border: 1px solid #eeeeee;
-
-    border-radius: 24px;
-
-    box-shadow:
-        0 14px 40px rgba(0, 0, 0, 0.06);
-}
-
-
-/* =========================================================
-   FORM FIELDS
-========================================================= */
-
-.holy-grail-field {
-    margin-bottom: 22px;
-}
-
-
-.holy-grail-field label {
-    display: block;
-
-    margin-bottom: 8px;
-
-    color: #333;
-
-    font-family: "Nunito", sans-serif;
-
-    font-size: 14px;
-
-    font-weight: 900;
-}
-
-
-.holy-grail-field input {
-    display: block;
-
-    width: 100%;
-
-    height: 54px;
-
-    box-sizing: border-box;
-
-    padding: 0 16px;
-
-    border: 1px solid #dddddd;
-
-    border-radius: 13px;
-
-    background: #ffffff;
-
-    color: #333;
-
-    font-family: "Nunito", sans-serif;
-
-    font-size: 15px;
-
-    outline: none;
-
-    transition:
-        border-color .2s ease,
-        box-shadow .2s ease,
-        background .2s ease;
-}
-
-
-.holy-grail-field input::placeholder {
-    color: #aaaaaa;
-}
-
-
-.holy-grail-field input:hover {
-    border-color: #cccccc;
-}
-
-
-.holy-grail-field input:focus {
-    border-color: #d94d7a;
-
-    background: #fffafb;
-
-    box-shadow:
-        0 0 0 4px rgba(217, 77, 122, 0.10);
-}
-
-
-/* =========================================================
-   ERROR
-========================================================= */
-
-.holy-grail-error {
-    min-height: 20px;
-
-    margin: -5px 0 12px;
-
-    color: #c43f67;
-
-    font-size: 13px;
-
-    font-weight: 800;
-
-    text-align: center;
-}
-
-
-/* =========================================================
-   SUBMIT BUTTON
-========================================================= */
-
-.holy-grail-submit {
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    width: 100%;
-
-    min-height: 56px;
-
-    padding: 14px 20px;
-
-    border: 0;
-
-    border-radius: 14px;
-
-    background: #d94d7a;
-
-    color: #ffffff;
-
-    font-family: "Nunito", sans-serif;
-
-    font-size: 14px;
-
-    font-weight: 900;
-
-    cursor: pointer;
-
-    box-shadow:
-        0 9px 22px rgba(217, 77, 122, 0.20);
-
-    transition:
-        transform .2s ease,
-        box-shadow .2s ease,
-        background .2s ease,
-        opacity .2s ease;
-}
-
-
-.holy-grail-submit:hover:not(:disabled) {
-    transform: translateY(-2px);
-
-    background: #cf426f;
-
-    box-shadow:
-        0 12px 26px rgba(217, 77, 122, 0.26);
-}
-
-
-.holy-grail-submit:active:not(:disabled) {
-    transform: translateY(0);
-}
-
-
-.holy-grail-submit:disabled {
-    opacity: .65;
-
-    cursor: wait;
-
-    transform: none;
-}
-
-
-/* =========================================================
-   SUCCESS MESSAGE
-========================================================= */
-
-.holy-grail-success {
-    text-align: center;
-}
-
-
-.holy-grail-success-icon {
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    width: 64px;
-
-    height: 64px;
-
-    margin: 0 auto 16px;
-
-    border-radius: 50%;
-
-    background: #fff1f6;
-
-    font-size: 28px;
-}
-
-
-.holy-grail-success h2 {
-    margin: 0 0 10px;
-
-    color: #333;
-
-    font-family: "Nunito", sans-serif;
-
-    font-size: 30px;
-
-    font-weight: 900;
-}
-
-
-.holy-grail-success p {
-    max-width: 430px;
-
-    margin: 0 auto 24px;
-
-    color: #777;
-
-    font-size: 15px;
-
-    line-height: 1.6;
-}
-
-
-/* =========================================================
-   SUBMIT ANOTHER BUTTON
-========================================================= */
-
-.holy-grail-another {
-    display: inline-flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    min-height: 45px;
-
-    padding: 11px 18px;
-
-    border: 1px solid #ead5dd;
-
-    border-radius: 11px;
-
-    background: #ffffff;
-
-    color: #d94d7a;
-
-    font-family: "Nunito", sans-serif;
-
-    font-size: 13px;
-
-    font-weight: 900;
-
-    cursor: pointer;
-
-    transition:
-        background .2s ease,
-        transform .2s ease,
-        border-color .2s ease;
-}
-
-
-.holy-grail-another:hover {
-    transform: translateY(-2px);
-
-    background: #fff4f7;
-
-    border-color: #e6bfce;
-}
-
-
-/* =========================================================
-   BACK TO RECOMMENDATIONS
-========================================================= */
-
-.holy-grail-back {
-    margin: 0 auto 75px;
-
-    text-align: center;
-}
-
-
-.holy-grail-back-link {
-    display: inline-flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    min-height: 48px;
-
-    padding: 12px 20px;
-
-    border-radius: 12px;
-
-    background: #f8f8f8;
-
-    color: #555;
-
-    font-family: "Nunito", sans-serif;
-
-    font-size: 13px;
-
-    font-weight: 900;
-
-    text-decoration: none;
-
-    transition:
-        transform .2s ease,
-        background .2s ease,
-        color .2s ease;
-}
-
-
-.holy-grail-back-link:hover {
-    transform: translateY(-2px);
-
-    background: #fff1f6;
-
-    color: #d94d7a;
-}
-
-
-/* =========================================================
-   HOLY GRAIL MOBILE
-========================================================= */
-
-@media (max-width: 700px) {
-
-    .holy-grail-form {
-        max-width: 100%;
-
-        margin-top: 30px;
-
-        padding: 25px 20px;
-
-        border-radius: 20px;
-    }
-
-
-    .holy-grail-field {
-        margin-bottom: 19px;
-    }
-
-
-    .holy-grail-field input {
-        height: 52px;
-
-        font-size: 16px;
-    }
-
-
-    .holy-grail-submit {
-        min-height: 54px;
-
-        font-size: 13px;
-    }
-
-
-    .holy-grail-success h2 {
-        font-size: 27px;
-    }
-
-
-    .holy-grail-success p {
-        font-size: 14px;
-    }
-
-
-    .holy-grail-back {
-        margin-bottom: 55px;
-    }
-
+.recommend-button:focus-visible,
+.next-discovery:focus-visible,
+.product-shop-link:focus-visible,
+.voting-categories a:focus-visible,
+.holy-grail-link:focus-visible,
+.holy-grail-final-button:focus-visible {
+    outline: 3px solid rgba(217, 77, 122, .25);
+
+    outline-offset: 3px;
 }
