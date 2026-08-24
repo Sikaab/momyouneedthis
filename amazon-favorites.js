@@ -2,15 +2,7 @@
    MOM-VOTED PRODUCT EXPERIENCE
    MomYouNeedThis
    ---------------------------------------------------------
-   Pure JavaScript
-   No dependencies
-   No backend required
-
-   IMPORTANT:
-   The percentages in PRODUCT DATA are editorial/community
-   benchmark values until a real backend is connected.
-
-   Visitor votes are saved locally on their device.
+   Product battle / voting experience
 ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -22,9 +14,11 @@ document.addEventListener("DOMContentLoaded", () => {
        CONFIGURATION
     ===================================================== */
 
-    const STORAGE_KEY = "momYouNeedThisVotingExperience";
+    const STORAGE_KEY =
+        "momYouNeedThisVotingExperience";
 
-    const SESSION_KEY = "momYouNeedThisSession";
+    const SESSION_KEY =
+        "momYouNeedThisSession";
 
     const AUTO_ADVANCE_DELAY = 1150;
 
@@ -220,15 +214,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const categoryNames = {
 
         baby: "Baby",
-
         toddler: "Toddler",
-
         sleep: "Sleep",
-
         potty: "Potty",
-
         feeding: "Feeding",
-
         under25: "Under $25"
 
     };
@@ -296,25 +285,55 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function loadSession() {
 
+        const defaultSession = {
+
+            streak: 0,
+
+            totalVotes: 0,
+
+            completedBattles: 0,
+
+            seen: []
+
+        };
+
+
         try {
 
-            return JSON.parse(
-                localStorage.getItem(SESSION_KEY)
-            ) || {
-                streak: 0,
-                totalVotes: 0,
-                completedBattles: 0,
-                seen: []
+            const stored =
+                JSON.parse(
+                    localStorage.getItem(
+                        SESSION_KEY
+                    )
+                );
+
+
+            if (!stored) {
+                return defaultSession;
+            }
+
+
+            return {
+
+                streak:
+                    Number(stored.streak) || 0,
+
+                totalVotes:
+                    Number(stored.totalVotes) || 0,
+
+                completedBattles:
+                    Number(stored.completedBattles) || 0,
+
+                seen:
+                    Array.isArray(stored.seen)
+                        ? stored.seen
+                        : []
+
             };
 
         } catch (error) {
 
-            return {
-                streak: 0,
-                totalVotes: 0,
-                completedBattles: 0,
-                seen: []
-            };
+            return defaultSession;
 
         }
 
@@ -342,9 +361,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    let savedVotes = loadVotes();
+    let savedVotes =
+        loadVotes();
 
-    let session = loadSession();
+
+    let session =
+        loadSession();
 
 
     /* =====================================================
@@ -368,14 +390,32 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
+    /*
+       IMPORTANT:
+       A battle is complete only when BOTH products
+       have an individual vote.
+
+       Product position is NOT the same thing as
+       voting progress.
+    */
+
+    function isBattleComplete(category) {
+
+        return Boolean(
+            savedVotes[`${category}-0`] &&
+            savedVotes[`${category}-1`]
+        );
+
+    }
+
+
     function getCompletedBattleCount() {
 
         return Object.keys(products)
             .filter((category) => {
 
-                return (
-                    savedVotes[`${category}-0`] &&
-                    savedVotes[`${category}-1`]
+                return isBattleComplete(
+                    category
                 );
 
             })
@@ -386,7 +426,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function getTotalVoteCount() {
 
-        return Object.keys(savedVotes).length;
+        return Object.keys(savedVotes)
+            .filter((key) => {
+
+                return (
+                    savedVotes[key] === "yes" ||
+                    savedVotes[key] === "no"
+                );
+
+            })
+            .length;
 
     }
 
@@ -432,7 +481,9 @@ document.addEventListener("DOMContentLoaded", () => {
        CONSENSUS
     ===================================================== */
 
-    function getConsensusLabel(percentage) {
+    function getConsensusLabel(
+        percentage
+    ) {
 
         if (percentage >= 80) {
 
@@ -440,11 +491,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
+
         if (percentage >= 65) {
 
             return "💗 Strong mom approval";
 
         }
+
 
         if (percentage >= 50) {
 
@@ -452,12 +505,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
+
         return "🤔 Not for everyone";
 
     }
 
 
-    function getNoPercentage(percentage) {
+    function getNoPercentage(
+        percentage
+    ) {
 
         return Math.max(
             0,
@@ -474,17 +530,25 @@ document.addEventListener("DOMContentLoaded", () => {
        VALID AMAZON LINK
     ===================================================== */
 
-    function isValidAffiliateLink(link) {
+    function isValidAffiliateLink(
+        link
+    ) {
 
         if (!link) {
             return false;
         }
 
+
         if (
-            link.includes("YOUR-AMAZON-LINK-HERE")
+            link.includes(
+                "YOUR-AMAZON-LINK-HERE"
+            )
         ) {
+
             return false;
+
         }
+
 
         return (
             link.startsWith("https://") ||
@@ -501,7 +565,10 @@ document.addEventListener("DOMContentLoaded", () => {
     function createGlobalProgress() {
 
         const hero =
-            document.querySelector(".voting-hero");
+            document.querySelector(
+                ".voting-hero"
+            );
+
 
         if (!hero) {
             return null;
@@ -520,7 +587,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         const wrapper =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
+
 
         wrapper.className =
             "mom-voting-progress";
@@ -540,6 +610,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             </div>
 
+
             <div class="mom-voting-progress-track">
 
                 <div
@@ -548,6 +619,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 ></div>
 
             </div>
+
 
             <div
                 class="mom-voting-progress-message"
@@ -559,7 +631,10 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
 
 
-        hero.appendChild(wrapper);
+        hero.appendChild(
+            wrapper
+        );
+
 
         return wrapper;
 
@@ -584,7 +659,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const percentage =
             totalBattles
                 ? Math.round(
-                    (completed / totalBattles) * 100
+                    (
+                        completed /
+                        totalBattles
+                    ) * 100
                 )
                 : 0;
 
@@ -634,8 +712,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 completed < totalBattles
             ) {
 
+                const remaining =
+                    totalBattles -
+                    completed;
+
+
                 message.textContent =
-                    `${totalBattles - completed} more battle${totalBattles - completed === 1 ? "" : "s"} waiting for you 👀`;
+                    `${remaining} more battle${remaining === 1 ? "" : "s"} waiting for you 👀`;
 
             } else {
 
@@ -660,13 +743,28 @@ document.addEventListener("DOMContentLoaded", () => {
                 ".mom-voted-header"
             );
 
+
         if (!header) {
             return null;
         }
 
 
+        const existing =
+            header.querySelector(
+                ".mom-streak-badge"
+            );
+
+
+        if (existing) {
+            return existing;
+        }
+
+
         const badge =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
+
 
         badge.className =
             "mom-streak-badge";
@@ -686,7 +784,10 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
 
 
-        header.appendChild(badge);
+        header.appendChild(
+            badge
+        );
+
 
         return badge;
 
@@ -730,7 +831,9 @@ document.addEventListener("DOMContentLoaded", () => {
        TOAST
     ===================================================== */
 
-    function showToast(message) {
+    function showToast(
+        message
+    ) {
 
         let toast =
             document.querySelector(
@@ -741,7 +844,10 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!toast) {
 
             toast =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
+
 
             toast.className =
                 "mom-voting-toast";
@@ -787,7 +893,10 @@ document.addEventListener("DOMContentLoaded", () => {
     function celebrate() {
 
         const container =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
+
 
         container.className =
             "vote-celebration";
@@ -800,7 +909,9 @@ document.addEventListener("DOMContentLoaded", () => {
         ) {
 
             const piece =
-                document.createElement("span");
+                document.createElement(
+                    "span"
+                );
 
 
             piece.textContent =
@@ -853,6 +964,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
+       HELPER
+    ===================================================== */
+
+    function updateElement(
+        element,
+        value
+    ) {
+
+        if (!element) {
+            return;
+        }
+
+
+        element.textContent =
+            value;
+
+    }
+
+
+    /* =====================================================
        BATTLE INITIALIZATION
     ===================================================== */
 
@@ -880,8 +1011,21 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
 
-        markBattleSeen(category);
+        markBattleSeen(
+            category
+        );
 
+
+        /*
+           IMPORTANT:
+           currentIndex represents ONLY the
+           product currently being displayed.
+
+           0 = PRODUCT 1 OF 2
+           1 = PRODUCT 2 OF 2
+
+           It does NOT represent voting progress.
+        */
 
         let currentIndex = 0;
 
@@ -891,35 +1035,51 @@ document.addEventListener("DOMContentLoaded", () => {
         ================================================= */
 
         const image =
-            battle.querySelector("[data-image]");
+            battle.querySelector(
+                "[data-image]"
+            );
 
 
         const label =
-            battle.querySelector("[data-label]");
+            battle.querySelector(
+                "[data-label]"
+            );
 
 
         const name =
-            battle.querySelector("[data-name]");
+            battle.querySelector(
+                "[data-name]"
+            );
 
 
         const brand =
-            battle.querySelector("[data-brand]");
+            battle.querySelector(
+                "[data-brand]"
+            );
 
 
         const description =
-            battle.querySelector("[data-description]");
+            battle.querySelector(
+                "[data-description]"
+            );
 
 
         const score =
-            battle.querySelector("[data-score]");
+            battle.querySelector(
+                "[data-score]"
+            );
 
 
         const percentage =
-            battle.querySelector("[data-percentage]");
+            battle.querySelector(
+                "[data-percentage]"
+            );
 
 
         const consensus =
-            battle.querySelector("[data-consensus]");
+            battle.querySelector(
+                "[data-consensus]"
+            );
 
 
         const consensusBar =
@@ -929,11 +1089,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         const link =
-            battle.querySelector("[data-link]");
+            battle.querySelector(
+                "[data-link]"
+            );
 
 
         const position =
-            battle.querySelector("[data-position]");
+            battle.querySelector(
+                "[data-position]"
+            );
 
 
         const yesPercentage =
@@ -949,7 +1113,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         const result =
-            battle.querySelector("[data-result]");
+            battle.querySelector(
+                "[data-result]"
+            );
 
 
         const resultTitle =
@@ -995,7 +1161,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         const dotsContainer =
-            battle.querySelector("[data-dots]");
+            battle.querySelector(
+                "[data-dots]"
+            );
 
 
         const nextContender =
@@ -1005,11 +1173,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         const prevButton =
-            battle.querySelector("[data-prev]");
+            battle.querySelector(
+                "[data-prev]"
+            );
 
 
         const nextButton =
-            battle.querySelector("[data-next]");
+            battle.querySelector(
+                "[data-next]"
+            );
 
 
         const voteButtons =
@@ -1046,7 +1218,9 @@ document.addEventListener("DOMContentLoaded", () => {
                         );
 
 
-                    dot.type = "button";
+                    dot.type =
+                        "button";
+
 
                     dot.className =
                         "battle-dot";
@@ -1062,7 +1236,9 @@ document.addEventListener("DOMContentLoaded", () => {
                         "click",
                         () => {
 
-                            showProduct(index);
+                            showProduct(
+                                index
+                            );
 
                         }
                     );
@@ -1079,7 +1255,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         /* =================================================
-           UPDATE BATTLE META
+           BATTLE META
         ================================================= */
 
         function createBattleMeta(
@@ -1110,7 +1286,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
             const meta =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
 
 
             meta.className =
@@ -1124,13 +1302,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 </span>
 
                 <span data-battle-vote-count>
-                    0 votes
+                    0/2 picked
                 </span>
 
             `;
 
 
-            top.appendChild(meta);
+            top.appendChild(
+                meta
+            );
 
         }
 
@@ -1143,6 +1323,11 @@ document.addEventListener("DOMContentLoaded", () => {
             index,
             direction = "next"
         ) {
+
+            /*
+               Normalize the index so navigation always
+               remains inside the two-product battle.
+            */
 
             currentIndex =
                 (
@@ -1167,6 +1352,11 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
 
+            /*
+               Small delay allows the existing transition
+               animation to finish before replacing content.
+            */
+
             setTimeout(() => {
 
                 if (image) {
@@ -1183,6 +1373,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 }
 
+
+                /*
+                   PRODUCT POSITION
+                   ----------------
+                   This is based ONLY on currentIndex.
+
+                   First product:
+                   PRODUCT 1 OF 2
+
+                   Second product:
+                   PRODUCT 2 OF 2
+                */
 
                 updateElement(
                     label,
@@ -1237,20 +1439,70 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
 
 
+                /*
+                   AMAZON CTA
+                   ----------------
+                   Only show it when the product has
+                   an actual configured link.
+
+                   The CTA copy is intentionally
+                   curiosity-driven.
+                */
+
                 if (link) {
 
-                    link.href =
-                        product.link;
-
-                    link.style.display =
+                    const validLink =
                         isValidAffiliateLink(
                             product.link
-                        )
-                            ? ""
-                            : "none";
+                        );
+
+
+                    if (validLink) {
+
+                        link.href =
+                            product.link;
+
+
+                        link.textContent =
+                            "See Why Moms Love It →";
+
+
+                        link.style.display =
+                            "";
+
+
+                        link.setAttribute(
+                            "target",
+                            "_blank"
+                        );
+
+
+                        link.setAttribute(
+                            "rel",
+                            "nofollow sponsored noopener"
+                        );
+
+                    } else {
+
+                        link.removeAttribute(
+                            "href"
+                        );
+
+
+                        link.style.display =
+                            "none";
+
+                    }
 
                 }
 
+
+                /*
+                   PRODUCT POSITION
+                   ----------------
+                   This is intentionally NOT tied
+                   to vote count.
+                */
 
                 updateElement(
                     position,
@@ -1278,14 +1530,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 updateDots();
 
+
+                /*
+                   Restore this individual product's
+                   vote, if one exists.
+                */
+
                 restoreVoteState();
 
+
+                /*
+                   Update how many products in this
+                   battle have been voted on.
+                */
+
                 updateBattleVoteCount();
+
+
+                /*
+                   Check whether BOTH products have
+                   been voted on.
+                */
 
                 updateBattleWinner();
 
 
                 updateButtonLabels();
+
 
             }, 120);
 
@@ -1311,8 +1582,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
             const nextProduct =
-                battleProducts[nextIndex];
+                battleProducts[
+                    nextIndex
+                ];
 
+
+            /*
+               Keep the next-product CTA specific
+               to the product the mom is about to see.
+            */
 
             nextContender.textContent =
                 `See ${nextProduct.name} →`;
@@ -1345,6 +1623,18 @@ document.addEventListener("DOMContentLoaded", () => {
                         index === currentIndex
                     );
 
+
+                    /*
+                       Optional accessibility state.
+                    */
+
+                    dot.setAttribute(
+                        "aria-current",
+                        index === currentIndex
+                            ? "true"
+                            : "false"
+                    );
+
                 }
             );
 
@@ -1354,6 +1644,18 @@ document.addEventListener("DOMContentLoaded", () => {
         /* =================================================
            VOTE KEY
         ================================================= */
+
+        /*
+           Each product has its own permanent key.
+
+           Example:
+
+           baby-0
+           baby-1
+
+           This means voting for Product 1 never
+           accidentally marks Product 2 as voted.
+        */
 
         function getVoteKey() {
 
@@ -1366,11 +1668,20 @@ document.addEventListener("DOMContentLoaded", () => {
            CAST VOTE
         ================================================= */
 
-        function castVote(choice) {
+        function castVote(
+            choice
+        ) {
 
             const key =
                 getVoteKey();
 
+
+            /*
+               Prevent duplicate votes.
+
+               Returning to a product that was already
+               voted on simply restores its result.
+            */
 
             if (savedVotes[key]) {
 
@@ -1379,10 +1690,15 @@ document.addEventListener("DOMContentLoaded", () => {
                     true
                 );
 
+
                 return;
 
             }
 
+
+            /*
+               Save THIS product's vote.
+            */
 
             savedVotes[key] =
                 choice;
@@ -1391,12 +1707,23 @@ document.addEventListener("DOMContentLoaded", () => {
             saveVotes();
 
 
+            /*
+               Update session totals.
+            */
+
             session.totalVotes =
                 getTotalVoteCount();
 
 
+            /*
+               Streak increments only when a genuinely
+               new vote is cast.
+            */
+
             session.streak =
-                Number(session.streak || 0) + 1;
+                Number(
+                    session.streak || 0
+                ) + 1;
 
 
             saveSession();
@@ -1406,6 +1733,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
             updateGlobalProgress();
 
+            updateBattleVoteCount();
+
 
             showVoteResult(
                 choice,
@@ -1414,6 +1743,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
             celebrate();
+
+
+            /*
+               Check whether this vote completed
+               the entire two-product battle.
+            */
+
+            updateBattleWinner();
 
         }
 
@@ -1443,6 +1780,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 );
 
 
+            /*
+               Hide voting controls after the product
+               has been voted on.
+            */
+
             if (voteArea) {
 
                 voteArea.style.display =
@@ -1450,6 +1792,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
             }
 
+
+            /*
+               Reveal individual product result.
+            */
 
             if (result) {
 
@@ -1573,7 +1919,16 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
 
+            /*
+               This does NOT mean the battle is complete.
+
+               It only checks whether BOTH products
+               now have votes.
+            */
+
             checkBattleCompletion();
+
+            updateNextBattleButton();
 
         }
 
@@ -1592,12 +1947,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 savedVotes[key];
 
 
+            /*
+               No vote for this particular product.
+
+               Show the voting UI and hide the result.
+            */
+
             if (!existingVote) {
 
                 if (voteArea) {
 
                     voteArea.style.display =
-                        "block";
+                        "";
 
                 }
 
@@ -1625,9 +1986,15 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
 
+            /*
+               A vote exists for THIS product.
+
+               Restore exactly that result.
+            */
+
             showVoteResult(
                 existingVote,
-                true
+                false
             );
 
         }
@@ -1639,22 +2006,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
         function checkBattleCompletion() {
 
-            const firstVote =
-                savedVotes[
-                    `${category}-0`
-                ];
+            const complete =
+                isBattleComplete(
+                    category
+                );
 
 
-            const secondVote =
-                savedVotes[
-                    `${category}-1`
-                ];
+            /*
+               IMPORTANT:
+               Do NOT show the winner after only one vote.
+            */
 
-
-            if (
-                !firstVote ||
-                !secondVote
-            ) {
+            if (!complete) {
 
                 if (winner) {
 
@@ -1667,13 +2030,49 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 if (winnerText) {
 
-                    winnerText.textContent =
-                        "Vote for both products to reveal the battle result.";
+                    const firstVoted =
+                        Boolean(
+                            savedVotes[
+                                `${category}-0`
+                            ]
+                        );
+
+
+                    const secondVoted =
+                        Boolean(
+                            savedVotes[
+                                `${category}-1`
+                            ]
+                        );
+
+
+                    if (
+                        firstVoted &&
+                        !secondVoted
+                    ) {
+
+                        winnerText.textContent =
+                            "You picked Product 1. Now see what you think of Product 2.";
+
+                    } else if (
+                        !firstVoted &&
+                        secondVoted
+                    ) {
+
+                        winnerText.textContent =
+                            "You picked Product 2. Now see what you think of Product 1.";
+
+                    } else {
+
+                        winnerText.textContent =
+                            "Vote for both products to reveal the battle result.";
+
+                    }
 
                 }
 
 
-                return;
+                return false;
 
             }
 
@@ -1733,6 +2132,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
             updateGlobalProgress();
 
+
+            return true;
+
         }
 
 
@@ -1773,8 +2175,21 @@ document.addEventListener("DOMContentLoaded", () => {
             );
 
 
+            /*
+               This is VOTING progress.
+
+               It is deliberately separate from
+               PRODUCT 1 OF 2 / PRODUCT 2 OF 2.
+            */
+
             element.textContent =
                 `${count}/${battleProducts.length} picked`;
+
+
+            element.classList.toggle(
+                "complete",
+                count === battleProducts.length
+            );
 
         }
 
@@ -1797,10 +2212,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
             const button =
-                document.createElement("button");
+                document.createElement(
+                    "button"
+                );
 
 
-            button.type = "button";
+            button.type =
+                "button";
+
 
             button.className =
                 "next-battle-cta";
@@ -1844,6 +2263,12 @@ document.addEventListener("DOMContentLoaded", () => {
                     footer
                 );
 
+            } else {
+
+                battle.appendChild(
+                    button
+                );
+
             }
 
         }
@@ -1856,12 +2281,9 @@ document.addEventListener("DOMContentLoaded", () => {
         function updateNextBattleButton() {
 
             const complete =
-                savedVotes[
-                    `${category}-0`
-                ] &&
-                savedVotes[
-                    `${category}-1`
-                ];
+                isBattleComplete(
+                    category
+                );
 
 
             const button =
@@ -1869,6 +2291,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     ".next-battle-cta"
                 );
 
+
+            /*
+               The next battle CTA is only available
+               after BOTH products have been voted on.
+            */
 
             if (complete) {
 
@@ -1975,8 +2402,27 @@ document.addEventListener("DOMContentLoaded", () => {
                     "click",
                     () => {
 
+                        const choice =
+                            button.dataset.vote;
+
+
+                        if (
+                            choice !== "yes" &&
+                            choice !== "no"
+                        ) {
+
+                            console.warn(
+                                `Invalid vote choice: ${choice}`
+                            );
+
+
+                            return;
+
+                        }
+
+
                         castVote(
-                            button.dataset.vote
+                            choice
                         );
 
                     }
@@ -2055,7 +2501,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
 
 
-                if (differenceX > 0) {
+                if (
+                    differenceX > 0
+                ) {
 
                     showProduct(
                         currentIndex + 1
@@ -2090,6 +2538,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         "image-error"
                     );
 
+
                     image.alt =
                         "Product image unavailable";
 
@@ -2100,10 +2549,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         /* =================================================
-           INITIALIZE
+           INITIALIZE BATTLE
         ================================================= */
 
-        showProduct(0);
+        showProduct(
+            0
+        );
 
     });
 
@@ -2130,8 +2581,13 @@ document.addEventListener("DOMContentLoaded", () => {
             );
 
 
-        let nextBattle = null;
+        let nextBattle =
+            null;
 
+
+        /*
+           First try to move forward.
+        */
 
         for (
             let i = currentIndex + 1;
@@ -2154,6 +2610,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
+
+        /*
+           If we're at the end, loop back to
+           the first visible battle.
+        */
 
         if (!nextBattle) {
 
@@ -2186,6 +2647,7 @@ document.addEventListener("DOMContentLoaded", () => {
             showToast(
                 "You've reached the end! 🏆"
             );
+
 
             return;
 
@@ -2263,7 +2725,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     /* =====================================================
        CATEGORY OBSERVER
-       Makes the active category update while scrolling.
+       Makes active category update while scrolling.
     ===================================================== */
 
     if (
@@ -2306,7 +2768,8 @@ document.addEventListener("DOMContentLoaded", () => {
                                 "active",
                                 link.getAttribute(
                                     "href"
-                                ) === `#${category}`
+                                ) ===
+                                `#${category}`
                             );
 
                         }
@@ -2384,6 +2847,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                     "filtered-out"
                                 );
 
+
                                 return;
 
                             }
@@ -2457,7 +2921,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       RETURN TO TOP HELPER
+       RETURN TO TOP / VOTING PROGRESS STATE
     ===================================================== */
 
     window.addEventListener(
@@ -2477,6 +2941,12 @@ document.addEventListener("DOMContentLoaded", () => {
                     "has-voting-progress"
                 );
 
+            } else {
+
+                document.body.classList.remove(
+                    "has-voting-progress"
+                );
+
             }
 
         },
@@ -2488,7 +2958,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     /* =====================================================
        OPTIONAL RESET FUNCTION
-       Useful during development.
 
        Console:
        resetMomVotes()
