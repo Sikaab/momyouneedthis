@@ -1200,6 +1200,47 @@
         margin-right: auto;
         margin-left: auto;
     }
+    
+    
+/* =========================================================
+   SOCIAL PROOF / MOM VOTE PERCENTAGE
+========================================================= */
+
+.vote-social-proof {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 6px;
+
+    margin: 0 0 17px;
+    padding: 8px 13px;
+
+    box-sizing: border-box;
+
+    border: 1px solid #f3d5df;
+    border-radius: 999px;
+
+    background: #fff5f8;
+
+    color: #c94d73;
+
+    font-family: "Nunito", sans-serif;
+
+    font-size: 12px;
+    font-weight: 900;
+
+    line-height: 1.25;
+
+    white-space: nowrap;
+}
+
+
+.vote-proof-heart {
+    font-size: 13px;
+
+    line-height: 1;
+}
 
 
     /* -----------------------------------------
