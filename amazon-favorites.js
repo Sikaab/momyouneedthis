@@ -1,925 +1,834 @@
-
 /* =========================================================
-   MOMYOU NEED THIS
-   MOM-VOTED PRODUCT BATTLES
-   Firebase Anonymous Authentication + Firestore
+   MOM-VOTED PRODUCT EXPERIENCE
+   amazon-favorites.js
+
+   Features:
+   - Persistent votes
+   - Personal voting count
+   - Voting progress
+   - Instant vote feedback
+   - "Keep discovering" interaction
+   - Smooth scrolling
+   - Returning-user vote state
+   - No fake activity numbers
 ========================================================= */
 
-import { db } from "./firebase-config.js";
 
-import {
-    getAuth,
-    signInAnonymously,
-    onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
+document.addEventListener("DOMContentLoaded", () => {
 
-import {
-    doc,
-    setDoc,
-    serverTimestamp
-} from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+    "use strict";
 
 
-/* =========================================================
-   FIREBASE AUTH
-========================================================= */
+    /* =====================================================
+       STORAGE
+    ===================================================== */
 
-const auth = getAuth();
+    const STORAGE_KEY = "momYouNeedThisVoting";
 
-let currentUser = null;
 
-let authReady = new Promise((resolve, reject) => {
+    const defaultState = {
+        votes: {},
+        totalVotes: 0
+    };
 
-    let resolved = false;
 
-    onAuthStateChanged(auth, (user) => {
+    let state = loadState();
 
-        if (user) {
 
-            currentUser = user;
+    function loadState() {
 
-            console.log(
-                "Anonymous Firebase user ready:",
-                user.uid
-            );
+        try {
 
-            if (!resolved) {
-                resolved = true;
-                resolve(user);
+            const saved = localStorage.getItem(STORAGE_KEY);
+
+            if (!saved) {
+                return {
+                    ...defaultState
+                };
             }
 
+
+            const parsed = JSON.parse(saved);
+
+
+            return {
+                votes:
+                    parsed &&
+                    typeof parsed.votes === "object"
+                        ? parsed.votes
+                        : {},
+
+                totalVotes:
+                    parsed &&
+                    Number.isFinite(parsed.totalVotes)
+                        ? parsed.totalVotes
+                        : 0
+            };
+
+        } catch (error) {
+
+            console.warn(
+                "MomYouNeedThis voting data could not be loaded.",
+                error
+            );
+
+
+            return {
+                ...defaultState
+            };
+
         }
+
+    }
+
+
+    function saveState() {
+
+        try {
+
+            localStorage.setItem(
+                STORAGE_KEY,
+                JSON.stringify(state)
+            );
+
+        } catch (error) {
+
+            console.warn(
+                "MomYouNeedThis voting data could not be saved.",
+                error
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       DOM
+    ===================================================== */
+
+    const productSections = [
+        ...document.querySelectorAll(".product-battle")
+    ];
+
+
+    const voteCountElement =
+        document.querySelector("[data-vote-count]");
+
+
+    const progressFill =
+        document.querySelector("[data-progress-fill]");
+
+
+    const progressMessage =
+        document.querySelector("[data-progress-message]");
+
+
+    /* =====================================================
+       PROGRESS
+    ===================================================== */
+
+    const totalProducts =
+        productSections.length;
+
+
+    function updatePersonalProgress() {
+
+        const count = state.totalVotes;
+
+
+        if (voteCountElement) {
+
+            voteCountElement.textContent =
+                `${count} ${count === 1 ? "vote" : "votes"}`;
+
+        }
+
+
+        /*
+         * This is deliberately personal progress.
+         *
+         * It does NOT pretend to represent other users.
+         */
+
+        const progress =
+            totalProducts > 0
+                ? Math.min(
+                    100,
+                    (count / totalProducts) * 100
+                )
+                : 0;
+
+
+        if (progressFill) {
+
+            progressFill.style.width =
+                `${progress}%`;
+
+        }
+
+
+        if (!progressMessage) {
+            return;
+        }
+
+
+        if (count === 0) {
+
+            progressMessage.textContent =
+                "Cast your first vote to get started.";
+
+            return;
+
+        }
+
+
+        if (count === 1) {
+
+            progressMessage.textContent =
+                "Nice start. Keep discovering.";
+
+            return;
+
+        }
+
+
+        if (count < totalProducts) {
+
+            progressMessage.textContent =
+                "You're getting the hang of it. Keep going.";
+
+            return;
+
+        }
+
+
+        progressMessage.textContent =
+            "You've voted on every product you've discovered here.";
+
+    }
+
+
+    /* =====================================================
+       PRODUCT SECTIONS
+    ===================================================== */
+
+    productSections.forEach((section) => {
+
+        setupProductSection(section);
 
     });
 
-});
 
+    function setupProductSection(section) {
 
-/* =========================================================
-   START ANONYMOUS AUTH
-========================================================= */
+        const productId =
+            section.dataset.productId;
 
-async function initializeAuthentication() {
 
-    try {
-
-        if (!auth.currentUser) {
-
-            await signInAnonymously(auth);
-
-        } else {
-
-            currentUser = auth.currentUser;
-
-        }
-
-        await authReady;
-
-    } catch (error) {
-
-        console.error(
-            "Anonymous authentication failed:",
-            error
-        );
-
-        throw error;
-
-    }
-
-}
-
-
-/* =========================================================
-   PRODUCT DATA
-   ---------------------------------------------------------
-   CHANGE ONLY "percentage" EACH MONTH
-   FOR MANUAL SOCIAL-PROOF UPDATES.
-========================================================= */
-
-const competitions = {
-
-    baby: [
-
-        {
-            id: "baby-einstein-aquarium",
-
-            name: "Soother Musical Crib Toy",
-
-            brand: "Baby Einstein",
-
-            image: "assets/babyeinstein-aquarium.jpeg",
-
-            alt: "Baby Einstein Soother Musical Crib Toy",
-
-            description:
-                "A popular option for keeping little ones entertained during quiet moments and daily routines.",
-
-            percentage: 62,
-
-            link: "https://amzn.to/4fNqr9j"
-        },
-
-        {
-            id: "baby-white-noise-machine",
-
-            name: "White Noise Machine",
-
-            brand: "Parent Favorite",
-
-            image: "assets/white-noise-machine.jpeg",
-
-            alt: "White noise machine",
-
-            description:
-                "A popular choice for creating a consistent sleep environment for little ones.",
-
-            percentage: 38,
-
-            link: "https://amzn.to/4z8LxGC"
-        }
-
-    ],
-
-
-    toddler: [
-
-        {
-            id: "toddler-favorite",
-
-            name: "Toddler Favorite",
-
-            brand: "MomYouNeedThis Pick",
-
-            image: "assets/product2.jpg",
-
-            alt: "Toddler favorite product",
-
-            description:
-                "A practical everyday product designed to make life with toddlers a little easier.",
-
-            percentage: 57,
-
-            link: "YOUR-AMAZON-LINK-HERE"
-        },
-
-        {
-            id: "toddler-red-light",
-
-            name: "Red Light",
-
-            brand: "Parent Favorite",
-
-            image: "assets/redlight.jpeg",
-
-            alt: "Red light for baby and toddler routines",
-
-            description:
-                "A useful addition to bedtime and nighttime routines.",
-
-            percentage: 43,
-
-            link: "https://amzn.to/3U5XzAB"
-        }
-
-    ],
-
-
-    sleep: [
-
-        {
-            id: "sleep-white-noise-machine",
-
-            name: "White Noise Machine",
-
-            brand: "Parent Favorite",
-
-            image: "assets/white-noise-machine.jpeg",
-
-            alt: "White noise machine",
-
-            description:
-                "A popular choice for creating a consistent sleep environment for little ones.",
-
-            percentage: 71,
-
-            link: "https://amzn.to/4z8LxGC"
-        },
-
-        {
-            id: "sleep-red-light",
-
-            name: "Red Light",
-
-            brand: "Parent Favorite",
-
-            image: "assets/redlight.jpeg",
-
-            alt: "Red light",
-
-            description:
-                "A simple option some parents incorporate into nighttime routines.",
-
-            percentage: 29,
-
-            link: "https://amzn.to/3U5XzAB"
-        }
-
-    ],
-
-
-    potty: [
-
-        {
-            id: "babybjorn-potty",
-
-            name: "Potty Training Seat",
-
-            brand: "BabyBjörn",
-
-            image: "assets/babybjorn-potty-toilet.jpeg",
-
-            alt: "BabyBjörn potty",
-
-            description:
-                "A simple potty-training option designed to help toddlers feel comfortable and confident.",
-
-            percentage: 68,
-
-            link: "https://amzn.to/3S23eqS"
-        },
-
-        {
-            id: "potty-training-contender",
-
-            name: "Potty Training Favorite",
-
-            brand: "Mom Favorite",
-
-            image: "assets/babybjorn-potty-toilet.jpeg",
-
-            alt: "Potty training product",
-
-            description:
-                "Another contender will be added as more moms submit their favorite products.",
-
-            percentage: 32,
-
-            link: "submit-holy-grail.html"
-        }
-
-    ],
-
-    /*
-     * These categories are ready for when you add
-     * the corresponding HTML sections.
-     */
-
-    feeding: [],
-
-    under25: []
-
-};
-
-
-/* =========================================================
-   CREATE SAFE DOCUMENT ID
-========================================================= */
-
-function createVoteId(category, productId) {
-
-    if (!currentUser) {
-        throw new Error(
-            "Cannot create vote ID before authentication."
-        );
-    }
-
-    return `${currentUser.uid}_${category}_${productId}`;
-
-}
-
-
-/* =========================================================
-   SAVE VOTE
-========================================================= */
-
-async function saveVote(category, product) {
-
-    await authReady;
-
-    if (!currentUser) {
-
-        throw new Error(
-            "Firebase authentication is not ready."
-        );
-
-    }
-
-
-    const voteId =
-        createVoteId(
-            category,
-            product.id
-        );
-
-
-    const voteRef =
-        doc(
-            db,
-            "productVotes",
-            voteId
-        );
-
-
-    await setDoc(
-        voteRef,
-        {
-
-            uid: currentUser.uid,
-
-            category: category,
-
-            productId: product.id,
-
-            productName: product.name,
-
-            productBrand: product.brand,
-
-            createdAt: serverTimestamp()
-
-        },
-
-        {
-            merge: false
-        }
-
-    );
-
-}
-
-
-/* =========================================================
-   CAROUSELS
-========================================================= */
-
-function initializeBattles() {
-
-    const battles =
-        document.querySelectorAll(
-            ".product-battle"
-        );
-
-
-    battles.forEach(function (battle) {
-
-        const category =
-            battle.dataset.category;
-
-
-        const products =
-            competitions[category];
-
-
-        if (
-            !products ||
-            !products.length
-        ) {
-
+        if (!productId) {
             return;
-
         }
 
-
-        let currentIndex = 0;
-
-
-        const image =
-            battle.querySelector("[data-image]");
-
-        const name =
-            battle.querySelector("[data-name]");
-
-        const brand =
-            battle.querySelector("[data-brand]");
-
-        const description =
-            battle.querySelector("[data-description]");
-
-        const percentage =
-            battle.querySelector("[data-vote-percentage]");
-
-        const link =
-            battle.querySelector("[data-link]");
-
-        const label =
-            battle.querySelector("[data-label]");
-
-        const position =
-            battle.querySelector("[data-position]");
 
         const voteButton =
-            battle.querySelector("[data-vote]");
+            section.querySelector("[data-vote]");
 
-        const confirmation =
-            battle.querySelector("[data-confirmation]");
 
-        const dotsContainer =
-            battle.querySelector("[data-dots]");
+        const voteResult =
+            section.querySelector("[data-result]");
 
-        const previousButton =
-            battle.querySelector("[data-prev]");
 
         const nextButton =
-            battle.querySelector("[data-next]");
+            section.querySelector("[data-next-discovery]");
 
 
-        /* =================================================
-           SAFETY CHECK
-        ================================================= */
+        const votePercentage =
+            section.querySelector("[data-vote-percentage]");
 
-        if (
-            !image ||
-            !name ||
-            !brand ||
-            !description ||
-            !percentage ||
-            !link ||
-            !voteButton ||
-            !dotsContainer ||
-            !previousButton ||
-            !nextButton
-        ) {
 
-            console.error(
-                "Product battle is missing required HTML elements:",
-                category
-            );
+        const productName =
+            section.querySelector("[data-name]");
 
+
+        if (!voteButton) {
             return;
+        }
+
+
+        /*
+         * Restore previous vote.
+         */
+
+        if (state.votes[productId]) {
+
+            setVotedState(
+                section,
+                false
+            );
 
         }
 
 
         /* =================================================
-           DOTS
-        ================================================= */
-
-        products.forEach(function (_, index) {
-
-            const dot =
-                document.createElement("button");
-
-
-            dot.type = "button";
-
-            dot.className =
-                "battle-dot";
-
-
-            dot.setAttribute(
-                "aria-label",
-                `Show product ${index + 1}`
-            );
-
-
-            dot.addEventListener(
-                "click",
-                function () {
-
-                    currentIndex =
-                        index;
-
-                    updateProduct();
-
-                }
-            );
-
-
-            dotsContainer.appendChild(
-                dot
-            );
-
-        });
-
-
-        const dots =
-            dotsContainer.querySelectorAll(
-                ".battle-dot"
-            );
-
-
-        /* =================================================
-           VOTE STATE
-        ================================================= */
-
-        function updateVoteState() {
-
-            const product =
-                products[currentIndex];
-
-
-            const localVoteKey =
-                `momVote_${category}_${product.id}`;
-
-
-            const hasVoted =
-                localStorage.getItem(
-                    localVoteKey
-                );
-
-
-            if (hasVoted) {
-
-                voteButton.classList.add(
-                    "has-voted"
-                );
-
-
-                voteButton.innerHTML =
-                    `
-                    <span class="recommend-heart">
-                        ♥
-                    </span>
-
-                    <span>
-                        YOU RECOMMENDED THIS
-                    </span>
-                    `;
-
-            } else {
-
-                voteButton.classList.remove(
-                    "has-voted"
-                );
-
-
-                voteButton.innerHTML =
-                    `
-                    <span class="recommend-heart">
-                        ♥
-                    </span>
-
-                    <span>
-                        I WOULD RECOMMEND THIS
-                    </span>
-                    `;
-
-            }
-
-        }
-
-
-        /* =================================================
-           UPDATE PRODUCT
-        ================================================= */
-
-        function updateProduct() {
-
-            const product =
-                products[currentIndex];
-
-
-            image.classList.add(
-                "product-changing"
-            );
-
-
-            setTimeout(function () {
-
-                image.src =
-                    product.image;
-
-                image.alt =
-                    product.alt;
-
-                name.textContent =
-                    product.name;
-
-                brand.textContent =
-                    product.brand;
-
-                description.textContent =
-                    product.description;
-
-
-                /* -----------------------------------------
-                   SOCIAL PROOF PERCENTAGE
-                ----------------------------------------- */
-
-                percentage.innerHTML =
-                    `
-                    <span class="vote-proof-heart">
-                        ♥
-                    </span>
-
-                    <span>
-                        ${product.percentage}% of moms would recommend this
-                    </span>
-                    `;
-
-
-                label.textContent =
-                    `PRODUCT ${currentIndex + 1}`;
-
-
-                position.textContent =
-                    `${currentIndex + 1} / ${products.length}`;
-
-
-                confirmation.textContent =
-                    "";
-
-
-                if (product.link) {
-
-                    link.href =
-                        product.link;
-
-                }
-
-
-                image.classList.remove(
-                    "product-changing"
-                );
-
-
-                updateVoteState();
-
-            }, 120);
-
-
-            dots.forEach(function (
-                dot,
-                index
-            ) {
-
-                dot.classList.toggle(
-                    "active",
-                    index === currentIndex
-                );
-
-            });
-
-
-            previousButton.disabled =
-                currentIndex === 0;
-
-
-            nextButton.disabled =
-                currentIndex ===
-                products.length - 1;
-
-        }
-
-
-        /* =================================================
-           VOTE BUTTON
+           VOTE
         ================================================= */
 
         voteButton.addEventListener(
             "click",
-            async function () {
+            () => {
 
-                const product =
-                    products[currentIndex];
+                handleVote(
+                    section,
+                    productId
+                );
+
+            }
+        );
 
 
-                const localVoteKey =
-                    `momVote_${category}_${product.id}`;
+        /* =================================================
+           KEEP DISCOVERING
+        ================================================= */
 
+        if (nextButton) {
 
-                /*
-                 * Prevent accidental double-clicks.
-                 */
+            nextButton.addEventListener(
+                "click",
+                () => {
 
-                if (
-                    voteButton.dataset.saving ===
-                    "true"
-                ) {
-
-                    return;
+                    goToNextProduct(
+                        section
+                    );
 
                 }
+            );
+
+        }
 
 
-                /*
-                 * Prevent another local vote.
-                 */
+        /* =================================================
+           PREVENT EMPTY AMAZON LINK
+        ================================================= */
 
-                if (
-                    localStorage.getItem(
-                        localVoteKey
-                    )
-                ) {
+        const shopLink =
+            section.querySelector("[data-link]");
 
-                    return;
+
+        if (
+            shopLink &&
+            shopLink.getAttribute("href") ===
+            "YOUR-AMAZON-LINK-HERE"
+        ) {
+
+            shopLink.classList.add(
+                "missing-affiliate-link"
+            );
+
+            shopLink.addEventListener(
+                "click",
+                (event) => {
+
+                    event.preventDefault();
+
+                    alert(
+                        "Add the Amazon affiliate link for this product first."
+                    );
 
                 }
+            );
+
+        }
 
 
-                voteButton.dataset.saving =
-                    "true";
+        /*
+         * Keep variables referenced so future
+         * product data can easily expand.
+         */
+
+        void voteResult;
+        void votePercentage;
+        void productName;
+
+    }
 
 
-                voteButton.disabled =
-                    true;
+    /* =====================================================
+       HANDLE VOTE
+    ===================================================== */
+
+    function handleVote(
+        section,
+        productId
+    ) {
+
+        /*
+         * Prevent multiple votes from the same
+         * browser for the same product.
+         */
+
+        if (state.votes[productId]) {
+
+            setVotedState(
+                section,
+                true
+            );
+
+            return;
+
+        }
 
 
-                confirmation.textContent =
-                    "Saving your vote…";
+        state.votes[productId] = {
+            votedAt: Date.now()
+        };
 
 
-                try {
+        state.totalVotes += 1;
 
-                    await saveVote(
-                        category,
-                        product
+
+        saveState();
+
+
+        setVotedState(
+            section,
+            true
+        );
+
+
+        updatePersonalProgress();
+
+
+        /*
+         * Tiny scroll adjustment on mobile.
+         * It keeps the feedback visible without
+         * aggressively jumping the user around.
+         */
+
+        if (
+            window.innerWidth <= 700
+        ) {
+
+            setTimeout(() => {
+
+                const result =
+                    section.querySelector(
+                        "[data-result]"
                     );
 
 
-                    /*
-                     * Only mark locally AFTER
-                     * Firestore successfully accepts
-                     * the vote.
-                     */
+                if (result) {
 
-                    localStorage.setItem(
-                        localVoteKey,
-                        "true"
-                    );
-
-
-                    voteButton.classList.add(
-                        "has-voted"
-                    );
-
-
-                    voteButton.innerHTML =
-                        `
-                        <span class="recommend-heart">
-                            ♥
-                        </span>
-
-                        <span>
-                            YOU RECOMMENDED THIS
-                        </span>
-                        `;
-
-
-                    confirmation.textContent =
-                        "💗 Thanks! Your recommendation has been recorded.";
-
-
-                } catch (error) {
-
-                    console.error(
-                        "Vote failed:",
-                        error
-                    );
+                    const rect =
+                        result.getBoundingClientRect();
 
 
                     if (
-                        error.code ===
-                        "permission-denied"
+                        rect.bottom >
+                        window.innerHeight
                     ) {
 
-                        confirmation.textContent =
-                            "You've already voted for this product.";
-
-                        localStorage.setItem(
-                            localVoteKey,
-                            "true"
-                        );
-
-
-                        voteButton.classList.add(
-                            "has-voted"
-                        );
-
-
-                        voteButton.innerHTML =
-                            `
-                            <span class="recommend-heart">
-                                ♥
-                            </span>
-
-                            <span>
-                                YOU RECOMMENDED THIS
-                            </span>
-                            `;
-
-                    } else {
-
-                        confirmation.textContent =
-                            "Sorry — we couldn't record your vote. Please try again.";
+                        result.scrollIntoView({
+                            behavior: "smooth",
+                            block: "nearest"
+                        });
 
                     }
 
                 }
 
-
-                voteButton.dataset.saving =
-                    "false";
-
-
-                voteButton.disabled =
-                    false;
-
-            }
-        );
-
-
-        /* =================================================
-           PREVIOUS
-        ================================================= */
-
-        previousButton.addEventListener(
-            "click",
-            function () {
-
-                if (
-                    currentIndex > 0
-                ) {
-
-                    currentIndex--;
-
-                    updateProduct();
-
-                }
-
-            }
-        );
-
-
-        /* =================================================
-           NEXT
-        ================================================= */
-
-        nextButton.addEventListener(
-            "click",
-            function () {
-
-                if (
-                    currentIndex <
-                    products.length - 1
-                ) {
-
-                    currentIndex++;
-
-                    updateProduct();
-
-                }
-
-            }
-        );
-
-
-        /* =================================================
-           INITIAL PRODUCT
-        ================================================= */
-
-        updateProduct();
-
-    });
-
-}
-
-
-/* =========================================================
-   INITIALIZE
-========================================================= */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    async function () {
-
-        try {
-
-            await initializeAuthentication();
-
-            initializeBattles();
-
-            console.log(
-                "Mom voting system initialized."
-            );
-
-        } catch (error) {
-
-            console.error(
-                "Voting system failed to initialize:",
-                error
-            );
-
-
-            document
-                .querySelectorAll("[data-vote]")
-                .forEach(function (button) {
-
-                    button.disabled =
-                        true;
-
-                });
+            }, 100);
 
         }
 
     }
-);
+
+
+    /* =====================================================
+       VOTED STATE
+    ===================================================== */
+
+    function setVotedState(
+        section,
+        isReturningUser
+    ) {
+
+        const button =
+            section.querySelector("[data-vote]");
+
+
+        const result =
+            section.querySelector("[data-result]");
+
+
+        const resultTitle =
+            section.querySelector("[data-result-title]");
+
+
+        const resultMessage =
+            section.querySelector("[data-result-message]");
+
+
+        if (!button) {
+            return;
+        }
+
+
+        button.classList.add(
+            "has-voted"
+        );
+
+
+        button.disabled = true;
+
+
+        button.querySelector("span:first-child")
+            .textContent =
+            "YOU RECOMMENDED THIS";
+
+
+        const arrow =
+            button.querySelector(".vote-arrow");
+
+
+        if (arrow) {
+
+            arrow.textContent = "✓";
+
+        }
+
+
+        if (result) {
+
+            result.classList.add(
+                "visible"
+            );
+
+        }
+
+
+        if (resultTitle) {
+
+            resultTitle.textContent =
+                isReturningUser
+                    ? "You already voted for this."
+                    : "Your vote is in!";
+
+        }
+
+
+        if (resultMessage) {
+
+            resultMessage.textContent =
+                isReturningUser
+                    ? "Your recommendation is saved on this device."
+                    : "You just helped another mom narrow it down.";
+
+        }
+
+    }
+
+
+    /* =====================================================
+       NEXT DISCOVERY
+    ===================================================== */
+
+    function goToNextProduct(
+        currentSection
+    ) {
+
+        const currentIndex =
+            productSections.indexOf(
+                currentSection
+            );
+
+
+        if (currentIndex === -1) {
+            return;
+        }
+
+
+        /*
+         * Find the next product section.
+         *
+         * If we're at the last one, loop back
+         * to the first one.
+         */
+
+        let nextIndex =
+            currentIndex + 1;
+
+
+        if (
+            nextIndex >=
+            productSections.length
+        ) {
+
+            nextIndex = 0;
+
+        }
+
+
+        const nextSection =
+            productSections[nextIndex];
+
+
+        if (!nextSection) {
+            return;
+        }
+
+
+        /*
+         * Small delay makes the interaction feel
+         * deliberate rather than abrupt.
+         */
+
+        window.setTimeout(() => {
+
+            nextSection.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+
+        }, 80);
+
+    }
+
+
+    /* =====================================================
+       UPDATE PROGRESS ON LOAD
+    ===================================================== */
+
+    updatePersonalProgress();
+
+
+    /* =====================================================
+       SMOOTH CATEGORY NAVIGATION
+    ===================================================== */
+
+    document
+        .querySelectorAll(
+            ".voting-categories a"
+        )
+        .forEach((link) => {
+
+            link.addEventListener(
+                "click",
+                (event) => {
+
+                    const targetId =
+                        link.getAttribute("href");
+
+
+                    if (
+                        !targetId ||
+                        !targetId.startsWith("#")
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    const target =
+                        document.querySelector(
+                            targetId
+                        );
+
+
+                    if (!target) {
+                        return;
+                    }
+
+
+                    event.preventDefault();
+
+
+                    target.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+
+                }
+            );
+
+        });
+
+
+    /* =====================================================
+       INTERSECTION OBSERVER
+       Highlights the category currently being viewed.
+    ===================================================== */
+
+    const categoryLinks =
+        new Map();
+
+
+    document
+        .querySelectorAll(
+            ".voting-categories a"
+        )
+        .forEach((link) => {
+
+            const targetId =
+                link.getAttribute("href");
+
+
+            if (!targetId) {
+                return;
+            }
+
+
+            categoryLinks.set(
+                targetId,
+                link
+            );
+
+        });
+
+
+    if (
+        "IntersectionObserver" in window
+    ) {
+
+        const observer =
+            new IntersectionObserver(
+                (entries) => {
+
+                    entries.forEach(
+                        (entry) => {
+
+                            if (
+                                !entry.isIntersecting
+                            ) {
+
+                                return;
+
+                            }
+
+
+                            const id =
+                                `#${entry.target.id}`;
+
+
+                            categoryLinks.forEach(
+                                (link) => {
+
+                                    link.classList.remove(
+                                        "active"
+                                    );
+
+                                }
+                            );
+
+
+                            const activeLink =
+                                categoryLinks.get(
+                                    id
+                                );
+
+
+                            if (activeLink) {
+
+                                activeLink.classList.add(
+                                    "active"
+                                );
+
+                            }
+
+                        }
+                    );
+
+                },
+                {
+                    threshold: 0.25,
+                    rootMargin:
+                        "-15% 0px -55% 0px"
+                }
+            );
+
+
+        productSections.forEach(
+            (section) => {
+
+                observer.observe(
+                    section
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       IMAGE LOADING
+       Adds a subtle premium reveal.
+    ===================================================== */
+
+    document
+        .querySelectorAll(
+            ".battle-product-image"
+        )
+        .forEach((image) => {
+
+            if (image.complete) {
+
+                image.classList.add(
+                    "image-loaded"
+                );
+
+                return;
+
+            }
+
+
+            image.addEventListener(
+                "load",
+                () => {
+
+                    image.classList.add(
+                        "image-loaded"
+                    );
+
+                },
+                {
+                    once: true
+                }
+            );
+
+        });
+
+
+    /* =====================================================
+       KEYBOARD ACCESSIBILITY
+    ===================================================== */
+
+    document
+        .querySelectorAll(
+            ".recommend-button"
+        )
+        .forEach((button) => {
+
+            button.addEventListener(
+                "keydown",
+                (event) => {
+
+                    if (
+                        event.key === "Enter" ||
+                        event.key === " "
+                    ) {
+
+                        event.preventDefault();
+
+                        button.click();
+
+                    }
+
+                }
+            );
+
+        });
+
+
+});
