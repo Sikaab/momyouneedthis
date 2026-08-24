@@ -2,18 +2,32 @@
 <html lang="en">
 
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Mom-Voted Baby & Toddler Products | MomYouNeedThis</title>
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>
+Mom-Voted Baby & Toddler Products | MomYouNeedThis
+</title>
 
 <meta
     name="description"
-    content="Discover the baby and toddler products moms actually recommend. Vote for your favorites and see why other moms love them."
+    content="See what moms are recommending, cast your vote, compare products, and discover mom-approved baby and toddler favorites."
 >
 
-<link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="amazon-favorites.css">
+<link
+    rel="stylesheet"
+    href="style.css"
+>
+
+<link
+    rel="stylesheet"
+    href="amazon-favorites.css"
+>
 
 <link
     href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap"
@@ -34,7 +48,7 @@
      HEADER
 ===================================================== -->
 
-<div class="mom-voted-header">
+<header class="mom-voted-header">
 
     <a
         href="index.html"
@@ -51,80 +65,65 @@
 
 
     <span class="community-badge">
-        🗳️ MOMS ARE VOTING
+        🗳️ MOMS ARE DECIDING
     </span>
 
-</div>
+</header>
+
 
 
 <!-- =====================================================
      HERO
 ===================================================== -->
 
-<h1>
+<section class="voting-hero">
 
-What Do Moms
-<span>Actually Recommend?</span>
-
-</h1>
-
-
-<p class="mom-voted-intro">
-
-Skip the endless reviews.
-
-<br>
-
-<strong>
-See what moms are choosing, vote for your favorite,
-and discover the products worth knowing about.
-</strong>
-
-</p>
+    <span class="hero-kicker">
+        REAL MOM OPINIONS
+    </span>
 
 
-<!-- =====================================================
-     PARTICIPATION BAR
-===================================================== -->
+    <h1>
 
-<div class="participation-bar">
+        What Do Moms
+        <span>Actually Recommend?</span>
 
-    <div class="participation-stat">
+    </h1>
 
-        <span class="participation-number" data-total-votes>
-            1,284
+
+    <p class="mom-voted-intro">
+
+        Skip the endless scrolling.
+
+        <br>
+
+        See what moms are choosing, make your pick,
+        and discover which products are winning the
+        mom vote.
+
+    </p>
+
+
+    <div class="hero-mini-proof">
+
+        <span>👀</span>
+
+        <strong>
+            You choose.
+        </strong>
+
+        <span>
+            Moms reveal.
         </span>
 
-        <span class="participation-label">
-            mom recommendations
-        </span>
-
-    </div>
-
-
-    <div class="participation-divider"></div>
-
-
-    <div class="participation-stat">
-
-        <span class="participation-number" data-your-picks>
-            0
-        </span>
-
-        <span class="participation-label">
-            your picks
+        <span>
+            You decide.
         </span>
 
     </div>
 
+</section>
 
-    <div class="participation-message" data-participation-message>
-
-        Your votes help other moms decide.
-
-    </div>
-
-</div>
 
 
 <!-- =====================================================
@@ -145,8 +144,8 @@ and discover the products worth knowing about.
         </strong>
 
         <span>
-            Tell us about the one product you would recommend
-            without hesitation.
+            Tell us about the one product you would
+            recommend to another mom.
         </span>
 
     </div>
@@ -162,6 +161,7 @@ and discover the products worth knowing about.
 </div>
 
 
+
 <!-- =====================================================
      CATEGORY NAVIGATION
 ===================================================== -->
@@ -171,56 +171,120 @@ and discover the products worth knowing about.
     aria-label="Product categories"
 >
 
-    <a href="#baby">
+    <a
+        href="#baby"
+        class="category-link active"
+    >
         👶 Baby
     </a>
 
-    <a href="#toddler">
+    <a
+        href="#toddler"
+        class="category-link"
+    >
         🧸 Toddler
     </a>
 
-    <a href="#sleep">
+    <a
+        href="#sleep"
+        class="category-link"
+    >
         😴 Sleep
     </a>
 
-    <a href="#potty">
+    <a
+        href="#potty"
+        class="category-link"
+    >
         🚽 Potty
     </a>
 
-    <a href="#feeding">
+    <a
+        href="#feeding"
+        class="category-link"
+    >
         🍽️ Feeding
     </a>
 
-    <a href="#under25">
+    <a
+        href="#under25"
+        class="category-link"
+    >
         💰 Under $25
     </a>
 
 </nav>
 
 
+
 <!-- =====================================================
-     BABY
+     DISCOVERY FILTERS
+===================================================== -->
+
+<div class="discovery-strip">
+
+    <button
+        type="button"
+        class="discovery-filter active"
+        data-filter="all"
+    >
+        ✨ All Battles
+    </button>
+
+
+    <button
+        type="button"
+        class="discovery-filter"
+        data-filter="new"
+    >
+        🆕 New
+    </button>
+
+
+    <button
+        type="button"
+        class="discovery-filter"
+        data-filter="trending"
+    >
+        🔥 Trending
+    </button>
+
+
+    <button
+        type="button"
+        class="discovery-filter"
+        data-filter="favorite"
+    >
+        🏆 Mom Favorites
+    </button>
+
+</div>
+
+
+
+<!-- =====================================================
+     BATTLE 1 — BABY
 ===================================================== -->
 
 <section
     class="product-battle"
     id="baby"
     data-category="baby"
+    data-filter-tags="new trending"
 >
 
     <div class="battle-heading">
 
         <span class="battle-eyebrow">
-            👶 BABY
+            👶 BABY BATTLE
         </span>
 
         <h2>
-            Best Baby Must-Haves
+            Which Baby Product Wins?
         </h2>
 
         <p>
-            If another mom asked you which one to buy,
-            which would you recommend?
+            You have to pick one. Which would you choose?
         </p>
 
     </div>
@@ -231,21 +295,30 @@ and discover the products worth knowing about.
         <div class="battle-top">
 
             <span class="battle-category">
-                COMMUNITY PICK
+                🗳️ MOM BATTLE
             </span>
+
 
             <span
                 class="battle-position"
                 data-position
             >
-                1 / 2
+                PRODUCT 1 OF 2
             </span>
 
         </div>
 
 
-        <div class="mom-pick-banner" data-mom-pick>
-            ✨ Current Mom Favorite
+        <div class="battle-question">
+
+            <span>
+                YOUR TURN
+            </span>
+
+            <strong>
+                What would YOU pick?
+            </strong>
+
         </div>
 
 
@@ -266,8 +339,9 @@ and discover the products worth knowing about.
                 <div class="product-image-wrap">
 
                     <div class="product-image-badge">
-                        MOM FAVORITE
+                        MOM PICK
                     </div>
+
 
                     <img
                         class="battle-product-image"
@@ -311,58 +385,188 @@ and discover the products worth knowing about.
                     </p>
 
 
-                    <!-- SOCIAL PROOF -->
+                    <!-- MOM SCORE -->
 
-                    <div class="vote-social-proof">
+                    <div class="mom-score">
 
-                        <strong data-vote-percentage>
-                            62%
-                        </strong>
+                        <div class="mom-score-top">
 
-                        <span>
-                            of moms would recommend this
-                        </span>
+                            <span>
+                                💗 MOM SCORE
+                            </span>
+
+                            <strong data-score>
+                                8.4
+                            </strong>
+
+                            <small>
+                                /10
+                            </small>
+
+                        </div>
+
+
+                        <div class="consensus-label">
+                            <span data-consensus>
+                                💗 Strong mom approval
+                            </span>
+                        </div>
+
+
+                        <div class="consensus-bar">
+
+                            <div
+                                class="consensus-fill"
+                                data-consensus-bar
+                            ></div>
+
+                        </div>
+
+
+                        <div class="consensus-text">
+
+                            <strong data-percentage>
+                                62%
+                            </strong>
+
+                            <span>
+                                of moms recommend this
+                            </span>
+
+                        </div>
 
                     </div>
 
 
-                    <div class="vote-progress">
 
-                        <div
-                            class="vote-progress-fill"
-                            data-vote-progress
-                        ></div>
+                    <!-- VOTING AREA -->
 
-                    </div>
-
-
-                    <!-- VOTE -->
-
-                    <button
-                        type="button"
-                        class="recommend-button"
-                        data-vote
+                    <div
+                        class="vote-area"
+                        data-vote-area
                     >
 
-                        <span>
-                            I WOULD RECOMMEND THIS
-                        </span>
-
-                        <span class="recommend-arrow">
-                            →
-                        </span>
-
-                    </button>
+                        <p class="vote-question">
+                            Would you recommend it?
+                        </p>
 
 
-                    <p
-                        class="vote-confirmation"
-                        data-confirmation
+                        <div class="vote-choice-grid">
+
+                            <button
+                                type="button"
+                                class="vote-choice vote-yes"
+                                data-vote="yes"
+                            >
+
+                                <span class="vote-choice-icon">
+                                    ✓
+                                </span>
+
+                                <span>
+                                    YES, I WOULD
+                                </span>
+
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="vote-choice vote-no"
+                                data-vote="no"
+                            >
+
+                                <span class="vote-choice-icon">
+                                    ×
+                                </span>
+
+                                <span>
+                                    NO, I'D SKIP IT
+                                </span>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- RESULT -->
+
+                    <div
+                        class="vote-result"
+                        data-result
                         aria-live="polite"
-                    ></p>
+                    >
+
+                        <div class="result-icon">
+                            🎉
+                        </div>
 
 
-                    <!-- PRODUCT CTA -->
+                        <strong data-result-title>
+                            You voted!
+                        </strong>
+
+
+                        <p data-result-text>
+                            See how your opinion compares with other moms.
+                        </p>
+
+                    </div>
+
+
+
+                    <!-- SOCIAL COMPARISON -->
+
+                    <div
+                        class="social-comparison"
+                        data-social-comparison
+                    >
+
+                        <div class="social-comparison-title">
+                            See how moms voted
+                        </div>
+
+
+                        <div class="social-result-row">
+
+                            <span>
+                                YES
+                            </span>
+
+                            <strong data-yes-percentage>
+                                62%
+                            </strong>
+
+                        </div>
+
+
+                        <div class="social-result-row no-row">
+
+                            <span>
+                                NO
+                            </span>
+
+                            <strong data-no-percentage>
+                                38%
+                            </strong>
+
+                        </div>
+
+
+                        <div class="your-position">
+                            <span data-your-position>
+                                You're with the majority.
+                            </span>
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- AFFILIATE CTA -->
 
                     <a
                         href="https://amzn.to/4fNqr9j"
@@ -371,16 +575,18 @@ and discover the products worth knowing about.
                         class="product-shop-link"
                         data-link
                     >
-                        See Why Moms Love It →
+                        See why moms are choosing it →
                     </a>
 
 
+                    <!-- NEXT CONTENDER -->
+
                     <button
                         type="button"
-                        class="next-product-link"
-                        data-next-product
+                        class="next-contender"
+                        data-next-contender
                     >
-                        Show Me Another Mom Favorite →
+                        See the other contender →
                     </button>
 
                 </div>
@@ -406,10 +612,36 @@ and discover the products worth knowing about.
         ></div>
 
 
+        <!-- WINNER -->
+
+        <div
+            class="battle-winner"
+            data-winner
+        >
+
+            <span>
+                🏆
+            </span>
+
+            <div>
+
+                <strong>
+                    Battle complete
+                </strong>
+
+                <p data-winner-text>
+                    Vote for both products to see the winner.
+                </p>
+
+            </div>
+
+        </div>
+
+
         <div class="battle-footer">
 
             <span>
-                🗳️ Your vote helps another mom skip the guesswork.
+                🗳️ Your opinion helps another mom decide.
             </span>
 
         </div>
@@ -417,6 +649,7 @@ and discover the products worth knowing about.
     </div>
 
 </section>
+
 
 
 <!-- =====================================================
@@ -427,12 +660,13 @@ and discover the products worth knowing about.
     class="product-battle"
     id="toddler"
     data-category="toddler"
+    data-filter-tags="trending"
 >
 
     <div class="battle-heading">
 
         <span class="battle-eyebrow">
-            🧸 TODDLER
+            🧸 TODDLER BATTLE
         </span>
 
         <h2>
@@ -440,7 +674,7 @@ and discover the products worth knowing about.
         </h2>
 
         <p>
-            Which product would earn a spot in your home?
+            Which one would earn a spot in your home?
         </p>
 
     </div>
@@ -451,21 +685,29 @@ and discover the products worth knowing about.
         <div class="battle-top">
 
             <span class="battle-category">
-                COMMUNITY PICK
+                🗳️ MOM BATTLE
             </span>
 
             <span
                 class="battle-position"
                 data-position
             >
-                1 / 2
+                PRODUCT 1 OF 2
             </span>
 
         </div>
 
 
-        <div class="mom-pick-banner" data-mom-pick>
-            ✨ Current Mom Favorite
+        <div class="battle-question">
+
+            <span>
+                YOUR TURN
+            </span>
+
+            <strong>
+                What would YOU pick?
+            </strong>
+
         </div>
 
 
@@ -486,8 +728,9 @@ and discover the products worth knowing about.
                 <div class="product-image-wrap">
 
                     <div class="product-image-badge">
-                        MOM FAVORITE
+                        MOM PICK
                     </div>
+
 
                     <img
                         class="battle-product-image"
@@ -531,51 +774,170 @@ and discover the products worth knowing about.
                     </p>
 
 
-                    <div class="vote-social-proof">
+                    <div class="mom-score">
 
-                        <strong data-vote-percentage>
-                            57%
-                        </strong>
+                        <div class="mom-score-top">
 
-                        <span>
-                            of moms would recommend this
-                        </span>
+                            <span>
+                                💗 MOM SCORE
+                            </span>
+
+                            <strong data-score>
+                                8.1
+                            </strong>
+
+                            <small>
+                                /10
+                            </small>
+
+                        </div>
+
+
+                        <div class="consensus-label">
+                            <span data-consensus>
+                                💗 Strong mom approval
+                            </span>
+                        </div>
+
+
+                        <div class="consensus-bar">
+
+                            <div
+                                class="consensus-fill"
+                                data-consensus-bar
+                            ></div>
+
+                        </div>
+
+
+                        <div class="consensus-text">
+
+                            <strong data-percentage>
+                                57%
+                            </strong>
+
+                            <span>
+                                of moms recommend this
+                            </span>
+
+                        </div>
 
                     </div>
 
 
-                    <div class="vote-progress">
-
-                        <div
-                            class="vote-progress-fill"
-                            data-vote-progress
-                        ></div>
-
-                    </div>
-
-
-                    <button
-                        type="button"
-                        class="recommend-button"
-                        data-vote
+                    <div
+                        class="vote-area"
+                        data-vote-area
                     >
 
-                        <span>
-                            I WOULD RECOMMEND THIS
-                        </span>
-
-                        <span class="recommend-arrow">
-                            →
-                        </span>
-
-                    </button>
+                        <p class="vote-question">
+                            Would you recommend it?
+                        </p>
 
 
-                    <p
-                        class="vote-confirmation"
-                        data-confirmation
+                        <div class="vote-choice-grid">
+
+                            <button
+                                type="button"
+                                class="vote-choice vote-yes"
+                                data-vote="yes"
+                            >
+
+                                <span class="vote-choice-icon">
+                                    ✓
+                                </span>
+
+                                <span>
+                                    YES, I WOULD
+                                </span>
+
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="vote-choice vote-no"
+                                data-vote="no"
+                            >
+
+                                <span class="vote-choice-icon">
+                                    ×
+                                </span>
+
+                                <span>
+                                    NO, I'D SKIP IT
+                                </span>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="vote-result"
+                        data-result
                         aria-live="polite"
-                    ></p>
+                    >
+
+                        <div class="result-icon">
+                            🎉
+                        </div>
+
+                        <strong data-result-title>
+                            You voted!
+                        </strong>
+
+                        <p data-result-text>
+                            See how your opinion compares with other moms.
+                        </p>
+
+                    </div>
+
+
+                    <div
+                        class="social-comparison"
+                        data-social-comparison
+                    >
+
+                        <div class="social-comparison-title">
+                            See how moms voted
+                        </div>
+
+                        <div class="social-result-row">
+
+                            <span>
+                                YES
+                            </span>
+
+                            <strong data-yes-percentage>
+                                57%
+                            </strong>
+
+                        </div>
+
+                        <div class="social-result-row no-row">
+
+                            <span>
+                                NO
+                            </span>
+
+                            <strong data-no-percentage>
+                                43%
+                            </strong>
+
+                        </div>
+
+                        <div class="your-position">
+
+                            <span data-your-position>
+                                You're with the majority.
+                            </span>
+
+                        </div>
+
+                    </div>
 
 
                     <a
@@ -585,16 +947,16 @@ and discover the products worth knowing about.
                         class="product-shop-link"
                         data-link
                     >
-                        See Why Moms Love It →
+                        See why moms are choosing it →
                     </a>
 
 
                     <button
                         type="button"
-                        class="next-product-link"
-                        data-next-product
+                        class="next-contender"
+                        data-next-contender
                     >
-                        Show Me Another Mom Favorite →
+                        See the other contender →
                     </button>
 
                 </div>
@@ -620,6 +982,30 @@ and discover the products worth knowing about.
         ></div>
 
 
+        <div
+            class="battle-winner"
+            data-winner
+        >
+
+            <span>
+                🏆
+            </span>
+
+            <div>
+
+                <strong>
+                    Battle complete
+                </strong>
+
+                <p data-winner-text>
+                    Vote for both products to see the winner.
+                </p>
+
+            </div>
+
+        </div>
+
+
         <div class="battle-footer">
 
             <span>
@@ -633,6 +1019,7 @@ and discover the products worth knowing about.
 </section>
 
 
+
 <!-- =====================================================
      SLEEP
 ===================================================== -->
@@ -641,16 +1028,17 @@ and discover the products worth knowing about.
     class="product-battle"
     id="sleep"
     data-category="sleep"
+    data-filter-tags="favorite trending"
 >
 
     <div class="battle-heading">
 
         <span class="battle-eyebrow">
-            😴 SLEEP
+            😴 SLEEP BATTLE
         </span>
 
         <h2>
-            Sleep Helpers
+            Which Sleep Helper Wins?
         </h2>
 
         <p>
@@ -665,21 +1053,29 @@ and discover the products worth knowing about.
         <div class="battle-top">
 
             <span class="battle-category">
-                COMMUNITY PICK
+                🗳️ MOM BATTLE
             </span>
 
             <span
                 class="battle-position"
                 data-position
             >
-                1 / 2
+                PRODUCT 1 OF 2
             </span>
 
         </div>
 
 
-        <div class="mom-pick-banner" data-mom-pick>
-            ✨ Current Mom Favorite
+        <div class="battle-question">
+
+            <span>
+                YOUR TURN
+            </span>
+
+            <strong>
+                What would YOU pick?
+            </strong>
+
         </div>
 
 
@@ -700,8 +1096,9 @@ and discover the products worth knowing about.
                 <div class="product-image-wrap">
 
                     <div class="product-image-badge">
-                        MOM FAVORITE
+                        MOM PICK
                     </div>
+
 
                     <img
                         class="battle-product-image"
@@ -745,51 +1142,175 @@ and discover the products worth knowing about.
                     </p>
 
 
-                    <div class="vote-social-proof">
+                    <div class="mom-score">
 
-                        <strong data-vote-percentage>
-                            71%
-                        </strong>
+                        <div class="mom-score-top">
 
-                        <span>
-                            of moms would recommend this
-                        </span>
+                            <span>
+                                💗 MOM SCORE
+                            </span>
+
+                            <strong data-score>
+                                8.7
+                            </strong>
+
+                            <small>
+                                /10
+                            </small>
+
+                        </div>
+
+
+                        <div class="consensus-label">
+
+                            <span data-consensus>
+                                🔥 Mom favorite
+                            </span>
+
+                        </div>
+
+
+                        <div class="consensus-bar">
+
+                            <div
+                                class="consensus-fill"
+                                data-consensus-bar
+                            ></div>
+
+                        </div>
+
+
+                        <div class="consensus-text">
+
+                            <strong data-percentage>
+                                71%
+                            </strong>
+
+                            <span>
+                                of moms recommend this
+                            </span>
+
+                        </div>
 
                     </div>
 
 
-                    <div class="vote-progress">
-
-                        <div
-                            class="vote-progress-fill"
-                            data-vote-progress
-                        ></div>
-
-                    </div>
-
-
-                    <button
-                        type="button"
-                        class="recommend-button"
-                        data-vote
+                    <div
+                        class="vote-area"
+                        data-vote-area
                     >
 
-                        <span>
-                            I WOULD RECOMMEND THIS
-                        </span>
-
-                        <span class="recommend-arrow">
-                            →
-                        </span>
-
-                    </button>
+                        <p class="vote-question">
+                            Would you recommend it?
+                        </p>
 
 
-                    <p
-                        class="vote-confirmation"
-                        data-confirmation
+                        <div class="vote-choice-grid">
+
+                            <button
+                                type="button"
+                                class="vote-choice vote-yes"
+                                data-vote="yes"
+                            >
+
+                                <span class="vote-choice-icon">
+                                    ✓
+                                </span>
+
+                                <span>
+                                    YES, I WOULD
+                                </span>
+
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="vote-choice vote-no"
+                                data-vote="no"
+                            >
+
+                                <span class="vote-choice-icon">
+                                    ×
+                                </span>
+
+                                <span>
+                                    NO, I'D SKIP IT
+                                </span>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="vote-result"
+                        data-result
                         aria-live="polite"
-                    ></p>
+                    >
+
+                        <div class="result-icon">
+                            🎉
+                        </div>
+
+                        <strong data-result-title>
+                            You voted!
+                        </strong>
+
+                        <p data-result-text>
+                            See how your opinion compares with other moms.
+                        </p>
+
+                    </div>
+
+
+                    <div
+                        class="social-comparison"
+                        data-social-comparison
+                    >
+
+                        <div class="social-comparison-title">
+                            See how moms voted
+                        </div>
+
+
+                        <div class="social-result-row">
+
+                            <span>
+                                YES
+                            </span>
+
+                            <strong data-yes-percentage>
+                                71%
+                            </strong>
+
+                        </div>
+
+
+                        <div class="social-result-row no-row">
+
+                            <span>
+                                NO
+                            </span>
+
+                            <strong data-no-percentage>
+                                29%
+                            </strong>
+
+                        </div>
+
+
+                        <div class="your-position">
+
+                            <span data-your-position>
+                                You're with the majority.
+                            </span>
+
+                        </div>
+
+                    </div>
 
 
                     <a
@@ -799,16 +1320,16 @@ and discover the products worth knowing about.
                         class="product-shop-link"
                         data-link
                     >
-                        See Why Moms Love It →
+                        See why moms are choosing it →
                     </a>
 
 
                     <button
                         type="button"
-                        class="next-product-link"
-                        data-next-product
+                        class="next-contender"
+                        data-next-contender
                     >
-                        Show Me Another Mom Favorite →
+                        See the other contender →
                     </button>
 
                 </div>
@@ -834,10 +1355,34 @@ and discover the products worth knowing about.
         ></div>
 
 
+        <div
+            class="battle-winner"
+            data-winner
+        >
+
+            <span>
+                🏆
+            </span>
+
+            <div>
+
+                <strong>
+                    Battle complete
+                </strong>
+
+                <p data-winner-text>
+                    Vote for both products to see the winner.
+                </p>
+
+            </div>
+
+        </div>
+
+
         <div class="battle-footer">
 
             <span>
-                💗 What works for one family might help another.
+                💗 What works for your family might help another.
             </span>
 
         </div>
@@ -845,6 +1390,7 @@ and discover the products worth knowing about.
     </div>
 
 </section>
+
 
 
 <!-- =====================================================
@@ -855,12 +1401,13 @@ and discover the products worth knowing about.
     class="product-battle"
     id="potty"
     data-category="potty"
+    data-filter-tags="favorite"
 >
 
     <div class="battle-heading">
 
         <span class="battle-eyebrow">
-            🚽 POTTY TRAINING
+            🚽 POTTY BATTLE
         </span>
 
         <h2>
@@ -879,21 +1426,29 @@ and discover the products worth knowing about.
         <div class="battle-top">
 
             <span class="battle-category">
-                COMMUNITY PICK
+                🗳️ MOM BATTLE
             </span>
 
             <span
                 class="battle-position"
                 data-position
             >
-                1 / 2
+                PRODUCT 1 OF 2
             </span>
 
         </div>
 
 
-        <div class="mom-pick-banner" data-mom-pick>
-            ✨ Current Mom Favorite
+        <div class="battle-question">
+
+            <span>
+                YOUR TURN
+            </span>
+
+            <strong>
+                What would YOU pick?
+            </strong>
+
         </div>
 
 
@@ -914,8 +1469,9 @@ and discover the products worth knowing about.
                 <div class="product-image-wrap">
 
                     <div class="product-image-badge">
-                        MOM FAVORITE
+                        MOM PICK
                     </div>
+
 
                     <img
                         class="battle-product-image"
@@ -959,51 +1515,175 @@ and discover the products worth knowing about.
                     </p>
 
 
-                    <div class="vote-social-proof">
+                    <div class="mom-score">
 
-                        <strong data-vote-percentage>
-                            68%
-                        </strong>
+                        <div class="mom-score-top">
 
-                        <span>
-                            of moms would recommend this
-                        </span>
+                            <span>
+                                💗 MOM SCORE
+                            </span>
+
+                            <strong data-score>
+                                8.6
+                            </strong>
+
+                            <small>
+                                /10
+                            </small>
+
+                        </div>
+
+
+                        <div class="consensus-label">
+
+                            <span data-consensus>
+                                💗 Strong mom approval
+                            </span>
+
+                        </div>
+
+
+                        <div class="consensus-bar">
+
+                            <div
+                                class="consensus-fill"
+                                data-consensus-bar
+                            ></div>
+
+                        </div>
+
+
+                        <div class="consensus-text">
+
+                            <strong data-percentage>
+                                68%
+                            </strong>
+
+                            <span>
+                                of moms recommend this
+                            </span>
+
+                        </div>
 
                     </div>
 
 
-                    <div class="vote-progress">
-
-                        <div
-                            class="vote-progress-fill"
-                            data-vote-progress
-                        ></div>
-
-                    </div>
-
-
-                    <button
-                        type="button"
-                        class="recommend-button"
-                        data-vote
+                    <div
+                        class="vote-area"
+                        data-vote-area
                     >
 
-                        <span>
-                            I WOULD RECOMMEND THIS
-                        </span>
-
-                        <span class="recommend-arrow">
-                            →
-                        </span>
-
-                    </button>
+                        <p class="vote-question">
+                            Would you recommend it?
+                        </p>
 
 
-                    <p
-                        class="vote-confirmation"
-                        data-confirmation
+                        <div class="vote-choice-grid">
+
+                            <button
+                                type="button"
+                                class="vote-choice vote-yes"
+                                data-vote="yes"
+                            >
+
+                                <span class="vote-choice-icon">
+                                    ✓
+                                </span>
+
+                                <span>
+                                    YES, I WOULD
+                                </span>
+
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="vote-choice vote-no"
+                                data-vote="no"
+                            >
+
+                                <span class="vote-choice-icon">
+                                    ×
+                                </span>
+
+                                <span>
+                                    NO, I'D SKIP IT
+                                </span>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="vote-result"
+                        data-result
                         aria-live="polite"
-                    ></p>
+                    >
+
+                        <div class="result-icon">
+                            🎉
+                        </div>
+
+                        <strong data-result-title>
+                            You voted!
+                        </strong>
+
+                        <p data-result-text>
+                            See how your opinion compares with other moms.
+                        </p>
+
+                    </div>
+
+
+                    <div
+                        class="social-comparison"
+                        data-social-comparison
+                    >
+
+                        <div class="social-comparison-title">
+                            See how moms voted
+                        </div>
+
+
+                        <div class="social-result-row">
+
+                            <span>
+                                YES
+                            </span>
+
+                            <strong data-yes-percentage>
+                                68%
+                            </strong>
+
+                        </div>
+
+
+                        <div class="social-result-row no-row">
+
+                            <span>
+                                NO
+                            </span>
+
+                            <strong data-no-percentage>
+                                32%
+                            </strong>
+
+                        </div>
+
+
+                        <div class="your-position">
+
+                            <span data-your-position>
+                                You're with the majority.
+                            </span>
+
+                        </div>
+
+                    </div>
 
 
                     <a
@@ -1013,16 +1693,16 @@ and discover the products worth knowing about.
                         class="product-shop-link"
                         data-link
                     >
-                        See Why Moms Love It →
+                        See why moms are choosing it →
                     </a>
 
 
                     <button
                         type="button"
-                        class="next-product-link"
-                        data-next-product
+                        class="next-contender"
+                        data-next-contender
                     >
-                        Show Me Another Mom Favorite →
+                        See the other contender →
                     </button>
 
                 </div>
@@ -1048,6 +1728,30 @@ and discover the products worth knowing about.
         ></div>
 
 
+        <div
+            class="battle-winner"
+            data-winner
+        >
+
+            <span>
+                🏆
+            </span>
+
+            <div>
+
+                <strong>
+                    Battle complete
+                </strong>
+
+                <p data-winner-text>
+                    Vote for both products to see the winner.
+                </p>
+
+            </div>
+
+        </div>
+
+
         <div class="battle-footer">
 
             <span>
@@ -1059,6 +1763,799 @@ and discover the products worth knowing about.
     </div>
 
 </section>
+
+
+
+<!-- =====================================================
+     FEEDING
+===================================================== -->
+
+<section
+    class="product-battle"
+    id="feeding"
+    data-category="feeding"
+    data-filter-tags="new"
+>
+
+    <div class="battle-heading">
+
+        <span class="battle-eyebrow">
+            🍽️ FEEDING BATTLE
+        </span>
+
+        <h2>
+            Feeding Favorites
+        </h2>
+
+        <p>
+            Which one would make your daily routine easier?
+        </p>
+
+    </div>
+
+
+    <div class="battle-card">
+
+        <div class="battle-top">
+
+            <span class="battle-category">
+                🗳️ MOM BATTLE
+            </span>
+
+            <span
+                class="battle-position"
+                data-position
+            >
+                PRODUCT 1 OF 2
+            </span>
+
+        </div>
+
+
+        <div class="battle-question">
+
+            <span>
+                YOUR TURN
+            </span>
+
+            <strong>
+                What would YOU pick?
+            </strong>
+
+        </div>
+
+
+        <div class="product-viewer">
+
+            <button
+                class="product-arrow product-arrow-left"
+                type="button"
+                aria-label="Previous product"
+                data-prev
+            >
+                ‹
+            </button>
+
+
+            <div class="product-slide-area">
+
+                <div class="product-image-wrap">
+
+                    <div class="product-image-badge">
+                        NEW BATTLE
+                    </div>
+
+
+                    <img
+                        class="battle-product-image"
+                        src="assets/product2.jpg"
+                        alt="Feeding product"
+                        data-image
+                    >
+
+                </div>
+
+
+                <div class="battle-product-info">
+
+                    <span
+                        class="product-label"
+                        data-label
+                    >
+                        PRODUCT 1
+                    </span>
+
+
+                    <h3 data-name>
+                        Feeding Favorite
+                    </h3>
+
+
+                    <p
+                        class="product-brand"
+                        data-brand
+                    >
+                        Mom Pick
+                    </p>
+
+
+                    <p
+                        class="battle-description"
+                        data-description
+                    >
+                        A practical feeding favorite designed to
+                        make everyday mealtimes a little easier.
+                    </p>
+
+
+                    <div class="mom-score">
+
+                        <div class="mom-score-top">
+
+                            <span>
+                                💗 MOM SCORE
+                            </span>
+
+                            <strong data-score>
+                                8.0
+                            </strong>
+
+                            <small>
+                                /10
+                            </small>
+
+                        </div>
+
+
+                        <div class="consensus-label">
+                            <span data-consensus>
+                                👀 Moms are deciding
+                            </span>
+                        </div>
+
+
+                        <div class="consensus-bar">
+
+                            <div
+                                class="consensus-fill"
+                                data-consensus-bar
+                            ></div>
+
+                        </div>
+
+
+                        <div class="consensus-text">
+
+                            <strong data-percentage>
+                                54%
+                            </strong>
+
+                            <span>
+                                of moms recommend this
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="vote-area"
+                        data-vote-area
+                    >
+
+                        <p class="vote-question">
+                            Would you recommend it?
+                        </p>
+
+
+                        <div class="vote-choice-grid">
+
+                            <button
+                                type="button"
+                                class="vote-choice vote-yes"
+                                data-vote="yes"
+                            >
+
+                                <span class="vote-choice-icon">
+                                    ✓
+                                </span>
+
+                                <span>
+                                    YES, I WOULD
+                                </span>
+
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="vote-choice vote-no"
+                                data-vote="no"
+                            >
+
+                                <span class="vote-choice-icon">
+                                    ×
+                                </span>
+
+                                <span>
+                                    NO, I'D SKIP IT
+                                </span>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="vote-result"
+                        data-result
+                    >
+
+                        <div class="result-icon">
+                            🎉
+                        </div>
+
+                        <strong data-result-title>
+                            You voted!
+                        </strong>
+
+                        <p data-result-text>
+                            See how your opinion compares with other moms.
+                        </p>
+
+                    </div>
+
+
+                    <div
+                        class="social-comparison"
+                        data-social-comparison
+                    >
+
+                        <div class="social-comparison-title">
+                            See how moms voted
+                        </div>
+
+                        <div class="social-result-row">
+
+                            <span>
+                                YES
+                            </span>
+
+                            <strong data-yes-percentage>
+                                54%
+                            </strong>
+
+                        </div>
+
+                        <div class="social-result-row no-row">
+
+                            <span>
+                                NO
+                            </span>
+
+                            <strong data-no-percentage>
+                                46%
+                            </strong>
+
+                        </div>
+
+                        <div class="your-position">
+
+                            <span data-your-position>
+                                You're with the majority.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <a
+                        href="YOUR-AMAZON-LINK-HERE"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="product-shop-link"
+                        data-link
+                    >
+                        See why moms are choosing it →
+                    </a>
+
+
+                    <button
+                        type="button"
+                        class="next-contender"
+                        data-next-contender
+                    >
+                        See the other contender →
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="product-arrow product-arrow-right"
+                type="button"
+                aria-label="Next product"
+                data-next
+            >
+                ›
+            </button>
+
+        </div>
+
+
+        <div
+            class="battle-dots"
+            data-dots
+        ></div>
+
+
+        <div
+            class="battle-winner"
+            data-winner
+        >
+
+            <span>
+                🏆
+            </span>
+
+            <div>
+
+                <strong>
+                    Battle complete
+                </strong>
+
+                <p data-winner-text>
+                    Vote for both products to see the winner.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="battle-footer">
+
+            <span>
+                🍽️ Your vote helps another mom decide.
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     UNDER $25
+===================================================== -->
+
+<section
+    class="product-battle"
+    id="under25"
+    data-category="under25"
+    data-filter-tags="trending favorite"
+>
+
+    <div class="battle-heading">
+
+        <span class="battle-eyebrow">
+            💰 UNDER $25
+        </span>
+
+        <h2>
+            Mom Finds Under $25
+        </h2>
+
+        <p>
+            Small price. Big question. Which one wins?
+        </p>
+
+    </div>
+
+
+    <div class="battle-card">
+
+        <div class="battle-top">
+
+            <span class="battle-category">
+                🗳️ MOM BATTLE
+            </span>
+
+            <span
+                class="battle-position"
+                data-position
+            >
+                PRODUCT 1 OF 2
+            </span>
+
+        </div>
+
+
+        <div class="battle-question">
+
+            <span>
+                YOUR TURN
+            </span>
+
+            <strong>
+                Would you pick it?
+            </strong>
+
+        </div>
+
+
+        <div class="product-viewer">
+
+            <button
+                class="product-arrow product-arrow-left"
+                type="button"
+                aria-label="Previous product"
+                data-prev
+            >
+                ‹
+            </button>
+
+
+            <div class="product-slide-area">
+
+                <div class="product-image-wrap">
+
+                    <div class="product-image-badge">
+                        UNDER $25
+                    </div>
+
+
+                    <img
+                        class="battle-product-image"
+                        src="assets/product2.jpg"
+                        alt="Mom find under $25"
+                        data-image
+                    >
+
+                </div>
+
+
+                <div class="battle-product-info">
+
+                    <span
+                        class="product-label"
+                        data-label
+                    >
+                        PRODUCT 1
+                    </span>
+
+
+                    <h3 data-name>
+                        Budget Mom Find
+                    </h3>
+
+
+                    <p
+                        class="product-brand"
+                        data-brand
+                    >
+                        MomYouNeedThis Pick
+                    </p>
+
+
+                    <p
+                        class="battle-description"
+                        data-description
+                    >
+                        A useful little find that could make everyday
+                        parenting just a bit easier.
+                    </p>
+
+
+                    <div class="mom-score">
+
+                        <div class="mom-score-top">
+
+                            <span>
+                                💗 MOM SCORE
+                            </span>
+
+                            <strong data-score>
+                                8.3
+                            </strong>
+
+                            <small>
+                                /10
+                            </small>
+
+                        </div>
+
+
+                        <div class="consensus-label">
+
+                            <span data-consensus>
+                                💗 Strong mom approval
+                            </span>
+
+                        </div>
+
+
+                        <div class="consensus-bar">
+
+                            <div
+                                class="consensus-fill"
+                                data-consensus-bar
+                            ></div>
+
+                        </div>
+
+
+                        <div class="consensus-text">
+
+                            <strong data-percentage>
+                                63%
+                            </strong>
+
+                            <span>
+                                of moms recommend this
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="vote-area"
+                        data-vote-area
+                    >
+
+                        <p class="vote-question">
+                            Would you recommend it?
+                        </p>
+
+
+                        <div class="vote-choice-grid">
+
+                            <button
+                                type="button"
+                                class="vote-choice vote-yes"
+                                data-vote="yes"
+                            >
+
+                                <span class="vote-choice-icon">
+                                    ✓
+                                </span>
+
+                                <span>
+                                    YES, I WOULD
+                                </span>
+
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="vote-choice vote-no"
+                                data-vote="no"
+                            >
+
+                                <span class="vote-choice-icon">
+                                    ×
+                                </span>
+
+                                <span>
+                                    NO, I'D SKIP IT
+                                </span>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="vote-result"
+                        data-result
+                    >
+
+                        <div class="result-icon">
+                            🎉
+                        </div>
+
+                        <strong data-result-title>
+                            You voted!
+                        </strong>
+
+                        <p data-result-text>
+                            See how your opinion compares with other moms.
+                        </p>
+
+                    </div>
+
+
+                    <div
+                        class="social-comparison"
+                        data-social-comparison
+                    >
+
+                        <div class="social-comparison-title">
+                            See how moms voted
+                        </div>
+
+
+                        <div class="social-result-row">
+
+                            <span>
+                                YES
+                            </span>
+
+                            <strong data-yes-percentage>
+                                63%
+                            </strong>
+
+                        </div>
+
+
+                        <div class="social-result-row no-row">
+
+                            <span>
+                                NO
+                            </span>
+
+                            <strong data-no-percentage>
+                                37%
+                            </strong>
+
+                        </div>
+
+
+                        <div class="your-position">
+
+                            <span data-your-position>
+                                You're with the majority.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <a
+                        href="YOUR-AMAZON-LINK-HERE"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="product-shop-link"
+                        data-link
+                    >
+                        See why moms are choosing it →
+                    </a>
+
+
+                    <button
+                        type="button"
+                        class="next-contender"
+                        data-next-contender
+                    >
+                        See the other contender →
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="product-arrow product-arrow-right"
+                type="button"
+                aria-label="Next product"
+                data-next
+            >
+                ›
+            </button>
+
+        </div>
+
+
+        <div
+            class="battle-dots"
+            data-dots
+        ></div>
+
+
+        <div
+            class="battle-winner"
+            data-winner
+        >
+
+            <span>
+                🏆
+            </span>
+
+            <div>
+
+                <strong>
+                    Battle complete
+                </strong>
+
+                <p data-winner-text>
+                    Vote for both products to see the winner.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="battle-footer">
+
+            <span>
+                💰 Discover another mom-approved find.
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     KEEP DISCOVERING
+===================================================== -->
+
+<section class="keep-discovering">
+
+    <span class="keep-discovering-kicker">
+        👀 NOT DONE YET?
+    </span>
+
+
+    <h2>
+        Keep discovering mom favorites.
+    </h2>
+
+
+    <p>
+        There are always more products waiting for your opinion.
+    </p>
+
+
+    <div class="discovery-links">
+
+        <a href="#baby">
+            👶 Baby
+        </a>
+
+        <a href="#toddler">
+            🧸 Toddler
+        </a>
+
+        <a href="#sleep">
+            😴 Sleep
+        </a>
+
+        <a href="#potty">
+            🚽 Potty
+        </a>
+
+        <a href="#feeding">
+            🍽️ Feeding
+        </a>
+
+        <a href="#under25">
+            💰 Under $25
+        </a>
+
+    </div>
+
+</section>
+
 
 
 <!-- =====================================================
@@ -1078,12 +2575,13 @@ and discover the products worth knowing about.
 
 
     <p>
-        Discover products through the recommendations
-        of moms who would actually choose them.
+        Discover a product, make your choice, then see
+        how your opinion compares with other moms.
     </p>
 
 
     <div class="explainer-grid">
+
 
         <div class="explainer-item">
 
@@ -1096,7 +2594,7 @@ and discover the products worth knowing about.
             </h3>
 
             <p>
-                Find products moms are talking about.
+                Explore products going head-to-head.
             </p>
 
         </div>
@@ -1109,11 +2607,11 @@ and discover the products worth knowing about.
             </span>
 
             <h3>
-                Vote
+                Pick
             </h3>
 
             <p>
-                Pick the one you would genuinely recommend.
+                Tell us which one you would actually choose.
             </p>
 
         </div>
@@ -1126,18 +2624,20 @@ and discover the products worth knowing about.
             </span>
 
             <h3>
-                Keep Exploring
+                Compare
             </h3>
 
             <p>
-                See another mom favorite and keep discovering.
+                See whether other moms agree with you.
             </p>
 
         </div>
 
+
     </div>
 
 </section>
+
 
 
 <!-- =====================================================
@@ -1170,6 +2670,7 @@ and discover the products worth knowing about.
     </a>
 
 </section>
+
 
 
 <!-- =====================================================
@@ -1221,9 +2722,10 @@ and discover the products worth knowing about.
 </div>
 
 
+
 <script
-    type="module"
     src="amazon-favorites.js"
+    defer
 ></script>
 
 
