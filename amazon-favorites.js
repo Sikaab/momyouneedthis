@@ -20,55 +20,83 @@ import {
 
 
 /* =========================================================
-   FIREBASE AUTH
+   FIREBASE AUTHENTICATION
 ========================================================= */
 
 const auth = getAuth();
 
 let currentUser = null;
 
-let authReady = new Promise((resolve, reject) => {
+let authReadyResolve;
 
-    onAuthStateChanged(auth, (user) => {
+let authReadyReject;
 
-        if (user) {
+const authReady = new Promise((resolve, reject) => {
 
-            currentUser = user;
-
-            console.log(
-                "Anonymous Firebase user ready:",
-                user.uid
-            );
-
-            resolve(user);
-
-        }
-
-    });
+    authReadyResolve = resolve;
+    authReadyReject = reject;
 
 });
 
 
 /* =========================================================
-   START ANONYMOUS AUTH
+   AUTH STATE
+========================================================= */
+
+onAuthStateChanged(auth, (user) => {
+
+    if (user) {
+
+        currentUser = user;
+
+        console.log(
+            "Anonymous Firebase user ready:",
+            user.uid
+        );
+
+        authReadyResolve(user);
+
+    }
+
+});
+
+
+/* =========================================================
+   START ANONYMOUS AUTHENTICATION
 ========================================================= */
 
 async function initializeAuthentication() {
 
     try {
 
-        if (!auth.currentUser) {
+        if (auth.currentUser) {
 
-            await signInAnonymously(auth);
+            currentUser =
+                auth.currentUser;
+
+            return currentUser;
 
         }
+
+
+        await signInAnonymously(auth);
+
+
+        /*
+         * onAuthStateChanged will set
+         * currentUser.
+         */
+
+        return await authReady;
 
     } catch (error) {
 
         console.error(
-            "Anonymous authentication failed:",
+            "Anonymous Firebase authentication failed:",
             error
         );
+
+        authReadyReject(error);
 
         throw error;
 
@@ -82,6 +110,10 @@ async function initializeAuthentication() {
 ========================================================= */
 
 const competitions = {
+
+    /* =====================================================
+       BABY
+    ===================================================== */
 
     baby: [
 
@@ -101,6 +133,7 @@ const competitions = {
 
             link: "https://amzn.to/4fNqr9j"
         },
+
 
         {
             id: "baby-white-noise-machine",
@@ -122,6 +155,10 @@ const competitions = {
     ],
 
 
+    /* =====================================================
+       TODDLER
+    ===================================================== */
+
     toddler: [
 
         {
@@ -140,6 +177,7 @@ const competitions = {
 
             link: "YOUR-AMAZON-LINK-HERE"
         },
+
 
         {
             id: "toddler-red-light",
@@ -161,6 +199,10 @@ const competitions = {
     ],
 
 
+    /* =====================================================
+       SLEEP
+    ===================================================== */
+
     sleep: [
 
         {
@@ -179,6 +221,7 @@ const competitions = {
 
             link: "https://amzn.to/4z8LxGC"
         },
+
 
         {
             id: "sleep-red-light",
@@ -200,6 +243,10 @@ const competitions = {
     ],
 
 
+    /* =====================================================
+       POTTY
+    ===================================================== */
+
     potty: [
 
         {
@@ -218,6 +265,7 @@ const competitions = {
 
             link: "https://amzn.to/3S23eqS"
         },
+
 
         {
             id: "potty-training-contender",
@@ -242,10 +290,35 @@ const competitions = {
 
 
 /* =========================================================
-   CREATE SAFE DOCUMENT ID
+   CREATE UNIQUE VOTE DOCUMENT ID
 ========================================================= */
 
+/*
+   One document is created for:
+
+   anonymous user
+   +
+   category
+   +
+   product
+
+   Example:
+
+   USER123_baby_baby-einstein-aquarium
+
+   This means the same anonymous user cannot
+   create another vote for that exact product.
+*/
+
 function createVoteId(category, productId) {
+
+    if (!currentUser) {
+
+        throw new Error(
+            "No authenticated Firebase user."
+        );
+
+    }
 
     return `${currentUser.uid}_${category}_${productId}`;
 
@@ -253,12 +326,13 @@ function createVoteId(category, productId) {
 
 
 /* =========================================================
-   SAVE VOTE
+   SAVE VOTE TO FIRESTORE
 ========================================================= */
 
 async function saveVote(category, product) {
 
     await authReady;
+
 
     if (!currentUser) {
 
@@ -284,21 +358,39 @@ async function saveVote(category, product) {
         );
 
 
+    /*
+     * IMPORTANT:
+     *
+     * We use setDoc with merge:false.
+     *
+     * Your Firestore security rules should allow
+     * CREATE but not UPDATE.
+     *
+     * Therefore, once the vote document exists,
+     * another attempt cannot overwrite it.
+     */
+
     await setDoc(
         voteRef,
         {
 
-            uid: currentUser.uid,
+            uid:
+                currentUser.uid,
 
-            category: category,
+            category:
+                category,
 
-            productId: product.id,
+            productId:
+                product.id,
 
-            productName: product.name,
+            productName:
+                product.name,
 
-            productBrand: product.brand,
+            productBrand:
+                product.brand,
 
-            createdAt: serverTimestamp()
+            createdAt:
+                serverTimestamp()
 
         },
 
@@ -312,7 +404,7 @@ async function saveVote(category, product) {
 
 
 /* =========================================================
-   CAROUSELS
+   CAROUSEL INITIALIZATION
 ========================================================= */
 
 function initializeBattles() {
@@ -335,8 +427,13 @@ function initializeBattles() {
 
         if (
             !products ||
-            !products.length
+            products.length === 0
         ) {
+
+            console.warn(
+                "No products found for category:",
+                category
+            );
 
             return;
 
@@ -346,83 +443,157 @@ function initializeBattles() {
         let currentIndex = 0;
 
 
+        /* =================================================
+           ELEMENTS
+        ================================================= */
+
         const image =
-            battle.querySelector("[data-image]");
+            battle.querySelector(
+                "[data-image]"
+            );
+
 
         const name =
-            battle.querySelector("[data-name]");
+            battle.querySelector(
+                "[data-name]"
+            );
+
 
         const brand =
-            battle.querySelector("[data-brand]");
+            battle.querySelector(
+                "[data-brand]"
+            );
+
 
         const description =
-            battle.querySelector("[data-description]");
+            battle.querySelector(
+                "[data-description]"
+            );
+
 
         const link =
-            battle.querySelector("[data-link]");
+            battle.querySelector(
+                "[data-link]"
+            );
+
 
         const label =
-            battle.querySelector("[data-label]");
+            battle.querySelector(
+                "[data-label]"
+            );
+
 
         const position =
-            battle.querySelector("[data-position]");
+            battle.querySelector(
+                "[data-position]"
+            );
+
 
         const voteButton =
-            battle.querySelector("[data-vote]");
+            battle.querySelector(
+                "[data-vote]"
+            );
+
 
         const confirmation =
-            battle.querySelector("[data-confirmation]");
+            battle.querySelector(
+                "[data-confirmation]"
+            );
+
 
         const dotsContainer =
-            battle.querySelector("[data-dots]");
+            battle.querySelector(
+                "[data-dots]"
+            );
+
 
         const previousButton =
-            battle.querySelector("[data-prev]");
+            battle.querySelector(
+                "[data-prev]"
+            );
+
 
         const nextButton =
-            battle.querySelector("[data-next]");
+            battle.querySelector(
+                "[data-next]"
+            );
+
+
+        /*
+         * Make sure the required elements exist.
+         */
+
+        if (
+            !image ||
+            !name ||
+            !brand ||
+            !description ||
+            !link ||
+            !label ||
+            !position ||
+            !voteButton ||
+            !confirmation ||
+            !dotsContainer ||
+            !previousButton ||
+            !nextButton
+        ) {
+
+            console.error(
+                "Voting battle is missing required HTML elements:",
+                category
+            );
+
+            return;
+
+        }
 
 
         /* =================================================
-           DOTS
+           CREATE DOTS
         ================================================= */
 
-        products.forEach(function (_, index) {
+        products.forEach(
+            function (_, index) {
 
-            const dot =
-                document.createElement("button");
-
-
-            dot.type = "button";
-
-            dot.className =
-                "battle-dot";
+                const dot =
+                    document.createElement(
+                        "button"
+                    );
 
 
-            dot.setAttribute(
-                "aria-label",
-                `Show product ${index + 1}`
-            );
+                dot.type =
+                    "button";
 
 
-            dot.addEventListener(
-                "click",
-                function () {
-
-                    currentIndex =
-                        index;
-
-                    updateProduct();
-
-                }
-            );
+                dot.className =
+                    "battle-dot";
 
 
-            dotsContainer.appendChild(
-                dot
-            );
+                dot.setAttribute(
+                    "aria-label",
+                    `Show product ${index + 1}`
+                );
 
-        });
+
+                dot.addEventListener(
+                    "click",
+                    function () {
+
+                        currentIndex =
+                            index;
+
+                        updateProduct();
+
+                    }
+                );
+
+
+                dotsContainer.appendChild(
+                    dot
+                );
+
+            }
+        );
 
 
         const dots =
@@ -432,24 +603,43 @@ function initializeBattles() {
 
 
         /* =================================================
-           VOTE STATE
+           LOCAL VOTE KEY
+        ================================================= */
+
+        /*
+         * localStorage is ONLY used to remember
+         * the visual state on the same browser.
+         *
+         * It is NOT being used as the security
+         * mechanism.
+         */
+
+        function getLocalVoteKey(product) {
+
+            return (
+                "momVote_" +
+                category +
+                "_" +
+                product.id
+            );
+
+        }
+
+
+        /* =================================================
+           UPDATE VOTE BUTTON STATE
         ================================================= */
 
         function updateVoteState() {
-
-            /*
-             * We intentionally use localStorage only
-             * for the visual state.
-             *
-             * Firestore remains the actual vote record.
-             */
 
             const product =
                 products[currentIndex];
 
 
             const localVoteKey =
-                `momVote_${category}_${product.id}`;
+                getLocalVoteKey(
+                    product
+                );
 
 
             const hasVoted =
@@ -514,58 +704,70 @@ function initializeBattles() {
             );
 
 
-            setTimeout(function () {
+            setTimeout(
+                function () {
 
-                image.src =
-                    product.image;
-
-                image.alt =
-                    product.alt;
-
-                name.textContent =
-                    product.name;
-
-                brand.textContent =
-                    product.brand;
-
-                description.textContent =
-                    product.description;
-
-                link.href =
-                    product.link;
-
-                label.textContent =
-                    `PRODUCT ${currentIndex + 1}`;
-
-                position.textContent =
-                    `${currentIndex + 1} / ${products.length}`;
+                    image.src =
+                        product.image;
 
 
-                confirmation.textContent =
-                    "";
+                    image.alt =
+                        product.alt;
 
 
-                image.classList.remove(
-                    "product-changing"
-                );
+                    name.textContent =
+                        product.name;
 
 
-                updateVoteState();
+                    brand.textContent =
+                        product.brand;
 
-            }, 120);
+
+                    description.textContent =
+                        product.description;
 
 
-            dots.forEach(function (
-                dot,
-                index
-            ) {
+                    link.href =
+                        product.link;
 
-                dot.classList.toggle(
-                    "active",
-                    index === currentIndex
-                );
 
-            });
+                    label.textContent =
+                        `PRODUCT ${currentIndex + 1}`;
+
+
+                    position.textContent =
+                        `${currentIndex + 1} / ${products.length}`;
+
+
+                    confirmation.textContent =
+                        "";
+
+
+                    image.classList.remove(
+                        "product-changing"
+                    );
+
+
+                    updateVoteState();
+
+                },
+                120
+            );
+
+
+            dots.forEach(
+                function (
+                    dot,
+                    index
+                ) {
+
+                    dot.classList.toggle(
+                        "active",
+                        index === currentIndex
+                    );
+
+                }
+            );
 
 
             previousButton.disabled =
@@ -592,11 +794,14 @@ function initializeBattles() {
 
 
                 const localVoteKey =
-                    `momVote_${category}_${product.id}`;
+                    getLocalVoteKey(
+                        product
+                    );
 
 
                 /*
-                 * Prevent accidental double-clicks
+                 * Prevent double clicks while
+                 * the Firebase request is running.
                  */
 
                 if (
@@ -610,7 +815,9 @@ function initializeBattles() {
 
 
                 /*
-                 * Local visual protection
+                 * Visual/browser protection.
+                 *
+                 * This is NOT the actual security layer.
                  */
 
                 if (
@@ -618,6 +825,9 @@ function initializeBattles() {
                         localVoteKey
                     )
                 ) {
+
+                    confirmation.textContent =
+                        "You've already recommended this product.";
 
                     return;
 
@@ -645,9 +855,8 @@ function initializeBattles() {
 
 
                     /*
-                     * Only mark locally AFTER
-                     * Firestore successfully accepts
-                     * the vote.
+                     * Only mark the browser
+                     * after Firestore succeeds.
                      */
 
                     localStorage.setItem(
@@ -676,8 +885,10 @@ function initializeBattles() {
                     confirmation.textContent =
                         "💗 Thanks! Your recommendation has been recorded.";
 
+                }
 
-                } catch (error) {
+
+                catch (error) {
 
                     console.error(
                         "Vote failed:",
@@ -686,9 +897,12 @@ function initializeBattles() {
 
 
                     /*
-                     * If the document already exists,
-                     * Firestore correctly rejected a
-                     * duplicate vote.
+                     * Permission denied means
+                     * Firestore's security rules rejected
+                     * the request.
+                     *
+                     * We don't automatically assume
+                     * that means "duplicate vote."
                      */
 
                     if (
@@ -697,29 +911,7 @@ function initializeBattles() {
                     ) {
 
                         confirmation.textContent =
-                            "You've already voted for this product.";
-
-                        localStorage.setItem(
-                            localVoteKey,
-                            "true"
-                        );
-
-
-                        voteButton.classList.add(
-                            "has-voted"
-                        );
-
-
-                        voteButton.innerHTML =
-                            `
-                            <span class="recommend-heart">
-                                ♥
-                            </span>
-
-                            <span>
-                                YOU RECOMMENDED THIS
-                            </span>
-                            `;
+                            "This vote could not be recorded.";
 
                     } else {
 
@@ -731,19 +923,23 @@ function initializeBattles() {
                 }
 
 
-                voteButton.dataset.saving =
-                    "false";
+                finally {
+
+                    voteButton.dataset.saving =
+                        "false";
 
 
-                voteButton.disabled =
-                    false;
+                    voteButton.disabled =
+                        false;
+
+                }
 
             }
         );
 
 
         /* =================================================
-           PREVIOUS
+           PREVIOUS BUTTON
         ================================================= */
 
         previousButton.addEventListener(
@@ -765,7 +961,7 @@ function initializeBattles() {
 
 
         /* =================================================
-           NEXT
+           NEXT BUTTON
         ================================================= */
 
         nextButton.addEventListener(
@@ -787,6 +983,10 @@ function initializeBattles() {
         );
 
 
+        /* =================================================
+           INITIAL PRODUCT
+        ================================================= */
+
         updateProduct();
 
     });
@@ -795,7 +995,7 @@ function initializeBattles() {
 
 
 /* =========================================================
-   INITIALIZE
+   INITIALIZE PAGE
 ========================================================= */
 
 document.addEventListener(
@@ -804,25 +1004,33 @@ document.addEventListener(
 
         try {
 
+            console.log(
+                "Starting MomYouNeedThis voting system..."
+            );
+
+
             /*
-             * Start anonymous authentication.
+             * Authenticate anonymously first.
              */
 
             await initializeAuthentication();
 
 
             /*
-             * Initialize all product battles.
+             * Then initialize the voting interface.
              */
 
             initializeBattles();
 
 
             console.log(
-                "Mom voting system initialized."
+                "MomYouNeedThis voting system initialized successfully."
             );
 
-        } catch (error) {
+        }
+
+
+        catch (error) {
 
             console.error(
                 "Voting system failed to initialize:",
@@ -831,17 +1039,40 @@ document.addEventListener(
 
 
             /*
-             * Don't leave the page looking broken.
+             * Disable voting buttons if Firebase
+             * authentication cannot initialize.
              */
 
             document
-                .querySelectorAll("[data-vote]")
-                .forEach(function (button) {
+                .querySelectorAll(
+                    "[data-vote]"
+                )
+                .forEach(
+                    function (button) {
 
-                    button.disabled =
-                        true;
+                        button.disabled =
+                            true;
 
-                });
+                    }
+                );
+
+
+            /*
+             * Show a friendly message.
+             */
+
+            document
+                .querySelectorAll(
+                    "[data-confirmation]"
+                )
+                .forEach(
+                    function (message) {
+
+                        message.textContent =
+                            "Voting is temporarily unavailable. Please try again later.";
+
+                    }
+                );
 
         }
 
