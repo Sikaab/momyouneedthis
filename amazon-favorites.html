@@ -21,6 +21,561 @@
     rel="stylesheet"
 >
 
+
+<!-- =====================================================
+     PAGE-SPECIFIC STYLES
+     Keeps the voting/social-proof elements formatted
+     even if they aren't currently in amazon-favorites.css
+===================================================== -->
+
+<style>
+
+.mom-voted-page {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.mom-voted-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 35px;
+}
+
+.mom-voted-logo {
+    width: 180px;
+    max-width: 100%;
+}
+
+.community-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: .5px;
+    background: #fff0f7;
+    color: #d94b8a;
+}
+
+.mom-voted-page > h1 {
+    text-align: center;
+    font-size: clamp(34px, 5vw, 58px);
+    line-height: 1.05;
+    margin: 20px auto;
+    max-width: 800px;
+}
+
+.mom-voted-page > h1 span {
+    display: block;
+}
+
+.mom-voted-intro {
+    max-width: 700px;
+    margin: 0 auto 35px;
+    text-align: center;
+    line-height: 1.7;
+    font-size: 17px;
+}
+
+.holy-grail-banner {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 20px 24px;
+    margin: 30px 0 35px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #fff3f8, #fff9fc);
+    border: 1px solid #ffd5e7;
+}
+
+.holy-grail-banner-icon {
+    font-size: 32px;
+    flex-shrink: 0;
+}
+
+.holy-grail-banner-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.holy-grail-banner-content strong {
+    font-size: 17px;
+}
+
+.holy-grail-banner-content span {
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.holy-grail-link {
+    flex-shrink: 0;
+    padding: 11px 17px;
+    border-radius: 10px;
+    background: #e85d9e;
+    color: white;
+    text-decoration: none;
+    font-weight: 800;
+    transition: transform .2s ease;
+}
+
+.holy-grail-link:hover {
+    transform: translateY(-2px);
+}
+
+.voting-categories {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin: 0 auto 55px;
+}
+
+.voting-categories a {
+    display: inline-flex;
+    padding: 10px 16px;
+    border-radius: 999px;
+    background: #fff;
+    border: 1px solid #eadde5;
+    color: #444;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.product-battle {
+    margin-bottom: 75px;
+    scroll-margin-top: 30px;
+}
+
+.battle-heading {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.battle-eyebrow {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    color: #d94b8a;
+    margin-bottom: 8px;
+}
+
+.battle-heading h2 {
+    margin: 5px 0 8px;
+    font-size: clamp(26px, 4vw, 38px);
+}
+
+.battle-heading p {
+    margin: 0;
+    color: #666;
+}
+
+.battle-card {
+    background: #fff;
+    border: 1px solid #eee1e8;
+    border-radius: 24px;
+    padding: 22px;
+    box-shadow: 0 8px 30px rgba(0,0,0,.06);
+}
+
+.battle-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.battle-category {
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: .8px;
+    color: #d94b8a;
+}
+
+.battle-position {
+    font-size: 13px;
+    font-weight: 800;
+    color: #777;
+}
+
+.product-viewer {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.product-slide-area {
+    flex: 1;
+    min-width: 0;
+    display: grid;
+    grid-template-columns: minmax(260px, 45%) 1fr;
+    align-items: center;
+    gap: 35px;
+}
+
+.product-image-wrap {
+    width: 100%;
+    min-height: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #faf8fa;
+    border-radius: 20px;
+    padding: 25px;
+}
+
+.battle-product-image {
+    width: 100%;
+    height: 350px;
+    object-fit: contain;
+    transition: opacity .15s ease;
+}
+
+.product-changing {
+    opacity: .35;
+}
+
+.battle-product-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.product-label {
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: .8px;
+    color: #d94b8a;
+    margin-bottom: 7px;
+}
+
+.battle-product-info h3 {
+    margin: 0 0 5px;
+    font-size: clamp(24px, 3vw, 32px);
+    line-height: 1.15;
+}
+
+.product-brand {
+    margin: 0 0 15px;
+    color: #777;
+    font-weight: 700;
+}
+
+.battle-description {
+    color: #555;
+    line-height: 1.65;
+    margin-bottom: 20px;
+}
+
+/* =====================================================
+   SOCIAL PROOF / MONTHLY PERCENTAGE
+===================================================== */
+
+.product-social-proof {
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 13px 15px;
+    margin: 5px 0 17px;
+    border-radius: 12px;
+    background: #fff5f9;
+    border: 1px solid #ffd9e9;
+    color: #8d315c;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.product-social-proof-heart {
+    font-size: 19px;
+    flex-shrink: 0;
+}
+
+.product-social-proof strong {
+    color: #d94b8a;
+    font-weight: 900;
+    font-size: 16px;
+}
+
+/* =====================================================
+   VOTE BUTTON
+===================================================== */
+
+.recommend-button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 18px;
+    border: 0;
+    border-radius: 12px;
+    background: #e85d9e;
+    color: white;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: transform .2s ease, opacity .2s ease;
+}
+
+.recommend-button:hover {
+    transform: translateY(-2px);
+}
+
+.recommend-button:disabled {
+    cursor: not-allowed;
+    opacity: .65;
+}
+
+.recommend-button.has-voted {
+    background: #8bcf9c;
+}
+
+.recommend-heart {
+    font-size: 17px;
+}
+
+/* =====================================================
+   PRODUCT CTA
+===================================================== */
+
+.product-details-cta {
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 14px;
+    text-align: center;
+}
+
+.product-details-cta-text {
+    margin: 0 0 6px;
+    font-size: 12px;
+    color: #777;
+    font-weight: 700;
+}
+
+.product-shop-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 13px 18px;
+    border-radius: 12px;
+    background: #fff;
+    border: 2px solid #e85d9e;
+    color: #d94b8a;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 900;
+    transition: background .2s ease, color .2s ease, transform .2s ease;
+}
+
+.product-shop-link:hover {
+    background: #e85d9e;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.vote-confirmation {
+    width: 100%;
+    min-height: 20px;
+    margin: 10px 0 0;
+    text-align: center;
+    font-size: 13px;
+    color: #5c9b6a;
+    font-weight: 700;
+}
+
+.product-arrow {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    border: 1px solid #eadde5;
+    border-radius: 50%;
+    background: white;
+    color: #d94b8a;
+    font-size: 30px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.product-arrow:disabled {
+    opacity: .3;
+    cursor: default;
+}
+
+.battle-dots {
+    display: flex;
+    justify-content: center;
+    gap: 7px;
+    margin: 22px 0 15px;
+}
+
+.battle-dot {
+    width: 9px;
+    height: 9px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: #ddd;
+    cursor: pointer;
+}
+
+.battle-dot.active {
+    background: #e85d9e;
+    transform: scale(1.25);
+}
+
+.battle-footer {
+    text-align: center;
+    color: #777;
+    font-size: 13px;
+    padding-top: 8px;
+}
+
+.voting-explainer {
+    text-align: center;
+    padding: 55px 20px;
+    margin: 30px 0 60px;
+    background: #fff8fb;
+    border-radius: 25px;
+}
+
+.voting-explainer h2 {
+    margin: 15px 0 10px;
+    font-size: 32px;
+}
+
+.voting-explainer > p {
+    max-width: 650px;
+    margin: 0 auto 35px;
+    line-height: 1.7;
+    color: #666;
+}
+
+.explainer-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    max-width: 850px;
+    margin: auto;
+}
+
+.explainer-item {
+    background: white;
+    padding: 25px 20px;
+    border-radius: 18px;
+}
+
+.explainer-item > span {
+    font-weight: 900;
+    color: #e85d9e;
+    font-size: 13px;
+}
+
+.explainer-item h3 {
+    margin: 8px 0;
+}
+
+.explainer-item p {
+    margin: 0;
+    color: #666;
+    line-height: 1.5;
+    font-size: 14px;
+}
+
+.holy-grail-final {
+    text-align: center;
+    padding: 55px 25px;
+    margin-bottom: 60px;
+    background: linear-gradient(135deg, #fff2f8, #fff9fc);
+    border-radius: 25px;
+}
+
+.holy-grail-final-icon {
+    font-size: 40px;
+}
+
+.holy-grail-final h2 {
+    font-size: 32px;
+    margin: 12px 0;
+}
+
+.holy-grail-final p {
+    max-width: 600px;
+    margin: 0 auto 25px;
+    color: #666;
+    line-height: 1.6;
+}
+
+.holy-grail-final-button {
+    display: inline-flex;
+    padding: 14px 22px;
+    border-radius: 12px;
+    background: #e85d9e;
+    color: white;
+    text-decoration: none;
+    font-weight: 900;
+}
+
+@media (max-width: 700px) {
+
+    .mom-voted-header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .holy-grail-banner {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .holy-grail-link {
+        width: 100%;
+        box-sizing: border-box;
+        text-align: center;
+    }
+
+    .product-viewer {
+        gap: 5px;
+    }
+
+    .product-slide-area {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .product-image-wrap {
+        min-height: 260px;
+    }
+
+    .battle-product-image {
+        height: 260px;
+    }
+
+    .product-arrow {
+        width: 36px;
+        height: 36px;
+        font-size: 25px;
+    }
+
+    .explainer-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+</style>
+
 </head>
 
 
@@ -31,16 +586,13 @@
 <section class="resource-page mom-voted-page">
 
 
-<!-- =========================================
+<!-- =====================================================
      HEADER
-========================================= -->
+===================================================== -->
 
 <div class="mom-voted-header">
 
-    <a
-        href="index.html"
-        class="mom-voted-logo-link"
-    >
+    <a href="index.html" class="mom-voted-logo-link">
 
         <img
             src="assets/logo.svg"
@@ -50,7 +602,6 @@
 
     </a>
 
-
     <span class="community-badge">
         🗳️ MOMS ARE VOTING
     </span>
@@ -59,38 +610,34 @@
 
 
 <h1>
-
-What Do Moms
-<span>Actually Recommend?</span>
-
+    What Do Moms
+    <span>Actually Recommend?</span>
 </h1>
 
 
 <p class="mom-voted-intro">
 
-Forget endless reviews and scrolling through hundreds
-of nearly identical products.
+    Forget endless reviews and scrolling through hundreds
+    of nearly identical products.
 
-<br><br>
+    <br><br>
 
-<strong>
-See what moms are choosing — and cast your own vote.
-</strong>
+    <strong>
+        See what moms are choosing — and cast your own vote.
+    </strong>
 
 </p>
 
 
-
-<!-- =========================================
+<!-- =====================================================
      HOLY GRAIL BANNER
-========================================= -->
+===================================================== -->
 
 <div class="holy-grail-banner">
 
     <div class="holy-grail-banner-icon">
         💗
     </div>
-
 
     <div class="holy-grail-banner-content">
 
@@ -105,60 +652,38 @@ See what moms are choosing — and cast your own vote.
 
     </div>
 
-
     <a
         href="submit-holy-grail.html"
         class="holy-grail-link"
     >
-
         Recommend One →
-
     </a>
 
 </div>
 
 
-
-<!-- =========================================
+<!-- =====================================================
      CATEGORY NAV
-========================================= -->
+===================================================== -->
 
 <nav
     class="voting-categories"
     aria-label="Product categories"
 >
 
-    <a href="#baby">
-        👶 Baby
-    </a>
-
-    <a href="#toddler">
-        🧸 Toddler
-    </a>
-
-    <a href="#sleep">
-        😴 Sleep
-    </a>
-
-    <a href="#potty">
-        🚽 Potty
-    </a>
-
-    <a href="#feeding">
-        🍽️ Feeding
-    </a>
-
-    <a href="#under25">
-        💰 Under $25
-    </a>
+    <a href="#baby">👶 Baby</a>
+    <a href="#toddler">🧸 Toddler</a>
+    <a href="#sleep">😴 Sleep</a>
+    <a href="#potty">🚽 Potty</a>
+    <a href="#feeding">🍽️ Feeding</a>
+    <a href="#under25">💰 Under $25</a>
 
 </nav>
 
 
-
-<!-- =========================================
+<!-- =====================================================
      BABY
-========================================= -->
+===================================================== -->
 
 <section
     class="product-battle"
@@ -166,220 +691,199 @@ See what moms are choosing — and cast your own vote.
     data-category="baby"
 >
 
+    <div class="battle-heading">
 
-<div class="battle-heading">
-
-    <span class="battle-eyebrow">
-        👶 BABY
-    </span>
-
-
-    <h2>
-        Best Baby Must-Have
-    </h2>
-
-
-    <p>
-        Which one would you recommend to another mom?
-    </p>
-
-</div>
-
-
-
-<div class="battle-card">
-
-
-    <!-- BATTLE TOP -->
-
-    <div class="battle-top">
-
-        <span class="battle-category">
-            COMMUNITY VOTE
+        <span class="battle-eyebrow">
+            👶 BABY
         </span>
 
+        <h2>
+            Best Baby Must-Have
+        </h2>
 
-        <span
-            class="battle-position"
-            data-position
-        >
-            1 / 2
-        </span>
+        <p>
+            Which one would you recommend to another mom?
+        </p>
 
     </div>
 
 
+    <div class="battle-card">
 
-    <!-- PRODUCT VIEWER -->
+        <div class="battle-top">
 
-    <div class="product-viewer">
+            <span class="battle-category">
+                COMMUNITY VOTE
+            </span>
 
-
-        <button
-            class="product-arrow product-arrow-left"
-            type="button"
-            aria-label="Previous product"
-            data-prev
-        >
-            ‹
-        </button>
-
-
-
-        <div class="product-slide-area">
-
-
-            <!-- PRODUCT IMAGE -->
-
-            <div class="product-image-wrap">
-
-                <img
-                    class="battle-product-image"
-                    src="assets/babyeinstein-aquarium.jpeg"
-                    alt="Baby Einstein Soother Musical Crib Toy"
-                    data-image
-                >
-
-            </div>
-
-
-
-            <!-- PRODUCT INFO -->
-
-            <div class="battle-product-info">
-
-
-                <span
-                    class="product-label"
-                    data-label
-                >
-                    PRODUCT 1
-                </span>
-
-
-                <h3 data-name>
-                    Soother Musical Crib Toy
-                </h3>
-
-
-                <p
-                    class="product-brand"
-                    data-brand
-                >
-                    Baby Einstein
-                </p>
-
-
-                <p
-                    class="battle-description"
-                    data-description
-                >
-                    A popular option for keeping little ones
-                    entertained during quiet moments and daily routines.
-                </p>
-
-
-                <!-- MONTHLY MANUALLY UPDATED STAT -->
-
-                <p
-                    class="vote-stat"
-                    data-vote-stat
-                >
-                    💗 <strong>62% of moms</strong> would recommend this product.
-                </p>
-
-
-
-                <!-- VOTE -->
-
-                <button
-                    type="button"
-                    class="recommend-button"
-                    data-vote
-                >
-
-                    <span class="recommend-heart">
-                        ♥
-                    </span>
-
-                    <span>
-                        I WOULD RECOMMEND THIS
-                    </span>
-
-                </button>
-
-
-                <p
-                    class="vote-confirmation"
-                    data-confirmation
-                    aria-live="polite"
-                ></p>
-
-
-
-                <!-- SHOP -->
-
-                <a
-                    href="https://amzn.to/4fNqr9j"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="product-shop-link"
-                    data-link
-                >
-
-                    See product details →
-
-                </a>
-
-
-            </div>
+            <span
+                class="battle-position"
+                data-position
+            >
+                1 / 2
+            </span>
 
         </div>
 
 
+        <div class="product-viewer">
 
-        <button
-            class="product-arrow product-arrow-right"
-            type="button"
-            aria-label="Next product"
-            data-next
-        >
-            ›
-        </button>
+            <button
+                class="product-arrow product-arrow-left"
+                type="button"
+                aria-label="Previous product"
+                data-prev
+            >
+                ‹
+            </button>
+
+
+            <div class="product-slide-area">
+
+                <div class="product-image-wrap">
+
+                    <img
+                        class="battle-product-image"
+                        src="assets/babyeinstein-aquarium.jpeg"
+                        alt="Baby Einstein Soother Musical Crib Toy"
+                        data-image
+                    >
+
+                </div>
+
+
+                <div class="battle-product-info">
+
+                    <span
+                        class="product-label"
+                        data-label
+                    >
+                        PRODUCT 1
+                    </span>
+
+
+                    <h3 data-name>
+                        Soother Musical Crib Toy
+                    </h3>
+
+
+                    <p
+                        class="product-brand"
+                        data-brand
+                    >
+                        Baby Einstein
+                    </p>
+
+
+                    <p
+                        class="battle-description"
+                        data-description
+                    >
+                        A popular option for keeping little ones
+                        entertained during quiet moments and daily routines.
+                    </p>
+
+
+                    <!-- MONTHLY MANUAL PERCENTAGE -->
+
+                    <div
+                        class="product-social-proof"
+                        data-social-proof
+                    >
+
+                        <span class="product-social-proof-heart">
+                            💗
+                        </span>
+
+                        <span>
+                            <strong data-vote-percent>62%</strong>
+                            of moms would recommend this
+                        </span>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="recommend-button"
+                        data-vote
+                    >
+
+                        <span class="recommend-heart">
+                            ♥
+                        </span>
+
+                        <span>
+                            I WOULD RECOMMEND THIS
+                        </span>
+
+                    </button>
+
+
+                    <p
+                        class="vote-confirmation"
+                        data-confirmation
+                        aria-live="polite"
+                    ></p>
+
+
+                    <div class="product-details-cta">
+
+                        <p class="product-details-cta-text">
+                            Want to see why moms are choosing it?
+                        </p>
+
+                        <a
+                            href="https://amzn.to/4fNqr9j"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="product-shop-link"
+                            data-link
+                        >
+                            See product details →
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="product-arrow product-arrow-right"
+                type="button"
+                aria-label="Next product"
+                data-next
+            >
+                ›
+            </button>
+
+        </div>
+
+
+        <div
+            class="battle-dots"
+            data-dots
+        ></div>
+
+
+        <div class="battle-footer">
+
+            <span>
+                🗳️ Your vote helps another mom decide.
+            </span>
+
+        </div>
 
     </div>
-
-
-
-    <!-- DOTS -->
-
-    <div
-        class="battle-dots"
-        data-dots
-    ></div>
-
-
-
-    <!-- FOOTER -->
-
-    <div class="battle-footer">
-
-        <span>
-            🗳️ Your vote helps another mom decide.
-        </span>
-
-    </div>
-
-
-</div>
 
 </section>
 
 
-
-<!-- =========================================
+<!-- =====================================================
      TODDLER
-========================================= -->
+===================================================== -->
 
 <section
     class="product-battle"
@@ -387,199 +891,197 @@ See what moms are choosing — and cast your own vote.
     data-category="toddler"
 >
 
+    <div class="battle-heading">
 
-<div class="battle-heading">
-
-    <span class="battle-eyebrow">
-        🧸 TODDLER
-    </span>
-
-
-    <h2>
-        Toddler Favorites
-    </h2>
-
-
-    <p>
-        Which product would earn a spot in your home?
-    </p>
-
-</div>
-
-
-
-<div class="battle-card">
-
-
-    <div class="battle-top">
-
-        <span class="battle-category">
-            COMMUNITY VOTE
+        <span class="battle-eyebrow">
+            🧸 TODDLER
         </span>
 
+        <h2>
+            Toddler Favorites
+        </h2>
 
-        <span
-            class="battle-position"
-            data-position
-        >
-            1 / 2
-        </span>
+        <p>
+            Which product would earn a spot in your home?
+        </p>
 
     </div>
 
 
+    <div class="battle-card">
 
-    <div class="product-viewer">
+        <div class="battle-top">
 
+            <span class="battle-category">
+                COMMUNITY VOTE
+            </span>
 
-        <button
-            class="product-arrow product-arrow-left"
-            type="button"
-            aria-label="Previous product"
-            data-prev
-        >
-            ‹
-        </button>
-
-
-
-        <div class="product-slide-area">
-
-
-            <div class="product-image-wrap">
-
-                <img
-                    class="battle-product-image"
-                    src="assets/product2.jpg"
-                    alt="Toddler favorite product"
-                    data-image
-                >
-
-            </div>
-
-
-
-            <div class="battle-product-info">
-
-
-                <span
-                    class="product-label"
-                    data-label
-                >
-                    PRODUCT 1
-                </span>
-
-
-                <h3 data-name>
-                    Toddler Favorite
-                </h3>
-
-
-                <p
-                    class="product-brand"
-                    data-brand
-                >
-                    MomYouNeedThis Pick
-                </p>
-
-
-                <p
-                    class="battle-description"
-                    data-description
-                >
-                    A practical everyday product designed to make
-                    life with toddlers a little easier.
-                </p>
-
-
-                <p
-                    class="vote-stat"
-                    data-vote-stat
-                >
-                    💗 <strong>58% of moms</strong> would recommend this product.
-                </p>
-
-
-
-                <button
-                    type="button"
-                    class="recommend-button"
-                    data-vote
-                >
-
-                    <span class="recommend-heart">
-                        ♥
-                    </span>
-
-                    <span>
-                        I WOULD RECOMMEND THIS
-                    </span>
-
-                </button>
-
-
-                <p
-                    class="vote-confirmation"
-                    data-confirmation
-                    aria-live="polite"
-                ></p>
-
-
-                <a
-                    href="YOUR-AMAZON-LINK-HERE"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="product-shop-link"
-                    data-link
-                >
-
-                    See product details →
-
-                </a>
-
-            </div>
+            <span
+                class="battle-position"
+                data-position
+            >
+                1 / 2
+            </span>
 
         </div>
 
 
+        <div class="product-viewer">
 
-        <button
-            class="product-arrow product-arrow-right"
-            type="button"
-            aria-label="Next product"
-            data-next
-        >
-            ›
-        </button>
+            <button
+                class="product-arrow product-arrow-left"
+                type="button"
+                aria-label="Previous product"
+                data-prev
+            >
+                ‹
+            </button>
+
+
+            <div class="product-slide-area">
+
+                <div class="product-image-wrap">
+
+                    <img
+                        class="battle-product-image"
+                        src="assets/product2.jpg"
+                        alt="Toddler favorite product"
+                        data-image
+                    >
+
+                </div>
+
+
+                <div class="battle-product-info">
+
+                    <span
+                        class="product-label"
+                        data-label
+                    >
+                        PRODUCT 1
+                    </span>
+
+
+                    <h3 data-name>
+                        Toddler Favorite
+                    </h3>
+
+
+                    <p
+                        class="product-brand"
+                        data-brand
+                    >
+                        MomYouNeedThis Pick
+                    </p>
+
+
+                    <p
+                        class="battle-description"
+                        data-description
+                    >
+                        A practical everyday product designed to make
+                        life with toddlers a little easier.
+                    </p>
+
+
+                    <div
+                        class="product-social-proof"
+                        data-social-proof
+                    >
+
+                        <span class="product-social-proof-heart">
+                            💗
+                        </span>
+
+                        <span>
+                            <strong data-vote-percent>71%</strong>
+                            of moms would recommend this
+                        </span>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="recommend-button"
+                        data-vote
+                    >
+
+                        <span class="recommend-heart">
+                            ♥
+                        </span>
+
+                        <span>
+                            I WOULD RECOMMEND THIS
+                        </span>
+
+                    </button>
+
+
+                    <p
+                        class="vote-confirmation"
+                        data-confirmation
+                        aria-live="polite"
+                    ></p>
+
+
+                    <div class="product-details-cta">
+
+                        <p class="product-details-cta-text">
+                            Curious why moms keep recommending it?
+                        </p>
+
+                        <a
+                            href="YOUR-AMAZON-LINK-HERE"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="product-shop-link"
+                            data-link
+                        >
+                            See product details →
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="product-arrow product-arrow-right"
+                type="button"
+                aria-label="Next product"
+                data-next
+            >
+                ›
+            </button>
+
+        </div>
+
+
+        <div
+            class="battle-dots"
+            data-dots
+        ></div>
+
+
+        <div class="battle-footer">
+
+            <span>
+                🗳️ Vote for the one you would actually recommend.
+            </span>
+
+        </div>
 
     </div>
-
-
-
-    <div
-        class="battle-dots"
-        data-dots
-    ></div>
-
-
-
-    <div class="battle-footer">
-
-        <span>
-            🗳️ Vote for the one you would actually recommend.
-        </span>
-
-    </div>
-
-</div>
 
 </section>
 
 
-
-<!-- =========================================
+<!-- =====================================================
      SLEEP
-========================================= -->
+===================================================== -->
 
 <section
     class="product-battle"
@@ -587,199 +1089,197 @@ See what moms are choosing — and cast your own vote.
     data-category="sleep"
 >
 
+    <div class="battle-heading">
 
-<div class="battle-heading">
-
-    <span class="battle-eyebrow">
-        😴 SLEEP
-    </span>
-
-
-    <h2>
-        Sleep Helpers
-    </h2>
-
-
-    <p>
-        Which one would you tell another tired mom about?
-    </p>
-
-</div>
-
-
-
-<div class="battle-card">
-
-
-    <div class="battle-top">
-
-        <span class="battle-category">
-            COMMUNITY VOTE
+        <span class="battle-eyebrow">
+            😴 SLEEP
         </span>
 
+        <h2>
+            Sleep Helpers
+        </h2>
 
-        <span
-            class="battle-position"
-            data-position
-        >
-            1 / 2
-        </span>
+        <p>
+            Which one would you tell another tired mom about?
+        </p>
 
     </div>
 
 
+    <div class="battle-card">
 
-    <div class="product-viewer">
+        <div class="battle-top">
 
+            <span class="battle-category">
+                COMMUNITY VOTE
+            </span>
 
-        <button
-            class="product-arrow product-arrow-left"
-            type="button"
-            aria-label="Previous product"
-            data-prev
-        >
-            ‹
-        </button>
-
-
-
-        <div class="product-slide-area">
-
-
-            <div class="product-image-wrap">
-
-                <img
-                    class="battle-product-image"
-                    src="assets/white-noise-machine.jpeg"
-                    alt="White noise machine"
-                    data-image
-                >
-
-            </div>
-
-
-
-            <div class="battle-product-info">
-
-
-                <span
-                    class="product-label"
-                    data-label
-                >
-                    PRODUCT 1
-                </span>
-
-
-                <h3 data-name>
-                    White Noise Machine
-                </h3>
-
-
-                <p
-                    class="product-brand"
-                    data-brand
-                >
-                    Parent Favorite
-                </p>
-
-
-                <p
-                    class="battle-description"
-                    data-description
-                >
-                    A popular choice for creating a consistent sleep
-                    environment for little ones.
-                </p>
-
-
-                <p
-                    class="vote-stat"
-                    data-vote-stat
-                >
-                    💗 <strong>64% of moms</strong> would recommend this product.
-                </p>
-
-
-
-                <button
-                    type="button"
-                    class="recommend-button"
-                    data-vote
-                >
-
-                    <span class="recommend-heart">
-                        ♥
-                    </span>
-
-                    <span>
-                        I WOULD RECOMMEND THIS
-                    </span>
-
-                </button>
-
-
-                <p
-                    class="vote-confirmation"
-                    data-confirmation
-                    aria-live="polite"
-                ></p>
-
-
-                <a
-                    href="https://amzn.to/4z8LxGC"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="product-shop-link"
-                    data-link
-                >
-
-                    See product details →
-
-                </a>
-
-            </div>
+            <span
+                class="battle-position"
+                data-position
+            >
+                1 / 2
+            </span>
 
         </div>
 
 
+        <div class="product-viewer">
 
-        <button
-            class="product-arrow product-arrow-right"
-            type="button"
-            aria-label="Next product"
-            data-next
-        >
-            ›
-        </button>
+            <button
+                class="product-arrow product-arrow-left"
+                type="button"
+                aria-label="Previous product"
+                data-prev
+            >
+                ‹
+            </button>
+
+
+            <div class="product-slide-area">
+
+                <div class="product-image-wrap">
+
+                    <img
+                        class="battle-product-image"
+                        src="assets/white-noise-machine.jpeg"
+                        alt="White noise machine"
+                        data-image
+                    >
+
+                </div>
+
+
+                <div class="battle-product-info">
+
+                    <span
+                        class="product-label"
+                        data-label
+                    >
+                        PRODUCT 1
+                    </span>
+
+
+                    <h3 data-name>
+                        White Noise Machine
+                    </h3>
+
+
+                    <p
+                        class="product-brand"
+                        data-brand
+                    >
+                        Parent Favorite
+                    </p>
+
+
+                    <p
+                        class="battle-description"
+                        data-description
+                    >
+                        A popular choice for creating a consistent sleep
+                        environment for little ones.
+                    </p>
+
+
+                    <div
+                        class="product-social-proof"
+                        data-social-proof
+                    >
+
+                        <span class="product-social-proof-heart">
+                            💗
+                        </span>
+
+                        <span>
+                            <strong data-vote-percent>58%</strong>
+                            of moms would recommend this
+                        </span>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="recommend-button"
+                        data-vote
+                    >
+
+                        <span class="recommend-heart">
+                            ♥
+                        </span>
+
+                        <span>
+                            I WOULD RECOMMEND THIS
+                        </span>
+
+                    </button>
+
+
+                    <p
+                        class="vote-confirmation"
+                        data-confirmation
+                        aria-live="polite"
+                    ></p>
+
+
+                    <div class="product-details-cta">
+
+                        <p class="product-details-cta-text">
+                            See why this one is getting mom approval →
+                        </p>
+
+                        <a
+                            href="https://amzn.to/4z8LxGC"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="product-shop-link"
+                            data-link
+                        >
+                            See product details →
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="product-arrow product-arrow-right"
+                type="button"
+                aria-label="Next product"
+                data-next
+            >
+                ›
+            </button>
+
+        </div>
+
+
+        <div
+            class="battle-dots"
+            data-dots
+        ></div>
+
+
+        <div class="battle-footer">
+
+            <span>
+                💗 What works for your family might help another.
+            </span>
+
+        </div>
 
     </div>
-
-
-
-    <div
-        class="battle-dots"
-        data-dots
-    ></div>
-
-
-
-    <div class="battle-footer">
-
-        <span>
-            💗 What works for your family might help another.
-        </span>
-
-    </div>
-
-</div>
 
 </section>
 
 
-
-<!-- =========================================
+<!-- =====================================================
      POTTY
-========================================= -->
+===================================================== -->
 
 <section
     class="product-battle"
@@ -787,199 +1287,197 @@ See what moms are choosing — and cast your own vote.
     data-category="potty"
 >
 
+    <div class="battle-heading">
 
-<div class="battle-heading">
-
-    <span class="battle-eyebrow">
-        🚽 POTTY TRAINING
-    </span>
-
-
-    <h2>
-        Potty Training Favorites
-    </h2>
-
-
-    <p>
-        Which one would you recommend to a parent starting out?
-    </p>
-
-</div>
-
-
-
-<div class="battle-card">
-
-
-    <div class="battle-top">
-
-        <span class="battle-category">
-            COMMUNITY VOTE
+        <span class="battle-eyebrow">
+            🚽 POTTY TRAINING
         </span>
 
+        <h2>
+            Potty Training Favorites
+        </h2>
 
-        <span
-            class="battle-position"
-            data-position
-        >
-            1 / 2
-        </span>
+        <p>
+            Which one would you recommend to a parent starting out?
+        </p>
 
     </div>
 
 
+    <div class="battle-card">
 
-    <div class="product-viewer">
+        <div class="battle-top">
 
+            <span class="battle-category">
+                COMMUNITY VOTE
+            </span>
 
-        <button
-            class="product-arrow product-arrow-left"
-            type="button"
-            aria-label="Previous product"
-            data-prev
-        >
-            ‹
-        </button>
-
-
-
-        <div class="product-slide-area">
-
-
-            <div class="product-image-wrap">
-
-                <img
-                    class="battle-product-image"
-                    src="assets/babybjorn-potty-toilet.jpeg"
-                    alt="BabyBjorn potty"
-                    data-image
-                >
-
-            </div>
-
-
-
-            <div class="battle-product-info">
-
-
-                <span
-                    class="product-label"
-                    data-label
-                >
-                    PRODUCT 1
-                </span>
-
-
-                <h3 data-name>
-                    Potty Training Seat
-                </h3>
-
-
-                <p
-                    class="product-brand"
-                    data-brand
-                >
-                    BabyBjörn
-                </p>
-
-
-                <p
-                    class="battle-description"
-                    data-description
-                >
-                    A simple potty-training option designed to help
-                    toddlers feel comfortable and confident.
-                </p>
-
-
-                <p
-                    class="vote-stat"
-                    data-vote-stat
-                >
-                    💗 <strong>71% of moms</strong> would recommend this product.
-                </p>
-
-
-
-                <button
-                    type="button"
-                    class="recommend-button"
-                    data-vote
-                >
-
-                    <span class="recommend-heart">
-                        ♥
-                    </span>
-
-                    <span>
-                        I WOULD RECOMMEND THIS
-                    </span>
-
-                </button>
-
-
-                <p
-                    class="vote-confirmation"
-                    data-confirmation
-                    aria-live="polite"
-                ></p>
-
-
-                <a
-                    href="https://amzn.to/3S23eqS"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="product-shop-link"
-                    data-link
-                >
-
-                    See product details →
-
-                </a>
-
-            </div>
+            <span
+                class="battle-position"
+                data-position
+            >
+                1 / 2
+            </span>
 
         </div>
 
 
+        <div class="product-viewer">
 
-        <button
-            class="product-arrow product-arrow-right"
-            type="button"
-            aria-label="Next product"
-            data-next
-        >
-            ›
-        </button>
+            <button
+                class="product-arrow product-arrow-left"
+                type="button"
+                aria-label="Previous product"
+                data-prev
+            >
+                ‹
+            </button>
+
+
+            <div class="product-slide-area">
+
+                <div class="product-image-wrap">
+
+                    <img
+                        class="battle-product-image"
+                        src="assets/babybjorn-potty-toilet.jpeg"
+                        alt="BabyBjorn potty"
+                        data-image
+                    >
+
+                </div>
+
+
+                <div class="battle-product-info">
+
+                    <span
+                        class="product-label"
+                        data-label
+                    >
+                        PRODUCT 1
+                    </span>
+
+
+                    <h3 data-name>
+                        Potty Training Seat
+                    </h3>
+
+
+                    <p
+                        class="product-brand"
+                        data-brand
+                    >
+                        BabyBjörn
+                    </p>
+
+
+                    <p
+                        class="battle-description"
+                        data-description
+                    >
+                        A simple potty-training option designed to help
+                        toddlers feel comfortable and confident.
+                    </p>
+
+
+                    <div
+                        class="product-social-proof"
+                        data-social-proof
+                    >
+
+                        <span class="product-social-proof-heart">
+                            💗
+                        </span>
+
+                        <span>
+                            <strong data-vote-percent>76%</strong>
+                            of moms would recommend this
+                        </span>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="recommend-button"
+                        data-vote
+                    >
+
+                        <span class="recommend-heart">
+                            ♥
+                        </span>
+
+                        <span>
+                            I WOULD RECOMMEND THIS
+                        </span>
+
+                    </button>
+
+
+                    <p
+                        class="vote-confirmation"
+                        data-confirmation
+                        aria-live="polite"
+                    ></p>
+
+
+                    <div class="product-details-cta">
+
+                        <p class="product-details-cta-text">
+                            See the potty pick moms are loving →
+                        </p>
+
+                        <a
+                            href="https://amzn.to/3S23eqS"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="product-shop-link"
+                            data-link
+                        >
+                            See product details →
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="product-arrow product-arrow-right"
+                type="button"
+                aria-label="Next product"
+                data-next
+            >
+                ›
+            </button>
+
+        </div>
+
+
+        <div
+            class="battle-dots"
+            data-dots
+        ></div>
+
+
+        <div class="battle-footer">
+
+            <span>
+                🗳️ Help another parent skip the guesswork.
+            </span>
+
+        </div>
 
     </div>
-
-
-
-    <div
-        class="battle-dots"
-        data-dots
-    ></div>
-
-
-
-    <div class="battle-footer">
-
-        <span>
-            🗳️ Help another parent skip the guesswork.
-        </span>
-
-    </div>
-
-</div>
 
 </section>
 
 
-
-<!-- =========================================
+<!-- =====================================================
      HOW IT WORKS
-========================================= -->
+===================================================== -->
 
 <section class="voting-explainer">
 
@@ -999,15 +1497,11 @@ See what moms are choosing — and cast your own vote.
     </p>
 
 
-
     <div class="explainer-grid">
-
 
         <div class="explainer-item">
 
-            <span>
-                01
-            </span>
+            <span>01</span>
 
             <h3>
                 Discover
@@ -1020,12 +1514,9 @@ See what moms are choosing — and cast your own vote.
         </div>
 
 
-
         <div class="explainer-item">
 
-            <span>
-                02
-            </span>
+            <span>02</span>
 
             <h3>
                 Vote
@@ -1038,12 +1529,9 @@ See what moms are choosing — and cast your own vote.
         </div>
 
 
-
         <div class="explainer-item">
 
-            <span>
-                03
-            </span>
+            <span>03</span>
 
             <h3>
                 Help Moms
@@ -1056,16 +1544,14 @@ See what moms are choosing — and cast your own vote.
 
         </div>
 
-
     </div>
 
 </section>
 
 
-
-<!-- =========================================
-     FINAL HOLY GRAIL CTA
-========================================= -->
+<!-- =====================================================
+     FINAL CTA
+===================================================== -->
 
 <section class="holy-grail-final">
 
@@ -1089,18 +1575,15 @@ See what moms are choosing — and cast your own vote.
         href="submit-holy-grail.html"
         class="holy-grail-final-button"
     >
-
         Recommend a Product →
-
     </a>
 
 </section>
 
 
-
-<!-- =========================================
+<!-- =====================================================
      FOOTER
-========================================= -->
+===================================================== -->
 
 <footer>
 
@@ -1125,7 +1608,6 @@ See what moms are choosing — and cast your own vote.
     </p>
 
 
-
     <div class="footer-bottom">
 
         <p>
@@ -1148,15 +1630,172 @@ See what moms are choosing — and cast your own vote.
 </div>
 
 
-
-<!-- =========================================
-     JAVASCRIPT
-========================================= -->
+<!-- =====================================================
+     VOTING JAVASCRIPT
+===================================================== -->
 
 <script
     type="module"
     src="amazon-favorites.js"
 ></script>
+
+
+<!-- =====================================================
+     MONTHLY PERCENTAGE HANDLER
+     
+     IMPORTANT:
+     The percentages live in the PRODUCT DATA inside
+     amazon-favorites.js.
+
+     This small script only displays the value associated
+     with the currently displayed product.
+===================================================== -->
+
+<script type="module">
+
+/*
+ * Monthly percentages.
+ *
+ * CHANGE THESE NUMBERS EACH MONTH.
+ *
+ * Each product has its own percentage.
+ */
+
+const monthlyVotePercentages = {
+
+    "baby-einstein-aquarium": 62,
+
+    "baby-white-noise-machine": 38,
+
+    "toddler-favorite": 71,
+
+    "toddler-red-light": 29,
+
+    "sleep-white-noise-machine": 58,
+
+    "sleep-red-light": 42,
+
+    "babybjorn-potty": 76,
+
+    "potty-training-contender": 24
+
+};
+
+
+/*
+ * The voting JS exposes the current product through
+ * the product label/name.
+ *
+ * We watch for product changes and update the
+ * percentage automatically.
+ */
+
+function updateVisiblePercentage() {
+
+    document
+        .querySelectorAll(".product-battle")
+        .forEach(battle => {
+
+            const category =
+                battle.dataset.category;
+
+            const nameElement =
+                battle.querySelector("[data-name]");
+
+            const percentageElement =
+                battle.querySelector("[data-vote-percent]");
+
+            if (
+                !nameElement ||
+                !percentageElement
+            ) {
+                return;
+            }
+
+            const productName =
+                nameElement.textContent.trim();
+
+
+            const productIds = {
+
+                "Soother Musical Crib Toy":
+                    "baby-einstein-aquarium",
+
+                "White Noise Machine":
+                    category === "sleep"
+                        ? "sleep-white-noise-machine"
+                        : "baby-white-noise-machine",
+
+                "Toddler Favorite":
+                    "toddler-favorite",
+
+                "Red Light":
+                    category === "sleep"
+                        ? "sleep-red-light"
+                        : "toddler-red-light",
+
+                "Potty Training Seat":
+                    "babybjorn-potty",
+
+                "Potty Training Favorite":
+                    "potty-training-contender"
+
+            };
+
+
+            const productId =
+                productIds[productName];
+
+
+            const percentage =
+                monthlyVotePercentages[productId];
+
+
+            if (
+                typeof percentage === "number"
+            ) {
+
+                percentageElement.textContent =
+                    percentage + "%";
+
+            }
+
+        });
+
+}
+
+
+/*
+ * Run initially.
+ */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        setTimeout(
+            updateVisiblePercentage,
+            250
+        );
+
+
+        /*
+         * The existing carousel changes the product
+         * after a short timeout.
+         *
+         * Checking periodically keeps the percentage
+         * synchronized without changing your voting JS.
+         */
+
+        setInterval(
+            updateVisiblePercentage,
+            300
+        );
+
+    }
+);
+
+</script>
 
 
 </body>
