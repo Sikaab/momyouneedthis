@@ -1,3 +1,4 @@
+
 /* =========================================================
    MOMYOU NEED THIS
    MOM-VOTED PRODUCT BATTLES
@@ -20,83 +21,66 @@ import {
 
 
 /* =========================================================
-   FIREBASE AUTHENTICATION
+   FIREBASE AUTH
 ========================================================= */
 
 const auth = getAuth();
 
 let currentUser = null;
 
-let authReadyResolve;
+let authReady = new Promise((resolve, reject) => {
 
-let authReadyReject;
+    let resolved = false;
 
-const authReady = new Promise((resolve, reject) => {
+    onAuthStateChanged(auth, (user) => {
 
-    authReadyResolve = resolve;
-    authReadyReject = reject;
+        if (user) {
 
-});
+            currentUser = user;
 
+            console.log(
+                "Anonymous Firebase user ready:",
+                user.uid
+            );
 
-/* =========================================================
-   AUTH STATE
-========================================================= */
+            if (!resolved) {
+                resolved = true;
+                resolve(user);
+            }
 
-onAuthStateChanged(auth, (user) => {
+        }
 
-    if (user) {
-
-        currentUser = user;
-
-        console.log(
-            "Anonymous Firebase user ready:",
-            user.uid
-        );
-
-        authReadyResolve(user);
-
-    }
+    });
 
 });
 
 
 /* =========================================================
-   START ANONYMOUS AUTHENTICATION
+   START ANONYMOUS AUTH
 ========================================================= */
 
 async function initializeAuthentication() {
 
     try {
 
-        if (auth.currentUser) {
+        if (!auth.currentUser) {
 
-            currentUser =
-                auth.currentUser;
+            await signInAnonymously(auth);
 
-            return currentUser;
+        } else {
+
+            currentUser = auth.currentUser;
 
         }
 
-
-        await signInAnonymously(auth);
-
-
-        /*
-         * onAuthStateChanged will set
-         * currentUser.
-         */
-
-        return await authReady;
+        await authReady;
 
     } catch (error) {
 
         console.error(
-            "Anonymous Firebase authentication failed:",
+            "Anonymous authentication failed:",
             error
         );
-
-        authReadyReject(error);
 
         throw error;
 
@@ -107,13 +91,12 @@ async function initializeAuthentication() {
 
 /* =========================================================
    PRODUCT DATA
+   ---------------------------------------------------------
+   CHANGE ONLY "percentage" EACH MONTH
+   FOR MANUAL SOCIAL-PROOF UPDATES.
 ========================================================= */
 
 const competitions = {
-
-    /* =====================================================
-       BABY
-    ===================================================== */
 
     baby: [
 
@@ -131,9 +114,10 @@ const competitions = {
             description:
                 "A popular option for keeping little ones entertained during quiet moments and daily routines.",
 
+            percentage: 62,
+
             link: "https://amzn.to/4fNqr9j"
         },
-
 
         {
             id: "baby-white-noise-machine",
@@ -149,15 +133,13 @@ const competitions = {
             description:
                 "A popular choice for creating a consistent sleep environment for little ones.",
 
+            percentage: 38,
+
             link: "https://amzn.to/4z8LxGC"
         }
 
     ],
 
-
-    /* =====================================================
-       TODDLER
-    ===================================================== */
 
     toddler: [
 
@@ -175,9 +157,10 @@ const competitions = {
             description:
                 "A practical everyday product designed to make life with toddlers a little easier.",
 
+            percentage: 57,
+
             link: "YOUR-AMAZON-LINK-HERE"
         },
-
 
         {
             id: "toddler-red-light",
@@ -193,15 +176,13 @@ const competitions = {
             description:
                 "A useful addition to bedtime and nighttime routines.",
 
+            percentage: 43,
+
             link: "https://amzn.to/3U5XzAB"
         }
 
     ],
 
-
-    /* =====================================================
-       SLEEP
-    ===================================================== */
 
     sleep: [
 
@@ -219,9 +200,10 @@ const competitions = {
             description:
                 "A popular choice for creating a consistent sleep environment for little ones.",
 
+            percentage: 71,
+
             link: "https://amzn.to/4z8LxGC"
         },
-
 
         {
             id: "sleep-red-light",
@@ -237,15 +219,13 @@ const competitions = {
             description:
                 "A simple option some parents incorporate into nighttime routines.",
 
+            percentage: 29,
+
             link: "https://amzn.to/3U5XzAB"
         }
 
     ],
 
-
-    /* =====================================================
-       POTTY
-    ===================================================== */
 
     potty: [
 
@@ -258,14 +238,15 @@ const competitions = {
 
             image: "assets/babybjorn-potty-toilet.jpeg",
 
-            alt: "BabyBjorn potty",
+            alt: "BabyBjörn potty",
 
             description:
                 "A simple potty-training option designed to help toddlers feel comfortable and confident.",
 
+            percentage: 68,
+
             link: "https://amzn.to/3S23eqS"
         },
-
 
         {
             id: "potty-training-contender",
@@ -281,43 +262,35 @@ const competitions = {
             description:
                 "Another contender will be added as more moms submit their favorite products.",
 
+            percentage: 32,
+
             link: "submit-holy-grail.html"
         }
 
-    ]
+    ],
+
+    /*
+     * These categories are ready for when you add
+     * the corresponding HTML sections.
+     */
+
+    feeding: [],
+
+    under25: []
 
 };
 
 
 /* =========================================================
-   CREATE UNIQUE VOTE DOCUMENT ID
+   CREATE SAFE DOCUMENT ID
 ========================================================= */
-
-/*
-   One document is created for:
-
-   anonymous user
-   +
-   category
-   +
-   product
-
-   Example:
-
-   USER123_baby_baby-einstein-aquarium
-
-   This means the same anonymous user cannot
-   create another vote for that exact product.
-*/
 
 function createVoteId(category, productId) {
 
     if (!currentUser) {
-
         throw new Error(
-            "No authenticated Firebase user."
+            "Cannot create vote ID before authentication."
         );
-
     }
 
     return `${currentUser.uid}_${category}_${productId}`;
@@ -326,13 +299,12 @@ function createVoteId(category, productId) {
 
 
 /* =========================================================
-   SAVE VOTE TO FIRESTORE
+   SAVE VOTE
 ========================================================= */
 
 async function saveVote(category, product) {
 
     await authReady;
-
 
     if (!currentUser) {
 
@@ -358,39 +330,21 @@ async function saveVote(category, product) {
         );
 
 
-    /*
-     * IMPORTANT:
-     *
-     * We use setDoc with merge:false.
-     *
-     * Your Firestore security rules should allow
-     * CREATE but not UPDATE.
-     *
-     * Therefore, once the vote document exists,
-     * another attempt cannot overwrite it.
-     */
-
     await setDoc(
         voteRef,
         {
 
-            uid:
-                currentUser.uid,
+            uid: currentUser.uid,
 
-            category:
-                category,
+            category: category,
 
-            productId:
-                product.id,
+            productId: product.id,
 
-            productName:
-                product.name,
+            productName: product.name,
 
-            productBrand:
-                product.brand,
+            productBrand: product.brand,
 
-            createdAt:
-                serverTimestamp()
+            createdAt: serverTimestamp()
 
         },
 
@@ -404,7 +358,7 @@ async function saveVote(category, product) {
 
 
 /* =========================================================
-   CAROUSEL INITIALIZATION
+   CAROUSELS
 ========================================================= */
 
 function initializeBattles() {
@@ -427,13 +381,8 @@ function initializeBattles() {
 
         if (
             !products ||
-            products.length === 0
+            !products.length
         ) {
-
-            console.warn(
-                "No products found for category:",
-                category
-            );
 
             return;
 
@@ -443,103 +392,65 @@ function initializeBattles() {
         let currentIndex = 0;
 
 
-        /* =================================================
-           ELEMENTS
-        ================================================= */
-
         const image =
-            battle.querySelector(
-                "[data-image]"
-            );
-
+            battle.querySelector("[data-image]");
 
         const name =
-            battle.querySelector(
-                "[data-name]"
-            );
-
+            battle.querySelector("[data-name]");
 
         const brand =
-            battle.querySelector(
-                "[data-brand]"
-            );
-
+            battle.querySelector("[data-brand]");
 
         const description =
-            battle.querySelector(
-                "[data-description]"
-            );
+            battle.querySelector("[data-description]");
 
+        const percentage =
+            battle.querySelector("[data-vote-percentage]");
 
         const link =
-            battle.querySelector(
-                "[data-link]"
-            );
-
+            battle.querySelector("[data-link]");
 
         const label =
-            battle.querySelector(
-                "[data-label]"
-            );
-
+            battle.querySelector("[data-label]");
 
         const position =
-            battle.querySelector(
-                "[data-position]"
-            );
-
+            battle.querySelector("[data-position]");
 
         const voteButton =
-            battle.querySelector(
-                "[data-vote]"
-            );
-
+            battle.querySelector("[data-vote]");
 
         const confirmation =
-            battle.querySelector(
-                "[data-confirmation]"
-            );
-
+            battle.querySelector("[data-confirmation]");
 
         const dotsContainer =
-            battle.querySelector(
-                "[data-dots]"
-            );
-
+            battle.querySelector("[data-dots]");
 
         const previousButton =
-            battle.querySelector(
-                "[data-prev]"
-            );
-
+            battle.querySelector("[data-prev]");
 
         const nextButton =
-            battle.querySelector(
-                "[data-next]"
-            );
+            battle.querySelector("[data-next]");
 
 
-        /*
-         * Make sure the required elements exist.
-         */
+        /* =================================================
+           SAFETY CHECK
+        ================================================= */
 
         if (
             !image ||
             !name ||
             !brand ||
             !description ||
+            !percentage ||
             !link ||
-            !label ||
-            !position ||
             !voteButton ||
-            !confirmation ||
             !dotsContainer ||
             !previousButton ||
             !nextButton
         ) {
 
             console.error(
-                "Voting battle is missing required HTML elements:",
+                "Product battle is missing required HTML elements:",
                 category
             );
 
@@ -549,51 +460,45 @@ function initializeBattles() {
 
 
         /* =================================================
-           CREATE DOTS
+           DOTS
         ================================================= */
 
-        products.forEach(
-            function (_, index) {
+        products.forEach(function (_, index) {
 
-                const dot =
-                    document.createElement(
-                        "button"
-                    );
+            const dot =
+                document.createElement("button");
 
 
-                dot.type =
-                    "button";
+            dot.type = "button";
+
+            dot.className =
+                "battle-dot";
 
 
-                dot.className =
-                    "battle-dot";
+            dot.setAttribute(
+                "aria-label",
+                `Show product ${index + 1}`
+            );
 
 
-                dot.setAttribute(
-                    "aria-label",
-                    `Show product ${index + 1}`
-                );
+            dot.addEventListener(
+                "click",
+                function () {
+
+                    currentIndex =
+                        index;
+
+                    updateProduct();
+
+                }
+            );
 
 
-                dot.addEventListener(
-                    "click",
-                    function () {
+            dotsContainer.appendChild(
+                dot
+            );
 
-                        currentIndex =
-                            index;
-
-                        updateProduct();
-
-                    }
-                );
-
-
-                dotsContainer.appendChild(
-                    dot
-                );
-
-            }
-        );
+        });
 
 
         const dots =
@@ -603,31 +508,7 @@ function initializeBattles() {
 
 
         /* =================================================
-           LOCAL VOTE KEY
-        ================================================= */
-
-        /*
-         * localStorage is ONLY used to remember
-         * the visual state on the same browser.
-         *
-         * It is NOT being used as the security
-         * mechanism.
-         */
-
-        function getLocalVoteKey(product) {
-
-            return (
-                "momVote_" +
-                category +
-                "_" +
-                product.id
-            );
-
-        }
-
-
-        /* =================================================
-           UPDATE VOTE BUTTON STATE
+           VOTE STATE
         ================================================= */
 
         function updateVoteState() {
@@ -637,9 +518,7 @@ function initializeBattles() {
 
 
             const localVoteKey =
-                getLocalVoteKey(
-                    product
-                );
+                `momVote_${category}_${product.id}`;
 
 
             const hasVoted =
@@ -704,70 +583,81 @@ function initializeBattles() {
             );
 
 
-            setTimeout(
-                function () {
+            setTimeout(function () {
 
-                    image.src =
-                        product.image;
+                image.src =
+                    product.image;
+
+                image.alt =
+                    product.alt;
+
+                name.textContent =
+                    product.name;
+
+                brand.textContent =
+                    product.brand;
+
+                description.textContent =
+                    product.description;
 
 
-                    image.alt =
-                        product.alt;
+                /* -----------------------------------------
+                   SOCIAL PROOF PERCENTAGE
+                ----------------------------------------- */
+
+                percentage.innerHTML =
+                    `
+                    <span class="vote-proof-heart">
+                        ♥
+                    </span>
+
+                    <span>
+                        ${product.percentage}% of moms would recommend this
+                    </span>
+                    `;
 
 
-                    name.textContent =
-                        product.name;
+                label.textContent =
+                    `PRODUCT ${currentIndex + 1}`;
 
 
-                    brand.textContent =
-                        product.brand;
+                position.textContent =
+                    `${currentIndex + 1} / ${products.length}`;
 
 
-                    description.textContent =
-                        product.description;
+                confirmation.textContent =
+                    "";
 
+
+                if (product.link) {
 
                     link.href =
                         product.link;
 
-
-                    label.textContent =
-                        `PRODUCT ${currentIndex + 1}`;
-
-
-                    position.textContent =
-                        `${currentIndex + 1} / ${products.length}`;
-
-
-                    confirmation.textContent =
-                        "";
-
-
-                    image.classList.remove(
-                        "product-changing"
-                    );
-
-
-                    updateVoteState();
-
-                },
-                120
-            );
-
-
-            dots.forEach(
-                function (
-                    dot,
-                    index
-                ) {
-
-                    dot.classList.toggle(
-                        "active",
-                        index === currentIndex
-                    );
-
                 }
-            );
+
+
+                image.classList.remove(
+                    "product-changing"
+                );
+
+
+                updateVoteState();
+
+            }, 120);
+
+
+            dots.forEach(function (
+                dot,
+                index
+            ) {
+
+                dot.classList.toggle(
+                    "active",
+                    index === currentIndex
+                );
+
+            });
 
 
             previousButton.disabled =
@@ -794,14 +684,11 @@ function initializeBattles() {
 
 
                 const localVoteKey =
-                    getLocalVoteKey(
-                        product
-                    );
+                    `momVote_${category}_${product.id}`;
 
 
                 /*
-                 * Prevent double clicks while
-                 * the Firebase request is running.
+                 * Prevent accidental double-clicks.
                  */
 
                 if (
@@ -815,9 +702,7 @@ function initializeBattles() {
 
 
                 /*
-                 * Visual/browser protection.
-                 *
-                 * This is NOT the actual security layer.
+                 * Prevent another local vote.
                  */
 
                 if (
@@ -825,9 +710,6 @@ function initializeBattles() {
                         localVoteKey
                     )
                 ) {
-
-                    confirmation.textContent =
-                        "You've already recommended this product.";
 
                     return;
 
@@ -855,8 +737,9 @@ function initializeBattles() {
 
 
                     /*
-                     * Only mark the browser
-                     * after Firestore succeeds.
+                     * Only mark locally AFTER
+                     * Firestore successfully accepts
+                     * the vote.
                      */
 
                     localStorage.setItem(
@@ -885,10 +768,8 @@ function initializeBattles() {
                     confirmation.textContent =
                         "💗 Thanks! Your recommendation has been recorded.";
 
-                }
 
-
-                catch (error) {
+                } catch (error) {
 
                     console.error(
                         "Vote failed:",
@@ -896,22 +777,35 @@ function initializeBattles() {
                     );
 
 
-                    /*
-                     * Permission denied means
-                     * Firestore's security rules rejected
-                     * the request.
-                     *
-                     * We don't automatically assume
-                     * that means "duplicate vote."
-                     */
-
                     if (
                         error.code ===
                         "permission-denied"
                     ) {
 
                         confirmation.textContent =
-                            "This vote could not be recorded.";
+                            "You've already voted for this product.";
+
+                        localStorage.setItem(
+                            localVoteKey,
+                            "true"
+                        );
+
+
+                        voteButton.classList.add(
+                            "has-voted"
+                        );
+
+
+                        voteButton.innerHTML =
+                            `
+                            <span class="recommend-heart">
+                                ♥
+                            </span>
+
+                            <span>
+                                YOU RECOMMENDED THIS
+                            </span>
+                            `;
 
                     } else {
 
@@ -923,23 +817,19 @@ function initializeBattles() {
                 }
 
 
-                finally {
-
-                    voteButton.dataset.saving =
-                        "false";
+                voteButton.dataset.saving =
+                    "false";
 
 
-                    voteButton.disabled =
-                        false;
-
-                }
+                voteButton.disabled =
+                    false;
 
             }
         );
 
 
         /* =================================================
-           PREVIOUS BUTTON
+           PREVIOUS
         ================================================= */
 
         previousButton.addEventListener(
@@ -961,7 +851,7 @@ function initializeBattles() {
 
 
         /* =================================================
-           NEXT BUTTON
+           NEXT
         ================================================= */
 
         nextButton.addEventListener(
@@ -995,7 +885,7 @@ function initializeBattles() {
 
 
 /* =========================================================
-   INITIALIZE PAGE
+   INITIALIZE
 ========================================================= */
 
 document.addEventListener(
@@ -1004,33 +894,15 @@ document.addEventListener(
 
         try {
 
-            console.log(
-                "Starting MomYouNeedThis voting system..."
-            );
-
-
-            /*
-             * Authenticate anonymously first.
-             */
-
             await initializeAuthentication();
-
-
-            /*
-             * Then initialize the voting interface.
-             */
 
             initializeBattles();
 
-
             console.log(
-                "MomYouNeedThis voting system initialized successfully."
+                "Mom voting system initialized."
             );
 
-        }
-
-
-        catch (error) {
+        } catch (error) {
 
             console.error(
                 "Voting system failed to initialize:",
@@ -1038,41 +910,14 @@ document.addEventListener(
             );
 
 
-            /*
-             * Disable voting buttons if Firebase
-             * authentication cannot initialize.
-             */
-
             document
-                .querySelectorAll(
-                    "[data-vote]"
-                )
-                .forEach(
-                    function (button) {
+                .querySelectorAll("[data-vote]")
+                .forEach(function (button) {
 
-                        button.disabled =
-                            true;
+                    button.disabled =
+                        true;
 
-                    }
-                );
-
-
-            /*
-             * Show a friendly message.
-             */
-
-            document
-                .querySelectorAll(
-                    "[data-confirmation]"
-                )
-                .forEach(
-                    function (message) {
-
-                        message.textContent =
-                            "Voting is temporarily unavailable. Please try again later.";
-
-                    }
-                );
+                });
 
         }
 
