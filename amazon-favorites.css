@@ -1,5 +1,5 @@
 /* =========================================================
-   MOM-VOTED PRODUCT PAGE
+   MOM-VOTED PRODUCT EXPERIENCE
    MomYouNeedThis
 ========================================================= */
 
@@ -45,7 +45,6 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
 
     width: fit-content;
 
@@ -60,6 +59,7 @@
     color: #d94d7a;
 
     font-family: "Nunito", sans-serif;
+
     font-size: 11px;
     font-weight: 900;
 
@@ -72,8 +72,28 @@
    HERO
 ========================================================= */
 
+.voting-hero {
+    text-align: center;
+}
+
+.hero-kicker {
+    display: inline-block;
+
+    margin-bottom: 12px;
+
+    color: #d94d7a;
+
+    font-family: "Nunito", sans-serif;
+
+    font-size: 11px;
+    font-weight: 900;
+
+    letter-spacing: 1.4px;
+}
+
 .mom-voted-page h1 {
     max-width: 760px;
+
     margin: 0 auto;
 
     text-align: center;
@@ -84,6 +104,7 @@
     font-weight: 900;
 
     line-height: .98;
+
     letter-spacing: -2.5px;
 }
 
@@ -95,7 +116,7 @@
 .mom-voted-intro {
     max-width: 650px;
 
-    margin: 24px auto 28px;
+    margin: 24px auto 20px;
 
     text-align: center;
 
@@ -107,72 +128,31 @@
     color: #666;
 }
 
-
-/* =========================================================
-   PARTICIPATION BAR
-========================================================= */
-
-.participation-bar {
+.hero-mini-proof {
     display: flex;
     align-items: center;
     justify-content: center;
 
-    gap: 22px;
+    flex-wrap: wrap;
 
-    max-width: 720px;
+    gap: 7px;
 
     margin: 0 auto 35px;
-    padding: 15px 20px;
 
-    box-sizing: border-box;
-
-    border: 1px solid #eeeeee;
-    border-radius: 16px;
-
-    background: #ffffff;
-
-    box-shadow: 0 6px 22px rgba(0,0,0,.04);
+    color: #777;
 
     font-family: "Nunito", sans-serif;
+
+    font-size: 12px;
 }
 
-.participation-stat {
-    display: flex;
-    align-items: baseline;
-    gap: 6px;
-}
-
-.participation-number {
+.hero-mini-proof strong {
     color: #333;
-
-    font-size: 16px;
-    font-weight: 900;
-}
-
-.participation-label {
-    color: #888;
-
-    font-size: 11px;
-    font-weight: 700;
-}
-
-.participation-divider {
-    width: 1px;
-    height: 25px;
-
-    background: #eeeeee;
-}
-
-.participation-message {
-    color: #d94d7a;
-
-    font-size: 11px;
-    font-weight: 800;
 }
 
 
 /* =========================================================
-   HOLY GRAIL BANNER
+   HOLY GRAIL
 ========================================================= */
 
 .holy-grail-banner {
@@ -185,6 +165,7 @@
     max-width: 780px;
 
     margin: 0 auto 42px;
+
     padding: 18px 20px;
 
     box-sizing: border-box;
@@ -196,9 +177,8 @@
     );
 
     border: 1px solid #f5d8e3;
-    border-radius: 18px;
 
-    text-align: left;
+    border-radius: 18px;
 }
 
 .holy-grail-banner-icon {
@@ -217,7 +197,8 @@
 
     font-size: 22px;
 
-    box-shadow: 0 4px 14px rgba(0,0,0,.06);
+    box-shadow:
+        0 4px 14px rgba(0, 0, 0, .06);
 }
 
 .holy-grail-banner-content {
@@ -230,11 +211,12 @@
 
     margin-bottom: 3px;
 
+    color: #333;
+
     font-family: "Nunito", sans-serif;
+
     font-size: 16px;
     font-weight: 900;
-
-    color: #333;
 }
 
 .holy-grail-banner-content span {
@@ -259,6 +241,7 @@
     font-weight: 900;
 
     text-decoration: none;
+
     white-space: nowrap;
 
     transition: opacity .2s ease;
@@ -270,7 +253,7 @@
 
 
 /* =========================================================
-   CATEGORY NAVIGATION
+   CATEGORY NAV
 ========================================================= */
 
 .voting-categories {
@@ -280,7 +263,7 @@
 
     gap: 9px;
 
-    margin: 0 auto 70px;
+    margin: 0 auto 22px;
 }
 
 .voting-categories a {
@@ -311,7 +294,8 @@
         color .2s ease;
 }
 
-.voting-categories a:hover {
+.voting-categories a:hover,
+.voting-categories a.active {
     transform: translateY(-2px);
 
     background: #fff1f6;
@@ -323,16 +307,65 @@
 
 
 /* =========================================================
-   PRODUCT BATTLE
+   DISCOVERY FILTERS
+========================================================= */
+
+.discovery-strip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin: 0 auto 70px;
+}
+
+.discovery-filter {
+    padding: 8px 13px;
+
+    border: 0;
+
+    background: transparent;
+
+    color: #888;
+
+    font-family: "Nunito", sans-serif;
+
+    font-size: 12px;
+    font-weight: 900;
+
+    cursor: pointer;
+
+    transition:
+        color .2s ease,
+        transform .2s ease;
+}
+
+.discovery-filter:hover {
+    color: #d94d7a;
+    transform: translateY(-1px);
+}
+
+.discovery-filter.active {
+    color: #d94d7a;
+}
+
+
+/* =========================================================
+   BATTLE
 ========================================================= */
 
 .product-battle {
-    margin-bottom: 85px;
+    margin-bottom: 90px;
+
     scroll-margin-top: 30px;
 }
 
 .battle-heading {
     margin-bottom: 22px;
+
     text-align: center;
 }
 
@@ -388,9 +421,11 @@
     background: white;
 
     border: 1px solid #ededed;
+
     border-radius: 28px;
 
-    box-shadow: 0 14px 45px rgba(0,0,0,.07);
+    box-shadow:
+        0 14px 45px rgba(0, 0, 0, .07);
 }
 
 .battle-top {
@@ -431,45 +466,44 @@
 
 
 /* =========================================================
-   MOM PICK BANNER
+   QUESTION
 ========================================================= */
 
-.mom-pick-banner {
+.battle-question {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
 
-    min-height: 35px;
+    padding: 23px 20px 0;
 
-    padding: 7px 15px;
+    text-align: center;
+}
 
-    box-sizing: border-box;
+.battle-question span {
+    margin-bottom: 4px;
 
-    background: #fffaf0;
-
-    border-bottom: 1px solid #f5ead4;
-
-    color: #ad791d;
+    color: #d94d7a;
 
     font-family: "Nunito", sans-serif;
 
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 900;
 
-    letter-spacing: .3px;
-
-    transition:
-        opacity .2s ease,
-        transform .2s ease;
+    letter-spacing: 1.2px;
 }
 
-.mom-pick-banner.not-leading {
-    opacity: .55;
+.battle-question strong {
+    color: #333;
+
+    font-family: "Nunito", sans-serif;
+
+    font-size: 21px;
+    font-weight: 900;
 }
 
 
 /* =========================================================
-   PRODUCT VIEWER
+   VIEWER
 ========================================================= */
 
 .product-viewer {
@@ -494,15 +528,20 @@
 
     box-sizing: border-box;
 
-    padding: 45px 65px;
+    padding: 35px 65px 45px;
 }
 
-.product-image-wrap {
-    position: relative;
 
+/* =========================================================
+   IMAGE
+========================================================= */
+
+.product-image-wrap {
     display: flex;
     align-items: center;
     justify-content: center;
+
+    position: relative;
 
     min-height: 330px;
 
@@ -514,16 +553,16 @@
 .product-image-badge {
     position: absolute;
 
-    top: 10px;
-    left: 25px;
+    top: 18px;
+    left: 18px;
 
-    padding: 6px 10px;
+    padding: 6px 9px;
 
     border-radius: 999px;
 
-    background: #fffaf0;
+    background: #fff5f8;
 
-    color: #ad791d;
+    color: #d94d7a;
 
     font-family: "Nunito", sans-serif;
 
@@ -531,6 +570,8 @@
     font-weight: 900;
 
     letter-spacing: .7px;
+
+    z-index: 2;
 }
 
 .battle-product-image {
@@ -544,23 +585,23 @@
     object-fit: contain;
 
     transition:
-        opacity .16s ease,
-        transform .16s ease;
+        opacity .15s ease,
+        transform .15s ease;
 }
 
 .product-changing {
     opacity: 0;
-
-    transform: scale(.95);
+    transform: scale(.96);
 }
 
 
 /* =========================================================
-   PRODUCT INFORMATION
+   PRODUCT INFO
 ========================================================= */
 
 .battle-product-info {
     padding: 25px 30px;
+
     box-sizing: border-box;
 }
 
@@ -606,67 +647,96 @@
 .battle-description {
     max-width: 420px;
 
-    margin: 0 0 20px;
+    margin: 0 0 25px;
 
     color: #666;
 
     font-family: "Nunito", sans-serif;
 
     font-size: 15px;
+
     line-height: 1.65;
 }
 
 
 /* =========================================================
-   SOCIAL PROOF
-   INTENTIONALLY NOT A BUTTON
+   MOM SCORE
 ========================================================= */
 
-.vote-social-proof {
+.mom-score {
+    margin: 0 0 22px;
+
+    padding: 15px 0 17px;
+
+    border-top: 1px solid #f0f0f0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.mom-score-top {
     display: flex;
     align-items: baseline;
-    gap: 6px;
 
-    margin: 0 0 8px;
+    gap: 5px;
 
-    color: #555;
+    margin-bottom: 7px;
+}
+
+.mom-score-top > span {
+    margin-right: auto;
+
+    color: #777;
 
     font-family: "Nunito", sans-serif;
 
-    font-size: 13px;
-    font-weight: 700;
+    font-size: 11px;
+    font-weight: 900;
 
-    line-height: 1.4;
+    letter-spacing: .7px;
 }
 
-.vote-social-proof strong {
-    color: #c94d73;
+.mom-score-top strong {
+    color: #333;
 
-    font-size: 18px;
+    font-family: "Nunito", sans-serif;
+
+    font-size: 25px;
     font-weight: 900;
 }
 
+.mom-score-top small {
+    color: #999;
 
-/* =========================================================
-   VOTE PROGRESS
-========================================================= */
+    font-size: 11px;
+    font-weight: 800;
+}
 
-.vote-progress {
+.consensus-label {
+    margin-bottom: 8px;
+}
+
+.consensus-label span {
+    color: #d94d7a;
+
+    font-family: "Nunito", sans-serif;
+
+    font-size: 11px;
+    font-weight: 900;
+}
+
+.consensus-bar {
     width: 100%;
-    max-width: 410px;
-
     height: 5px;
 
-    margin-bottom: 19px;
-
     overflow: hidden;
+
+    margin-bottom: 8px;
 
     border-radius: 999px;
 
     background: #f0f0f0;
 }
 
-.vote-progress-fill {
+.consensus-fill {
     width: 0;
     height: 100%;
 
@@ -674,43 +744,82 @@
 
     background: #d94d7a;
 
-    transition: width .7s cubic-bezier(.22,1,.36,1);
+    transition: width .7s cubic-bezier(.22, 1, .36, 1);
+}
+
+.consensus-text {
+    display: flex;
+    align-items: baseline;
+
+    gap: 5px;
+}
+
+.consensus-text strong {
+    color: #333;
+
+    font-family: "Nunito", sans-serif;
+
+    font-size: 14px;
+    font-weight: 900;
+}
+
+.consensus-text span {
+    color: #888;
+
+    font-family: "Nunito", sans-serif;
+
+    font-size: 11px;
 }
 
 
 /* =========================================================
-   VOTE BUTTON
+   VOTE
 ========================================================= */
 
-.recommend-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.vote-area {
+    margin-top: 5px;
+}
 
-    width: 100%;
-    min-height: 56px;
+.vote-question {
+    margin: 0 0 10px;
 
-    gap: 10px;
-
-    padding: 13px 18px;
-
-    box-sizing: border-box;
-
-    border: 0;
-    border-radius: 14px;
-
-    background: #d94d7a;
-
-    color: white;
+    color: #333;
 
     font-family: "Nunito", sans-serif;
 
     font-size: 13px;
     font-weight: 900;
 
-    cursor: pointer;
+    text-align: center;
+}
 
-    box-shadow: 0 8px 20px rgba(217,77,122,.20);
+.vote-choice-grid {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 9px;
+}
+
+.vote-choice {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 51px;
+
+    gap: 8px;
+
+    padding: 11px 10px;
+
+    border-radius: 12px;
+
+    font-family: "Nunito", sans-serif;
+
+    font-size: 11px;
+    font-weight: 900;
+
+    cursor: pointer;
 
     transition:
         transform .2s ease,
@@ -718,84 +827,209 @@
         background .2s ease;
 }
 
-.recommend-button:hover {
+.vote-yes {
+    border: 1px solid #d7eee4;
+
+    background: #f4fbf7;
+
+    color: #2f8e6c;
+}
+
+.vote-no {
+    border: 1px solid #eeeeee;
+
+    background: #fafafa;
+
+    color: #777;
+}
+
+.vote-choice:hover {
     transform: translateY(-2px);
-
-    box-shadow: 0 12px 25px rgba(217,77,122,.28);
 }
 
-.recommend-button:active {
-    transform: translateY(0);
+.vote-yes:hover {
+    box-shadow: 0 8px 20px rgba(47, 157, 115, .12);
 }
 
-.recommend-button.has-voted {
-    background: #2f9d73;
-
-    box-shadow: 0 8px 20px rgba(47,157,115,.18);
+.vote-no:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, .06);
 }
 
-.recommend-arrow {
-    font-size: 17px;
+.vote-choice-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 
-    transition: transform .2s ease;
-}
+    width: 22px;
+    height: 22px;
 
-.recommend-button:hover .recommend-arrow {
-    transform: translateX(3px);
+    border-radius: 50%;
+
+    font-size: 13px;
+    font-weight: 900;
 }
 
 
 /* =========================================================
-   VOTE CONFIRMATION
+   RESULT
 ========================================================= */
 
-.vote-confirmation {
-    min-height: 20px;
+.vote-result {
+    display: none;
 
-    margin: 10px 0 0;
+    margin-top: 14px;
 
-    color: #2f9d73;
+    padding: 15px;
 
-    font-family: "Nunito", sans-serif;
+    border-radius: 14px;
 
-    font-size: 12px;
-    font-weight: 900;
+    background: #f7fbf9;
 
     text-align: center;
 
-    opacity: 0;
-
-    transform: translateY(-3px);
-
-    transition:
-        opacity .25s ease,
-        transform .25s ease;
+    animation: resultAppear .4s ease;
 }
 
-.vote-confirmation.visible {
-    opacity: 1;
-
-    transform: translateY(0);
+.vote-result.visible {
+    display: block;
 }
 
+@keyframes resultAppear {
+    from {
+        opacity: 0;
+        transform: translateY(7px);
+    }
 
-/* =========================================================
-   AFFILIATE / PRODUCT DISCOVERY LINK
-========================================================= */
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
-.product-shop-link {
+.result-icon {
+    margin-bottom: 3px;
+
+    font-size: 19px;
+}
+
+.vote-result strong {
     display: block;
 
-    width: fit-content;
-
-    margin: 17px auto 0;
-
-    color: #c68a19;
+    color: #2f8e6c;
 
     font-family: "Nunito", sans-serif;
 
     font-size: 14px;
     font-weight: 900;
+}
+
+.vote-result p {
+    margin: 3px 0 0;
+
+    color: #777;
+
+    font-family: "Nunito", sans-serif;
+
+    font-size: 11px;
+
+    line-height: 1.4;
+}
+
+
+/* =========================================================
+   SOCIAL COMPARISON
+========================================================= */
+
+.social-comparison {
+    display: none;
+
+    margin-top: 10px;
+
+    padding: 15px;
+
+    border-radius: 14px;
+
+    background: #fafafa;
+
+    animation: resultAppear .45s ease;
+}
+
+.social-comparison.visible {
+    display: block;
+}
+
+.social-comparison-title {
+    margin-bottom: 10px;
+
+    color: #333;
+
+    font-family: "Nunito", sans-serif;
+
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.social-result-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 5px 0;
+
+    border-bottom: 1px solid #eeeeee;
+
+    font-family: "Nunito", sans-serif;
+}
+
+.social-result-row span {
+    color: #777;
+
+    font-size: 10px;
+    font-weight: 900;
+}
+
+.social-result-row strong {
+    color: #2f8e6c;
+
+    font-size: 13px;
+    font-weight: 900;
+}
+
+.social-result-row.no-row strong {
+    color: #888;
+}
+
+.your-position {
+    margin-top: 10px;
+
+    color: #d94d7a;
+
+    font-family: "Nunito", sans-serif;
+
+    font-size: 11px;
+    font-weight: 900;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   AMAZON CTA
+========================================================= */
+
+.product-shop-link {
+    display: block;
+
+    margin-top: 19px;
+
+    color: #c48a17;
+
+    font-family: "Nunito", sans-serif;
+
+    font-size: 14px;
+    font-weight: 900;
+
+    text-align: center;
 
     text-decoration: none;
 
@@ -807,26 +1041,22 @@
 }
 
 .product-shop-link:hover {
-    color: #9e6c0d;
+    color: #9f6d0e;
 
     transform: translateY(-1px);
 }
 
-.product-shop-link:active {
-    transform: translateY(0);
-}
-
 
 /* =========================================================
-   NEXT PRODUCT DISCOVERY
+   NEXT CONTENDER
 ========================================================= */
 
-.next-product-link {
+.next-contender {
     display: block;
 
-    width: fit-content;
+    width: 100%;
 
-    margin: 13px auto 0;
+    margin-top: 14px;
 
     padding: 0;
 
@@ -834,12 +1064,14 @@
 
     background: transparent;
 
-    color: #999;
+    color: #888;
 
     font-family: "Nunito", sans-serif;
 
     font-size: 11px;
-    font-weight: 800;
+    font-weight: 900;
+
+    text-align: center;
 
     cursor: pointer;
 
@@ -848,7 +1080,7 @@
         transform .2s ease;
 }
 
-.next-product-link:hover {
+.next-contender:hover {
     color: #d94d7a;
 
     transform: translateX(2px);
@@ -872,6 +1104,7 @@
     padding: 0;
 
     border: 1px solid #e8e8e8;
+
     border-radius: 50%;
 
     background: white;
@@ -889,7 +1122,8 @@
 
     z-index: 3;
 
-    box-shadow: 0 5px 18px rgba(0,0,0,.08);
+    box-shadow:
+        0 5px 18px rgba(0, 0, 0, .08);
 
     transition:
         transform .2s ease,
@@ -897,20 +1131,12 @@
         color .2s ease;
 }
 
-.product-arrow:hover:not(:disabled) {
+.product-arrow:hover {
     transform: scale(1.08);
 
     background: #fff1f6;
 
     color: #d94d7a;
-}
-
-.product-arrow:disabled {
-    opacity: .25;
-
-    cursor: default;
-
-    box-shadow: none;
 }
 
 .product-arrow-left {
@@ -963,7 +1189,63 @@
 
 
 /* =========================================================
-   BATTLE FOOTER
+   WINNER
+========================================================= */
+
+.battle-winner {
+    display: none;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin: 0 24px 20px;
+
+    padding: 14px 16px;
+
+    border-radius: 14px;
+
+    background: #fffaf0;
+
+    border: 1px solid #f2e3bf;
+}
+
+.battle-winner.visible {
+    display: flex;
+
+    animation: resultAppear .45s ease;
+}
+
+.battle-winner > span {
+    font-size: 24px;
+}
+
+.battle-winner strong {
+    display: block;
+
+    margin-bottom: 2px;
+
+    color: #9c7218;
+
+    font-family: "Nunito", sans-serif;
+
+    font-size: 13px;
+    font-weight: 900;
+}
+
+.battle-winner p {
+    margin: 0;
+
+    color: #777;
+
+    font-family: "Nunito", sans-serif;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   FOOTER
 ========================================================= */
 
 .battle-footer {
@@ -984,6 +1266,99 @@
     font-weight: 700;
 
     text-align: center;
+}
+
+
+/* =========================================================
+   KEEP DISCOVERING
+========================================================= */
+
+.keep-discovering {
+    max-width: 850px;
+
+    margin: 0 auto 80px;
+
+    padding: 45px 30px;
+
+    box-sizing: border-box;
+
+    text-align: center;
+
+    border-top: 1px solid #eeeeee;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.keep-discovering-kicker {
+    color: #d94d7a;
+
+    font-family: "Nunito", sans-serif;
+
+    font-size: 10px;
+    font-weight: 900;
+
+    letter-spacing: 1px;
+}
+
+.keep-discovering h2 {
+    margin: 10px 0 7px;
+
+    color: #333;
+
+    font-family: "Nunito", sans-serif;
+
+    font-size: 29px;
+    font-weight: 900;
+}
+
+.keep-discovering p {
+    margin: 0 0 25px;
+
+    color: #777;
+
+    font-family: "Nunito", sans-serif;
+
+    font-size: 14px;
+}
+
+.discovery-links {
+    display: flex;
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+}
+
+.discovery-links a {
+    padding: 9px 13px;
+
+    border: 1px solid #ededed;
+
+    border-radius: 999px;
+
+    color: #555;
+
+    background: #fafafa;
+
+    font-family: "Nunito", sans-serif;
+
+    font-size: 11px;
+    font-weight: 900;
+
+    text-decoration: none;
+
+    transition:
+        transform .2s ease,
+        color .2s ease,
+        background .2s ease;
+}
+
+.discovery-links a:hover {
+    transform: translateY(-2px);
+
+    color: #d94d7a;
+
+    background: #fff1f6;
 }
 
 
@@ -1079,6 +1454,7 @@
     font-family: "Nunito", sans-serif;
 
     font-size: 13px;
+
     line-height: 1.55;
 }
 
@@ -1165,37 +1541,16 @@
     transform: translateY(-2px);
 
     box-shadow:
-        0 10px 24px rgba(217,77,122,.20);
+        0 10px 24px rgba(217, 77, 122, .20);
 }
 
 
 /* =========================================================
-   TABLET
+   HIDDEN FILTER STATE
 ========================================================= */
 
-@media (max-width: 1000px) {
-
-    .mom-voted-logo {
-        width: 160px;
-    }
-
-    .product-slide-area {
-        grid-template-columns:
-            minmax(240px, 45%)
-            minmax(260px, 55%);
-
-        padding: 35px 45px;
-    }
-
-    .battle-product-image {
-        max-width: 290px;
-        height: 290px;
-    }
-
-    .product-image-wrap {
-        min-height: 290px;
-    }
-
+.product-battle.filtered-out {
+    display: none;
 }
 
 
@@ -1211,96 +1566,59 @@
 
     .mom-voted-logo {
         width: 130px;
+        max-width: 130px;
     }
 
     .community-badge {
         margin-top: 12px;
-
         padding: 6px 12px;
-
         font-size: 9px;
     }
 
-
-    /* HERO */
-
     .mom-voted-page h1 {
         font-size: 42px;
-
         letter-spacing: -1.7px;
     }
 
     .mom-voted-intro {
         margin-top: 20px;
-
         font-size: 16px;
     }
 
-
-    /* PARTICIPATION */
-
-    .participation-bar {
-        flex-wrap: wrap;
-
-        gap: 10px 15px;
-
-        padding: 14px;
+    .hero-mini-proof {
+        font-size: 11px;
     }
-
-    .participation-message {
-        width: 100%;
-
-        padding-top: 7px;
-
-        border-top: 1px solid #eeeeee;
-
-        text-align: center;
-    }
-
-
-    /* HOLY GRAIL */
 
     .holy-grail-banner {
         align-items: flex-start;
-
         flex-wrap: wrap;
-
         padding: 16px;
     }
 
     .holy-grail-banner-content {
         min-width: 0;
-
         flex: 1;
     }
 
     .holy-grail-link {
         width: 100%;
-
         padding-top: 10px;
-
         border-top: 1px solid #f0dce4;
-
         text-align: center;
     }
 
-
-    /* NAV */
-
     .voting-categories {
         gap: 7px;
-
-        margin-bottom: 50px;
     }
 
     .voting-categories a {
         padding: 8px 12px;
-
         font-size: 12px;
     }
 
-
-    /* BATTLE */
+    .discovery-strip {
+        margin-bottom: 50px;
+    }
 
     .product-battle {
         margin-bottom: 65px;
@@ -1314,18 +1632,25 @@
         padding: 14px 16px;
     }
 
+    .battle-question {
+        padding-top: 18px;
+    }
+
+    .battle-question strong {
+        font-size: 19px;
+    }
+
     .product-viewer {
         min-height: auto;
     }
 
     .product-slide-area {
         display: flex;
-
         flex-direction: column;
 
         width: 100%;
 
-        padding: 20px 20px 28px;
+        padding: 15px 20px 28px;
     }
 
     .product-image-wrap {
@@ -1336,17 +1661,17 @@
         padding: 10px 30px;
     }
 
+    .product-image-badge {
+        top: 10px;
+        left: 20px;
+    }
+
     .battle-product-image {
         width: 100%;
 
         max-width: 270px;
 
         height: 250px;
-    }
-
-    .product-image-badge {
-        top: 3px;
-        left: 20px;
     }
 
     .battle-product-info {
@@ -1366,54 +1691,57 @@
         margin-left: auto;
     }
 
-    .vote-progress {
-        margin-right: auto;
-        margin-left: auto;
+    .mom-score {
+        text-align: left;
     }
 
+    .vote-choice-grid {
+        gap: 7px;
+    }
 
-    /* ARROWS */
+    .vote-choice {
+        min-height: 50px;
+        font-size: 10px;
+    }
 
     .product-arrow {
         position: absolute;
 
-        top: 150px;
+        top: 145px;
 
         width: 42px;
         height: 42px;
 
         font-size: 30px;
 
-        background: rgba(255,255,255,.95);
+        background: rgba(255, 255, 255, .96);
     }
 
     .product-arrow-left {
         left: 9px;
-
         margin: 0;
     }
 
     .product-arrow-right {
         right: 9px;
-
         margin: 0;
     }
 
-
-    /* VOTE */
-
-    .recommend-button {
-        min-height: 54px;
-
-        font-size: 12px;
+    .battle-winner {
+        margin-right: 15px;
+        margin-left: 15px;
     }
 
+    .keep-discovering {
+        padding: 38px 20px;
+    }
 
-    /* EXPLAINER */
+    .keep-discovering h2 {
+        font-size: 26px;
+    }
 
     .voting-explainer {
         padding: 35px 22px;
-
         border-radius: 22px;
     }
 
@@ -1423,23 +1751,17 @@
 
     .explainer-grid {
         grid-template-columns: 1fr;
-
         gap: 20px;
     }
 
-
-    /* FINAL */
-
     .holy-grail-final {
         padding: 35px 22px;
-
         border-radius: 22px;
     }
 
     .holy-grail-final h2 {
         font-size: 28px;
     }
-
 }
 
 
@@ -1451,6 +1773,7 @@
 
     .mom-voted-logo {
         width: 120px;
+        max-width: 120px;
     }
 
     .mom-voted-page h1 {
@@ -1479,35 +1802,7 @@
         font-size: 27px;
     }
 
-}
-
-
-/* =========================================================
-   ACCESSIBILITY
-========================================================= */
-
-button:focus-visible,
-a:focus-visible {
-    outline: 3px solid rgba(217,77,122,.35);
-
-    outline-offset: 3px;
-}
-
-
-/* =========================================================
-   REDUCED MOTION
-========================================================= */
-
-@media (prefers-reduced-motion: reduce) {
-
-    *,
-    *::before,
-    *::after {
-        scroll-behavior: auto !important;
-
-        transition-duration: .01ms !important;
-        animation-duration: .01ms !important;
-        animation-iteration-count: 1 !important;
+    .vote-choice {
+        font-size: 9px;
     }
-
 }
