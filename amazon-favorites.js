@@ -2,28 +2,23 @@
    MOM-VOTED PRODUCT EXPERIENCE
    MomYouNeedThis
    ---------------------------------------------------------
-   Product battle / voting experience
 ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
 
     "use strict";
 
-
     /* =====================================================
        CONFIGURATION
     ===================================================== */
 
-    const STORAGE_KEY =
-        "momYouNeedThisVotingExperience";
+    const STORAGE_KEY = "momYouNeedThisVotingExperience";
 
-    const SESSION_KEY =
-        "momYouNeedThisSession";
+    const SESSION_KEY = "momYouNeedThisSession";
 
     const AUTO_ADVANCE_DELAY = 1150;
 
     const MIN_SWIPE_DISTANCE = 45;
-
 
     /* =====================================================
        PRODUCT DATA
@@ -59,7 +54,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         ],
 
-
         toddler: [
 
             {
@@ -87,7 +81,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
         ],
-
 
         sleep: [
 
@@ -117,7 +110,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         ],
 
-
         potty: [
 
             {
@@ -146,7 +138,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         ],
 
-
         feeding: [
 
             {
@@ -174,7 +165,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
         ],
-
 
         under25: [
 
@@ -206,7 +196,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     };
 
-
     /* =====================================================
        CATEGORY INFORMATION
     ===================================================== */
@@ -214,14 +203,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const categoryNames = {
 
         baby: "Baby",
+
         toddler: "Toddler",
+
         sleep: "Sleep",
+
         potty: "Potty",
+
         feeding: "Feeding",
+
         under25: "Under $25"
 
     };
-
 
     /* =====================================================
        DOM
@@ -230,11 +223,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const battles =
         document.querySelectorAll(".product-battle");
 
-
     if (!battles.length) {
         return;
     }
-
 
     /* =====================================================
        STORAGE
@@ -261,7 +252,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-
     function saveVotes() {
 
         try {
@@ -282,63 +272,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-
     function loadSession() {
-
-        const defaultSession = {
-
-            streak: 0,
-
-            totalVotes: 0,
-
-            completedBattles: 0,
-
-            seen: []
-
-        };
-
 
         try {
 
-            const stored =
-                JSON.parse(
-                    localStorage.getItem(
-                        SESSION_KEY
-                    )
-                );
-
-
-            if (!stored) {
-                return defaultSession;
-            }
-
-
-            return {
-
-                streak:
-                    Number(stored.streak) || 0,
-
-                totalVotes:
-                    Number(stored.totalVotes) || 0,
-
-                completedBattles:
-                    Number(stored.completedBattles) || 0,
-
-                seen:
-                    Array.isArray(stored.seen)
-                        ? stored.seen
-                        : []
-
+            return JSON.parse(
+                localStorage.getItem(SESSION_KEY)
+            ) || {
+                streak: 0,
+                totalVotes: 0,
+                completedBattles: 0,
+                seen: []
             };
 
         } catch (error) {
 
-            return defaultSession;
+            return {
+                streak: 0,
+                totalVotes: 0,
+                completedBattles: 0,
+                seen: []
+            };
 
         }
 
     }
-
 
     function saveSession() {
 
@@ -360,14 +318,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
+    let savedVotes = loadVotes();
 
-    let savedVotes =
-        loadVotes();
-
-
-    let session =
-        loadSession();
-
+    let session = loadSession();
 
     /* =====================================================
        SESSION STATE
@@ -375,7 +328,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const totalBattles =
         Object.keys(products).length;
-
 
     function markBattleSeen(category) {
 
@@ -389,56 +341,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-
-    /*
-       IMPORTANT:
-       A battle is complete only when BOTH products
-       have an individual vote.
-
-       Product position is NOT the same thing as
-       voting progress.
-    */
-
-    function isBattleComplete(category) {
-
-        return Boolean(
-            savedVotes[`${category}-0`] &&
-            savedVotes[`${category}-1`]
-        );
-
-    }
-
-
     function getCompletedBattleCount() {
 
         return Object.keys(products)
             .filter((category) => {
 
-                return isBattleComplete(
-                    category
+                return (
+                    savedVotes[`${category}-0`] &&
+                    savedVotes[`${category}-1`]
                 );
 
             })
             .length;
 
     }
-
 
     function getTotalVoteCount() {
 
-        return Object.keys(savedVotes)
-            .filter((key) => {
-
-                return (
-                    savedVotes[key] === "yes" ||
-                    savedVotes[key] === "no"
-                );
-
-            })
-            .length;
+        return Object.keys(savedVotes).length;
 
     }
-
 
     /* =====================================================
        MICRO COPY
@@ -464,7 +386,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     ];
 
-
     function randomEncouragement() {
 
         return encouragements[
@@ -476,14 +397,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-
     /* =====================================================
        CONSENSUS
     ===================================================== */
 
-    function getConsensusLabel(
-        percentage
-    ) {
+    function getConsensusLabel(percentage) {
 
         if (percentage >= 80) {
 
@@ -491,13 +409,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
         if (percentage >= 65) {
 
             return "💗 Strong mom approval";
 
         }
-
 
         if (percentage >= 50) {
 
@@ -505,15 +421,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
         return "🤔 Not for everyone";
 
     }
 
-
-    function getNoPercentage(
-        percentage
-    ) {
+    function getNoPercentage(percentage) {
 
         return Math.max(
             0,
@@ -525,30 +437,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-
     /* =====================================================
        VALID AMAZON LINK
     ===================================================== */
 
-    function isValidAffiliateLink(
-        link
-    ) {
+    function isValidAffiliateLink(link) {
 
         if (!link) {
             return false;
         }
 
-
         if (
-            link.includes(
-                "YOUR-AMAZON-LINK-HERE"
-            )
+            link.includes("YOUR-AMAZON-LINK-HERE")
         ) {
-
             return false;
-
         }
-
 
         return (
             link.startsWith("https://") ||
@@ -557,7 +460,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-
     /* =====================================================
        GLOBAL PROGRESS BAR
     ===================================================== */
@@ -565,36 +467,26 @@ document.addEventListener("DOMContentLoaded", () => {
     function createGlobalProgress() {
 
         const hero =
-            document.querySelector(
-                ".voting-hero"
-            );
-
+            document.querySelector(".voting-hero");
 
         if (!hero) {
             return null;
         }
-
 
         const existing =
             document.querySelector(
                 ".mom-voting-progress"
             );
 
-
         if (existing) {
             return existing;
         }
 
-
         const wrapper =
-            document.createElement(
-                "div"
-            );
-
+            document.createElement("div");
 
         wrapper.className =
             "mom-voting-progress";
-
 
         wrapper.innerHTML = `
 
@@ -610,7 +502,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             </div>
 
-
             <div class="mom-voting-progress-track">
 
                 <div
@@ -619,7 +510,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 ></div>
 
             </div>
-
 
             <div
                 class="mom-voting-progress-message"
@@ -630,20 +520,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
         `;
 
-
-        hero.appendChild(
-            wrapper
-        );
-
+        hero.appendChild(wrapper);
 
         return wrapper;
 
     }
 
-
     const globalProgress =
         createGlobalProgress();
-
 
     function updateGlobalProgress() {
 
@@ -651,39 +535,30 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         const completed =
             getCompletedBattleCount();
-
 
         const percentage =
             totalBattles
                 ? Math.round(
-                    (
-                        completed /
-                        totalBattles
-                    ) * 100
+                    (completed / totalBattles) * 100
                 )
                 : 0;
-
 
         const text =
             globalProgress.querySelector(
                 "[data-global-progress-text]"
             );
 
-
         const fill =
             globalProgress.querySelector(
                 "[data-global-progress-fill]"
             );
 
-
         const message =
             globalProgress.querySelector(
                 "[data-global-progress-message]"
             );
-
 
         if (text) {
 
@@ -692,14 +567,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
         if (fill) {
 
             fill.style.width =
                 `${percentage}%`;
 
         }
-
 
         if (message) {
 
@@ -712,13 +585,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 completed < totalBattles
             ) {
 
-                const remaining =
-                    totalBattles -
-                    completed;
-
-
                 message.textContent =
-                    `${remaining} more battle${remaining === 1 ? "" : "s"} waiting for you 👀`;
+                    `${totalBattles - completed} more battle${totalBattles - completed === 1 ? "" : "s"} waiting for you 👀`;
 
             } else {
 
@@ -731,7 +599,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-
     /* =====================================================
        STREAK UI
     ===================================================== */
@@ -743,32 +610,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 ".mom-voted-header"
             );
 
-
         if (!header) {
             return null;
         }
 
-
-        const existing =
-            header.querySelector(
-                ".mom-streak-badge"
-            );
-
-
-        if (existing) {
-            return existing;
-        }
-
-
         const badge =
-            document.createElement(
-                "div"
-            );
-
+            document.createElement("div");
 
         badge.className =
             "mom-streak-badge";
-
 
         badge.innerHTML = `
 
@@ -783,20 +633,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
         `;
 
-
-        header.appendChild(
-            badge
-        );
-
+        header.appendChild(badge);
 
         return badge;
 
     }
 
-
     const streakBadge =
         createStreakBadge();
-
 
     function updateStreak() {
 
@@ -804,12 +648,10 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         const streak =
             streakBadge.querySelector(
                 "[data-streak]"
             );
-
 
         if (streak) {
 
@@ -818,7 +660,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
         streakBadge.classList.toggle(
             "has-streak",
             session.streak > 0
@@ -826,32 +667,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-
     /* =====================================================
        TOAST
     ===================================================== */
 
-    function showToast(
-        message
-    ) {
+    function showToast(message) {
 
         let toast =
             document.querySelector(
                 ".mom-voting-toast"
             );
 
-
         if (!toast) {
 
             toast =
-                document.createElement(
-                    "div"
-                );
-
+                document.createElement("div");
 
             toast.className =
                 "mom-voting-toast";
-
 
             document.body.appendChild(
                 toast
@@ -859,20 +692,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
         toast.textContent =
             message;
-
 
         toast.classList.add(
             "visible"
         );
 
-
         clearTimeout(
             toast._timer
         );
-
 
         toast._timer =
             setTimeout(() => {
@@ -885,7 +714,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-
     /* =====================================================
        CONFETTI
     ===================================================== */
@@ -893,14 +721,10 @@ document.addEventListener("DOMContentLoaded", () => {
     function celebrate() {
 
         const container =
-            document.createElement(
-                "div"
-            );
-
+            document.createElement("div");
 
         container.className =
             "vote-celebration";
-
 
         for (
             let i = 0;
@@ -909,10 +733,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ) {
 
             const piece =
-                document.createElement(
-                    "span"
-                );
-
+                document.createElement("span");
 
             piece.textContent =
                 [
@@ -927,7 +748,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     )
                 ];
 
-
             piece.style.setProperty(
                 "--x",
                 `${(
@@ -935,12 +755,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 ) - 100}px`
             );
 
-
             piece.style.setProperty(
                 "--delay",
                 `${Math.random() * 0.25}s`
             );
-
 
             container.appendChild(
                 piece
@@ -948,11 +766,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
         document.body.appendChild(
             container
         );
-
 
         setTimeout(() => {
 
@@ -961,27 +777,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 1300);
 
     }
-
-
-    /* =====================================================
-       HELPER
-    ===================================================== */
-
-    function updateElement(
-        element,
-        value
-    ) {
-
-        if (!element) {
-            return;
-        }
-
-
-        element.textContent =
-            value;
-
-    }
-
 
     /* =====================================================
        BATTLE INITIALIZATION
@@ -992,10 +787,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const category =
             battle.dataset.category;
 
-
         const battleProducts =
             products[category];
-
 
         if (
             !battleProducts ||
@@ -1010,185 +803,115 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
-        markBattleSeen(
-            category
-        );
-
-
-        /*
-           IMPORTANT:
-           currentIndex represents ONLY the
-           product currently being displayed.
-
-           0 = PRODUCT 1 OF 2
-           1 = PRODUCT 2 OF 2
-
-           It does NOT represent voting progress.
-        */
+        markBattleSeen(category);
 
         let currentIndex = 0;
-
 
         /* =================================================
            ELEMENTS
         ================================================= */
 
         const image =
-            battle.querySelector(
-                "[data-image]"
-            );
-
+            battle.querySelector("[data-image]");
 
         const label =
-            battle.querySelector(
-                "[data-label]"
-            );
-
+            battle.querySelector("[data-label]");
 
         const name =
-            battle.querySelector(
-                "[data-name]"
-            );
-
+            battle.querySelector("[data-name]");
 
         const brand =
-            battle.querySelector(
-                "[data-brand]"
-            );
-
+            battle.querySelector("[data-brand]");
 
         const description =
-            battle.querySelector(
-                "[data-description]"
-            );
-
+            battle.querySelector("[data-description]");
 
         const score =
-            battle.querySelector(
-                "[data-score]"
-            );
-
+            battle.querySelector("[data-score]");
 
         const percentage =
-            battle.querySelector(
-                "[data-percentage]"
-            );
-
+            battle.querySelector("[data-percentage]");
 
         const consensus =
-            battle.querySelector(
-                "[data-consensus]"
-            );
-
+            battle.querySelector("[data-consensus]");
 
         const consensusBar =
             battle.querySelector(
                 "[data-consensus-bar]"
             );
 
-
         const link =
-            battle.querySelector(
-                "[data-link]"
-            );
-
+            battle.querySelector("[data-link]");
 
         const position =
-            battle.querySelector(
-                "[data-position]"
-            );
-
+            battle.querySelector("[data-position]");
 
         const yesPercentage =
             battle.querySelector(
                 "[data-yes-percentage]"
             );
 
-
         const noPercentage =
             battle.querySelector(
                 "[data-no-percentage]"
             );
 
-
         const result =
-            battle.querySelector(
-                "[data-result]"
-            );
-
+            battle.querySelector("[data-result]");
 
         const resultTitle =
             battle.querySelector(
                 "[data-result-title]"
             );
 
-
         const resultText =
             battle.querySelector(
                 "[data-result-text]"
             );
-
 
         const socialComparison =
             battle.querySelector(
                 "[data-social-comparison]"
             );
 
-
         const yourPosition =
             battle.querySelector(
                 "[data-your-position]"
             );
-
 
         const voteArea =
             battle.querySelector(
                 "[data-vote-area]"
             );
 
-
         const winner =
             battle.querySelector(
                 "[data-winner]"
             );
-
 
         const winnerText =
             battle.querySelector(
                 "[data-winner-text]"
             );
 
-
         const dotsContainer =
-            battle.querySelector(
-                "[data-dots]"
-            );
-
+            battle.querySelector("[data-dots]");
 
         const nextContender =
             battle.querySelector(
                 "[data-next-contender]"
             );
 
-
         const prevButton =
-            battle.querySelector(
-                "[data-prev]"
-            );
-
+            battle.querySelector("[data-prev]");
 
         const nextButton =
-            battle.querySelector(
-                "[data-next]"
-            );
-
+            battle.querySelector("[data-next]");
 
         const voteButtons =
             battle.querySelectorAll(
                 "[data-vote]"
             );
-
 
         /* =================================================
            ADD BATTLE META
@@ -1199,7 +922,6 @@ document.addEventListener("DOMContentLoaded", () => {
             category
         );
 
-
         /* =================================================
            CREATE DOTS
         ================================================= */
@@ -1207,7 +929,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (dotsContainer) {
 
             dotsContainer.innerHTML = "";
-
 
             battleProducts.forEach(
                 (product, index) => {
@@ -1217,32 +938,24 @@ document.addEventListener("DOMContentLoaded", () => {
                             "button"
                         );
 
-
-                    dot.type =
-                        "button";
-
+                    dot.type = "button";
 
                     dot.className =
                         "battle-dot";
-
 
                     dot.setAttribute(
                         "aria-label",
                         `View ${product.name}`
                     );
 
-
                     dot.addEventListener(
                         "click",
                         () => {
 
-                            showProduct(
-                                index
-                            );
+                            showProduct(index);
 
                         }
                     );
-
 
                     dotsContainer.appendChild(
                         dot
@@ -1253,9 +966,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
         /* =================================================
-           BATTLE META
+           UPDATE BATTLE META
         ================================================= */
 
         function createBattleMeta(
@@ -1273,27 +985,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
             }
 
-
             const top =
                 battleElement.querySelector(
                     ".battle-top"
                 );
 
-
             if (!top) {
                 return;
             }
 
-
             const meta =
-                document.createElement(
-                    "div"
-                );
-
+                document.createElement("div");
 
             meta.className =
                 "battle-progress-meta";
-
 
             meta.innerHTML = `
 
@@ -1302,18 +1007,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 </span>
 
                 <span data-battle-vote-count>
-                    0/2 picked
+                    0 votes
                 </span>
 
             `;
 
-
-            top.appendChild(
-                meta
-            );
+            top.appendChild(meta);
 
         }
-
 
         /* =================================================
            PRODUCT DISPLAY
@@ -1324,11 +1025,6 @@ document.addEventListener("DOMContentLoaded", () => {
             direction = "next"
         ) {
 
-            /*
-               Normalize the index so navigation always
-               remains inside the two-product battle.
-            */
-
             currentIndex =
                 (
                     index +
@@ -1336,12 +1032,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 ) %
                 battleProducts.length;
 
-
             const product =
                 battleProducts[
                     currentIndex
                 ];
-
 
             if (image) {
 
@@ -1350,12 +1044,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 );
 
             }
-
-
-            /*
-               Small delay allows the existing transition
-               animation to finish before replacing content.
-            */
 
             setTimeout(() => {
 
@@ -1373,42 +1061,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 }
 
-
-                /*
-                   PRODUCT POSITION
-                   ----------------
-                   This is based ONLY on currentIndex.
-
-                   First product:
-                   PRODUCT 1 OF 2
-
-                   Second product:
-                   PRODUCT 2 OF 2
-                */
-
                 updateElement(
                     label,
                     `PRODUCT ${currentIndex + 1}`
                 );
-
 
                 updateElement(
                     name,
                     product.name
                 );
 
-
                 updateElement(
                     brand,
                     product.brand
                 );
 
-
                 updateElement(
                     description,
                     product.description
                 );
-
 
                 updateElement(
                     score,
@@ -1416,12 +1087,10 @@ document.addEventListener("DOMContentLoaded", () => {
                         .toFixed(1)
                 );
 
-
                 updateElement(
                     percentage,
                     `${product.percentage}%`
                 );
-
 
                 updateElement(
                     consensus,
@@ -1430,7 +1099,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     )
                 );
 
-
                 if (consensusBar) {
 
                     consensusBar.style.width =
@@ -1438,130 +1106,53 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 }
 
-
-                /*
-                   AMAZON CTA
-                   ----------------
-                   Only show it when the product has
-                   an actual configured link.
-
-                   The CTA copy is intentionally
-                   curiosity-driven.
-                */
-
                 if (link) {
 
-                    const validLink =
+                    link.href =
+                        product.link;
+
+                    link.style.display =
                         isValidAffiliateLink(
                             product.link
-                        );
-
-
-                    if (validLink) {
-
-                        link.href =
-                            product.link;
-
-
-                        link.textContent =
-                            "See Why Moms Love It →";
-
-
-                        link.style.display =
-                            "";
-
-
-                        link.setAttribute(
-                            "target",
-                            "_blank"
-                        );
-
-
-                        link.setAttribute(
-                            "rel",
-                            "nofollow sponsored noopener"
-                        );
-
-                    } else {
-
-                        link.removeAttribute(
-                            "href"
-                        );
-
-
-                        link.style.display =
-                            "none";
-
-                    }
+                        )
+                            ? ""
+                            : "none";
 
                 }
-
-
-                /*
-                   PRODUCT POSITION
-                   ----------------
-                   This is intentionally NOT tied
-                   to vote count.
-                */
 
                 updateElement(
                     position,
                     `PRODUCT ${currentIndex + 1} OF ${battleProducts.length}`
                 );
 
-
                 const noPercent =
                     getNoPercentage(
                         product.percentage
                     );
-
 
                 updateElement(
                     yesPercentage,
                     `${product.percentage}%`
                 );
 
-
                 updateElement(
                     noPercentage,
                     `${noPercent}%`
                 );
 
-
                 updateDots();
-
-
-                /*
-                   Restore this individual product's
-                   vote, if one exists.
-                */
 
                 restoreVoteState();
 
-
-                /*
-                   Update how many products in this
-                   battle have been voted on.
-                */
-
                 updateBattleVoteCount();
-
-
-                /*
-                   Check whether BOTH products have
-                   been voted on.
-                */
 
                 updateBattleWinner();
 
-
                 updateButtonLabels();
-
 
             }, 120);
 
         }
-
 
         /* =================================================
            UPDATE BUTTON COPY
@@ -1573,30 +1164,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-
             const nextIndex =
                 (
                     currentIndex + 1
                 ) %
                 battleProducts.length;
 
-
             const nextProduct =
-                battleProducts[
-                    nextIndex
-                ];
-
-
-            /*
-               Keep the next-product CTA specific
-               to the product the mom is about to see.
-            */
+                battleProducts[nextIndex];
 
             nextContender.textContent =
                 `See ${nextProduct.name} →`;
 
         }
-
 
         /* =================================================
            DOT STATE
@@ -1608,12 +1188,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-
             const dots =
                 dotsContainer.querySelectorAll(
                     ".battle-dot"
                 );
-
 
             dots.forEach(
                 (dot, index) => {
@@ -1623,39 +1201,14 @@ document.addEventListener("DOMContentLoaded", () => {
                         index === currentIndex
                     );
 
-
-                    /*
-                       Optional accessibility state.
-                    */
-
-                    dot.setAttribute(
-                        "aria-current",
-                        index === currentIndex
-                            ? "true"
-                            : "false"
-                    );
-
                 }
             );
 
         }
 
-
         /* =================================================
            VOTE KEY
         ================================================= */
-
-        /*
-           Each product has its own permanent key.
-
-           Example:
-
-           baby-0
-           baby-1
-
-           This means voting for Product 1 never
-           accidentally marks Product 2 as voted.
-        */
 
         function getVoteKey() {
 
@@ -1663,25 +1216,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
         /* =================================================
            CAST VOTE
         ================================================= */
 
-        function castVote(
-            choice
-        ) {
+        function castVote(choice) {
 
             const key =
                 getVoteKey();
-
-
-            /*
-               Prevent duplicate votes.
-
-               Returning to a product that was already
-               voted on simply restores its result.
-            */
 
             if (savedVotes[key]) {
 
@@ -1690,70 +1232,35 @@ document.addEventListener("DOMContentLoaded", () => {
                     true
                 );
 
-
                 return;
 
             }
 
-
-            /*
-               Save THIS product's vote.
-            */
-
             savedVotes[key] =
                 choice;
 
-
             saveVotes();
-
-
-            /*
-               Update session totals.
-            */
 
             session.totalVotes =
                 getTotalVoteCount();
 
-
-            /*
-               Streak increments only when a genuinely
-               new vote is cast.
-            */
-
             session.streak =
-                Number(
-                    session.streak || 0
-                ) + 1;
-
+                Number(session.streak || 0) + 1;
 
             saveSession();
-
 
             updateStreak();
 
             updateGlobalProgress();
-
-            updateBattleVoteCount();
-
 
             showVoteResult(
                 choice,
                 false
             );
 
-
             celebrate();
 
-
-            /*
-               Check whether this vote completed
-               the entire two-product battle.
-            */
-
-            updateBattleWinner();
-
         }
-
 
         /* =================================================
            VOTE RESULT
@@ -1769,21 +1276,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     currentIndex
                 ];
 
-
             const yes =
                 product.percentage;
-
 
             const no =
                 getNoPercentage(
                     product.percentage
                 );
-
-
-            /*
-               Hide voting controls after the product
-               has been voted on.
-            */
 
             if (voteArea) {
 
@@ -1791,11 +1290,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     "none";
 
             }
-
-
-            /*
-               Reveal individual product result.
-            */
 
             if (result) {
 
@@ -1805,7 +1299,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             }
 
-
             if (socialComparison) {
 
                 socialComparison.classList.add(
@@ -1813,7 +1306,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 );
 
             }
-
 
             if (choice === "yes") {
 
@@ -1824,7 +1316,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 }
 
-
                 if (yes >= 50) {
 
                     if (resultText) {
@@ -1833,7 +1324,6 @@ document.addEventListener("DOMContentLoaded", () => {
                             `You're on the same side as ${yes}% of moms who recommend this one.`;
 
                     }
-
 
                     if (yourPosition) {
 
@@ -1850,7 +1340,6 @@ document.addEventListener("DOMContentLoaded", () => {
                             `Interesting pick 👀 Only ${yes}% currently recommend this one.`;
 
                     }
-
 
                     if (yourPosition) {
 
@@ -1870,7 +1359,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 }
 
-
                 if (no >= 50) {
 
                     if (resultText) {
@@ -1879,7 +1367,6 @@ document.addEventListener("DOMContentLoaded", () => {
                             `${no}% currently wouldn't recommend this one either.`;
 
                     }
-
 
                     if (yourPosition) {
 
@@ -1897,7 +1384,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     }
 
-
                     if (yourPosition) {
 
                         yourPosition.textContent =
@@ -1909,7 +1395,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             }
 
-
             if (existingVote) {
 
                 showToast(
@@ -1918,20 +1403,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
             }
 
-
-            /*
-               This does NOT mean the battle is complete.
-
-               It only checks whether BOTH products
-               now have votes.
-            */
-
             checkBattleCompletion();
 
-            updateNextBattleButton();
-
         }
-
 
         /* =================================================
            RESTORE VOTE
@@ -1942,26 +1416,17 @@ document.addEventListener("DOMContentLoaded", () => {
             const key =
                 getVoteKey();
 
-
             const existingVote =
                 savedVotes[key];
-
-
-            /*
-               No vote for this particular product.
-
-               Show the voting UI and hide the result.
-            */
 
             if (!existingVote) {
 
                 if (voteArea) {
 
                     voteArea.style.display =
-                        "";
+                        "block";
 
                 }
-
 
                 if (result) {
 
@@ -1971,7 +1436,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 }
 
-
                 if (socialComparison) {
 
                     socialComparison.classList.remove(
@@ -1980,25 +1444,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 }
 
-
                 return;
 
             }
 
-
-            /*
-               A vote exists for THIS product.
-
-               Restore exactly that result.
-            */
-
             showVoteResult(
                 existingVote,
-                false
+                true
             );
 
         }
-
 
         /* =================================================
            BATTLE COMPLETION
@@ -2006,18 +1461,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
         function checkBattleCompletion() {
 
-            const complete =
-                isBattleComplete(
-                    category
-                );
+            const firstVote =
+                savedVotes[
+                    `${category}-0`
+                ];
 
+            const secondVote =
+                savedVotes[
+                    `${category}-1`
+                ];
 
-            /*
-               IMPORTANT:
-               Do NOT show the winner after only one vote.
-            */
-
-            if (!complete) {
+            if (
+                !firstVote ||
+                !secondVote
+            ) {
 
                 if (winner) {
 
@@ -2027,63 +1484,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 }
 
-
                 if (winnerText) {
 
-                    const firstVoted =
-                        Boolean(
-                            savedVotes[
-                                `${category}-0`
-                            ]
-                        );
-
-
-                    const secondVoted =
-                        Boolean(
-                            savedVotes[
-                                `${category}-1`
-                            ]
-                        );
-
-
-                    if (
-                        firstVoted &&
-                        !secondVoted
-                    ) {
-
-                        winnerText.textContent =
-                            "You picked Product 1. Now see what you think of Product 2.";
-
-                    } else if (
-                        !firstVoted &&
-                        secondVoted
-                    ) {
-
-                        winnerText.textContent =
-                            "You picked Product 2. Now see what you think of Product 1.";
-
-                    } else {
-
-                        winnerText.textContent =
-                            "Vote for both products to reveal the battle result.";
-
-                    }
+                    winnerText.textContent =
+                        "Vote for both products to reveal the battle result.";
 
                 }
 
-
-                return false;
+                return;
 
             }
-
 
             const first =
                 battleProducts[0];
 
-
             const second =
                 battleProducts[1];
-
 
             if (winner) {
 
@@ -2092,7 +1508,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 );
 
             }
-
 
             if (
                 first.percentage >
@@ -2129,14 +1544,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
             }
 
-
             updateGlobalProgress();
 
-
-            return true;
-
         }
-
 
         /* =================================================
            VOTE COUNT
@@ -2149,14 +1559,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     "[data-battle-vote-count]"
                 );
 
-
             if (!element) {
                 return;
             }
 
-
             let count = 0;
-
 
             battleProducts.forEach(
                 (product, index) => {
@@ -2174,25 +1581,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             );
 
-
-            /*
-               This is VOTING progress.
-
-               It is deliberately separate from
-               PRODUCT 1 OF 2 / PRODUCT 2 OF 2.
-            */
-
             element.textContent =
                 `${count}/${battleProducts.length} picked`;
 
-
-            element.classList.toggle(
-                "complete",
-                count === battleProducts.length
-            );
-
         }
-
 
         /* =================================================
            NEXT BATTLE BUTTON
@@ -2210,20 +1602,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
             }
 
-
             const button =
-                document.createElement(
-                    "button"
-                );
+                document.createElement("button");
 
-
-            button.type =
-                "button";
-
+            button.type = "button";
 
             button.className =
                 "next-battle-cta";
-
 
             button.innerHTML = `
 
@@ -2237,7 +1622,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             `;
 
-
             button.addEventListener(
                 "click",
                 () => {
@@ -2249,12 +1633,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             );
 
-
             const footer =
                 battle.querySelector(
                     ".battle-footer"
                 );
-
 
             if (footer) {
 
@@ -2263,16 +1645,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     footer
                 );
 
-            } else {
-
-                battle.appendChild(
-                    button
-                );
-
             }
 
         }
-
 
         /* =================================================
            CHECK NEXT BUTTON
@@ -2281,21 +1656,17 @@ document.addEventListener("DOMContentLoaded", () => {
         function updateNextBattleButton() {
 
             const complete =
-                isBattleComplete(
-                    category
-                );
-
+                savedVotes[
+                    `${category}-0`
+                ] &&
+                savedVotes[
+                    `${category}-1`
+                ];
 
             const button =
                 battle.querySelector(
                     ".next-battle-cta"
                 );
-
-
-            /*
-               The next battle CTA is only available
-               after BOTH products have been voted on.
-            */
 
             if (complete) {
 
@@ -2309,7 +1680,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
         /* =================================================
            WINNER UPDATE WRAPPER
         ================================================= */
@@ -2321,7 +1691,6 @@ document.addEventListener("DOMContentLoaded", () => {
             updateNextBattleButton();
 
         }
-
 
         /* =================================================
            ARROWS
@@ -2343,7 +1712,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
         if (nextButton) {
 
             nextButton.addEventListener(
@@ -2360,7 +1728,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
         /* =================================================
            NEXT CONTENDER
         ================================================= */
@@ -2374,7 +1741,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     showProduct(
                         currentIndex + 1
                     );
-
 
                     setTimeout(() => {
 
@@ -2390,7 +1756,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
         /* =================================================
            VOTE BUTTONS
         ================================================= */
@@ -2402,27 +1767,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     "click",
                     () => {
 
-                        const choice =
-                            button.dataset.vote;
-
-
-                        if (
-                            choice !== "yes" &&
-                            choice !== "no"
-                        ) {
-
-                            console.warn(
-                                `Invalid vote choice: ${choice}`
-                            );
-
-
-                            return;
-
-                        }
-
-
                         castVote(
-                            choice
+                            button.dataset.vote
                         );
 
                     }
@@ -2430,7 +1776,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             }
         );
-
 
         /* =================================================
            SWIPE SUPPORT
@@ -2440,7 +1785,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         let touchStartY = 0;
 
-
         battle.addEventListener(
             "touchstart",
             (event) => {
@@ -2448,10 +1792,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 const touch =
                     event.changedTouches[0];
 
-
                 touchStartX =
                     touch.screenX;
-
 
                 touchStartY =
                     touch.screenY;
@@ -2462,7 +1804,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         );
 
-
         battle.addEventListener(
             "touchend",
             (event) => {
@@ -2470,16 +1811,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 const touch =
                     event.changedTouches[0];
 
-
                 const differenceX =
                     touchStartX -
                     touch.screenX;
 
-
                 const differenceY =
                     touchStartY -
                     touch.screenY;
-
 
                 if (
                     Math.abs(differenceX) <
@@ -2490,7 +1828,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 }
 
-
                 if (
                     Math.abs(differenceY) >
                     Math.abs(differenceX)
@@ -2500,10 +1837,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 }
 
-
-                if (
-                    differenceX > 0
-                ) {
+                if (differenceX > 0) {
 
                     showProduct(
                         currentIndex + 1
@@ -2523,7 +1857,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         );
 
-
         /* =================================================
            IMAGE ERROR HANDLING
         ================================================= */
@@ -2538,7 +1871,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         "image-error"
                     );
 
-
                     image.alt =
                         "Product image unavailable";
 
@@ -2547,17 +1879,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
         /* =================================================
-           INITIALIZE BATTLE
+           INITIALIZE
         ================================================= */
 
-        showProduct(
-            0
-        );
+        showProduct(0);
 
     });
-
 
     /* =====================================================
        NEXT BATTLE
@@ -2574,20 +1902,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 )
             );
 
-
         const currentIndex =
             allBattles.indexOf(
                 currentBattle
             );
 
-
-        let nextBattle =
-            null;
-
-
-        /*
-           First try to move forward.
-        */
+        let nextBattle = null;
 
         for (
             let i = currentIndex + 1;
@@ -2609,12 +1929,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
         }
-
-
-        /*
-           If we're at the end, loop back to
-           the first visible battle.
-        */
 
         if (!nextBattle) {
 
@@ -2641,24 +1955,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
         if (!nextBattle) {
 
             showToast(
                 "You've reached the end! 🏆"
             );
 
-
             return;
 
         }
-
 
         nextBattle.scrollIntoView({
             behavior: "smooth",
             block: "center"
         });
-
 
         setTimeout(() => {
 
@@ -2666,7 +1976,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 nextBattle.querySelector(
                     "[data-vote]"
                 );
-
 
             if (
                 firstButton &&
@@ -2683,7 +1992,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-
     /* =====================================================
        CATEGORY NAVIGATION
     ===================================================== */
@@ -2692,7 +2000,6 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelectorAll(
             ".category-link"
         );
-
 
     categoryLinks.forEach(
         (link) => {
@@ -2711,7 +2018,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         }
                     );
 
-
                     link.classList.add(
                         "active"
                     );
@@ -2722,10 +2028,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     );
 
-
     /* =====================================================
        CATEGORY OBSERVER
-       Makes active category update while scrolling.
+       Makes the active category update while scrolling.
     ===================================================== */
 
     if (
@@ -2748,18 +2053,15 @@ document.addEventListener("DOMContentLoaded", () => {
                                     a.intersectionRatio
                             );
 
-
                     if (!visible.length) {
                         return;
                     }
-
 
                     const category =
                         visible[0]
                             .target
                             .dataset
                             .category;
-
 
                     categoryLinks.forEach(
                         (link) => {
@@ -2768,8 +2070,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                 "active",
                                 link.getAttribute(
                                     "href"
-                                ) ===
-                                `#${category}`
+                                ) === `#${category}`
                             );
 
                         }
@@ -2785,7 +2086,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             );
 
-
         battles.forEach(
             (battle) => {
 
@@ -2798,7 +2098,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-
     /* =====================================================
        DISCOVERY FILTERS
     ===================================================== */
@@ -2807,7 +2106,6 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelectorAll(
             ".discovery-filter"
         );
-
 
     filters.forEach(
         (filter) => {
@@ -2819,7 +2117,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     const selected =
                         filter.dataset.filter;
 
-
                     filters.forEach(
                         (item) => {
 
@@ -2830,11 +2127,9 @@ document.addEventListener("DOMContentLoaded", () => {
                         }
                     );
 
-
                     filter.classList.add(
                         "active"
                     );
-
 
                     battles.forEach(
                         (battle) => {
@@ -2847,11 +2142,9 @@ document.addEventListener("DOMContentLoaded", () => {
                                     "filtered-out"
                                 );
 
-
                                 return;
 
                             }
-
 
                             const tags =
                                 (
@@ -2861,7 +2154,6 @@ document.addEventListener("DOMContentLoaded", () => {
                                 )
                                     .split(/\s+/)
                                     .filter(Boolean);
-
 
                             if (
                                 tags.includes(
@@ -2884,12 +2176,10 @@ document.addEventListener("DOMContentLoaded", () => {
                         }
                     );
 
-
                     const firstVisible =
                         document.querySelector(
                             ".product-battle:not(.filtered-out)"
                         );
-
 
                     if (firstVisible) {
 
@@ -2910,7 +2200,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     );
 
-
     /* =====================================================
        INITIAL GLOBAL UI
     ===================================================== */
@@ -2919,9 +2208,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     updateStreak();
 
-
     /* =====================================================
-       RETURN TO TOP / VOTING PROGRESS STATE
+       RETURN TO TOP HELPER
     ===================================================== */
 
     window.addEventListener(
@@ -2931,19 +2219,12 @@ document.addEventListener("DOMContentLoaded", () => {
             const completed =
                 getCompletedBattleCount();
 
-
             if (
                 completed > 0 &&
                 completed < totalBattles
             ) {
 
                 document.body.classList.add(
-                    "has-voting-progress"
-                );
-
-            } else {
-
-                document.body.classList.remove(
                     "has-voting-progress"
                 );
 
@@ -2955,9 +2236,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     );
 
-
     /* =====================================================
        OPTIONAL RESET FUNCTION
+       Useful during development.
 
        Console:
        resetMomVotes()
@@ -2970,15 +2251,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 STORAGE_KEY
             );
 
-
             localStorage.removeItem(
                 SESSION_KEY
             );
 
-
             window.location.reload();
 
         };
-
 
 });
