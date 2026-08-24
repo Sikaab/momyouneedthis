@@ -1,11 +1,8 @@
 /* =========================================================
    MOM-VOTED PRODUCT EXPERIENCE
-   MomYouNeedThis
-   ---------------------------------------------------------
-   Firebase-backed voting
 ========================================================= */
 
-import { db, auth } from "./firebase-config.js";
+import { db } from "./firebase-config.js";
 
 import {
     collection,
@@ -29,12 +26,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const SESSION_KEY =
         "momYouNeedThisSession";
 
-    const AUTO_ADVANCE_DELAY = 1150;
-
-    const MIN_SWIPE_DISTANCE = 45;
-
     const FIRESTORE_VOTES_COLLECTION =
         "productVotes";
+
+    const MIN_SWIPE_DISTANCE = 45;
 
 
     /* =====================================================
@@ -71,6 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         ],
 
+
         toddler: [
 
             {
@@ -98,6 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
         ],
+
 
         sleep: [
 
@@ -127,6 +124,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         ],
 
+
         potty: [
 
             {
@@ -155,6 +153,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         ],
 
+
         feeding: [
 
             {
@@ -182,6 +181,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
         ],
+
 
         under25: [
 
@@ -239,77 +239,46 @@ document.addEventListener("DOMContentLoaded", () => {
             ".product-battle"
         );
 
+
     if (!battles.length) {
+
+        console.warn(
+            "No .product-battle elements found."
+        );
+
         return;
-    }
-
-
-    /* =====================================================
-       FIREBASE AUTHENTICATION
-    ===================================================== */
-
-    let firebaseUser =
-        auth?.currentUser || null;
-
-
-    /*
-       Firebase anonymous authentication is expected
-       to already happen in firebase-config.js.
-
-       We listen here so that if the anonymous user
-       hasn't finished initializing yet, voting can
-       wait for the UID instead of failing.
-    */
-
-    let authReadyResolve;
-
-    const authReady =
-        new Promise((resolve) => {
-
-            authReadyResolve = resolve;
-
-        });
-
-
-    if (firebaseUser) {
-
-        authReadyResolve(firebaseUser);
-
-    } else if (auth) {
-
-        const unsubscribe =
-            auth.onAuthStateChanged(
-                (user) => {
-
-                    firebaseUser = user;
-
-                    authReadyResolve(user);
-
-                    unsubscribe();
-
-                }
-            );
-
-    } else {
-
-        authReadyResolve(null);
 
     }
 
 
     /* =====================================================
-       STORAGE
+       LOCAL STORAGE
     ===================================================== */
 
     function loadVotes() {
 
         try {
 
-            return JSON.parse(
+            const stored =
                 localStorage.getItem(
                     STORAGE_KEY
-                )
-            ) || {};
+                );
+
+            if (!stored) {
+
+                return {};
+
+            }
+
+            const parsed =
+                JSON.parse(stored);
+
+            return (
+                parsed &&
+                typeof parsed === "object"
+            )
+                ? parsed
+                : {};
 
         } catch (error) {
 
@@ -348,31 +317,42 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function loadSession() {
 
+        const defaultSession = {
+
+            streak: 0,
+            totalVotes: 0,
+            completedBattles: 0,
+            seen: []
+
+        };
+
+
         try {
 
-            return JSON.parse(
+            const stored =
                 localStorage.getItem(
                     SESSION_KEY
-                )
-            ) || {
+                );
 
-                streak: 0,
-                totalVotes: 0,
-                completedBattles: 0,
-                seen: []
+            if (!stored) {
+
+                return defaultSession;
+
+            }
+
+            const parsed =
+                JSON.parse(stored);
+
+            return {
+
+                ...defaultSession,
+                ...parsed
 
             };
 
         } catch (error) {
 
-            return {
-
-                streak: 0,
-                totalVotes: 0,
-                completedBattles: 0,
-                seen: []
-
-            };
+            return defaultSession;
 
         }
 
@@ -408,7 +388,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       SESSION STATE
+       SESSION
     ===================================================== */
 
     const totalBattles =
@@ -428,18 +408,58 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
+    function getVoteKey(
+        category,
+        productId
+    ) {
+
+        /*
+           IMPORTANT:
+
+           Votes are associated with the PRODUCT ID,
+           not Product 1 / Product 2 position.
+
+           This prevents switching products from
+           accidentally sharing state.
+        */
+
+        return `${category}-${productId}`;
+
+    }
+
+
     function getCompletedBattleCount() {
 
         return Object.keys(products)
             .filter((category) => {
 
+                const battleProducts =
+                    products[category];
+
+                if (
+                    !battleProducts ||
+                    battleProducts.length < 2
+                ) {
+
+                    return false;
+
+                }
+
+                const firstKey =
+                    getVoteKey(
+                        category,
+                        battleProducts[0].id
+                    );
+
+                const secondKey =
+                    getVoteKey(
+                        category,
+                        battleProducts[1].id
+                    );
+
                 return (
-                    savedVotes[
-                        `${category}-0`
-                    ] &&
-                    savedVotes[
-                        `${category}-1`
-                    ]
+                    Boolean(savedVotes[firstKey]) &&
+                    Boolean(savedVotes[secondKey])
                 );
 
             })
@@ -450,7 +470,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function getTotalVoteCount() {
 
-        return Object.keys(savedVotes).length;
+        return Object.keys(
+            savedVotes
+        ).length;
 
     }
 
@@ -469,7 +491,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         "Your mom-opinion is officially on the record. 💗",
 
-        "You’re getting good at this.",
+        "You're getting good at this.",
 
         "Another battle is waiting…",
 
@@ -496,7 +518,9 @@ document.addEventListener("DOMContentLoaded", () => {
        CONSENSUS
     ===================================================== */
 
-    function getConsensusLabel(percentage) {
+    function getConsensusLabel(
+        percentage
+    ) {
 
         if (percentage >= 80) {
 
@@ -521,7 +545,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    function getNoPercentage(percentage) {
+    function getNoPercentage(
+        percentage
+    ) {
 
         return Math.max(
             0,
@@ -535,13 +561,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       VALID AMAZON LINK
+       AMAZON LINK
     ===================================================== */
 
-    function isValidAffiliateLink(link) {
+    function isValidAffiliateLink(
+        link
+    ) {
 
         if (!link) {
+
             return false;
+
         }
 
         if (
@@ -563,7 +593,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       GLOBAL PROGRESS BAR
+       GLOBAL PROGRESS
     ===================================================== */
 
     function createGlobalProgress() {
@@ -574,8 +604,11 @@ document.addEventListener("DOMContentLoaded", () => {
             );
 
         if (!hero) {
+
             return null;
+
         }
+
 
         const existing =
             document.querySelector(
@@ -583,14 +616,20 @@ document.addEventListener("DOMContentLoaded", () => {
             );
 
         if (existing) {
+
             return existing;
+
         }
 
+
         const wrapper =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
         wrapper.className =
             "mom-voting-progress";
+
 
         wrapper.innerHTML = `
 
@@ -624,7 +663,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         `;
 
-        hero.appendChild(wrapper);
+
+        hero.appendChild(
+            wrapper
+        );
+
 
         return wrapper;
 
@@ -638,13 +681,17 @@ document.addEventListener("DOMContentLoaded", () => {
     function updateGlobalProgress() {
 
         if (!globalProgress) {
+
             return;
+
         }
+
 
         const completed =
             getCompletedBattleCount();
 
-        const percentage =
+
+        const progress =
             totalBattles
                 ? Math.round(
                     (
@@ -653,6 +700,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     ) * 100
                 )
                 : 0;
+
 
         const text =
             globalProgress.querySelector(
@@ -669,6 +717,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 "[data-global-progress-message]"
             );
 
+
         if (text) {
 
             text.textContent =
@@ -676,12 +725,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
+
         if (fill) {
 
             fill.style.width =
-                `${percentage}%`;
+                `${progress}%`;
 
         }
+
 
         if (message) {
 
@@ -694,8 +745,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 completed < totalBattles
             ) {
 
+                const remaining =
+                    totalBattles -
+                    completed;
+
                 message.textContent =
-                    `${totalBattles - completed} more battle${totalBattles - completed === 1 ? "" : "s"} waiting for you 👀`;
+                    `${remaining} more battle${remaining === 1 ? "" : "s"} waiting for you 👀`;
 
             } else {
 
@@ -710,7 +765,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       STREAK UI
+       STREAK
     ===================================================== */
 
     function createStreakBadge() {
@@ -721,14 +776,20 @@ document.addEventListener("DOMContentLoaded", () => {
             );
 
         if (!header) {
+
             return null;
+
         }
 
+
         const badge =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
         badge.className =
             "mom-streak-badge";
+
 
         badge.innerHTML = `
 
@@ -737,13 +798,24 @@ document.addEventListener("DOMContentLoaded", () => {
             </span>
 
             <span>
-                <small>VOTE STREAK</small>
-                <strong data-streak>0</strong>
+
+                <small>
+                    VOTE STREAK
+                </small>
+
+                <strong data-streak>
+                    0
+                </strong>
+
             </span>
 
         `;
 
-        header.appendChild(badge);
+
+        header.appendChild(
+            badge
+        );
+
 
         return badge;
 
@@ -757,13 +829,17 @@ document.addEventListener("DOMContentLoaded", () => {
     function updateStreak() {
 
         if (!streakBadge) {
+
             return;
+
         }
+
 
         const streak =
             streakBadge.querySelector(
                 "[data-streak]"
             );
+
 
         if (streak) {
 
@@ -771,6 +847,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 session.streak;
 
         }
+
 
         streakBadge.classList.toggle(
             "has-streak",
@@ -784,20 +861,26 @@ document.addEventListener("DOMContentLoaded", () => {
        TOAST
     ===================================================== */
 
-    function showToast(message) {
+    function showToast(
+        message
+    ) {
 
         let toast =
             document.querySelector(
                 ".mom-voting-toast"
             );
 
+
         if (!toast) {
 
             toast =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
 
             toast.className =
                 "mom-voting-toast";
+
 
             document.body.appendChild(
                 toast
@@ -805,16 +888,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
+
         toast.textContent =
             message;
+
 
         toast.classList.add(
             "visible"
         );
 
+
         clearTimeout(
             toast._timer
         );
+
 
         toast._timer =
             setTimeout(() => {
@@ -835,10 +922,13 @@ document.addEventListener("DOMContentLoaded", () => {
     function celebrate() {
 
         const container =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
         container.className =
             "vote-celebration";
+
 
         for (
             let i = 0;
@@ -847,7 +937,10 @@ document.addEventListener("DOMContentLoaded", () => {
         ) {
 
             const piece =
-                document.createElement("span");
+                document.createElement(
+                    "span"
+                );
+
 
             piece.textContent =
                 [
@@ -862,6 +955,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     )
                 ];
 
+
             piece.style.setProperty(
                 "--x",
                 `${(
@@ -869,10 +963,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 ) - 100}px`
             );
 
+
             piece.style.setProperty(
                 "--delay",
                 `${Math.random() * 0.25}s`
             );
+
 
             container.appendChild(
                 piece
@@ -880,9 +976,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
+
         document.body.appendChild(
             container
         );
+
 
         setTimeout(() => {
 
@@ -895,6 +993,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     /* =====================================================
        FIRESTORE VOTE
+       -----------------------------------------------------
+       NO UID.
+       NO AUTH.
+       COMPLETELY ANONYMOUS.
     ===================================================== */
 
     async function saveVoteToFirebase({
@@ -904,53 +1006,31 @@ document.addEventListener("DOMContentLoaded", () => {
         choice
     }) {
 
-        /*
-           Wait for Firebase anonymous authentication.
+        const voteData = {
 
-           The UID is therefore taken from Firebase
-           itself — never generated manually here.
-        */
+            category:
+                category,
 
-        const user =
-            await authReady;
+            productId:
+                product.id,
 
-        if (!user) {
+            productIndex:
+                productIndex,
 
-            throw new Error(
-                "No authenticated Firebase user was available."
-            );
+            productName:
+                product.name,
 
-        }
+            brand:
+                product.brand,
 
-        if (!user.uid) {
+            choice:
+                choice,
 
-            throw new Error(
-                "Authenticated Firebase user has no UID."
-            );
+            createdAt:
+                serverTimestamp()
 
-        }
+        };
 
-
-        /*
-           One Firestore document is created for each
-           user/product vote.
-
-           Example:
-
-           productVotes/
-             auto-generated-id
-
-           {
-             uid,
-             category,
-             productId,
-             productIndex,
-             productName,
-             brand,
-             choice,
-             createdAt
-           }
-        */
 
         const docRef =
             await addDoc(
@@ -958,38 +1038,12 @@ document.addEventListener("DOMContentLoaded", () => {
                     db,
                     FIRESTORE_VOTES_COLLECTION
                 ),
-                {
-
-                    uid:
-                        user.uid,
-
-                    category:
-                        category,
-
-                    productId:
-                        product.id,
-
-                    productIndex:
-                        productIndex,
-
-                    productName:
-                        product.name,
-
-                    brand:
-                        product.brand,
-
-                    choice:
-                        choice,
-
-                    createdAt:
-                        serverTimestamp()
-
-                }
+                voteData
             );
 
 
         console.log(
-            "Vote saved to Firestore:",
+            "Anonymous vote saved:",
             docRef.id
         );
 
@@ -1008,8 +1062,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const category =
             battle.dataset.category;
 
+
         const battleProducts =
             products[category];
+
 
         if (
             !battleProducts ||
@@ -1025,26 +1081,29 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
 
-        markBattleSeen(category);
+        markBattleSeen(
+            category
+        );
 
+
+        /* =================================================
+           STATE
+        ================================================= */
 
         let currentIndex = 0;
 
-
         /*
-           IMPORTANT:
+           This counter is used to invalidate any old
+           render operation.
 
-           Every time showProduct() is called we increment
-           this number.
-
-           If Product 1 starts an animation and the user
-           immediately switches to Product 2, the delayed
-           Product 1 update is ignored.
-
-           This prevents Product 1 from overwriting Product 2.
+           More importantly, rendering itself is now
+           synchronous, so Product 1 cannot overwrite
+           Product 2 after the user switches.
         */
 
         let renderVersion = 0;
+
+        let isVoting = false;
 
 
         /* =================================================
@@ -1183,22 +1242,76 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         /* =================================================
-           ADD BATTLE META
+           BATTLE META
         ================================================= */
 
-        createBattleMeta(
-            battle,
-            category
-        );
+        createBattleMeta();
+
+
+        function createBattleMeta() {
+
+            if (
+                battle.querySelector(
+                    ".battle-progress-meta"
+                )
+            ) {
+
+                return;
+
+            }
+
+
+            const top =
+                battle.querySelector(
+                    ".battle-top"
+                );
+
+
+            if (!top) {
+
+                return;
+
+            }
+
+
+            const meta =
+                document.createElement(
+                    "div"
+                );
+
+
+            meta.className =
+                "battle-progress-meta";
+
+
+            meta.innerHTML = `
+
+                <span>
+                    ${categoryNames[category] || category}
+                </span>
+
+                <span data-battle-vote-count>
+                    0/${battleProducts.length} picked
+                </span>
+
+            `;
+
+
+            top.appendChild(
+                meta
+            );
+
+        }
 
 
         /* =================================================
-           CREATE DOTS
+           DOTS
         ================================================= */
 
         if (dotsContainer) {
 
             dotsContainer.innerHTML = "";
+
 
             battleProducts.forEach(
                 (product, index) => {
@@ -1208,16 +1321,20 @@ document.addEventListener("DOMContentLoaded", () => {
                             "button"
                         );
 
+
                     dot.type =
                         "button";
 
+
                     dot.className =
                         "battle-dot";
+
 
                     dot.setAttribute(
                         "aria-label",
                         `View ${product.name}`
                     );
+
 
                     dot.addEventListener(
                         "click",
@@ -1230,6 +1347,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         }
                     );
 
+
                     dotsContainer.appendChild(
                         dot
                     );
@@ -1241,300 +1359,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         /* =================================================
-           UPDATE BATTLE META
-        ================================================= */
-
-        function createBattleMeta(
-            battleElement,
-            categoryName
-        ) {
-
-            if (
-                battleElement.querySelector(
-                    ".battle-progress-meta"
-                )
-            ) {
-
-                return;
-
-            }
-
-            const top =
-                battleElement.querySelector(
-                    ".battle-top"
-                );
-
-            if (!top) {
-                return;
-            }
-
-            const meta =
-                document.createElement(
-                    "div"
-                );
-
-            meta.className =
-                "battle-progress-meta";
-
-            meta.innerHTML = `
-
-                <span>
-                    ${categoryNames[categoryName] || categoryName}
-                </span>
-
-                <span data-battle-vote-count>
-                    0 votes
-                </span>
-
-            `;
-
-            top.appendChild(
-                meta
-            );
-
-        }
-
-
-        /* =================================================
-           PRODUCT DISPLAY
-        ================================================= */
-
-        function showProduct(
-            index,
-            direction = "next"
-        ) {
-
-            /*
-               Invalidate every previous pending render.
-            */
-
-            renderVersion++;
-
-            const thisRender =
-                renderVersion;
-
-
-            /*
-               Normalize index.
-            */
-
-            currentIndex =
-                (
-                    index +
-                    battleProducts.length
-                ) %
-                battleProducts.length;
-
-
-            const product =
-                battleProducts[
-                    currentIndex
-                ];
-
-
-            /*
-               Start transition.
-            */
-
-            if (image) {
-
-                image.classList.add(
-                    "product-changing"
-                );
-
-            }
-
-
-            /*
-               Delay only the visual transition.
-
-               The renderVersion check ensures an old
-               delayed update cannot overwrite the new
-               product.
-            */
-
-            setTimeout(() => {
-
-                if (
-                    thisRender !==
-                    renderVersion
-                ) {
-
-                    return;
-
-                }
-
-
-                /* =============================
-                   IMAGE
-                ============================= */
-
-                if (image) {
-
-                    image.src =
-                        product.image;
-
-                    image.alt =
-                        product.name;
-
-                    image.classList.remove(
-                        "product-changing"
-                    );
-
-                    image.classList.remove(
-                        "image-error"
-                    );
-
-                }
-
-
-                /* =============================
-                   TEXT
-                ============================= */
-
-                updateElement(
-                    label,
-                    `PRODUCT ${currentIndex + 1}`
-                );
-
-                updateElement(
-                    name,
-                    product.name
-                );
-
-                updateElement(
-                    brand,
-                    product.brand
-                );
-
-                updateElement(
-                    description,
-                    product.description
-                );
-
-                updateElement(
-                    score,
-                    Number(product.score)
-                        .toFixed(1)
-                );
-
-                updateElement(
-                    percentage,
-                    `${product.percentage}%`
-                );
-
-
-                /* =============================
-                   CONSENSUS
-                ============================= */
-
-                updateElement(
-                    consensus,
-                    getConsensusLabel(
-                        product.percentage
-                    )
-                );
-
-
-                if (consensusBar) {
-
-                    consensusBar.style.width =
-                        `${product.percentage}%`;
-
-                }
-
-
-                /* =============================
-                   AMAZON LINK
-                ============================= */
-
-                if (link) {
-
-                    link.href =
-                        product.link;
-
-                    link.style.display =
-                        isValidAffiliateLink(
-                            product.link
-                        )
-                            ? ""
-                            : "none";
-
-                }
-
-
-                /* =============================
-                   POSITION
-                ============================= */
-
-                updateElement(
-                    position,
-                    `PRODUCT ${currentIndex + 1} OF ${battleProducts.length}`
-                );
-
-
-                /* =============================
-                   YES / NO
-                ============================= */
-
-                const noPercent =
-                    getNoPercentage(
-                        product.percentage
-                    );
-
-                updateElement(
-                    yesPercentage,
-                    `${product.percentage}%`
-                );
-
-                updateElement(
-                    noPercentage,
-                    `${noPercent}%`
-                );
-
-
-                /* =============================
-                   DOTS
-                ============================= */
-
-                updateDots();
-
-
-                /* =============================
-                   VOTE STATE
-                ============================= */
-
-                restoreVoteState();
-
-
-                /* =============================
-                   BATTLE COUNT
-                ============================= */
-
-                updateBattleVoteCount();
-
-
-                /* =============================
-                   WINNER
-                ============================= */
-
-                updateBattleWinner();
-
-
-                /* =============================
-                   BUTTON LABELS
-                ============================= */
-
-                updateButtonLabels();
-
-
-            }, 120);
-
-        }
-
-
-        /* =================================================
-           SAFE ELEMENT UPDATE
+           SAFE TEXT UPDATE
         ================================================= */
 
         function updateElement(
@@ -1553,14 +1378,413 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         /* =================================================
-           UPDATE BUTTON COPY
+           GET CURRENT PRODUCT
+        ================================================= */
+
+        function getCurrentProduct() {
+
+            return battleProducts[
+                currentIndex
+            ];
+
+        }
+
+
+        /* =================================================
+           GET CURRENT VOTE
+        ================================================= */
+
+        function getCurrentVote() {
+
+            const product =
+                getCurrentProduct();
+
+
+            if (!product) {
+
+                return null;
+
+            }
+
+
+            return savedVotes[
+                getVoteKey(
+                    category,
+                    product.id
+                )
+            ] || null;
+
+        }
+
+
+        /* =================================================
+           RESET RESULT UI
+        ================================================= */
+
+        function resetVoteUI() {
+
+            /*
+               This is critical.
+
+               When switching Product 1 -> Product 2,
+               Product 1's result must disappear unless
+               Product 2 itself has already been voted on.
+            */
+
+            if (voteArea) {
+
+                voteArea.style.display =
+                    "block";
+
+            }
+
+
+            if (result) {
+
+                result.classList.remove(
+                    "visible"
+                );
+
+            }
+
+
+            if (socialComparison) {
+
+                socialComparison.classList.remove(
+                    "visible"
+                );
+
+            }
+
+
+            voteButtons.forEach(
+                (button) => {
+
+                    button.disabled =
+                        false;
+
+                }
+            );
+
+        }
+
+
+        /* =================================================
+           RESTORE CURRENT PRODUCT VOTE
+        ================================================= */
+
+        function restoreVoteState() {
+
+            const existingVote =
+                getCurrentVote();
+
+
+            if (!existingVote) {
+
+                resetVoteUI();
+
+                return;
+
+            }
+
+
+            showVoteResult(
+                existingVote,
+                true
+            );
+
+        }
+
+
+        /* =================================================
+           PRODUCT DISPLAY
+        ================================================= */
+
+        function showProduct(
+            requestedIndex,
+            direction = "next"
+        ) {
+
+            renderVersion++;
+
+            const thisRender =
+                renderVersion;
+
+
+            /*
+               Normalize the index.
+            */
+
+            currentIndex =
+                (
+                    requestedIndex +
+                    battleProducts.length
+                ) %
+                battleProducts.length;
+
+
+            const product =
+                battleProducts[
+                    currentIndex
+                ];
+
+
+            if (!product) {
+
+                return;
+
+            }
+
+
+            /*
+               IMPORTANT:
+
+               Do not use a setTimeout here.
+
+               The previous version delayed the actual
+               product update by 120ms. That could cause
+               Product 1 to overwrite Product 2 during
+               rapid clicks.
+
+               Everything below updates immediately.
+            */
+
+
+            if (image) {
+
+                image.classList.add(
+                    "product-changing"
+                );
+
+            }
+
+
+            /* =================================================
+               IMAGE
+            ================================================= */
+
+            if (image) {
+
+                image.src =
+                    product.image;
+
+                image.alt =
+                    product.name;
+
+                image.classList.remove(
+                    "image-error"
+                );
+
+                /*
+                   Remove the transition class on the
+                   next paint instead of delaying the
+                   actual product data.
+                */
+
+                requestAnimationFrame(() => {
+
+                    if (
+                        thisRender !==
+                        renderVersion
+                    ) {
+
+                        return;
+
+                    }
+
+                    image.classList.remove(
+                        "product-changing"
+                    );
+
+                });
+
+            }
+
+
+            /* =================================================
+               TEXT
+            ================================================= */
+
+            updateElement(
+                label,
+                `PRODUCT ${currentIndex + 1}`
+            );
+
+
+            updateElement(
+                name,
+                product.name
+            );
+
+
+            updateElement(
+                brand,
+                product.brand
+            );
+
+
+            updateElement(
+                description,
+                product.description
+            );
+
+
+            updateElement(
+                score,
+                Number(product.score)
+                    .toFixed(1)
+            );
+
+
+            updateElement(
+                percentage,
+                `${product.percentage}%`
+            );
+
+
+            /* =================================================
+               CONSENSUS
+            ================================================= */
+
+            updateElement(
+                consensus,
+                getConsensusLabel(
+                    product.percentage
+                )
+            );
+
+
+            if (consensusBar) {
+
+                consensusBar.style.width =
+                    `${product.percentage}%`;
+
+            }
+
+
+            /* =================================================
+               AMAZON LINK
+            ================================================= */
+
+            if (link) {
+
+                if (
+                    isValidAffiliateLink(
+                        product.link
+                    )
+                ) {
+
+                    link.href =
+                        product.link;
+
+                    link.style.display =
+                        "";
+
+                } else {
+
+                    link.removeAttribute(
+                        "href"
+                    );
+
+                    link.style.display =
+                        "none";
+
+                }
+
+            }
+
+
+            /* =================================================
+               POSITION
+            ================================================= */
+
+            updateElement(
+                position,
+                `PRODUCT ${currentIndex + 1} OF ${battleProducts.length}`
+            );
+
+
+            /* =================================================
+               YES / NO
+            ================================================= */
+
+            const noPercent =
+                getNoPercentage(
+                    product.percentage
+                );
+
+
+            updateElement(
+                yesPercentage,
+                `${product.percentage}%`
+            );
+
+
+            updateElement(
+                noPercentage,
+                `${noPercent}%`
+            );
+
+
+            /* =================================================
+               DOTS
+            ================================================= */
+
+            updateDots();
+
+
+            /* =================================================
+               NEXT BUTTON
+            ================================================= */
+
+            updateButtonLabels();
+
+
+            /* =================================================
+               RESET FIRST
+               -----------------------------------------------
+               This prevents the previous product's result
+               from staying visible.
+            ================================================= */
+
+            resetVoteUI();
+
+
+            /* =================================================
+               RESTORE IF THIS PRODUCT WAS ALREADY VOTED
+            ================================================= */
+
+            restoreVoteState();
+
+
+            /* =================================================
+               COUNTS
+            ================================================= */
+
+            updateBattleVoteCount();
+
+
+            /* =================================================
+               WINNER
+            ================================================= */
+
+            updateBattleWinner();
+
+        }
+
+
+        /* =================================================
+           BUTTON LABELS
         ================================================= */
 
         function updateButtonLabels() {
 
             if (!nextContender) {
+
                 return;
+
             }
+
 
             const nextIndex =
                 (
@@ -1568,13 +1792,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 ) %
                 battleProducts.length;
 
+
             const nextProduct =
                 battleProducts[
                     nextIndex
                 ];
 
-            nextContender.textContent =
-                `See ${nextProduct.name} →`;
+
+            if (nextProduct) {
+
+                nextContender.textContent =
+                    `See ${nextProduct.name} →`;
+
+            }
 
         }
 
@@ -1586,13 +1816,17 @@ document.addEventListener("DOMContentLoaded", () => {
         function updateDots() {
 
             if (!dotsContainer) {
+
                 return;
+
             }
+
 
             const dots =
                 dotsContainer.querySelectorAll(
                     ".battle-dot"
                 );
+
 
             dots.forEach(
                 (dot, index) => {
@@ -1609,30 +1843,46 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         /* =================================================
-           VOTE KEY
-        ================================================= */
-
-        function getVoteKey() {
-
-            return (
-                `${category}-${currentIndex}`
-            );
-
-        }
-
-
-        /* =================================================
            CAST VOTE
         ================================================= */
 
-        async function castVote(choice) {
+        async function castVote(
+            choice
+        ) {
 
-            const key =
-                getVoteKey();
+            if (isVoting) {
+
+                return;
+
+            }
+
+
+            const product =
+                getCurrentProduct();
+
+
+            if (!product) {
+
+                return;
+
+            }
 
 
             /*
-               Prevent duplicate local votes.
+               IMPORTANT:
+
+               Use product ID rather than position.
+            */
+
+            const key =
+                getVoteKey(
+                    category,
+                    product.id
+                );
+
+
+            /*
+               Already voted?
             */
 
             if (savedVotes[key]) {
@@ -1647,59 +1897,8 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
 
-            const product =
-                battleProducts[
-                    currentIndex
-                ];
+            isVoting = true;
 
-
-            /*
-               Make sure Firebase authentication
-               has completed before recording the vote.
-            */
-
-            let user;
-
-            try {
-
-                user =
-                    await authReady;
-
-            } catch (error) {
-
-                console.error(
-                    "Firebase authentication error:",
-                    error
-                );
-
-                showToast(
-                    "We couldn't verify your session. Please try again."
-                );
-
-                return;
-
-            }
-
-
-            if (!user || !user.uid) {
-
-                console.error(
-                    "No Firebase anonymous user available."
-                );
-
-                showToast(
-                    "We couldn't verify your session. Please try again."
-                );
-
-                return;
-
-            }
-
-
-            /*
-               Prevent multiple rapid clicks while
-               Firebase is processing the vote.
-            */
 
             voteButtons.forEach(
                 (button) => {
@@ -1714,7 +1913,9 @@ document.addEventListener("DOMContentLoaded", () => {
             try {
 
                 /*
-                   REAL FIREBASE VOTE
+                   Save anonymously to Firestore.
+
+                   NO UID.
                 */
 
                 await saveVoteToFirebase({
@@ -1735,13 +1936,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                 /*
-                   Only update the local vote state
-                   AFTER Firebase successfully accepted
-                   the vote.
+                   Only save locally AFTER Firebase
+                   succeeds.
                 */
 
                 savedVotes[key] =
                     choice;
+
 
                 saveVotes();
 
@@ -1749,10 +1950,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 session.totalVotes =
                     getTotalVoteCount();
 
+
                 session.streak =
                     Number(
                         session.streak || 0
                     ) + 1;
+
 
                 saveSession();
 
@@ -1774,7 +1977,7 @@ document.addEventListener("DOMContentLoaded", () => {
             } catch (error) {
 
                 console.error(
-                    "Firebase vote error:",
+                    "Firebase anonymous vote error:",
                     error
                 );
 
@@ -1785,20 +1988,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                 /*
-                   IMPORTANT:
+                   Firebase failed.
 
-                   Because Firebase failed, we DO NOT
-                   mark the vote as completed locally.
+                   Therefore we intentionally DO NOT
+                   save anything to localStorage.
                 */
+
+                voteButtons.forEach(
+                    (button) => {
+
+                        button.disabled =
+                            false;
+
+                    }
+                );
 
             } finally {
 
+                isVoting = false;
+
+
                 /*
-                   Re-enable buttons unless the current
-                   product now has a recorded vote.
+                   Only keep buttons disabled if the
+                   current product has actually been voted.
                 */
 
-                if (!savedVotes[key]) {
+                if (
+                    !getCurrentVote()
+                ) {
 
                     voteButtons.forEach(
                         (button) => {
@@ -1817,7 +2034,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         /* =================================================
-           VOTE RESULT
+           SHOW VOTE RESULT
         ================================================= */
 
         function showVoteResult(
@@ -1826,16 +2043,25 @@ document.addEventListener("DOMContentLoaded", () => {
         ) {
 
             const product =
-                battleProducts[
-                    currentIndex
-                ];
+                getCurrentProduct();
+
+
+            if (!product) {
+
+                return;
+
+            }
+
 
             const yes =
-                product.percentage;
+                Number(
+                    product.percentage
+                );
+
 
             const no =
                 getNoPercentage(
-                    product.percentage
+                    yes
                 );
 
 
@@ -1867,87 +2093,73 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (choice === "yes") {
 
-                if (resultTitle) {
+                updateElement(
+                    resultTitle,
+                    "🎉 You picked it!"
+                );
 
-                    resultTitle.textContent =
-                        "🎉 You picked it!";
-
-                }
 
                 if (yes >= 50) {
 
-                    if (resultText) {
+                    updateElement(
+                        resultText,
+                        `You're on the same side as ${yes}% of moms who recommend this one.`
+                    );
 
-                        resultText.textContent =
-                            `You're on the same side as ${yes}% of moms who recommend this one.`;
 
-                    }
-
-                    if (yourPosition) {
-
-                        yourPosition.textContent =
-                            `You're with the ${yes}% majority. 💗`;
-
-                    }
+                    updateElement(
+                        yourPosition,
+                        `You're with the ${yes}% majority. 💗`
+                    );
 
                 } else {
 
-                    if (resultText) {
+                    updateElement(
+                        resultText,
+                        `Interesting pick 👀 Only ${yes}% currently recommend this one.`
+                    );
 
-                        resultText.textContent =
-                            `Interesting pick 👀 Only ${yes}% currently recommend this one.`;
 
-                    }
-
-                    if (yourPosition) {
-
-                        yourPosition.textContent =
-                            `You're with the ${yes}% minority. 👀`;
-
-                    }
+                    updateElement(
+                        yourPosition,
+                        `You're with the ${yes}% minority. 👀`
+                    );
 
                 }
 
             } else {
 
-                if (resultTitle) {
+                updateElement(
+                    resultTitle,
+                    "👀 You'd skip it!"
+                );
 
-                    resultTitle.textContent =
-                        "👀 You'd skip it!";
-
-                }
 
                 if (no >= 50) {
 
-                    if (resultText) {
+                    updateElement(
+                        resultText,
+                        `${no}% currently wouldn't recommend this one either.`
+                    );
 
-                        resultText.textContent =
-                            `${no}% currently wouldn't recommend this one either.`;
 
-                    }
-
-                    if (yourPosition) {
-
-                        yourPosition.textContent =
-                            `You're with the ${no}% majority.`;
-
-                    }
+                    updateElement(
+                        yourPosition,
+                        `You're with the ${no}% majority.`
+                    );
 
                 } else {
 
-                    if (resultText) {
+                    updateElement(
+                        resultText,
+                        `Most moms would choose it — ${yes}% currently recommend it.`
+                    );
 
-                        resultText.textContent =
-                            `Most moms would choose it — ${yes}% currently recommend it.`;
 
-                    }
-
-                    if (yourPosition) {
-
-                        yourPosition.textContent =
-                            `You're with the ${no}% minority. 👀`;
-
-                    }
+                    updateElement(
+                        yourPosition,
+                        `You're with the ${no}% minority. 👀`
+                    );
 
                 }
 
@@ -1969,81 +2181,40 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         /* =================================================
-           RESTORE VOTE
+           BATTLE COMPLETION
         ================================================= */
 
-        function restoreVoteState() {
+        function checkBattleCompletion() {
 
-            const key =
-                getVoteKey();
+            const first =
+                battleProducts[0];
 
-            const existingVote =
-                savedVotes[key];
-
-
-            if (!existingVote) {
-
-                if (voteArea) {
-
-                    voteArea.style.display =
-                        "block";
-
-                }
-
-                if (result) {
-
-                    result.classList.remove(
-                        "visible"
-                    );
-
-                }
-
-                if (socialComparison) {
-
-                    socialComparison.classList.remove(
-                        "visible"
-                    );
-
-                }
+            const second =
+                battleProducts[1];
 
 
-                voteButtons.forEach(
-                    (button) => {
-
-                        button.disabled =
-                            false;
-
-                    }
-                );
-
+            if (!first || !second) {
 
                 return;
 
             }
 
 
-            showVoteResult(
-                existingVote,
-                true
-            );
-
-        }
-
-
-        /* =================================================
-           BATTLE COMPLETION
-        ================================================= */
-
-        function checkBattleCompletion() {
-
             const firstVote =
                 savedVotes[
-                    `${category}-0`
+                    getVoteKey(
+                        category,
+                        first.id
+                    )
                 ];
+
 
             const secondVote =
                 savedVotes[
-                    `${category}-1`
+                    getVoteKey(
+                        category,
+                        second.id
+                    )
                 ];
 
 
@@ -2060,6 +2231,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 }
 
+
                 if (winnerText) {
 
                     winnerText.textContent =
@@ -2067,16 +2239,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 }
 
+
                 return;
 
             }
-
-
-            const first =
-                battleProducts[0];
-
-            const second =
-                battleProducts[1];
 
 
             if (winner) {
@@ -2093,33 +2259,27 @@ document.addEventListener("DOMContentLoaded", () => {
                 second.percentage
             ) {
 
-                if (winnerText) {
-
-                    winnerText.textContent =
-                        `🏆 ${first.name} is currently ahead ${first.percentage}% to ${second.percentage}%.`;
-
-                }
+                updateElement(
+                    winnerText,
+                    `🏆 ${first.name} is currently ahead ${first.percentage}% to ${second.percentage}%.`
+                );
 
             } else if (
                 second.percentage >
                 first.percentage
             ) {
 
-                if (winnerText) {
-
-                    winnerText.textContent =
-                        `🏆 ${second.name} is currently ahead ${second.percentage}% to ${first.percentage}%.`;
-
-                }
+                updateElement(
+                    winnerText,
+                    `🏆 ${second.name} is currently ahead ${second.percentage}% to ${first.percentage}%.`
+                );
 
             } else {
 
-                if (winnerText) {
-
-                    winnerText.textContent =
-                        "🤝 It's a tie — moms can't decide.";
-
-                }
+                updateElement(
+                    winnerText,
+                    "🤝 It's a tie — moms can't decide."
+                );
 
             }
 
@@ -2140,8 +2300,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     "[data-battle-vote-count]"
                 );
 
+
             if (!element) {
+
                 return;
+
             }
 
 
@@ -2149,12 +2312,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
             battleProducts.forEach(
-                (product, index) => {
+                (product) => {
+
+                    const key =
+                        getVoteKey(
+                            category,
+                            product.id
+                        );
+
 
                     if (
-                        savedVotes[
-                            `${category}-${index}`
-                        ]
+                        savedVotes[key]
                     ) {
 
                         count++;
@@ -2193,11 +2361,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     "button"
                 );
 
+
             button.type =
                 "button";
 
+
             button.className =
                 "next-battle-cta";
+
 
             button.innerHTML = `
 
@@ -2243,18 +2414,42 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         /* =================================================
-           CHECK NEXT BUTTON
+           NEXT BATTLE STATE
         ================================================= */
 
         function updateNextBattleButton() {
 
+            const first =
+                battleProducts[0];
+
+            const second =
+                battleProducts[1];
+
+
+            if (!first || !second) {
+
+                return;
+
+            }
+
+
             const complete =
-                savedVotes[
-                    `${category}-0`
-                ] &&
-                savedVotes[
-                    `${category}-1`
-                ];
+                Boolean(
+                    savedVotes[
+                        getVoteKey(
+                            category,
+                            first.id
+                        )
+                    ]
+                ) &&
+                Boolean(
+                    savedVotes[
+                        getVoteKey(
+                            category,
+                            second.id
+                        )
+                    ]
+                );
 
 
             const button =
@@ -2277,7 +2472,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         /* =================================================
-           WINNER UPDATE WRAPPER
+           WINNER WRAPPER
         ================================================= */
 
         function updateBattleWinner() {
@@ -2290,14 +2485,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         /* =================================================
-           ARROWS
+           PREVIOUS PRODUCT
         ================================================= */
 
         if (prevButton) {
 
             prevButton.addEventListener(
                 "click",
-                () => {
+                (event) => {
+
+                    event.preventDefault();
+
+                    if (isVoting) {
+
+                        return;
+
+                    }
 
                     showProduct(
                         currentIndex - 1,
@@ -2310,11 +2513,23 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
 
+        /* =================================================
+           NEXT PRODUCT
+        ================================================= */
+
         if (nextButton) {
 
             nextButton.addEventListener(
                 "click",
-                () => {
+                (event) => {
+
+                    event.preventDefault();
+
+                    if (isVoting) {
+
+                        return;
+
+                    }
 
                     showProduct(
                         currentIndex + 1,
@@ -2335,7 +2550,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
             nextContender.addEventListener(
                 "click",
-                () => {
+                (event) => {
+
+                    event.preventDefault();
+
+                    if (isVoting) {
+
+                        return;
+
+                    }
+
 
                     showProduct(
                         currentIndex + 1
@@ -2366,10 +2590,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 button.addEventListener(
                     "click",
-                    () => {
+                    (event) => {
+
+                        event.preventDefault();
+
+
+                        const choice =
+                            button.dataset.vote;
+
+
+                        if (
+                            choice !== "yes" &&
+                            choice !== "no"
+                        ) {
+
+                            console.warn(
+                                "Invalid vote button:",
+                                choice
+                            );
+
+                            return;
+
+                        }
+
 
                         castVote(
-                            button.dataset.vote
+                            choice
                         );
 
                     }
@@ -2395,6 +2641,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 const touch =
                     event.changedTouches[0];
 
+
+                if (!touch) {
+
+                    return;
+
+                }
+
+
                 touchStartX =
                     touch.screenX;
 
@@ -2412,12 +2666,28 @@ document.addEventListener("DOMContentLoaded", () => {
             "touchend",
             (event) => {
 
+                if (isVoting) {
+
+                    return;
+
+                }
+
+
                 const touch =
                     event.changedTouches[0];
+
+
+                if (!touch) {
+
+                    return;
+
+                }
+
 
                 const differenceX =
                     touchStartX -
                     touch.screenX;
+
 
                 const differenceY =
                     touchStartY -
@@ -2466,7 +2736,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         /* =================================================
-           IMAGE ERROR HANDLING
+           IMAGE ERROR
         ================================================= */
 
         if (image) {
@@ -2489,10 +2759,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         /* =================================================
-           INITIALIZE
+           INITIALIZE BATTLE
         ================================================= */
 
-        showProduct(0);
+        showProduct(
+            0
+        );
 
     });
 
@@ -2519,7 +2791,8 @@ document.addEventListener("DOMContentLoaded", () => {
             );
 
 
-        let nextBattle = null;
+        let nextBattle =
+            null;
 
 
         for (
@@ -2676,7 +2949,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                     if (!visible.length) {
+
                         return;
+
                     }
 
 
@@ -2847,7 +3122,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       RETURN TO TOP HELPER
+       SCROLL PROGRESS
     ===================================================== */
 
     window.addEventListener(
@@ -2877,7 +3152,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       OPTIONAL RESET FUNCTION
+       RESET FUNCTION
     ===================================================== */
 
     window.resetMomVotes =
@@ -2887,9 +3162,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 STORAGE_KEY
             );
 
+
             localStorage.removeItem(
                 SESSION_KEY
             );
+
 
             window.location.reload();
 
