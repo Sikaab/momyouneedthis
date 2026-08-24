@@ -1,16 +1,6 @@
 /* =========================================================
    MOM-VOTED PRODUCT EXPERIENCE
-   amazon-favorites.js
-
-   Features:
-   - Persistent votes
-   - Personal voting count
-   - Voting progress
-   - Instant vote feedback
-   - "Keep discovering" interaction
-   - Smooth scrolling
-   - Returning-user vote state
-   - No fake activity numbers
+   
 ========================================================= */
 
 
