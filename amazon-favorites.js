@@ -1,27 +1,38 @@
 /* =========================================================
    MOM-VOTED PRODUCT EXPERIENCE
    MomYouNeedThis
+   ---------------------------------------------------------
+   Pure JavaScript
+   No dependencies
+   No backend required
+
+   IMPORTANT:
+   The percentages in PRODUCT DATA are editorial/community
+   benchmark values until a real backend is connected.
+
+   Visitor votes are saved locally on their device.
 ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    const battles = document.querySelectorAll(".product-battle");
+    "use strict";
 
-    if (!battles.length) {
-        return;
-    }
+
+    /* =====================================================
+       CONFIGURATION
+    ===================================================== */
+
+    const STORAGE_KEY = "momYouNeedThisVotingExperience";
+
+    const SESSION_KEY = "momYouNeedThisSession";
+
+    const AUTO_ADVANCE_DELAY = 1150;
+
+    const MIN_SWIPE_DISTANCE = 45;
 
 
     /* =====================================================
        PRODUCT DATA
-
-       Replace/add products here.
-
-       The percentage represents the current community
-       recommendation rate you want displayed.
-
-       IMPORTANT:
-       Do not use fake vote totals.
     ===================================================== */
 
     const products = {
@@ -29,6 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
         baby: [
 
             {
+                id: "baby-soother",
                 name: "Soother Musical Crib Toy",
                 brand: "Baby Einstein",
                 image: "assets/babyeinstein-aquarium.jpeg",
@@ -40,11 +52,12 @@ document.addEventListener("DOMContentLoaded", () => {
             },
 
             {
+                id: "baby-contender",
                 name: "Baby Favorite",
                 brand: "MomYouNeedThis Pick",
                 image: "assets/product2.jpg",
                 description:
-                    "Another mom-loved option worth comparing before making your choice.",
+                    "Another mom-approved option worth comparing before making your choice.",
                 percentage: 38,
                 score: 7.7,
                 link: "YOUR-AMAZON-LINK-HERE"
@@ -56,6 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
         toddler: [
 
             {
+                id: "toddler-favorite",
                 name: "Toddler Favorite",
                 brand: "MomYouNeedThis Pick",
                 image: "assets/product2.jpg",
@@ -67,6 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
             },
 
             {
+                id: "toddler-contender",
                 name: "Toddler Contender",
                 brand: "Mom Favorite",
                 image: "assets/product2.jpg",
@@ -83,6 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
         sleep: [
 
             {
+                id: "sleep-white-noise",
                 name: "White Noise Machine",
                 brand: "Parent Favorite",
                 image: "assets/white-noise-machine.jpeg",
@@ -94,6 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
             },
 
             {
+                id: "sleep-contender",
                 name: "Sleep Contender",
                 brand: "Mom Pick",
                 image: "assets/product2.jpg",
@@ -110,6 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
         potty: [
 
             {
+                id: "potty-babybjorn",
                 name: "Potty Training Seat",
                 brand: "BabyBjörn",
                 image: "assets/babybjorn-potty-toilet.jpeg",
@@ -121,6 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
             },
 
             {
+                id: "potty-contender",
                 name: "Potty Training Contender",
                 brand: "Mom Pick",
                 image: "assets/product2.jpg",
@@ -137,6 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
         feeding: [
 
             {
+                id: "feeding-favorite",
                 name: "Feeding Favorite",
                 brand: "Mom Pick",
                 image: "assets/product2.jpg",
@@ -148,6 +168,7 @@ document.addEventListener("DOMContentLoaded", () => {
             },
 
             {
+                id: "feeding-contender",
                 name: "Feeding Contender",
                 brand: "Mom Pick",
                 image: "assets/product2.jpg",
@@ -164,6 +185,7 @@ document.addEventListener("DOMContentLoaded", () => {
         under25: [
 
             {
+                id: "budget-find",
                 name: "Budget Mom Find",
                 brand: "MomYouNeedThis Pick",
                 image: "assets/product2.jpg",
@@ -175,6 +197,7 @@ document.addEventListener("DOMContentLoaded", () => {
             },
 
             {
+                id: "budget-contender",
                 name: "Budget Contender",
                 brand: "Mom Pick",
                 image: "assets/product2.jpg",
@@ -191,13 +214,44 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       LOCAL STORAGE
+       CATEGORY INFORMATION
     ===================================================== */
 
-    const STORAGE_KEY = "momYouNeedThisVotes";
+    const categoryNames = {
+
+        baby: "Baby",
+
+        toddler: "Toddler",
+
+        sleep: "Sleep",
+
+        potty: "Potty",
+
+        feeding: "Feeding",
+
+        under25: "Under $25"
+
+    };
 
 
-    function getSavedVotes() {
+    /* =====================================================
+       DOM
+    ===================================================== */
+
+    const battles =
+        document.querySelectorAll(".product-battle");
+
+
+    if (!battles.length) {
+        return;
+    }
+
+
+    /* =====================================================
+       STORAGE
+    ===================================================== */
+
+    function loadVotes() {
 
         try {
 
@@ -207,6 +261,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         } catch (error) {
 
+            console.warn(
+                "Unable to read saved votes.",
+                error
+            );
+
             return {};
 
         }
@@ -214,19 +273,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    function saveVotes(votes) {
+    function saveVotes() {
 
         try {
 
             localStorage.setItem(
                 STORAGE_KEY,
-                JSON.stringify(votes)
+                JSON.stringify(savedVotes)
             );
 
         } catch (error) {
 
             console.warn(
-                "Unable to save vote.",
+                "Unable to save votes.",
                 error
             );
 
@@ -235,25 +294,162 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    let savedVotes = getSavedVotes();
+    function loadSession() {
+
+        try {
+
+            return JSON.parse(
+                localStorage.getItem(SESSION_KEY)
+            ) || {
+                streak: 0,
+                totalVotes: 0,
+                completedBattles: 0,
+                seen: []
+            };
+
+        } catch (error) {
+
+            return {
+                streak: 0,
+                totalVotes: 0,
+                completedBattles: 0,
+                seen: []
+            };
+
+        }
+
+    }
+
+
+    function saveSession() {
+
+        try {
+
+            localStorage.setItem(
+                SESSION_KEY,
+                JSON.stringify(session)
+            );
+
+        } catch (error) {
+
+            console.warn(
+                "Unable to save session.",
+                error
+            );
+
+        }
+
+    }
+
+
+    let savedVotes = loadVotes();
+
+    let session = loadSession();
 
 
     /* =====================================================
-       HELPERS
+       SESSION STATE
+    ===================================================== */
+
+    const totalBattles =
+        Object.keys(products).length;
+
+
+    function markBattleSeen(category) {
+
+        if (!session.seen.includes(category)) {
+
+            session.seen.push(category);
+
+            saveSession();
+
+        }
+
+    }
+
+
+    function getCompletedBattleCount() {
+
+        return Object.keys(products)
+            .filter((category) => {
+
+                return (
+                    savedVotes[`${category}-0`] &&
+                    savedVotes[`${category}-1`]
+                );
+
+            })
+            .length;
+
+    }
+
+
+    function getTotalVoteCount() {
+
+        return Object.keys(savedVotes).length;
+
+    }
+
+
+    /* =====================================================
+       MICRO COPY
+    ===================================================== */
+
+    const encouragements = [
+
+        "Okay, we need to know your next pick 👀",
+
+        "You have good instincts. Keep going.",
+
+        "One more? This gets interesting.",
+
+        "Your mom-opinion is officially on the record. 💗",
+
+        "You’re getting good at this.",
+
+        "Another battle is waiting…",
+
+        "This one might be harder.",
+
+        "Let's see if you agree with the crowd 👀"
+
+    ];
+
+
+    function randomEncouragement() {
+
+        return encouragements[
+            Math.floor(
+                Math.random() *
+                encouragements.length
+            )
+        ];
+
+    }
+
+
+    /* =====================================================
+       CONSENSUS
     ===================================================== */
 
     function getConsensusLabel(percentage) {
 
         if (percentage >= 80) {
+
             return "🔥 Mom favorite";
+
         }
 
         if (percentage >= 65) {
+
             return "💗 Strong mom approval";
+
         }
 
         if (percentage >= 50) {
+
             return "👀 Moms are split";
+
         }
 
         return "🤔 Not for everyone";
@@ -274,23 +470,397 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    function updateElement(element, value) {
+    /* =====================================================
+       VALID AMAZON LINK
+    ===================================================== */
 
-        if (element) {
-            element.textContent = value;
+    function isValidAffiliateLink(link) {
+
+        if (!link) {
+            return false;
+        }
+
+        if (
+            link.includes("YOUR-AMAZON-LINK-HERE")
+        ) {
+            return false;
+        }
+
+        return (
+            link.startsWith("https://") ||
+            link.startsWith("http://")
+        );
+
+    }
+
+
+    /* =====================================================
+       GLOBAL PROGRESS BAR
+    ===================================================== */
+
+    function createGlobalProgress() {
+
+        const hero =
+            document.querySelector(".voting-hero");
+
+        if (!hero) {
+            return null;
+        }
+
+
+        const existing =
+            document.querySelector(
+                ".mom-voting-progress"
+            );
+
+
+        if (existing) {
+            return existing;
+        }
+
+
+        const wrapper =
+            document.createElement("div");
+
+        wrapper.className =
+            "mom-voting-progress";
+
+
+        wrapper.innerHTML = `
+
+            <div class="mom-voting-progress-top">
+
+                <span>
+                    💗 Your mom-vote journey
+                </span>
+
+                <strong data-global-progress-text>
+                    0/${totalBattles} battles
+                </strong>
+
+            </div>
+
+            <div class="mom-voting-progress-track">
+
+                <div
+                    class="mom-voting-progress-fill"
+                    data-global-progress-fill
+                ></div>
+
+            </div>
+
+            <div
+                class="mom-voting-progress-message"
+                data-global-progress-message
+            >
+                Pick your first product.
+            </div>
+
+        `;
+
+
+        hero.appendChild(wrapper);
+
+        return wrapper;
+
+    }
+
+
+    const globalProgress =
+        createGlobalProgress();
+
+
+    function updateGlobalProgress() {
+
+        if (!globalProgress) {
+            return;
+        }
+
+
+        const completed =
+            getCompletedBattleCount();
+
+
+        const percentage =
+            totalBattles
+                ? Math.round(
+                    (completed / totalBattles) * 100
+                )
+                : 0;
+
+
+        const text =
+            globalProgress.querySelector(
+                "[data-global-progress-text]"
+            );
+
+
+        const fill =
+            globalProgress.querySelector(
+                "[data-global-progress-fill]"
+            );
+
+
+        const message =
+            globalProgress.querySelector(
+                "[data-global-progress-message]"
+            );
+
+
+        if (text) {
+
+            text.textContent =
+                `${completed}/${totalBattles} battles`;
+
+        }
+
+
+        if (fill) {
+
+            fill.style.width =
+                `${percentage}%`;
+
+        }
+
+
+        if (message) {
+
+            if (completed === 0) {
+
+                message.textContent =
+                    "Pick your first product.";
+
+            } else if (
+                completed < totalBattles
+            ) {
+
+                message.textContent =
+                    `${totalBattles - completed} more battle${totalBattles - completed === 1 ? "" : "s"} waiting for you 👀`;
+
+            } else {
+
+                message.textContent =
+                    "🏆 You completed every battle!";
+
+            }
+
         }
 
     }
 
 
     /* =====================================================
-       INITIALIZE BATTLE
+       STREAK UI
+    ===================================================== */
+
+    function createStreakBadge() {
+
+        const header =
+            document.querySelector(
+                ".mom-voted-header"
+            );
+
+        if (!header) {
+            return null;
+        }
+
+
+        const badge =
+            document.createElement("div");
+
+        badge.className =
+            "mom-streak-badge";
+
+
+        badge.innerHTML = `
+
+            <span class="mom-streak-fire">
+                🔥
+            </span>
+
+            <span>
+                <small>VOTE STREAK</small>
+                <strong data-streak>0</strong>
+            </span>
+
+        `;
+
+
+        header.appendChild(badge);
+
+        return badge;
+
+    }
+
+
+    const streakBadge =
+        createStreakBadge();
+
+
+    function updateStreak() {
+
+        if (!streakBadge) {
+            return;
+        }
+
+
+        const streak =
+            streakBadge.querySelector(
+                "[data-streak]"
+            );
+
+
+        if (streak) {
+
+            streak.textContent =
+                session.streak;
+
+        }
+
+
+        streakBadge.classList.toggle(
+            "has-streak",
+            session.streak > 0
+        );
+
+    }
+
+
+    /* =====================================================
+       TOAST
+    ===================================================== */
+
+    function showToast(message) {
+
+        let toast =
+            document.querySelector(
+                ".mom-voting-toast"
+            );
+
+
+        if (!toast) {
+
+            toast =
+                document.createElement("div");
+
+            toast.className =
+                "mom-voting-toast";
+
+
+            document.body.appendChild(
+                toast
+            );
+
+        }
+
+
+        toast.textContent =
+            message;
+
+
+        toast.classList.add(
+            "visible"
+        );
+
+
+        clearTimeout(
+            toast._timer
+        );
+
+
+        toast._timer =
+            setTimeout(() => {
+
+                toast.classList.remove(
+                    "visible"
+                );
+
+            }, 2200);
+
+    }
+
+
+    /* =====================================================
+       CONFETTI
+    ===================================================== */
+
+    function celebrate() {
+
+        const container =
+            document.createElement("div");
+
+        container.className =
+            "vote-celebration";
+
+
+        for (
+            let i = 0;
+            i < 18;
+            i++
+        ) {
+
+            const piece =
+                document.createElement("span");
+
+
+            piece.textContent =
+                [
+                    "💗",
+                    "✨",
+                    "🎉",
+                    "⭐",
+                    "💫"
+                ][
+                    Math.floor(
+                        Math.random() * 5
+                    )
+                ];
+
+
+            piece.style.setProperty(
+                "--x",
+                `${(
+                    Math.random() * 200
+                ) - 100}px`
+            );
+
+
+            piece.style.setProperty(
+                "--delay",
+                `${Math.random() * 0.25}s`
+            );
+
+
+            container.appendChild(
+                piece
+            );
+
+        }
+
+
+        document.body.appendChild(
+            container
+        );
+
+
+        setTimeout(() => {
+
+            container.remove();
+
+        }, 1300);
+
+    }
+
+
+    /* =====================================================
+       BATTLE INITIALIZATION
     ===================================================== */
 
     battles.forEach((battle) => {
 
         const category =
             battle.dataset.category;
+
 
         const battleProducts =
             products[category];
@@ -310,189 +880,382 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
 
+        markBattleSeen(category);
+
+
         let currentIndex = 0;
 
+
+        /* =================================================
+           ELEMENTS
+        ================================================= */
 
         const image =
             battle.querySelector("[data-image]");
 
+
         const label =
             battle.querySelector("[data-label]");
+
 
         const name =
             battle.querySelector("[data-name]");
 
+
         const brand =
             battle.querySelector("[data-brand]");
+
 
         const description =
             battle.querySelector("[data-description]");
 
+
         const score =
             battle.querySelector("[data-score]");
+
 
         const percentage =
             battle.querySelector("[data-percentage]");
 
+
         const consensus =
             battle.querySelector("[data-consensus]");
 
+
         const consensusBar =
-            battle.querySelector("[data-consensus-bar]");
+            battle.querySelector(
+                "[data-consensus-bar]"
+            );
+
 
         const link =
             battle.querySelector("[data-link]");
 
+
         const position =
             battle.querySelector("[data-position]");
 
+
         const yesPercentage =
-            battle.querySelector("[data-yes-percentage]");
+            battle.querySelector(
+                "[data-yes-percentage]"
+            );
+
 
         const noPercentage =
-            battle.querySelector("[data-no-percentage]");
+            battle.querySelector(
+                "[data-no-percentage]"
+            );
+
 
         const result =
             battle.querySelector("[data-result]");
 
+
         const resultTitle =
-            battle.querySelector("[data-result-title]");
+            battle.querySelector(
+                "[data-result-title]"
+            );
+
 
         const resultText =
-            battle.querySelector("[data-result-text]");
+            battle.querySelector(
+                "[data-result-text]"
+            );
+
 
         const socialComparison =
             battle.querySelector(
                 "[data-social-comparison]"
             );
 
+
         const yourPosition =
-            battle.querySelector("[data-your-position]");
+            battle.querySelector(
+                "[data-your-position]"
+            );
+
 
         const voteArea =
-            battle.querySelector("[data-vote-area]");
+            battle.querySelector(
+                "[data-vote-area]"
+            );
+
 
         const winner =
-            battle.querySelector("[data-winner]");
+            battle.querySelector(
+                "[data-winner]"
+            );
+
 
         const winnerText =
-            battle.querySelector("[data-winner-text]");
+            battle.querySelector(
+                "[data-winner-text]"
+            );
+
 
         const dotsContainer =
             battle.querySelector("[data-dots]");
 
+
         const nextContender =
-            battle.querySelector("[data-next-contender]");
+            battle.querySelector(
+                "[data-next-contender]"
+            );
+
 
         const prevButton =
             battle.querySelector("[data-prev]");
 
+
         const nextButton =
             battle.querySelector("[data-next]");
+
+
+        const voteButtons =
+            battle.querySelectorAll(
+                "[data-vote]"
+            );
+
+
+        /* =================================================
+           ADD BATTLE META
+        ================================================= */
+
+        createBattleMeta(
+            battle,
+            category
+        );
 
 
         /* =================================================
            CREATE DOTS
         ================================================= */
 
-        dotsContainer.innerHTML = "";
+        if (dotsContainer) {
+
+            dotsContainer.innerHTML = "";
 
 
-        battleProducts.forEach((product, index) => {
+            battleProducts.forEach(
+                (product, index) => {
 
-            const dot =
-                document.createElement("button");
-
-            dot.type = "button";
-
-            dot.className =
-                "battle-dot";
-
-            dot.setAttribute(
-                "aria-label",
-                `View product ${index + 1}`
-            );
+                    const dot =
+                        document.createElement(
+                            "button"
+                        );
 
 
-            dot.addEventListener(
-                "click",
-                () => {
+                    dot.type = "button";
 
-                    showProduct(index);
+                    dot.className =
+                        "battle-dot";
+
+
+                    dot.setAttribute(
+                        "aria-label",
+                        `View ${product.name}`
+                    );
+
+
+                    dot.addEventListener(
+                        "click",
+                        () => {
+
+                            showProduct(index);
+
+                        }
+                    );
+
+
+                    dotsContainer.appendChild(
+                        dot
+                    );
 
                 }
             );
 
-
-            dotsContainer.appendChild(dot);
-
-        });
+        }
 
 
         /* =================================================
-           SHOW PRODUCT
+           UPDATE BATTLE META
         ================================================= */
 
-        function showProduct(index) {
+        function createBattleMeta(
+            battleElement,
+            categoryName
+        ) {
+
+            if (
+                battleElement.querySelector(
+                    ".battle-progress-meta"
+                )
+            ) {
+
+                return;
+
+            }
+
+
+            const top =
+                battleElement.querySelector(
+                    ".battle-top"
+                );
+
+
+            if (!top) {
+                return;
+            }
+
+
+            const meta =
+                document.createElement("div");
+
+
+            meta.className =
+                "battle-progress-meta";
+
+
+            meta.innerHTML = `
+
+                <span>
+                    ${categoryNames[categoryName] || categoryName}
+                </span>
+
+                <span data-battle-vote-count>
+                    0 votes
+                </span>
+
+            `;
+
+
+            top.appendChild(meta);
+
+        }
+
+
+        /* =================================================
+           PRODUCT DISPLAY
+        ================================================= */
+
+        function showProduct(
+            index,
+            direction = "next"
+        ) {
 
             currentIndex =
-                (index + battleProducts.length)
-                % battleProducts.length;
+                (
+                    index +
+                    battleProducts.length
+                ) %
+                battleProducts.length;
 
 
             const product =
-                battleProducts[currentIndex];
+                battleProducts[
+                    currentIndex
+                ];
 
 
-            /* ---------------------------------------------
-               ANIMATION
-            --------------------------------------------- */
+            if (image) {
 
-            image.classList.add(
-                "product-changing"
-            );
+                image.classList.add(
+                    "product-changing"
+                );
+
+            }
 
 
             setTimeout(() => {
 
-                image.src =
-                    product.image;
+                if (image) {
 
-                image.alt =
-                    product.name;
+                    image.src =
+                        product.image;
 
-                label.textContent =
-                    `PRODUCT ${currentIndex + 1}`;
+                    image.alt =
+                        product.name;
 
-                name.textContent =
-                    product.name;
-
-                brand.textContent =
-                    product.brand;
-
-                description.textContent =
-                    product.description;
-
-                score.textContent =
-                    Number(product.score)
-                    .toFixed(1);
-
-                percentage.textContent =
-                    `${product.percentage}%`;
-
-                consensus.textContent =
-                    getConsensusLabel(
-                        product.percentage
+                    image.classList.remove(
+                        "product-changing"
                     );
 
-                consensusBar.style.width =
-                    `${product.percentage}%`;
+                }
 
-                link.href =
-                    product.link;
 
-                position.textContent =
-                    `PRODUCT ${currentIndex + 1} OF ${battleProducts.length}`;
+                updateElement(
+                    label,
+                    `PRODUCT ${currentIndex + 1}`
+                );
+
+
+                updateElement(
+                    name,
+                    product.name
+                );
+
+
+                updateElement(
+                    brand,
+                    product.brand
+                );
+
+
+                updateElement(
+                    description,
+                    product.description
+                );
+
+
+                updateElement(
+                    score,
+                    Number(product.score)
+                        .toFixed(1)
+                );
+
+
+                updateElement(
+                    percentage,
+                    `${product.percentage}%`
+                );
+
+
+                updateElement(
+                    consensus,
+                    getConsensusLabel(
+                        product.percentage
+                    )
+                );
+
+
+                if (consensusBar) {
+
+                    consensusBar.style.width =
+                        `${product.percentage}%`;
+
+                }
+
+
+                if (link) {
+
+                    link.href =
+                        product.link;
+
+                    link.style.display =
+                        isValidAffiliateLink(
+                            product.link
+                        )
+                            ? ""
+                            : "none";
+
+                }
+
+
+                updateElement(
+                    position,
+                    `PRODUCT ${currentIndex + 1} OF ${battleProducts.length}`
+                );
 
 
                 const noPercent =
@@ -501,15 +1264,15 @@ document.addEventListener("DOMContentLoaded", () => {
                     );
 
 
-                yesPercentage.textContent =
-                    `${product.percentage}%`;
+                updateElement(
+                    yesPercentage,
+                    `${product.percentage}%`
+                );
 
-                noPercentage.textContent =
-                    `${noPercent}%`;
 
-
-                image.classList.remove(
-                    "product-changing"
+                updateElement(
+                    noPercentage,
+                    `${noPercent}%`
                 );
 
 
@@ -517,16 +1280,56 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 restoreVoteState();
 
-            }, 130);
+                updateBattleVoteCount();
+
+                updateBattleWinner();
+
+
+                updateButtonLabels();
+
+            }, 120);
 
         }
 
 
         /* =================================================
-           DOTS
+           UPDATE BUTTON COPY
+        ================================================= */
+
+        function updateButtonLabels() {
+
+            if (!nextContender) {
+                return;
+            }
+
+
+            const nextIndex =
+                (
+                    currentIndex + 1
+                ) %
+                battleProducts.length;
+
+
+            const nextProduct =
+                battleProducts[nextIndex];
+
+
+            nextContender.textContent =
+                `See ${nextProduct.name} →`;
+
+        }
+
+
+        /* =================================================
+           DOT STATE
         ================================================= */
 
         function updateDots() {
+
+            if (!dotsContainer) {
+                return;
+            }
+
 
             const dots =
                 dotsContainer.querySelectorAll(
@@ -534,14 +1337,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 );
 
 
-            dots.forEach((dot, index) => {
+            dots.forEach(
+                (dot, index) => {
 
-                dot.classList.toggle(
-                    "active",
-                    index === currentIndex
-                );
+                    dot.classList.toggle(
+                        "active",
+                        index === currentIndex
+                    );
 
-            });
+                }
+            );
 
         }
 
@@ -558,7 +1363,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         /* =================================================
-           VOTE
+           CAST VOTE
         ================================================= */
 
         function castVote(choice) {
@@ -567,30 +1372,70 @@ document.addEventListener("DOMContentLoaded", () => {
                 getVoteKey();
 
 
+            if (savedVotes[key]) {
+
+                showVoteResult(
+                    savedVotes[key],
+                    true
+                );
+
+                return;
+
+            }
+
+
             savedVotes[key] =
                 choice;
 
 
-            saveVotes(savedVotes);
+            saveVotes();
 
 
-            showVoteResult(choice);
+            session.totalVotes =
+                getTotalVoteCount();
+
+
+            session.streak =
+                Number(session.streak || 0) + 1;
+
+
+            saveSession();
+
+
+            updateStreak();
+
+            updateGlobalProgress();
+
+
+            showVoteResult(
+                choice,
+                false
+            );
+
+
+            celebrate();
 
         }
 
 
         /* =================================================
-           SHOW VOTE RESULT
+           VOTE RESULT
         ================================================= */
 
-        function showVoteResult(choice) {
+        function showVoteResult(
+            choice,
+            existingVote = false
+        ) {
 
             const product =
-                battleProducts[currentIndex];
+                battleProducts[
+                    currentIndex
+                ];
 
 
             const yes =
                 product.percentage;
+
 
             const no =
                 getNoPercentage(
@@ -598,67 +1443,132 @@ document.addEventListener("DOMContentLoaded", () => {
                 );
 
 
-            voteArea.style.display =
-                "none";
+            if (voteArea) {
+
+                voteArea.style.display =
+                    "none";
+
+            }
 
 
-            result.classList.add(
-                "visible"
-            );
+            if (result) {
+
+                result.classList.add(
+                    "visible"
+                );
+
+            }
 
 
-            socialComparison.classList.add(
-                "visible"
-            );
+            if (socialComparison) {
+
+                socialComparison.classList.add(
+                    "visible"
+                );
+
+            }
 
 
             if (choice === "yes") {
 
-                resultTitle.textContent =
-                    "🎉 You picked it!";
+                if (resultTitle) {
+
+                    resultTitle.textContent =
+                        "🎉 You picked it!";
+
+                }
 
 
                 if (yes >= 50) {
 
-                    resultText.textContent =
-                        `You're in the majority — ${yes}% of moms recommend this one.`;
+                    if (resultText) {
 
-                    yourPosition.textContent =
-                        `You're with ${yes}% of moms. 💗`;
+                        resultText.textContent =
+                            `You're on the same side as ${yes}% of moms who recommend this one.`;
+
+                    }
+
+
+                    if (yourPosition) {
+
+                        yourPosition.textContent =
+                            `You're with the ${yes}% majority. 💗`;
+
+                    }
 
                 } else {
 
-                    resultText.textContent =
-                        `You're in the minority — only ${yes}% of moms recommend this one.`;
+                    if (resultText) {
 
-                    yourPosition.textContent =
-                        `You're with the ${yes}% minority. 👀`;
+                        resultText.textContent =
+                            `Interesting pick 👀 Only ${yes}% currently recommend this one.`;
+
+                    }
+
+
+                    if (yourPosition) {
+
+                        yourPosition.textContent =
+                            `You're with the ${yes}% minority. 👀`;
+
+                    }
 
                 }
 
             } else {
 
-                resultTitle.textContent =
-                    "👀 You'd skip it!";
+                if (resultTitle) {
+
+                    resultTitle.textContent =
+                        "👀 You'd skip it!";
+
+                }
 
 
                 if (no >= 50) {
 
-                    resultText.textContent =
-                        `You're in the majority — ${no}% of moms would skip it.`;
+                    if (resultText) {
 
-                    yourPosition.textContent =
-                        `You're with ${no}% of moms.`;
+                        resultText.textContent =
+                            `${no}% currently wouldn't recommend this one either.`;
+
+                    }
+
+
+                    if (yourPosition) {
+
+                        yourPosition.textContent =
+                            `You're with the ${no}% majority.`;
+
+                    }
 
                 } else {
 
-                    resultText.textContent =
-                        `Most moms disagree — ${yes}% would recommend it.`;
+                    if (resultText) {
 
-                    yourPosition.textContent =
-                        `You're with the ${no}% minority.`;
+                        resultText.textContent =
+                            `Most moms would choose it — ${yes}% currently recommend it.`;
+
+                    }
+
+
+                    if (yourPosition) {
+
+                        yourPosition.textContent =
+                            `You're with the ${no}% minority. 👀`;
+
+                    }
 
                 }
+
+            }
+
+
+            if (existingVote) {
+
+                showToast(
+                    "You already voted on this one 💗"
+                );
 
             }
 
@@ -684,16 +1594,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (!existingVote) {
 
-                voteArea.style.display =
-                    "block";
+                if (voteArea) {
 
-                result.classList.remove(
-                    "visible"
-                );
+                    voteArea.style.display =
+                        "block";
 
-                socialComparison.classList.remove(
-                    "visible"
-                );
+                }
+
+
+                if (result) {
+
+                    result.classList.remove(
+                        "visible"
+                    );
+
+                }
+
+
+                if (socialComparison) {
+
+                    socialComparison.classList.remove(
+                        "visible"
+                    );
+
+                }
+
 
                 return;
 
@@ -701,14 +1626,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
             showVoteResult(
-                existingVote
+                existingVote,
+                true
             );
 
         }
 
 
         /* =================================================
-           CHECK BATTLE
+           BATTLE COMPLETION
         ================================================= */
 
         function checkBattleCompletion() {
@@ -717,6 +1643,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 savedVotes[
                     `${category}-0`
                 ];
+
 
             const secondVote =
                 savedVotes[
@@ -729,12 +1656,22 @@ document.addEventListener("DOMContentLoaded", () => {
                 !secondVote
             ) {
 
-                winner.classList.remove(
-                    "visible"
-                );
+                if (winner) {
 
-                winnerText.textContent =
-                    "Vote for both products to see the winner.";
+                    winner.classList.remove(
+                        "visible"
+                    );
+
+                }
+
+
+                if (winnerText) {
+
+                    winnerText.textContent =
+                        "Vote for both products to reveal the battle result.";
+
+                }
+
 
                 return;
 
@@ -744,13 +1681,18 @@ document.addEventListener("DOMContentLoaded", () => {
             const first =
                 battleProducts[0];
 
+
             const second =
                 battleProducts[1];
 
 
-            winner.classList.add(
-                "visible"
-            );
+            if (winner) {
+
+                winner.classList.add(
+                    "visible"
+                );
+
+            }
 
 
             if (
@@ -758,23 +1700,198 @@ document.addEventListener("DOMContentLoaded", () => {
                 second.percentage
             ) {
 
-                winnerText.textContent =
-                    `${first.name} is currently winning ${first.percentage}% to ${second.percentage}%.`;
+                if (winnerText) {
+
+                    winnerText.textContent =
+                        `🏆 ${first.name} is currently ahead ${first.percentage}% to ${second.percentage}%.`;
+
+                }
 
             } else if (
                 second.percentage >
                 first.percentage
             ) {
 
-                winnerText.textContent =
-                    `${second.name} is currently winning ${second.percentage}% to ${first.percentage}%.`;
+                if (winnerText) {
+
+                    winnerText.textContent =
+                        `🏆 ${second.name} is currently ahead ${second.percentage}% to ${first.percentage}%.`;
+
+                }
 
             } else {
 
-                winnerText.textContent =
-                    "It's a tie! Moms can't decide.";
+                if (winnerText) {
+
+                    winnerText.textContent =
+                        "🤝 It's a tie — moms can't decide.";
+
+                }
 
             }
+
+
+            updateGlobalProgress();
+
+        }
+
+
+        /* =================================================
+           VOTE COUNT
+        ================================================= */
+
+        function updateBattleVoteCount() {
+
+            const element =
+                battle.querySelector(
+                    "[data-battle-vote-count]"
+                );
+
+
+            if (!element) {
+                return;
+            }
+
+
+            let count = 0;
+
+
+            battleProducts.forEach(
+                (product, index) => {
+
+                    if (
+                        savedVotes[
+                            `${category}-${index}`
+                        ]
+                    ) {
+
+                        count++;
+
+                    }
+
+                }
+            );
+
+
+            element.textContent =
+                `${count}/${battleProducts.length} picked`;
+
+        }
+
+
+        /* =================================================
+           NEXT BATTLE BUTTON
+        ================================================= */
+
+        function createNextBattleButton() {
+
+            if (
+                battle.querySelector(
+                    ".next-battle-cta"
+                )
+            ) {
+
+                return;
+
+            }
+
+
+            const button =
+                document.createElement("button");
+
+
+            button.type = "button";
+
+            button.className =
+                "next-battle-cta";
+
+
+            button.innerHTML = `
+
+                <span>
+                    ${randomEncouragement()}
+                </span>
+
+                <strong>
+                    Next battle →
+                </strong>
+
+            `;
+
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    goToNextBattle(
+                        battle
+                    );
+
+                }
+            );
+
+
+            const footer =
+                battle.querySelector(
+                    ".battle-footer"
+                );
+
+
+            if (footer) {
+
+                footer.parentNode.insertBefore(
+                    button,
+                    footer
+                );
+
+            }
+
+        }
+
+
+        /* =================================================
+           CHECK NEXT BUTTON
+        ================================================= */
+
+        function updateNextBattleButton() {
+
+            const complete =
+                savedVotes[
+                    `${category}-0`
+                ] &&
+                savedVotes[
+                    `${category}-1`
+                ];
+
+
+            const button =
+                battle.querySelector(
+                    ".next-battle-cta"
+                );
+
+
+            if (complete) {
+
+                createNextBattleButton();
+
+            } else if (button) {
+
+                button.remove();
+
+            }
+
+        }
+
+
+        /* =================================================
+           WINNER UPDATE WRAPPER
+        ================================================= */
+
+        function updateBattleWinner() {
+
+            checkBattleCompletion();
+
+            updateNextBattleButton();
 
         }
 
@@ -783,28 +1900,38 @@ document.addEventListener("DOMContentLoaded", () => {
            ARROWS
         ================================================= */
 
-        prevButton.addEventListener(
-            "click",
-            () => {
+        if (prevButton) {
 
-                showProduct(
-                    currentIndex - 1
-                );
+            prevButton.addEventListener(
+                "click",
+                () => {
 
-            }
-        );
+                    showProduct(
+                        currentIndex - 1,
+                        "previous"
+                    );
+
+                }
+            );
+
+        }
 
 
-        nextButton.addEventListener(
-            "click",
-            () => {
+        if (nextButton) {
 
-                showProduct(
-                    currentIndex + 1
-                );
+            nextButton.addEventListener(
+                "click",
+                () => {
 
-            }
-        );
+                    showProduct(
+                        currentIndex + 1,
+                        "next"
+                    );
+
+                }
+            );
+
+        }
 
 
         /* =================================================
@@ -822,10 +1949,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     );
 
 
-                    battle.scrollIntoView({
-                        behavior: "smooth",
-                        block: "center"
-                    });
+                    setTimeout(() => {
+
+                        battle.scrollIntoView({
+                            behavior: "smooth",
+                            block: "center"
+                        });
+
+                    }, 50);
 
                 }
             );
@@ -837,26 +1968,22 @@ document.addEventListener("DOMContentLoaded", () => {
            VOTE BUTTONS
         ================================================= */
 
-        const voteButtons =
-            battle.querySelectorAll(
-                "[data-vote]"
-            );
+        voteButtons.forEach(
+            (button) => {
 
+                button.addEventListener(
+                    "click",
+                    () => {
 
-        voteButtons.forEach((button) => {
+                        castVote(
+                            button.dataset.vote
+                        );
 
-            button.addEventListener(
-                "click",
-                () => {
+                    }
+                );
 
-                    castVote(
-                        button.dataset.vote
-                    );
-
-                }
-            );
-
-        });
+            }
+        );
 
 
         /* =================================================
@@ -865,18 +1992,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
         let touchStartX = 0;
 
-        let touchEndX = 0;
+        let touchStartY = 0;
 
 
         battle.addEventListener(
             "touchstart",
             (event) => {
 
+                const touch =
+                    event.changedTouches[0];
+
+
                 touchStartX =
-                    event.changedTouches[0].screenX;
+                    touch.screenX;
+
+
+                touchStartY =
+                    touch.screenY;
 
             },
-            { passive: true }
+            {
+                passive: true
+            }
         );
 
 
@@ -884,20 +2021,41 @@ document.addEventListener("DOMContentLoaded", () => {
             "touchend",
             (event) => {
 
-                touchEndX =
-                    event.changedTouches[0].screenX;
+                const touch =
+                    event.changedTouches[0];
 
 
-                const difference =
-                    touchStartX - touchEndX;
+                const differenceX =
+                    touchStartX -
+                    touch.screenX;
 
 
-                if (Math.abs(difference) < 45) {
+                const differenceY =
+                    touchStartY -
+                    touch.screenY;
+
+
+                if (
+                    Math.abs(differenceX) <
+                    MIN_SWIPE_DISTANCE
+                ) {
+
                     return;
+
                 }
 
 
-                if (difference > 0) {
+                if (
+                    Math.abs(differenceY) >
+                    Math.abs(differenceX)
+                ) {
+
+                    return;
+
+                }
+
+
+                if (differenceX > 0) {
 
                     showProduct(
                         currentIndex + 1
@@ -912,12 +2070,37 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
 
             },
-            { passive: true }
+            {
+                passive: true
+            }
         );
 
 
         /* =================================================
-           INITIAL
+           IMAGE ERROR HANDLING
+        ================================================= */
+
+        if (image) {
+
+            image.addEventListener(
+                "error",
+                () => {
+
+                    image.classList.add(
+                        "image-error"
+                    );
+
+                    image.alt =
+                        "Product image unavailable";
+
+                }
+            );
+
+        }
+
+
+        /* =================================================
+           INITIALIZE
         ================================================= */
 
         showProduct(0);
@@ -925,9 +2108,122 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 
+    /* =====================================================
+       NEXT BATTLE
+    ===================================================== */
+
+    function goToNextBattle(
+        currentBattle
+    ) {
+
+        const allBattles =
+            Array.from(
+                document.querySelectorAll(
+                    ".product-battle"
+                )
+            );
+
+
+        const currentIndex =
+            allBattles.indexOf(
+                currentBattle
+            );
+
+
+        let nextBattle = null;
+
+
+        for (
+            let i = currentIndex + 1;
+            i < allBattles.length;
+            i++
+        ) {
+
+            if (
+                !allBattles[i].classList.contains(
+                    "filtered-out"
+                )
+            ) {
+
+                nextBattle =
+                    allBattles[i];
+
+                break;
+
+            }
+
+        }
+
+
+        if (!nextBattle) {
+
+            for (
+                let i = 0;
+                i < currentIndex;
+                i++
+            ) {
+
+                if (
+                    !allBattles[i].classList.contains(
+                        "filtered-out"
+                    )
+                ) {
+
+                    nextBattle =
+                        allBattles[i];
+
+                    break;
+
+                }
+
+            }
+
+        }
+
+
+        if (!nextBattle) {
+
+            showToast(
+                "You've reached the end! 🏆"
+            );
+
+            return;
+
+        }
+
+
+        nextBattle.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+
+
+        setTimeout(() => {
+
+            const firstButton =
+                nextBattle.querySelector(
+                    "[data-vote]"
+                );
+
+
+            if (
+                firstButton &&
+                firstButton.offsetParent !== null
+            ) {
+
+                firstButton.focus({
+                    preventScroll: true
+                });
+
+            }
+
+        }, 650);
+
+    }
+
 
     /* =====================================================
-       CATEGORY NAV ACTIVE STATE
+       CATEGORY NAVIGATION
     ===================================================== */
 
     const categoryLinks =
@@ -936,30 +2232,108 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
 
-    categoryLinks.forEach((link) => {
+    categoryLinks.forEach(
+        (link) => {
 
-        link.addEventListener(
-            "click",
-            () => {
+            link.addEventListener(
+                "click",
+                () => {
 
-                categoryLinks.forEach(
-                    (item) => {
-                        item.classList.remove(
-                            "active"
-                        );
+                    categoryLinks.forEach(
+                        (item) => {
+
+                            item.classList.remove(
+                                "active"
+                            );
+
+                        }
+                    );
+
+
+                    link.classList.add(
+                        "active"
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       CATEGORY OBSERVER
+       Makes the active category update while scrolling.
+    ===================================================== */
+
+    if (
+        "IntersectionObserver" in window
+    ) {
+
+        const observer =
+            new IntersectionObserver(
+                (entries) => {
+
+                    const visible =
+                        entries
+                            .filter(
+                                (entry) =>
+                                    entry.isIntersecting
+                            )
+                            .sort(
+                                (a, b) =>
+                                    b.intersectionRatio -
+                                    a.intersectionRatio
+                            );
+
+
+                    if (!visible.length) {
+                        return;
                     }
-                );
 
 
-                link.classList.add(
-                    "active"
+                    const category =
+                        visible[0]
+                            .target
+                            .dataset
+                            .category;
+
+
+                    categoryLinks.forEach(
+                        (link) => {
+
+                            link.classList.toggle(
+                                "active",
+                                link.getAttribute(
+                                    "href"
+                                ) === `#${category}`
+                            );
+
+                        }
+                    );
+
+                },
+                {
+                    threshold: [
+                        0.25,
+                        0.5,
+                        0.75
+                    ]
+                }
+            );
+
+
+        battles.forEach(
+            (battle) => {
+
+                observer.observe(
+                    battle
                 );
 
             }
         );
 
-    });
-
+    }
 
 
     /* =====================================================
@@ -972,98 +2346,170 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
 
-    filters.forEach((filter) => {
+    filters.forEach(
+        (filter) => {
 
-        filter.addEventListener(
-            "click",
-            () => {
+            filter.addEventListener(
+                "click",
+                () => {
 
-                const selected =
-                    filter.dataset.filter;
-
-
-                filters.forEach(
-                    (item) => {
-
-                        item.classList.remove(
-                            "active"
-                        );
-
-                    }
-                );
+                    const selected =
+                        filter.dataset.filter;
 
 
-                filter.classList.add(
-                    "active"
-                );
+                    filters.forEach(
+                        (item) => {
 
-
-                battles.forEach(
-                    (battle) => {
-
-                        if (
-                            selected === "all"
-                        ) {
-
-                            battle.classList.remove(
-                                "filtered-out"
-                            );
-
-                            return;
-
-                        }
-
-
-                        const tags =
-                            (
-                                battle.dataset
-                                    .filterTags || ""
-                            ).split(" ");
-
-
-                        if (
-                            tags.includes(selected)
-                        ) {
-
-                            battle.classList.remove(
-                                "filtered-out"
-                            );
-
-                        } else {
-
-                            battle.classList.add(
-                                "filtered-out"
+                            item.classList.remove(
+                                "active"
                             );
 
                         }
-
-                    }
-                );
-
-
-                const firstVisible =
-                    document.querySelector(
-                        ".product-battle:not(.filtered-out)"
                     );
 
 
-                if (firstVisible) {
+                    filter.classList.add(
+                        "active"
+                    );
 
-                    setTimeout(() => {
 
-                        firstVisible.scrollIntoView({
-                            behavior: "smooth",
-                            block: "start"
-                        });
+                    battles.forEach(
+                        (battle) => {
 
-                    }, 100);
+                            if (
+                                selected === "all"
+                            ) {
+
+                                battle.classList.remove(
+                                    "filtered-out"
+                                );
+
+                                return;
+
+                            }
+
+
+                            const tags =
+                                (
+                                    battle.dataset
+                                        .filterTags ||
+                                    ""
+                                )
+                                    .split(/\s+/)
+                                    .filter(Boolean);
+
+
+                            if (
+                                tags.includes(
+                                    selected
+                                )
+                            ) {
+
+                                battle.classList.remove(
+                                    "filtered-out"
+                                );
+
+                            } else {
+
+                                battle.classList.add(
+                                    "filtered-out"
+                                );
+
+                            }
+
+                        }
+                    );
+
+
+                    const firstVisible =
+                        document.querySelector(
+                            ".product-battle:not(.filtered-out)"
+                        );
+
+
+                    if (firstVisible) {
+
+                        setTimeout(() => {
+
+                            firstVisible.scrollIntoView({
+                                behavior: "smooth",
+                                block: "start"
+                            });
+
+                        }, 120);
+
+                    }
 
                 }
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       INITIAL GLOBAL UI
+    ===================================================== */
+
+    updateGlobalProgress();
+
+    updateStreak();
+
+
+    /* =====================================================
+       RETURN TO TOP HELPER
+    ===================================================== */
+
+    window.addEventListener(
+        "scroll",
+        () => {
+
+            const completed =
+                getCompletedBattleCount();
+
+
+            if (
+                completed > 0 &&
+                completed < totalBattles
+            ) {
+
+                document.body.classList.add(
+                    "has-voting-progress"
+                );
 
             }
-        );
 
-    });
+        },
+        {
+            passive: true
+        }
+    );
+
+
+    /* =====================================================
+       OPTIONAL RESET FUNCTION
+       Useful during development.
+
+       Console:
+       resetMomVotes()
+    ===================================================== */
+
+    window.resetMomVotes =
+        function () {
+
+            localStorage.removeItem(
+                STORAGE_KEY
+            );
+
+
+            localStorage.removeItem(
+                SESSION_KEY
+            );
+
+
+            window.location.reload();
+
+        };
 
 
 });
