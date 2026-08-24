@@ -3,11 +3,6 @@
    MomYouNeedThis
 ========================================================= */
 
-
-/* =========================================================
-   PAGE
-========================================================= */
-
 .mom-voted-page {
     width: 100%;
     max-width: 1050px;
@@ -25,46 +20,37 @@
     align-items: center;
 
     width: 100%;
-
-    margin: 0 auto 22px;
+    margin: 0 auto 25px;
 
     text-align: center;
 }
 
-
 .mom-voted-logo-link {
     display: block;
-
     width: fit-content;
-
     margin: 0 auto;
-
     line-height: 0;
-
     text-decoration: none;
 }
 
-
 .mom-voted-logo {
     display: block;
-
-    width: 175px;
-    max-width: 175px;
+    width: 190px;
+    max-width: 190px;
     height: auto;
-
     margin: 0 auto;
 }
-
 
 .community-badge {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: 6px;
 
     width: fit-content;
 
-    margin-top: 14px;
-    padding: 7px 13px;
+    margin-top: 15px;
+    padding: 7px 14px;
 
     border: 1px solid #f5d5e1;
     border-radius: 999px;
@@ -74,11 +60,11 @@
     color: #d94d7a;
 
     font-family: "Nunito", sans-serif;
-
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 900;
 
-    letter-spacing: .65px;
+    letter-spacing: .6px;
+    line-height: 1.2;
 }
 
 
@@ -86,150 +72,102 @@
    HERO
 ========================================================= */
 
-.voting-hero {
-    text-align: center;
-}
-
-
-.hero-kicker {
-    margin: 0 0 10px;
-
-    color: #d94d7a;
-
-    font-family: "Nunito", sans-serif;
-
-    font-size: 11px;
-    font-weight: 900;
-
-    letter-spacing: 1.5px;
-}
-
-
 .mom-voted-page h1 {
-    max-width: 780px;
-
+    max-width: 760px;
     margin: 0 auto;
 
+    text-align: center;
+
     font-family: "Nunito", sans-serif;
 
-    font-size: clamp(42px, 7vw, 68px);
+    font-size: clamp(40px, 7vw, 68px);
     font-weight: 900;
 
     line-height: .98;
-
-    letter-spacing: -2.8px;
-
-    color: #252525;
+    letter-spacing: -2.5px;
 }
-
 
 .mom-voted-page h1 span {
     display: block;
-
-    margin-top: 6px;
+    margin-top: 5px;
 }
-
 
 .mom-voted-intro {
     max-width: 650px;
 
-    margin: 24px auto 24px;
+    margin: 24px auto 28px;
 
     text-align: center;
 
     font-family: "Nunito", sans-serif;
 
     font-size: 17px;
-    line-height: 1.6;
+    line-height: 1.65;
 
     color: #666;
 }
 
 
 /* =========================================================
-   PERSONAL PROGRESS
+   PARTICIPATION BAR
 ========================================================= */
 
-.personal-progress {
-    width: 100%;
-    max-width: 470px;
+.participation-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    margin: 0 auto 34px;
+    gap: 22px;
 
-    padding: 13px 16px;
+    max-width: 720px;
+
+    margin: 0 auto 35px;
+    padding: 15px 20px;
 
     box-sizing: border-box;
 
     border: 1px solid #eeeeee;
-    border-radius: 14px;
+    border-radius: 16px;
 
-    background: #fff;
+    background: #ffffff;
 
-    text-align: left;
-
-    box-shadow:
-        0 5px 20px rgba(0, 0, 0, .035);
-}
-
-
-.progress-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    gap: 15px;
-
-    margin-bottom: 8px;
-
-    color: #777;
+    box-shadow: 0 6px 22px rgba(0,0,0,.04);
 
     font-family: "Nunito", sans-serif;
+}
+
+.participation-stat {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+}
+
+.participation-number {
+    color: #333;
+
+    font-size: 16px;
+    font-weight: 900;
+}
+
+.participation-label {
+    color: #888;
 
     font-size: 11px;
     font-weight: 700;
 }
 
+.participation-divider {
+    width: 1px;
+    height: 25px;
 
-.progress-top strong {
+    background: #eeeeee;
+}
+
+.participation-message {
     color: #d94d7a;
 
-    font-weight: 900;
-}
-
-
-.progress-track {
-    width: 100%;
-    height: 5px;
-
-    overflow: hidden;
-
-    border-radius: 999px;
-
-    background: #f1f1f1;
-}
-
-
-.progress-fill {
-    width: 0%;
-    height: 100%;
-
-    border-radius: inherit;
-
-    background: #d94d7a;
-
-    transition: width .5s cubic-bezier(.22, 1, .36, 1);
-}
-
-
-.personal-progress p {
-    margin: 7px 0 0;
-
-    color: #999;
-
-    font-family: "Nunito", sans-serif;
-
-    font-size: 10px;
-    line-height: 1.4;
+    font-size: 11px;
+    font-weight: 800;
 }
 
 
@@ -258,12 +196,10 @@
     );
 
     border: 1px solid #f5d8e3;
-
     border-radius: 18px;
 
     text-align: left;
 }
-
 
 .holy-grail-banner-icon {
     flex: 0 0 44px;
@@ -281,30 +217,25 @@
 
     font-size: 22px;
 
-    box-shadow:
-        0 4px 14px rgba(0, 0, 0, .06);
+    box-shadow: 0 4px 14px rgba(0,0,0,.06);
 }
-
 
 .holy-grail-banner-content {
     flex: 1;
     min-width: 0;
 }
 
-
 .holy-grail-banner-content strong {
     display: block;
 
     margin-bottom: 3px;
 
-    color: #333;
-
     font-family: "Nunito", sans-serif;
-
     font-size: 16px;
     font-weight: 900;
-}
 
+    color: #333;
+}
 
 .holy-grail-banner-content span {
     display: block;
@@ -314,10 +245,8 @@
     font-family: "Nunito", sans-serif;
 
     font-size: 13px;
-
     line-height: 1.45;
 }
-
 
 .holy-grail-link {
     flex-shrink: 0;
@@ -330,12 +259,10 @@
     font-weight: 900;
 
     text-decoration: none;
-
     white-space: nowrap;
 
     transition: opacity .2s ease;
 }
-
 
 .holy-grail-link:hover {
     opacity: .7;
@@ -343,7 +270,7 @@
 
 
 /* =========================================================
-   CATEGORY NAV
+   CATEGORY NAVIGATION
 ========================================================= */
 
 .voting-categories {
@@ -355,7 +282,6 @@
 
     margin: 0 auto 70px;
 }
-
 
 .voting-categories a {
     display: inline-flex;
@@ -385,7 +311,6 @@
         color .2s ease;
 }
 
-
 .voting-categories a:hover {
     transform: translateY(-2px);
 
@@ -398,22 +323,18 @@
 
 
 /* =========================================================
-   PRODUCT SECTION
+   PRODUCT BATTLE
 ========================================================= */
 
 .product-battle {
-    margin-bottom: 82px;
-
+    margin-bottom: 85px;
     scroll-margin-top: 30px;
 }
 
-
 .battle-heading {
     margin-bottom: 22px;
-
     text-align: center;
 }
-
 
 .battle-eyebrow {
     display: inline-block;
@@ -430,11 +351,8 @@
     letter-spacing: 1px;
 }
 
-
 .battle-heading h2 {
     margin: 0 0 7px;
-
-    color: #272727;
 
     font-family: "Nunito", sans-serif;
 
@@ -444,7 +362,6 @@
     line-height: 1.1;
 }
 
-
 .battle-heading p {
     margin: 0;
 
@@ -453,13 +370,12 @@
     font-family: "Nunito", sans-serif;
 
     font-size: 15px;
-
     line-height: 1.5;
 }
 
 
 /* =========================================================
-   CARD
+   BATTLE CARD
 ========================================================= */
 
 .battle-card {
@@ -469,42 +385,37 @@
 
     box-sizing: border-box;
 
-    background: #fff;
+    background: white;
 
     border: 1px solid #ededed;
-
     border-radius: 28px;
 
-    box-shadow:
-        0 14px 45px rgba(0, 0, 0, .065);
+    box-shadow: 0 14px 45px rgba(0,0,0,.07);
 }
-
 
 .battle-top {
     display: flex;
     align-items: center;
     justify-content: space-between;
 
-    padding: 17px 24px;
+    padding: 18px 24px;
 
     border-bottom: 1px solid #f0f0f0;
 }
-
 
 .battle-category {
     color: #999;
 
     font-family: "Nunito", sans-serif;
 
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 900;
 
     letter-spacing: 1px;
 }
 
-
 .battle-position {
-    padding: 5px 9px;
+    padding: 5px 10px;
 
     border-radius: 999px;
 
@@ -514,8 +425,46 @@
 
     font-family: "Nunito", sans-serif;
 
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 900;
+}
+
+
+/* =========================================================
+   MOM PICK BANNER
+========================================================= */
+
+.mom-pick-banner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 35px;
+
+    padding: 7px 15px;
+
+    box-sizing: border-box;
+
+    background: #fffaf0;
+
+    border-bottom: 1px solid #f5ead4;
+
+    color: #ad791d;
+
+    font-family: "Nunito", sans-serif;
+
+    font-size: 11px;
+    font-weight: 900;
+
+    letter-spacing: .3px;
+
+    transition:
+        opacity .2s ease,
+        transform .2s ease;
+}
+
+.mom-pick-banner.not-leading {
+    opacity: .55;
 }
 
 
@@ -524,11 +473,13 @@
 ========================================================= */
 
 .product-viewer {
+    display: flex;
+    align-items: center;
+
     position: relative;
 
-    width: 100%;
+    min-height: 450px;
 }
-
 
 .product-slide-area {
     display: grid;
@@ -543,20 +494,8 @@
 
     box-sizing: border-box;
 
-    padding: 40px 65px;
+    padding: 45px 65px;
 }
-
-
-/* =========================================================
-   IMAGE
-========================================================= */
-
-.product-image-column {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 
 .product-image-wrap {
     position: relative;
@@ -565,50 +504,34 @@
     align-items: center;
     justify-content: center;
 
-    width: 100%;
-
     min-height: 330px;
 
     padding: 25px;
 
     box-sizing: border-box;
-
-    border-radius: 22px;
-
-    background:
-        radial-gradient(
-            circle at center,
-            #fff9fb 0%,
-            #fff 70%
-        );
 }
 
-
-.product-discovery-badge {
+.product-image-badge {
     position: absolute;
 
-    top: 12px;
-    left: 12px;
+    top: 10px;
+    left: 25px;
 
-    padding: 6px 9px;
+    padding: 6px 10px;
 
-    border-radius: 7px;
+    border-radius: 999px;
 
-    background: #fff;
+    background: #fffaf0;
 
-    color: #d94d7a;
+    color: #ad791d;
 
     font-family: "Nunito", sans-serif;
 
     font-size: 9px;
     font-weight: 900;
 
-    letter-spacing: .8px;
-
-    box-shadow:
-        0 3px 12px rgba(0, 0, 0, .06);
+    letter-spacing: .7px;
 }
-
 
 .battle-product-image {
     display: block;
@@ -621,42 +544,43 @@
     object-fit: contain;
 
     transition:
-        opacity .18s ease,
-        transform .18s ease;
+        opacity .16s ease,
+        transform .16s ease;
+}
+
+.product-changing {
+    opacity: 0;
+
+    transform: scale(.95);
 }
 
 
 /* =========================================================
-   PRODUCT INFO
+   PRODUCT INFORMATION
 ========================================================= */
 
 .battle-product-info {
     padding: 25px 30px;
-
     box-sizing: border-box;
 }
-
 
 .product-label {
     display: inline-block;
 
-    margin-bottom: 11px;
+    margin-bottom: 12px;
 
     color: #d94d7a;
 
     font-family: "Nunito", sans-serif;
 
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 900;
 
     letter-spacing: 1px;
 }
 
-
 .battle-product-info h3 {
     margin: 0;
-
-    color: #272727;
 
     font-family: "Nunito", sans-serif;
 
@@ -668,9 +592,8 @@
     letter-spacing: -1px;
 }
 
-
 .product-brand {
-    margin: 9px 0 16px;
+    margin: 9px 0 17px;
 
     color: #888;
 
@@ -679,7 +602,6 @@
     font-size: 14px;
     font-weight: 800;
 }
-
 
 .battle-description {
     max-width: 420px;
@@ -691,45 +613,68 @@
     font-family: "Nunito", sans-serif;
 
     font-size: 15px;
-
     line-height: 1.65;
 }
 
 
 /* =========================================================
-   RECOMMENDATION RATE
+   SOCIAL PROOF
    INTENTIONALLY NOT A BUTTON
 ========================================================= */
 
-.recommendation-rate {
+.vote-social-proof {
     display: flex;
     align-items: baseline;
+    gap: 6px;
 
-    gap: 7px;
+    margin: 0 0 8px;
 
-    margin: 0 0 18px;
-
-    color: #777;
+    color: #555;
 
     font-family: "Nunito", sans-serif;
 
-    line-height: 1.3;
-}
-
-
-.recommendation-rate strong {
-    color: #d94d7a;
-
-    font-size: 24px;
-    font-weight: 900;
-
-    letter-spacing: -.5px;
-}
-
-
-.recommendation-rate span {
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 700;
+
+    line-height: 1.4;
+}
+
+.vote-social-proof strong {
+    color: #c94d73;
+
+    font-size: 18px;
+    font-weight: 900;
+}
+
+
+/* =========================================================
+   VOTE PROGRESS
+========================================================= */
+
+.vote-progress {
+    width: 100%;
+    max-width: 410px;
+
+    height: 5px;
+
+    margin-bottom: 19px;
+
+    overflow: hidden;
+
+    border-radius: 999px;
+
+    background: #f0f0f0;
+}
+
+.vote-progress-fill {
+    width: 0;
+    height: 100%;
+
+    border-radius: inherit;
+
+    background: #d94d7a;
+
+    transition: width .7s cubic-bezier(.22,1,.36,1);
 }
 
 
@@ -743,7 +688,7 @@
     justify-content: center;
 
     width: 100%;
-    min-height: 55px;
+    min-height: 56px;
 
     gap: 10px;
 
@@ -756,7 +701,7 @@
 
     background: #d94d7a;
 
-    color: #fff;
+    color: white;
 
     font-family: "Nunito", sans-serif;
 
@@ -765,8 +710,7 @@
 
     cursor: pointer;
 
-    box-shadow:
-        0 8px 20px rgba(217, 77, 122, .20);
+    box-shadow: 0 8px 20px rgba(217,77,122,.20);
 
     transition:
         transform .2s ease,
@@ -774,171 +718,69 @@
         background .2s ease;
 }
 
-
 .recommend-button:hover {
     transform: translateY(-2px);
 
-    box-shadow:
-        0 12px 26px rgba(217, 77, 122, .28);
+    box-shadow: 0 12px 25px rgba(217,77,122,.28);
 }
-
 
 .recommend-button:active {
-    transform: scale(.98);
+    transform: translateY(0);
 }
-
 
 .recommend-button.has-voted {
     background: #2f9d73;
 
-    box-shadow:
-        0 8px 20px rgba(47, 157, 115, .18);
+    box-shadow: 0 8px 20px rgba(47,157,115,.18);
 }
 
-
-.vote-arrow {
+.recommend-arrow {
     font-size: 17px;
 
     transition: transform .2s ease;
 }
 
-
-.recommend-button:hover .vote-arrow {
+.recommend-button:hover .recommend-arrow {
     transform: translateX(3px);
 }
 
 
 /* =========================================================
-   VOTE RESULT
+   VOTE CONFIRMATION
 ========================================================= */
 
-.vote-result {
-    display: none;
+.vote-confirmation {
+    min-height: 20px;
 
-    margin-top: 11px;
+    margin: 10px 0 0;
 
-    padding: 13px;
-
-    border-radius: 13px;
-
-    background: #f5fbf8;
-
-    border: 1px solid #d9eee5;
-
-    animation: resultReveal .35s ease both;
-}
-
-
-.vote-result.visible {
-    display: block;
-}
-
-
-@keyframes resultReveal {
-
-    from {
-        opacity: 0;
-        transform: translateY(-5px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-}
-
-
-.vote-result-main {
-    display: flex;
-    align-items: center;
-
-    gap: 10px;
-}
-
-
-.result-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    flex: 0 0 27px;
-
-    width: 27px;
-    height: 27px;
-
-    border-radius: 50%;
-
-    background: #2f9d73;
-
-    color: #fff;
-
-    font-size: 13px;
-    font-weight: 900;
-}
-
-
-.vote-result-main strong {
-    display: block;
-
-    margin-bottom: 2px;
-
-    color: #286f54;
+    color: #2f9d73;
 
     font-family: "Nunito", sans-serif;
 
     font-size: 12px;
     font-weight: 900;
+
+    text-align: center;
+
+    opacity: 0;
+
+    transform: translateY(-3px);
+
+    transition:
+        opacity .25s ease,
+        transform .25s ease;
 }
 
+.vote-confirmation.visible {
+    opacity: 1;
 
-.vote-result-main span {
-    color: #6e8b7f;
-
-    font-family: "Nunito", sans-serif;
-
-    font-size: 10px;
-
-    line-height: 1.4;
-}
-
-
-/* =========================================================
-   KEEP DISCOVERING
-========================================================= */
-
-.next-discovery {
-    display: block;
-
-    width: 100%;
-
-    margin-top: 10px;
-    padding: 0;
-
-    border: 0;
-
-    background: transparent;
-
-    color: #2f8061;
-
-    font-family: "Nunito", sans-serif;
-
-    font-size: 11px;
-    font-weight: 900;
-
-    text-align: left;
-
-    cursor: pointer;
-}
-
-
-.next-discovery:hover {
-    text-decoration: underline;
+    transform: translateY(0);
 }
 
 
 /* =========================================================
-   AMAZON LINK
+   AFFILIATE / PRODUCT DISCOVERY LINK
 ========================================================= */
 
 .product-shop-link {
@@ -946,9 +788,9 @@
 
     width: fit-content;
 
-    margin-top: 18px;
+    margin: 17px auto 0;
 
-    color: #d89b22;
+    color: #c68a19;
 
     font-family: "Nunito", sans-serif;
 
@@ -964,16 +806,119 @@
         transform .2s ease;
 }
 
-
 .product-shop-link:hover {
-    color: #a9700d;
+    color: #9e6c0d;
+
+    transform: translateY(-1px);
+}
+
+.product-shop-link:active {
+    transform: translateY(0);
+}
+
+
+/* =========================================================
+   NEXT PRODUCT DISCOVERY
+========================================================= */
+
+.next-product-link {
+    display: block;
+
+    width: fit-content;
+
+    margin: 13px auto 0;
+
+    padding: 0;
+
+    border: 0;
+
+    background: transparent;
+
+    color: #999;
+
+    font-family: "Nunito", sans-serif;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition:
+        color .2s ease,
+        transform .2s ease;
+}
+
+.next-product-link:hover {
+    color: #d94d7a;
 
     transform: translateX(2px);
 }
 
 
-.product-shop-link:active {
-    transform: translateX(0);
+/* =========================================================
+   ARROWS
+========================================================= */
+
+.product-arrow {
+    flex: 0 0 auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 48px;
+    height: 48px;
+
+    padding: 0;
+
+    border: 1px solid #e8e8e8;
+    border-radius: 50%;
+
+    background: white;
+
+    color: #444;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 34px;
+    font-weight: 300;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    z-index: 3;
+
+    box-shadow: 0 5px 18px rgba(0,0,0,.08);
+
+    transition:
+        transform .2s ease,
+        background .2s ease,
+        color .2s ease;
+}
+
+.product-arrow:hover:not(:disabled) {
+    transform: scale(1.08);
+
+    background: #fff1f6;
+
+    color: #d94d7a;
+}
+
+.product-arrow:disabled {
+    opacity: .25;
+
+    cursor: default;
+
+    box-shadow: none;
+}
+
+.product-arrow-left {
+    margin-left: 18px;
+}
+
+.product-arrow-right {
+    margin-right: 18px;
 }
 
 
@@ -990,7 +935,6 @@
     padding: 0 20px 20px;
 }
 
-
 .battle-dot {
     width: 7px;
     height: 7px;
@@ -1003,8 +947,11 @@
     background: #ddd;
 
     cursor: pointer;
-}
 
+    transition:
+        width .2s ease,
+        background .2s ease;
+}
 
 .battle-dot.active {
     width: 22px;
@@ -1041,57 +988,6 @@
 
 
 /* =========================================================
-   COMING SOON
-========================================================= */
-
-.coming-soon-categories {
-    max-width: 850px;
-
-    margin: -20px auto 75px;
-
-    text-align: center;
-}
-
-
-.coming-soon-label {
-    margin: 0 0 15px;
-
-    color: #aaa;
-
-    font-family: "Nunito", sans-serif;
-
-    font-size: 10px;
-    font-weight: 900;
-
-    letter-spacing: 1.3px;
-}
-
-
-.coming-soon-grid {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-
-    gap: 9px;
-}
-
-
-.coming-soon-grid span {
-    padding: 9px 13px;
-
-    border: 1px dashed #ddd;
-    border-radius: 999px;
-
-    color: #999;
-
-    font-family: "Nunito", sans-serif;
-
-    font-size: 11px;
-    font-weight: 800;
-}
-
-
-/* =========================================================
    HOW IT WORKS
 ========================================================= */
 
@@ -1111,7 +1007,6 @@
     text-align: center;
 }
 
-
 .voting-explainer h2 {
     margin: 18px 0 10px;
 
@@ -1120,7 +1015,6 @@
     font-size: 34px;
     font-weight: 900;
 }
-
 
 .voting-explainer > p {
     max-width: 600px;
@@ -1134,7 +1028,6 @@
     line-height: 1.65;
 }
 
-
 .explainer-grid {
     display: grid;
 
@@ -1143,11 +1036,9 @@
     gap: 25px;
 }
 
-
 .explainer-item {
     padding: 10px;
 }
-
 
 .explainer-item > span {
     display: inline-flex;
@@ -1171,7 +1062,6 @@
     font-weight: 900;
 }
 
-
 .explainer-item h3 {
     margin: 0 0 7px;
 
@@ -1181,7 +1071,6 @@
     font-weight: 900;
 }
 
-
 .explainer-item p {
     margin: 0;
 
@@ -1190,7 +1079,6 @@
     font-family: "Nunito", sans-serif;
 
     font-size: 13px;
-
     line-height: 1.55;
 }
 
@@ -1221,13 +1109,11 @@
     text-align: center;
 }
 
-
 .holy-grail-final-icon {
     margin-bottom: 10px;
 
     font-size: 35px;
 }
-
 
 .holy-grail-final h2 {
     margin: 0 0 10px;
@@ -1237,7 +1123,6 @@
     font-size: 32px;
     font-weight: 900;
 }
-
 
 .holy-grail-final p {
     max-width: 500px;
@@ -1250,7 +1135,6 @@
 
     line-height: 1.6;
 }
-
 
 .holy-grail-final-button {
     display: inline-flex;
@@ -1277,12 +1161,11 @@
         box-shadow .2s ease;
 }
 
-
 .holy-grail-final-button:hover {
     transform: translateY(-2px);
 
     box-shadow:
-        0 10px 24px rgba(217, 77, 122, .20);
+        0 10px 24px rgba(217,77,122,.20);
 }
 
 
@@ -1294,9 +1177,7 @@
 
     .mom-voted-logo {
         width: 160px;
-        max-width: 160px;
     }
-
 
     .product-slide-area {
         grid-template-columns:
@@ -1306,12 +1187,10 @@
         padding: 35px 45px;
     }
 
-
     .battle-product-image {
         max-width: 290px;
         height: 290px;
     }
-
 
     .product-image-wrap {
         min-height: 290px;
@@ -1327,46 +1206,55 @@
 @media (max-width: 700px) {
 
     .mom-voted-header {
-        margin-bottom: 18px;
+        margin-bottom: 20px;
     }
-
 
     .mom-voted-logo {
         width: 130px;
-        max-width: 130px;
     }
-
 
     .community-badge {
-        margin-top: 11px;
+        margin-top: 12px;
 
-        padding: 6px 11px;
+        padding: 6px 12px;
 
         font-size: 9px;
     }
 
 
-    .hero-kicker {
-        font-size: 9px;
-    }
-
+    /* HERO */
 
     .mom-voted-page h1 {
         font-size: 42px;
 
-        letter-spacing: -1.8px;
+        letter-spacing: -1.7px;
     }
 
-
     .mom-voted-intro {
-        margin-top: 19px;
+        margin-top: 20px;
 
         font-size: 16px;
     }
 
 
-    .personal-progress {
-        margin-bottom: 28px;
+    /* PARTICIPATION */
+
+    .participation-bar {
+        flex-wrap: wrap;
+
+        gap: 10px 15px;
+
+        padding: 14px;
+    }
+
+    .participation-message {
+        width: 100%;
+
+        padding-top: 7px;
+
+        border-top: 1px solid #eeeeee;
+
+        text-align: center;
     }
 
 
@@ -1380,13 +1268,11 @@
         padding: 16px;
     }
 
-
     .holy-grail-banner-content {
         min-width: 0;
 
         flex: 1;
     }
-
 
     .holy-grail-link {
         width: 100%;
@@ -1407,7 +1293,6 @@
         margin-bottom: 50px;
     }
 
-
     .voting-categories a {
         padding: 8px 12px;
 
@@ -1415,22 +1300,23 @@
     }
 
 
-    /* PRODUCT */
+    /* BATTLE */
 
     .product-battle {
         margin-bottom: 65px;
     }
 
-
     .battle-card {
         border-radius: 22px;
     }
-
 
     .battle-top {
         padding: 14px 16px;
     }
 
+    .product-viewer {
+        min-height: auto;
+    }
 
     .product-slide-area {
         display: flex;
@@ -1442,12 +1328,6 @@
         padding: 20px 20px 28px;
     }
 
-
-    .product-image-column {
-        width: 100%;
-    }
-
-
     .product-image-wrap {
         width: 100%;
 
@@ -1455,13 +1335,6 @@
 
         padding: 10px 30px;
     }
-
-
-    .product-discovery-badge {
-        top: 8px;
-        left: 8px;
-    }
-
 
     .battle-product-image {
         width: 100%;
@@ -1471,35 +1344,68 @@
         height: 250px;
     }
 
+    .product-image-badge {
+        top: 3px;
+        left: 20px;
+    }
 
     .battle-product-info {
         width: 100%;
 
-        padding: 12px 8px 0;
+        padding: 10px 8px 0;
 
         text-align: center;
     }
 
-
     .battle-product-info h3 {
         font-size: 30px;
     }
-
 
     .battle-description {
         margin-right: auto;
         margin-left: auto;
     }
 
-
-    .recommendation-rate {
-        justify-content: center;
+    .vote-progress {
+        margin-right: auto;
+        margin-left: auto;
     }
 
 
-    .product-shop-link {
-        margin-right: auto;
-        margin-left: auto;
+    /* ARROWS */
+
+    .product-arrow {
+        position: absolute;
+
+        top: 150px;
+
+        width: 42px;
+        height: 42px;
+
+        font-size: 30px;
+
+        background: rgba(255,255,255,.95);
+    }
+
+    .product-arrow-left {
+        left: 9px;
+
+        margin: 0;
+    }
+
+    .product-arrow-right {
+        right: 9px;
+
+        margin: 0;
+    }
+
+
+    /* VOTE */
+
+    .recommend-button {
+        min-height: 54px;
+
+        font-size: 12px;
     }
 
 
@@ -1511,11 +1417,9 @@
         border-radius: 22px;
     }
 
-
     .voting-explainer h2 {
         font-size: 28px;
     }
-
 
     .explainer-grid {
         grid-template-columns: 1fr;
@@ -1524,14 +1428,13 @@
     }
 
 
-    /* FINAL CTA */
+    /* FINAL */
 
     .holy-grail-final {
         padding: 35px 22px;
 
         border-radius: 22px;
     }
-
 
     .holy-grail-final h2 {
         font-size: 28px;
@@ -1548,39 +1451,32 @@
 
     .mom-voted-logo {
         width: 120px;
-        max-width: 120px;
     }
-
 
     .mom-voted-page h1 {
         font-size: 37px;
     }
 
-
     .mom-voted-intro {
         font-size: 15px;
     }
 
-
     .battle-product-image {
         max-width: 235px;
-
         height: 225px;
     }
-
 
     .product-image-wrap {
         min-height: 225px;
     }
 
+    .product-arrow {
+        top: 137px;
 
-    .recommendation-rate strong {
-        font-size: 22px;
-    }
+        width: 38px;
+        height: 38px;
 
-
-    .recommendation-rate span {
-        font-size: 11px;
+        font-size: 27px;
     }
 
 }
@@ -1590,13 +1486,28 @@
    ACCESSIBILITY
 ========================================================= */
 
-.recommend-button:focus-visible,
-.next-discovery:focus-visible,
-.product-shop-link:focus-visible,
-.voting-categories a:focus-visible,
-.holy-grail-link:focus-visible,
-.holy-grail-final-button:focus-visible {
-    outline: 3px solid rgba(217, 77, 122, .25);
+button:focus-visible,
+a:focus-visible {
+    outline: 3px solid rgba(217,77,122,.35);
 
     outline-offset: 3px;
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+
+        transition-duration: .01ms !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+
 }
