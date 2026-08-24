@@ -1,748 +1,907 @@
 /* =========================================================
-   MOM-VOTED PRODUCT EXPERIENCE
-   
+   MOMYOU NEED THIS
+   AMAZON FAVORITES / MOM VOTED PRODUCTS
 ========================================================= */
 
 
-document.addEventListener("DOMContentLoaded", () => {
+/* =========================================================
+   PRODUCT DATA
+========================================================= */
 
-    "use strict";
+const productData = {
 
+    baby: [
 
-    /* =====================================================
-       STORAGE
-    ===================================================== */
+        {
+            image: "assets/babyeinstein-aquarium.jpeg",
 
-    const STORAGE_KEY = "momYouNeedThisVoting";
+            alt: "Baby Einstein Soother Musical Crib Toy",
 
+            name: "Soother Musical Crib Toy",
 
-    const defaultState = {
-        votes: {},
-        totalVotes: 0
-    };
+            brand: "Baby Einstein",
 
+            description:
+                "A popular option for keeping little ones entertained during quiet moments and daily routines.",
 
-    let state = loadState();
+            percentage: 62,
 
-
-    function loadState() {
-
-        try {
-
-            const saved = localStorage.getItem(STORAGE_KEY);
-
-            if (!saved) {
-                return {
-                    ...defaultState
-                };
-            }
+            link: "https://amzn.to/4fNqr9j"
+        },
 
 
-            const parsed = JSON.parse(saved);
+        {
+            image: "assets/product2.jpg",
 
+            alt: "Baby product favorite",
 
-            return {
-                votes:
-                    parsed &&
-                    typeof parsed.votes === "object"
-                        ? parsed.votes
-                        : {},
+            name: "Another Baby Favorite",
 
-                totalVotes:
-                    parsed &&
-                    Number.isFinite(parsed.totalVotes)
-                        ? parsed.totalVotes
-                        : 0
-            };
+            brand: "MomYouNeedThis Pick",
 
-        } catch (error) {
+            description:
+                "A practical baby product that many parents appreciate during everyday routines.",
 
-            console.warn(
-                "MomYouNeedThis voting data could not be loaded.",
-                error
-            );
+            percentage: 54,
 
-
-            return {
-                ...defaultState
-            };
-
+            link: "YOUR-AMAZON-LINK-HERE"
         }
+
+    ],
+
+
+    toddler: [
+
+        {
+            image: "assets/product2.jpg",
+
+            alt: "Toddler favorite product",
+
+            name: "Toddler Favorite",
+
+            brand: "MomYouNeedThis Pick",
+
+            description:
+                "A practical everyday product designed to make life with toddlers a little easier.",
+
+            percentage: 57,
+
+            link: "YOUR-AMAZON-LINK-HERE"
+        },
+
+
+        {
+            image: "assets/product2.jpg",
+
+            alt: "Toddler product favorite",
+
+            name: "Another Toddler Favorite",
+
+            brand: "Parent Pick",
+
+            description:
+                "A simple product parents keep coming back to because it makes everyday toddler life easier.",
+
+            percentage: 64,
+
+            link: "YOUR-AMAZON-LINK-HERE"
+        }
+
+    ],
+
+
+    sleep: [
+
+        {
+            image: "assets/white-noise-machine.jpeg",
+
+            alt: "White noise machine",
+
+            name: "White Noise Machine",
+
+            brand: "Parent Favorite",
+
+            description:
+                "A popular choice for creating a consistent sleep environment for little ones.",
+
+            percentage: 71,
+
+            link: "https://amzn.to/4z8LxGC"
+        },
+
+
+        {
+            image: "assets/product2.jpg",
+
+            alt: "Baby sleep product",
+
+            name: "Sleep Time Favorite",
+
+            brand: "Mom Pick",
+
+            description:
+                "A simple sleep-time helper parents often keep nearby during naps and bedtime.",
+
+            percentage: 63,
+
+            link: "YOUR-AMAZON-LINK-HERE"
+        }
+
+    ],
+
+
+    potty: [
+
+        {
+            image: "assets/babybjorn-potty-toilet.jpeg",
+
+            alt: "BabyBjörn potty",
+
+            name: "Potty Training Seat",
+
+            brand: "BabyBjörn",
+
+            description:
+                "A simple potty-training option designed to help toddlers feel comfortable and confident.",
+
+            percentage: 68,
+
+            link: "https://amzn.to/3S23eqS"
+        },
+
+
+        {
+            image: "assets/product2.jpg",
+
+            alt: "Potty training favorite",
+
+            name: "Potty Training Favorite",
+
+            brand: "Parent Pick",
+
+            description:
+                "A practical potty-training helper designed to make the transition a little easier.",
+
+            percentage: 59,
+
+            link: "YOUR-AMAZON-LINK-HERE"
+        }
+
+    ]
+
+};
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+const state = {};
+
+let totalVotes =
+    Number(
+        localStorage.getItem("momYouNeedThisTotalVotes")
+    ) || 1284;
+
+
+let yourPicks =
+    Number(
+        localStorage.getItem("momYouNeedThisYourPicks")
+    ) || 0;
+
+
+const votedProducts =
+    JSON.parse(
+        localStorage.getItem("momYouNeedThisVotedProducts") || "{}"
+    );
+
+
+/* =========================================================
+   DOM HELPERS
+========================================================= */
+
+const qs = (selector, parent = document) =>
+    parent.querySelector(selector);
+
+
+const qsa = (selector, parent = document) =>
+    [...parent.querySelectorAll(selector)];
+
+
+/* =========================================================
+   UPDATE GLOBAL PARTICIPATION
+========================================================= */
+
+function updateParticipation() {
+
+    const totalElement =
+        qs("[data-total-votes]");
+
+    const picksElement =
+        qs("[data-your-picks]");
+
+    const messageElement =
+        qs("[data-participation-message]");
+
+
+    if (totalElement) {
+
+        totalElement.textContent =
+            totalVotes.toLocaleString();
 
     }
 
 
-    function saveState() {
+    if (picksElement) {
 
-        try {
-
-            localStorage.setItem(
-                STORAGE_KEY,
-                JSON.stringify(state)
-            );
-
-        } catch (error) {
-
-            console.warn(
-                "MomYouNeedThis voting data could not be saved.",
-                error
-            );
-
-        }
+        picksElement.textContent =
+            yourPicks;
 
     }
 
 
-    /* =====================================================
-       DOM
-    ===================================================== */
-
-    const productSections = [
-        ...document.querySelectorAll(".product-battle")
-    ];
+    if (!messageElement) return;
 
 
-    const voteCountElement =
-        document.querySelector("[data-vote-count]");
+    if (yourPicks === 0) {
 
-
-    const progressFill =
-        document.querySelector("[data-progress-fill]");
-
-
-    const progressMessage =
-        document.querySelector("[data-progress-message]");
-
-
-    /* =====================================================
-       PROGRESS
-    ===================================================== */
-
-    const totalProducts =
-        productSections.length;
-
-
-    function updatePersonalProgress() {
-
-        const count = state.totalVotes;
-
-
-        if (voteCountElement) {
-
-            voteCountElement.textContent =
-                `${count} ${count === 1 ? "vote" : "votes"}`;
-
-        }
-
-
-        /*
-         * This is deliberately personal progress.
-         *
-         * It does NOT pretend to represent other users.
-         */
-
-        const progress =
-            totalProducts > 0
-                ? Math.min(
-                    100,
-                    (count / totalProducts) * 100
-                )
-                : 0;
-
-
-        if (progressFill) {
-
-            progressFill.style.width =
-                `${progress}%`;
-
-        }
-
-
-        if (!progressMessage) {
-            return;
-        }
-
-
-        if (count === 0) {
-
-            progressMessage.textContent =
-                "Cast your first vote to get started.";
-
-            return;
-
-        }
-
-
-        if (count === 1) {
-
-            progressMessage.textContent =
-                "Nice start. Keep discovering.";
-
-            return;
-
-        }
-
-
-        if (count < totalProducts) {
-
-            progressMessage.textContent =
-                "You're getting the hang of it. Keep going.";
-
-            return;
-
-        }
-
-
-        progressMessage.textContent =
-            "You've voted on every product you've discovered here.";
+        messageElement.textContent =
+            "Your votes help other moms decide.";
 
     }
 
+    else if (yourPicks === 1) {
 
-    /* =====================================================
-       PRODUCT SECTIONS
-    ===================================================== */
+        messageElement.textContent =
+            "You've made your first mom pick 💗";
 
-    productSections.forEach((section) => {
+    }
 
-        setupProductSection(section);
+    else if (yourPicks < 4) {
+
+        messageElement.textContent =
+            "You're helping other moms choose.";
+
+    }
+
+    else {
+
+        messageElement.textContent =
+            "You're becoming a serious MomYouNeedThis voter ✨";
+
+    }
+
+}
+
+
+/* =========================================================
+   SAVE STATE
+========================================================= */
+
+function saveState() {
+
+    localStorage.setItem(
+        "momYouNeedThisTotalVotes",
+        String(totalVotes)
+    );
+
+
+    localStorage.setItem(
+        "momYouNeedThisYourPicks",
+        String(yourPicks)
+    );
+
+
+    localStorage.setItem(
+        "momYouNeedThisVotedProducts",
+        JSON.stringify(votedProducts)
+    );
+
+}
+
+
+/* =========================================================
+   GET LEADING PRODUCT
+========================================================= */
+
+function getLeadingProduct(products) {
+
+    let leaderIndex = 0;
+
+    products.forEach((product, index) => {
+
+        if (
+            product.percentage >
+            products[leaderIndex].percentage
+        ) {
+
+            leaderIndex = index;
+
+        }
 
     });
 
-
-    function setupProductSection(section) {
-
-        const productId =
-            section.dataset.productId;
+    return leaderIndex;
+}
 
 
-        if (!productId) {
-            return;
-        }
+/* =========================================================
+   UPDATE MOM PICK
+========================================================= */
+
+function updateMomPick(
+    battle,
+    products,
+    currentIndex
+) {
+
+    const banner =
+        qs("[data-mom-pick]", battle);
 
 
-        const voteButton =
-            section.querySelector("[data-vote]");
+    if (!banner) return;
 
 
-        const voteResult =
-            section.querySelector("[data-result]");
+    const leaderIndex =
+        getLeadingProduct(products);
 
 
-        const nextButton =
-            section.querySelector("[data-next-discovery]");
+    if (leaderIndex === currentIndex) {
 
+        banner.textContent =
+            "✨ Current Mom Favorite";
 
-        const votePercentage =
-            section.querySelector("[data-vote-percentage]");
-
-
-        const productName =
-            section.querySelector("[data-name]");
-
-
-        if (!voteButton) {
-            return;
-        }
-
-
-        /*
-         * Restore previous vote.
-         */
-
-        if (state.votes[productId]) {
-
-            setVotedState(
-                section,
-                false
-            );
-
-        }
-
-
-        /* =================================================
-           VOTE
-        ================================================= */
-
-        voteButton.addEventListener(
-            "click",
-            () => {
-
-                handleVote(
-                    section,
-                    productId
-                );
-
-            }
+        banner.classList.remove(
+            "not-leading"
         );
-
-
-        /* =================================================
-           KEEP DISCOVERING
-        ================================================= */
-
-        if (nextButton) {
-
-            nextButton.addEventListener(
-                "click",
-                () => {
-
-                    goToNextProduct(
-                        section
-                    );
-
-                }
-            );
-
-        }
-
-
-        /* =================================================
-           PREVENT EMPTY AMAZON LINK
-        ================================================= */
-
-        const shopLink =
-            section.querySelector("[data-link]");
-
-
-        if (
-            shopLink &&
-            shopLink.getAttribute("href") ===
-            "YOUR-AMAZON-LINK-HERE"
-        ) {
-
-            shopLink.classList.add(
-                "missing-affiliate-link"
-            );
-
-            shopLink.addEventListener(
-                "click",
-                (event) => {
-
-                    event.preventDefault();
-
-                    alert(
-                        "Add the Amazon affiliate link for this product first."
-                    );
-
-                }
-            );
-
-        }
-
-
-        /*
-         * Keep variables referenced so future
-         * product data can easily expand.
-         */
-
-        void voteResult;
-        void votePercentage;
-        void productName;
 
     }
 
+    else {
 
-    /* =====================================================
-       HANDLE VOTE
-    ===================================================== */
+        banner.textContent =
+            "💗 Another Mom Favorite";
 
-    function handleVote(
-        section,
-        productId
-    ) {
-
-        /*
-         * Prevent multiple votes from the same
-         * browser for the same product.
-         */
-
-        if (state.votes[productId]) {
-
-            setVotedState(
-                section,
-                true
-            );
-
-            return;
-
-        }
-
-
-        state.votes[productId] = {
-            votedAt: Date.now()
-        };
-
-
-        state.totalVotes += 1;
-
-
-        saveState();
-
-
-        setVotedState(
-            section,
-            true
+        banner.classList.add(
+            "not-leading"
         );
-
-
-        updatePersonalProgress();
-
-
-        /*
-         * Tiny scroll adjustment on mobile.
-         * It keeps the feedback visible without
-         * aggressively jumping the user around.
-         */
-
-        if (
-            window.innerWidth <= 700
-        ) {
-
-            setTimeout(() => {
-
-                const result =
-                    section.querySelector(
-                        "[data-result]"
-                    );
-
-
-                if (result) {
-
-                    const rect =
-                        result.getBoundingClientRect();
-
-
-                    if (
-                        rect.bottom >
-                        window.innerHeight
-                    ) {
-
-                        result.scrollIntoView({
-                            behavior: "smooth",
-                            block: "nearest"
-                        });
-
-                    }
-
-                }
-
-            }, 100);
-
-        }
 
     }
 
-
-    /* =====================================================
-       VOTED STATE
-    ===================================================== */
-
-    function setVotedState(
-        section,
-        isReturningUser
-    ) {
-
-        const button =
-            section.querySelector("[data-vote]");
+}
 
 
-        const result =
-            section.querySelector("[data-result]");
+/* =========================================================
+   RENDER PRODUCT
+========================================================= */
+
+function renderProduct(
+    battle,
+    products,
+    index,
+    direction = "next"
+) {
+
+    const image =
+        qs("[data-image]", battle);
+
+    const name =
+        qs("[data-name]", battle);
+
+    const brand =
+        qs("[data-brand]", battle);
+
+    const description =
+        qs("[data-description]", battle);
+
+    const label =
+        qs("[data-label]", battle);
+
+    const percentage =
+        qs("[data-vote-percentage]", battle);
+
+    const progress =
+        qs("[data-vote-progress]", battle);
+
+    const link =
+        qs("[data-link]", battle);
+
+    const position =
+        qs("[data-position]", battle);
+
+    const confirmation =
+        qs("[data-confirmation]", battle);
+
+    const voteButton =
+        qs("[data-vote]", battle);
 
 
-        const resultTitle =
-            section.querySelector("[data-result-title]");
+    const product =
+        products[index];
 
 
-        const resultMessage =
-            section.querySelector("[data-result-message]");
+    if (!product) return;
 
 
-        if (!button) {
-            return;
-        }
+    /* -----------------------------------------
+       TRANSITION
+    ----------------------------------------- */
+
+    image.classList.add(
+        "product-changing"
+    );
 
 
-        button.classList.add(
+    setTimeout(() => {
+
+        image.src =
+            product.image;
+
+        image.alt =
+            product.alt;
+
+
+        name.textContent =
+            product.name;
+
+
+        brand.textContent =
+            product.brand;
+
+
+        description.textContent =
+            product.description;
+
+
+        label.textContent =
+            `PRODUCT ${index + 1}`;
+
+
+        percentage.textContent =
+            `${product.percentage}%`;
+
+
+        progress.style.width =
+            `${product.percentage}%`;
+
+
+        link.href =
+            product.link;
+
+
+        position.textContent =
+            `${index + 1} / ${products.length}`;
+
+
+        confirmation.textContent = "";
+
+        confirmation.classList.remove(
+            "visible"
+        );
+
+
+        voteButton.classList.remove(
             "has-voted"
         );
 
 
-        button.disabled = true;
+        if (
+            votedProducts[
+                `${battle.dataset.category}-${index}`
+            ]
+        ) {
 
+            voteButton.classList.add(
+                "has-voted"
+            );
 
-        button.querySelector("span:first-child")
-            .textContent =
-            "YOU RECOMMENDED THIS";
+            confirmation.textContent =
+                "You already recommended this one 💗";
 
-
-        const arrow =
-            button.querySelector(".vote-arrow");
-
-
-        if (arrow) {
-
-            arrow.textContent = "✓";
-
-        }
-
-
-        if (result) {
-
-            result.classList.add(
+            confirmation.classList.add(
                 "visible"
             );
 
         }
 
 
-        if (resultTitle) {
-
-            resultTitle.textContent =
-                isReturningUser
-                    ? "You already voted for this."
-                    : "Your vote is in!";
-
-        }
+        image.classList.remove(
+            "product-changing"
+        );
 
 
-        if (resultMessage) {
-
-            resultMessage.textContent =
-                isReturningUser
-                    ? "Your recommendation is saved on this device."
-                    : "You just helped another mom narrow it down.";
-
-        }
-
-    }
+        updateMomPick(
+            battle,
+            products,
+            index
+        );
 
 
-    /* =====================================================
-       NEXT DISCOVERY
-    ===================================================== */
+        updateDots(
+            battle,
+            products,
+            index
+        );
 
-    function goToNextProduct(
-        currentSection
-    ) {
+    }, 140);
 
-        const currentIndex =
-            productSections.indexOf(
-                currentSection
+}
+
+
+/* =========================================================
+   DOTS
+========================================================= */
+
+function updateDots(
+    battle,
+    products,
+    currentIndex
+) {
+
+    const dots =
+        qs("[data-dots]", battle);
+
+
+    if (!dots) return;
+
+
+    qsa(
+        ".battle-dot",
+        dots
+    ).forEach((dot, index) => {
+
+        dot.classList.toggle(
+            "active",
+            index === currentIndex
+        );
+
+    });
+
+}
+
+
+/* =========================================================
+   CREATE DOTS
+========================================================= */
+
+function createDots(
+    battle,
+    products,
+    setIndex
+) {
+
+    const container =
+        qs("[data-dots]", battle);
+
+
+    if (!container) return;
+
+
+    container.innerHTML = "";
+
+
+    products.forEach(
+        (product, index) => {
+
+            const dot =
+                document.createElement("button");
+
+
+            dot.type = "button";
+
+            dot.className =
+                "battle-dot";
+
+
+            dot.setAttribute(
+                "aria-label",
+                `Show product ${index + 1}`
             );
 
 
-        if (currentIndex === -1) {
-            return;
-        }
-
-
-        /*
-         * Find the next product section.
-         *
-         * If we're at the last one, loop back
-         * to the first one.
-         */
-
-        let nextIndex =
-            currentIndex + 1;
-
-
-        if (
-            nextIndex >=
-            productSections.length
-        ) {
-
-            nextIndex = 0;
-
-        }
-
-
-        const nextSection =
-            productSections[nextIndex];
-
-
-        if (!nextSection) {
-            return;
-        }
-
-
-        /*
-         * Small delay makes the interaction feel
-         * deliberate rather than abrupt.
-         */
-
-        window.setTimeout(() => {
-
-            nextSection.scrollIntoView({
-                behavior: "smooth",
-                block: "start"
-            });
-
-        }, 80);
-
-    }
-
-
-    /* =====================================================
-       UPDATE PROGRESS ON LOAD
-    ===================================================== */
-
-    updatePersonalProgress();
-
-
-    /* =====================================================
-       SMOOTH CATEGORY NAVIGATION
-    ===================================================== */
-
-    document
-        .querySelectorAll(
-            ".voting-categories a"
-        )
-        .forEach((link) => {
-
-            link.addEventListener(
+            dot.addEventListener(
                 "click",
-                (event) => {
+                () => {
 
-                    const targetId =
-                        link.getAttribute("href");
-
-
-                    if (
-                        !targetId ||
-                        !targetId.startsWith("#")
-                    ) {
-
-                        return;
-
-                    }
-
-
-                    const target =
-                        document.querySelector(
-                            targetId
-                        );
-
-
-                    if (!target) {
-                        return;
-                    }
-
-
-                    event.preventDefault();
-
-
-                    target.scrollIntoView({
-                        behavior: "smooth",
-                        block: "start"
-                    });
+                    setIndex(index);
 
                 }
             );
 
-        });
+
+            container.appendChild(dot);
+
+        }
+    );
+
+}
 
 
-    /* =====================================================
-       INTERSECTION OBSERVER
-       Highlights the category currently being viewed.
-    ===================================================== */
+/* =========================================================
+   VOTE
+========================================================= */
 
-    const categoryLinks =
-        new Map();
+function voteForProduct(
+    battle,
+    products,
+    currentIndex
+) {
 
-
-    document
-        .querySelectorAll(
-            ".voting-categories a"
-        )
-        .forEach((link) => {
-
-            const targetId =
-                link.getAttribute("href");
+    const category =
+        battle.dataset.category;
 
 
-            if (!targetId) {
-                return;
+    const voteKey =
+        `${category}-${currentIndex}`;
+
+
+    const confirmation =
+        qs("[data-confirmation]", battle);
+
+
+    const button =
+        qs("[data-vote]", battle);
+
+
+    const product =
+        products[currentIndex];
+
+
+    /* -----------------------------------------
+       PREVENT DUPLICATE VOTE
+    ----------------------------------------- */
+
+    if (votedProducts[voteKey]) {
+
+        confirmation.textContent =
+            "You've already recommended this one 💗";
+
+        confirmation.classList.add(
+            "visible"
+        );
+
+        return;
+
+    }
+
+
+    /* -----------------------------------------
+       SAVE VOTE
+    ----------------------------------------- */
+
+    votedProducts[voteKey] = true;
+
+
+    product.percentage =
+        Math.min(
+            99,
+            product.percentage + 1
+        );
+
+
+    totalVotes += 1;
+
+    yourPicks += 1;
+
+
+    saveState();
+
+    updateParticipation();
+
+
+    /* -----------------------------------------
+       UI
+    ----------------------------------------- */
+
+    button.classList.add(
+        "has-voted"
+    );
+
+
+    button.querySelector(
+        "span:first-child"
+    ).textContent =
+        "RECOMMENDED";
+
+
+    confirmation.textContent =
+        `You're with ${product.percentage}% of moms 💗`;
+
+
+    confirmation.classList.add(
+        "visible"
+    );
+
+
+    const percentage =
+        qs(
+            "[data-vote-percentage]",
+            battle
+        );
+
+
+    const progress =
+        qs(
+            "[data-vote-progress]",
+            battle
+        );
+
+
+    percentage.textContent =
+        `${product.percentage}%`;
+
+
+    progress.style.width =
+        `${product.percentage}%`;
+
+
+    updateMomPick(
+        battle,
+        products,
+        currentIndex
+    );
+
+
+    /* -----------------------------------------
+       LITTLE FEEDBACK EFFECT
+    ----------------------------------------- */
+
+    button.animate(
+        [
+            {
+                transform: "scale(1)"
+            },
+
+            {
+                transform: "scale(1.04)"
+            },
+
+            {
+                transform: "scale(1)"
             }
+        ],
+        {
+            duration: 300,
+            easing: "ease-out"
+        }
+    );
 
 
-            categoryLinks.set(
-                targetId,
-                link
-            );
+    /* -----------------------------------------
+       UPDATE DISCOVERY MESSAGE
+    ----------------------------------------- */
 
-        });
+    const nextButton =
+        qs(
+            "[data-next-product]",
+            battle
+        );
+
+
+    if (nextButton) {
+
+        nextButton.textContent =
+            "Nice pick! Show Me Another →";
+
+    }
+
+}
+
+
+/* =========================================================
+   INITIALIZE BATTLE
+========================================================= */
+
+function initializeBattle(battle) {
+
+    const category =
+        battle.dataset.category;
+
+
+    const products =
+        productData[category];
 
 
     if (
-        "IntersectionObserver" in window
+        !products ||
+        products.length === 0
     ) {
 
-        const observer =
-            new IntersectionObserver(
-                (entries) => {
+        return;
 
-                    entries.forEach(
-                        (entry) => {
-
-                            if (
-                                !entry.isIntersecting
-                            ) {
-
-                                return;
-
-                            }
+    }
 
 
-                            const id =
-                                `#${entry.target.id}`;
+    state[category] = {
+        index: 0
+    };
 
 
-                            categoryLinks.forEach(
-                                (link) => {
-
-                                    link.classList.remove(
-                                        "active"
-                                    );
-
-                                }
-                            );
+    const getIndex = () =>
+        state[category].index;
 
 
-                            const activeLink =
-                                categoryLinks.get(
-                                    id
-                                );
+    const setIndex = (
+        newIndex
+    ) => {
+
+        const oldIndex =
+            state[category].index;
 
 
-                            if (activeLink) {
+        if (newIndex === oldIndex) {
 
-                                activeLink.classList.add(
-                                    "active"
-                                );
+            return;
 
-                            }
-
-                        }
-                    );
-
-                },
-                {
-                    threshold: 0.25,
-                    rootMargin:
-                        "-15% 0px -55% 0px"
-                }
-            );
+        }
 
 
-        productSections.forEach(
-            (section) => {
+        if (
+            newIndex < 0
+        ) {
 
-                observer.observe(
-                    section
+            newIndex =
+                products.length - 1;
+
+        }
+
+
+        if (
+            newIndex >= products.length
+        ) {
+
+            newIndex = 0;
+
+        }
+
+
+        state[category].index =
+            newIndex;
+
+
+        renderProduct(
+            battle,
+            products,
+            newIndex,
+            newIndex > oldIndex
+                ? "next"
+                : "previous"
+        );
+
+    };
+
+
+    /* -----------------------------------------
+       DOTS
+    ----------------------------------------- */
+
+    createDots(
+        battle,
+        products,
+        setIndex
+    );
+
+
+    /* -----------------------------------------
+       ARROWS
+    ----------------------------------------- */
+
+    const previous =
+        qs("[data-prev]", battle);
+
+
+    const next =
+        qs("[data-next]", battle);
+
+
+    if (previous) {
+
+        previous.addEventListener(
+            "click",
+            () => {
+
+                setIndex(
+                    getIndex() - 1
                 );
 
             }
@@ -751,74 +910,410 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    /* =====================================================
-       IMAGE LOADING
-       Adds a subtle premium reveal.
-    ===================================================== */
+    if (next) {
 
-    document
-        .querySelectorAll(
-            ".battle-product-image"
-        )
-        .forEach((image) => {
+        next.addEventListener(
+            "click",
+            () => {
 
-            if (image.complete) {
-
-                image.classList.add(
-                    "image-loaded"
+                setIndex(
+                    getIndex() + 1
                 );
+
+            }
+        );
+
+    }
+
+
+    /* -----------------------------------------
+       VOTE
+    ----------------------------------------- */
+
+    const vote =
+        qs("[data-vote]", battle);
+
+
+    if (vote) {
+
+        vote.addEventListener(
+            "click",
+            () => {
+
+                voteForProduct(
+                    battle,
+                    products,
+                    getIndex()
+                );
+
+            }
+        );
+
+    }
+
+
+    /* -----------------------------------------
+       NEXT PRODUCT CTA
+    ----------------------------------------- */
+
+    const nextProduct =
+        qs(
+            "[data-next-product]",
+            battle
+        );
+
+
+    if (nextProduct) {
+
+        nextProduct.addEventListener(
+            "click",
+            () => {
+
+                setIndex(
+                    getIndex() + 1
+                );
+
+
+                /* Scroll product into comfortable view
+                   on mobile */
+
+                if (
+                    window.innerWidth <= 700
+                ) {
+
+                    setTimeout(() => {
+
+                        battle.scrollIntoView({
+                            behavior: "smooth",
+                            block: "center"
+                        });
+
+                    }, 180);
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* -----------------------------------------
+       INITIAL RENDER
+    ----------------------------------------- */
+
+    renderProduct(
+        battle,
+        products,
+        0
+    );
+
+}
+
+
+/* =========================================================
+   CATEGORY NAV SMOOTH SCROLL
+========================================================= */
+
+function initializeCategoryNavigation() {
+
+    qsa(
+        ".voting-categories a"
+    ).forEach(link => {
+
+        link.addEventListener(
+            "click",
+            event => {
+
+                const href =
+                    link.getAttribute("href");
+
+
+                if (
+                    !href ||
+                    !href.startsWith("#")
+                ) {
+
+                    return;
+
+                }
+
+
+                const target =
+                    qs(href);
+
+
+                if (!target) return;
+
+
+                event.preventDefault();
+
+
+                target.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+
+            }
+        );
+
+    });
+
+}
+
+
+/* =========================================================
+   SWIPE SUPPORT
+========================================================= */
+
+function initializeSwipe(battle) {
+
+    let startX = null;
+
+
+    const viewer =
+        qs(
+            ".product-viewer",
+            battle
+        );
+
+
+    if (!viewer) return;
+
+
+    viewer.addEventListener(
+        "touchstart",
+        event => {
+
+            if (
+                event.touches.length !== 1
+            ) {
 
                 return;
 
             }
 
 
-            image.addEventListener(
-                "load",
-                () => {
+            startX =
+                event.touches[0].clientX;
 
-                    image.classList.add(
-                        "image-loaded"
-                    );
+        },
+        {
+            passive: true
+        }
+    );
 
-                },
-                {
-                    once: true
-                }
+
+    viewer.addEventListener(
+        "touchend",
+        event => {
+
+            if (
+                startX === null
+            ) {
+
+                return;
+
+            }
+
+
+            const endX =
+                event.changedTouches[0].clientX;
+
+
+            const distance =
+                endX - startX;
+
+
+            startX = null;
+
+
+            if (
+                Math.abs(distance) < 50
+            ) {
+
+                return;
+
+            }
+
+
+            const category =
+                battle.dataset.category;
+
+
+            const products =
+                productData[category];
+
+
+            if (!products) return;
+
+
+            const current =
+                state[category].index;
+
+
+            let nextIndex;
+
+
+            if (distance < 0) {
+
+                nextIndex =
+                    current + 1;
+
+            }
+
+            else {
+
+                nextIndex =
+                    current - 1;
+
+            }
+
+
+            if (
+                nextIndex < 0
+            ) {
+
+                nextIndex =
+                    products.length - 1;
+
+            }
+
+
+            if (
+                nextIndex >= products.length
+            ) {
+
+                nextIndex = 0;
+
+            }
+
+
+            state[category].index =
+                nextIndex;
+
+
+            renderProduct(
+                battle,
+                products,
+                nextIndex
             );
 
-        });
+        },
+        {
+            passive: true
+        }
+    );
+
+}
 
 
-    /* =====================================================
-       KEYBOARD ACCESSIBILITY
-    ===================================================== */
+/* =========================================================
+   INTERSECTION OBSERVER
+   MAKES THE FEED FEEL ALIVE
+========================================================= */
 
-    document
-        .querySelectorAll(
-            ".recommend-button"
-        )
-        .forEach((button) => {
+function initializeRevealAnimations() {
 
-            button.addEventListener(
-                "keydown",
-                (event) => {
+    const battles =
+        qsa(".product-battle");
+
+
+    if (
+        !("IntersectionObserver" in window)
+    ) {
+
+        battles.forEach(
+            battle =>
+                battle.classList.add(
+                    "battle-visible"
+                )
+        );
+
+        return;
+
+    }
+
+
+    const observer =
+        new IntersectionObserver(
+            entries => {
+
+                entries.forEach(entry => {
 
                     if (
-                        event.key === "Enter" ||
-                        event.key === " "
+                        entry.isIntersecting
                     ) {
 
-                        event.preventDefault();
-
-                        button.click();
+                        entry.target.classList.add(
+                            "battle-visible"
+                        );
 
                     }
 
-                }
+                });
+
+            },
+            {
+                threshold: .15
+            }
+        );
+
+
+    battles.forEach(
+        battle =>
+            observer.observe(battle)
+    );
+
+}
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+function initialize() {
+
+    updateParticipation();
+
+
+    qsa(
+        ".product-battle"
+    ).forEach(
+        battle => {
+
+            initializeBattle(
+                battle
             );
 
-        });
+            initializeSwipe(
+                battle
+            );
+
+        }
+    );
 
 
-});
+    initializeCategoryNavigation();
+
+    initializeRevealAnimations();
+
+}
+
+
+if (
+    document.readyState === "loading"
+) {
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        initialize
+    );
+
+}
+
+else {
+
+    initialize();
+
+}
