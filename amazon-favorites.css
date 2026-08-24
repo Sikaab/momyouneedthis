@@ -1678,7 +1678,6 @@
         padding: 15px 12px 45px;
     }
 
-
     .mom-voted-header {
         margin-bottom: 25px;
     }
@@ -1700,7 +1699,6 @@
         font-size: 8px;
     }
 
-
     .voting-hero {
         padding: 30px 5px 40px;
     }
@@ -1712,7 +1710,6 @@
     .mom-voted-intro {
         font-size: 14px;
     }
-
 
     .hero-mini-proof {
         gap: 7px;
@@ -1729,7 +1726,6 @@
     .proof-arrow {
         font-size: 15px;
     }
-
 
     .holy-grail-banner {
         align-items: flex-start;
@@ -1757,7 +1753,6 @@
         margin-top: 4px;
     }
 
-
     .voting-categories {
         margin-bottom: 30px;
     }
@@ -1767,7 +1762,6 @@
         font-size: 10px;
     }
 
-
     .discovery-heading {
         align-items: flex-start;
     }
@@ -1776,11 +1770,9 @@
         font-size: 21px;
     }
 
-
     .product-battle {
         margin-bottom: 65px;
     }
-
 
     .battle-card {
         border-radius: 22px;
@@ -1802,19 +1794,15 @@
         font-size: 18px;
     }
 
-
     .product-viewer {
         position: relative;
-
         display: block;
-
         padding: 0 10px 15px;
     }
 
     .product-slide-area {
         border-radius: 18px;
     }
-
 
     .product-arrow {
         position: absolute;
@@ -1840,7 +1828,6 @@
         right: 17px;
     }
 
-
     .product-image-wrap {
         min-height: 300px;
         padding: 25px 45px;
@@ -1856,7 +1843,6 @@
         font-size: 8px;
     }
 
-
     .battle-product-info {
         padding: 25px 18px 22px;
     }
@@ -1869,7 +1855,6 @@
         font-size: 12px;
     }
 
-
     .vote-choice-grid {
         grid-template-columns: 1fr;
     }
@@ -1878,11 +1863,9 @@
         min-height: 48px;
     }
 
-
     .battle-footer {
         padding: 15px;
     }
-
 
     .keep-discovering {
         margin: 65px 0;
@@ -1894,7 +1877,6 @@
         font-size: 27px;
     }
 
-
     .explainer-grid {
         grid-template-columns: 1fr;
     }
@@ -1902,7 +1884,6 @@
     .voting-explainer {
         margin-bottom: 65px;
     }
-
 
     .holy-grail-final {
         margin-bottom: 55px;
@@ -1913,7 +1894,6 @@
     .holy-grail-final h2 {
         font-size: 28px;
     }
-
 }
 
 
@@ -1946,8 +1926,8 @@
     .battle-product-info h3 {
         font-size: 24px;
     }
-
 }
+
 
 /* =====================================
    HOLY GRAIL PRODUCT SUBMISSION
@@ -2374,7 +2354,6 @@
     .holy-grail-back {
         margin-bottom: 36px;
     }
-
 }
 
 
@@ -2402,5 +2381,4 @@
         width: 100%;
         box-sizing: border-box;
     }
-
 }
