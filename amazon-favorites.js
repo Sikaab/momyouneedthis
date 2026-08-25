@@ -24,9 +24,8 @@
    FIREBASE IMPORTS
    ============================================================ */
 
-import {
-    initializeApp
-} from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+
+import { db } from "./firebase-config.js";
 
 import {
     getAuth,
@@ -42,51 +41,31 @@ import {
     serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
 
-
-/* ============================================================
-   FIREBASE CONFIG
-   ============================================================
-
-   IMPORTANT:
-
-   If you already have a separate Firebase config file,
-   KEEP USING THAT CONFIG.
-
-   Replace the import below with the SAME config import
-   you are already using in your project.
-
-   Example:
-
-   import { firebaseConfig } from "./firebase-config.js";
-
-   ============================================================ */
-
-import { db } from "./firebase-config.js";
-
+import {app} from "./firebase-config.js";
 
 /* ============================================================
    INITIALIZE FIREBASE
    ============================================================ */
 
-let firebaseApp = null;
+let app = null;
 let auth = null;
 let db = null;
 
 try {
 
-    firebaseApp =
+    app =
         initializeApp(
             firebaseConfig
         );
 
     auth =
         getAuth(
-            firebaseApp
+            app
         );
 
     db =
         getFirestore(
-            firebaseApp
+            app
         );
 
     console.log(
