@@ -5,18 +5,16 @@
 import { db } from "./firebase-config.js";
 
 import {
-    getAuth
-} from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
-
-import {
-    signInAnonymously
-} from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
-
-import {
     collection,
     setDoc,
+    doc,
     serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+
+import {
+    getAuth,
+    signInAnonymously
+} from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
 
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -42,105 +40,99 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     /* =====================================================
        FIREBASE AUTHENTICATION
+       -----------------------------------------------
+       The visitor does NOT need an account.
+
+       Firebase Anonymous Authentication creates a
+       temporary Firebase user automatically.
     ===================================================== */
 
-    /*
-       Your firebase-config.js already initializes Firebase
-       and provides the Firestore database.
+    let auth;
 
-       We use the existing default Firebase app for
-       Anonymous Authentication.
-
-       IMPORTANT:
-       The user does NOT have to sign in manually.
-    */
-
-    let auth = null;
-    let anonymousAuthPromise = null;
+    let currentFirebaseUser = null;
 
 
-    function initializeAnonymousAuth() {
+    try {
 
-        try {
+        /*
+         * db.app gives us the same Firebase App that
+         * your existing firebase-config.js is already
+         * using.
+         */
 
-            auth = getAuth();
-
-        } catch (error) {
-
-            console.error(
-                "Unable to initialize Firebase Authentication:",
-                error
-            );
-
-            return Promise.reject(error);
-
-        }
+        auth = getAuth(db.app);
 
 
         /*
-           If an anonymous/authenticated user already exists,
-           use it.
-        */
+         * If a Firebase user already exists, use it.
+         * Otherwise create an anonymous identity.
+         */
 
         if (auth.currentUser) {
 
-            return Promise.resolve(
-                auth.currentUser
+            currentFirebaseUser =
+                auth.currentUser;
+
+        } else {
+
+            const credential =
+                await signInAnonymously(auth);
+
+            currentFirebaseUser =
+                credential.user;
+
+        }
+
+
+        console.log(
+            "Firebase anonymous authentication ready:",
+            currentFirebaseUser.uid
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Firebase anonymous authentication failed:",
+            error
+        );
+
+
+        /*
+         * We intentionally do NOT continue pretending
+         * that voting works.
+
+         * No vote will be saved locally unless Firebase
+         * successfully records it.
+         */
+
+        const authMessage =
+            document.querySelector(
+                "[data-voting-auth-error]"
             );
+
+
+        if (authMessage) {
+
+            authMessage.textContent =
+                "Voting is temporarily unavailable. Please try again.";
+
+            authMessage.style.display =
+                "block";
 
         }
 
 
         /*
-           Otherwise silently authenticate anonymously.
-        */
+         * We continue loading the product experience
+         * so the page itself still works.
 
-        if (!anonymousAuthPromise) {
+         * Voting will simply fail safely.
+         */
 
-            anonymousAuthPromise =
-                signInAnonymously(auth)
-                    .then(
-                        (credential) => {
-
-                            console.log(
-                                "Anonymous Firebase authentication successful."
-                            );
-
-                            return credential.user;
-
-                        }
-                    )
-                    .catch(
-                        (error) => {
-
-                            console.error(
-                                "Anonymous Firebase authentication failed:",
-                                error
-                            );
-
-                            throw error;
-
-                        }
-                    );
-
-        }
-
-
-        return anonymousAuthPromise;
+        currentFirebaseUser = null;
 
     }
-
-
-    /*
-       Start authentication immediately.
-
-       Product switching does NOT depend on this promise.
-
-       Voting does.
-    */
-
-    const authenticationPromise =
-        initializeAnonymousAuth();
 
 
     /* =====================================================
@@ -375,14 +367,17 @@ document.addEventListener("DOMContentLoaded", async () => {
                     STORAGE_KEY
                 );
 
+
             if (!stored) {
 
                 return {};
 
             }
 
+
             const parsed =
                 JSON.parse(stored);
+
 
             return (
                 parsed &&
@@ -390,6 +385,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             )
                 ? parsed
                 : {};
+
 
         } catch (error) {
 
@@ -445,14 +441,17 @@ document.addEventListener("DOMContentLoaded", async () => {
                     SESSION_KEY
                 );
 
+
             if (!stored) {
 
                 return defaultSession;
 
             }
 
+
             const parsed =
                 JSON.parse(stored);
+
 
             return {
 
@@ -460,6 +459,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 ...parsed
 
             };
+
 
         } catch (error) {
 
@@ -493,6 +493,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     let savedVotes =
         loadVotes();
+
 
     let session =
         loadSession();
@@ -537,6 +538,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 const battleProducts =
                     products[category];
 
+
                 if (
                     !battleProducts ||
                     battleProducts.length < 2
@@ -546,17 +548,20 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                 }
 
+
                 const firstKey =
                     getVoteKey(
                         category,
                         battleProducts[0].id
                     );
 
+
                 const secondKey =
                     getVoteKey(
                         category,
                         battleProducts[1].id
                     );
+
 
                 return (
                     Boolean(savedVotes[firstKey]) &&
@@ -629,17 +634,20 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         }
 
+
         if (percentage >= 65) {
 
             return "💗 Strong mom approval";
 
         }
 
+
         if (percentage >= 50) {
 
             return "👀 Moms are split";
 
         }
+
 
         return "🤔 Not for everyone";
 
@@ -675,6 +683,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         }
 
+
         if (
             link.includes(
                 "YOUR-AMAZON-LINK-HERE"
@@ -684,6 +693,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             return false;
 
         }
+
 
         return (
             link.startsWith("https://") ||
@@ -704,6 +714,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 ".voting-hero"
             );
 
+
         if (!hero) {
 
             return null;
@@ -716,6 +727,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 ".mom-voting-progress"
             );
 
+
         if (existing) {
 
             return existing;
@@ -727,6 +739,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             document.createElement(
                 "div"
             );
+
 
         wrapper.className =
             "mom-voting-progress";
@@ -746,6 +759,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             </div>
 
+
             <div class="mom-voting-progress-track">
 
                 <div
@@ -754,6 +768,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 ></div>
 
             </div>
+
 
             <div
                 class="mom-voting-progress-message"
@@ -808,10 +823,12 @@ document.addEventListener("DOMContentLoaded", async () => {
                 "[data-global-progress-text]"
             );
 
+
         const fill =
             globalProgress.querySelector(
                 "[data-global-progress-fill]"
             );
+
 
         const message =
             globalProgress.querySelector(
@@ -850,6 +867,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     totalBattles -
                     completed;
 
+
                 message.textContent =
                     `${remaining} more battle${remaining === 1 ? "" : "s"} waiting for you 👀`;
 
@@ -876,6 +894,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 ".mom-voted-header"
             );
 
+
         if (!header) {
 
             return null;
@@ -887,6 +906,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             document.createElement(
                 "div"
             );
+
 
         badge.className =
             "mom-streak-badge";
@@ -979,6 +999,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     "div"
                 );
 
+
             toast.className =
                 "mom-voting-toast";
 
@@ -1026,6 +1047,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             document.createElement(
                 "div"
             );
+
 
         container.className =
             "vote-celebration";
@@ -1094,20 +1116,15 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     /* =====================================================
        FIRESTORE VOTE
-       -----------------------------------------------------
+       -----------------------------------------------
        IMPORTANT:
 
-       The Firestore rules require:
+       We use setDoc(), NOT addDoc().
 
-       1. request.auth != null
-       2. data.uid == request.auth.uid
-       3. document ID starts with UID + "_"
-       4. category is string
-       5. productId is string
-       6. productName is string
-       7. productBrand is string
+       Your Firestore rules require the document ID
+       to start with the authenticated user's UID:
 
-       This function satisfies all seven requirements.
+       voteId.matches(request.auth.uid + '_.*')
     ===================================================== */
 
     async function saveVoteToFirebase({
@@ -1118,65 +1135,57 @@ document.addEventListener("DOMContentLoaded", async () => {
     }) {
 
         /*
-           Make absolutely sure the visitor is
-           anonymously authenticated first.
-        */
+         * There must be a Firebase Authentication
+         * identity before attempting the write.
+         */
 
-        const user =
-            await authenticationPromise;
-
-
-        if (!user || !user.uid) {
+        if (!currentFirebaseUser) {
 
             throw new Error(
-                "Firebase authentication did not return a UID."
+                "No Firebase authentication user is available."
             );
 
         }
 
 
         const uid =
-            user.uid;
+            currentFirebaseUser.uid;
 
 
         /*
-           Your Firestore rules require:
+         * The document ID MUST begin with the UID.
 
-           voteId.matches(
-               request.auth.uid + '_.*'
-           )
+         * Example:
 
-           Therefore we CANNOT use addDoc(),
-           because addDoc() creates a random ID.
-
-           Instead we explicitly create:
-
-           UID_randomID
-        */
-
-        let randomPart;
-
-        if (
-            typeof crypto !== "undefined" &&
-            typeof crypto.randomUUID === "function"
-        ) {
-
-            randomPart =
-                crypto.randomUUID();
-
-        } else {
-
-            randomPart =
-                `${Date.now()}-${Math.random()
-                    .toString(36)
-                    .slice(2)}`;
-
-        }
-
+         * abc123_random-id
+         */
 
         const voteId =
-            `${uid}_${randomPart}`;
+            `${uid}_${crypto.randomUUID()}`;
 
+
+        const voteRef =
+            doc(
+                db,
+                FIRESTORE_VOTES_COLLECTION,
+                voteId
+            );
+
+
+        /*
+         * IMPORTANT:
+
+         * Your Firestore rules specifically require:
+
+         * uid
+         * category
+         * productId
+         * productName
+         * productBrand
+
+         * So the field names below intentionally match
+         * your rules exactly.
+         */
 
         const voteData = {
 
@@ -1195,13 +1204,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             productName:
                 product.name,
 
-            /*
-               IMPORTANT:
-
-               Firestore rules require
-               productBrand, NOT brand.
-            */
-
             productBrand:
                 product.brand,
 
@@ -1215,56 +1217,26 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
         /*
-           setDoc() creates the document using the
-           UID-prefixed ID required by your rules.
-        */
+         * Firebase must successfully complete this
+         * operation before the caller saves anything
+         * to localStorage.
+         */
 
         await setDoc(
-            FirestoreDocumentReference(
-                voteId
-            ),
+            voteRef,
             voteData
         );
 
 
         console.log(
-            "Anonymous vote successfully saved to Firestore:",
+            "Vote successfully saved to Firestore:",
             voteId
         );
 
 
-        return {
-            voteId,
-            uid
-        };
+        return voteId;
 
     }
-
-
-    /*
-       Small helper so the collection/document creation
-       stays isolated.
-    */
-
-    function FirestoreDocumentReference(
-        voteId
-    ) {
-
-        return {
-            _delegate: undefined,
-            _converter: undefined
-        };
-
-    }
-
-
-    /*
-       The above helper cannot be used with the Firebase
-       SDK directly, so we create the reference using
-       doc().
-
-       This function is replaced below after importing doc.
-    */
 
 
     /* =====================================================
@@ -1306,8 +1278,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         let currentIndex = 0;
 
-        let renderVersion = 0;
-
         let isVoting = false;
 
 
@@ -1320,125 +1290,150 @@ document.addEventListener("DOMContentLoaded", async () => {
                 "[data-image]"
             );
 
+
         const label =
             battle.querySelector(
                 "[data-label]"
             );
+
 
         const name =
             battle.querySelector(
                 "[data-name]"
             );
 
+
         const brand =
             battle.querySelector(
                 "[data-brand]"
             );
+
 
         const description =
             battle.querySelector(
                 "[data-description]"
             );
 
+
         const score =
             battle.querySelector(
                 "[data-score]"
             );
+
 
         const percentage =
             battle.querySelector(
                 "[data-percentage]"
             );
 
+
         const consensus =
             battle.querySelector(
                 "[data-consensus]"
             );
+
 
         const consensusBar =
             battle.querySelector(
                 "[data-consensus-bar]"
             );
 
+
         const link =
             battle.querySelector(
                 "[data-link]"
             );
+
 
         const position =
             battle.querySelector(
                 "[data-position]"
             );
 
+
         const yesPercentage =
             battle.querySelector(
                 "[data-yes-percentage]"
             );
+
 
         const noPercentage =
             battle.querySelector(
                 "[data-no-percentage]"
             );
 
+
         const result =
             battle.querySelector(
                 "[data-result]"
             );
+
 
         const resultTitle =
             battle.querySelector(
                 "[data-result-title]"
             );
 
+
         const resultText =
             battle.querySelector(
                 "[data-result-text]"
             );
+
 
         const socialComparison =
             battle.querySelector(
                 "[data-social-comparison]"
             );
 
+
         const yourPosition =
             battle.querySelector(
                 "[data-your-position]"
             );
+
 
         const voteArea =
             battle.querySelector(
                 "[data-vote-area]"
             );
 
+
         const winner =
             battle.querySelector(
                 "[data-winner]"
             );
+
 
         const winnerText =
             battle.querySelector(
                 "[data-winner-text]"
             );
 
+
         const dotsContainer =
             battle.querySelector(
                 "[data-dots]"
             );
+
 
         const nextContender =
             battle.querySelector(
                 "[data-next-contender]"
             );
 
+
         const prevButton =
             battle.querySelector(
                 "[data-prev]"
             );
 
+
         const nextButton =
             battle.querySelector(
                 "[data-next]"
             );
+
 
         const voteButtons =
             battle.querySelectorAll(
@@ -1543,7 +1538,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                     dot.addEventListener(
                         "click",
-                        () => {
+                        (event) => {
+
+                            event.preventDefault();
 
                             if (isVoting) {
 
@@ -1589,7 +1586,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
         /* =================================================
-           GET CURRENT PRODUCT
+           CURRENT PRODUCT
         ================================================= */
 
         function getCurrentProduct() {
@@ -1602,7 +1599,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
         /* =================================================
-           GET CURRENT VOTE
+           CURRENT VOTE
         ================================================= */
 
         function getCurrentVote() {
@@ -1629,7 +1626,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
         /* =================================================
-           RESET RESULT UI
+           RESET VOTE UI
         ================================================= */
 
         function resetVoteUI() {
@@ -1684,8 +1681,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             if (!existingVote) {
 
-                resetVoteUI();
-
                 return;
 
             }
@@ -1707,20 +1702,12 @@ document.addEventListener("DOMContentLoaded", async () => {
             requestedIndex
         ) {
 
-            renderVersion++;
-
-            const thisRender =
-                renderVersion;
-
-
             /*
-               Normalize the index so:
+             * Normalize the requested index so that:
 
-               -1 → last product
-               0 → first product
-               1 → second product
-               2 → first product again
-            */
+             * -1 becomes last product
+             * 2 becomes first product
+             */
 
             currentIndex =
                 (
@@ -1746,8 +1733,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             /* =================================================
                IMAGE
 
-               A failed image must NEVER stop the rest of
-               the product from rendering.
+               A broken image MUST NOT prevent the rest
+               of the product from rendering.
             ================================================= */
 
             if (image) {
@@ -1757,36 +1744,20 @@ document.addEventListener("DOMContentLoaded", async () => {
                 );
 
 
-                image.onerror =
-                    function () {
-
-                        image.classList.add(
-                            "image-error"
-                        );
-
-                        image.alt =
-                            "Product image unavailable";
-
-                    };
-
-
                 image.src =
                     product.image;
+
 
                 image.alt =
                     product.name;
 
 
+                image.classList.remove(
+                    "image-error"
+                );
+
+
                 requestAnimationFrame(() => {
-
-                    if (
-                        thisRender !==
-                        renderVersion
-                    ) {
-
-                        return;
-
-                    }
 
                     image.classList.remove(
                         "product-changing"
@@ -1798,7 +1769,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
             /* =================================================
-               TEXT
+               PRODUCT LABEL
             ================================================= */
 
             updateElement(
@@ -1807,11 +1778,19 @@ document.addEventListener("DOMContentLoaded", async () => {
             );
 
 
+            /* =================================================
+               PRODUCT NAME
+            ================================================= */
+
             updateElement(
                 name,
                 product.name
             );
 
+
+            /* =================================================
+               BRAND
+            ================================================= */
 
             updateElement(
                 brand,
@@ -1819,11 +1798,19 @@ document.addEventListener("DOMContentLoaded", async () => {
             );
 
 
+            /* =================================================
+               DESCRIPTION
+            ================================================= */
+
             updateElement(
                 description,
                 product.description
             );
 
+
+            /* =================================================
+               SCORE
+            ================================================= */
 
             updateElement(
                 score,
@@ -1831,6 +1818,10 @@ document.addEventListener("DOMContentLoaded", async () => {
                     .toFixed(1)
             );
 
+
+            /* =================================================
+               PERCENTAGE
+            ================================================= */
 
             updateElement(
                 percentage,
@@ -1891,12 +1882,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
             /* =================================================
-               POSITION
-
-               This is the part that changes:
-
-               PRODUCT 1 OF 2
-               PRODUCT 2 OF 2
+               PRODUCT POSITION
+               -----------------------------------------------
+               THIS is the important update you asked for.
             ================================================= */
 
             updateElement(
@@ -1906,7 +1894,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
             /* =================================================
-               YES / NO
+               YES / NO PERCENTAGES
             ================================================= */
 
             const noPercent =
@@ -1935,21 +1923,21 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
             /* =================================================
-               NEXT BUTTON
+               NEXT CONTENDER
             ================================================= */
 
             updateButtonLabels();
 
 
             /* =================================================
-               RESET RESULT
+               RESET OLD RESULT
             ================================================= */
 
             resetVoteUI();
 
 
             /* =================================================
-               RESTORE VOTE IF ONE EXISTS
+               RESTORE THIS PRODUCT'S VOTE
             ================================================= */
 
             restoreVoteState();
@@ -2074,17 +2062,36 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
             /*
-               Already voted locally?
+             * Already voted locally.
 
-               We can display the existing result,
-               but we NEVER create another Firebase vote.
-            */
+             * This is only a local optimization.
+
+             * New votes are NEVER added to localStorage
+             * until Firebase has successfully accepted
+             * them.
+             */
 
             if (savedVotes[key]) {
 
                 showVoteResult(
                     savedVotes[key],
                     true
+                );
+
+                return;
+
+            }
+
+
+            /*
+             * We cannot vote without a Firebase Auth
+             * identity.
+             */
+
+            if (!currentFirebaseUser) {
+
+                showToast(
+                    "Voting is temporarily unavailable. Please try again."
                 );
 
                 return;
@@ -2108,32 +2115,10 @@ document.addEventListener("DOMContentLoaded", async () => {
             try {
 
                 /*
-                   WAIT FOR ANONYMOUS AUTHENTICATION.
-                */
+                 * IMPORTANT:
 
-                const user =
-                    await authenticationPromise;
-
-
-                if (
-                    !user ||
-                    !user.uid
-                ) {
-
-                    throw new Error(
-                        "Anonymous authentication returned no user."
-                    );
-
-                }
-
-
-                /*
-                   IMPORTANT:
-
-                   saveVoteToFirebase MUST complete
-                   successfully before anything is
-                   written to localStorage.
-                */
+                 * This must complete successfully first.
+                 */
 
                 await saveVoteToFirebase({
 
@@ -2153,10 +2138,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
                 /*
-                   FIRESTORE SUCCEEDED.
+                 * ONLY NOW do we save the vote locally.
 
-                   ONLY NOW save locally.
-                */
+                 * If Firebase failed, execution jumps to
+                 * catch() and this code is never reached.
+                 */
 
                 savedVotes[key] =
                     choice;
@@ -2180,6 +2166,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                 updateStreak();
 
+
                 updateGlobalProgress();
 
 
@@ -2195,21 +2182,15 @@ document.addEventListener("DOMContentLoaded", async () => {
             } catch (error) {
 
                 console.error(
-                    "Vote was NOT saved because Firebase failed:",
+                    "Vote was NOT saved:",
                     error
                 );
 
 
                 /*
-                   IMPORTANT:
-
-                   Nothing is added to savedVotes.
-
-                   Nothing is written to localStorage.
-
-                   The vote therefore remains completely
-                   unregistered locally.
-                */
+                 * Absolutely no local vote is created
+                 * here.
+                 */
 
                 showToast(
                     "We couldn't record your vote. Please try again."
@@ -2230,20 +2211,16 @@ document.addEventListener("DOMContentLoaded", async () => {
                 isVoting = false;
 
 
+                /*
+                 * If Firebase successfully saved the
+                 * vote, keep buttons disabled.
+
+                 * If it didn't, allow another attempt.
+                 */
+
                 if (
-                    getCurrentVote()
+                    !getCurrentVote()
                 ) {
-
-                    voteButtons.forEach(
-                        (button) => {
-
-                            button.disabled =
-                                true;
-
-                        }
-                    );
-
-                } else {
 
                     voteButtons.forEach(
                         (button) => {
@@ -2417,6 +2394,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             const first =
                 battleProducts[0];
 
+
             const second =
                 battleProducts[1];
 
@@ -2468,8 +2446,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                 }
 
 
-                updateNextBattleButton();
-
                 return;
 
             }
@@ -2515,8 +2491,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
             updateGlobalProgress();
-
-            updateNextBattleButton();
 
         }
 
@@ -2654,6 +2628,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             const first =
                 battleProducts[0];
 
+
             const second =
                 battleProducts[1];
 
@@ -2704,12 +2679,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
         /* =================================================
-           WINNER WRAPPER
+           WINNER
         ================================================= */
 
         function updateBattleWinner() {
 
             checkBattleCompletion();
+
+            updateNextBattleButton();
 
         }
 
@@ -2726,11 +2703,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                     event.preventDefault();
 
+
                     if (isVoting) {
 
                         return;
 
                     }
+
 
                     showProduct(
                         currentIndex - 1
@@ -2754,11 +2733,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                     event.preventDefault();
 
+
                     if (isVoting) {
 
                         return;
 
                     }
+
 
                     showProduct(
                         currentIndex + 1
@@ -2781,6 +2762,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 (event) => {
 
                     event.preventDefault();
+
 
                     if (isVoting) {
 
@@ -2816,17 +2798,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         voteButtons.forEach(
             (button) => {
 
-                button.type =
-                    "button";
-
-
                 button.addEventListener(
                     "click",
                     (event) => {
 
                         event.preventDefault();
-
-                        event.stopPropagation();
 
 
                         const choice =
@@ -2885,6 +2861,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                 touchStartX =
                     touch.screenX;
+
 
                 touchStartY =
                     touch.screenY;
@@ -2971,6 +2948,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         /* =================================================
            IMAGE ERROR
+           -----------------------------------------------
+           A 404 here only affects the image.
+
+           It MUST NOT stop:
+           - arrows
+           - vote buttons
+           - Firebase
+           - product switching
         ================================================= */
 
         if (image) {
@@ -2982,6 +2967,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     image.classList.add(
                         "image-error"
                     );
+
 
                     image.alt =
                         "Product image unavailable";
