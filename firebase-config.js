@@ -11,10 +11,9 @@ import { getFirestore, collection, addDoc } from "https://www.gstatic.com/fireba
     measurementId: "G-JKVZH6W85R"
   };
   
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  export const db = getFirestore(app);
-
+const app = initializeApp(firebaseConfig);
+export { app };
+export const db = getFirestore(app);
 
   
 
