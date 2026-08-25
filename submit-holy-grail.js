@@ -5,7 +5,13 @@
    Firebase:
    - Anonymous Authentication
    - Firestore
-   - Collection: holyGrailRecommendations
+   - Collection:
+       holyGrailRecommendations
+
+   IMPORTANT:
+   Firebase errors are logged to the console
+   for debugging but friendly messages are
+   shown to visitors.
 ===================================== */
 
 
@@ -61,7 +67,7 @@ const submitAnother =
 
 
 /* ===========================
-   FIREBASE AUTH STATE
+   AUTH STATE
 =========================== */
 
 let auth = null;
@@ -74,7 +80,7 @@ let authenticationReady = false;
 
 
 /* ===========================
-   INITIALIZE FIREBASE AUTH
+   FIREBASE INITIALIZATION
 =========================== */
 
 try {
@@ -82,17 +88,18 @@ try {
     if (!app) {
 
         throw new Error(
-            "Firebase app was not initialized."
+            "Firebase app is unavailable."
         );
 
     }
 
 
-    auth = getAuth(app);
+    auth =
+        getAuth(app);
 
 
     console.log(
-        "Firebase Authentication initialized."
+        "Holy Grail Firebase Authentication initialized."
     );
 
 } catch (error) {
@@ -112,28 +119,28 @@ try {
 if (!db) {
 
     console.error(
-        "Firestore database was not initialized. " +
+        "Firestore was not initialized. " +
         "Check firebase-config.js."
     );
 
 }
 
 
-/* ===========================
+/* ============================================================
    AUTHENTICATION
-=========================== */
+============================================================ */
 
 function startAnonymousAuthentication() {
 
     /*
-     * Firebase Auth is unavailable.
+     * Firebase Auth isn't available.
      */
 
     if (!auth) {
 
         return Promise.reject(
             new Error(
-                "Firebase Authentication is not initialized."
+                "Firebase Authentication is unavailable."
             )
         );
 
@@ -141,7 +148,7 @@ function startAnonymousAuthentication() {
 
 
     /*
-     * User already exists.
+     * Already authenticated.
      */
 
     if (auth.currentUser) {
@@ -160,8 +167,7 @@ function startAnonymousAuthentication() {
 
 
     /*
-     * Authentication is already
-     * being established.
+     * Authentication already in progress.
      */
 
     if (authenticationPromise) {
@@ -175,12 +181,14 @@ function startAnonymousAuthentication() {
         new Promise(
             (resolve, reject) => {
 
-                let finished = false;
+                let finished =
+                    false;
 
 
                 const unsubscribe =
                     onAuthStateChanged(
                         auth,
+
                         async (user) => {
 
                             if (finished) {
@@ -191,8 +199,7 @@ function startAnonymousAuthentication() {
 
 
                             /*
-                             * Firebase already has
-                             * an authenticated user.
+                             * Existing user.
                              */
 
                             if (user) {
@@ -227,7 +234,7 @@ function startAnonymousAuthentication() {
                             /*
                              * No user exists.
                              *
-                             * Create an anonymous user.
+                             * Create anonymous account.
                              */
 
                             try {
@@ -244,39 +251,38 @@ function startAnonymousAuthentication() {
 
 
                                 if (
-                                    credential &&
-                                    credential.user
+                                    !credential ||
+                                    !credential.user
                                 ) {
-
-                                    finished =
-                                        true;
-
-                                    currentUser =
-                                        credential.user;
-
-                                    authenticationReady =
-                                        true;
-
-                                    unsubscribe();
-
-
-                                    console.log(
-                                        "Anonymous authentication successful:",
-                                        currentUser.uid
-                                    );
-
-
-                                    resolve(
-                                        currentUser
-                                    );
-
-                                } else {
 
                                     throw new Error(
                                         "Firebase did not return an authenticated user."
                                     );
 
                                 }
+
+
+                                finished =
+                                    true;
+
+                                currentUser =
+                                    credential.user;
+
+                                authenticationReady =
+                                    true;
+
+                                unsubscribe();
+
+
+                                console.log(
+                                    "Anonymous Firebase authentication successful:",
+                                    currentUser.uid
+                                );
+
+
+                                resolve(
+                                    currentUser
+                                );
 
                             } catch (error) {
 
@@ -346,102 +352,204 @@ function startAnonymousAuthentication() {
 }
 
 
-/* ===========================
-   FIREBASE ERROR MESSAGE
-=========================== */
+/* ============================================================
+   FRIENDLY ERROR HANDLING
+============================================================ */
 
-function getReadableFirebaseError(
-    error
+/*
+ * IMPORTANT:
+ *
+ * Visitors NEVER see Firebase error codes.
+ *
+ * Developers can still see the real error
+ * in the browser console.
+ */
+
+function getFriendlyErrorMessage(
+    error,
+    context = "submission"
 ) {
 
-    if (!error) {
-
-        return (
-            "We couldn't submit your recommendation right now. Please try again."
-        );
-
-    }
-
+    /*
+     * Always log the technical error
+     * for debugging.
+     */
 
     console.error(
-        "Full Firebase error:",
+        `Holy Grail ${context} error:`,
         error
     );
 
 
     /*
-     * Anonymous authentication
-     * isn't enabled.
+     * Authentication errors.
      */
 
     if (
+        error &&
         error.code ===
         "auth/operation-not-allowed"
     ) {
 
+        console.error(
+            "ACTION REQUIRED: Anonymous Authentication " +
+            "is not enabled in Firebase."
+        );
+
+
         return (
-            "Anonymous Authentication is not enabled in Firebase. " +
-            "Enable Anonymous Authentication in your Firebase Authentication settings."
+            "We couldn't connect your submission right now. " +
+            "Please try again in a moment."
         );
 
     }
 
 
-    /*
-     * Firestore security rules
-     * rejected the request.
-     */
-
     if (
-        error.code ===
-        "permission-denied"
-    ) {
-
-        return (
-            "Firebase rejected the submission. " +
-            "Please check your Firestore security rules."
-        );
-
-    }
-
-
-    /*
-     * Network problem.
-     */
-
-    if (
+        error &&
         error.code ===
         "auth/network-request-failed"
     ) {
 
         return (
-            "There was a network problem. " +
-            "Please check your connection and try again."
+            "It looks like there's a connection problem. " +
+            "Please check your internet connection and try again."
         );
 
     }
 
 
     if (
-        error.code ===
-        "unavailable"
+        error &&
+        (
+            error.code ===
+            "auth/internal-error" ||
+
+            error.code ===
+            "auth/network-request-failed"
+        )
     ) {
 
         return (
-            "Firebase is temporarily unavailable. " +
+            "We couldn't connect right now. " +
             "Please try again."
         );
 
     }
 
 
+    /*
+     * Firestore permission error.
+     *
+     * This is likely the error you are currently
+     * seeing if your Firestore rules don't match
+     * the document being created.
+     */
+
     if (
+        error &&
+        (
+            error.code ===
+            "permission-denied" ||
+
+            error.code ===
+            "firestore/permission-denied"
+        )
+    ) {
+
+        console.error(
+            "Firestore rejected the submission. " +
+            "Check the security rule for " +
+            "holyGrailRecommendations."
+        );
+
+
+        return (
+            "We couldn't send your recommendation right now. " +
+            "Please try again in a moment."
+        );
+
+    }
+
+
+    /*
+     * Firestore unavailable.
+     */
+
+    if (
+        error &&
+        (
+            error.code ===
+            "unavailable" ||
+
+            error.code ===
+            "deadline-exceeded"
+        )
+    ) {
+
+        return (
+            "Our service is temporarily unavailable. " +
+            "Please try again in a moment."
+        );
+
+    }
+
+
+    /*
+     * Firestore failed precondition.
+     */
+
+    if (
+        error &&
         error.code ===
         "failed-precondition"
     ) {
 
+        console.error(
+            "Firestore failed precondition. " +
+            "Check Firebase configuration."
+        );
+
+
         return (
-            "Firebase could not complete the submission. " +
+            "We couldn't complete your submission right now. " +
+            "Please try again."
+        );
+
+    }
+
+
+    /*
+     * Invalid argument.
+     */
+
+    if (
+        error &&
+        error.code ===
+        "invalid-argument"
+    ) {
+
+        return (
+            "Something went wrong with your submission. " +
+            "Please check the information and try again."
+        );
+
+    }
+
+
+    /*
+     * Generic fallback.
+     *
+     * Never expose technical details.
+     */
+
+    if (
+        context ===
+        "authentication"
+    ) {
+
+        return (
+            "We couldn't connect your submission right now. " +
             "Please try again."
         );
 
@@ -449,29 +557,94 @@ function getReadableFirebaseError(
 
 
     return (
-        "We couldn't submit your recommendation right now. " +
-        "Please try again."
+        "We couldn't send your recommendation right now. " +
+        "Please try again in a moment."
     );
 
 }
 
 
-/* ===========================
-   SAFETY CHECK
-=========================== */
+/* ============================================================
+   UI ERROR
+============================================================ */
 
-if (!form) {
+function showError(
+    message
+) {
 
-    console.error(
-        "Holy Grail form was not found."
-    );
+    if (!errorMessage) {
+
+        return;
+
+    }
+
+
+    errorMessage.textContent =
+        message;
+
+
+    errorMessage.hidden =
+        false;
 
 }
 
 
-/* ===========================
+/* ============================================================
+   CLEAR ERROR
+============================================================ */
+
+function clearError() {
+
+    if (!errorMessage) {
+
+        return;
+
+    }
+
+
+    errorMessage.textContent =
+        "";
+
+}
+
+
+/* ============================================================
+   LOADING STATE
+============================================================ */
+
+function setLoading(
+    loading
+) {
+
+    if (submitButton) {
+
+        submitButton.disabled =
+            loading;
+
+    }
+
+
+    if (submitText) {
+
+        submitText.hidden =
+            loading;
+
+    }
+
+
+    if (submitLoading) {
+
+        submitLoading.hidden =
+            !loading;
+
+    }
+
+}
+
+
+/* ============================================================
    SUBMIT RECOMMENDATION
-=========================== */
+============================================================ */
 
 if (form) {
 
@@ -482,16 +655,7 @@ if (form) {
             event.preventDefault();
 
 
-            /* =========================
-               CLEAR PREVIOUS MESSAGES
-            ========================= */
-
-            if (errorMessage) {
-
-                errorMessage.textContent =
-                    "";
-
-            }
+            clearError();
 
 
             /* =========================
@@ -516,12 +680,9 @@ if (form) {
 
             if (!productName) {
 
-                if (errorMessage) {
-
-                    errorMessage.textContent =
-                        "Please enter the product name.";
-
-                }
+                showError(
+                    "Please enter the product name."
+                );
 
 
                 if (productNameInput) {
@@ -538,12 +699,9 @@ if (form) {
 
             if (!brand) {
 
-                if (errorMessage) {
-
-                    errorMessage.textContent =
-                        "Please enter the brand.";
-
-                }
+                showError(
+                    "Please enter the brand."
+                );
 
 
                 if (brandInput) {
@@ -559,31 +717,12 @@ if (form) {
 
 
             /* =========================
-               LOADING STATE
+               LOADING
             ========================= */
 
-            if (submitButton) {
-
-                submitButton.disabled =
-                    true;
-
-            }
-
-
-            if (submitText) {
-
-                submitText.hidden =
-                    true;
-
-            }
-
-
-            if (submitLoading) {
-
-                submitLoading.hidden =
-                    false;
-
-            }
+            setLoading(
+                true
+            );
 
 
             try {
@@ -594,7 +733,7 @@ if (form) {
 
 
                 /* =========================
-                   CHECK FIREBASE
+                   FIREBASE CHECKS
                 ========================= */
 
                 if (!db) {
@@ -616,13 +755,14 @@ if (form) {
 
 
                 /* =========================
-                   AUTHENTICATE FIRST
+                   AUTHENTICATE
                 ========================= */
 
-                await startAnonymousAuthentication();
+                const user =
+                    await startAnonymousAuthentication();
 
 
-                if (!currentUser) {
+                if (!user) {
 
                     throw new Error(
                         "No authenticated Firebase user exists."
@@ -631,14 +771,18 @@ if (form) {
                 }
 
 
+                currentUser =
+                    user;
+
+
                 console.log(
-                    "Authenticated user:",
+                    "Authenticated UID:",
                     currentUser.uid
                 );
 
 
                 /* =========================
-                   SAVE TO FIRESTORE
+                   SAVE
                 ========================= */
 
                 const docRef =
@@ -655,13 +799,6 @@ if (form) {
                             brand:
                                 brand,
 
-                            /*
-                             * Store the anonymous UID.
-                             *
-                             * This is useful for security
-                             * rules and moderation.
-                             */
-
                             uid:
                                 currentUser.uid,
 
@@ -675,34 +812,21 @@ if (form) {
                     );
 
 
+                /*
+                 * IMPORTANT:
+                 *
+                 * If execution reaches here,
+                 * Firestore accepted the write.
+                 */
+
                 console.log(
-                    "Holy Grail recommendation saved:",
+                    "Holy Grail recommendation successfully saved:",
                     docRef.id
                 );
 
 
                 /* =========================
                    SUCCESS
-                ========================= */
-
-                if (form) {
-
-                    form.hidden =
-                        true;
-
-                }
-
-
-                if (successMessage) {
-
-                    successMessage.hidden =
-                        false;
-
-                }
-
-
-                /* =========================
-                   CLEAR FIELDS
                 ========================= */
 
                 if (productNameInput) {
@@ -721,50 +845,49 @@ if (form) {
                 }
 
 
-            } catch (error) {
+                if (form) {
 
-                console.error(
-                    "Holy Grail Firebase error:",
-                    error
-                );
-
-
-                if (errorMessage) {
-
-                    errorMessage.textContent =
-                        getReadableFirebaseError(
-                            error
-                        );
-
-                }
-
-
-                /*
-                 * Restore button.
-                 */
-
-                if (submitButton) {
-
-                    submitButton.disabled =
-                        false;
-
-                }
-
-
-                if (submitText) {
-
-                    submitText.hidden =
-                        false;
-
-                }
-
-
-                if (submitLoading) {
-
-                    submitLoading.hidden =
+                    form.hidden =
                         true;
 
                 }
+
+
+                if (successMessage) {
+
+                    successMessage.hidden =
+                        false;
+
+                }
+
+
+                clearError();
+
+
+            } catch (error) {
+
+                /*
+                 * Technical error stays in
+                 * console.
+                 *
+                 * Visitor gets friendly message.
+                 */
+
+                showError(
+                    getFriendlyErrorMessage(
+                        error,
+                        "submission"
+                    )
+                );
+
+
+                /*
+                 * Restore form controls.
+                 */
+
+                setLoading(
+                    false
+                );
 
             }
 
@@ -774,9 +897,9 @@ if (form) {
 }
 
 
-/* ===========================
+/* ============================================================
    SUBMIT ANOTHER
-=========================== */
+============================================================ */
 
 if (submitAnother) {
 
@@ -800,36 +923,12 @@ if (submitAnother) {
             }
 
 
-            if (submitButton) {
-
-                submitButton.disabled =
-                    false;
-
-            }
+            setLoading(
+                false
+            );
 
 
-            if (submitText) {
-
-                submitText.hidden =
-                    false;
-
-            }
-
-
-            if (submitLoading) {
-
-                submitLoading.hidden =
-                    true;
-
-            }
-
-
-            if (errorMessage) {
-
-                errorMessage.textContent =
-                    "";
-
-            }
+            clearError();
 
 
             if (productNameInput) {
@@ -844,9 +943,9 @@ if (submitAnother) {
 }
 
 
-/* ===========================
-   INITIALIZE AUTH
-=========================== */
+/* ============================================================
+   INITIALIZE PAGE
+============================================================ */
 
 async function initializeHolyGrail() {
 
@@ -856,10 +955,10 @@ async function initializeHolyGrail() {
 
 
     /*
-     * Start authentication when the page loads.
+     * Start authentication in the background.
      *
-     * This means the anonymous user is ready
-     * before the visitor submits the form.
+     * The visitor does not have to wait
+     * for this before seeing the page.
      */
 
     try {
@@ -869,14 +968,19 @@ async function initializeHolyGrail() {
 
 
         console.log(
-            "Holy Grail Firebase authentication ready:",
+            "Holy Grail authentication ready:",
             user.uid
         );
 
     } catch (error) {
 
+        /*
+         * Keep technical information
+         * in the console.
+         */
+
         console.error(
-            "Holy Grail authentication could not start:",
+            "Holy Grail authentication initialization failed:",
             error
         );
 
@@ -885,9 +989,9 @@ async function initializeHolyGrail() {
 }
 
 
-/* ===========================
-   START
-=========================== */
+/* ============================================================
+   START APPLICATION
+============================================================ */
 
 if (
     document.readyState ===
