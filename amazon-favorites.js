@@ -41,10 +41,21 @@ import {
 
 
 /* ============================================================
-   INITIALIZE FIREBASE AUTH
+   FIREBASE AUTH
    ============================================================ */
 
 let auth = null;
+
+let currentUser = null;
+
+let authenticationReady = false;
+
+let authenticationPromise = null;
+
+
+/*
+ * Initialize Firebase Authentication.
+ */
 
 try {
 
@@ -64,9 +75,9 @@ try {
 }
 
 
-/* ============================================================
-   FIRESTORE CHECK
-   ============================================================ */
+/*
+ * Check Firestore.
+ */
 
 if (!db) {
 
@@ -88,49 +99,35 @@ if (!db) {
    STATE
    ============================================================ */
 
-let currentUser = null;
-
-let authenticationReady = false;
-
-let authenticationPromise = null;
-
 
 /*
- * Tracks the product currently being displayed
- * in each battle.
+ * Tracks which product is currently displayed
+ * in each category.
  */
 
 const battleIndexes = {};
 
 
 /*
- * Prevents duplicate clicks while a vote is being saved.
+ * Prevents multiple simultaneous votes for
+ * the same product.
  */
 
 const voteInProgress = new Set();
 
 
 /*
- * Votes confirmed by Firestore.
+ * Votes confirmed by Firestore during this
+ * page session.
  *
  * Key:
- *
- * category_productId
+ *     category_productId
  *
  * Value:
- *
- * "yes" / "no"
+ *     "yes" / "no"
  */
 
 const confirmedVotes = new Map();
-
-
-/*
- * Prevents multiple authentication listeners
- * from being created simultaneously.
- */
-
-let authenticationListenerStarted = false;
 
 
 /* ============================================================
@@ -444,11 +441,9 @@ function getVoteDocumentId(
 ) {
 
     /*
-     * IMPORTANT:
+     * Firestore document ID:
      *
-     * This MUST match the Firestore security rule:
-     *
-     * voteId.matches(request.auth.uid + '_.*')
+     * UID_category_productId
      */
 
     return `${uid}_${category}_${productId}`;
@@ -502,7 +497,7 @@ function getCurrentProduct(
 function startAnonymousAuthentication() {
 
     /*
-     * Firebase itself isn't initialized.
+     * Firebase Authentication isn't available.
      */
 
     if (!auth) {
@@ -525,7 +520,8 @@ function startAnonymousAuthentication() {
         currentUser =
             auth.currentUser;
 
-        authenticationReady = true;
+        authenticationReady =
+            true;
 
         return Promise.resolve(
             currentUser
@@ -535,8 +531,9 @@ function startAnonymousAuthentication() {
 
 
     /*
-     * If authentication is already being established,
-     * return the existing promise.
+     * Authentication is already being established.
+     *
+     * Reuse the same Promise.
      */
 
     if (authenticationPromise) {
@@ -550,46 +547,117 @@ function startAnonymousAuthentication() {
         new Promise(
             (resolve, reject) => {
 
-                let resolved = false;
+                let finished = false;
+
+                let unsubscribe = null;
 
 
-                const unsubscribe =
+                const finishSuccess =
+                    (user) => {
+
+                        if (finished) {
+
+                            return;
+
+                        }
+
+
+                        finished = true;
+
+
+                        currentUser =
+                            user;
+
+
+                        authenticationReady =
+                            true;
+
+
+                        if (unsubscribe) {
+
+                            unsubscribe();
+
+                        }
+
+
+                        console.log(
+                            "Firebase user ready:",
+                            user.uid
+                        );
+
+
+                        resolve(
+                            user
+                        );
+
+                    };
+
+
+                const finishError =
+                    (error) => {
+
+                        if (finished) {
+
+                            return;
+
+                        }
+
+
+                        finished = true;
+
+
+                        authenticationReady =
+                            false;
+
+
+                        currentUser =
+                            null;
+
+
+                        authenticationPromise =
+                            null;
+
+
+                        if (unsubscribe) {
+
+                            unsubscribe();
+
+                        }
+
+
+                        console.error(
+                            "Firebase authentication error:",
+                            error
+                        );
+
+
+                        reject(
+                            error
+                        );
+
+                    };
+
+
+                unsubscribe =
                     onAuthStateChanged(
                         auth,
+
                         async (user) => {
 
-                            if (resolved) {
+                            if (finished) {
+
                                 return;
+
                             }
 
 
                             /*
-                             * Firebase already has a user.
+                             * Existing Firebase user.
                              */
 
                             if (user) {
 
-                                resolved = true;
-
-                                currentUser =
-                                    user;
-
-                                authenticationReady =
-                                    true;
-
-                                authenticationListenerStarted =
-                                    true;
-
-                                unsubscribe();
-
-
-                                console.log(
-                                    "Firebase user ready:",
-                                    user.uid
-                                );
-
-
-                                resolve(
+                                finishSuccess(
                                     user
                                 );
 
@@ -601,7 +669,7 @@ function startAnonymousAuthentication() {
                             /*
                              * No user exists.
                              *
-                             * Create anonymous account.
+                             * Create an anonymous user.
                              */
 
                             try {
@@ -622,28 +690,8 @@ function startAnonymousAuthentication() {
                                     credential.user
                                 ) {
 
-                                    currentUser =
-                                        credential.user;
-
-                                    authenticationReady =
-                                        true;
-
-                                    resolved = true;
-
-                                    authenticationListenerStarted =
-                                        true;
-
-                                    unsubscribe();
-
-
-                                    console.log(
-                                        "Anonymous authentication successful:",
-                                        currentUser.uid
-                                    );
-
-
-                                    resolve(
-                                        currentUser
+                                    finishSuccess(
+                                        credential.user
                                     );
 
                                 } else {
@@ -662,20 +710,9 @@ function startAnonymousAuthentication() {
                                 );
 
 
-                                if (!resolved) {
-
-                                    resolved = true;
-
-                                    unsubscribe();
-
-                                    authenticationPromise =
-                                        null;
-
-                                    reject(
-                                        error
-                                    );
-
-                                }
+                                finishError(
+                                    error
+                                );
 
                             }
 
@@ -683,26 +720,7 @@ function startAnonymousAuthentication() {
 
                         (error) => {
 
-                            if (resolved) {
-                                return;
-                            }
-
-
-                            resolved = true;
-
-                            unsubscribe();
-
-                            authenticationPromise =
-                                null;
-
-
-                            console.error(
-                                "Firebase authentication state error:",
-                                error
-                            );
-
-
-                            reject(
+                            finishError(
                                 error
                             );
 
@@ -719,421 +737,8 @@ function startAnonymousAuthentication() {
 
 
 /* ============================================================
-   LOAD EXISTING VOTE FROM FIRESTORE
-   ============================================================ */
-
-async function loadExistingVote(
-    category,
-    product
-) {
-
-    /*
-     * Authentication and Firestore are required.
-     */
-
-    if (
-        !currentUser ||
-        !db
-    ) {
-
-        return null;
-
-    }
-
-
-    const key =
-        getBattleKey(
-            category,
-            product.id
-        );
-
-
-    /*
-     * If we already confirmed this vote during the
-     * current page session, use it.
-     */
-
-    if (
-        confirmedVotes.has(key)
-    ) {
-
-        return confirmedVotes.get(key);
-
-    }
-
-
-    const documentId =
-        getVoteDocumentId(
-            category,
-            product.id,
-            currentUser.uid
-        );
-
-
-    try {
-
-        const voteRef =
-            doc(
-                db,
-                "productVotes",
-                documentId
-            );
-
-
-        const snapshot =
-            await getDoc(
-                voteRef
-            );
-
-
-        /*
-         * No vote exists for this user/product.
-         */
-
-        if (
-            !snapshot.exists()
-        ) {
-
-            return null;
-
-        }
-
-
-        const data =
-            snapshot.data();
-
-
-        /*
-         * Extra safety check:
-         *
-         * The returned vote must belong to the current user.
-         */
-
-        if (
-            data.uid !==
-            currentUser.uid
-        ) {
-
-            console.warn(
-                "Firestore returned a vote belonging to another UID."
-            );
-
-            return null;
-
-        }
-
-
-        /*
-         * Only accept our two valid vote values.
-         */
-
-        if (
-            data.vote !== "yes" &&
-            data.vote !== "no"
-        ) {
-
-            console.warn(
-                "Firestore vote contains an invalid vote value."
-            );
-
-            return null;
-
-        }
-
-
-        /*
-         * Firestore confirmed the vote.
-         */
-
-        confirmedVotes.set(
-            key,
-            data.vote
-        );
-
-
-        /*
-         * Cache the confirmed result locally.
-         */
-
-        saveConfirmedVoteLocally(
-            category,
-            product.id,
-            data.vote
-        );
-
-
-        return data.vote;
-
-    } catch (error) {
-
-        /*
-         * IMPORTANT:
-         *
-         * A failed read is NOT considered a vote.
-         *
-         * The visitor can still attempt to vote.
-         */
-
-        console.warn(
-            "Could not check existing Firestore vote:",
-            error
-        );
-
-
-        return null;
-
-    }
-
-}
-
-
-/* ============================================================
-   WRITE VOTE TO FIRESTORE
-   ============================================================ */
-
-async function saveVote(
-    category,
-    product,
-    vote
-) {
-
-    /*
-     * Validate product.
-     */
-
-    if (!product) {
-
-        throw new Error(
-            "No product is currently selected."
-        );
-
-    }
-
-
-    /*
-     * Validate vote.
-     */
-
-    if (
-        vote !== "yes" &&
-        vote !== "no"
-    ) {
-
-        throw new Error(
-            "Invalid vote."
-        );
-
-    }
-
-
-    /*
-     * Make absolutely sure authentication exists.
-     */
-
-    if (
-        !authenticationReady ||
-        !currentUser
-    ) {
-
-        await startAnonymousAuthentication();
-
-    }
-
-
-    if (!currentUser) {
-
-        throw new Error(
-            "No authenticated Firebase user exists."
-        );
-
-    }
-
-
-    if (!db) {
-
-        throw new Error(
-            "Firestore is not initialized."
-        );
-
-    }
-
-
-    const key =
-        getBattleKey(
-            category,
-            product.id
-        );
-
-
-    /*
-     * Prevent double-clicks.
-     */
-
-    if (
-        voteInProgress.has(key)
-    ) {
-
-        return false;
-
-    }
-
-
-    /*
-     * If Firestore already confirmed this vote during
-     * this session, don't write another vote.
-     */
-
-    if (
-        confirmedVotes.has(key)
-    ) {
-
-        return false;
-
-    }
-
-
-    voteInProgress.add(
-        key
-    );
-
-
-    try {
-
-        const documentId =
-            getVoteDocumentId(
-                category,
-                product.id,
-                currentUser.uid
-            );
-
-
-        const voteRef =
-            doc(
-                db,
-                "productVotes",
-                documentId
-            );
-
-
-        /*
-         * IMPORTANT:
-         *
-         * setDoc() is awaited.
-         *
-         * The UI is NOT told that the vote succeeded
-         * until Firebase confirms the write.
-         */
-
-        await setDoc(
-            voteRef,
-            {
-                uid:
-                    currentUser.uid,
-
-                category:
-                    category,
-
-                productId:
-                    product.id,
-
-                productName:
-                    product.name,
-
-                productBrand:
-                    product.brand,
-
-                vote:
-                    vote,
-
-                createdAt:
-                    serverTimestamp()
-
-            },
-            {
-                merge: false
-            }
-        );
-
-
-        /*
-         * Firestore successfully accepted the vote.
-         */
-
-        confirmedVotes.set(
-            key,
-            vote
-        );
-
-
-        /*
-         * Cache the confirmed result.
-         */
-
-        saveConfirmedVoteLocally(
-            category,
-            product.id,
-            vote
-        );
-
-
-        console.log(
-            "Vote successfully saved:",
-            {
-                uid:
-                    currentUser.uid,
-
-                category:
-                    category,
-
-                productId:
-                    product.id,
-
-                vote:
-                    vote
-            }
-        );
-
-
-        return true;
-
-    } catch (error) {
-
-        /*
-         * DO NOT cache the vote.
-         *
-         * If Firestore rejected it, it is NOT registered.
-         */
-
-        console.error(
-            "Vote was NOT saved:",
-            error
-        );
-
-
-        throw error;
-
-    } finally {
-
-        voteInProgress.delete(
-            key
-        );
-
-    }
-
-}
-
-
-/* ============================================================
    LOCAL STORAGE
    ============================================================ */
-
-/*
- * IMPORTANT:
- *
- * localStorage is ONLY a convenience cache.
- *
- * Firestore is the actual source of truth.
- */
 
 function getLocalVoteKey(
     category,
@@ -1274,6 +879,7 @@ function setImage(
 
     imageElement.src =
         src;
+
 
     imageElement.alt =
         alt || "";
@@ -1700,7 +1306,7 @@ function showVoteUI(
         );
 
 
-    if (product) {
+    if (product && yourPosition) {
 
         const yes =
             Number(
@@ -1765,11 +1371,6 @@ function showVoteError(
         );
 
 
-    /*
-     * Do NOT leave the vote area looking completed
-     * after an unsuccessful vote.
-     */
-
     if (voteArea) {
 
         voteArea.classList.remove(
@@ -1830,6 +1431,378 @@ function showVoteError(
 
 
 /* ============================================================
+   LOAD EXISTING VOTE
+   ============================================================ */
+
+async function loadExistingVote(
+    category,
+    product
+) {
+
+    if (
+        !currentUser ||
+        !db
+    ) {
+
+        return null;
+
+    }
+
+
+    const key =
+        getBattleKey(
+            category,
+            product.id
+        );
+
+
+    /*
+     * Already confirmed during this session.
+     */
+
+    if (
+        confirmedVotes.has(key)
+    ) {
+
+        return confirmedVotes.get(key);
+
+    }
+
+
+    const documentId =
+        getVoteDocumentId(
+            category,
+            product.id,
+            currentUser.uid
+        );
+
+
+    try {
+
+        const voteRef =
+            doc(
+                db,
+                "productVotes",
+                documentId
+            );
+
+
+        const snapshot =
+            await getDoc(
+                voteRef
+            );
+
+
+        if (
+            !snapshot.exists()
+        ) {
+
+            return null;
+
+        }
+
+
+        const data =
+            snapshot.data();
+
+
+        /*
+         * Verify the document belongs to
+         * the current anonymous user.
+         */
+
+        if (
+            data.uid !==
+            currentUser.uid
+        ) {
+
+            console.warn(
+                "Vote document UID does not match current user."
+            );
+
+            return null;
+
+        }
+
+
+        /*
+         * Validate the vote.
+         */
+
+        if (
+            data.vote !== "yes" &&
+            data.vote !== "no"
+        ) {
+
+            console.warn(
+                "Invalid vote value found in Firestore."
+            );
+
+            return null;
+
+        }
+
+
+        /*
+         * Firestore confirmed the vote.
+         */
+
+        confirmedVotes.set(
+            key,
+            data.vote
+        );
+
+
+        saveConfirmedVoteLocally(
+            category,
+            product.id,
+            data.vote
+        );
+
+
+        return data.vote;
+
+    } catch (error) {
+
+        /*
+         * A failed READ must never be interpreted
+         * as a successful vote.
+         */
+
+        console.warn(
+            "Could not check existing Firestore vote:",
+            error
+        );
+
+
+        return null;
+
+    }
+
+}
+
+
+/* ============================================================
+   SAVE VOTE
+   ============================================================ */
+
+async function saveVote(
+    category,
+    product,
+    vote
+) {
+
+    if (!product) {
+
+        throw new Error(
+            "No product is currently selected."
+        );
+
+    }
+
+
+    if (
+        vote !== "yes" &&
+        vote !== "no"
+    ) {
+
+        throw new Error(
+            "Invalid vote."
+        );
+
+    }
+
+
+    /*
+     * Make sure authentication exists.
+     */
+
+    if (
+        !authenticationReady ||
+        !currentUser
+    ) {
+
+        await startAnonymousAuthentication();
+
+    }
+
+
+    if (!currentUser) {
+
+        throw new Error(
+            "No authenticated Firebase user exists."
+        );
+
+    }
+
+
+    if (!db) {
+
+        throw new Error(
+            "Firestore is not initialized."
+        );
+
+    }
+
+
+    const key =
+        getBattleKey(
+            category,
+            product.id
+        );
+
+
+    /*
+     * Prevent duplicate writes.
+     */
+
+    if (
+        voteInProgress.has(key)
+    ) {
+
+        return false;
+
+    }
+
+
+    /*
+     * A confirmed vote cannot be replaced.
+     */
+
+    if (
+        confirmedVotes.has(key)
+    ) {
+
+        return false;
+
+    }
+
+
+    voteInProgress.add(
+        key
+    );
+
+
+    try {
+
+        const documentId =
+            getVoteDocumentId(
+                category,
+                product.id,
+                currentUser.uid
+            );
+
+
+        const voteRef =
+            doc(
+                db,
+                "productVotes",
+                documentId
+            );
+
+
+        /*
+         * Firestore must confirm the write
+         * before the UI says "saved".
+         */
+
+        await setDoc(
+            voteRef,
+            {
+                uid:
+                    currentUser.uid,
+
+                category:
+                    category,
+
+                productId:
+                    product.id,
+
+                productName:
+                    product.name,
+
+                productBrand:
+                    product.brand,
+
+                vote:
+                    vote,
+
+                createdAt:
+                    serverTimestamp()
+
+            },
+            {
+                merge: false
+            }
+        );
+
+
+        /*
+         * Firestore accepted the vote.
+         */
+
+        confirmedVotes.set(
+            key,
+            vote
+        );
+
+
+        saveConfirmedVoteLocally(
+            category,
+            product.id,
+            vote
+        );
+
+
+        console.log(
+            "Vote successfully saved:",
+            {
+                uid:
+                    currentUser.uid,
+
+                category:
+                    category,
+
+                productId:
+                    product.id,
+
+                vote:
+                    vote
+            }
+        );
+
+
+        return true;
+
+    } catch (error) {
+
+        /*
+         * IMPORTANT:
+         *
+         * Nothing is cached when Firestore rejects
+         * the write.
+         */
+
+        console.error(
+            "Vote was NOT saved:",
+            error
+        );
+
+
+        throw error;
+
+    } finally {
+
+        voteInProgress.delete(
+            key
+        );
+
+    }
+
+}
+
+
+/* ============================================================
    FIREBASE ERROR MESSAGES
    ============================================================ */
 
@@ -1859,7 +1832,7 @@ function getReadableFirebaseError(
 
         return (
             "Firebase rejected the vote. " +
-            "Make sure Anonymous Authentication is enabled " +
+            "Check that Anonymous Authentication is enabled " +
             "and your Firestore rules allow authenticated users to create votes."
         );
 
@@ -1973,7 +1946,7 @@ async function handleVote(
 
 
     /*
-     * Authenticate before attempting the vote.
+     * Authenticate first.
      */
 
     try {
@@ -1999,10 +1972,6 @@ async function handleVote(
     }
 
 
-    /*
-     * Authentication must have produced a user.
-     */
-
     if (!currentUser) {
 
         showVoteError(
@@ -2017,7 +1986,7 @@ async function handleVote(
 
 
     /*
-     * Save the vote.
+     * Save vote.
      */
 
     try {
@@ -2031,8 +2000,8 @@ async function handleVote(
 
 
         /*
-         * ONLY show success if Firestore confirmed
-         * the write.
+         * ONLY show success after Firestore
+         * confirms the write.
          */
 
         if (saved) {
@@ -2051,10 +2020,6 @@ async function handleVote(
             error
         );
 
-
-        /*
-         * Failed vote is NOT cached.
-         */
 
         showVoteError(
             battle,
@@ -2172,7 +2137,7 @@ async function showProduct(
 
 
     /*
-     * Keep index safely inside the array.
+     * Keep index inside the array.
      */
 
     if (index < 0) {
@@ -2201,7 +2166,7 @@ async function showProduct(
 
 
     /*
-     * UPDATE POSITION
+     * Update position.
      */
 
     updateProductPosition(
@@ -2212,7 +2177,7 @@ async function showProduct(
 
 
     /*
-     * UPDATE DOTS
+     * Update dots.
      */
 
     updateDots(
@@ -2223,7 +2188,7 @@ async function showProduct(
 
 
     /*
-     * UPDATE IMAGE
+     * Update image.
      */
 
     setImage(
@@ -2236,7 +2201,7 @@ async function showProduct(
 
 
     /*
-     * UPDATE PRODUCT LABEL
+     * Update product label.
      */
 
     setText(
@@ -2248,7 +2213,7 @@ async function showProduct(
 
 
     /*
-     * UPDATE NAME
+     * Update name.
      */
 
     setText(
@@ -2260,7 +2225,7 @@ async function showProduct(
 
 
     /*
-     * UPDATE BRAND
+     * Update brand.
      */
 
     setText(
@@ -2272,7 +2237,7 @@ async function showProduct(
 
 
     /*
-     * UPDATE DESCRIPTION
+     * Update description.
      */
 
     setText(
@@ -2284,7 +2249,7 @@ async function showProduct(
 
 
     /*
-     * UPDATE PRODUCT LINK
+     * Update product link.
      */
 
     const link =
@@ -2302,7 +2267,7 @@ async function showProduct(
 
 
     /*
-     * UPDATE SCORE
+     * Update score.
      */
 
     updateScoreUI(
@@ -2312,7 +2277,7 @@ async function showProduct(
 
 
     /*
-     * RESET VOTE UI
+     * Reset vote UI first.
      */
 
     resetVoteUI(
@@ -2324,8 +2289,6 @@ async function showProduct(
      * --------------------------------------------------------
      * CHECK LOCAL CACHE
      * --------------------------------------------------------
-     *
-     * This is only a speed optimization.
      */
 
     const localVote =
@@ -2337,11 +2300,15 @@ async function showProduct(
 
     if (localVote) {
 
-        confirmedVotes.set(
+        const key =
             getBattleKey(
                 category,
                 product.id
-            ),
+            );
+
+
+        confirmedVotes.set(
+            key,
             localVote
         );
 
@@ -2351,12 +2318,6 @@ async function showProduct(
             localVote
         );
 
-
-        /*
-         * We still don't need to perform a Firestore read
-         * immediately because this local value was previously
-         * created only after a successful Firestore write.
-         */
 
         return;
 
@@ -2368,7 +2329,7 @@ async function showProduct(
      * CHECK FIRESTORE
      * --------------------------------------------------------
      *
-     * This is what was missing in your previous code.
+     * This does NOT prevent voting if the read fails.
      */
 
     try {
@@ -2383,11 +2344,41 @@ async function showProduct(
         }
 
 
+        /*
+         * Make sure the product hasn't changed while
+         * authentication was loading.
+         */
+
+        if (
+            battleIndexes[category] !==
+            index
+        ) {
+
+            return;
+
+        }
+
+
         const existingVote =
             await loadExistingVote(
                 category,
                 product
             );
+
+
+        /*
+         * Make sure the user hasn't navigated to another
+         * product while Firestore was loading.
+         */
+
+        if (
+            battleIndexes[category] !==
+            index
+        ) {
+
+            return;
+
+        }
 
 
         if (existingVote) {
@@ -2402,7 +2393,9 @@ async function showProduct(
     } catch (error) {
 
         /*
-         * A failed read must NOT prevent voting.
+         * Existing-vote check failed.
+         *
+         * The product remains votable.
          */
 
         console.warn(
@@ -2564,7 +2557,7 @@ function initializeBattle(
 
 
     /*
-     * Initial product.
+     * Render first product.
      */
 
     showProduct(
@@ -2587,7 +2580,7 @@ async function initializePage() {
 
 
     /*
-     * Find all battles.
+     * Find battles on page.
      */
 
     const battlesOnPage =
@@ -2610,10 +2603,9 @@ async function initializePage() {
 
 
     /*
-     * Initialize the UI immediately.
+     * Render the UI immediately.
      *
-     * Firebase must never prevent the product cards
-     * from rendering.
+     * Firebase must NOT block the product cards.
      */
 
     battlesOnPage.forEach(
@@ -2628,9 +2620,7 @@ async function initializePage() {
 
 
     /*
-     * Start anonymous authentication.
-     *
-     * This happens after the UI is initialized.
+     * Start Firebase authentication.
      */
 
     try {
@@ -2640,36 +2630,37 @@ async function initializePage() {
 
 
         console.log(
-            "Firebase authentication ready.",
+            "Firebase authentication ready:",
             user.uid
         );
 
 
         /*
-         * Authentication is now ready.
+         * Now that authentication is ready,
+         * check the currently displayed products.
          *
-         * Refresh the currently displayed products so
-         * Firestore can check for existing votes.
+         * We do this only once here instead of triggering
+         * another initialization cycle unnecessarily.
          */
 
-        battlesOnPage.forEach(
-            battle => {
+        for (
+            const battle of battlesOnPage
+        ) {
 
-                const category =
-                    battle.dataset.category;
-
-
-                const index =
-                    battleIndexes[category] || 0;
+            const category =
+                battle.dataset.category;
 
 
-                showProduct(
-                    battle,
-                    index
-                );
+            const index =
+                battleIndexes[category] || 0;
 
-            }
-        );
+
+            await showProduct(
+                battle,
+                index
+            );
+
+        }
 
     } catch (error) {
 
@@ -2680,10 +2671,10 @@ async function initializePage() {
 
 
         /*
-         * The page still works visually.
+         * The visual page still works.
          *
-         * Voting will show an appropriate error if
-         * the visitor attempts to vote.
+         * If the user tries to vote, they will receive
+         * an appropriate error.
          */
 
     }
