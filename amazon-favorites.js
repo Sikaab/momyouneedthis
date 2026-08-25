@@ -24,8 +24,7 @@
    FIREBASE IMPORTS
    ============================================================ */
 
-
-import { db } from "./firebase-config.js";
+import { app, db } from "./firebase-config.js";
 
 import {
     getAuth,
@@ -34,35 +33,52 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
 
 import {
-    getFirestore,
     doc,
     setDoc,
     getDoc,
     serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
 
-import {app} from "./firebase-config.js";
 
 /* ============================================================
-   INITIALIZE FIREBASE
+   INITIALIZE FIREBASE AUTH
    ============================================================ */
 
-let app = null;
 let auth = null;
-let db = null;
 
 try {
 
-    auth =
-        getAuth(
-            app
-        );
+    auth = getAuth(app);
+
+    console.log(
+        "Firebase Authentication initialized."
+    );
 
 } catch (error) {
 
     console.error(
-        "Firebase get auth failed:",
+        "Firebase Authentication initialization failed:",
         error
+    );
+
+}
+
+
+/* ============================================================
+   FIRESTORE CHECK
+   ============================================================ */
+
+if (!db) {
+
+    console.error(
+        "Firestore database was not initialized. " +
+        "Check firebase-config.js."
+    );
+
+} else {
+
+    console.log(
+        "Firestore initialized."
     );
 
 }
@@ -82,13 +98,6 @@ let authenticationPromise = null;
 /*
  * Tracks the product currently being displayed
  * in each battle.
- *
- * Example:
- *
- * {
- *     baby: 0,
- *     toddler: 1
- * }
  */
 
 const battleIndexes = {};
@@ -98,8 +107,7 @@ const battleIndexes = {};
  * Prevents duplicate clicks while a vote is being saved.
  */
 
-const voteInProgress =
-    new Set();
+const voteInProgress = new Set();
 
 
 /*
@@ -114,8 +122,7 @@ const voteInProgress =
  * "yes" / "no"
  */
 
-const confirmedVotes =
-    new Map();
+const confirmedVotes = new Map();
 
 
 /*
