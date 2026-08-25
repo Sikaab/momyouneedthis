@@ -61,7 +61,6 @@ import {
 
    ============================================================ */
 
-// CHANGE THIS PATH IF YOUR CONFIG FILE HAS A DIFFERENT NAME.
 import { firebaseConfig } from "./firebase-config.js";
 
 
