@@ -1,349 +1,2077 @@
-/* =========================================================
-   MOM-VOTED PRODUCT EXPERIENCE
-========================================================= */
+/*
+ * ============================================================
+ * MOMYOU NEED THIS — MOM-VOTED PRODUCT BATTLES
+ * ============================================================
+ *
+ * Requires Firebase modular SDK.
+ *
+ * IMPORTANT:
+ * Replace the firebaseConfig values below with the SAME
+ * Firebase web app configuration used by your other working
+ * MomYouNeedThis tools.
+ *
+ * Firestore collection:
+ *     productVotes
+ *
+ * Required fields:
+ *     uid
+ *     category
+ *     productId
+ *     productName
+ *     productBrand
+ *
+ * Firebase Authentication:
+ *     Anonymous authentication
+ *
+ * ============================================================
+ */
 
-import { db } from "./firebase-config.js";
+
+/* ============================================================
+   FIREBASE IMPORTS
+   ============================================================ */
 
 import {
-    collection,
-    setDoc,
-    doc,
-    serverTimestamp
-} from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
     getAuth,
-    signInAnonymously
-} from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
+    signInAnonymously,
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+import {
+    getFirestore,
+    doc,
+    setDoc,
+    getDoc,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
-document.addEventListener("DOMContentLoaded", async () => {
+/* ============================================================
+   FIREBASE CONFIG
+   ============================================================
 
-    "use strict";
+   IMPORTANT:
+   Use your EXISTING Firebase configuration.
+
+   Do NOT create a second Firebase project.
+
+   ============================================================ */
+
+const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT.firebasestorage.app",
+    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+    appId: "YOUR_APP_ID"
+};
 
 
-    /* =====================================================
-       CONFIGURATION
-    ===================================================== */
+/* ============================================================
+   INITIALIZE FIREBASE
+   ============================================================ */
 
-    const STORAGE_KEY =
-        "momYouNeedThisVotingExperience";
+let firebaseApp;
+let auth;
+let db;
 
-    const SESSION_KEY =
-        "momYouNeedThisSession";
+try {
 
-    const FIRESTORE_VOTES_COLLECTION =
-        "productVotes";
+    firebaseApp = initializeApp(firebaseConfig);
 
-    const MIN_SWIPE_DISTANCE = 45;
+    auth = getAuth(firebaseApp);
+
+    db = getFirestore(firebaseApp);
+
+} catch (error) {
+
+    console.error(
+        "Firebase initialization failed:",
+        error
+    );
+
+}
 
 
-    /* =====================================================
-       FIREBASE AUTHENTICATION
-       -----------------------------------------------
-       The visitor does NOT need an account.
+/* ============================================================
+   STATE
+   ============================================================ */
 
-       Firebase Anonymous Authentication creates a
-       temporary Firebase user automatically.
-    ===================================================== */
+let currentUser = null;
 
-    let auth;
+let authenticationReady = false;
 
-    let currentFirebaseUser = null;
+let authenticationPromise = null;
+
+
+/*
+ * Tracks the product currently being displayed in each battle.
+ *
+ * Example:
+ *
+ * {
+ *     baby: 0,
+ *     toddler: 1
+ * }
+ */
+
+const battleIndexes = {};
+
+
+/*
+ * Prevents double-clicks while a vote is being written.
+ */
+
+const voteInProgress = new Set();
+
+
+/*
+ * Stores votes only AFTER Firestore successfully confirms
+ * the write.
+ *
+ * Key:
+ *
+ * category_productId
+ */
+
+const confirmedVotes = new Map();
+
+
+/* ============================================================
+   PRODUCT DATA
+   ============================================================
+
+   These IDs are stable identifiers.
+
+   DO NOT change them after votes have started accumulating.
+
+   ============================================================ */
+
+const battles = {
+
+    baby: [
+
+        {
+            id: "baby-einstein-soother",
+            name: "Soother Musical Crib Toy",
+            brand: "Baby Einstein",
+            image: "assets/babyeinstein-aquarium.jpeg",
+            description:
+                "A popular option for keeping little ones entertained during quiet moments and daily routines.",
+            score: "8.4",
+            percentage: 62,
+            link: "https://amzn.to/4fNqr9j"
+        },
+
+        {
+            id: "baby-einstein-aquarium",
+            name: "Baby Einstein Aquarium",
+            brand: "Baby Einstein",
+            image: "assets/babyeinstein-aquarium.jpeg",
+            description:
+                "A colorful interactive option designed to keep babies engaged during everyday routines.",
+            score: "8.2",
+            percentage: 59,
+            link: "https://amzn.to/4fNqr9j"
+        }
+
+    ],
+
+
+    toddler: [
+
+        {
+            id: "toddler-favorite-1",
+            name: "Toddler Favorite",
+            brand: "MomYouNeedThis Pick",
+            image: "assets/product2.jpg",
+            description:
+                "A practical everyday product designed to make life with toddlers a little easier.",
+            score: "8.1",
+            percentage: 57,
+            link: "#"
+        },
+
+        {
+            id: "toddler-favorite-2",
+            name: "Toddler Favorite #2",
+            brand: "MomYouNeedThis Pick",
+            image: "assets/product2.jpg",
+            description:
+                "Another practical favorite parents may find useful during everyday toddler life.",
+            score: "8.3",
+            percentage: 61,
+            link: "#"
+        }
+
+    ],
+
+
+    sleep: [
+
+        {
+            id: "white-noise-machine",
+            name: "White Noise Machine",
+            brand: "Parent Favorite",
+            image: "assets/white-noise-machine.jpeg",
+            description:
+                "A popular choice for creating a consistent sleep environment for little ones.",
+            score: "8.7",
+            percentage: 71,
+            link: "https://amzn.to/4z8LxGC"
+        },
+
+        {
+            id: "sleep-helper-2",
+            name: "Sleep Helper",
+            brand: "Parent Favorite",
+            image: "assets/white-noise-machine.jpeg",
+            description:
+                "A simple sleep-support product designed to make bedtime routines easier.",
+            score: "8.4",
+            percentage: 65,
+            link: "https://amzn.to/4z8LxGC"
+        }
+
+    ],
+
+
+    potty: [
+
+        {
+            id: "babybjorn-potty",
+            name: "Potty Training Seat",
+            brand: "BabyBjörn",
+            image: "assets/babybjorn-potty-toilet.jpeg",
+            description:
+                "A simple potty-training option designed to help toddlers feel comfortable and confident.",
+            score: "8.6",
+            percentage: 68,
+            link: "https://amzn.to/3S23eqS"
+        },
+
+        {
+            id: "potty-training-seat-2",
+            name: "Potty Training Favorite",
+            brand: "Mom Pick",
+            image: "assets/babybjorn-potty-toilet.jpeg",
+            description:
+                "Another popular potty-training option designed for everyday use.",
+            score: "8.2",
+            percentage: 61,
+            link: "https://amzn.to/3S23eqS"
+        }
+
+    ],
+
+
+    feeding: [
+
+        {
+            id: "feeding-favorite-1",
+            name: "Feeding Favorite",
+            brand: "Mom Pick",
+            image: "assets/product2.jpg",
+            description:
+                "A practical feeding favorite designed to make everyday mealtimes a little easier.",
+            score: "8.0",
+            percentage: 54,
+            link: "#"
+        },
+
+        {
+            id: "feeding-favorite-2",
+            name: "Feeding Favorite #2",
+            brand: "Mom Pick",
+            image: "assets/product2.jpg",
+            description:
+                "A useful everyday feeding product designed to simplify mealtime routines.",
+            score: "8.2",
+            percentage: 58,
+            link: "#"
+        }
+
+    ],
+
+
+    under25: [
+
+        {
+            id: "under25-find-1",
+            name: "Budget Mom Find",
+            brand: "MomYouNeedThis Pick",
+            image: "assets/product2.jpg",
+            description:
+                "A useful little find that could make everyday parenting just a bit easier.",
+            score: "8.3",
+            percentage: 63,
+            link: "#"
+        },
+
+        {
+            id: "under25-find-2",
+            name: "Budget Mom Find #2",
+            brand: "MomYouNeedThis Pick",
+            image: "assets/product2.jpg",
+            description:
+                "A small everyday find that could make a practical difference for parents.",
+            score: "8.1",
+            percentage: 59,
+            link: "#"
+        }
+
+    ]
+
+};
+
+
+/* ============================================================
+   UTILITY FUNCTIONS
+   ============================================================ */
+
+function getBattleKey(category, productId) {
+
+    return `${category}_${productId}`;
+
+}
+
+
+function getVoteDocumentId(category, productId, uid) {
+
+    /*
+     * This produces:
+     *
+     * UID_category_productId
+     *
+     * Your Firestore rule checks that the document ID begins
+     * with the authenticated UID.
+     */
+
+    return `${uid}_${category}_${productId}`;
+
+}
+
+
+function getCurrentProduct(category) {
+
+    const products = battles[category];
+
+    if (!products || products.length === 0) {
+        return null;
+    }
+
+    let index = battleIndexes[category];
+
+    if (
+        typeof index !== "number" ||
+        index < 0 ||
+        index >= products.length
+    ) {
+        index = 0;
+        battleIndexes[category] = 0;
+    }
+
+    return products[index];
+
+}
+
+
+/* ============================================================
+   AUTHENTICATION
+   ============================================================ */
+
+function startAnonymousAuthentication() {
+
+    if (!auth) {
+
+        return Promise.reject(
+            new Error(
+                "Firebase Authentication is not initialized."
+            )
+        );
+
+    }
+
+
+    /*
+     * If Firebase already has a user, use it.
+     */
+
+    if (auth.currentUser) {
+
+        currentUser = auth.currentUser;
+
+        authenticationReady = true;
+
+        return Promise.resolve(currentUser);
+
+    }
+
+
+    /*
+     * Wait for Firebase's authentication state.
+     */
+
+    authenticationPromise = new Promise(
+        (resolve, reject) => {
+
+            let resolved = false;
+
+
+            const unsubscribe = onAuthStateChanged(
+                auth,
+                async (user) => {
+
+                    if (resolved) {
+                        return;
+                    }
+
+
+                    if (user) {
+
+                        resolved = true;
+
+                        currentUser = user;
+
+                        authenticationReady = true;
+
+                        unsubscribe();
+
+                        console.log(
+                            "Anonymous Firebase user ready:",
+                            user.uid
+                        );
+
+                        resolve(user);
+
+                        return;
+
+                    }
+
+
+                    /*
+                     * No authenticated user exists yet.
+                     *
+                     * Create one anonymously.
+                     */
+
+                    try {
+
+                        const credential =
+                            await signInAnonymously(auth);
+
+                        if (
+                            credential &&
+                            credential.user
+                        ) {
+
+                            currentUser =
+                                credential.user;
+
+                            authenticationReady = true;
+
+                            resolved = true;
+
+                            unsubscribe();
+
+                            console.log(
+                                "Anonymous authentication successful:",
+                                currentUser.uid
+                            );
+
+                            resolve(currentUser);
+
+                        }
+
+                    } catch (error) {
+
+                        console.error(
+                            "Anonymous authentication failed:",
+                            error
+                        );
+
+                        if (!resolved) {
+
+                            resolved = true;
+
+                            unsubscribe();
+
+                            reject(error);
+
+                        }
+
+                    }
+
+                },
+
+                (error) => {
+
+                    if (resolved) {
+                        return;
+                    }
+
+                    resolved = true;
+
+                    unsubscribe();
+
+                    reject(error);
+
+                }
+
+            );
+
+        }
+    );
+
+
+    return authenticationPromise;
+
+}
+
+
+/* ============================================================
+   LOAD EXISTING VOTE
+   ============================================================ */
+
+async function loadExistingVote(
+    category,
+    product
+) {
+
+    if (!currentUser || !db) {
+        return null;
+    }
+
+
+    const key = getBattleKey(
+        category,
+        product.id
+    );
+
+
+    /*
+     * Already loaded during this page session.
+     */
+
+    if (confirmedVotes.has(key)) {
+
+        return confirmedVotes.get(key);
+
+    }
+
+
+    const documentId =
+        getVoteDocumentId(
+            category,
+            product.id,
+            currentUser.uid
+        );
 
 
     try {
 
-        /*
-         * db.app gives us the same Firebase App that
-         * your existing firebase-config.js is already
-         * using.
-         */
-
-        auth = getAuth(db.app);
+        const voteRef = doc(
+            db,
+            "productVotes",
+            documentId
+        );
 
 
-        /*
-         * If a Firebase user already exists, use it.
-         * Otherwise create an anonymous identity.
-         */
+        const snapshot =
+            await getDoc(voteRef);
 
-        if (auth.currentUser) {
 
-            currentFirebaseUser =
-                auth.currentUser;
+        if (snapshot.exists()) {
 
-        } else {
+            const data = snapshot.data();
 
-            const credential =
-                await signInAnonymously(auth);
+            const vote =
+                data.vote === "yes" ||
+                data.vote === "no"
+                    ? data.vote
+                    : null;
 
-            currentFirebaseUser =
-                credential.user;
+
+            if (vote) {
+
+                confirmedVotes.set(
+                    key,
+                    vote
+                );
+
+            }
+
+
+            return vote;
 
         }
 
 
-        console.log(
-            "Firebase anonymous authentication ready:",
-            currentFirebaseUser.uid
+        return null;
+
+    } catch (error) {
+
+        /*
+         * IMPORTANT:
+         *
+         * Your current Firestore rules explicitly say:
+         *
+         * allow read: if false;
+         *
+         * Therefore getDoc() will be denied.
+         *
+         * We intentionally DO NOT treat this as a vote.
+         *
+         * The application can still create votes because create
+         * is allowed by your rules.
+         */
+
+        console.warn(
+            "Existing vote cannot be read because Firestore read access is disabled:",
+            error
         );
 
+        return null;
+
+    }
+
+}
+
+
+/* ============================================================
+   WRITE VOTE
+   ============================================================ */
+
+async function saveVote(
+    category,
+    product,
+    vote
+) {
+
+    if (!product) {
+
+        throw new Error(
+            "No product is currently selected."
+        );
+
+    }
+
+
+    if (
+        vote !== "yes" &&
+        vote !== "no"
+    ) {
+
+        throw new Error(
+            "Invalid vote."
+        );
+
+    }
+
+
+    /*
+     * ABSOLUTELY REQUIRE AUTHENTICATION FIRST.
+     */
+
+    if (!authenticationReady || !currentUser) {
+
+        try {
+
+            await startAnonymousAuthentication();
+
+        } catch (error) {
+
+            throw new Error(
+                "Authentication failed. Your vote was not saved."
+            );
+
+        }
+
+    }
+
+
+    if (!currentUser) {
+
+        throw new Error(
+            "No authenticated Firebase user exists. Your vote was not saved."
+        );
+
+    }
+
+
+    if (!db) {
+
+        throw new Error(
+            "Firestore is not initialized. Your vote was not saved."
+        );
+
+    }
+
+
+    const key =
+        getBattleKey(
+            category,
+            product.id
+        );
+
+
+    /*
+     * Prevent multiple clicks while the first request
+     * is still being processed.
+     */
+
+    if (voteInProgress.has(key)) {
+
+        return false;
+
+    }
+
+
+    /*
+     * If this page already knows the vote was successfully
+     * saved, don't create another one.
+     */
+
+    if (confirmedVotes.has(key)) {
+
+        return false;
+
+    }
+
+
+    voteInProgress.add(key);
+
+
+    try {
+
+        const documentId =
+            getVoteDocumentId(
+                category,
+                product.id,
+                currentUser.uid
+            );
+
+
+        const voteRef =
+            doc(
+                db,
+                "productVotes",
+                documentId
+            );
+
+
+        /*
+         * IMPORTANT:
+         *
+         * setDoc() is awaited.
+         *
+         * Nothing is saved locally before this succeeds.
+         */
+
+        await setDoc(
+            voteRef,
+            {
+                uid: currentUser.uid,
+                category: category,
+                productId: product.id,
+                productName: product.name,
+                productBrand: product.brand,
+                vote: vote,
+                createdAt: serverTimestamp()
+            },
+            {
+                merge: false
+            }
+        );
+
+
+        /*
+         * Only NOW do we consider the vote confirmed.
+         */
+
+        confirmedVotes.set(
+            key,
+            vote
+        );
+
+
+        /*
+         * Only NOW save the local state.
+         */
+
+        saveConfirmedVoteLocally(
+            category,
+            product.id,
+            vote
+        );
+
+
+        return true;
 
     } catch (error) {
 
         console.error(
-            "Firebase anonymous authentication failed:",
+            "Vote was NOT saved:",
             error
         );
 
 
         /*
-         * We intentionally do NOT continue pretending
-         * that voting works.
-
-         * No vote will be saved locally unless Firebase
-         * successfully records it.
+         * IMPORTANT:
+         *
+         * We deliberately DO NOT save anything locally here.
          */
 
-        const authMessage =
-            document.querySelector(
-                "[data-voting-auth-error]"
+        throw error;
+
+    } finally {
+
+        voteInProgress.delete(key);
+
+    }
+
+}
+
+
+/* ============================================================
+   LOCAL STORAGE
+   ============================================================ */
+
+function getLocalVoteKey(
+    category,
+    productId
+) {
+
+    return `momYouNeedThis_vote_${category}_${productId}`;
+
+}
+
+
+function saveConfirmedVoteLocally(
+    category,
+    productId,
+    vote
+) {
+
+    try {
+
+        localStorage.setItem(
+            getLocalVoteKey(
+                category,
+                productId
+            ),
+            vote
+        );
+
+    } catch (error) {
+
+        console.warn(
+            "Could not save local vote state:",
+            error
+        );
+
+    }
+
+}
+
+
+function getConfirmedLocalVote(
+    category,
+    productId
+) {
+
+    try {
+
+        const vote =
+            localStorage.getItem(
+                getLocalVoteKey(
+                    category,
+                    productId
+                )
             );
 
 
-        if (authMessage) {
+        if (
+            vote === "yes" ||
+            vote === "no"
+        ) {
 
-            authMessage.textContent =
-                "Voting is temporarily unavailable. Please try again.";
-
-            authMessage.style.display =
-                "block";
+            return vote;
 
         }
 
+    } catch (error) {
 
-        /*
-         * We continue loading the product experience
-         * so the page itself still works.
-
-         * Voting will simply fail safely.
-         */
-
-        currentFirebaseUser = null;
+        console.warn(
+            "Could not read local vote state:",
+            error
+        );
 
     }
 
 
-    /* =====================================================
-       PRODUCT DATA
-    ===================================================== */
+    return null;
 
-    const products = {
-
-        baby: [
-
-            {
-                id: "baby-soother",
-                name: "Soother Musical Crib Toy",
-                brand: "Baby Einstein",
-                image: "assets/babyeinstein-aquarium.jpeg",
-                description:
-                    "A popular option for keeping little ones entertained during quiet moments and daily routines.",
-                percentage: 62,
-                score: 8.4,
-                link: "https://amzn.to/4fNqr9j"
-            },
-
-            {
-                id: "baby-contender",
-                name: "Baby Favorite",
-                brand: "MomYouNeedThis Pick",
-                image: "assets/product2.jpg",
-                description:
-                    "Another mom-approved option worth comparing before making your choice.",
-                percentage: 38,
-                score: 7.7,
-                link: "YOUR-AMAZON-LINK-HERE"
-            }
-
-        ],
+}
 
 
-        toddler: [
+/* ============================================================
+   UI HELPERS
+   ============================================================ */
 
-            {
-                id: "toddler-favorite",
-                name: "Toddler Favorite",
-                brand: "MomYouNeedThis Pick",
-                image: "assets/product2.jpg",
-                description:
-                    "A practical everyday product designed to make life with toddlers a little easier.",
-                percentage: 57,
-                score: 8.1,
-                link: "YOUR-AMAZON-LINK-HERE"
-            },
+function setText(
+    element,
+    value
+) {
 
-            {
-                id: "toddler-contender",
-                name: "Toddler Contender",
-                brand: "Mom Favorite",
-                image: "assets/product2.jpg",
-                description:
-                    "Another practical option parents may want to compare.",
-                percentage: 43,
-                score: 7.8,
-                link: "YOUR-AMAZON-LINK-HERE"
-            }
+    if (element) {
+        element.textContent = value;
+    }
 
-        ],
+}
 
 
-        sleep: [
+function setImage(
+    imageElement,
+    src,
+    alt
+) {
 
-            {
-                id: "sleep-white-noise",
-                name: "White Noise Machine",
-                brand: "Parent Favorite",
-                image: "assets/white-noise-machine.jpeg",
-                description:
-                    "A popular choice for creating a consistent sleep environment for little ones.",
-                percentage: 71,
-                score: 8.7,
-                link: "https://amzn.to/4z8LxGC"
-            },
-
-            {
-                id: "sleep-contender",
-                name: "Sleep Contender",
-                brand: "Mom Pick",
-                image: "assets/product2.jpg",
-                description:
-                    "Another sleep option parents may want to compare.",
-                percentage: 29,
-                score: 7.2,
-                link: "YOUR-AMAZON-LINK-HERE"
-            }
-
-        ],
+    if (!imageElement) {
+        return;
+    }
 
 
-        potty: [
+    /*
+     * Do NOT allow a broken image to stop the application.
+     */
 
-            {
-                id: "potty-babybjorn",
-                name: "Potty Training Seat",
-                brand: "BabyBjörn",
-                image: "assets/babybjorn-potty-toilet.jpeg",
-                description:
-                    "A simple potty-training option designed to help toddlers feel comfortable and confident.",
-                percentage: 68,
-                score: 8.6,
-                link: "https://amzn.to/3S23eqS"
-            },
+    imageElement.onerror = () => {
 
-            {
-                id: "potty-contender",
-                name: "Potty Training Contender",
-                brand: "Mom Pick",
-                image: "assets/product2.jpg",
-                description:
-                    "Another potty-training option worth comparing before you decide.",
-                percentage: 32,
-                score: 7.4,
-                link: "YOUR-AMAZON-LINK-HERE"
-            }
+        console.warn(
+            "Product image failed to load:",
+            src
+        );
 
-        ],
-
-
-        feeding: [
-
-            {
-                id: "feeding-favorite",
-                name: "Feeding Favorite",
-                brand: "Mom Pick",
-                image: "assets/product2.jpg",
-                description:
-                    "A practical feeding favorite designed to make everyday mealtimes a little easier.",
-                percentage: 54,
-                score: 8.0,
-                link: "YOUR-AMAZON-LINK-HERE"
-            },
-
-            {
-                id: "feeding-contender",
-                name: "Feeding Contender",
-                brand: "Mom Pick",
-                image: "assets/product2.jpg",
-                description:
-                    "Another feeding option parents can compare.",
-                percentage: 46,
-                score: 7.8,
-                link: "YOUR-AMAZON-LINK-HERE"
-            }
-
-        ],
-
-
-        under25: [
-
-            {
-                id: "budget-find",
-                name: "Budget Mom Find",
-                brand: "MomYouNeedThis Pick",
-                image: "assets/product2.jpg",
-                description:
-                    "A useful little find that could make everyday parenting just a bit easier.",
-                percentage: 63,
-                score: 8.3,
-                link: "YOUR-AMAZON-LINK-HERE"
-            },
-
-            {
-                id: "budget-contender",
-                name: "Budget Contender",
-                brand: "Mom Pick",
-                image: "assets/product2.jpg",
-                description:
-                    "Another affordable find worth putting to the mom test.",
-                percentage: 37,
-                score: 7.5,
-                link: "YOUR-AMAZON-LINK-HERE"
-            }
-
-        ]
+        imageElement.classList.add(
+            "image-load-error"
+        );
 
     };
 
 
-    /* =====================================================
-       CATEGORY INFORMATION
-    ===================================================== */
+    imageElement.src = src;
 
-    const categoryNames = {
+    imageElement.alt = alt || "";
 
-        baby: "Baby",
-        toddler: "Toddler",
-        sleep: "Sleep",
-        potty: "Potty",
-        feeding: "Feeding",
-        under25: "Under $25"
-
-    };
+}
 
 
-    /* =====================================================
-       DOM
-    ===================================================== */
+function updateProductPosition(
+    battle,
+    index,
+    total
+) {
 
-    const battles =
+    const position =
+        battle.querySelector(
+            "[data-position]"
+        );
+
+
+    const progressText =
+        battle.querySelector(
+            "[data-progress-text]"
+        );
+
+
+    const progress =
+        battle.querySelector(
+            "[data-progress]"
+        );
+
+
+    /*
+     * THIS fixes:
+     *
+     * PRODUCT 1 OF 2
+     *
+     * becoming:
+     *
+     * PRODUCT 2 OF 2
+     */
+
+    setText(
+        position,
+        `PRODUCT ${index + 1} OF ${total}`
+    );
+
+
+    /*
+     * Update:
+     *
+     * 1 / 2
+     *
+     * to:
+     *
+     * 2 / 2
+     */
+
+    setText(
+        progressText,
+        `${index + 1} / ${total}`
+    );
+
+
+    if (progress) {
+
+        const percentage =
+            total > 0
+                ? ((index + 1) / total) * 100
+                : 0;
+
+
+        progress.style.width =
+            `${percentage}%`;
+
+    }
+
+}
+
+
+function updateDots(
+    battle,
+    products,
+    activeIndex
+) {
+
+    const dots =
+        battle.querySelector(
+            "[data-dots]"
+        );
+
+
+    if (!dots) {
+        return;
+    }
+
+
+    dots.innerHTML = "";
+
+
+    products.forEach(
+        (_, index) => {
+
+            const dot =
+                document.createElement(
+                    "button"
+                );
+
+
+            dot.type = "button";
+
+            dot.className =
+                "battle-dot";
+
+
+            if (index === activeIndex) {
+
+                dot.classList.add(
+                    "active"
+                );
+
+            }
+
+
+            dot.setAttribute(
+                "aria-label",
+                `View product ${index + 1}`
+            );
+
+
+            dot.addEventListener(
+                "click",
+                () => {
+
+                    showProduct(
+                        battle,
+                        index
+                    );
+
+                }
+            );
+
+
+            dots.appendChild(dot);
+
+        }
+    );
+
+}
+
+
+function updateScoreUI(
+    battle,
+    product
+) {
+
+    const percentage =
+        Number(product.percentage) || 0;
+
+
+    const noPercentage =
+        Math.max(
+            0,
+            100 - percentage
+        );
+
+
+    setText(
+        battle.querySelector(
+            "[data-score]"
+        ),
+        product.score
+    );
+
+
+    setText(
+        battle.querySelector(
+            "[data-percentage]"
+        ),
+        `${percentage}%`
+    );
+
+
+    setText(
+        battle.querySelector(
+            "[data-yes-percentage]"
+        ),
+        `${percentage}%`
+    );
+
+
+    setText(
+        battle.querySelector(
+            "[data-no-percentage]"
+        ),
+        `${noPercentage}%`
+    );
+
+
+    const consensusBar =
+        battle.querySelector(
+            "[data-consensus-bar]"
+        );
+
+
+    if (consensusBar) {
+
+        consensusBar.style.width =
+            `${percentage}%`;
+
+    }
+
+
+    const consensus =
+        battle.querySelector(
+            "[data-consensus]"
+        );
+
+
+    if (consensus) {
+
+        if (percentage >= 70) {
+
+            consensus.textContent =
+                "🔥 Mom favorite";
+
+        } else if (percentage >= 60) {
+
+            consensus.textContent =
+                "💗 Strong mom approval";
+
+        } else {
+
+            consensus.textContent =
+                "👀 Moms are deciding";
+
+        }
+
+    }
+
+}
+
+
+function resetVoteUI(
+    battle
+) {
+
+    const result =
+        battle.querySelector(
+            "[data-result]"
+        );
+
+
+    const socialComparison =
+        battle.querySelector(
+            "[data-social-comparison]"
+        );
+
+
+    const voteArea =
+        battle.querySelector(
+            "[data-vote-area]"
+        );
+
+
+    if (result) {
+
+        result.classList.remove(
+            "visible"
+        );
+
+    }
+
+
+    if (socialComparison) {
+
+        socialComparison.classList.remove(
+            "visible"
+        );
+
+    }
+
+
+    if (voteArea) {
+
+        voteArea.classList.remove(
+            "vote-complete"
+        );
+
+    }
+
+
+    battle
+        .querySelectorAll(
+            "[data-vote]"
+        )
+        .forEach(
+            button => {
+
+                button.disabled = false;
+
+                button.classList.remove(
+                    "selected"
+                );
+
+            }
+        );
+
+}
+
+
+function showVoteUI(
+    battle,
+    vote
+) {
+
+    const result =
+        battle.querySelector(
+            "[data-result]"
+        );
+
+
+    const resultTitle =
+        battle.querySelector(
+            "[data-result-title]"
+        );
+
+
+    const resultText =
+        battle.querySelector(
+            "[data-result-text]"
+        );
+
+
+    const socialComparison =
+        battle.querySelector(
+            "[data-social-comparison]"
+        );
+
+
+    const yourPosition =
+        battle.querySelector(
+            "[data-your-position]"
+        );
+
+
+    const voteArea =
+        battle.querySelector(
+            "[data-vote-area]"
+        );
+
+
+    if (voteArea) {
+
+        voteArea.classList.add(
+            "vote-complete"
+        );
+
+    }
+
+
+    battle
+        .querySelectorAll(
+            "[data-vote]"
+        )
+        .forEach(
+            button => {
+
+                button.disabled = true;
+
+
+                if (
+                    button.dataset.vote ===
+                    vote
+                ) {
+
+                    button.classList.add(
+                        "selected"
+                    );
+
+                }
+
+            }
+        );
+
+
+    if (result) {
+
+        result.classList.add(
+            "visible"
+        );
+
+    }
+
+
+    setText(
+        resultTitle,
+        "Your vote is saved!"
+    );
+
+
+    setText(
+        resultText,
+        "Your vote was successfully registered."
+    );
+
+
+    if (socialComparison) {
+
+        socialComparison.classList.add(
+            "visible"
+        );
+
+    }
+
+
+    const product =
+        getCurrentProduct(
+            battle.dataset.category
+        );
+
+
+    if (product) {
+
+        const yes =
+            Number(product.percentage) || 0;
+
+
+        const isMajority =
+            vote === "yes"
+                ? yes >= 50
+                : yes < 50;
+
+
+        setText(
+            yourPosition,
+            isMajority
+                ? "You're with the majority."
+                : "You're with the minority."
+        );
+
+    }
+
+}
+
+
+/* ============================================================
+   DISPLAY PRODUCT
+   ============================================================ */
+
+async function showProduct(
+    battle,
+    index
+) {
+
+    const category =
+        battle.dataset.category;
+
+
+    const products =
+        battles[category];
+
+
+    if (!products || products.length === 0) {
+
+        console.warn(
+            `No products configured for category: ${category}`
+        );
+
+        return;
+
+    }
+
+
+    /*
+     * Keep index safely inside the array.
+     */
+
+    if (index < 0) {
+
+        index =
+            products.length - 1;
+
+    }
+
+
+    if (index >= products.length) {
+
+        index = 0;
+
+    }
+
+
+    battleIndexes[category] = index;
+
+
+    const product =
+        products[index];
+
+
+    /*
+     * UPDATE POSITION FIRST
+     */
+
+    updateProductPosition(
+        battle,
+        index,
+        products.length
+    );
+
+
+    updateDots(
+        battle,
+        products,
+        index
+    );
+
+
+    /*
+     * UPDATE PRODUCT INFORMATION
+     */
+
+    setImage(
+        battle.querySelector(
+            "[data-image]"
+        ),
+        product.image,
+        product.name
+    );
+
+
+    setText(
+        battle.querySelector(
+            "[data-label]"
+        ),
+        `PRODUCT ${index + 1}`
+    );
+
+
+    setText(
+        battle.querySelector(
+            "[data-name]"
+        ),
+        product.name
+    );
+
+
+    setText(
+        battle.querySelector(
+            "[data-brand]"
+        ),
+        product.brand
+    );
+
+
+    setText(
+        battle.querySelector(
+            "[data-description]"
+        ),
+        product.description
+    );
+
+
+    const link =
+        battle.querySelector(
+            "[data-link]"
+        );
+
+
+    if (link) {
+
+        link.href =
+            product.link || "#";
+
+    }
+
+
+    updateScoreUI(
+        battle,
+        product
+    );
+
+
+    resetVoteUI(
+        battle
+    );
+
+
+    /*
+     * Do not trust localStorage alone.
+     *
+     * The local state is only considered confirmed if it was
+     * previously created AFTER a successful Firestore write.
+     */
+
+    const localVote =
+        getConfirmedLocalVote(
+            category,
+            product.id
+        );
+
+
+    if (localVote) {
+
+        confirmedVotes.set(
+            getBattleKey(
+                category,
+                product.id
+            ),
+            localVote
+        );
+
+
+        showVoteUI(
+            battle,
+            localVote
+        );
+
+    }
+
+
+    /*
+     * Because your current rules have:
+     *
+     * allow read: if false;
+     *
+     * we cannot verify existing votes from Firestore.
+     *
+     * We therefore don't block the UI waiting for a read.
+     */
+
+}
+
+
+/* ============================================================
+   HANDLE VOTE
+   ============================================================ */
+
+async function handleVote(
+    battle,
+    vote
+) {
+
+    const category =
+        battle.dataset.category;
+
+
+    const product =
+        getCurrentProduct(category);
+
+
+    if (!product) {
+
+        return;
+
+    }
+
+
+    const key =
+        getBattleKey(
+            category,
+            product.id
+        );
+
+
+    /*
+     * Ignore duplicate clicks.
+     */
+
+    if (voteInProgress.has(key)) {
+
+        return;
+
+    }
+
+
+    /*
+     * Make sure the user is authenticated BEFORE showing
+     * any successful vote UI.
+     */
+
+    try {
+
+        await startAnonymousAuthentication();
+
+    } catch (error) {
+
+        console.error(
+            "Authentication error:",
+            error
+        );
+
+        showVoteError(
+            battle,
+            "We couldn't connect your vote. Please try again."
+        );
+
+        return;
+
+    }
+
+
+    /*
+     * Now attempt Firestore.
+     */
+
+    try {
+
+        const saved =
+            await saveVote(
+                category,
+                product,
+                vote
+            );
+
+
+        /*
+         * Only show success if Firestore actually returned
+         * successfully.
+         */
+
+        if (saved) {
+
+            showVoteUI(
+                battle,
+                vote
+            );
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Vote registration failed:",
+            error
+        );
+
+
+        /*
+         * IMPORTANT:
+         *
+         * No localStorage write happens here.
+         *
+         * Therefore a failed Firebase vote is NOT treated
+         * as a registered vote.
+         */
+
+        showVoteError(
+            battle,
+            getReadableFirebaseError(error)
+        );
+
+    }
+
+}
+
+
+/* ============================================================
+   VOTE ERROR UI
+   ============================================================ */
+
+function showVoteError(
+    battle,
+    message
+) {
+
+    const result =
+        battle.querySelector(
+            "[data-result]"
+        );
+
+
+    const resultTitle =
+        battle.querySelector(
+            "[data-result-title]"
+        );
+
+
+    const resultText =
+        battle.querySelector(
+            "[data-result-text]"
+        );
+
+
+    if (result) {
+
+        result.classList.add(
+            "visible"
+        );
+
+    }
+
+
+    setText(
+        resultTitle,
+        "Vote not registered"
+    );
+
+
+    setText(
+        resultText,
+        message
+    );
+
+}
+
+
+/* ============================================================
+   FIREBASE ERROR MESSAGES
+   ============================================================ */
+
+function getReadableFirebaseError(
+    error
+) {
+
+    if (!error) {
+
+        return "Your vote could not be registered.";
+
+    }
+
+
+    if (
+        error.code ===
+        "permission-denied"
+    ) {
+
+        return (
+            "Firebase rejected the vote. " +
+            "Check that Anonymous Authentication is enabled " +
+            "and that your Firestore rules match this application."
+        );
+
+    }
+
+
+    if (
+        error.code ===
+        "auth/operation-not-allowed"
+    ) {
+
+        return (
+            "Anonymous Authentication is not enabled " +
+            "in your Firebase project."
+        );
+
+    }
+
+
+    if (
+        error.code ===
+        "auth/network-request-failed"
+    ) {
+
+        return (
+            "There was a network problem. " +
+            "Your vote was not saved."
+        );
+
+    }
+
+
+    return (
+        "Your vote could not be registered. " +
+        "Please try again."
+    );
+
+}
+
+
+/* ============================================================
+   BATTLE NAVIGATION
+   ============================================================ */
+
+function goToNextProduct(
+    battle
+) {
+
+    const category =
+        battle.dataset.category;
+
+
+    const products =
+        battles[category];
+
+
+    if (!products || products.length === 0) {
+        return;
+    }
+
+
+    const currentIndex =
+        battleIndexes[category] || 0;
+
+
+    showProduct(
+        battle,
+        currentIndex + 1
+    );
+
+}
+
+
+function goToPreviousProduct(
+    battle
+) {
+
+    const category =
+        battle.dataset.category;
+
+
+    const products =
+        battles[category];
+
+
+    if (!products || products.length === 0) {
+        return;
+    }
+
+
+    const currentIndex =
+        battleIndexes[category] || 0;
+
+
+    showProduct(
+        battle,
+        currentIndex - 1
+    );
+
+}
+
+
+/* ============================================================
+   INITIALIZE ONE BATTLE
+   ============================================================ */
+
+function initializeBattle(
+    battle
+) {
+
+    const category =
+        battle.dataset.category;
+
+
+    if (!category) {
+
+        console.warn(
+            "Battle has no data-category:",
+            battle
+        );
+
+        return;
+
+    }
+
+
+    if (!battles[category]) {
+
+        console.warn(
+            `No product data exists for category: ${category}`
+        );
+
+        return;
+
+    }
+
+
+    battleIndexes[category] = 0;
+
+
+    /*
+     * NEXT ARROW
+     */
+
+    const next =
+        battle.querySelector(
+            "[data-next]"
+        );
+
+
+    if (next) {
+
+        next.addEventListener(
+            "click",
+            () => {
+
+                goToNextProduct(
+                    battle
+                );
+
+            }
+        );
+
+    }
+
+
+    /*
+     * PREVIOUS ARROW
+     */
+
+    const previous =
+        battle.querySelector(
+            "[data-prev]"
+        );
+
+
+    if (previous) {
+
+        previous.addEventListener(
+            "click",
+            () => {
+
+                goToPreviousProduct(
+                    battle
+                );
+
+            }
+        );
+
+    }
+
+
+    /*
+     * NEXT CONTENDER BUTTON
+     */
+
+    const nextContender =
+        battle.querySelector(
+            "[data-next-contender]"
+        );
+
+
+    if (nextContender) {
+
+        nextContender.addEventListener(
+            "click",
+            () => {
+
+                goToNextProduct(
+                    battle
+                );
+
+            }
+        );
+
+    }
+
+
+    /*
+     * YES / NO BUTTONS
+     */
+
+    battle
+        .querySelectorAll(
+            "[data-vote]"
+        )
+        .forEach(
+            button => {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        const vote =
+                            button.dataset.vote;
+
+
+                        handleVote(
+                            battle,
+                            vote
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+
+    /*
+     * Initial product display.
+     */
+
+    showProduct(
+        battle,
+        0
+    );
+
+}
+
+
+/* ============================================================
+   INITIALIZE PAGE
+   ============================================================ */
+
+async function initializePage() {
+
+    console.log(
+        "MomYouNeedThis voting page initializing..."
+    );
+
+
+    const battlesOnPage =
         document.querySelectorAll(
             ".product-battle"
         );
 
 
-    if (!battles.length) {
+    if (!battlesOnPage.length) {
 
         console.warn(
             "No .product-battle elements found."
@@ -354,3043 +2082,70 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
 
-    /* =====================================================
-       LOCAL STORAGE
-    ===================================================== */
+    /*
+     * Initialize the UI FIRST.
+     *
+     * A broken image must never prevent the voting interface
+     * from being initialized.
+     */
 
-    function loadVotes() {
+    battlesOnPage.forEach(
+        battle => {
 
-        try {
-
-            const stored =
-                localStorage.getItem(
-                    STORAGE_KEY
-                );
-
-
-            if (!stored) {
-
-                return {};
-
-            }
-
-
-            const parsed =
-                JSON.parse(stored);
-
-
-            return (
-                parsed &&
-                typeof parsed === "object"
-            )
-                ? parsed
-                : {};
-
-
-        } catch (error) {
-
-            console.warn(
-                "Unable to read saved votes.",
-                error
-            );
-
-            return {};
-
-        }
-
-    }
-
-
-    function saveVotes() {
-
-        try {
-
-            localStorage.setItem(
-                STORAGE_KEY,
-                JSON.stringify(savedVotes)
-            );
-
-        } catch (error) {
-
-            console.warn(
-                "Unable to save votes.",
-                error
+            initializeBattle(
+                battle
             );
 
         }
+    );
 
-    }
 
+    /*
+     * THEN initialize anonymous Firebase authentication.
+     *
+     * Voting buttons remain functional only after authentication
+     * has been established.
+     */
 
-    function loadSession() {
+    try {
 
-        const defaultSession = {
-
-            streak: 0,
-            totalVotes: 0,
-            completedBattles: 0,
-            seen: []
-
-        };
-
-
-        try {
-
-            const stored =
-                localStorage.getItem(
-                    SESSION_KEY
-                );
-
-
-            if (!stored) {
-
-                return defaultSession;
-
-            }
-
-
-            const parsed =
-                JSON.parse(stored);
-
-
-            return {
-
-                ...defaultSession,
-                ...parsed
-
-            };
-
-
-        } catch (error) {
-
-            return defaultSession;
-
-        }
-
-    }
-
-
-    function saveSession() {
-
-        try {
-
-            localStorage.setItem(
-                SESSION_KEY,
-                JSON.stringify(session)
-            );
-
-        } catch (error) {
-
-            console.warn(
-                "Unable to save session.",
-                error
-            );
-
-        }
-
-    }
-
-
-    let savedVotes =
-        loadVotes();
-
-
-    let session =
-        loadSession();
-
-
-    /* =====================================================
-       SESSION
-    ===================================================== */
-
-    const totalBattles =
-        Object.keys(products).length;
-
-
-    function markBattleSeen(category) {
-
-        if (!session.seen.includes(category)) {
-
-            session.seen.push(category);
-
-            saveSession();
-
-        }
-
-    }
-
-
-    function getVoteKey(
-        category,
-        productId
-    ) {
-
-        return `${category}-${productId}`;
-
-    }
-
-
-    function getCompletedBattleCount() {
-
-        return Object.keys(products)
-            .filter((category) => {
-
-                const battleProducts =
-                    products[category];
-
-
-                if (
-                    !battleProducts ||
-                    battleProducts.length < 2
-                ) {
-
-                    return false;
-
-                }
-
-
-                const firstKey =
-                    getVoteKey(
-                        category,
-                        battleProducts[0].id
-                    );
-
-
-                const secondKey =
-                    getVoteKey(
-                        category,
-                        battleProducts[1].id
-                    );
-
-
-                return (
-                    Boolean(savedVotes[firstKey]) &&
-                    Boolean(savedVotes[secondKey])
-                );
-
-            })
-            .length;
-
-    }
-
-
-    function getTotalVoteCount() {
-
-        return Object.keys(
-            savedVotes
-        ).length;
-
-    }
-
-
-    /* =====================================================
-       MICRO COPY
-    ===================================================== */
-
-    const encouragements = [
-
-        "Okay, we need to know your next pick 👀",
-
-        "You have good instincts. Keep going.",
-
-        "One more? This gets interesting.",
-
-        "Your mom-opinion is officially on the record. 💗",
-
-        "You're getting good at this.",
-
-        "Another battle is waiting…",
-
-        "This one might be harder.",
-
-        "Let's see if you agree with the crowd 👀"
-
-    ];
-
-
-    function randomEncouragement() {
-
-        return encouragements[
-            Math.floor(
-                Math.random() *
-                encouragements.length
-            )
-        ];
-
-    }
-
-
-    /* =====================================================
-       CONSENSUS
-    ===================================================== */
-
-    function getConsensusLabel(
-        percentage
-    ) {
-
-        if (percentage >= 80) {
-
-            return "🔥 Mom favorite";
-
-        }
-
-
-        if (percentage >= 65) {
-
-            return "💗 Strong mom approval";
-
-        }
-
-
-        if (percentage >= 50) {
-
-            return "👀 Moms are split";
-
-        }
-
-
-        return "🤔 Not for everyone";
-
-    }
-
-
-    function getNoPercentage(
-        percentage
-    ) {
-
-        return Math.max(
-            0,
-            Math.min(
-                100,
-                100 - percentage
-            )
-        );
-
-    }
-
-
-    /* =====================================================
-       AMAZON LINK
-    ===================================================== */
-
-    function isValidAffiliateLink(
-        link
-    ) {
-
-        if (!link) {
-
-            return false;
-
-        }
-
-
-        if (
-            link.includes(
-                "YOUR-AMAZON-LINK-HERE"
-            )
-        ) {
-
-            return false;
-
-        }
-
-
-        return (
-            link.startsWith("https://") ||
-            link.startsWith("http://")
-        );
-
-    }
-
-
-    /* =====================================================
-       GLOBAL PROGRESS
-    ===================================================== */
-
-    function createGlobalProgress() {
-
-        const hero =
-            document.querySelector(
-                ".voting-hero"
-            );
-
-
-        if (!hero) {
-
-            return null;
-
-        }
-
-
-        const existing =
-            document.querySelector(
-                ".mom-voting-progress"
-            );
-
-
-        if (existing) {
-
-            return existing;
-
-        }
-
-
-        const wrapper =
-            document.createElement(
-                "div"
-            );
-
-
-        wrapper.className =
-            "mom-voting-progress";
-
-
-        wrapper.innerHTML = `
-
-            <div class="mom-voting-progress-top">
-
-                <span>
-                    💗 Your mom-vote journey
-                </span>
-
-                <strong data-global-progress-text>
-                    0/${totalBattles} battles
-                </strong>
-
-            </div>
-
-
-            <div class="mom-voting-progress-track">
-
-                <div
-                    class="mom-voting-progress-fill"
-                    data-global-progress-fill
-                ></div>
-
-            </div>
-
-
-            <div
-                class="mom-voting-progress-message"
-                data-global-progress-message
-            >
-                Pick your first product.
-            </div>
-
-        `;
-
-
-        hero.appendChild(
-            wrapper
-        );
-
-
-        return wrapper;
-
-    }
-
-
-    const globalProgress =
-        createGlobalProgress();
-
-
-    function updateGlobalProgress() {
-
-        if (!globalProgress) {
-
-            return;
-
-        }
-
-
-        const completed =
-            getCompletedBattleCount();
-
-
-        const progress =
-            totalBattles
-                ? Math.round(
-                    (
-                        completed /
-                        totalBattles
-                    ) * 100
-                )
-                : 0;
-
-
-        const text =
-            globalProgress.querySelector(
-                "[data-global-progress-text]"
-            );
-
-
-        const fill =
-            globalProgress.querySelector(
-                "[data-global-progress-fill]"
-            );
-
-
-        const message =
-            globalProgress.querySelector(
-                "[data-global-progress-message]"
-            );
-
-
-        if (text) {
-
-            text.textContent =
-                `${completed}/${totalBattles} battles`;
-
-        }
-
-
-        if (fill) {
-
-            fill.style.width =
-                `${progress}%`;
-
-        }
-
-
-        if (message) {
-
-            if (completed === 0) {
-
-                message.textContent =
-                    "Pick your first product.";
-
-            } else if (
-                completed < totalBattles
-            ) {
-
-                const remaining =
-                    totalBattles -
-                    completed;
-
-
-                message.textContent =
-                    `${remaining} more battle${remaining === 1 ? "" : "s"} waiting for you 👀`;
-
-            } else {
-
-                message.textContent =
-                    "🏆 You completed every battle!";
-
-            }
-
-        }
-
-    }
-
-
-    /* =====================================================
-       STREAK
-    ===================================================== */
-
-    function createStreakBadge() {
-
-        const header =
-            document.querySelector(
-                ".mom-voted-header"
-            );
-
-
-        if (!header) {
-
-            return null;
-
-        }
-
-
-        const badge =
-            document.createElement(
-                "div"
-            );
-
-
-        badge.className =
-            "mom-streak-badge";
-
-
-        badge.innerHTML = `
-
-            <span class="mom-streak-fire">
-                🔥
-            </span>
-
-            <span>
-
-                <small>
-                    VOTE STREAK
-                </small>
-
-                <strong data-streak>
-                    0
-                </strong>
-
-            </span>
-
-        `;
-
-
-        header.appendChild(
-            badge
-        );
-
-
-        return badge;
-
-    }
-
-
-    const streakBadge =
-        createStreakBadge();
-
-
-    function updateStreak() {
-
-        if (!streakBadge) {
-
-            return;
-
-        }
-
-
-        const streak =
-            streakBadge.querySelector(
-                "[data-streak]"
-            );
-
-
-        if (streak) {
-
-            streak.textContent =
-                session.streak;
-
-        }
-
-
-        streakBadge.classList.toggle(
-            "has-streak",
-            session.streak > 0
-        );
-
-    }
-
-
-    /* =====================================================
-       TOAST
-    ===================================================== */
-
-    function showToast(
-        message
-    ) {
-
-        let toast =
-            document.querySelector(
-                ".mom-voting-toast"
-            );
-
-
-        if (!toast) {
-
-            toast =
-                document.createElement(
-                    "div"
-                );
-
-
-            toast.className =
-                "mom-voting-toast";
-
-
-            document.body.appendChild(
-                toast
-            );
-
-        }
-
-
-        toast.textContent =
-            message;
-
-
-        toast.classList.add(
-            "visible"
-        );
-
-
-        clearTimeout(
-            toast._timer
-        );
-
-
-        toast._timer =
-            setTimeout(() => {
-
-                toast.classList.remove(
-                    "visible"
-                );
-
-            }, 2200);
-
-    }
-
-
-    /* =====================================================
-       CONFETTI
-    ===================================================== */
-
-    function celebrate() {
-
-        const container =
-            document.createElement(
-                "div"
-            );
-
-
-        container.className =
-            "vote-celebration";
-
-
-        for (
-            let i = 0;
-            i < 18;
-            i++
-        ) {
-
-            const piece =
-                document.createElement(
-                    "span"
-                );
-
-
-            piece.textContent =
-                [
-                    "💗",
-                    "✨",
-                    "🎉",
-                    "⭐",
-                    "💫"
-                ][
-                    Math.floor(
-                        Math.random() * 5
-                    )
-                ];
-
-
-            piece.style.setProperty(
-                "--x",
-                `${(
-                    Math.random() * 200
-                ) - 100}px`
-            );
-
-
-            piece.style.setProperty(
-                "--delay",
-                `${Math.random() * 0.25}s`
-            );
-
-
-            container.appendChild(
-                piece
-            );
-
-        }
-
-
-        document.body.appendChild(
-            container
-        );
-
-
-        setTimeout(() => {
-
-            container.remove();
-
-        }, 1300);
-
-    }
-
-
-    /* =====================================================
-       FIRESTORE VOTE
-       -----------------------------------------------
-       IMPORTANT:
-
-       We use setDoc(), NOT addDoc().
-
-       Your Firestore rules require the document ID
-       to start with the authenticated user's UID:
-
-       voteId.matches(request.auth.uid + '_.*')
-    ===================================================== */
-
-    async function saveVoteToFirebase({
-        category,
-        product,
-        productIndex,
-        choice
-    }) {
-
-        /*
-         * There must be a Firebase Authentication
-         * identity before attempting the write.
-         */
-
-        if (!currentFirebaseUser) {
-
-            throw new Error(
-                "No Firebase authentication user is available."
-            );
-
-        }
-
-
-        const uid =
-            currentFirebaseUser.uid;
-
-
-        /*
-         * The document ID MUST begin with the UID.
-
-         * Example:
-
-         * abc123_random-id
-         */
-
-        const voteId =
-            `${uid}_${crypto.randomUUID()}`;
-
-
-        const voteRef =
-            doc(
-                db,
-                FIRESTORE_VOTES_COLLECTION,
-                voteId
-            );
-
-
-        /*
-         * IMPORTANT:
-
-         * Your Firestore rules specifically require:
-
-         * uid
-         * category
-         * productId
-         * productName
-         * productBrand
-
-         * So the field names below intentionally match
-         * your rules exactly.
-         */
-
-        const voteData = {
-
-            uid:
-                uid,
-
-            category:
-                category,
-
-            productId:
-                product.id,
-
-            productIndex:
-                productIndex,
-
-            productName:
-                product.name,
-
-            productBrand:
-                product.brand,
-
-            choice:
-                choice,
-
-            createdAt:
-                serverTimestamp()
-
-        };
-
-
-        /*
-         * Firebase must successfully complete this
-         * operation before the caller saves anything
-         * to localStorage.
-         */
-
-        await setDoc(
-            voteRef,
-            voteData
-        );
-
+        await startAnonymousAuthentication();
 
         console.log(
-            "Vote successfully saved to Firestore:",
-            voteId
+            "Firebase authentication ready."
         );
 
-
-        return voteId;
-
-    }
-
-
-    /* =====================================================
-       BATTLE INITIALIZATION
-    ===================================================== */
-
-    battles.forEach((battle) => {
-
-        const category =
-            battle.dataset.category;
-
-
-        const battleProducts =
-            products[category];
-
-
-        if (
-            !battleProducts ||
-            battleProducts.length < 2
-        ) {
-
-            console.warn(
-                `No products configured for ${category}`
-            );
-
-            return;
-
-        }
-
-
-        markBattleSeen(
-            category
-        );
-
-
-        /* =================================================
-           STATE
-        ================================================= */
-
-        let currentIndex = 0;
-
-        let isVoting = false;
-
-
-        /* =================================================
-           ELEMENTS
-        ================================================= */
-
-        const image =
-            battle.querySelector(
-                "[data-image]"
-            );
-
-
-        const label =
-            battle.querySelector(
-                "[data-label]"
-            );
-
-
-        const name =
-            battle.querySelector(
-                "[data-name]"
-            );
-
-
-        const brand =
-            battle.querySelector(
-                "[data-brand]"
-            );
-
-
-        const description =
-            battle.querySelector(
-                "[data-description]"
-            );
-
-
-        const score =
-            battle.querySelector(
-                "[data-score]"
-            );
-
-
-        const percentage =
-            battle.querySelector(
-                "[data-percentage]"
-            );
-
-
-        const consensus =
-            battle.querySelector(
-                "[data-consensus]"
-            );
-
-
-        const consensusBar =
-            battle.querySelector(
-                "[data-consensus-bar]"
-            );
-
-
-        const link =
-            battle.querySelector(
-                "[data-link]"
-            );
-
-
-        const position =
-            battle.querySelector(
-                "[data-position]"
-            );
-
-
-        const yesPercentage =
-            battle.querySelector(
-                "[data-yes-percentage]"
-            );
-
-
-        const noPercentage =
-            battle.querySelector(
-                "[data-no-percentage]"
-            );
-
-
-        const result =
-            battle.querySelector(
-                "[data-result]"
-            );
-
-
-        const resultTitle =
-            battle.querySelector(
-                "[data-result-title]"
-            );
-
-
-        const resultText =
-            battle.querySelector(
-                "[data-result-text]"
-            );
-
-
-        const socialComparison =
-            battle.querySelector(
-                "[data-social-comparison]"
-            );
-
-
-        const yourPosition =
-            battle.querySelector(
-                "[data-your-position]"
-            );
-
-
-        const voteArea =
-            battle.querySelector(
-                "[data-vote-area]"
-            );
-
-
-        const winner =
-            battle.querySelector(
-                "[data-winner]"
-            );
-
-
-        const winnerText =
-            battle.querySelector(
-                "[data-winner-text]"
-            );
-
-
-        const dotsContainer =
-            battle.querySelector(
-                "[data-dots]"
-            );
-
-
-        const nextContender =
-            battle.querySelector(
-                "[data-next-contender]"
-            );
-
-
-        const prevButton =
-            battle.querySelector(
-                "[data-prev]"
-            );
-
-
-        const nextButton =
-            battle.querySelector(
-                "[data-next]"
-            );
-
-
-        const voteButtons =
-            battle.querySelectorAll(
-                "[data-vote]"
-            );
-
-
-        /* =================================================
-           BATTLE META
-        ================================================= */
-
-        createBattleMeta();
-
-
-        function createBattleMeta() {
-
-            if (
-                battle.querySelector(
-                    ".battle-progress-meta"
-                )
-            ) {
-
-                return;
-
-            }
-
-
-            const top =
-                battle.querySelector(
-                    ".battle-top"
-                );
-
-
-            if (!top) {
-
-                return;
-
-            }
-
-
-            const meta =
-                document.createElement(
-                    "div"
-                );
-
-
-            meta.className =
-                "battle-progress-meta";
-
-
-            meta.innerHTML = `
-
-                <span>
-                    ${categoryNames[category] || category}
-                </span>
-
-                <span data-battle-vote-count>
-                    0/${battleProducts.length} picked
-                </span>
-
-            `;
-
-
-            top.appendChild(
-                meta
-            );
-
-        }
-
-
-        /* =================================================
-           DOTS
-        ================================================= */
-
-        if (dotsContainer) {
-
-            dotsContainer.innerHTML = "";
-
-
-            battleProducts.forEach(
-                (product, index) => {
-
-                    const dot =
-                        document.createElement(
-                            "button"
-                        );
-
-
-                    dot.type =
-                        "button";
-
-
-                    dot.className =
-                        "battle-dot";
-
-
-                    dot.setAttribute(
-                        "aria-label",
-                        `View ${product.name}`
-                    );
-
-
-                    dot.addEventListener(
-                        "click",
-                        (event) => {
-
-                            event.preventDefault();
-
-                            if (isVoting) {
-
-                                return;
-
-                            }
-
-                            showProduct(
-                                index
-                            );
-
-                        }
-                    );
-
-
-                    dotsContainer.appendChild(
-                        dot
-                    );
-
-                }
-            );
-
-        }
-
-
-        /* =================================================
-           SAFE TEXT UPDATE
-        ================================================= */
-
-        function updateElement(
-            element,
-            value
-        ) {
-
-            if (element) {
-
-                element.textContent =
-                    value;
-
-            }
-
-        }
-
-
-        /* =================================================
-           CURRENT PRODUCT
-        ================================================= */
-
-        function getCurrentProduct() {
-
-            return battleProducts[
-                currentIndex
-            ];
-
-        }
-
-
-        /* =================================================
-           CURRENT VOTE
-        ================================================= */
-
-        function getCurrentVote() {
-
-            const product =
-                getCurrentProduct();
-
-
-            if (!product) {
-
-                return null;
-
-            }
-
-
-            return savedVotes[
-                getVoteKey(
-                    category,
-                    product.id
-                )
-            ] || null;
-
-        }
-
-
-        /* =================================================
-           RESET VOTE UI
-        ================================================= */
-
-        function resetVoteUI() {
-
-            if (voteArea) {
-
-                voteArea.style.display =
-                    "block";
-
-            }
-
-
-            if (result) {
-
-                result.classList.remove(
-                    "visible"
-                );
-
-            }
-
-
-            if (socialComparison) {
-
-                socialComparison.classList.remove(
-                    "visible"
-                );
-
-            }
-
-
-            voteButtons.forEach(
-                (button) => {
-
-                    button.disabled =
-                        false;
-
-                }
-            );
-
-        }
-
-
-        /* =================================================
-           RESTORE CURRENT PRODUCT VOTE
-        ================================================= */
-
-        function restoreVoteState() {
-
-            const existingVote =
-                getCurrentVote();
-
-
-            if (!existingVote) {
-
-                return;
-
-            }
-
-
-            showVoteResult(
-                existingVote,
-                true
-            );
-
-        }
-
-
-        /* =================================================
-           PRODUCT DISPLAY
-        ================================================= */
-
-        function showProduct(
-            requestedIndex
-        ) {
-
-            /*
-             * Normalize the requested index so that:
-
-             * -1 becomes last product
-             * 2 becomes first product
-             */
-
-            currentIndex =
-                (
-                    requestedIndex +
-                    battleProducts.length
-                ) %
-                battleProducts.length;
-
-
-            const product =
-                battleProducts[
-                    currentIndex
-                ];
-
-
-            if (!product) {
-
-                return;
-
-            }
-
-
-            /* =================================================
-               IMAGE
-
-               A broken image MUST NOT prevent the rest
-               of the product from rendering.
-            ================================================= */
-
-            if (image) {
-
-                image.classList.add(
-                    "product-changing"
-                );
-
-
-                image.src =
-                    product.image;
-
-
-                image.alt =
-                    product.name;
-
-
-                image.classList.remove(
-                    "image-error"
-                );
-
-
-                requestAnimationFrame(() => {
-
-                    image.classList.remove(
-                        "product-changing"
-                    );
-
-                });
-
-            }
-
-
-            /* =================================================
-               PRODUCT LABEL
-            ================================================= */
-
-            updateElement(
-                label,
-                `PRODUCT ${currentIndex + 1}`
-            );
-
-
-            /* =================================================
-               PRODUCT NAME
-            ================================================= */
-
-            updateElement(
-                name,
-                product.name
-            );
-
-
-            /* =================================================
-               BRAND
-            ================================================= */
-
-            updateElement(
-                brand,
-                product.brand
-            );
-
-
-            /* =================================================
-               DESCRIPTION
-            ================================================= */
-
-            updateElement(
-                description,
-                product.description
-            );
-
-
-            /* =================================================
-               SCORE
-            ================================================= */
-
-            updateElement(
-                score,
-                Number(product.score)
-                    .toFixed(1)
-            );
-
-
-            /* =================================================
-               PERCENTAGE
-            ================================================= */
-
-            updateElement(
-                percentage,
-                `${product.percentage}%`
-            );
-
-
-            /* =================================================
-               CONSENSUS
-            ================================================= */
-
-            updateElement(
-                consensus,
-                getConsensusLabel(
-                    product.percentage
-                )
-            );
-
-
-            if (consensusBar) {
-
-                consensusBar.style.width =
-                    `${product.percentage}%`;
-
-            }
-
-
-            /* =================================================
-               AMAZON LINK
-            ================================================= */
-
-            if (link) {
-
-                if (
-                    isValidAffiliateLink(
-                        product.link
-                    )
-                ) {
-
-                    link.href =
-                        product.link;
-
-                    link.style.display =
-                        "";
-
-                } else {
-
-                    link.removeAttribute(
-                        "href"
-                    );
-
-                    link.style.display =
-                        "none";
-
-                }
-
-            }
-
-
-            /* =================================================
-               PRODUCT POSITION
-               -----------------------------------------------
-               THIS is the important update you asked for.
-            ================================================= */
-
-            updateElement(
-                position,
-                `PRODUCT ${currentIndex + 1} OF ${battleProducts.length}`
-            );
-
-
-            /* =================================================
-               YES / NO PERCENTAGES
-            ================================================= */
-
-            const noPercent =
-                getNoPercentage(
-                    product.percentage
-                );
-
-
-            updateElement(
-                yesPercentage,
-                `${product.percentage}%`
-            );
-
-
-            updateElement(
-                noPercentage,
-                `${noPercent}%`
-            );
-
-
-            /* =================================================
-               DOTS
-            ================================================= */
-
-            updateDots();
-
-
-            /* =================================================
-               NEXT CONTENDER
-            ================================================= */
-
-            updateButtonLabels();
-
-
-            /* =================================================
-               RESET OLD RESULT
-            ================================================= */
-
-            resetVoteUI();
-
-
-            /* =================================================
-               RESTORE THIS PRODUCT'S VOTE
-            ================================================= */
-
-            restoreVoteState();
-
-
-            /* =================================================
-               COUNTS
-            ================================================= */
-
-            updateBattleVoteCount();
-
-
-            /* =================================================
-               WINNER
-            ================================================= */
-
-            updateBattleWinner();
-
-        }
-
-
-        /* =================================================
-           BUTTON LABELS
-        ================================================= */
-
-        function updateButtonLabels() {
-
-            if (!nextContender) {
-
-                return;
-
-            }
-
-
-            const nextIndex =
-                (
-                    currentIndex + 1
-                ) %
-                battleProducts.length;
-
-
-            const nextProduct =
-                battleProducts[
-                    nextIndex
-                ];
-
-
-            if (nextProduct) {
-
-                nextContender.textContent =
-                    `See ${nextProduct.name} →`;
-
-            }
-
-        }
-
-
-        /* =================================================
-           DOT STATE
-        ================================================= */
-
-        function updateDots() {
-
-            if (!dotsContainer) {
-
-                return;
-
-            }
-
-
-            const dots =
-                dotsContainer.querySelectorAll(
-                    ".battle-dot"
-                );
-
-
-            dots.forEach(
-                (dot, index) => {
-
-                    dot.classList.toggle(
-                        "active",
-                        index === currentIndex
-                    );
-
-                }
-            );
-
-        }
-
-
-        /* =================================================
-           CAST VOTE
-        ================================================= */
-
-        async function castVote(
-            choice
-        ) {
-
-            if (isVoting) {
-
-                return;
-
-            }
-
-
-            const product =
-                getCurrentProduct();
-
-
-            if (!product) {
-
-                return;
-
-            }
-
-
-            const key =
-                getVoteKey(
-                    category,
-                    product.id
-                );
-
-
-            /*
-             * Already voted locally.
-
-             * This is only a local optimization.
-
-             * New votes are NEVER added to localStorage
-             * until Firebase has successfully accepted
-             * them.
-             */
-
-            if (savedVotes[key]) {
-
-                showVoteResult(
-                    savedVotes[key],
-                    true
-                );
-
-                return;
-
-            }
-
-
-            /*
-             * We cannot vote without a Firebase Auth
-             * identity.
-             */
-
-            if (!currentFirebaseUser) {
-
-                showToast(
-                    "Voting is temporarily unavailable. Please try again."
-                );
-
-                return;
-
-            }
-
-
-            isVoting = true;
-
-
-            voteButtons.forEach(
-                (button) => {
-
-                    button.disabled =
-                        true;
-
-                }
-            );
-
-
-            try {
-
-                /*
-                 * IMPORTANT:
-
-                 * This must complete successfully first.
-                 */
-
-                await saveVoteToFirebase({
-
-                    category:
-                        category,
-
-                    product:
-                        product,
-
-                    productIndex:
-                        currentIndex,
-
-                    choice:
-                        choice
-
-                });
-
-
-                /*
-                 * ONLY NOW do we save the vote locally.
-
-                 * If Firebase failed, execution jumps to
-                 * catch() and this code is never reached.
-                 */
-
-                savedVotes[key] =
-                    choice;
-
-
-                saveVotes();
-
-
-                session.totalVotes =
-                    getTotalVoteCount();
-
-
-                session.streak =
-                    Number(
-                        session.streak || 0
-                    ) + 1;
-
-
-                saveSession();
-
-
-                updateStreak();
-
-
-                updateGlobalProgress();
-
-
-                showVoteResult(
-                    choice,
-                    false
-                );
-
-
-                celebrate();
-
-
-            } catch (error) {
-
-                console.error(
-                    "Vote was NOT saved:",
-                    error
-                );
-
-
-                /*
-                 * Absolutely no local vote is created
-                 * here.
-                 */
-
-                showToast(
-                    "We couldn't record your vote. Please try again."
-                );
-
-
-                voteButtons.forEach(
-                    (button) => {
-
-                        button.disabled =
-                            false;
-
-                    }
-                );
-
-            } finally {
-
-                isVoting = false;
-
-
-                /*
-                 * If Firebase successfully saved the
-                 * vote, keep buttons disabled.
-
-                 * If it didn't, allow another attempt.
-                 */
-
-                if (
-                    !getCurrentVote()
-                ) {
-
-                    voteButtons.forEach(
-                        (button) => {
-
-                            button.disabled =
-                                false;
-
-                        }
-                    );
-
-                }
-
-            }
-
-        }
-
-
-        /* =================================================
-           SHOW VOTE RESULT
-        ================================================= */
-
-        function showVoteResult(
-            choice,
-            existingVote = false
-        ) {
-
-            const product =
-                getCurrentProduct();
-
-
-            if (!product) {
-
-                return;
-
-            }
-
-
-            const yes =
-                Number(
-                    product.percentage
-                );
-
-
-            const no =
-                getNoPercentage(
-                    yes
-                );
-
-
-            if (voteArea) {
-
-                voteArea.style.display =
-                    "none";
-
-            }
-
-
-            if (result) {
-
-                result.classList.add(
-                    "visible"
-                );
-
-            }
-
-
-            if (socialComparison) {
-
-                socialComparison.classList.add(
-                    "visible"
-                );
-
-            }
-
-
-            if (choice === "yes") {
-
-                updateElement(
-                    resultTitle,
-                    "🎉 You picked it!"
-                );
-
-
-                if (yes >= 50) {
-
-                    updateElement(
-                        resultText,
-                        `You're on the same side as ${yes}% of moms who recommend this one.`
-                    );
-
-
-                    updateElement(
-                        yourPosition,
-                        `You're with the ${yes}% majority. 💗`
-                    );
-
-                } else {
-
-                    updateElement(
-                        resultText,
-                        `Interesting pick 👀 Only ${yes}% currently recommend this one.`
-                    );
-
-
-                    updateElement(
-                        yourPosition,
-                        `You're with the ${yes}% minority. 👀`
-                    );
-
-                }
-
-            } else {
-
-                updateElement(
-                    resultTitle,
-                    "👀 You'd skip it!"
-                );
-
-
-                if (no >= 50) {
-
-                    updateElement(
-                        resultText,
-                        `${no}% currently wouldn't recommend this one either.`
-                    );
-
-
-                    updateElement(
-                        yourPosition,
-                        `You're with the ${no}% majority.`
-                    );
-
-                } else {
-
-                    updateElement(
-                        resultText,
-                        `Most moms would choose it — ${yes}% currently recommend it.`
-                    );
-
-
-                    updateElement(
-                        yourPosition,
-                        `You're with the ${no}% minority. 👀`
-                    );
-
-                }
-
-            }
-
-
-            if (existingVote) {
-
-                showToast(
-                    "You already voted on this one 💗"
-                );
-
-            }
-
-
-            checkBattleCompletion();
-
-        }
-
-
-        /* =================================================
-           BATTLE COMPLETION
-        ================================================= */
-
-        function checkBattleCompletion() {
-
-            const first =
-                battleProducts[0];
-
-
-            const second =
-                battleProducts[1];
-
-
-            if (!first || !second) {
-
-                return;
-
-            }
-
-
-            const firstVote =
-                savedVotes[
-                    getVoteKey(
-                        category,
-                        first.id
-                    )
-                ];
-
-
-            const secondVote =
-                savedVotes[
-                    getVoteKey(
-                        category,
-                        second.id
-                    )
-                ];
-
-
-            if (
-                !firstVote ||
-                !secondVote
-            ) {
-
-                if (winner) {
-
-                    winner.classList.remove(
-                        "visible"
-                    );
-
-                }
-
-
-                if (winnerText) {
-
-                    winnerText.textContent =
-                        "Vote for both products to reveal the battle result.";
-
-                }
-
-
-                return;
-
-            }
-
-
-            if (winner) {
-
-                winner.classList.add(
-                    "visible"
-                );
-
-            }
-
-
-            if (
-                first.percentage >
-                second.percentage
-            ) {
-
-                updateElement(
-                    winnerText,
-                    `🏆 ${first.name} is currently ahead ${first.percentage}% to ${second.percentage}%.`
-                );
-
-            } else if (
-                second.percentage >
-                first.percentage
-            ) {
-
-                updateElement(
-                    winnerText,
-                    `🏆 ${second.name} is currently ahead ${second.percentage}% to ${first.percentage}%.`
-                );
-
-            } else {
-
-                updateElement(
-                    winnerText,
-                    "🤝 It's a tie — moms can't decide."
-                );
-
-            }
-
-
-            updateGlobalProgress();
-
-        }
-
-
-        /* =================================================
-           VOTE COUNT
-        ================================================= */
-
-        function updateBattleVoteCount() {
-
-            const element =
-                battle.querySelector(
-                    "[data-battle-vote-count]"
-                );
-
-
-            if (!element) {
-
-                return;
-
-            }
-
-
-            let count = 0;
-
-
-            battleProducts.forEach(
-                (product) => {
-
-                    const key =
-                        getVoteKey(
-                            category,
-                            product.id
-                        );
-
-
-                    if (
-                        savedVotes[key]
-                    ) {
-
-                        count++;
-
-                    }
-
-                }
-            );
-
-
-            element.textContent =
-                `${count}/${battleProducts.length} picked`;
-
-        }
-
-
-        /* =================================================
-           NEXT BATTLE BUTTON
-        ================================================= */
-
-        function createNextBattleButton() {
-
-            if (
-                battle.querySelector(
-                    ".next-battle-cta"
-                )
-            ) {
-
-                return;
-
-            }
-
-
-            const button =
-                document.createElement(
-                    "button"
-                );
-
-
-            button.type =
-                "button";
-
-
-            button.className =
-                "next-battle-cta";
-
-
-            button.innerHTML = `
-
-                <span>
-                    ${randomEncouragement()}
-                </span>
-
-                <strong>
-                    Next battle →
-                </strong>
-
-            `;
-
-
-            button.addEventListener(
-                "click",
-                () => {
-
-                    goToNextBattle(
-                        battle
-                    );
-
-                }
-            );
-
-
-            const footer =
-                battle.querySelector(
-                    ".battle-footer"
-                );
-
-
-            if (footer) {
-
-                footer.parentNode.insertBefore(
-                    button,
-                    footer
-                );
-
-            }
-
-        }
-
-
-        /* =================================================
-           NEXT BATTLE STATE
-        ================================================= */
-
-        function updateNextBattleButton() {
-
-            const first =
-                battleProducts[0];
-
-
-            const second =
-                battleProducts[1];
-
-
-            if (!first || !second) {
-
-                return;
-
-            }
-
-
-            const complete =
-                Boolean(
-                    savedVotes[
-                        getVoteKey(
-                            category,
-                            first.id
-                        )
-                    ]
-                ) &&
-                Boolean(
-                    savedVotes[
-                        getVoteKey(
-                            category,
-                            second.id
-                        )
-                    ]
-                );
-
-
-            const button =
-                battle.querySelector(
-                    ".next-battle-cta"
-                );
-
-
-            if (complete) {
-
-                createNextBattleButton();
-
-            } else if (button) {
-
-                button.remove();
-
-            }
-
-        }
-
-
-        /* =================================================
-           WINNER
-        ================================================= */
-
-        function updateBattleWinner() {
-
-            checkBattleCompletion();
-
-            updateNextBattleButton();
-
-        }
-
-
-        /* =================================================
-           PREVIOUS PRODUCT
-        ================================================= */
-
-        if (prevButton) {
-
-            prevButton.addEventListener(
-                "click",
-                (event) => {
-
-                    event.preventDefault();
-
-
-                    if (isVoting) {
-
-                        return;
-
-                    }
-
-
-                    showProduct(
-                        currentIndex - 1
-                    );
-
-                }
-            );
-
-        }
-
-
-        /* =================================================
-           NEXT PRODUCT
-        ================================================= */
-
-        if (nextButton) {
-
-            nextButton.addEventListener(
-                "click",
-                (event) => {
-
-                    event.preventDefault();
-
-
-                    if (isVoting) {
-
-                        return;
-
-                    }
-
-
-                    showProduct(
-                        currentIndex + 1
-                    );
-
-                }
-            );
-
-        }
-
-
-        /* =================================================
-           NEXT CONTENDER
-        ================================================= */
-
-        if (nextContender) {
-
-            nextContender.addEventListener(
-                "click",
-                (event) => {
-
-                    event.preventDefault();
-
-
-                    if (isVoting) {
-
-                        return;
-
-                    }
-
-
-                    showProduct(
-                        currentIndex + 1
-                    );
-
-
-                    setTimeout(() => {
-
-                        battle.scrollIntoView({
-                            behavior: "smooth",
-                            block: "center"
-                        });
-
-                    }, 50);
-
-                }
-            );
-
-        }
-
-
-        /* =================================================
-           VOTE BUTTONS
-        ================================================= */
-
-        voteButtons.forEach(
-            (button) => {
-
-                button.addEventListener(
-                    "click",
-                    (event) => {
-
-                        event.preventDefault();
-
-
-                        const choice =
-                            button.dataset.vote;
-
-
-                        if (
-                            choice !== "yes" &&
-                            choice !== "no"
-                        ) {
-
-                            console.warn(
-                                "Invalid vote button:",
-                                choice
-                            );
-
-                            return;
-
-                        }
-
-
-                        castVote(
-                            choice
-                        );
-
-                    }
-                );
-
-            }
-        );
-
-
-        /* =================================================
-           SWIPE SUPPORT
-        ================================================= */
-
-        let touchStartX = 0;
-
-        let touchStartY = 0;
-
-
-        battle.addEventListener(
-            "touchstart",
-            (event) => {
-
-                const touch =
-                    event.changedTouches[0];
-
-
-                if (!touch) {
-
-                    return;
-
-                }
-
-
-                touchStartX =
-                    touch.screenX;
-
-
-                touchStartY =
-                    touch.screenY;
-
-            },
-            {
-                passive: true
-            }
-        );
-
-
-        battle.addEventListener(
-            "touchend",
-            (event) => {
-
-                if (isVoting) {
-
-                    return;
-
-                }
-
-
-                const touch =
-                    event.changedTouches[0];
-
-
-                if (!touch) {
-
-                    return;
-
-                }
-
-
-                const differenceX =
-                    touchStartX -
-                    touch.screenX;
-
-
-                const differenceY =
-                    touchStartY -
-                    touch.screenY;
-
-
-                if (
-                    Math.abs(differenceX) <
-                    MIN_SWIPE_DISTANCE
-                ) {
-
-                    return;
-
-                }
-
-
-                if (
-                    Math.abs(differenceY) >
-                    Math.abs(differenceX)
-                ) {
-
-                    return;
-
-                }
-
-
-                if (differenceX > 0) {
-
-                    showProduct(
-                        currentIndex + 1
-                    );
-
-                } else {
-
-                    showProduct(
-                        currentIndex - 1
-                    );
-
-                }
-
-            },
-            {
-                passive: true
-            }
-        );
-
-
-        /* =================================================
-           IMAGE ERROR
-           -----------------------------------------------
-           A 404 here only affects the image.
-
-           It MUST NOT stop:
-           - arrows
-           - vote buttons
-           - Firebase
-           - product switching
-        ================================================= */
-
-        if (image) {
-
-            image.addEventListener(
-                "error",
-                () => {
-
-                    image.classList.add(
-                        "image-error"
-                    );
-
-
-                    image.alt =
-                        "Product image unavailable";
-
-                }
-            );
-
-        }
-
-
-        /* =================================================
-           INITIALIZE BATTLE
-        ================================================= */
-
-        showProduct(
-            0
-        );
-
-    });
-
-
-    /* =====================================================
-       NEXT BATTLE
-    ===================================================== */
-
-    function goToNextBattle(
-        currentBattle
-    ) {
-
-        const allBattles =
-            Array.from(
-                document.querySelectorAll(
-                    ".product-battle"
-                )
-            );
-
-
-        const currentIndex =
-            allBattles.indexOf(
-                currentBattle
-            );
-
-
-        let nextBattle =
-            null;
-
-
-        for (
-            let i = currentIndex + 1;
-            i < allBattles.length;
-            i++
-        ) {
-
-            if (
-                !allBattles[i].classList.contains(
-                    "filtered-out"
-                )
-            ) {
-
-                nextBattle =
-                    allBattles[i];
-
-                break;
-
-            }
-
-        }
-
-
-        if (!nextBattle) {
-
-            for (
-                let i = 0;
-                i < currentIndex;
-                i++
-            ) {
-
-                if (
-                    !allBattles[i].classList.contains(
-                        "filtered-out"
-                    )
-                ) {
-
-                    nextBattle =
-                        allBattles[i];
-
-                    break;
-
-                }
-
-            }
-
-        }
-
-
-        if (!nextBattle) {
-
-            showToast(
-                "You've reached the end! 🏆"
-            );
-
-            return;
-
-        }
-
-
-        nextBattle.scrollIntoView({
-            behavior: "smooth",
-            block: "center"
-        });
-
-
-        setTimeout(() => {
-
-            const firstButton =
-                nextBattle.querySelector(
-                    "[data-vote]"
-                );
-
-
-            if (
-                firstButton &&
-                firstButton.offsetParent !== null
-            ) {
-
-                firstButton.focus({
-                    preventScroll: true
-                });
-
-            }
-
-        }, 650);
-
-    }
-
-
-    /* =====================================================
-       CATEGORY NAVIGATION
-    ===================================================== */
-
-    const categoryLinks =
-        document.querySelectorAll(
-            ".category-link"
-        );
-
-
-    categoryLinks.forEach(
-        (link) => {
-
-            link.addEventListener(
-                "click",
-                () => {
-
-                    categoryLinks.forEach(
-                        (item) => {
-
-                            item.classList.remove(
-                                "active"
-                            );
-
-                        }
-                    );
-
-
-                    link.classList.add(
-                        "active"
-                    );
-
-                }
-            );
-
-        }
-    );
-
-
-    /* =====================================================
-       CATEGORY OBSERVER
-    ===================================================== */
-
-    if (
-        "IntersectionObserver" in window
-    ) {
-
-        const observer =
-            new IntersectionObserver(
-                (entries) => {
-
-                    const visible =
-                        entries
-                            .filter(
-                                (entry) =>
-                                    entry.isIntersecting
-                            )
-                            .sort(
-                                (a, b) =>
-                                    b.intersectionRatio -
-                                    a.intersectionRatio
-                            );
-
-
-                    if (!visible.length) {
-
-                        return;
-
-                    }
-
-
-                    const category =
-                        visible[0]
-                            .target
-                            .dataset
-                            .category;
-
-
-                    categoryLinks.forEach(
-                        (link) => {
-
-                            link.classList.toggle(
-                                "active",
-                                link.getAttribute(
-                                    "href"
-                                ) ===
-                                `#${category}`
-                            );
-
-                        }
-                    );
-
-                },
-                {
-                    threshold: [
-                        0.25,
-                        0.5,
-                        0.75
-                    ]
-                }
-            );
-
-
-        battles.forEach(
-            (battle) => {
-
-                observer.observe(
-                    battle
-                );
-
-            }
+    } catch (error) {
+
+        console.error(
+            "Firebase authentication could not start:",
+            error
         );
 
     }
 
-
-    /* =====================================================
-       DISCOVERY FILTERS
-    ===================================================== */
-
-    const filters =
-        document.querySelectorAll(
-            ".discovery-filter"
-        );
+}
 
 
-    filters.forEach(
-        (filter) => {
+/* ============================================================
+   START
+   ============================================================ */
 
-            filter.addEventListener(
-                "click",
-                () => {
+if (
+    document.readyState ===
+    "loading"
+) {
 
-                    const selected =
-                        filter.dataset.filter;
-
-
-                    filters.forEach(
-                        (item) => {
-
-                            item.classList.remove(
-                                "active"
-                            );
-
-                        }
-                    );
-
-
-                    filter.classList.add(
-                        "active"
-                    );
-
-
-                    battles.forEach(
-                        (battle) => {
-
-                            if (
-                                selected ===
-                                "all"
-                            ) {
-
-                                battle.classList.remove(
-                                    "filtered-out"
-                                );
-
-                                return;
-
-                            }
-
-
-                            const tags =
-                                (
-                                    battle.dataset
-                                        .filterTags ||
-                                    ""
-                                )
-                                    .split(/\s+/)
-                                    .filter(Boolean);
-
-
-                            if (
-                                tags.includes(
-                                    selected
-                                )
-                            ) {
-
-                                battle.classList.remove(
-                                    "filtered-out"
-                                );
-
-                            } else {
-
-                                battle.classList.add(
-                                    "filtered-out"
-                                );
-
-                            }
-
-                        }
-                    );
-
-
-                    const firstVisible =
-                        document.querySelector(
-                            ".product-battle:not(.filtered-out)"
-                        );
-
-
-                    if (firstVisible) {
-
-                        setTimeout(() => {
-
-                            firstVisible.scrollIntoView({
-                                behavior: "smooth",
-                                block: "start"
-                            });
-
-                        }, 120);
-
-                    }
-
-                }
-            );
-
-        }
-    );
-
-
-    /* =====================================================
-       INITIAL GLOBAL UI
-    ===================================================== */
-
-    updateGlobalProgress();
-
-    updateStreak();
-
-
-    /* =====================================================
-       SCROLL PROGRESS
-    ===================================================== */
-
-    window.addEventListener(
-        "scroll",
-        () => {
-
-            const completed =
-                getCompletedBattleCount();
-
-
-            if (
-                completed > 0 &&
-                completed < totalBattles
-            ) {
-
-                document.body.classList.add(
-                    "has-voting-progress"
-                );
-
-            }
-
-        },
+    document.addEventListener(
+        "DOMContentLoaded",
+        initializePage,
         {
-            passive: true
+            once: true
         }
     );
 
+} else {
 
-    /* =====================================================
-       RESET FUNCTION
-    ===================================================== */
+    initializePage();
 
-    window.resetMomVotes =
-        function () {
-
-            localStorage.removeItem(
-                STORAGE_KEY
-            );
-
-
-            localStorage.removeItem(
-                SESSION_KEY
-            );
-
-
-            window.location.reload();
-
-        };
-
-
-});
+}
