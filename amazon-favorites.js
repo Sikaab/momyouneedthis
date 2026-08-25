@@ -143,7 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 id: "baby-contender",
                 name: "Baby Favorite",
                 brand: "MomYouNeedThis Pick",
-                image: "assets/product2.jpg",
+                image: "assets/babyeinstein-aquarium.jpeg",
                 description:
                     "Another mom-approved option worth comparing before making your choice.",
                 percentage: 38,
@@ -160,7 +160,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 id: "toddler-favorite",
                 name: "Toddler Favorite",
                 brand: "MomYouNeedThis Pick",
-                image: "assets/product2.jpg",
+                image: "assets/babyeinstein-aquarium.jpeg",
                 description:
                     "A practical everyday product designed to make life with toddlers a little easier.",
                 percentage: 57,
@@ -172,7 +172,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 id: "toddler-contender",
                 name: "Toddler Contender",
                 brand: "Mom Favorite",
-                image: "assets/product2.jpg",
+                image: "assets/babyeinstein-aquarium.jpeg",
                 description:
                     "Another practical option parents may want to compare.",
                 percentage: 43,
@@ -201,7 +201,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 id: "sleep-contender",
                 name: "Sleep Contender",
                 brand: "Mom Pick",
-                image: "assets/product2.jpg",
+                image: "assets/babyeinstein-aquarium.jpeg",
                 description:
                     "Another sleep option parents may want to compare.",
                 percentage: 29,
@@ -230,7 +230,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 id: "potty-contender",
                 name: "Potty Training Contender",
                 brand: "Mom Pick",
-                image: "assets/product2.jpg",
+                image: "assets/babyeinstein-aquarium.jpeg",
                 description:
                     "Another potty-training option worth comparing before you decide.",
                 percentage: 32,
@@ -247,7 +247,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 id: "feeding-favorite",
                 name: "Feeding Favorite",
                 brand: "Mom Pick",
-                image: "assets/product2.jpg",
+                image: "assets/babyeinstein-aquarium.jpeg",
                 description:
                     "A practical feeding favorite designed to make everyday mealtimes a little easier.",
                 percentage: 54,
@@ -259,7 +259,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 id: "feeding-contender",
                 name: "Feeding Contender",
                 brand: "Mom Pick",
-                image: "assets/product2.jpg",
+                image: "assets/babyeinstein-aquarium.jpeg",
                 description:
                     "Another feeding option parents can compare.",
                 percentage: 46,
@@ -276,7 +276,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 id: "budget-find",
                 name: "Budget Mom Find",
                 brand: "MomYouNeedThis Pick",
-                image: "assets/product2.jpg",
+                image: "assets/babyeinstein-aquarium.jpeg",
                 description:
                     "A useful little find that could make everyday parenting just a bit easier.",
                 percentage: 63,
@@ -288,7 +288,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 id: "budget-contender",
                 name: "Budget Contender",
                 brand: "Mom Pick",
-                image: "assets/product2.jpg",
+                image: "assets/babyeinstein-aquarium.jpeg",
                 description:
                     "Another affordable find worth putting to the mom test.",
                 percentage: 37,
