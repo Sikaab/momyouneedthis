@@ -26,13 +26,13 @@
 
 import {
     initializeApp
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+} from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
 
 import {
     getAuth,
     signInAnonymously,
     onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
 
 import {
     getFirestore,
@@ -40,7 +40,7 @@ import {
     setDoc,
     getDoc,
     serverTimestamp
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
 
 
 /* ============================================================
@@ -61,7 +61,7 @@ import {
 
    ============================================================ */
 
-import { firebaseConfig } from "./firebase-config.js";
+import { db } from "./firebase-config.js";
 
 
 /* ============================================================
