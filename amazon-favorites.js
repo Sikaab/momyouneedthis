@@ -5,11 +5,6 @@
  *
  * Requires Firebase modular SDK.
  *
- * IMPORTANT:
- * Replace the firebaseConfig values below with the SAME
- * Firebase web app configuration used by your other working
- * MomYouNeedThis tools.
- *
  * Firestore collection:
  *     productVotes
  *
