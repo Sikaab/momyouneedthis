@@ -401,10 +401,7 @@ function getReadableFirebaseError(
     ) {
 
         return (
-            "Firebase rejected the submission. " +
-            "Please make sure Anonymous Authentication " +
-            "is enabled and your Firestore rules allow " +
-            "authenticated users to submit recommendations."
+            "Ooppss, we couldn't submit your holy grail for now. Contact us to report the issue."
         );
 
     }
