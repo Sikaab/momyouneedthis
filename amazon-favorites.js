@@ -4,6 +4,11 @@
 import { db } from "./firebase-config.js";
 
 import {
+    getAuth,
+    signInAnonymously
+} from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
+
+import {
     collection,
     addDoc,
     serverTimestamp
@@ -13,6 +18,89 @@ import {
 document.addEventListener("DOMContentLoaded", () => {
 
     "use strict";
+
+
+    /* =====================================================
+       FIREBASE ANONYMOUS AUTHENTICATION
+       -----------------------------------------------------
+       The visitor is NOT asked to sign in.
+
+       Firebase creates an anonymous authenticated user
+       automatically. This allows Firestore rules such as:
+
+       allow create: if request.auth != null;
+
+       to accept the vote.
+    ===================================================== */
+
+    const auth = getAuth();
+
+    let anonymousAuthPromise = null;
+
+
+    async function ensureAnonymousAuthentication() {
+
+        /*
+           If Firebase already has an authenticated user,
+           use that user.
+
+           This prevents signing in anonymously again
+           every time someone votes.
+        */
+
+        if (auth.currentUser) {
+
+            return auth.currentUser;
+
+        }
+
+
+        /*
+           If authentication is already being attempted,
+           return the same promise instead of creating
+           multiple anonymous users.
+        */
+
+        if (anonymousAuthPromise) {
+
+            return anonymousAuthPromise;
+
+        }
+
+
+        anonymousAuthPromise =
+            signInAnonymously(auth)
+                .then((userCredential) => {
+
+                    console.log(
+                        "Firebase anonymous authentication successful."
+                    );
+
+                    return userCredential.user;
+
+                })
+                .catch((error) => {
+
+                    /*
+                       Allow a future attempt if this attempt
+                       fails.
+                    */
+
+                    anonymousAuthPromise = null;
+
+                    console.error(
+                        "Firebase anonymous authentication failed:",
+                        error
+                    );
+
+                    throw error;
+
+                });
+
+
+        return anonymousAuthPromise;
+
+    }
 
 
     /* =====================================================
@@ -411,16 +499,6 @@ document.addEventListener("DOMContentLoaded", () => {
         category,
         productId
     ) {
-
-        /*
-           IMPORTANT:
-
-           Votes are associated with the PRODUCT ID,
-           not Product 1 / Product 2 position.
-
-           This prevents switching products from
-           accidentally sharing state.
-        */
 
         return `${category}-${productId}`;
 
@@ -993,9 +1071,10 @@ document.addEventListener("DOMContentLoaded", () => {
     /* =====================================================
        FIRESTORE VOTE
        -----------------------------------------------------
-       NO UID.
-       NO AUTH.
-       COMPLETELY ANONYMOUS.
+       Firebase anonymous authentication happens FIRST.
+
+       The vote is only written to localStorage AFTER
+       Firestore successfully accepts it.
     ===================================================== */
 
     async function saveVoteToFirebase({
@@ -1004,6 +1083,32 @@ document.addEventListener("DOMContentLoaded", () => {
         productIndex,
         choice
     }) {
+
+        /*
+           THIS IS THE IMPORTANT FIX.
+
+           Firestore requires request.auth != null.
+
+           signInAnonymously() gives this visitor a Firebase
+           authenticated user without requiring a sign-in.
+        */
+
+        await ensureAnonymousAuthentication();
+
+
+        /*
+           Double-check that Firebase actually has a user
+           before attempting the Firestore write.
+        */
+
+        if (!auth.currentUser) {
+
+            throw new Error(
+                "Firebase anonymous authentication did not create a user."
+            );
+
+        }
+
 
         const voteData = {
 
@@ -1030,6 +1135,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         };
 
+
+        /*
+           Firestore write happens BEFORE localStorage.
+        */
 
         const docRef =
             await addDoc(
@@ -1090,15 +1199,6 @@ document.addEventListener("DOMContentLoaded", () => {
         ================================================= */
 
         let currentIndex = 0;
-
-        /*
-           This counter is used to invalidate any old
-           render operation.
-
-           More importantly, rendering itself is now
-           synchronous, so Product 1 cannot overwrite
-           Product 2 after the user switches.
-        */
 
         let renderVersion = 0;
 
@@ -1422,14 +1522,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         function resetVoteUI() {
 
-            /*
-               This is critical.
-
-               When switching Product 1 -> Product 2,
-               Product 1's result must disappear unless
-               Product 2 itself has already been voted on.
-            */
-
             if (voteArea) {
 
                 voteArea.style.display =
@@ -1510,10 +1602,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 renderVersion;
 
 
-            /*
-               Normalize the index.
-            */
-
             currentIndex =
                 (
                     requestedIndex +
@@ -1535,19 +1623,9 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
 
-            /*
-               IMPORTANT:
-
-               Do not use a setTimeout here.
-
-               The previous version delayed the actual
-               product update by 120ms. That could cause
-               Product 1 to overwrite Product 2 during
-               rapid clicks.
-
-               Everything below updates immediately.
-            */
-
+            /* =================================================
+               IMAGE
+            ================================================= */
 
             if (image) {
 
@@ -1555,14 +1633,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     "product-changing"
                 );
 
-            }
-
-
-            /* =================================================
-               IMAGE
-            ================================================= */
-
-            if (image) {
 
                 image.src =
                     product.image;
@@ -1574,11 +1644,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     "image-error"
                 );
 
-                /*
-                   Remove the transition class on the
-                   next paint instead of delaying the
-                   actual product data.
-                */
 
                 requestAnimationFrame(() => {
 
@@ -1695,6 +1760,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
             /* =================================================
                POSITION
+               -----------------------------------------------
+               This updates PRODUCT 1 OF 2 / PRODUCT 2 OF 2
+               every time the arrows switch products.
             ================================================= */
 
             updateElement(
@@ -1741,16 +1809,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
             /* =================================================
                RESET FIRST
-               -----------------------------------------------
-               This prevents the previous product's result
-               from staying visible.
             ================================================= */
 
             resetVoteUI();
 
 
             /* =================================================
-               RESTORE IF THIS PRODUCT WAS ALREADY VOTED
+               RESTORE IF ALREADY VOTED
             ================================================= */
 
             restoreVoteState();
@@ -1867,12 +1932,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
 
-            /*
-               IMPORTANT:
-
-               Use product ID rather than position.
-            */
-
             const key =
                 getVoteKey(
                     category,
@@ -1882,6 +1941,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
             /*
                Already voted?
+
+               Do not send another Firebase vote.
             */
 
             if (savedVotes[key]) {
@@ -1912,9 +1973,8 @@ document.addEventListener("DOMContentLoaded", () => {
             try {
 
                 /*
-                   Save anonymously to Firestore.
-
-                   NO UID.
+                   Firebase authentication + Firestore
+                   write happen BEFORE localStorage.
                 */
 
                 await saveVoteToFirebase({
@@ -1935,8 +1995,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                 /*
-                   Only save locally AFTER Firebase
-                   succeeds.
+                   IMPORTANT:
+
+                   This only executes if Firebase
+                   successfully accepted the vote.
                 */
 
                 savedVotes[key] =
@@ -1976,22 +2038,20 @@ document.addEventListener("DOMContentLoaded", () => {
             } catch (error) {
 
                 console.error(
-                    "Firebase anonymous vote error:",
+                    "Firebase vote error:",
                     error
                 );
 
+
+                /*
+                   Nothing is saved locally if Firebase
+                   failed.
+                */
 
                 showToast(
                     "We couldn't record your vote. Please try again."
                 );
 
-
-                /*
-                   Firebase failed.
-
-                   Therefore we intentionally DO NOT
-                   save anything to localStorage.
-                */
 
                 voteButtons.forEach(
                     (button) => {
@@ -2008,8 +2068,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                 /*
-                   Only keep buttons disabled if the
-                   current product has actually been voted.
+                   Keep disabled only if the vote
+                   actually exists locally.
                 */
 
                 if (
