@@ -4,11 +4,13 @@
 ===================================== */
 
 import { db } from "./firebase-config.js";
-import { 
-  collection, 
-  addDoc, 
-  serverTimestamp 
+
+import {
+    collection,
+    addDoc,
+    serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+
 
 /* ===========================
    ELEMENTS
@@ -41,6 +43,7 @@ const successMessage =
 const submitAnother =
     document.getElementById("submitAnother");
 
+
 /* ===========================
    SAFETY CHECK
 =========================== */
@@ -52,6 +55,7 @@ if (!form) {
     );
 
 }
+
 
 /* ===========================
    SUBMIT RECOMMENDATION
@@ -65,9 +69,11 @@ if (form) {
 
             event.preventDefault();
 
+
             /* Clear previous error */
 
             errorMessage.textContent = "";
+
 
             /* =========================
                GET VALUES
@@ -78,6 +84,7 @@ if (form) {
 
             const brand =
                 brandInput.value.trim();
+
 
             /* =========================
                VALIDATION
@@ -94,6 +101,7 @@ if (form) {
 
             }
 
+
             if (!brand) {
 
                 errorMessage.textContent =
@@ -105,6 +113,7 @@ if (form) {
 
             }
 
+
             /* =========================
                LOADING STATE
             ========================= */
@@ -115,11 +124,13 @@ if (form) {
 
             submitLoading.hidden = false;
 
+
             try {
 
                 console.log(
                     "Submitting Holy Grail recommendation..."
                 );
+
 
                 /* =========================
                    SAVE TO FIRESTORE
@@ -148,10 +159,12 @@ if (form) {
                         }
                     );
 
+
                 console.log(
                     "Holy Grail recommendation saved:",
                     docRef.id
                 );
+
 
                 /* =========================
                    SUCCESS
@@ -161,11 +174,13 @@ if (form) {
 
                 successMessage.hidden = false;
 
+
                 /* Clear fields */
 
                 productNameInput.value = "";
 
                 brandInput.value = "";
+
 
             }
 
@@ -176,8 +191,10 @@ if (form) {
                     error
                 );
 
+
                 errorMessage.textContent =
                     "We couldn't submit your recommendation right now. Please try again.";
+
 
                 submitButton.disabled = false;
 
@@ -191,6 +208,7 @@ if (form) {
     );
 
 }
+
 
 /* ===========================
    SUBMIT ANOTHER
