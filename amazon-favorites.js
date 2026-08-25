@@ -53,29 +53,15 @@ let db = null;
 
 try {
 
-    app =
-        initializeApp(
-            firebaseConfig
-        );
-
     auth =
         getAuth(
             app
         );
 
-    db =
-        getFirestore(
-            app
-        );
-
-    console.log(
-        "Firebase initialized successfully."
-    );
-
 } catch (error) {
 
     console.error(
-        "Firebase initialization failed:",
+        "Firebase get auth failed:",
         error
     );
 
