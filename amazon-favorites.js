@@ -2,17 +2,16 @@
    MOM-VOTED PRODUCT EXPERIENCE
 ========================================================= */
 import { db } from "./firebase-config.js";
+import { 
+  collection, 
+  addDoc, 
+  serverTimestamp 
+} from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
 
 import {
     getAuth,
     signInAnonymously
 } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
-
-import {
-    collection,
-    addDoc,
-    serverTimestamp
-} from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
 
 
 document.addEventListener("DOMContentLoaded", () => {
