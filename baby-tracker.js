@@ -1,6 +1,7 @@
 /* =========================================================
    MOMYOURENEEDTHIS
    BABY TRACKER
+   Robust version
 ========================================================= */
 
 (function () {
@@ -12,7 +13,7 @@
 
     const STORAGE_KEY = "momyouneedthis_baby_tracker_v1";
 
-    let state = {
+    const DEFAULT_STATE = {
         babyName: "My Baby",
         voiceLanguage: "en-US",
         voiceConfirmation: true,
@@ -20,10 +21,20 @@
         activeSleep: null
     };
 
+    let state = createDefaultState();
+
     let recognition = null;
     let isListening = false;
     let speechSupported = false;
     let sleepTimerInterval = null;
+    let toastTimeout = null;
+
+    /*
+     * Prevent a browser from firing duplicate recognition
+     * results that could create duplicate logs.
+     */
+    let lastVoiceText = "";
+    let lastVoiceProcessedAt = 0;
 
     /* =====================================================
        DOM HELPERS
@@ -43,7 +54,8 @@
 
     function safeText(element, value) {
         if (element) {
-            element.textContent = value;
+            element.textContent =
+                value == null ? "" : String(value);
         }
     }
 
@@ -59,35 +71,45 @@
         }
     }
 
+    function createDefaultState() {
+        return {
+            babyName: DEFAULT_STATE.babyName,
+            voiceLanguage: DEFAULT_STATE.voiceLanguage,
+            voiceConfirmation:
+                DEFAULT_STATE.voiceConfirmation,
+            logs: [],
+            activeSleep: null
+        };
+    }
+
     /* =====================================================
        STARTUP
     ===================================================== */
 
-    document.addEventListener("DOMContentLoaded", function () {
-
-        try {
-            initializeTracker();
-        } catch (error) {
-            console.error("Baby Tracker startup error:", error);
-
-            /*
-             * IMPORTANT:
-             * Never let one feature prevent the whole tracker
-             * from loading.
-             */
+    document.addEventListener(
+        "DOMContentLoaded",
+        function () {
             try {
-                loadFallbackState();
-                updateAllUI();
-                setupBasicEvents();
-            } catch (fallbackError) {
+                initializeTracker();
+            } catch (error) {
                 console.error(
-                    "Baby Tracker fallback error:",
-                    fallbackError
+                    "Baby Tracker startup error:",
+                    error
                 );
+
+                try {
+                    loadFallbackState();
+                    setupBasicEvents();
+                    updateAllUI();
+                } catch (fallbackError) {
+                    console.error(
+                        "Baby Tracker fallback error:",
+                        fallbackError
+                    );
+                }
             }
         }
-
-    });
+    );
 
     /* =====================================================
        INITIALIZE
@@ -109,8 +131,9 @@
 
         restoreActiveSleep();
 
-        console.log("Baby Tracker loaded successfully.");
-
+        console.log(
+            "MomYouNeedThis Baby Tracker loaded successfully."
+        );
     }
 
     /* =====================================================
@@ -121,42 +144,26 @@
 
         try {
 
-            const saved = localStorage.getItem(STORAGE_KEY);
+            const saved =
+                localStorage.getItem(STORAGE_KEY);
 
             if (!saved) {
+                state = createDefaultState();
                 return;
             }
 
-            const parsed = JSON.parse(saved);
+            const parsed =
+                JSON.parse(saved);
 
-            if (!parsed || typeof parsed !== "object") {
+            if (
+                !parsed ||
+                typeof parsed !== "object"
+            ) {
+                state = createDefaultState();
                 return;
             }
 
-            state = {
-                babyName:
-                    typeof parsed.babyName === "string"
-                        ? parsed.babyName
-                        : "My Baby",
-
-                voiceLanguage:
-                    typeof parsed.voiceLanguage === "string"
-                        ? parsed.voiceLanguage
-                        : "en-US",
-
-                voiceConfirmation:
-                    typeof parsed.voiceConfirmation === "boolean"
-                        ? parsed.voiceConfirmation
-                        : true,
-
-                logs:
-                    Array.isArray(parsed.logs)
-                        ? parsed.logs
-                        : [],
-
-                activeSleep:
-                    parsed.activeSleep || null
-            };
+            state = normalizeState(parsed);
 
         } catch (error) {
 
@@ -166,21 +173,141 @@
             );
 
             loadFallbackState();
+        }
+    }
 
+    function normalizeState(parsed) {
+
+        const normalized =
+            createDefaultState();
+
+        if (
+            typeof parsed.babyName ===
+            "string"
+        ) {
+            normalized.babyName =
+                parsed.babyName
+                    .trim()
+                    .substring(0, 40) ||
+                "My Baby";
         }
 
+        if (
+            typeof parsed.voiceLanguage ===
+            "string"
+        ) {
+            normalized.voiceLanguage =
+                parsed.voiceLanguage;
+        }
+
+        if (
+            typeof parsed.voiceConfirmation ===
+            "boolean"
+        ) {
+            normalized.voiceConfirmation =
+                parsed.voiceConfirmation;
+        }
+
+        if (
+            Array.isArray(parsed.logs)
+        ) {
+            normalized.logs =
+                parsed.logs
+                    .filter(isValidLog)
+                    .map(normalizeLog);
+        }
+
+        if (
+            parsed.activeSleep &&
+            typeof parsed.activeSleep ===
+                "object" &&
+            isValidDate(
+                parsed.activeSleep.start
+            )
+        ) {
+            normalized.activeSleep = {
+                start:
+                    new Date(
+                        parsed.activeSleep.start
+                    ).toISOString()
+            };
+        }
+
+        return normalized;
+    }
+
+    function isValidLog(log) {
+
+        if (
+            !log ||
+            typeof log !== "object"
+        ) {
+            return false;
+        }
+
+        if (
+            typeof log.timestamp !==
+            "string"
+        ) {
+            return false;
+        }
+
+        return isValidDate(
+            log.timestamp
+        );
+    }
+
+    function normalizeLog(log) {
+
+        return {
+            id:
+                log.id ||
+                createLogId(),
+
+            type:
+                typeof log.type ===
+                "string"
+                    ? log.type
+                    : "note",
+
+            title:
+                typeof log.title ===
+                "string"
+                    ? log.title
+                    : "Note",
+
+            details:
+                typeof log.details ===
+                "string"
+                    ? log.details
+                    : "",
+
+            subtype:
+                typeof log.subtype ===
+                "string"
+                    ? log.subtype
+                    : "",
+
+            duration:
+                Number.isFinite(
+                    Number(log.duration)
+                )
+                    ? Number(log.duration)
+                    : null,
+
+            start:
+                typeof log.start ===
+                "string"
+                    ? log.start
+                    : null,
+
+            timestamp:
+                log.timestamp
+        };
     }
 
     function loadFallbackState() {
-
-        state = {
-            babyName: "My Baby",
-            voiceLanguage: "en-US",
-            voiceConfirmation: true,
-            logs: [],
-            activeSleep: null
-        };
-
+        state = createDefaultState();
     }
 
     function saveState() {
@@ -207,9 +334,32 @@
             );
 
             return false;
+        }
+    }
 
+    function isValidDate(value) {
+
+        if (!value) {
+            return false;
         }
 
+        const date =
+            new Date(value);
+
+        return !Number.isNaN(
+            date.getTime()
+        );
+    }
+
+    function createLogId() {
+
+        return (
+            Date.now().toString(36) +
+            "-" +
+            Math.random()
+                .toString(36)
+                .substring(2, 10)
+        );
     }
 
     /* =====================================================
@@ -218,15 +368,16 @@
 
     function setupBasicEvents() {
 
-        const settingsButton = $("settingsButton");
+        const settingsButton =
+            $("settingsButton");
 
         if (settingsButton) {
+
             settingsButton.addEventListener(
                 "click",
                 openSettings
             );
         }
-
     }
 
     function setupEvents() {
@@ -237,76 +388,98 @@
            SETTINGS
         ------------------------------------------------ */
 
-        const settingsClose = $("settingsClose");
+        const settingsClose =
+            $("settingsClose");
 
         if (settingsClose) {
+
             settingsClose.addEventListener(
                 "click",
                 closeSettings
             );
         }
 
-        document.addEventListener("click", function (event) {
+        /* -----------------------------------------------
+           GLOBAL MODAL CLICK HANDLING
+        ------------------------------------------------ */
 
-            const target = event.target;
+        document.addEventListener(
+            "click",
+            function (event) {
 
-            if (!target) {
-                return;
+                const target =
+                    event.target;
+
+                if (!target) {
+                    return;
+                }
+
+                if (
+                    target.matches &&
+                    target.matches(
+                        "[data-close-settings]"
+                    )
+                ) {
+                    closeSettings();
+                }
+
+                if (
+                    target.matches &&
+                    target.matches(
+                        "[data-close-modal]"
+                    )
+                ) {
+                    closeActionModal();
+                }
+
+                if (
+                    target.matches &&
+                    target.matches(
+                        "[data-close-baby-name]"
+                    )
+                ) {
+                    closeBabyNameModal();
+                }
+
+                if (
+                    target.matches &&
+                    target.matches(
+                        "[data-close-delete]"
+                    )
+                ) {
+                    closeDeleteModal();
+                }
             }
-
-            if (
-                target.matches &&
-                target.matches("[data-close-settings]")
-            ) {
-                closeSettings();
-            }
-
-            if (
-                target.matches &&
-                target.matches("[data-close-modal]")
-            ) {
-                closeActionModal();
-            }
-
-            if (
-                target.matches &&
-                target.matches("[data-close-baby-name]")
-            ) {
-                closeBabyNameModal();
-            }
-
-            if (
-                target.matches &&
-                target.matches("[data-close-delete]")
-            ) {
-                closeDeleteModal();
-            }
-
-        });
+        );
 
         /* -----------------------------------------------
            BABY NAME
         ------------------------------------------------ */
 
-        const editBabyButton = $("editBabyButton");
+        const editBabyButton =
+            $("editBabyButton");
 
         if (editBabyButton) {
+
             editBabyButton.addEventListener(
                 "click",
                 openBabyNameModal
             );
         }
 
-        const babyNameModalClose = $("babyNameModalClose");
+        const babyNameModalClose =
+            $("babyNameModalClose");
 
         if (babyNameModalClose) {
+
             babyNameModalClose.addEventListener(
                 "click",
                 closeBabyNameModal
             );
         }
 
-        const babyNameForm = $("babyNameForm");
+        const babyNameForm =
+            $("babyNameForm");
 
         if (babyNameForm) {
 
@@ -319,10 +492,8 @@
                     saveBabyName(
                         $("babyNameModalInput")
                     );
-
                 }
             );
-
         }
 
         const saveBabyNameButton =
@@ -337,17 +508,16 @@
                     saveBabyName(
                         $("babyNameInput")
                     );
-
                 }
             );
-
         }
 
         /* -----------------------------------------------
            VOICE
         ------------------------------------------------ */
 
-        const voiceButton = $("voiceButton");
+        const voiceButton =
+            $("voiceButton");
 
         if (voiceButton) {
 
@@ -355,28 +525,30 @@
                 "click",
                 toggleVoice
             );
-
         }
 
-        $all(".voice-example").forEach(function (button) {
+        $all(".voice-example")
+            .forEach(
+                function (button) {
 
-            button.addEventListener(
-                "click",
-                function () {
+                    button.addEventListener(
+                        "click",
+                        function () {
 
-                    const text =
-                        button.getAttribute(
-                            "data-voice-example"
-                        );
+                            const text =
+                                button.getAttribute(
+                                    "data-voice-example"
+                                );
 
-                    if (text) {
-                        processVoiceText(text);
-                    }
-
+                            if (text) {
+                                processVoiceText(
+                                    text
+                                );
+                            }
+                        }
+                    );
                 }
             );
-
-        });
 
         const voicePermissionClose =
             $("voicePermissionClose");
@@ -390,33 +562,34 @@
                     hide(
                         $("voicePermissionMessage")
                     );
-
                 }
             );
-
         }
 
         /* -----------------------------------------------
            QUICK ACTIONS
         ------------------------------------------------ */
 
-        $all(".quick-action").forEach(function (button) {
+        $all(".quick-action")
+            .forEach(
+                function (button) {
 
-            button.addEventListener(
-                "click",
-                function () {
+                    button.addEventListener(
+                        "click",
+                        function () {
 
-                    const action =
-                        button.getAttribute(
-                            "data-action"
-                        );
+                            const action =
+                                button.getAttribute(
+                                    "data-action"
+                                );
 
-                    handleQuickAction(action);
-
+                            handleQuickAction(
+                                action
+                            );
+                        }
+                    );
                 }
             );
-
-        });
 
         /* -----------------------------------------------
            SLEEP
@@ -431,7 +604,6 @@
                 "click",
                 endSleep
             );
-
         }
 
         /* -----------------------------------------------
@@ -447,14 +619,14 @@
                 "click",
                 clearToday
             );
-
         }
 
         /* -----------------------------------------------
-           MODAL
+           ACTION MODAL
         ------------------------------------------------ */
 
-        const modalClose = $("modalClose");
+        const modalClose =
+            $("modalClose");
 
         if (modalClose) {
 
@@ -462,11 +634,10 @@
                 "click",
                 closeActionModal
             );
-
         }
 
         /* -----------------------------------------------
-           SETTINGS
+           VOICE SETTINGS
         ------------------------------------------------ */
 
         const voiceLanguage =
@@ -492,10 +663,8 @@
                         "Voice language updated",
                         "✓"
                     );
-
                 }
             );
-
         }
 
         const voiceConfirmationToggle =
@@ -514,10 +683,8 @@
                         voiceConfirmationToggle.checked;
 
                     saveState();
-
                 }
             );
-
         }
 
         /* -----------------------------------------------
@@ -533,7 +700,6 @@
                 "click",
                 exportData
             );
-
         }
 
         const settingsExportButton =
@@ -545,7 +711,6 @@
                 "click",
                 exportData
             );
-
         }
 
         const importDataButton =
@@ -557,7 +722,6 @@
                 "click",
                 openImportPicker
             );
-
         }
 
         const settingsImportButton =
@@ -569,7 +733,6 @@
                 "click",
                 openImportPicker
             );
-
         }
 
         const importDataInput =
@@ -581,7 +744,6 @@
                 "change",
                 handleImport
             );
-
         }
 
         /* -----------------------------------------------
@@ -597,7 +759,6 @@
                 "click",
                 openDeleteModal
             );
-
         }
 
         const cancelDeleteButton =
@@ -609,7 +770,6 @@
                 "click",
                 closeDeleteModal
             );
-
         }
 
         const confirmDeleteButton =
@@ -621,7 +781,6 @@
                 "click",
                 deleteEverything
             );
-
         }
 
         /* -----------------------------------------------
@@ -644,10 +803,8 @@
                 if (isListening) {
                     stopVoice();
                 }
-
             }
         );
-
     }
 
     /* =====================================================
@@ -657,7 +814,8 @@
     function updateBabyName() {
 
         const name =
-            state.babyName || "My Baby";
+            state.babyName ||
+            "My Baby";
 
         safeText(
             $("babyNameDisplay"),
@@ -668,20 +826,23 @@
             $("babyNameInput");
 
         if (input) {
-            input.value = name === "My Baby"
-                ? ""
-                : name;
+
+            input.value =
+                name === "My Baby"
+                    ? ""
+                    : name;
         }
 
         const modalInput =
             $("babyNameModalInput");
 
         if (modalInput) {
-            modalInput.value = name === "My Baby"
-                ? ""
-                : name;
-        }
 
+            modalInput.value =
+                name === "My Baby"
+                    ? ""
+                    : name;
+        }
     }
 
     function saveBabyName(input) {
@@ -697,7 +858,8 @@
             name = "My Baby";
         }
 
-        name = name.substring(0, 40);
+        name =
+            name.substring(0, 40);
 
         state.babyName = name;
 
@@ -712,7 +874,6 @@
             "Baby's name saved",
             "💗"
         );
-
     }
 
     /* =====================================================
@@ -728,9 +889,10 @@
             return;
         }
 
-        const now = new Date();
+        const now =
+            new Date();
 
-        const formatted =
+        dateElement.textContent =
             now.toLocaleDateString(
                 undefined,
                 {
@@ -739,10 +901,6 @@
                     day: "numeric"
                 }
             );
-
-        dateElement.textContent =
-            formatted;
-
     }
 
     /* =====================================================
@@ -751,8 +909,29 @@
 
     function initializeVoice() {
 
-        speechSupported = false;
+        /*
+         * Stop an existing recognition instance before
+         * replacing it.
+         */
+        if (recognition) {
+
+            try {
+                recognition.onstart = null;
+                recognition.onresult = null;
+                recognition.onerror = null;
+                recognition.onend = null;
+                recognition.abort();
+            } catch (error) {
+                console.warn(
+                    "Could not reset previous recognition.",
+                    error
+                );
+            }
+        }
+
         recognition = null;
+        speechSupported = false;
+        isListening = false;
 
         const SpeechRecognition =
             window.SpeechRecognition ||
@@ -764,16 +943,15 @@
                 "Speech recognition is not supported in this browser."
             );
 
-            return;
+            updateVoiceUI();
 
+            return;
         }
 
         try {
 
             recognition =
                 new SpeechRecognition();
-
-            speechSupported = true;
 
             recognition.continuous = false;
 
@@ -797,6 +975,8 @@
             recognition.onend =
                 handleVoiceEnd;
 
+            speechSupported = true;
+
         } catch (error) {
 
             console.warn(
@@ -806,29 +986,28 @@
 
             recognition = null;
             speechSupported = false;
-
         }
 
+        updateVoiceUI();
     }
 
     function toggleVoice() {
 
         if (isListening) {
-
             stopVoice();
-
             return;
-
         }
 
-        if (!speechSupported || !recognition) {
+        if (
+            !speechSupported ||
+            !recognition
+        ) {
 
             showVoicePermissionMessage(
-                "Voice recognition is not available in this browser. Try Chrome on desktop/Android, or use the Quick Tap buttons."
+                "Voice recognition isn't available in this browser. Try Chrome or use Quick Tap."
             );
 
             return;
-
         }
 
         try {
@@ -836,6 +1015,13 @@
             recognition.lang =
                 state.voiceLanguage ||
                 "en-US";
+
+            /*
+             * Reset duplicate protection when starting
+             * a new voice session.
+             */
+            lastVoiceText = "";
+            lastVoiceProcessedAt = 0;
 
             recognition.start();
 
@@ -846,28 +1032,56 @@
                 error
             );
 
-            /*
-             * Calling start() twice can throw an error.
-             * Reset and let the user try again.
-             */
-
             isListening = false;
 
             updateVoiceUI();
 
-        }
+            /*
+             * Some browsers throw InvalidStateError if
+             * recognition is already running.
+             */
+            if (
+                error &&
+                error.name ===
+                    "InvalidStateError"
+            ) {
 
+                try {
+                    recognition.abort();
+                } catch (abortError) {
+                    console.warn(
+                        "Could not abort recognition.",
+                        abortError
+                    );
+                }
+
+                setTimeout(
+                    function () {
+                        isListening = false;
+                        updateVoiceUI();
+                    },
+                    100
+                );
+            }
+        }
     }
 
     function stopVoice() {
 
         if (!recognition) {
+
+            isListening = false;
+            updateVoiceUI();
+
             return;
         }
 
         try {
+
             recognition.stop();
+
         } catch (error) {
+
             console.warn(
                 "Could not stop speech recognition:",
                 error
@@ -877,7 +1091,6 @@
         isListening = false;
 
         updateVoiceUI();
-
     }
 
     function handleVoiceStart() {
@@ -886,26 +1099,19 @@
 
         updateVoiceUI();
 
-        const statusTitle =
-            $("voiceStatusTitle");
-
-        const statusText =
-            $("voiceStatusText");
-
         safeText(
-            statusTitle,
+            $("voiceStatusTitle"),
             "Listening…"
         );
 
         safeText(
-            statusText,
+            $("voiceStatusText"),
             "Tell me what happened"
         );
 
         show(
             $("voiceStatus")
         );
-
     }
 
     function handleVoiceResult(event) {
@@ -913,7 +1119,6 @@
         try {
 
             let finalText = "";
-
             let interimText = "";
 
             for (
@@ -922,44 +1127,65 @@
                 i++
             ) {
 
-                const transcript =
-                    event.results[i][0]
-                        .transcript;
+                const result =
+                    event.results[i];
 
-                if (
-                    event.results[i].isFinal
-                ) {
+                if (!result ||
+                    !result[0]) {
+                    continue;
+                }
+
+                const transcript =
+                    result[0]
+                        .transcript
+                        .trim();
+
+                if (!transcript) {
+                    continue;
+                }
+
+                if (result.isFinal) {
 
                     finalText +=
+                        " " +
                         transcript;
 
                 } else {
 
                     interimText +=
+                        " " +
                         transcript;
-
                 }
-
             }
 
-            const text =
-                (
-                    finalText ||
-                    interimText
-                ).trim();
+            finalText =
+                finalText.trim();
 
-            if (!text) {
-                return;
+            interimText =
+                interimText.trim();
+
+            const displayText =
+                finalText ||
+                interimText;
+
+            if (displayText) {
+
+                showTranscript(
+                    displayText
+                );
             }
 
-            showTranscript(text);
-
+            /*
+             * ONLY process final recognition results.
+             * This is extremely important.
+             *
+             * Interim results must NEVER create a log.
+             */
             if (finalText) {
 
                 processVoiceText(
-                    finalText.trim()
+                    finalText
                 );
-
             }
 
         } catch (error) {
@@ -968,9 +1194,7 @@
                 "Voice result error:",
                 error
             );
-
         }
-
     }
 
     function handleVoiceError(event) {
@@ -987,36 +1211,49 @@
         let message =
             "Voice logging could not start.";
 
-        if (
+        const errorType =
             event &&
-            event.error === "not-allowed"
+            event.error;
+
+        if (
+            errorType ===
+            "not-allowed"
         ) {
 
             message =
                 "Microphone access was denied. Please allow microphone access in your browser.";
 
         } else if (
-            event &&
-            event.error === "no-speech"
+            errorType ===
+            "no-speech"
         ) {
 
             message =
                 "I didn't hear anything. Try again.";
 
         } else if (
-            event &&
-            event.error === "network"
+            errorType ===
+            "network"
         ) {
 
             message =
                 "Voice recognition needs an internet connection in this browser.";
 
+        } else if (
+            errorType ===
+            "aborted"
+        ) {
+
+            /*
+             * Aborted recognition isn't necessarily an error
+             * from the user's perspective.
+             */
+            return;
         }
 
         showVoicePermissionMessage(
             message
         );
-
     }
 
     function handleVoiceEnd() {
@@ -1024,7 +1261,6 @@
         isListening = false;
 
         updateVoiceUI();
-
     }
 
     function updateVoiceUI() {
@@ -1058,7 +1294,6 @@
                     ? "Stop voice logging"
                     : "Start voice logging"
             );
-
         }
 
         if (icon) {
@@ -1067,7 +1302,6 @@
                 isListening
                     ? "⏹️"
                     : "🎙️";
-
         }
 
         if (wave) {
@@ -1076,9 +1310,7 @@
                 "active",
                 isListening
             );
-
         }
-
     }
 
     function showTranscript(text) {
@@ -1099,7 +1331,6 @@
         );
 
         show(transcript);
-
     }
 
     function showVoicePermissionMessage(
@@ -1122,7 +1353,46 @@
         );
 
         show(messageElement);
+    }
 
+    /* =====================================================
+       VOICE TEXT NORMALIZATION
+    ===================================================== */
+
+    function normalizeVoiceText(text) {
+
+        return String(text || "")
+            .toLowerCase()
+            .replace(/[’']/g, "'")
+            .replace(/[.,!?;:]+/g, " ")
+            .replace(/\s+/g, " ")
+            .trim();
+    }
+
+    function isDuplicateVoiceCommand(text) {
+
+        const now =
+            Date.now();
+
+        const normalized =
+            normalizeVoiceText(text);
+
+        if (
+            normalized ===
+                lastVoiceText &&
+            now - lastVoiceProcessedAt <
+                4000
+        ) {
+            return true;
+        }
+
+        lastVoiceText =
+            normalized;
+
+        lastVoiceProcessedAt =
+            now;
+
+        return false;
     }
 
     /* =====================================================
@@ -1135,106 +1405,93 @@
             return;
         }
 
-        const lower =
-            text.toLowerCase();
+        const originalText =
+            String(text).trim();
 
-        let type = "note";
+        if (!originalText) {
+            return;
+        }
+
+        if (
+            isDuplicateVoiceCommand(
+                originalText
+            )
+        ) {
+            return;
+        }
+
+        const lower =
+            normalizeVoiceText(
+                originalText
+            );
+
+        if (!lower) {
+            return;
+        }
 
         /* -----------------------------------------------
            DIAPER
         ------------------------------------------------ */
 
-        if (
-            lower.includes("diaper") ||
-            lower.includes("nappy")
-        ) {
+        if (containsDiaperIntent(lower)) {
 
-            type = "diaper";
-
-            let diaperType = "wet";
-
-            if (
-                lower.includes("dirty") ||
-                lower.includes("poop") ||
-                lower.includes("poopy") ||
-                lower.includes("stool")
-            ) {
-
-                diaperType = "dirty";
-
-            }
+            const diaperType =
+                determineDiaperType(lower);
 
             addLog({
                 type: "diaper",
                 subtype: diaperType,
                 title:
-                    diaperType === "dirty"
-                        ? "Dirty diaper"
-                        : "Wet diaper",
+                    getDiaperTitle(
+                        diaperType
+                    ),
                 details:
-                    text,
+                    originalText,
                 timestamp:
                     new Date().toISOString()
             });
 
             return;
-
         }
 
         /* -----------------------------------------------
            FEEDING
         ------------------------------------------------ */
 
-        if (
-            lower.includes("feed") ||
-            lower.includes("fed") ||
-            lower.includes("drank") ||
-            lower.includes("milk") ||
-            lower.includes("bottle") ||
-            lower.includes("nursed") ||
-            lower.includes("nursing") ||
-            lower.includes("breast")
-        ) {
-
-            type = "feed";
+        if (containsFeedIntent(lower)) {
 
             const amount =
-                extractAmount(text);
+                extractAmount(
+                    originalText
+                );
 
             const duration =
-                extractDuration(text);
+                extractDuration(
+                    originalText
+                );
 
             let title =
-                "Feed";
+                determineFeedTitle(
+                    lower
+                );
+
+            let details =
+                originalText;
+
+            /*
+             * Do not append an amount/duration if the
+             * spoken sentence already contains it.
+             *
+             * The original sentence remains the most
+             * useful note for the parent.
+             */
 
             if (
-                lower.includes("nursed") ||
-                lower.includes("nursing") ||
-                lower.includes("breast")
+                !amount &&
+                !duration
             ) {
-
-                title =
-                    "Nursing";
-
-            } else if (
-                lower.includes("bottle")
-            ) {
-
-                title =
-                    "Bottle";
-
-            }
-
-            let details = text;
-
-            if (amount) {
-                details +=
-                    " • " + amount + " ml";
-            }
-
-            if (duration) {
-                details +=
-                    " • " + duration + " min";
+                details =
+                    originalText;
             }
 
             addLog({
@@ -1246,99 +1503,447 @@
             });
 
             return;
-
         }
 
         /* -----------------------------------------------
            SLEEP
         ------------------------------------------------ */
 
-        if (
-            lower.includes("sleep") ||
-            lower.includes("nap") ||
-            lower.includes("asleep") ||
-            lower.includes("woke up") ||
-            lower.includes("woke")
-        ) {
+        if (containsSleepIntent(lower)) {
 
-            if (
-                lower.includes("woke") ||
-                lower.includes("awake")
-            ) {
-
-                if (state.activeSleep) {
-                    endSleep();
-                } else {
-
-                    addLog({
-                        type: "sleep",
-                        title: "Woke up",
-                        details: text,
-                        timestamp:
-                            new Date().toISOString()
-                    });
-
-                }
-
-            } else {
-
-                startSleep();
-
-            }
+            processSleepVoiceCommand(
+                originalText,
+                lower
+            );
 
             return;
-
         }
 
         /* -----------------------------------------------
-           NOTE
+           EVERYTHING ELSE = NOTE
         ------------------------------------------------ */
 
         addLog({
             type: "note",
             title: "Note",
-            details: text,
+            details: originalText,
             timestamp:
                 new Date().toISOString()
         });
-
     }
+
+    /* =====================================================
+       DIAPER VOICE PARSING
+    ===================================================== */
+
+    function containsDiaperIntent(text) {
+
+        return (
+            /\bdiaper\b/.test(text) ||
+            /\bnappy\b/.test(text)
+        );
+    }
+
+    function determineDiaperType(text) {
+
+        const isDirty =
+            /\bdirty\b/.test(text) ||
+            /\bpoop\b/.test(text) ||
+            /\bpoopy\b/.test(text) ||
+            /\bstool\b/.test(text);
+
+        const isWet =
+            /\bwet\b/.test(text) ||
+            /\bpee\b/.test(text) ||
+            /\bpee(d|ing)?\b/.test(text);
+
+        if (isDirty && isWet) {
+            return "wet + dirty";
+        }
+
+        if (isDirty) {
+            return "dirty";
+        }
+
+        return "wet";
+    }
+
+    function getDiaperTitle(type) {
+
+        if (type === "dirty") {
+            return "Dirty diaper";
+        }
+
+        if (type === "wet + dirty") {
+            return "Wet + dirty diaper";
+        }
+
+        return "Wet diaper";
+    }
+
+    /* =====================================================
+       FEED VOICE PARSING
+    ===================================================== */
+
+    function containsFeedIntent(text) {
+
+        return (
+            /\bfeed\b/.test(text) ||
+            /\bfed\b/.test(text) ||
+            /\bfeeding\b/.test(text) ||
+            /\bdrank\b/.test(text) ||
+            /\bdrink\b/.test(text) ||
+            /\bmilk\b/.test(text) ||
+            /\bbottle\b/.test(text) ||
+            /\bnursed\b/.test(text) ||
+            /\bnursing\b/.test(text) ||
+            /\bbreastfed\b/.test(text) ||
+            /\bbreastfeeding\b/.test(text)
+        );
+    }
+
+    function determineFeedTitle(text) {
+
+        if (
+            /\bbottle\b/.test(text)
+        ) {
+            return "Bottle";
+        }
+
+        if (
+            /\bnursed\b/.test(text) ||
+            /\bnursing\b/.test(text) ||
+            /\bbreastfed\b/.test(text) ||
+            /\bbreastfeeding\b/.test(text)
+        ) {
+            return "Nursing";
+        }
+
+        if (
+            /\bsolids?\b/.test(text) ||
+            /\bfood\b/.test(text)
+        ) {
+            return "Solids";
+        }
+
+        return "Feed";
+    }
+
+    /* =====================================================
+       SLEEP VOICE PARSING
+    ===================================================== */
+
+    function containsSleepIntent(text) {
+
+        return (
+            /\bsleep\b/.test(text) ||
+            /\bslept\b/.test(text) ||
+            /\bsleeping\b/.test(text) ||
+            /\basleep\b/.test(text) ||
+            /\bnap\b/.test(text) ||
+            /\bnapped\b/.test(text) ||
+            /\bnapping\b/.test(text)
+        );
+    }
+
+    function processSleepVoiceCommand(
+        originalText,
+        lower
+    ) {
+
+        /* -------------------------------------------
+           1. WAKE / END SLEEP
+           
+           ONLY explicit wake phrases trigger this.
+           
+           "woke" by itself is intentionally NOT used.
+        ------------------------------------------- */
+
+        const isWakeCommand =
+            /\bwoke up\b/.test(lower) ||
+            /\bjust woke up\b/.test(lower) ||
+            /\bwake up\b/.test(lower) ||
+            /\bis awake\b/.test(lower) ||
+            /\bawake now\b/.test(lower) ||
+            /\bhas woken up\b/.test(lower) ||
+            /\bwoken up\b/.test(lower);
+
+        if (isWakeCommand) {
+
+            if (state.activeSleep) {
+
+                endSleep();
+
+            } else {
+
+                addLog({
+                    type: "sleep",
+                    title: "Woke up",
+                    details:
+                        originalText,
+                    timestamp:
+                        new Date().toISOString()
+                });
+            }
+
+            return;
+        }
+
+        /* -------------------------------------------
+           2. COMPLETED SLEEP WITH DURATION
+
+           THIS MUST COME BEFORE START SLEEP.
+
+           Examples:
+           "Baby napped 20 minutes"
+           "Baby napped for 20 minutes"
+           "Baby slept 1 hour"
+           "Baby slept for 1 hour 20 minutes"
+           "Baby had a 30 minute nap"
+
+           These ALWAYS create a completed log.
+           They NEVER start the live timer.
+        ------------------------------------------- */
+
+        const duration =
+            extractDuration(
+                originalText
+            );
+
+        if (duration !== null) {
+
+            addLog({
+                type: "sleep",
+                title: "Nap",
+                details:
+                    originalText,
+                duration:
+                    duration,
+                timestamp:
+                    new Date().toISOString()
+            });
+
+            return;
+        }
+
+        /* -------------------------------------------
+           3. EXPLICIT START COMMAND
+        ------------------------------------------- */
+
+        const explicitStart =
+            /\bstart (a )?nap\b/.test(lower) ||
+            /\bstarting (a )?nap\b/.test(lower) ||
+            /\bstart (a )?sleep\b/.test(lower) ||
+            /\bstarting (a )?sleep\b/.test(lower);
+
+        if (explicitStart) {
+
+            startSleep();
+
+            return;
+        }
+
+        /* -------------------------------------------
+           4. CLEARLY STARTED SLEEP
+        ------------------------------------------- */
+
+        const sleepStarted =
+            /\bgoing down for (a )?nap\b/.test(lower) ||
+            /\bgoing down for (a )?sleep\b/.test(lower) ||
+            /\bgoing to sleep\b/.test(lower) ||
+            /\bfell asleep\b/.test(lower) ||
+            /\bfalling asleep\b/.test(lower) ||
+            /\bhas fallen asleep\b/.test(lower) ||
+            /\bis asleep\b/.test(lower) ||
+            /\bis sleeping\b/.test(lower);
+
+        if (sleepStarted) {
+
+            startSleep();
+
+            return;
+        }
+
+        /* -------------------------------------------
+           5. SIMPLE COMMAND
+        ------------------------------------------- */
+
+        if (
+            lower === "nap" ||
+            lower === "a nap" ||
+            lower === "sleep"
+        ) {
+
+            startSleep();
+
+            return;
+        }
+
+        /* -------------------------------------------
+           6. AMBIGUOUS SLEEP SENTENCE
+
+           DO NOT CHANGE THE TIMER.
+
+           Save it as a note.
+        ------------------------------------------- */
+
+        addLog({
+            type: "note",
+            title: "Note",
+            details:
+                originalText,
+            timestamp:
+                new Date().toISOString()
+        });
+    }
+
+    /* =====================================================
+       AMOUNT PARSER
+    ===================================================== */
 
     function extractAmount(text) {
 
+        if (!text) {
+            return null;
+        }
+
         const match =
-            text.match(
-                /(\d+(?:[.,]\d+)?)\s*(?:ml|milliliters?|mL)/i
+            String(text).match(
+                /(\d+(?:[.,]\d+)?)\s*(?:ml|milliliters?|millilitres?)\b/i
             );
 
         if (!match) {
             return null;
         }
 
-        return Math.round(
+        const amount =
             parseFloat(
-                match[1].replace(",", ".")
-            )
-        );
+                match[1]
+                    .replace(",", ".")
+            );
 
+        if (!Number.isFinite(amount)) {
+            return null;
+        }
+
+        return Math.round(amount);
     }
+
+    /* =====================================================
+       DURATION PARSER
+    ===================================================== */
 
     function extractDuration(text) {
 
-        const match =
-            text.match(
-                /(\d+)\s*(?:minutes?|mins?|min)/i
-            );
-
-        if (!match) {
+        if (!text) {
             return null;
         }
 
-        return parseInt(
-            match[1],
-            10
-        );
+        const normalized =
+            String(text)
+                .toLowerCase()
+                .replace(/,/g, ".")
+                .trim();
 
+        /*
+         * HOURS + MINUTES
+         *
+         * "1 hour 20 minutes"
+         * "1 hr 20 min"
+         * "1h 20m"
+         */
+
+        const hoursAndMinutes =
+            normalized.match(
+                /(\d+(?:\.\d+)?)\s*(?:hours?|hrs?|h)\s*(?:and\s*)?(\d+)\s*(?:minutes?|mins?|min|m)\b/i
+            );
+
+        if (hoursAndMinutes) {
+
+            const hours =
+                parseFloat(
+                    hoursAndMinutes[1]
+                );
+
+            const minutes =
+                parseInt(
+                    hoursAndMinutes[2],
+                    10
+                );
+
+            if (
+                Number.isFinite(hours) &&
+                Number.isFinite(minutes)
+            ) {
+
+                return Math.round(
+                    hours * 60 +
+                    minutes
+                );
+            }
+        }
+
+        /*
+         * HOURS ONLY
+         *
+         * "1 hour"
+         * "2 hours"
+         * "1 hr"
+         * "1h"
+         */
+
+        const hours =
+            normalized.match(
+                /(\d+(?:\.\d+)?)\s*(?:hours?|hrs?|h)\b/i
+            );
+
+        if (hours) {
+
+            const value =
+                parseFloat(
+                    hours[1]
+                );
+
+            if (
+                Number.isFinite(value)
+            ) {
+
+                return Math.round(
+                    value * 60
+                );
+            }
+        }
+
+        /*
+         * MINUTES
+         *
+         * "20 minutes"
+         * "20 mins"
+         * "20 min"
+         * "20m"
+         */
+
+        const minutes =
+            normalized.match(
+                /(\d+)\s*(?:minutes?|mins?|min|m)\b/i
+            );
+
+        if (minutes) {
+
+            const value =
+                parseInt(
+                    minutes[1],
+                    10
+                );
+
+            if (
+                Number.isFinite(value)
+            ) {
+                return value;
+            }
+        }
+
+        return null;
     }
 
     /* =====================================================
@@ -1367,12 +1972,10 @@
 
             default:
                 console.warn(
-                    "Unknown action:",
+                    "Unknown quick action:",
                     action
                 );
-
         }
-
     }
 
     /* =====================================================
@@ -1399,9 +2002,11 @@
                         <option value="Bottle">
                             Bottle
                         </option>
+
                         <option value="Nursing">
                             Nursing
                         </option>
+
                         <option value="Solids">
                             Solids
                         </option>
@@ -1447,54 +2052,69 @@
         const form =
             $("feedForm");
 
-        if (form) {
-
-            form.addEventListener(
-                "submit",
-                function (event) {
-
-                    event.preventDefault();
-
-                    const type =
-                        $("feedType").value;
-
-                    const amount =
-                        $("feedAmount").value;
-
-                    const notes =
-                        $("feedNotes").value.trim();
-
-                    let details =
-                        type;
-
-                    if (amount) {
-                        details +=
-                            " • " +
-                            amount +
-                            " ml";
-                    }
-
-                    if (notes) {
-                        details +=
-                            " • " +
-                            notes;
-                    }
-
-                    addLog({
-                        type: "feed",
-                        title: type,
-                        details: details,
-                        timestamp:
-                            new Date().toISOString()
-                    });
-
-                    closeActionModal();
-
-                }
-            );
-
+        if (!form) {
+            return;
         }
 
+        form.addEventListener(
+            "submit",
+            function (event) {
+
+                event.preventDefault();
+
+                const typeElement =
+                    $("feedType");
+
+                const amountElement =
+                    $("feedAmount");
+
+                const notesElement =
+                    $("feedNotes");
+
+                const type =
+                    typeElement
+                        ? typeElement.value
+                        : "Feed";
+
+                const amount =
+                    amountElement
+                        ? amountElement.value.trim()
+                        : "";
+
+                const notes =
+                    notesElement
+                        ? notesElement.value.trim()
+                        : "";
+
+                let details =
+                    type;
+
+                if (amount) {
+
+                    details +=
+                        " • " +
+                        amount +
+                        " ml";
+                }
+
+                if (notes) {
+
+                    details +=
+                        " • " +
+                        notes;
+                }
+
+                addLog({
+                    type: "feed",
+                    title: type,
+                    details: details,
+                    timestamp:
+                        new Date().toISOString()
+                });
+
+                closeActionModal();
+            }
+        );
     }
 
     /* =====================================================
@@ -1521,9 +2141,11 @@
                         <option value="Wet">
                             Wet
                         </option>
+
                         <option value="Dirty">
                             Dirty
                         </option>
+
                         <option value="Wet + Dirty">
                             Wet + Dirty
                         </option>
@@ -1543,33 +2165,37 @@
         const form =
             $("diaperForm");
 
-        if (form) {
-
-            form.addEventListener(
-                "submit",
-                function (event) {
-
-                    event.preventDefault();
-
-                    const type =
-                        $("diaperType").value;
-
-                    addLog({
-                        type: "diaper",
-                        title:
-                            type + " diaper",
-                        details: "",
-                        timestamp:
-                            new Date().toISOString()
-                    });
-
-                    closeActionModal();
-
-                }
-            );
-
+        if (!form) {
+            return;
         }
 
+        form.addEventListener(
+            "submit",
+            function (event) {
+
+                event.preventDefault();
+
+                const typeElement =
+                    $("diaperType");
+
+                const type =
+                    typeElement
+                        ? typeElement.value
+                        : "Wet";
+
+                addLog({
+                    type: "diaper",
+                    title:
+                        type +
+                        " diaper",
+                    details: "",
+                    timestamp:
+                        new Date().toISOString()
+                });
+
+                closeActionModal();
+            }
+        );
     }
 
     /* =====================================================
@@ -1585,20 +2211,24 @@
         } else {
 
             startSleep();
-
         }
-
     }
 
     function startSleep() {
 
+        /*
+         * Never start two simultaneous naps.
+         */
         if (state.activeSleep) {
             return;
         }
 
+        const now =
+            new Date();
+
         state.activeSleep = {
             start:
-                new Date().toISOString()
+                now.toISOString()
         };
 
         saveState();
@@ -1611,12 +2241,21 @@
             "Nap started",
             "😴"
         );
-
     }
 
     function endSleep() {
 
         if (!state.activeSleep) {
+
+            /*
+             * There is no active timer.
+             * Do not create a fake duration.
+             */
+            showToast(
+                "No active nap",
+                "ℹ️"
+            );
+
             return;
         }
 
@@ -1627,6 +2266,23 @@
 
         const end =
             new Date();
+
+        if (
+            Number.isNaN(
+                start.getTime()
+            )
+        ) {
+
+            state.activeSleep = null;
+
+            saveState();
+
+            stopSleepTimer();
+
+            updateActiveSleep();
+
+            return;
+        }
 
         const duration =
             Math.max(
@@ -1639,23 +2295,26 @@
                 )
             );
 
-        addLog({
-            type: "sleep",
-            title: "Nap",
-            details:
-                duration +
-                " minute" +
-                (
-                    duration === 1
-                        ? ""
-                        : "s"
-                ),
-            duration: duration,
-            start:
-                state.activeSleep.start,
-            timestamp:
-                end.toISOString()
-        }, false);
+        addLog(
+            {
+                type: "sleep",
+                title: "Nap",
+                details:
+                    duration +
+                    " minute" +
+                    (
+                        duration === 1
+                            ? ""
+                            : "s"
+                    ),
+                duration: duration,
+                start:
+                    state.activeSleep.start,
+                timestamp:
+                    end.toISOString()
+            },
+            false
+        );
 
         state.activeSleep = null;
 
@@ -1663,15 +2322,12 @@
 
         stopSleepTimer();
 
-        updateActiveSleep();
-
         updateAllUI();
 
         showToast(
             "Nap saved",
             "😴"
         );
-
     }
 
     function restoreActiveSleep() {
@@ -1696,13 +2352,11 @@
             saveState();
 
             return;
-
         }
 
         updateActiveSleep();
 
         startSleepTimer();
-
     }
 
     function updateActiveSleep() {
@@ -1719,13 +2373,11 @@
             hide(card);
 
             return;
-
         }
 
         show(card);
 
         updateSleepTimer();
-
     }
 
     function startSleepTimer() {
@@ -1739,7 +2391,6 @@
                 updateSleepTimer,
                 1000
             );
-
     }
 
     function stopSleepTimer() {
@@ -1751,9 +2402,7 @@
             );
 
             sleepTimerInterval = null;
-
         }
-
     }
 
     function updateSleepTimer() {
@@ -1773,6 +2422,14 @@
                 state.activeSleep.start
             );
 
+        if (
+            Number.isNaN(
+                start.getTime()
+            )
+        ) {
+            return;
+        }
+
         const seconds =
             Math.max(
                 0,
@@ -1788,30 +2445,35 @@
             formatClock(
                 seconds
             );
-
     }
 
     function formatClock(seconds) {
 
+        const safeSeconds =
+            Math.max(
+                0,
+                Number(seconds) || 0
+            );
+
         const hours =
             Math.floor(
-                seconds / 3600
+                safeSeconds / 3600
             );
 
         const minutes =
             Math.floor(
-                (seconds % 3600) / 60
+                (safeSeconds % 3600) /
+                60
             );
 
         const secs =
-            seconds % 60;
+            safeSeconds % 60;
 
         return [
             String(hours).padStart(2, "0"),
             String(minutes).padStart(2, "0"),
             String(secs).padStart(2, "0")
         ].join(":");
-
     }
 
     /* =====================================================
@@ -1855,77 +2517,104 @@
         const form =
             $("noteForm");
 
-        if (form) {
-
-            form.addEventListener(
-                "submit",
-                function (event) {
-
-                    event.preventDefault();
-
-                    const note =
-                        $("noteText")
-                            .value
-                            .trim();
-
-                    if (!note) {
-                        return;
-                    }
-
-                    addLog({
-                        type: "note",
-                        title: "Note",
-                        details: note,
-                        timestamp:
-                            new Date().toISOString()
-                    });
-
-                    closeActionModal();
-
-                }
-            );
-
+        if (!form) {
+            return;
         }
 
+        form.addEventListener(
+            "submit",
+            function (event) {
+
+                event.preventDefault();
+
+                const input =
+                    $("noteText");
+
+                const note =
+                    input
+                        ? input.value.trim()
+                        : "";
+
+                if (!note) {
+                    return;
+                }
+
+                addLog({
+                    type: "note",
+                    title: "Note",
+                    details: note,
+                    timestamp:
+                        new Date().toISOString()
+                });
+
+                closeActionModal();
+            }
+        );
     }
 
     /* =====================================================
        LOGGING
     ===================================================== */
 
-    function addLog(log, showMessage = true) {
+    function addLog(
+        log,
+        showMessage = true
+    ) {
 
         const newLog = {
             id:
-                Date.now().toString() +
-                "-" +
-                Math.random()
-                    .toString(36)
-                    .substring(2, 9),
+                createLogId(),
 
             type:
-                log.type || "note",
+                log &&
+                typeof log.type ===
+                    "string"
+                    ? log.type
+                    : "note",
 
             title:
-                log.title || "Note",
+                log &&
+                typeof log.title ===
+                    "string"
+                    ? log.title
+                    : "Note",
 
             details:
-                log.details || "",
+                log &&
+                typeof log.details ===
+                    "string"
+                    ? log.details
+                    : "",
 
             subtype:
-                log.subtype || "",
+                log &&
+                typeof log.subtype ===
+                    "string"
+                    ? log.subtype
+                    : "",
 
             duration:
-                Number.isFinite(log.duration)
-                    ? log.duration
+                log &&
+                Number.isFinite(
+                    Number(log.duration)
+                )
+                    ? Number(log.duration)
                     : null,
 
             start:
-                log.start || null,
+                log &&
+                typeof log.start ===
+                    "string"
+                    ? log.start
+                    : null,
 
             timestamp:
-                log.timestamp ||
-                new Date().toISOString()
+                log &&
+                isValidDate(
+                    log.timestamp
+                )
+                    ? log.timestamp
+                    : new Date().toISOString()
         };
 
         state.logs.push(newLog);
@@ -1942,9 +2631,7 @@
                 ),
                 "✓"
             );
-
         }
-
     }
 
     function getSavedMessage(type) {
@@ -1965,9 +2652,7 @@
 
             default:
                 return "Saved";
-
         }
-
     }
 
     /* =====================================================
@@ -1985,7 +2670,6 @@
         updateSummary();
 
         updateActiveSleep();
-
     }
 
     /* =====================================================
@@ -2014,15 +2698,24 @@
                         log.timestamp
                     );
 
-                return (
-                    date.getFullYear() === year &&
-                    date.getMonth() === month &&
-                    date.getDate() === day
-                );
+                if (
+                    Number.isNaN(
+                        date.getTime()
+                    )
+                ) {
+                    return false;
+                }
 
+                return (
+                    date.getFullYear() ===
+                        year &&
+                    date.getMonth() ===
+                        month &&
+                    date.getDate() ===
+                        day
+                );
             }
         );
-
     }
 
     /* =====================================================
@@ -2036,20 +2729,26 @@
 
         safeText(
             $("totalLogs"),
-            String(logs.length)
+            logs.length
         );
 
         const feeds =
             logs.filter(
                 function (log) {
-                    return log.type === "feed";
+                    return (
+                        log.type ===
+                        "feed"
+                    );
                 }
             ).length;
 
         const diapers =
             logs.filter(
                 function (log) {
-                    return log.type === "diaper";
+                    return (
+                        log.type ===
+                        "diaper"
+                    );
                 }
             ).length;
 
@@ -2057,51 +2756,76 @@
             logs
                 .filter(
                     function (log) {
-                        return log.type === "sleep";
+                        return (
+                            log.type ===
+                            "sleep"
+                        );
                     }
                 )
                 .reduce(
-                    function (total, log) {
-                        return total +
-                            (
-                                Number(
-                                    log.duration
-                                ) || 0
+                    function (
+                        total,
+                        log
+                    ) {
+
+                        const duration =
+                            Number(
+                                log.duration
                             );
+
+                        return (
+                            total +
+                            (
+                                Number.isFinite(
+                                    duration
+                                )
+                                    ? duration
+                                    : 0
+                            )
+                        );
                     },
                     0
                 );
 
         safeText(
             $("feedCount"),
-            String(feeds)
+            feeds
         );
 
         safeText(
             $("diaperCount"),
-            String(diapers)
+            diapers
         );
 
         safeText(
             $("sleepTotal"),
-            formatSleepTotal(sleep)
+            formatSleepTotal(
+                sleep
+            )
         );
-
     }
 
-    function formatSleepTotal(minutes) {
+    function formatSleepTotal(
+        minutes
+    ) {
 
-        if (!minutes) {
+        const safeMinutes =
+            Math.max(
+                0,
+                Number(minutes) || 0
+            );
+
+        if (!safeMinutes) {
             return "0m";
         }
 
         const hours =
             Math.floor(
-                minutes / 60
+                safeMinutes / 60
             );
 
         const mins =
-            minutes % 60;
+            safeMinutes % 60;
 
         if (!hours) {
             return mins + "m";
@@ -2117,7 +2841,6 @@
             mins +
             "m"
         );
-
     }
 
     /* =====================================================
@@ -2136,11 +2859,6 @@
             return;
         }
 
-        /*
-         * Remove previous timeline items
-         * but keep empty state.
-         */
-
         Array.from(
             timeline.children
         ).forEach(
@@ -2150,11 +2868,8 @@
                     child.id !==
                     "emptyState"
                 ) {
-
                     child.remove();
-
                 }
-
             }
         );
 
@@ -2165,10 +2880,13 @@
                     function (a, b) {
 
                         return (
-                            new Date(b.timestamp) -
-                            new Date(a.timestamp)
+                            new Date(
+                                b.timestamp
+                            ) -
+                            new Date(
+                                a.timestamp
+                            )
                         );
-
                     }
                 );
 
@@ -2179,7 +2897,6 @@
             }
 
             return;
-
         }
 
         if (emptyState) {
@@ -2194,16 +2911,20 @@
                         log
                     );
 
-                timeline.appendChild(
-                    item
-                );
-
+                if (item) {
+                    timeline.appendChild(
+                        item
+                    );
+                }
             }
         );
-
     }
 
     function createTimelineItem(log) {
+
+        if (!log) {
+            return null;
+        }
 
         const item =
             document.createElement(
@@ -2256,6 +2977,7 @@
         );
 
         if (log.details) {
+
             info.appendChild(
                 details
             );
@@ -2300,7 +3022,6 @@
                 deleteLog(
                     log.id
                 );
-
             }
         );
 
@@ -2310,7 +3031,6 @@
         item.appendChild(deleteButton);
 
         return item;
-
     }
 
     function getLogIcon(log) {
@@ -2331,9 +3051,7 @@
 
             default:
                 return "💗";
-
         }
-
     }
 
     function formatTime(timestamp) {
@@ -2356,7 +3074,6 @@
                 minute: "2-digit"
             }
         );
-
     }
 
     /* =====================================================
@@ -2377,7 +3094,9 @@
         state.logs =
             state.logs.filter(
                 function (log) {
-                    return log.id !== id;
+                    return (
+                        log.id !== id
+                    );
                 }
             );
 
@@ -2389,7 +3108,6 @@
             "Log deleted",
             "✓"
         );
-
     }
 
     /* =====================================================
@@ -2409,7 +3127,6 @@
             );
 
             return;
-
         }
 
         const confirmed =
@@ -2433,6 +3150,7 @@
         state.logs =
             state.logs.filter(
                 function (log) {
+
                     return !todayIds.has(
                         log.id
                     );
@@ -2447,7 +3165,6 @@
             "Today's logs cleared",
             "✓"
         );
-
     }
 
     /* =====================================================
@@ -2462,7 +3179,10 @@
         const container =
             $("modalContent");
 
-        if (!modal || !container) {
+        if (
+            !modal ||
+            !container
+        ) {
             return;
         }
 
@@ -2476,6 +3196,13 @@
             "false"
         );
 
+        /*
+         * Prevent the browser from scrolling the page behind
+         * the modal while it is open.
+         */
+        document.body.classList.add(
+            "modal-open"
+        );
     }
 
     function closeActionModal() {
@@ -2494,6 +3221,9 @@
             "true"
         );
 
+        document.body.classList.remove(
+            "modal-open"
+        );
     }
 
     function openSettings() {
@@ -2511,6 +3241,7 @@
             $("voiceLanguage");
 
         if (language) {
+
             language.value =
                 state.voiceLanguage;
         }
@@ -2519,6 +3250,7 @@
             $("voiceConfirmationToggle");
 
         if (confirmation) {
+
             confirmation.checked =
                 state.voiceConfirmation;
         }
@@ -2530,16 +3262,20 @@
             "false"
         );
 
+        document.body.classList.add(
+            "modal-open"
+        );
+
         const button =
             $("settingsButton");
 
         if (button) {
+
             button.setAttribute(
                 "aria-expanded",
                 "true"
             );
         }
-
     }
 
     function closeSettings() {
@@ -2558,16 +3294,20 @@
             "true"
         );
 
+        document.body.classList.remove(
+            "modal-open"
+        );
+
         const button =
             $("settingsButton");
 
         if (button) {
+
             button.setAttribute(
                 "aria-expanded",
                 "false"
             );
         }
-
     }
 
     function openBabyNameModal() {
@@ -2585,10 +3325,10 @@
         if (input) {
 
             input.value =
-                state.babyName === "My Baby"
+                state.babyName ===
+                    "My Baby"
                     ? ""
                     : state.babyName;
-
         }
 
         show(modal);
@@ -2598,6 +3338,9 @@
             "false"
         );
 
+        document.body.classList.add(
+            "modal-open"
+        );
     }
 
     function closeBabyNameModal() {
@@ -2616,6 +3359,9 @@
             "true"
         );
 
+        document.body.classList.remove(
+            "modal-open"
+        );
     }
 
     /* =====================================================
@@ -2638,6 +3384,9 @@
             "false"
         );
 
+        document.body.classList.add(
+            "modal-open"
+        );
     }
 
     function closeDeleteModal() {
@@ -2656,6 +3405,9 @@
             "true"
         );
 
+        document.body.classList.remove(
+            "modal-open"
+        );
     }
 
     function deleteEverything() {
@@ -2672,16 +3424,10 @@
                 "Could not clear localStorage.",
                 error
             );
-
         }
 
-        state = {
-            babyName: "My Baby",
-            voiceLanguage: "en-US",
-            voiceConfirmation: true,
-            logs: [],
-            activeSleep: null
-        };
+        state =
+            createDefaultState();
 
         stopSleepTimer();
 
@@ -2689,13 +3435,16 @@
 
         closeSettings();
 
+        closeActionModal();
+
+        closeBabyNameModal();
+
         updateAllUI();
 
         showToast(
             "All tracker data deleted",
             "✓"
         );
-
     }
 
     /* =====================================================
@@ -2765,6 +3514,7 @@
 
             setTimeout(
                 function () {
+
                     URL.revokeObjectURL(
                         url
                     );
@@ -2788,9 +3538,7 @@
                 "Could not export data",
                 "⚠️"
             );
-
         }
-
     }
 
     /* =====================================================
@@ -2809,7 +3557,6 @@
         input.value = "";
 
         input.click();
-
     }
 
     function handleImport(event) {
@@ -2842,49 +3589,25 @@
                     if (
                         !imported ||
                         typeof imported !==
-                        "object"
+                            "object"
                     ) {
                         throw new Error(
                             "Invalid backup"
                         );
                     }
 
-                    state = {
-                        babyName:
-                            typeof imported.babyName ===
-                            "string"
-                                ? imported.babyName
-                                : "My Baby",
-
-                        voiceLanguage:
-                            typeof imported.voiceLanguage ===
-                            "string"
-                                ? imported.voiceLanguage
-                                : "en-US",
-
-                        voiceConfirmation:
-                            typeof imported.voiceConfirmation ===
-                            "boolean"
-                                ? imported.voiceConfirmation
-                                : true,
-
-                        logs:
-                            Array.isArray(
-                                imported.logs
-                            )
-                                ? imported.logs
-                                : [],
-
-                        activeSleep:
-                            imported.activeSleep ||
-                            null
-                    };
+                    state =
+                        normalizeState(
+                            imported
+                        );
 
                     saveState();
 
                     initializeVoice();
 
                     updateAllUI();
+
+                    restoreActiveSleep();
 
                     closeSettings();
 
@@ -2904,9 +3627,7 @@
                         "Invalid backup file",
                         "⚠️"
                     );
-
                 }
-
             };
 
         reader.onerror =
@@ -2916,20 +3637,16 @@
                     "Could not read backup",
                     "⚠️"
                 );
-
             };
 
         reader.readAsText(
             file
         );
-
     }
 
     /* =====================================================
        TOAST
     ===================================================== */
-
-    let toastTimeout = null;
 
     function showToast(
         message,
@@ -2968,7 +3685,6 @@
             clearTimeout(
                 toastTimeout
             );
-
         }
 
         toastTimeout =
@@ -2982,7 +3698,6 @@
                 },
                 2500
             );
-
     }
 
 })();
