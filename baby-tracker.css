@@ -1787,6 +1787,49 @@
     }
 }
 
+
+/* =========================================================
+   MOBILE MODAL INPUT ZOOM FIX
+   Prevent iOS Safari from zooming the entire page when
+   typing into tracker modal fields.
+========================================================= */
+
+.tracker-modal input,
+.tracker-modal select,
+.tracker-modal textarea {
+    font-size: 16px !important;
+    line-height: 1.4;
+    -webkit-text-size-adjust: 100%;
+}
+
+/* Keep the modal itself stable while typing */
+.tracker-modal-content {
+    -webkit-text-size-adjust: 100%;
+}
+
+/* Prevent accidental horizontal overflow after keyboard opens */
+.tracker-modal,
+.tracker-modal-content {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* iPhone/iPad specifically */
+@media screen and (max-width: 600px) {
+
+    .tracker-modal input,
+    .tracker-modal select,
+    .tracker-modal textarea {
+        font-size: 16px !important;
+        min-height: 48px;
+    }
+
+    .tracker-modal textarea {
+        min-height: 110px;
+        resize: vertical;
+    }
+}
+
 /* =========================================================
    TABLET
 ========================================================= */
