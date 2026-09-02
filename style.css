@@ -1255,140 +1255,173 @@ box-shadow:0 10px 25px rgba(0,0,0,.08);
 }
 
 /* =====================
-   AMAZON DEALS FACEBOOK SECTION
+   FACEBOOK DEALS
 ===================== */
 
 .deal-section{
-
-    margin:45px 0;
-
-    background:linear-gradient(180deg,#fff8fb,#ffffff);
-
-    border-radius:35px;
-
-    padding:35px 30px 40px;
-
-    text-align:center;
-
-    box-shadow:0 12px 30px rgba(0,0,0,.05);
-
-}
-
-.deal-badge{
-
-    display:inline-flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    background:#fff0d9;
-
-    color:#e58a00;
-
-    padding:10px 22px;
-
-    border-radius:999px;
-
-    font-weight:900;
-
-    font-size:14px;
-
-    margin-bottom:18px;
-
+    margin-top:8px;
+    background:#1d4f91;
+    border-radius:28px;
+    padding:24px 28px;
+    color:#fff;
     position:relative;
-
-    animation:badgeFloat 3s ease-in-out infinite;
-
-    box-shadow:0 8px 20px rgba(229,138,0,.25);
-
+    overflow:hidden;
+    box-shadow:0 12px 28px rgba(29,79,145,.16);
 }
 
-.deal-badge::before{
-
+.deal-section::before{
     content:"";
-
     position:absolute;
-
-    inset:-5px;
-
-    border-radius:999px;
-
-    background:rgba(229,138,0,.20);
-
-    z-index:-1;
-
-    animation:badgePulse 2s ease-in-out infinite;
-
+    width:180px;
+    height:180px;
+    border-radius:50%;
+    background:rgba(255,255,255,.06);
+    right:-55px;
+    top:-95px;
 }
 
-.deal-section h2{
+.deal-section::after{
+    content:"";
+    position:absolute;
+    width:110px;
+    height:110px;
+    border-radius:50%;
+    background:rgba(255,255,255,.05);
+    left:-45px;
+    bottom:-65px;
+}
 
-    font-size:36px;
+.deal-content{
+    max-width:950px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:auto 1fr auto;
+    align-items:center;
+    gap:20px;
+    position:relative;
+    z-index:1;
+}
 
+.deal-icon{
+    width:58px;
+    height:58px;
+    border-radius:18px;
+    background:rgba(255,255,255,.13);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:29px;
+}
+
+.deal-main{
+    min-width:0;
+}
+
+.deal-label{
+    display:block;
+    font-size:9px;
     font-weight:900;
-
-    margin-bottom:15px;
-
+    letter-spacing:.9px;
+    opacity:.8;
+    margin-bottom:4px;
 }
 
-.deal-description{
+.deal-main h2{
+    margin:0 0 5px;
+    font-size:24px;
+    line-height:1.15;
+    font-weight:900;
+}
 
-    color:#666;
+.deal-main h2 span{
+    color:#ffd8df;
+}
 
-    line-height:1.6;
+.deal-main p{
+    margin:0;
+    max-width:590px;
+    font-size:12px;
+    line-height:1.45;
+    opacity:.88;
+}
 
-    max-width:650px;
+.deal-perks{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-top:8px;
+}
 
-    margin:0 auto 30px;
-
+.deal-perks span{
+    font-size:10px;
+    font-weight:800;
+    opacity:.8;
 }
 
 .deal-button{
-
     display:inline-flex;
-
-    justify-content:center;
-
     align-items:center;
-
-    background:#1877f2;
-
-    color:white;
-
+    justify-content:center;
+    white-space:nowrap;
+    background:#fff;
+    color:#1d4f91;
+    padding:12px 17px;
+    border-radius:14px;
     text-decoration:none;
-
-    padding:20px 45px;
-
-    border-radius:999px;
-
-    font-size:20px;
-
+    font-size:10px;
     font-weight:900;
-
-    box-shadow:0 12px 30px rgba(24,119,242,.25);
-
-    transition:.25s ease;
-
+    letter-spacing:.3px;
+    transition:.2s ease;
 }
 
 .deal-button:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 18px rgba(0,0,0,.15);
+}
 
-    transform:translateY(-3px);
+
+/* =====================
+   FACEBOOK DEALS MOBILE
+===================== */
+
+@media(max-width:700px){
+
+    .deal-section{
+        padding:23px 18px;
+        border-radius:24px;
+    }
+
+    .deal-content{
+        grid-template-columns:auto 1fr;
+        gap:14px;
+    }
+
+    .deal-icon{
+        width:50px;
+        height:50px;
+        border-radius:15px;
+        font-size:25px;
+    }
+
+    .deal-main h2{
+        font-size:21px;
+    }
+
+    .deal-main p{
+        font-size:11px;
+    }
+
+    .deal-perks{
+        gap:8px;
+    }
+
+    .deal-button{
+        grid-column:1 / -1;
+        width:100%;
+    }
 
 }
 
-.deal-note{
-
-    margin-top:18px;
-
-    margin-bottom:0;
-
-    font-size:15px;
-
-    color:#777;
-
-}
 /* =====================
    FREE LEARNING LIBRARY
 ===================== */
