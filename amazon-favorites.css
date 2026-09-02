@@ -2442,3 +2442,816 @@
         box-sizing: border-box;
     }
 }
+
+/* ============================================================
+   MOMYOU NEED THIS 
+   ============================================================ */
+
+/*
+ * Only one battle exists visually at a time.
+ */
+
+.mom-voted-page .product-battle {
+    display: none;
+    margin-bottom: 0;
+}
+
+.mom-voted-page .product-battle.active-battle {
+    display: block;
+}
+
+
+/*
+ * Prevent hidden battles from accidentally being reached
+ * by keyboard/screen-reader navigation.
+ */
+
+.mom-voted-page .product-battle[aria-hidden="true"] {
+    visibility: hidden;
+    pointer-events: none;
+}
+
+
+/* ============================================================
+   DISCOVERY PROGRESS
+   ============================================================ */
+
+.mv-discovery-progress {
+    width: min(760px, calc(100% - 10px));
+    margin: -20px auto 24px;
+    padding: 11px 15px;
+    background: #fff;
+    border: 1px solid #eee3e9;
+    border-radius: 999px;
+    box-shadow: 0 8px 25px rgba(65, 38, 52, .07);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+    overflow: hidden;
+    z-index: 15;
+}
+
+.mv-discovery-progress::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        90deg,
+        rgba(232, 93, 143, .05),
+        rgba(139, 111, 201, .05)
+    );
+    pointer-events: none;
+}
+
+.mv-discovery-progress > * {
+    position: relative;
+    z-index: 1;
+}
+
+.mv-discovery-progress::after {
+    content: "";
+    position: absolute;
+    left: 15px;
+    right: 15px;
+    bottom: 0;
+    height: 3px;
+    background: #f2e8ee;
+    border-radius: 999px;
+}
+
+.mv-discovery-progress [data-discovery-category] {
+    font-size: 10px;
+    font-weight: 1000;
+    letter-spacing: .12em;
+    color: #d94378;
+    white-space: nowrap;
+}
+
+.mv-discovery-progress [data-discovery-product] {
+    margin-left: auto;
+    font-size: 11px;
+    font-weight: 900;
+    color: #77717a;
+    white-space: nowrap;
+}
+
+.mv-discovery-progress [data-discovery-fill] {
+    position: absolute;
+    left: 15px;
+    bottom: 0;
+    height: 3px;
+    width: 16%;
+    border-radius: 999px;
+    background: linear-gradient(
+        90deg,
+        #e85d8f,
+        #8b6fc9
+    );
+    transition: width .45s cubic-bezier(.22, 1, .36, 1);
+    z-index: 3;
+}
+
+
+/* ============================================================
+   CATEGORY NAV
+   ============================================================ */
+
+.mom-voted-page .voting-categories {
+    top: 8px;
+    z-index: 40;
+    box-shadow:
+        0 12px 35px rgba(60, 40, 50, .10),
+        0 2px 0 rgba(232, 93, 143, .05);
+}
+
+.mom-voted-page .category-link {
+    transition:
+        transform .2s ease,
+        background .2s ease,
+        color .2s ease,
+        box-shadow .2s ease;
+}
+
+.mom-voted-page .category-link:hover {
+    transform: translateY(-1px);
+}
+
+.mom-voted-page .category-link.active {
+    box-shadow:
+        0 7px 18px rgba(232, 93, 143, .20);
+}
+
+
+/* ============================================================
+   ACTIVE BATTLE
+   ============================================================ */
+
+.mom-voted-page .active-battle {
+    animation:
+        mvBattleAppear .42s cubic-bezier(.22, 1, .36, 1);
+}
+
+@keyframes mvBattleAppear {
+
+    from {
+        opacity: 0;
+        transform: translateY(15px) scale(.985);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+}
+
+
+/* ============================================================
+   CATEGORY TRANSITIONS
+   ============================================================ */
+
+.mom-voted-page .category-enter-left {
+    animation:
+        mvCategoryFromLeft .45s cubic-bezier(.22, 1, .36, 1);
+}
+
+.mom-voted-page .category-enter-right {
+    animation:
+        mvCategoryFromRight .45s cubic-bezier(.22, 1, .36, 1);
+}
+
+@keyframes mvCategoryFromLeft {
+
+    from {
+        opacity: 0;
+        transform:
+            translateX(80px)
+            scale(.97);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            translateX(0)
+            scale(1);
+    }
+
+}
+
+@keyframes mvCategoryFromRight {
+
+    from {
+        opacity: 0;
+        transform:
+            translateX(-80px)
+            scale(.97);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            translateX(0)
+            scale(1);
+    }
+
+}
+
+
+/* ============================================================
+   PRODUCT STAGE — HIGHER CONTRAST
+   ============================================================ */
+
+.mom-voted-page .product-slide-area {
+    position: relative;
+    background:
+        radial-gradient(
+            circle at 30% 20%,
+            #fff 0,
+            #fff 35%,
+            #fff3f7 100%
+        );
+    border: 1px solid #eadde4;
+    box-shadow:
+        0 18px 45px rgba(70, 35, 55, .08),
+        inset 0 1px 0 rgba(255,255,255,.9);
+    transition:
+        transform .32s cubic-bezier(.22, 1, .36, 1),
+        box-shadow .25s ease,
+        border-color .25s ease;
+    touch-action: pan-y;
+    will-change: transform;
+    overflow: hidden;
+}
+
+.mom-voted-page .product-slide-area::before {
+    content: "";
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    right: -65px;
+    top: -75px;
+    background: rgba(232, 93, 143, .09);
+    pointer-events: none;
+}
+
+.mom-voted-page .product-slide-area::after {
+    content: "";
+    position: absolute;
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    left: -65px;
+    bottom: -70px;
+    background: rgba(139, 111, 201, .08);
+    pointer-events: none;
+}
+
+
+/* ============================================================
+   PRODUCT IMAGE AREA
+   ============================================================ */
+
+.mom-voted-page .product-image-wrap {
+    position: relative;
+    background:
+        linear-gradient(
+            145deg,
+            #ffffff 0%,
+            #fff7fa 52%,
+            #f8f2ff 100%
+        );
+    border-right: 1px solid #eadde4;
+    isolation: isolate;
+}
+
+.mom-voted-page .product-image-wrap::after {
+    content: "";
+    position: absolute;
+    inset: 22px;
+    border: 1px dashed rgba(232, 93, 143, .13);
+    border-radius: 22px;
+    pointer-events: none;
+}
+
+.mom-voted-page .battle-product-image {
+    position: relative;
+    z-index: 2;
+    filter:
+        drop-shadow(
+            0 18px 18px rgba(40, 20, 30, .13)
+        );
+    transition:
+        transform .35s cubic-bezier(.22, 1, .36, 1),
+        filter .35s ease;
+}
+
+.mom-voted-page .product-slide-area:hover
+.battle-product-image {
+    transform: scale(1.025);
+    filter:
+        drop-shadow(
+            0 23px 23px rgba(40, 20, 30, .16)
+        );
+}
+
+
+/* ============================================================
+   PRODUCT INFO
+   ============================================================ */
+
+.mom-voted-page .product-info {
+    position: relative;
+    z-index: 2;
+}
+
+.mom-voted-page .product-info h3 {
+    letter-spacing: -.025em;
+}
+
+.mom-voted-page .product-brand {
+    color: #8b6fc9;
+    font-weight: 900;
+}
+
+
+/* ============================================================
+   MOM SCORE — MORE VISUAL
+   ============================================================ */
+
+.mom-voted-page .mom-score {
+    position: relative;
+    overflow: hidden;
+    background:
+        linear-gradient(
+            135deg,
+            #fff,
+            #fff7fa
+        );
+    box-shadow:
+        0 8px 20px rgba(65, 38, 52, .06);
+}
+
+.mom-voted-page .consensus-bar {
+    overflow: hidden;
+}
+
+.mom-voted-page .consensus-bar span {
+    background:
+        linear-gradient(
+            90deg,
+            #e85d8f,
+            #8b6fc9
+        );
+}
+
+
+/* ============================================================
+   YES / NO BUTTONS
+   ============================================================ */
+
+.mom-voted-page .vote-button {
+    min-height: 58px;
+    border-width: 2px;
+    transition:
+        transform .18s ease,
+        box-shadow .18s ease,
+        background .18s ease,
+        border-color .18s ease;
+}
+
+.mom-voted-page .vote-button:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow:
+        0 12px 25px rgba(60, 30, 50, .11);
+}
+
+.mom-voted-page .vote-button:active:not(:disabled) {
+    transform: translateY(0) scale(.98);
+}
+
+.mom-voted-page .vote-button.selected {
+    animation:
+        mvVoteSelected .4s cubic-bezier(.22, 1, .36, 1);
+}
+
+@keyframes mvVoteSelected {
+
+    0% {
+        transform: scale(1);
+    }
+
+    45% {
+        transform: scale(1.055);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+
+}
+
+
+/* ============================================================
+   VOTE SUCCESS FEEDBACK
+   ============================================================ */
+
+.mom-voted-page .vote-just-saved {
+    animation:
+        mvSavedPulse .6s ease;
+}
+
+@keyframes mvSavedPulse {
+
+    0% {
+        transform: scale(1);
+    }
+
+    45% {
+        transform: scale(1.008);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+
+}
+
+
+/* ============================================================
+   SWIPE HINT
+   ============================================================ */
+
+.mom-voted-page .mv-swipe-hint {
+    position: absolute;
+    left: 50%;
+    bottom: 18px;
+    transform:
+        translateX(-50%)
+        translateY(0);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 13px;
+    border-radius: 999px;
+    background: rgba(48, 42, 48, .88);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 1000;
+    letter-spacing: .08em;
+    white-space: nowrap;
+    box-shadow:
+        0 8px 22px rgba(30, 20, 25, .18);
+    pointer-events: none;
+    z-index: 20;
+    animation:
+        mvSwipeHint 1.8s ease-in-out infinite;
+    transition:
+        opacity .25s ease,
+        transform .25s ease;
+}
+
+.mom-voted-page .mv-swipe-hint.hint-hidden {
+    opacity: 0;
+    transform:
+        translateX(-50%)
+        translateY(8px);
+}
+
+.mv-swipe-arrow {
+    font-size: 16px;
+    line-height: 1;
+}
+
+@keyframes mvSwipeHint {
+
+    0%,
+    100% {
+        transform:
+            translateX(-50%)
+            translateX(0);
+    }
+
+    50% {
+        transform:
+            translateX(-50%)
+            translateX(-7px);
+    }
+
+}
+
+
+/* ============================================================
+   ACTIVE DRAG STATE
+   ============================================================ */
+
+.mom-voted-page .product-slide-area.is-dragging {
+    cursor: grabbing;
+    transition: none;
+    box-shadow:
+        0 25px 55px rgba(70, 30, 55, .16);
+}
+
+.mom-voted-page .product-slide-area.swipe-ready-left {
+    border-color: rgba(217, 67, 120, .55);
+    box-shadow:
+        0 25px 55px rgba(217, 67, 120, .15);
+}
+
+.mom-voted-page .product-slide-area.swipe-ready-right {
+    border-color: rgba(139, 111, 201, .55);
+    box-shadow:
+        0 25px 55px rgba(139, 111, 201, .15);
+}
+
+
+/* ============================================================
+   PRODUCT EXIT
+   ============================================================ */
+
+.mom-voted-page .swipe-exit-left .product-slide-area {
+    animation:
+        mvProductExitLeft .33s cubic-bezier(.55, .08, .68, .53);
+}
+
+.mom-voted-page .swipe-exit-right .product-slide-area {
+    animation:
+        mvProductExitRight .33s cubic-bezier(.55, .08, .68, .53);
+}
+
+@keyframes mvProductExitLeft {
+
+    from {
+        transform:
+            translateX(0)
+            rotate(0);
+        opacity: 1;
+    }
+
+    to {
+        transform:
+            translateX(-115%)
+            rotate(-9deg);
+        opacity: 0;
+    }
+
+}
+
+@keyframes mvProductExitRight {
+
+    from {
+        transform:
+            translateX(0)
+            rotate(0);
+        opacity: 1;
+    }
+
+    to {
+        transform:
+            translateX(115%)
+            rotate(9deg);
+        opacity: 0;
+    }
+
+}
+
+
+/* ============================================================
+   END-OF-DISCOVERY BOUNCE
+   ============================================================ */
+
+.mom-voted-page .swipe-end {
+    animation:
+        mvSwipeEnd .35s ease;
+}
+
+@keyframes mvSwipeEnd {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    35% {
+        transform: translateX(-12px);
+    }
+
+    70% {
+        transform: translateX(7px);
+    }
+
+}
+
+
+/* ============================================================
+   ARROWS
+   ============================================================ */
+
+.mom-voted-page .product-arrow {
+    transition:
+        transform .18s ease,
+        box-shadow .18s ease,
+        background .18s ease;
+}
+
+.mom-voted-page .product-arrow:hover {
+    transform: scale(1.08);
+    box-shadow:
+        0 10px 24px rgba(50, 30, 45, .13);
+}
+
+.mom-voted-page .product-arrow:active {
+    transform: scale(.94);
+}
+
+
+/* ============================================================
+   DOTS
+   ============================================================ */
+
+.mom-voted-page .battle-dot {
+    transition:
+        width .2s ease,
+        transform .2s ease,
+        background .2s ease;
+}
+
+.mom-voted-page .battle-dot:hover {
+    transform: scale(1.15);
+}
+
+
+/* ============================================================
+   MOBILE — TRUE APP-LIKE EXPERIENCE
+   ============================================================ */
+
+@media (max-width: 650px) {
+
+    .mom-voted-page {
+        padding-bottom: 40px;
+    }
+
+
+    .mv-discovery-progress {
+        width: calc(100% - 4px);
+        margin:
+            -13px auto
+            18px;
+        padding:
+            10px 13px;
+    }
+
+
+    .mv-discovery-progress [data-discovery-category] {
+        font-size: 9px;
+    }
+
+
+    .mv-discovery-progress [data-discovery-product] {
+        font-size: 10px;
+    }
+
+
+    .mom-voted-page .product-battle.active-battle {
+        min-height: 0;
+    }
+
+
+    .mom-voted-page .product-slide-area {
+        border-radius: 22px;
+        box-shadow:
+            0 18px 40px rgba(70, 35, 55, .10);
+    }
+
+
+    .mom-voted-page .product-image-wrap {
+        border-right: 0;
+        border-bottom: 1px solid #eadde4;
+    }
+
+
+    .mom-voted-page .product-image-wrap::after {
+        inset: 14px;
+        border-radius: 17px;
+    }
+
+
+    .mom-voted-page .battle-product-image {
+        filter:
+            drop-shadow(
+                0 14px 14px rgba(40, 20, 30, .14)
+            );
+    }
+
+
+    .mom-voted-page .mv-swipe-hint {
+        bottom: 12px;
+        font-size: 9px;
+    }
+
+
+    .mom-voted-page .product-slide-area.is-dragging {
+        box-shadow:
+            0 20px 40px rgba(70, 30, 55, .15);
+    }
+
+
+    .mom-voted-page .category-enter-left {
+        animation:
+            mvCategoryMobileLeft .4s
+            cubic-bezier(.22, 1, .36, 1);
+    }
+
+
+    .mom-voted-page .category-enter-right {
+        animation:
+            mvCategoryMobileRight .4s
+            cubic-bezier(.22, 1, .36, 1);
+    }
+
+}
+
+
+@keyframes mvCategoryMobileLeft {
+
+    from {
+        opacity: 0;
+        transform:
+            translateX(45px)
+            scale(.985);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            translateX(0)
+            scale(1);
+    }
+
+}
+
+
+@keyframes mvCategoryMobileRight {
+
+    from {
+        opacity: 0;
+        transform:
+            translateX(-45px)
+            scale(.985);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            translateX(0)
+            scale(1);
+    }
+
+}
+
+
+/* ============================================================
+   VERY SMALL PHONES
+   ============================================================ */
+
+@media (max-width: 400px) {
+
+    .mv-discovery-progress {
+        margin-bottom: 14px;
+    }
+
+
+    .mv-discovery-progress [data-discovery-category] {
+        letter-spacing: .07em;
+    }
+
+
+    .mom-voted-page .product-slide-area {
+        border-radius: 19px;
+    }
+
+
+    .mom-voted-page .mv-swipe-hint {
+        padding:
+            7px 10px;
+    }
+
+}
+
+
+/* ============================================================
+   ACCESSIBILITY / REDUCED MOTION
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .mom-voted-page *,
+    .mom-voted-page *::before,
+    .mom-voted-page *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+    }
+
+}
