@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1.0"
@@ -28,7 +29,10 @@
 
     <header class="mom-voted-header">
 
-        <a href="index.html">
+        <a
+            href="index.html"
+            class="mom-voted-logo-link"
+        >
             <img
                 src="assets/logo.svg"
                 alt="MomYouNeedThis"
@@ -63,11 +67,10 @@
         </h1>
 
         <p>
-            Help moms find the products that are actually worth
-            their money. Pick your favourite, see what other moms
-            think, and discover the next contender.
+            Two products enter. Moms decide which one wins.
+            Pick the product you would actually choose and
+            see what other moms think.
         </p>
-
 
         <div class="hero-mini-proof">
 
@@ -93,7 +96,6 @@
 
         </div>
 
-
         <div class="hero-scroll-hint">
             ↓ START VOTING
         </div>
@@ -102,24 +104,35 @@
 
 
     <!-- =====================================================
-         HOLY GRAIL BANNER
+         HOLY GRAIL
          ===================================================== -->
 
     <section class="holy-grail-banner">
 
-        <div>
+        <div class="holy-grail-banner-content">
 
-            <h3>
-                🏆 Know a product every mom needs?
-            </h3>
+            <div class="holy-grail-icon">
+                🏆
+            </div>
 
-            <p>
-                Add it to the MomYouNeedThis Holy Grail list.
-            </p>
+            <div>
+
+                <h3>
+                    Know a product every mom needs?
+                </h3>
+
+                <p>
+                    Add it to the MomYouNeedThis Holy Grail list.
+                </p>
+
+            </div>
 
         </div>
 
-        <a href="submit-holy-grail.html">
+        <a
+            href="submit-holy-grail.html"
+            class="holy-grail-banner-link"
+        >
             Recommend a Product →
         </a>
 
@@ -127,7 +140,7 @@
 
 
     <!-- =====================================================
-         CATEGORY NAVIGATION
+         CATEGORY NAV
          ===================================================== -->
 
     <nav
@@ -138,6 +151,7 @@
         <a
             href="#baby"
             class="category-link active"
+            data-category-link="baby"
         >
             👶 Baby
         </a>
@@ -145,6 +159,7 @@
         <a
             href="#toddler"
             class="category-link"
+            data-category-link="toddler"
         >
             🧸 Toddler
         </a>
@@ -152,6 +167,7 @@
         <a
             href="#sleep"
             class="category-link"
+            data-category-link="sleep"
         >
             🌙 Sleep
         </a>
@@ -159,6 +175,7 @@
         <a
             href="#potty"
             class="category-link"
+            data-category-link="potty"
         >
             🚽 Potty
         </a>
@@ -166,6 +183,7 @@
         <a
             href="#feeding"
             class="category-link"
+            data-category-link="feeding"
         >
             🥣 Feeding
         </a>
@@ -173,6 +191,7 @@
         <a
             href="#under25"
             class="category-link"
+            data-category-link="under25"
         >
             💸 Under $25
         </a>
@@ -181,446 +200,498 @@
 
 
     <!-- =====================================================
-         BABY
+         BATTLE AREA
          ===================================================== -->
 
-    <section
-        id="baby"
-        class="product-battle battle-active"
-        data-category="baby"
-        data-filter-tags="new trending"
-    >
-
-        <div class="battle-heading">
-
-            <h2>
-                👶 Baby Battle
-            </h2>
-
-            <p>
-                Which one would you choose?
-            </p>
-
-        </div>
+    <main class="battle-container">
 
 
-        <div class="battle-card">
+        <!-- =================================================
+             BABY
+             ================================================= -->
 
-            <div class="battle-top">
+        <section
+            id="baby"
+            class="product-battle active-category"
+            data-category="baby"
+            data-filter-tags="new trending"
+        >
 
-                <div
-                    class="battle-position"
-                    data-position
-                >
-                    BATTLE 1 OF 6
+            <div class="battle-heading">
+
+                <div class="battle-eyebrow">
+                    👶 BABY
                 </div>
 
-                <div
-                    class="battle-category-label"
-                >
-                    BABY
+                <h2>
+                    Baby Battle
+                </h2>
+
+                <p>
+                    Which one would you actually pick?
+                </p>
+
+            </div>
+
+
+            <div class="battle-card">
+
+                <div class="battle-top">
+
+                    <div
+                        class="battle-position"
+                        data-position
+                    >
+                        BATTLE 1
+                    </div>
+
+                    <div class="battle-live">
+                        ⚡ MOM BATTLE
+                    </div>
+
                 </div>
+
 
                 <div class="battle-progress">
 
                     <div
-                        class="battle-progress-fill"
-                        data-progress-fill
-                    ></div>
+                        class="battle-progress-track"
+                    >
+
+                        <div
+                            class="battle-progress-fill"
+                            data-progress-fill
+                        ></div>
+
+                    </div>
 
                 </div>
 
-            </div>
 
+                <div class="battle-question">
+                    WHICH ONE WOULD YOU PICK?
+                </div>
 
-            <div class="battle-question">
-                WHICH ONE WOULD YOU PICK?
-            </div>
-
-
-            <!--
-                JavaScript creates the complete
-                two-product battle arena here.
-            -->
-
-            <div class="product-viewer"></div>
-
-
-            <div
-                class="battle-footer"
-            >
-                Swipe left to keep discovering
-                mom-approved finds.
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =====================================================
-         TODDLER
-         ===================================================== -->
-
-    <section
-        id="toddler"
-        class="product-battle battle-hidden"
-        data-category="toddler"
-        data-filter-tags="trending"
-    >
-
-        <div class="battle-heading">
-
-            <h2>
-                🧸 Toddler Battle
-            </h2>
-
-            <p>
-                Which one would you choose?
-            </p>
-
-        </div>
-
-
-        <div class="battle-card">
-
-            <div class="battle-top">
 
                 <div
-                    class="battle-position"
-                    data-position
-                >
-                    BATTLE 2 OF 6
-                </div>
+                    class="product-viewer"
+                    data-product-viewer
+                ></div>
+
 
                 <div
-                    class="battle-category-label"
+                    class="battle-footer"
                 >
-                    TODDLER
+                    Swipe left or choose a product to keep discovering.
                 </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             TODDLER
+             ================================================= -->
+
+        <section
+            id="toddler"
+            class="product-battle"
+            data-category="toddler"
+            data-filter-tags="trending"
+        >
+
+            <div class="battle-heading">
+
+                <div class="battle-eyebrow">
+                    🧸 TODDLER
+                </div>
+
+                <h2>
+                    Toddler Battle
+                </h2>
+
+                <p>
+                    Which one would you actually pick?
+                </p>
+
+            </div>
+
+
+            <div class="battle-card">
+
+                <div class="battle-top">
+
+                    <div
+                        class="battle-position"
+                        data-position
+                    >
+                        BATTLE 2
+                    </div>
+
+                    <div class="battle-live">
+                        ⚡ MOM BATTLE
+                    </div>
+
+                </div>
+
 
                 <div class="battle-progress">
 
                     <div
-                        class="battle-progress-fill"
-                        data-progress-fill
-                    ></div>
+                        class="battle-progress-track"
+                    >
+
+                        <div
+                            class="battle-progress-fill"
+                            data-progress-fill
+                        ></div>
+
+                    </div>
 
                 </div>
 
-            </div>
 
+                <div class="battle-question">
+                    WHICH ONE WOULD YOU PICK?
+                </div>
 
-            <div class="battle-question">
-                WHICH ONE WOULD YOU PICK?
-            </div>
-
-
-            <div class="product-viewer"></div>
-
-
-            <div
-                class="battle-footer"
-            >
-                Swipe left to keep discovering
-                mom-approved finds.
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =====================================================
-         SLEEP
-         ===================================================== -->
-
-    <section
-        id="sleep"
-        class="product-battle battle-hidden"
-        data-category="sleep"
-        data-filter-tags="favorite trending"
-    >
-
-        <div class="battle-heading">
-
-            <h2>
-                🌙 Sleep Battle
-            </h2>
-
-            <p>
-                Which one would you choose?
-            </p>
-
-        </div>
-
-
-        <div class="battle-card">
-
-            <div class="battle-top">
 
                 <div
-                    class="battle-position"
-                    data-position
-                >
-                    BATTLE 3 OF 6
+                    class="product-viewer"
+                    data-product-viewer
+                ></div>
+
+
+                <div class="battle-footer">
+                    Swipe left or choose a product to keep discovering.
                 </div>
 
-                <div
-                    class="battle-category-label"
-                >
-                    SLEEP
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             SLEEP
+             ================================================= -->
+
+        <section
+            id="sleep"
+            class="product-battle"
+            data-category="sleep"
+            data-filter-tags="favorite trending"
+        >
+
+            <div class="battle-heading">
+
+                <div class="battle-eyebrow">
+                    🌙 SLEEP
                 </div>
+
+                <h2>
+                    Sleep Battle
+                </h2>
+
+                <p>
+                    Which one would you actually pick?
+                </p>
+
+            </div>
+
+
+            <div class="battle-card">
+
+                <div class="battle-top">
+
+                    <div
+                        class="battle-position"
+                        data-position
+                    >
+                        BATTLE 3
+                    </div>
+
+                    <div class="battle-live">
+                        ⚡ MOM BATTLE
+                    </div>
+
+                </div>
+
 
                 <div class="battle-progress">
 
+                    <div class="battle-progress-track">
+
+                        <div
+                            class="battle-progress-fill"
+                            data-progress-fill
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="battle-question">
+                    WHICH ONE WOULD YOU PICK?
+                </div>
+
+
+                <div
+                    class="product-viewer"
+                    data-product-viewer
+                ></div>
+
+
+                <div class="battle-footer">
+                    Swipe left or choose a product to keep discovering.
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             POTTY
+             ================================================= -->
+
+        <section
+            id="potty"
+            class="product-battle"
+            data-category="potty"
+            data-filter-tags="favorite"
+        >
+
+            <div class="battle-heading">
+
+                <div class="battle-eyebrow">
+                    🚽 POTTY
+                </div>
+
+                <h2>
+                    Potty Battle
+                </h2>
+
+                <p>
+                    Which one would you actually pick?
+                </p>
+
+            </div>
+
+
+            <div class="battle-card">
+
+                <div class="battle-top">
+
                     <div
-                        class="battle-progress-fill"
-                        data-progress-fill
-                    ></div>
+                        class="battle-position"
+                        data-position
+                    >
+                        BATTLE 4
+                    </div>
+
+                    <div class="battle-live">
+                        ⚡ MOM BATTLE
+                    </div>
 
                 </div>
 
-            </div>
-
-
-            <div class="battle-question">
-                WHICH ONE WOULD YOU PICK?
-            </div>
-
-
-            <div class="product-viewer"></div>
-
-
-            <div
-                class="battle-footer"
-            >
-                Swipe left to keep discovering
-                mom-approved finds.
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =====================================================
-         POTTY
-         ===================================================== -->
-
-    <section
-        id="potty"
-        class="product-battle battle-hidden"
-        data-category="potty"
-        data-filter-tags="favorite"
-    >
-
-        <div class="battle-heading">
-
-            <h2>
-                🚽 Potty Battle
-            </h2>
-
-            <p>
-                Which one would you choose?
-            </p>
-
-        </div>
-
-
-        <div class="battle-card">
-
-            <div class="battle-top">
-
-                <div
-                    class="battle-position"
-                    data-position
-                >
-                    BATTLE 4 OF 6
-                </div>
-
-                <div
-                    class="battle-category-label"
-                >
-                    POTTY
-                </div>
 
                 <div class="battle-progress">
 
+                    <div class="battle-progress-track">
+
+                        <div
+                            class="battle-progress-fill"
+                            data-progress-fill
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="battle-question">
+                    WHICH ONE WOULD YOU PICK?
+                </div>
+
+
+                <div
+                    class="product-viewer"
+                    data-product-viewer
+                ></div>
+
+
+                <div class="battle-footer">
+                    Swipe left or choose a product to keep discovering.
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             FEEDING
+             ================================================= -->
+
+        <section
+            id="feeding"
+            class="product-battle"
+            data-category="feeding"
+            data-filter-tags="new"
+        >
+
+            <div class="battle-heading">
+
+                <div class="battle-eyebrow">
+                    🥣 FEEDING
+                </div>
+
+                <h2>
+                    Feeding Battle
+                </h2>
+
+                <p>
+                    Which one would you actually pick?
+                </p>
+
+            </div>
+
+
+            <div class="battle-card">
+
+                <div class="battle-top">
+
                     <div
-                        class="battle-progress-fill"
-                        data-progress-fill
-                    ></div>
+                        class="battle-position"
+                        data-position
+                    >
+                        BATTLE 5
+                    </div>
+
+                    <div class="battle-live">
+                        ⚡ MOM BATTLE
+                    </div>
 
                 </div>
 
-            </div>
-
-
-            <div class="battle-question">
-                WHICH ONE WOULD YOU PICK?
-            </div>
-
-
-            <div class="product-viewer"></div>
-
-
-            <div
-                class="battle-footer"
-            >
-                Swipe left to keep discovering
-                mom-approved finds.
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =====================================================
-         FEEDING
-         ===================================================== -->
-
-    <section
-        id="feeding"
-        class="product-battle battle-hidden"
-        data-category="feeding"
-        data-filter-tags="new"
-    >
-
-        <div class="battle-heading">
-
-            <h2>
-                🥣 Feeding Battle
-            </h2>
-
-            <p>
-                Which one would you choose?
-            </p>
-
-        </div>
-
-
-        <div class="battle-card">
-
-            <div class="battle-top">
-
-                <div
-                    class="battle-position"
-                    data-position
-                >
-                    BATTLE 5 OF 6
-                </div>
-
-                <div
-                    class="battle-category-label"
-                >
-                    FEEDING
-                </div>
 
                 <div class="battle-progress">
 
+                    <div class="battle-progress-track">
+
+                        <div
+                            class="battle-progress-fill"
+                            data-progress-fill
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="battle-question">
+                    WHICH ONE WOULD YOU PICK?
+                </div>
+
+
+                <div
+                    class="product-viewer"
+                    data-product-viewer
+                ></div>
+
+
+                <div class="battle-footer">
+                    Swipe left or choose a product to keep discovering.
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             UNDER $25
+             ================================================= -->
+
+        <section
+            id="under25"
+            class="product-battle"
+            data-category="under25"
+            data-filter-tags="trending favorite"
+        >
+
+            <div class="battle-heading">
+
+                <div class="battle-eyebrow">
+                    💸 UNDER $25
+                </div>
+
+                <h2>
+                    Under $25 Battle
+                </h2>
+
+                <p>
+                    Which one would you actually pick?
+                </p>
+
+            </div>
+
+
+            <div class="battle-card">
+
+                <div class="battle-top">
+
                     <div
-                        class="battle-progress-fill"
-                        data-progress-fill
-                    ></div>
+                        class="battle-position"
+                        data-position
+                    >
+                        BATTLE 6
+                    </div>
+
+                    <div class="battle-live">
+                        ⚡ MOM BATTLE
+                    </div>
 
                 </div>
 
-            </div>
-
-
-            <div class="battle-question">
-                WHICH ONE WOULD YOU PICK?
-            </div>
-
-
-            <div class="product-viewer"></div>
-
-
-            <div
-                class="battle-footer"
-            >
-                Swipe left to keep discovering
-                mom-approved finds.
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =====================================================
-         UNDER $25
-         ===================================================== -->
-
-    <section
-        id="under25"
-        class="product-battle battle-hidden"
-        data-category="under25"
-        data-filter-tags="trending favorite"
-    >
-
-        <div class="battle-heading">
-
-            <h2>
-                💸 Under $25 Battle
-            </h2>
-
-            <p>
-                Which one would you choose?
-            </p>
-
-        </div>
-
-
-        <div class="battle-card">
-
-            <div class="battle-top">
-
-                <div
-                    class="battle-position"
-                    data-position
-                >
-                    BATTLE 6 OF 6
-                </div>
-
-                <div
-                    class="battle-category-label"
-                >
-                    UNDER $25
-                </div>
 
                 <div class="battle-progress">
 
-                    <div
-                        class="battle-progress-fill"
-                        data-progress-fill
-                    ></div>
+                    <div class="battle-progress-track">
 
+                        <div
+                            class="battle-progress-fill"
+                            data-progress-fill
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="battle-question">
+                    WHICH ONE WOULD YOU PICK?
+                </div>
+
+
+                <div
+                    class="product-viewer"
+                    data-product-viewer
+                ></div>
+
+
+                <div class="battle-footer">
+                    Swipe left or choose a product to keep discovering.
                 </div>
 
             </div>
 
+        </section>
 
-            <div class="battle-question">
-                WHICH ONE WOULD YOU PICK?
-            </div>
-
-
-            <div class="product-viewer"></div>
-
-
-            <div
-                class="battle-footer"
-            >
-                Swipe left to keep discovering
-                mom-approved finds.
-            </div>
-
-        </div>
-
-    </section>
+    </main>
 
 
     <!-- =====================================================
@@ -639,6 +710,10 @@
                 Keep Discovering
             </h2>
 
+            <p>
+                New products are constantly entering the battles.
+            </p>
+
         </div>
 
 
@@ -647,22 +722,25 @@
             <button
                 type="button"
                 class="discovery-filter"
+                data-filter="new"
             >
-                New
+                ✨ New
             </button>
 
             <button
                 type="button"
                 class="discovery-filter"
+                data-filter="trending"
             >
-                Trending
+                🔥 Trending
             </button>
 
             <button
                 type="button"
                 class="discovery-filter"
+                data-filter="favorite"
             >
-                Mom Favorites
+                💗 Mom Favorites
             </button>
 
         </div>
@@ -676,56 +754,72 @@
 
     <section class="how-it-works">
 
-        <h2>
-            How It Works
-        </h2>
+        <div class="how-it-works-heading">
+
+            <div class="section-kicker">
+                SIMPLE
+            </div>
+
+            <h2>
+                How It Works
+            </h2>
+
+        </div>
+
 
         <div class="how-it-works-grid">
 
-            <div>
-                <strong>
+            <div class="how-it-works-card">
+
+                <div class="how-number">
                     01
-                </strong>
+                </div>
 
                 <h3>
                     Pick
                 </h3>
 
                 <p>
-                    Choose the product you would actually
-                    pick for your family.
+                    Two products enter the battle.
+                    You decide which one you'd actually choose.
                 </p>
+
             </div>
 
 
-            <div>
-                <strong>
+            <div class="how-it-works-card">
+
+                <div class="how-number">
                     02
-                </strong>
+                </div>
 
                 <h3>
                     Reveal
                 </h3>
 
                 <p>
-                    See how other moms are leaning.
+                    See what other moms are choosing and
+                    discover the current mom favourite.
                 </p>
+
             </div>
 
 
-            <div>
-                <strong>
+            <div class="how-it-works-card">
+
+                <div class="how-number">
                     03
-                </strong>
+                </div>
 
                 <h3>
                     Discover
                 </h3>
 
                 <p>
-                    Swipe into the next battle and find
-                    another mom-approved product.
+                    Swipe into the next battle and keep
+                    finding products worth knowing about.
                 </p>
+
             </div>
 
         </div>
@@ -739,18 +833,23 @@
 
     <section class="final-cta">
 
+        <div class="section-kicker">
+            YOUR TURN
+        </div>
+
         <h2>
             Know a product every mom needs?
         </h2>
 
         <p>
-            Help other moms discover it.
+            Put it in front of the MomYouNeedThis community.
         </p>
 
         <a
             href="submit-holy-grail.html"
+            class="final-cta-button"
         >
-            Recommend a Product
+            Recommend a Product →
         </a>
 
     </section>
@@ -760,7 +859,7 @@
          FOOTER
          ===================================================== -->
 
-    <footer>
+    <footer class="mom-voted-footer">
 
         <p>
             MomYouNeedThis may earn a commission from
@@ -772,10 +871,6 @@
 
 </section>
 
-
-<!-- =========================================================
-     JAVASCRIPT
-     ========================================================= -->
 
 <script
     type="module"
