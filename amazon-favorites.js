@@ -1,20 +1,20 @@
 /*
  * ============================================================
- * MOMYOU NEED THIS — MOM-VOTED PRODUCT BATTLES
+ * MOMYOU NEED THIS
+ * MOM-VOTED PRODUCT BATTLES
+ *
+ * UNIFIED TWO-PRODUCT BATTLE EXPERIENCE
  * ============================================================
  *
  * Firebase:
  * - Anonymous Authentication
  * - Firestore
  *
- * Collection:
+ * Firestore collection:
  *     productVotes
  *
- * Swipe experience:
- * - One category visible at a time
- * - Swipe left → next product
- * - Swipe left from final product → next category
- * - Swipe right → previous product/category
+ * Vote document:
+ *     UID_category_productId
  *
  * ============================================================
  */
@@ -66,7 +66,6 @@ try {
 
 }
 
-
 if (!db) {
 
     console.error(
@@ -74,51 +73,7 @@ if (!db) {
         "Check firebase-config.js."
     );
 
-} else {
-
-    console.log(
-        "Firestore initialized."
-    );
-
 }
-
-
-/* ============================================================
-   STATE
-   ============================================================ */
-
-const battleIndexes = {};
-
-const voteInProgress = new Set();
-
-const confirmedVotes = new Map();
-
-let activeCategory = null;
-
-let categoryTransitionInProgress = false;
-
-
-/*
- * Prevents the browser from treating a swipe as
- * normal scrolling while the user is actively dragging
- * the battle card horizontally.
- */
-
-let activeSwipe = null;
-
-
-/* ============================================================
-   CATEGORY ORDER
-   ============================================================ */
-
-const categoryOrder = [
-    "baby",
-    "toddler",
-    "sleep",
-    "potty",
-    "feeding",
-    "under25"
-];
 
 
 /* ============================================================
@@ -131,44 +86,26 @@ const battles = {
 
         {
             id: "baby-einstein-soother",
-
             name: "Soother Musical Crib Toy",
-
             brand: "Baby Einstein",
-
-            image:
-                "assets/babyeinstein-aquarium.jpeg",
-
+            image: "assets/babyeinstein-aquarium.jpeg",
             description:
                 "A popular option for keeping little ones entertained during quiet moments and daily routines.",
-
             score: "8.4",
-
             percentage: 62,
-
-            link:
-                "https://amzn.to/4fNqr9j"
+            link: "https://amzn.to/4fNqr9j"
         },
 
         {
             id: "baby-einstein-aquarium",
-
             name: "Baby Einstein Aquarium",
-
             brand: "Baby Einstein",
-
-            image:
-                "assets/babyeinstein-aquarium.jpeg",
-
+            image: "assets/babyeinstein-aquarium.jpeg",
             description:
                 "A colorful interactive option designed to keep babies engaged during everyday routines.",
-
             score: "8.2",
-
             percentage: 59,
-
-            link:
-                "https://amzn.to/4fNqr9j"
+            link: "https://amzn.to/4fNqr9j"
         }
 
     ],
@@ -178,43 +115,25 @@ const battles = {
 
         {
             id: "toddler-favorite-1",
-
             name: "Toddler Favorite",
-
-            brand:
-                "MomYouNeedThis Pick",
-
-            image:
-                "assets/product2.jpg",
-
+            brand: "MomYouNeedThis Pick",
+            image: "assets/product2.jpg",
             description:
                 "A practical everyday product designed to make life with toddlers a little easier.",
-
             score: "8.1",
-
             percentage: 57,
-
             link: "#"
         },
 
         {
             id: "toddler-favorite-2",
-
             name: "Toddler Favorite #2",
-
-            brand:
-                "MomYouNeedThis Pick",
-
-            image:
-                "assets/product2.jpg",
-
+            brand: "MomYouNeedThis Pick",
+            image: "assets/product2.jpg",
             description:
                 "Another practical favorite parents may find useful during everyday toddler life.",
-
             score: "8.3",
-
             percentage: 61,
-
             link: "#"
         }
 
@@ -225,46 +144,26 @@ const battles = {
 
         {
             id: "white-noise-machine",
-
             name: "White Noise Machine",
-
-            brand:
-                "Parent Favorite",
-
-            image:
-                "assets/white-noise-machine.jpeg",
-
+            brand: "Parent Favorite",
+            image: "assets/white-noise-machine.jpeg",
             description:
                 "A popular choice for creating a consistent sleep environment for little ones.",
-
             score: "8.7",
-
             percentage: 71,
-
-            link:
-                "https://amzn.to/4z8LxGC"
+            link: "https://amzn.to/4z8LxGC"
         },
 
         {
             id: "sleep-helper-2",
-
             name: "Sleep Helper",
-
-            brand:
-                "Parent Favorite",
-
-            image:
-                "assets/white-noise-machine.jpeg",
-
+            brand: "Parent Favorite",
+            image: "assets/white-noise-machine.jpeg",
             description:
                 "A simple sleep-support product designed to make bedtime routines easier.",
-
             score: "8.4",
-
             percentage: 65,
-
-            link:
-                "https://amzn.to/4z8LxGC"
+            link: "https://amzn.to/4z8LxGC"
         }
 
     ],
@@ -274,44 +173,26 @@ const battles = {
 
         {
             id: "babybjorn-potty",
-
             name: "Potty Training Seat",
-
             brand: "BabyBjörn",
-
-            image:
-                "assets/babybjorn-potty-toilet.jpeg",
-
+            image: "assets/babybjorn-potty-toilet.jpeg",
             description:
                 "A simple potty-training option designed to help toddlers feel comfortable and confident.",
-
             score: "8.6",
-
             percentage: 68,
-
-            link:
-                "https://amzn.to/3S23eqS"
+            link: "https://amzn.to/3S23eqS"
         },
 
         {
             id: "potty-training-seat-2",
-
             name: "Potty Training Favorite",
-
             brand: "Mom Pick",
-
-            image:
-                "assets/babybjorn-potty-toilet.jpeg",
-
+            image: "assets/babybjorn-potty-toilet.jpeg",
             description:
                 "Another popular potty-training option designed for everyday use.",
-
             score: "8.2",
-
             percentage: 61,
-
-            link:
-                "https://amzn.to/3S23eqS"
+            link: "https://amzn.to/3S23eqS"
         }
 
     ],
@@ -321,41 +202,25 @@ const battles = {
 
         {
             id: "feeding-favorite-1",
-
             name: "Feeding Favorite",
-
             brand: "Mom Pick",
-
-            image:
-                "assets/product2.jpg",
-
+            image: "assets/product2.jpg",
             description:
                 "A practical feeding favorite designed to make everyday mealtimes a little easier.",
-
             score: "8.0",
-
             percentage: 54,
-
             link: "#"
         },
 
         {
             id: "feeding-favorite-2",
-
             name: "Feeding Favorite #2",
-
             brand: "Mom Pick",
-
-            image:
-                "assets/product2.jpg",
-
+            image: "assets/product2.jpg",
             description:
                 "A useful everyday feeding product designed to simplify mealtime routines.",
-
             score: "8.2",
-
             percentage: 58,
-
             link: "#"
         }
 
@@ -366,43 +231,25 @@ const battles = {
 
         {
             id: "under25-find-1",
-
             name: "Budget Mom Find",
-
-            brand:
-                "MomYouNeedThis Pick",
-
-            image:
-                "assets/product2.jpg",
-
+            brand: "MomYouNeedThis Pick",
+            image: "assets/product2.jpg",
             description:
                 "A useful little find that could make everyday parenting just a bit easier.",
-
             score: "8.3",
-
             percentage: 63,
-
             link: "#"
         },
 
         {
             id: "under25-find-2",
-
             name: "Budget Mom Find #2",
-
-            brand:
-                "MomYouNeedThis Pick",
-
-            image:
-                "assets/product2.jpg",
-
+            brand: "MomYouNeedThis Pick",
+            image: "assets/product2.jpg",
             description:
                 "A small everyday find that could make a practical difference for parents.",
-
             score: "8.1",
-
             percentage: 59,
-
             link: "#"
         }
 
@@ -412,7 +259,29 @@ const battles = {
 
 
 /* ============================================================
-   UTILITY FUNCTIONS
+   STATE
+   ============================================================ */
+
+const categoryOrder = [
+    "baby",
+    "toddler",
+    "sleep",
+    "potty",
+    "feeding",
+    "under25"
+];
+
+const battleIndexes = {};
+
+const voteInProgress = new Set();
+
+const confirmedVotes = new Map();
+
+let activeCategoryIndex = 0;
+
+
+/* ============================================================
+   UTILITY
    ============================================================ */
 
 function getBattleKey(
@@ -440,1051 +309,94 @@ function getCurrentProduct(
     category
 ) {
 
-    const products =
-        battles[category];
+    const products = battles[category];
 
-    if (
-        !products ||
-        products.length === 0
-    ) {
+    if (!products?.length) {
 
         return null;
 
     }
-
-
-    let index =
-        battleIndexes[category];
-
-
-    if (
-        typeof index !== "number" ||
-        index < 0 ||
-        index >= products.length
-    ) {
-
-        index = 0;
-
-        battleIndexes[category] = 0;
-
-    }
-
-
-    return products[index];
-
-}
-
-
-/* ============================================================
-   CATEGORY HELPERS
-   ============================================================ */
-
-function getBattleElement(
-    category
-) {
-
-    return document.querySelector(
-        `.product-battle[data-category="${category}"]`
-    );
-
-}
-
-
-function getCategoryIndex(
-    category
-) {
-
-    return categoryOrder.indexOf(
-        category
-    );
-
-}
-
-
-function getNextCategory(
-    category
-) {
 
     const index =
-        getCategoryIndex(category);
-
-    if (index < 0) {
-
-        return null;
-
-    }
-
-    return (
-        categoryOrder[index + 1] ||
-        null
-    );
-
-}
-
-
-function getPreviousCategory(
-    category
-) {
-
-    const index =
-        getCategoryIndex(category);
-
-    if (index <= 0) {
-
-        return null;
-
-    }
-
-    return categoryOrder[index - 1];
-
-}
-
-
-/* ============================================================
-   CATEGORY NAVIGATION
-   ============================================================ */
-
-function updateCategoryNavigation(
-    category
-) {
-
-    document
-        .querySelectorAll(
-            ".category-link"
-        )
-        .forEach(
-            link => {
-
-                const isActive =
-                    link.getAttribute("href") ===
-                    `#${category}`;
-
-                link.classList.toggle(
-                    "active",
-                    isActive
-                );
-
-                if (isActive) {
-
-                    link.setAttribute(
-                        "aria-current",
-                        "page"
-                    );
-
-                    try {
-
-                        link.scrollIntoView({
-                            behavior: "smooth",
-                            block: "nearest",
-                            inline: "center"
-                        });
-
-                    } catch (error) {
-
-                        /* Older browsers can safely ignore this. */
-
-                    }
-
-                } else {
-
-                    link.removeAttribute(
-                        "aria-current"
-                    );
-
-                }
-
-            }
-        );
-
-}
-
-
-/*
- * Update the small global discovery indicator
- * if one exists.
- *
- * This also creates one automatically if the page
- * does not already contain one.
- */
-
-function updateDiscoveryProgress(
-    category
-) {
-
-    const categoryIndex =
-        getCategoryIndex(category);
-
-    const totalCategories =
-        categoryOrder.length;
-
-    const battle =
-        getBattleElement(category);
-
-    if (!battle) {
-
-        return;
-
-    }
-
-
-    const productIndex =
-        battleIndexes[category] || 0;
-
-    const products =
-        battles[category] || [];
-
-    const totalProducts =
-        products.length;
-
-
-    let indicator =
-        document.querySelector(
-            "[data-discovery-progress]"
-        );
-
-
-    if (!indicator) {
-
-        indicator =
-            document.createElement(
-                "div"
-            );
-
-        indicator.setAttribute(
-            "data-discovery-progress",
-            ""
-        );
-
-        indicator.className =
-            "mv-discovery-progress";
-
-
-        const nav =
-            document.querySelector(
-                ".voting-categories"
-            );
-
-
-        if (nav) {
-
-            nav.parentNode.insertBefore(
-                indicator,
-                nav.nextSibling
-            );
-
-        }
-
-    }
-
-
-    setText(
-        indicator.querySelector(
-            "[data-discovery-category]"
-        ),
-        `BATTLE ${categoryIndex + 1} OF ${totalCategories}`
-    );
-
-
-    setText(
-        indicator.querySelector(
-            "[data-discovery-product]"
-        ),
-        `PRODUCT ${productIndex + 1} OF ${totalProducts}`
-    );
-
-
-    const fill =
-        indicator.querySelector(
-            "[data-discovery-fill]"
-        );
-
-
-    if (fill) {
-
-        const totalSteps =
-            categoryOrder.reduce(
-                (sum, currentCategory) => {
-
-                    return sum +
-                        (
-                            battles[currentCategory]
-                                ? battles[currentCategory].length
-                                : 0
-                        );
-
-                },
-                0
-            );
-
-
-        const completedBefore =
-            categoryOrder
-                .slice(
-                    0,
-                    categoryIndex
-                )
-                .reduce(
-                    (sum, currentCategory) => {
-
-                        return sum +
-                            (
-                                battles[currentCategory]
-                                    ? battles[currentCategory].length
-                                    : 0
-                            );
-
-                    },
-                    0
-                );
-
-
-        const currentStep =
-            completedBefore +
-            productIndex +
-            1;
-
-
-        const percentage =
-            totalSteps > 0
-                ? (currentStep / totalSteps) * 100
-                : 0;
-
-
-        fill.style.width =
-            `${percentage}%`;
-
-    }
-
-}
-
-
-/* ============================================================
-   DISPLAY ONE CATEGORY
-   ============================================================ */
-
-function displayCategory(
-    category,
-    options = {}
-) {
-
-    if (
-        !category ||
-        !battles[category]
-    ) {
-
-        return;
-
-    }
-
-
-    const battlesOnPage =
-        document.querySelectorAll(
-            ".product-battle"
-        );
-
-
-    if (!battlesOnPage.length) {
-
-        return;
-
-    }
-
-
-    const previousCategory =
-        activeCategory;
-
-
-    activeCategory =
-        category;
-
-
-    battlesOnPage.forEach(
-        battle => {
-
-            const isActive =
-                battle.dataset.category ===
-                category;
-
-
-            battle.classList.toggle(
-                "active-battle",
-                isActive
-            );
-
-
-            battle.setAttribute(
-                "aria-hidden",
-                isActive
-                    ? "false"
-                    : "true"
-            );
-
-
-            if (!isActive) {
-
-                battle.style.display =
-                    "none";
-
-            }
-
-        }
-    );
-
-
-    const activeBattle =
-        getBattleElement(category);
-
-
-    if (!activeBattle) {
-
-        return;
-
-    }
-
-
-    activeBattle.style.display =
-        "";
-
-
-    updateCategoryNavigation(
-        category
-    );
-
-
-    updateDiscoveryProgress(
-        category
-    );
-
-
-    /*
-     * Update URL without causing the browser
-     * to jump down the page.
-     */
-
-    if (
-        options.updateHash !== false
-    ) {
-
-        try {
-
-            const newUrl =
-                `${window.location.pathname}${window.location.search}#${category}`;
-
-            window.history.replaceState(
-                null,
-                "",
-                newUrl
-            );
-
-        } catch (error) {
-
-            console.warn(
-                "Could not update category URL:",
-                error
-            );
-
-        }
-
-    }
-
-
-    /*
-     * Animate category changes.
-     */
-
-    if (
-        previousCategory &&
-        previousCategory !== category &&
-        options.animate !== false
-    ) {
-
-        activeBattle.classList.remove(
-            "category-enter-left",
-            "category-enter-right"
-        );
-
-
-        void activeBattle.offsetWidth;
-
-
-        const previousIndex =
-            getCategoryIndex(
-                previousCategory
-            );
-
-
-        const currentIndex =
-            getCategoryIndex(
-                category
-            );
-
-
-        if (
-            currentIndex >
-            previousIndex
-        ) {
-
-            activeBattle.classList.add(
-                "category-enter-left"
-            );
-
-        } else {
-
-            activeBattle.classList.add(
-                "category-enter-right"
-            );
-
-        }
-
-
-        window.setTimeout(
-            () => {
-
-                activeBattle.classList.remove(
-                    "category-enter-left",
-                    "category-enter-right"
-                );
-
-            },
-            450
-        );
-
-    }
-
-}
-
-
-/* ============================================================
-   MOVE TO NEXT CATEGORY
-   ============================================================ */
-
-function moveToNextCategory(
-    animate = true
-) {
-
-    if (!activeCategory) {
-
-        return;
-
-    }
-
-
-    const nextCategory =
-        getNextCategory(
-            activeCategory
-        );
-
-
-    if (!nextCategory) {
-
-        /*
-         * At the end, give the card a tiny bounce
-         * rather than appearing broken.
-         */
-
-        const battle =
-            getBattleElement(
-                activeCategory
-            );
-
-
-        if (battle) {
-
-            battle.classList.remove(
-                "swipe-end"
-            );
-
-            void battle.offsetWidth;
-
-            battle.classList.add(
-                "swipe-end"
-            );
-
-        }
-
-        return;
-
-    }
-
-
-    displayCategory(
-        nextCategory,
-        {
-            animate
-        }
-    );
-
-
-    showProduct(
-        getBattleElement(
-            nextCategory
-        ),
-        0
-    );
-
-}
-
-
-/* ============================================================
-   MOVE TO PREVIOUS CATEGORY
-   ============================================================ */
-
-function moveToPreviousCategory() {
-
-    if (!activeCategory) {
-
-        return;
-
-    }
-
-
-    const previousCategory =
-        getPreviousCategory(
-            activeCategory
-        );
-
-
-    if (!previousCategory) {
-
-        return;
-
-    }
-
-
-    displayCategory(
-        previousCategory,
-        {
-            animate: true
-        }
-    );
-
-
-    const previousBattle =
-        getBattleElement(
-            previousCategory
-        );
-
-
-    const products =
-        battles[previousCategory] || [];
-
-
-    showProduct(
-        previousBattle,
+        typeof battleIndexes[category] === "number"
+            ? battleIndexes[category]
+            : 0;
+
+    return products[
         Math.max(
             0,
-            products.length - 1
+            Math.min(
+                index,
+                products.length - 1
+            )
+        )
+    ];
+
+}
+
+
+function clamp(
+    value,
+    min,
+    max
+) {
+
+    return Math.max(
+        min,
+        Math.min(
+            max,
+            value
         )
     );
 
 }
 
 
-/* ============================================================
-   MOVE PRODUCT
-   ============================================================ */
-
-function goToNextProduct(
-    battle
+function setText(
+    element,
+    value
 ) {
 
-    const category =
-        battle.dataset.category;
+    if (element) {
 
-
-    const products =
-        battles[category];
-
-
-    if (
-        !products ||
-        products.length === 0
-    ) {
-
-        return;
+        element.textContent =
+            value;
 
     }
-
-
-    const currentIndex =
-        battleIndexes[category] || 0;
-
-
-    /*
-     * Final product → next category.
-     */
-
-    if (
-        currentIndex >=
-        products.length - 1
-    ) {
-
-        if (
-            category === activeCategory
-        ) {
-
-            moveToNextCategory();
-
-        }
-
-        return;
-
-    }
-
-
-    animateProductExit(
-        battle,
-        "left",
-        () => {
-
-            showProduct(
-                battle,
-                currentIndex + 1
-            );
-
-        }
-    );
 
 }
 
 
-function goToPreviousProduct(
-    battle
+function createElement(
+    tag,
+    className,
+    text
 ) {
 
-    const category =
-        battle.dataset.category;
+    const element =
+        document.createElement(tag);
 
+    if (className) {
 
-    const products =
-        battles[category];
-
-
-    if (
-        !products ||
-        products.length === 0
-    ) {
-
-        return;
+        element.className =
+            className;
 
     }
 
+    if (typeof text === "string") {
 
-    const currentIndex =
-        battleIndexes[category] || 0;
-
-
-    /*
-     * First product → previous category.
-     */
-
-    if (
-        currentIndex <= 0
-    ) {
-
-        if (
-            category === activeCategory
-        ) {
-
-            moveToPreviousCategory();
-
-        }
-
-        return;
+        element.textContent =
+            text;
 
     }
 
-
-    animateProductExit(
-        battle,
-        "right",
-        () => {
-
-            showProduct(
-                battle,
-                currentIndex - 1
-            );
-
-        }
-    );
+    return element;
 
 }
 
 
 /* ============================================================
-   PRODUCT EXIT ANIMATION
-   ============================================================ */
-
-function animateProductExit(
-    battle,
-    direction,
-    callback
-) {
-
-    if (
-        !battle ||
-        categoryTransitionInProgress
-    ) {
-
-        return;
-
-    }
-
-
-    categoryTransitionInProgress =
-        true;
-
-
-    battle.classList.remove(
-        "swipe-exit-left",
-        "swipe-exit-right"
-    );
-
-
-    void battle.offsetWidth;
-
-
-    battle.classList.add(
-        direction === "left"
-            ? "swipe-exit-left"
-            : "swipe-exit-right"
-    );
-
-
-    window.setTimeout(
-        () => {
-
-            battle.classList.remove(
-                "swipe-exit-left",
-                "swipe-exit-right"
-            );
-
-
-            categoryTransitionInProgress =
-                false;
-
-
-            if (typeof callback === "function") {
-
-                callback();
-
-            }
-
-        },
-        330
-    );
-
-}
-
-
-/* ============================================================
-   AUTHENTICATION
-   ============================================================ */
-
-function startAnonymousAuthentication() {
-
-    if (!auth) {
-
-        return Promise.reject(
-            new Error(
-                "Firebase Authentication is not initialized."
-            )
-        );
-
-    }
-
-
-    if (auth.currentUser) {
-
-        currentUser =
-            auth.currentUser;
-
-        authenticationReady =
-            true;
-
-        return Promise.resolve(
-            currentUser
-        );
-
-    }
-
-
-    if (authenticationPromise) {
-
-        return authenticationPromise;
-
-    }
-
-
-    authenticationPromise =
-        new Promise(
-            (resolve, reject) => {
-
-                let finished = false;
-
-                let unsubscribe = null;
-
-
-                const finishSuccess =
-                    (user) => {
-
-                        if (finished) {
-
-                            return;
-
-                        }
-
-
-                        finished = true;
-
-                        currentUser =
-                            user;
-
-                        authenticationReady =
-                            true;
-
-
-                        if (unsubscribe) {
-
-                            unsubscribe();
-
-                        }
-
-
-                        console.log(
-                            "Firebase user ready:",
-                            user.uid
-                        );
-
-
-                        resolve(
-                            user
-                        );
-
-                    };
-
-
-                const finishError =
-                    (error) => {
-
-                        if (finished) {
-
-                            return;
-
-                        }
-
-
-                        finished = true;
-
-                        authenticationReady =
-                            false;
-
-                        currentUser =
-                            null;
-
-                        authenticationPromise =
-                            null;
-
-
-                        if (unsubscribe) {
-
-                            unsubscribe();
-
-                        }
-
-
-                        console.error(
-                            "Firebase authentication error:",
-                            error
-                        );
-
-
-                        reject(
-                            error
-                        );
-
-                    };
-
-
-                unsubscribe =
-                    onAuthStateChanged(
-                        auth,
-
-                        async (user) => {
-
-                            if (finished) {
-
-                                return;
-
-                            }
-
-
-                            if (user) {
-
-                                finishSuccess(
-                                    user
-                                );
-
-                                return;
-
-                            }
-
-
-                            try {
-
-                                const credential =
-                                    await signInAnonymously(
-                                        auth
-                                    );
-
-
-                                if (
-                                    credential &&
-                                    credential.user
-                                ) {
-
-                                    finishSuccess(
-                                        credential.user
-                                    );
-
-                                } else {
-
-                                    throw new Error(
-                                        "Firebase did not return an authenticated user."
-                                    );
-
-                                }
-
-                            } catch (error) {
-
-                                finishError(
-                                    error
-                                );
-
-                            }
-
-                        },
-
-                        (error) => {
-
-                            finishError(
-                                error
-                            );
-
-                        }
-                    );
-
-            }
-        );
-
-
-    return authenticationPromise;
-
-}
-
-
-/* ============================================================
-   LOCAL STORAGE
+   LOCAL VOTE CACHE
    ============================================================ */
 
 function getLocalVoteKey(
@@ -1513,7 +425,6 @@ function saveConfirmedVoteLocally(
         return;
 
     }
-
 
     try {
 
@@ -1552,7 +463,6 @@ function getConfirmedLocalVote(
                 )
             );
 
-
         if (
             vote === "yes" ||
             vote === "no"
@@ -1571,637 +481,230 @@ function getConfirmedLocalVote(
 
     }
 
-
     return null;
 
 }
 
 
 /* ============================================================
-   UI HELPERS
+   FIREBASE AUTHENTICATION
    ============================================================ */
 
-function setText(
-    element,
-    value
-) {
+function startAnonymousAuthentication() {
 
-    if (element) {
+    if (!auth) {
 
-        element.textContent =
-            value;
+        return Promise.reject(
+            new Error(
+                "Firebase Authentication is not initialized."
+            )
+        );
 
     }
+
+    if (auth.currentUser) {
+
+        currentUser =
+            auth.currentUser;
+
+        authenticationReady =
+            true;
+
+        return Promise.resolve(
+            currentUser
+        );
+
+    }
+
+    if (authenticationPromise) {
+
+        return authenticationPromise;
+
+    }
+
+    authenticationPromise =
+        new Promise(
+            (resolve, reject) => {
+
+                let finished = false;
+                let unsubscribe = null;
+
+                const finishSuccess =
+                    user => {
+
+                        if (finished) {
+
+                            return;
+
+                        }
+
+                        finished =
+                            true;
+
+                        currentUser =
+                            user;
+
+                        authenticationReady =
+                            true;
+
+                        if (unsubscribe) {
+
+                            unsubscribe();
+
+                        }
+
+                        console.log(
+                            "Firebase user ready:",
+                            user.uid
+                        );
+
+                        resolve(
+                            user
+                        );
+
+                    };
+
+                const finishError =
+                    error => {
+
+                        if (finished) {
+
+                            return;
+
+                        }
+
+                        finished =
+                            true;
+
+                        authenticationReady =
+                            false;
+
+                        currentUser =
+                            null;
+
+                        authenticationPromise =
+                            null;
+
+                        if (unsubscribe) {
+
+                            unsubscribe();
+
+                        }
+
+                        reject(
+                            error
+                        );
+
+                    };
+
+                unsubscribe =
+                    onAuthStateChanged(
+                        auth,
+
+                        async user => {
+
+                            if (finished) {
+
+                                return;
+
+                            }
+
+                            if (user) {
+
+                                finishSuccess(
+                                    user
+                                );
+
+                                return;
+
+                            }
+
+                            try {
+
+                                const credential =
+                                    await signInAnonymously(
+                                        auth
+                                    );
+
+                                if (
+                                    credential?.user
+                                ) {
+
+                                    finishSuccess(
+                                        credential.user
+                                    );
+
+                                } else {
+
+                                    throw new Error(
+                                        "Firebase did not return an authenticated user."
+                                    );
+
+                                }
+
+                            } catch (error) {
+
+                                finishError(
+                                    error
+                                );
+
+                            }
+
+                        },
+
+                        error => {
+
+                            finishError(
+                                error
+                            );
+
+                        }
+                    );
+
+            }
+        );
+
+    return authenticationPromise;
 
 }
 
 
+/* ============================================================
+   IMAGE
+   ============================================================ */
+
 function setImage(
-    imageElement,
+    element,
     src,
     alt
 ) {
 
-    if (!imageElement) {
+    if (!element) {
 
         return;
 
     }
 
-
-    imageElement.onerror =
+    element.onerror =
         () => {
 
-            console.warn(
-                "Product image failed to load:",
-                src
-            );
-
-            imageElement.classList.add(
+            element.classList.add(
                 "image-load-error"
             );
 
         };
 
-
-    imageElement.src =
+    element.src =
         src;
 
-
-    imageElement.alt =
+    element.alt =
         alt || "";
 
 }
 
 
-function updateProductPosition(
-    battle,
-    index,
-    total
-) {
-
-    const position =
-        battle.querySelector(
-            "[data-position]"
-        );
-
-
-    const progressText =
-        battle.querySelector(
-            "[data-progress-text]"
-        );
-
-
-    const progress =
-        battle.querySelector(
-            "[data-progress]"
-        );
-
-
-    setText(
-        position,
-        `PRODUCT ${index + 1} OF ${total}`
-    );
-
-
-    setText(
-        progressText,
-        `${index + 1} / ${total}`
-    );
-
-
-    if (progress) {
-
-        const percentage =
-            total > 0
-                ? ((index + 1) / total) * 100
-                : 0;
-
-
-        progress.style.width =
-            `${percentage}%`;
-
-    }
-
-}
-
-
-function updateDots(
-    battle,
-    products,
-    activeIndex
-) {
-
-    const dots =
-        battle.querySelector(
-            "[data-dots]"
-        );
-
-
-    if (!dots) {
-
-        return;
-
-    }
-
-
-    dots.innerHTML =
-        "";
-
-
-    products.forEach(
-        (_, index) => {
-
-            const dot =
-                document.createElement(
-                    "button"
-                );
-
-
-            dot.type =
-                "button";
-
-
-            dot.className =
-                "battle-dot";
-
-
-            if (
-                index === activeIndex
-            ) {
-
-                dot.classList.add(
-                    "active"
-                );
-
-            }
-
-
-            dot.setAttribute(
-                "aria-label",
-                `View product ${index + 1}`
-            );
-
-
-            dot.addEventListener(
-                "click",
-                (event) => {
-
-                    event.stopPropagation();
-
-
-                    showProduct(
-                        battle,
-                        index
-                    );
-
-                }
-            );
-
-
-            dots.appendChild(
-                dot
-            );
-
-        }
-    );
-
-}
-
-
-function updateScoreUI(
-    battle,
-    product
-) {
-
-    const percentage =
-        Number(
-            product.percentage
-        ) || 0;
-
-
-    const noPercentage =
-        Math.max(
-            0,
-            100 - percentage
-        );
-
-
-    setText(
-        battle.querySelector(
-            "[data-score]"
-        ),
-        product.score
-    );
-
-
-    setText(
-        battle.querySelector(
-            "[data-percentage]"
-        ),
-        `${percentage}%`
-    );
-
-
-    setText(
-        battle.querySelector(
-            "[data-yes-percentage]"
-        ),
-        `${percentage}%`
-    );
-
-
-    setText(
-        battle.querySelector(
-            "[data-no-percentage]"
-        ),
-        `${noPercentage}%`
-    );
-
-
-    const consensusBar =
-        battle.querySelector(
-            "[data-consensus-bar]"
-        );
-
-
-    if (consensusBar) {
-
-        consensusBar.style.width =
-            `${percentage}%`;
-
-    }
-
-
-    const consensus =
-        battle.querySelector(
-            "[data-consensus]"
-        );
-
-
-    if (consensus) {
-
-        if (
-            percentage >= 70
-        ) {
-
-            consensus.textContent =
-                "🔥 Mom favorite";
-
-        } else if (
-            percentage >= 60
-        ) {
-
-            consensus.textContent =
-                "💗 Strong mom approval";
-
-        } else {
-
-            consensus.textContent =
-                "👀 Moms are deciding";
-
-        }
-
-    }
-
-}
-
-
 /* ============================================================
-   RESET VOTE UI
-   ============================================================ */
-
-function resetVoteUI(
-    battle
-) {
-
-    const result =
-        battle.querySelector(
-            "[data-result]"
-        );
-
-
-    const socialComparison =
-        battle.querySelector(
-            "[data-social-comparison]"
-        );
-
-
-    const voteArea =
-        battle.querySelector(
-            "[data-vote-area]"
-        );
-
-
-    if (result) {
-
-        result.classList.remove(
-            "visible"
-        );
-
-    }
-
-
-    if (socialComparison) {
-
-        socialComparison.classList.remove(
-            "visible"
-        );
-
-    }
-
-
-    if (voteArea) {
-
-        voteArea.classList.remove(
-            "vote-complete"
-        );
-
-    }
-
-
-    battle
-        .querySelectorAll(
-            "[data-vote]"
-        )
-        .forEach(
-            button => {
-
-                button.disabled =
-                    false;
-
-                button.classList.remove(
-                    "selected"
-                );
-
-            }
-        );
-
-}
-
-
-/* ============================================================
-   SHOW SUCCESSFUL VOTE
-   ============================================================ */
-
-function showVoteUI(
-    battle,
-    vote
-) {
-
-    const result =
-        battle.querySelector(
-            "[data-result]"
-        );
-
-
-    const resultTitle =
-        battle.querySelector(
-            "[data-result-title]"
-        );
-
-
-    const resultText =
-        battle.querySelector(
-            "[data-result-text]"
-        );
-
-
-    const socialComparison =
-        battle.querySelector(
-            "[data-social-comparison]"
-        );
-
-
-    const yourPosition =
-        battle.querySelector(
-            "[data-your-position]"
-        );
-
-
-    const voteArea =
-        battle.querySelector(
-            "[data-vote-area]"
-        );
-
-
-    if (voteArea) {
-
-        voteArea.classList.add(
-            "vote-complete"
-        );
-
-    }
-
-
-    battle
-        .querySelectorAll(
-            "[data-vote]"
-        )
-        .forEach(
-            button => {
-
-                button.disabled =
-                    true;
-
-
-                if (
-                    button.dataset.vote ===
-                    vote
-                ) {
-
-                    button.classList.add(
-                        "selected"
-                    );
-
-                }
-
-            }
-        );
-
-
-    if (result) {
-
-        result.classList.add(
-            "visible"
-        );
-
-    }
-
-
-    setText(
-        resultTitle,
-        "Your vote is saved!"
-    );
-
-
-    setText(
-        resultText,
-        "Your vote was successfully registered."
-    );
-
-
-    if (socialComparison) {
-
-        socialComparison.classList.add(
-            "visible"
-        );
-
-    }
-
-
-    const product =
-        getCurrentProduct(
-            battle.dataset.category
-        );
-
-
-    if (
-        product &&
-        yourPosition
-    ) {
-
-        const yes =
-            Number(
-                product.percentage
-            ) || 0;
-
-
-        const isMajority =
-            vote === "yes"
-                ? yes >= 50
-                : yes < 50;
-
-
-        setText(
-            yourPosition,
-            isMajority
-                ? "You're with the majority."
-                : "You're with the minority."
-        );
-
-    }
-
-
-    /*
-     * Add an extra visual confirmation.
-     */
-
-    battle.classList.remove(
-        "vote-just-saved"
-    );
-
-
-    void battle.offsetWidth;
-
-
-    battle.classList.add(
-        "vote-just-saved"
-    );
-
-}
-
-
-/* ============================================================
-   SHOW VOTE ERROR
-   ============================================================ */
-
-function showVoteError(
-    battle,
-    message
-) {
-
-    const result =
-        battle.querySelector(
-            "[data-result]"
-        );
-
-
-    const resultTitle =
-        battle.querySelector(
-            "[data-result-title]"
-        );
-
-
-    const resultText =
-        battle.querySelector(
-            "[data-result-text]"
-        );
-
-
-    const socialComparison =
-        battle.querySelector(
-            "[data-social-comparison]"
-        );
-
-
-    const voteArea =
-        battle.querySelector(
-            "[data-vote-area]"
-        );
-
-
-    if (voteArea) {
-
-        voteArea.classList.remove(
-            "vote-complete"
-        );
-
-    }
-
-
-    if (socialComparison) {
-
-        socialComparison.classList.remove(
-            "visible"
-        );
-
-    }
-
-
-    battle
-        .querySelectorAll(
-            "[data-vote]"
-        )
-        .forEach(
-            button => {
-
-                button.disabled =
-                    false;
-
-                button.classList.remove(
-                    "selected"
-                );
-
-            }
-        );
-
-
-    if (result) {
-
-        result.classList.add(
-            "visible"
-        );
-
-    }
-
-
-    setText(
-        resultTitle,
-        "Vote not registered"
-    );
-
-
-    setText(
-        resultText,
-        message
-    );
-
-}
-
-
-/* ============================================================
-   LOAD EXISTING VOTE
+   FIRESTORE EXISTING VOTE
    ============================================================ */
 
 async function loadExistingVote(
@@ -2218,13 +721,11 @@ async function loadExistingVote(
 
     }
 
-
     const key =
         getBattleKey(
             category,
             product.id
         );
-
 
     if (
         confirmedVotes.has(key)
@@ -2234,14 +735,12 @@ async function loadExistingVote(
 
     }
 
-
     const documentId =
         getVoteDocumentId(
             category,
             product.id,
             currentUser.uid
         );
-
 
     try {
 
@@ -2252,12 +751,10 @@ async function loadExistingVote(
                 documentId
             );
 
-
         const snapshot =
             await getDoc(
                 voteRef
             );
-
 
         if (
             !snapshot.exists()
@@ -2267,51 +764,37 @@ async function loadExistingVote(
 
         }
 
-
         const data =
             snapshot.data();
-
 
         if (
             data.uid !==
             currentUser.uid
         ) {
 
-            console.warn(
-                "Vote document UID does not match current user."
-            );
-
             return null;
 
         }
-
 
         if (
             data.vote !== "yes" &&
             data.vote !== "no"
         ) {
 
-            console.warn(
-                "Invalid vote value found in Firestore."
-            );
-
             return null;
 
         }
-
 
         confirmedVotes.set(
             key,
             data.vote
         );
 
-
         saveConfirmedVoteLocally(
             category,
             product.id,
             data.vote
         );
-
 
         return data.vote;
 
@@ -2322,7 +805,6 @@ async function loadExistingVote(
             error
         );
 
-
         return null;
 
     }
@@ -2331,7 +813,7 @@ async function loadExistingVote(
 
 
 /* ============================================================
-   SAVE VOTE
+   FIRESTORE SAVE
    ============================================================ */
 
 async function saveVote(
@@ -2348,7 +830,6 @@ async function saveVote(
 
     }
 
-
     if (
         vote !== "yes" &&
         vote !== "no"
@@ -2360,7 +841,6 @@ async function saveVote(
 
     }
 
-
     if (
         !authenticationReady ||
         !currentUser
@@ -2370,7 +850,6 @@ async function saveVote(
 
     }
 
-
     if (!currentUser) {
 
         throw new Error(
@@ -2378,7 +857,6 @@ async function saveVote(
         );
 
     }
-
 
     if (!db) {
 
@@ -2388,13 +866,11 @@ async function saveVote(
 
     }
 
-
     const key =
         getBattleKey(
             category,
             product.id
         );
-
 
     if (
         voteInProgress.has(key)
@@ -2404,7 +880,6 @@ async function saveVote(
 
     }
 
-
     if (
         confirmedVotes.has(key)
     ) {
@@ -2413,11 +888,9 @@ async function saveVote(
 
     }
 
-
     voteInProgress.add(
         key
     );
-
 
     try {
 
@@ -2428,14 +901,12 @@ async function saveVote(
                 currentUser.uid
             );
 
-
         const voteRef =
             doc(
                 db,
                 "productVotes",
                 documentId
             );
-
 
         await setDoc(
             voteRef,
@@ -2467,37 +938,16 @@ async function saveVote(
             }
         );
 
-
         confirmedVotes.set(
             key,
             vote
         );
-
 
         saveConfirmedVoteLocally(
             category,
             product.id,
             vote
         );
-
-
-        console.log(
-            "Vote successfully saved:",
-            {
-                uid:
-                    currentUser.uid,
-
-                category:
-                    category,
-
-                productId:
-                    product.id,
-
-                vote:
-                    vote
-            }
-        );
-
 
         return true;
 
@@ -2507,7 +957,6 @@ async function saveVote(
             "Vote was NOT saved:",
             error
         );
-
 
         throw error;
 
@@ -2523,104 +972,989 @@ async function saveVote(
 
 
 /* ============================================================
-   FIREBASE ERROR MESSAGES
+   BUILD ONE PRODUCT SIDE
    ============================================================ */
 
-function getReadableFirebaseError(
-    error
+function createProductSide(
+    product,
+    side,
+    productNumber
 ) {
 
-    if (!error) {
-
-        return (
-            "Your vote could not be registered."
+    const wrapper =
+        createElement(
+            "div",
+            `battle-product-side ${side}`
         );
 
-    }
+    const label =
+        createElement(
+            "div",
+            "battle-side-label",
+            side === "left"
+                ? "CONTENDER A"
+                : "CONTENDER B"
+        );
 
-
-    console.error(
-        "Full Firebase error:",
-        error
+    wrapper.appendChild(
+        label
     );
 
 
-    if (
-        error.code ===
-        "permission-denied"
-    ) {
-
-        return (
-            "Firebase rejected the vote. " +
-            "Check that Anonymous Authentication is enabled " +
-            "and your Firestore rules allow authenticated users to create votes."
+    const imageArea =
+        createElement(
+            "div",
+            "battle-product-image-area"
         );
+
+
+    const image =
+        createElement(
+            "img",
+            "battle-product-image"
+        );
+
+    setImage(
+        image,
+        product.image,
+        product.name
+    );
+
+    imageArea.appendChild(
+        image
+    );
+
+    wrapper.appendChild(
+        imageArea
+    );
+
+
+    const info =
+        createElement(
+            "div",
+            "battle-product-info"
+        );
+
+
+    const brand =
+        createElement(
+            "div",
+            "battle-product-brand",
+            product.brand
+        );
+
+    const name =
+        createElement(
+            "h3",
+            "battle-product-name",
+            product.name
+        );
+
+    const description =
+        createElement(
+            "p",
+            "battle-product-description",
+            product.description
+        );
+
+
+    info.appendChild(
+        brand
+    );
+
+    info.appendChild(
+        name
+    );
+
+    info.appendChild(
+        description
+    );
+
+    wrapper.appendChild(
+        info
+    );
+
+
+    wrapper.dataset.productId =
+        product.id;
+
+    wrapper.dataset.productNumber =
+        productNumber;
+
+    return wrapper;
+
+}
+
+
+/* ============================================================
+   BUILD BATTLE ARENA
+   ============================================================ */
+
+function buildBattleArena(
+    battle,
+    leftProduct,
+    rightProduct
+) {
+
+    const oldViewer =
+        battle.querySelector(
+            ".product-viewer"
+        );
+
+    if (!oldViewer) {
+
+        return null;
 
     }
 
+    oldViewer.innerHTML =
+        "";
 
-    if (
-        error.code ===
-        "auth/operation-not-allowed"
-    ) {
-
-        return (
-            "Anonymous Authentication is not enabled " +
-            "in your Firebase project."
+    const arena =
+        createElement(
+            "div",
+            "battle-arena"
         );
+
+    arena.setAttribute(
+        "aria-label",
+        `Product battle: ${leftProduct.name} versus ${rightProduct.name}`
+    );
+
+
+    const leftSide =
+        createProductSide(
+            leftProduct,
+            "left",
+            1
+        );
+
+
+    const vsColumn =
+        createElement(
+            "div",
+            "battle-vs-column"
+        );
+
+
+    const vsBadge =
+        createElement(
+            "div",
+            "battle-vs-badge",
+            "VS"
+        );
+
+
+    vsColumn.appendChild(
+        vsBadge
+    );
+
+
+    const rightSide =
+        createProductSide(
+            rightProduct,
+            "right",
+            2
+        );
+
+
+    arena.appendChild(
+        leftSide
+    );
+
+    arena.appendChild(
+        vsColumn
+    );
+
+    arena.appendChild(
+        rightSide
+    );
+
+
+    oldViewer.appendChild(
+        arena
+    );
+
+
+    const hint =
+        createElement(
+            "div",
+            "swipe-hint"
+        );
+
+    const arrow =
+        createElement(
+            "span",
+            "swipe-hint-arrow",
+            "←"
+        );
+
+    const text =
+        createElement(
+            "span",
+            "",
+            "Swipe left for the next battle"
+        );
+
+    hint.appendChild(
+        arrow
+    );
+
+    hint.appendChild(
+        text
+    );
+
+
+    oldViewer.appendChild(
+        hint
+    );
+
+
+    setupSwipe(
+        battle,
+        arena
+    );
+
+
+    return arena;
+
+}
+
+
+/* ============================================================
+   SCORE UI
+   ============================================================ */
+
+function updateBattleScore(
+    battle,
+    leftProduct,
+    rightProduct
+) {
+
+    let scoreStrip =
+        battle.querySelector(
+            ".battle-score-strip"
+        );
+
+    if (!scoreStrip) {
+
+        scoreStrip =
+            createElement(
+                "div",
+                "battle-score-strip"
+            );
+
+        const viewer =
+            battle.querySelector(
+                ".product-viewer"
+            );
+
+        if (
+            viewer?.nextSibling
+        ) {
+
+            battle
+                .querySelector(
+                    ".battle-card"
+                )
+                ?.insertBefore(
+                    scoreStrip,
+                    viewer.nextSibling
+                );
+
+        } else {
+
+            battle
+                .querySelector(
+                    ".battle-card"
+                )
+                ?.appendChild(
+                    scoreStrip
+                );
+
+        }
 
     }
 
+    scoreStrip.innerHTML =
+        "";
 
-    if (
-        error.code ===
-        "auth/network-request-failed"
-    ) {
 
-        return (
-            "There was a network problem. " +
-            "Your vote was not saved."
+    const left =
+        createElement(
+            "div",
+            "battle-score-side left"
         );
 
-    }
-
-
-    if (
-        error.code ===
-        "unavailable"
-    ) {
-
-        return (
-            "Firebase is temporarily unavailable. " +
-            "Your vote was not saved."
+    const leftNumber =
+        createElement(
+            "strong",
+            "battle-score-number",
+            leftProduct.score
         );
 
-    }
-
-
-    if (
-        error.code ===
-        "failed-precondition"
-    ) {
-
-        return (
-            "Firebase could not complete the vote. " +
-            "Please try again."
+    const leftLabel =
+        createElement(
+            "span",
+            "battle-score-label",
+            `${leftProduct.percentage}% mom approval`
         );
 
-    }
+    left.appendChild(
+        leftNumber
+    );
+
+    left.appendChild(
+        leftLabel
+    );
 
 
-    return (
-        "Your vote could not be registered. " +
-        "Please try again."
+    const centre =
+        createElement(
+            "div",
+            "battle-score-vs",
+            "MOM SCORE"
+        );
+
+
+    const right =
+        createElement(
+            "div",
+            "battle-score-side right"
+        );
+
+    const rightNumber =
+        createElement(
+            "strong",
+            "battle-score-number",
+            rightProduct.score
+        );
+
+    const rightLabel =
+        createElement(
+            "span",
+            "battle-score-label",
+            `${rightProduct.percentage}% mom approval`
+        );
+
+    right.appendChild(
+        rightNumber
+    );
+
+    right.appendChild(
+        rightLabel
+    );
+
+
+    scoreStrip.appendChild(
+        left
+    );
+
+    scoreStrip.appendChild(
+        centre
+    );
+
+    scoreStrip.appendChild(
+        right
     );
 
 }
 
 
 /* ============================================================
-   HANDLE VOTE
+   MOM SCORE
+   ============================================================ */
+
+function updateMomScore(
+    battle,
+    leftProduct,
+    rightProduct
+) {
+
+    let score =
+        battle.querySelector(
+            ".mom-score"
+        );
+
+    if (!score) {
+
+        score =
+            createElement(
+                "div",
+                "mom-score"
+            );
+
+        const viewer =
+            battle.querySelector(
+                ".product-viewer"
+            );
+
+        if (viewer) {
+
+            viewer.after(
+                score
+            );
+
+        }
+
+    }
+
+    const winner =
+        leftProduct.percentage >=
+        rightProduct.percentage
+            ? leftProduct
+            : rightProduct;
+
+    const percentage =
+        Math.max(
+            0,
+            Math.min(
+                100,
+                Number(
+                    winner.percentage
+                ) || 0
+            )
+        );
+
+    let heading =
+        "MOM VERDICT";
+
+    let consensus =
+        "👀 Moms are deciding";
+
+    if (percentage >= 70) {
+
+        consensus =
+            "🔥 Mom favorite";
+
+    } else if (percentage >= 60) {
+
+        consensus =
+            "💗 Strong mom approval";
+
+    }
+
+
+    score.innerHTML =
+        "";
+
+
+    const headingElement =
+        createElement(
+            "div",
+            "mom-score-heading",
+            heading
+        );
+
+
+    const main =
+        createElement(
+            "div",
+            "mom-score-main"
+        );
+
+
+    const strong =
+        createElement(
+            "strong",
+            "",
+            `${percentage}%`
+        );
+
+    const label =
+        createElement(
+            "span",
+            "",
+            "approval"
+        );
+
+
+    main.appendChild(
+        strong
+    );
+
+    main.appendChild(
+        label
+    );
+
+
+    const bar =
+        createElement(
+            "div",
+            "consensus-bar"
+        );
+
+
+    const fill =
+        createElement(
+            "div",
+            "consensus-bar-fill"
+        );
+
+
+    fill.style.width =
+        `${percentage}%`;
+
+
+    bar.appendChild(
+        fill
+    );
+
+
+    const consensusText =
+        createElement(
+            "span",
+            "",
+            consensus
+        );
+
+
+    score.appendChild(
+        headingElement
+    );
+
+    score.appendChild(
+        main
+    );
+
+    score.appendChild(
+        bar
+    );
+
+    score.appendChild(
+        consensusText
+    );
+
+}
+
+
+/* ============================================================
+   VOTE AREA
+   ============================================================ */
+
+function ensureVoteArea(
+    battle
+) {
+
+    let voteArea =
+        battle.querySelector(
+            "[data-vote-area]"
+        );
+
+    if (voteArea) {
+
+        return voteArea;
+
+    }
+
+    voteArea =
+        createElement(
+            "div",
+            "vote-area"
+        );
+
+    voteArea.dataset.voteArea =
+        "";
+
+    const question =
+        createElement(
+            "div",
+            "vote-question",
+            "WHO GETS YOUR VOTE?"
+        );
+
+    const buttons =
+        createElement(
+            "div",
+            "vote-buttons"
+        );
+
+
+    const yes =
+        createElement(
+            "button",
+            "",
+            "💗 I'D PICK THIS"
+        );
+
+    yes.type =
+        "button";
+
+    yes.dataset.vote =
+        "yes";
+
+
+    const no =
+        createElement(
+            "button",
+            "",
+            "👎 NOT FOR ME"
+        );
+
+    no.type =
+        "button";
+
+    no.dataset.vote =
+        "no";
+
+
+    buttons.appendChild(
+        yes
+    );
+
+    buttons.appendChild(
+        no
+    );
+
+
+    voteArea.appendChild(
+        question
+    );
+
+    voteArea.appendChild(
+        buttons
+    );
+
+
+    const score =
+        battle.querySelector(
+            ".mom-score"
+        );
+
+    if (score) {
+
+        score.after(
+            voteArea
+        );
+
+    } else {
+
+        const viewer =
+            battle.querySelector(
+                ".product-viewer"
+            );
+
+        viewer?.after(
+            voteArea
+        );
+
+    }
+
+
+    return voteArea;
+
+}
+
+
+/* ============================================================
+   VOTE RESULT
+   ============================================================ */
+
+function ensureResultArea(
+    battle
+) {
+
+    let result =
+        battle.querySelector(
+            "[data-result]"
+        );
+
+    if (result) {
+
+        return result;
+
+    }
+
+    result =
+        createElement(
+            "div",
+            "vote-result"
+        );
+
+    result.dataset.result =
+        "";
+
+
+    const title =
+        createElement(
+            "div",
+            "",
+            "Your vote is saved!"
+        );
+
+    title.dataset.resultTitle =
+        "";
+
+
+    const text =
+        createElement(
+            "div",
+            "",
+            "Your vote was successfully registered."
+        );
+
+    text.dataset.resultText =
+        "";
+
+
+    result.appendChild(
+        title
+    );
+
+    result.appendChild(
+        text
+    );
+
+
+    const voteArea =
+        battle.querySelector(
+            "[data-vote-area]"
+        );
+
+    voteArea?.after(
+        result
+    );
+
+
+    return result;
+
+}
+
+
+/* ============================================================
+   RESET VOTE UI
+   ============================================================ */
+
+function resetVoteUI(
+    battle
+) {
+
+    const result =
+        battle.querySelector(
+            "[data-result]"
+        );
+
+    const social =
+        battle.querySelector(
+            "[data-social-comparison]"
+        );
+
+    const voteArea =
+        battle.querySelector(
+            "[data-vote-area]"
+        );
+
+    if (result) {
+
+        result.classList.remove(
+            "visible"
+        );
+
+    }
+
+    if (social) {
+
+        social.classList.remove(
+            "visible"
+        );
+
+    }
+
+    if (voteArea) {
+
+        voteArea.classList.remove(
+            "vote-complete"
+        );
+
+    }
+
+    battle
+        .querySelectorAll(
+            "[data-vote]"
+        )
+        .forEach(
+            button => {
+
+                button.disabled =
+                    false;
+
+                button.classList.remove(
+                    "selected"
+                );
+
+            }
+        );
+
+}
+
+
+/* ============================================================
+   SHOW VOTE SUCCESS
+   ============================================================ */
+
+function showVoteUI(
+    battle,
+    product,
+    vote
+) {
+
+    const result =
+        ensureResultArea(
+            battle
+        );
+
+    const title =
+        result.querySelector(
+            "[data-result-title]"
+        );
+
+    const text =
+        result.querySelector(
+            "[data-result-text]"
+        );
+
+    const voteArea =
+        battle.querySelector(
+            "[data-vote-area]"
+        );
+
+
+    if (voteArea) {
+
+        voteArea.classList.add(
+            "vote-complete"
+        );
+
+    }
+
+
+    battle
+        .querySelectorAll(
+            "[data-vote]"
+        )
+        .forEach(
+            button => {
+
+                button.disabled =
+                    true;
+
+                if (
+                    button.dataset.vote ===
+                    vote
+                ) {
+
+                    button.classList.add(
+                        "selected"
+                    );
+
+                }
+
+            }
+        );
+
+
+    result.classList.add(
+        "visible"
+    );
+
+
+    setText(
+        title,
+        "Your vote is saved! 💗"
+    );
+
+
+    const percentage =
+        Number(
+            product.percentage
+        ) || 0;
+
+
+    const majority =
+        vote === "yes"
+            ? percentage >= 50
+            : percentage < 50;
+
+
+    setText(
+        text,
+        majority
+            ? "You're with the mom majority."
+            : "You're with the mom minority."
+    );
+
+
+    showSwipeNextMessage(
+        battle
+    );
+
+}
+
+
+/* ============================================================
+   VOTE ERROR
+   ============================================================ */
+
+function showVoteError(
+    battle,
+    message
+) {
+
+    const result =
+        ensureResultArea(
+            battle
+        );
+
+    const title =
+        result.querySelector(
+            "[data-result-title]"
+        );
+
+    const text =
+        result.querySelector(
+            "[data-result-text]"
+        );
+
+
+    result.classList.add(
+        "visible"
+    );
+
+
+    setText(
+        title,
+        "Vote not registered"
+    );
+
+
+    setText(
+        text,
+        message
+    );
+
+
+    battle
+        .querySelectorAll(
+            "[data-vote]"
+        )
+        .forEach(
+            button => {
+
+                button.disabled =
+                    false;
+
+                button.classList.remove(
+                    "selected"
+                );
+
+            }
+        );
+
+}
+
+
+/* ============================================================
+   VOTE HANDLER
    ============================================================ */
 
 async function handleVote(
@@ -2631,12 +1965,10 @@ async function handleVote(
     const category =
         battle.dataset.category;
 
-
     const product =
         getCurrentProduct(
             category
         );
-
 
     if (!product) {
 
@@ -2667,17 +1999,10 @@ async function handleVote(
 
     } catch (error) {
 
-        console.error(
-            "Authentication error:",
-            error
-        );
-
-
         showVoteError(
             battle,
             "We couldn't connect your vote. Please try again."
         );
-
 
         return;
 
@@ -2690,7 +2015,6 @@ async function handleVote(
             battle,
             "We couldn't create your voting session. Please try again."
         );
-
 
         return;
 
@@ -2706,23 +2030,17 @@ async function handleVote(
                 vote
             );
 
-
         if (saved) {
 
             showVoteUI(
                 battle,
+                product,
                 vote
             );
 
         }
 
     } catch (error) {
-
-        console.error(
-            "Vote registration failed:",
-            error
-        );
-
 
         showVoteError(
             battle,
@@ -2737,20 +2055,518 @@ async function handleVote(
 
 
 /* ============================================================
-   DISPLAY PRODUCT
+   FIREBASE ERROR MESSAGE
    ============================================================ */
 
-async function showProduct(
-    battle,
-    index
+function getReadableFirebaseError(
+    error
 ) {
 
-    if (!battle) {
+    if (!error) {
+
+        return "Your vote could not be registered.";
+
+    }
+
+    if (
+        error.code ===
+        "permission-denied"
+    ) {
+
+        return (
+            "Firebase rejected the vote. " +
+            "Check that Anonymous Authentication is enabled " +
+            "and your Firestore rules allow authenticated users to create votes."
+        );
+
+    }
+
+    if (
+        error.code ===
+        "auth/operation-not-allowed"
+    ) {
+
+        return (
+            "Anonymous Authentication is not enabled " +
+            "in your Firebase project."
+        );
+
+    }
+
+    if (
+        error.code ===
+        "auth/network-request-failed"
+    ) {
+
+        return (
+            "There was a network problem. " +
+            "Your vote was not saved."
+        );
+
+    }
+
+    if (
+        error.code ===
+        "unavailable"
+    ) {
+
+        return (
+            "Firebase is temporarily unavailable. " +
+            "Your vote was not saved."
+        );
+
+    }
+
+    return (
+        "Your vote could not be registered. " +
+        "Please try again."
+    );
+
+}
+
+
+/* ============================================================
+   CATEGORY NAV
+   ============================================================ */
+
+function getBattleElements() {
+
+    return Array.from(
+        document.querySelectorAll(
+            ".product-battle"
+        )
+    );
+
+}
+
+
+function getCategoryIndex(
+    category
+) {
+
+    return categoryOrder.indexOf(
+        category
+    );
+
+}
+
+
+function updateCategoryNavigation(
+    category
+) {
+
+    document
+        .querySelectorAll(
+            ".category-link"
+        )
+        .forEach(
+            link => {
+
+                const href =
+                    link.getAttribute(
+                        "href"
+                    ) || "";
+
+                const linkCategory =
+                    href.replace(
+                        "#",
+                        ""
+                    );
+
+                link.classList.toggle(
+                    "active",
+                    linkCategory ===
+                    category
+                );
+
+            }
+        );
+
+
+    const activeLink =
+        Array.from(
+            document.querySelectorAll(
+                ".category-link"
+            )
+        ).find(
+            link => {
+
+                const href =
+                    link.getAttribute(
+                        "href"
+                    ) || "";
+
+                return (
+                    href.replace(
+                        "#",
+                        ""
+                    ) ===
+                    category
+                );
+
+            }
+        );
+
+
+    if (activeLink) {
+
+        activeLink.scrollIntoView({
+            behavior: "smooth",
+            block: "nearest",
+            inline: "center"
+        });
+
+    }
+
+}
+
+
+function updateCategoryProgress(
+    battle,
+    category
+) {
+
+    let position =
+        battle.querySelector(
+            "[data-position]"
+        );
+
+
+    if (!position) {
+
+        position =
+            createElement(
+                "span",
+                "battle-position"
+            );
+
+        position.dataset.position =
+            "";
+
+        battle
+            .querySelector(
+                ".battle-top"
+            )
+            ?.prepend(
+                position
+            );
+
+    }
+
+
+    const categoryIndex =
+        getCategoryIndex(
+            category
+        );
+
+
+    setText(
+        position,
+        `BATTLE ${categoryIndex + 1} OF ${categoryOrder.length}`
+    );
+
+
+    let categoryLabel =
+        battle.querySelector(
+            ".battle-category-label"
+        );
+
+
+    if (!categoryLabel) {
+
+        categoryLabel =
+            createElement(
+                "span",
+                "battle-category-label"
+            );
+
+        battle
+            .querySelector(
+                ".battle-top"
+            )
+            ?.appendChild(
+                categoryLabel
+            );
+
+    }
+
+
+    const names = {
+        baby: "BABY",
+        toddler: "TODDLER",
+        sleep: "SLEEP",
+        potty: "POTTY",
+        feeding: "FEEDING",
+        under25: "UNDER $25"
+    };
+
+
+    setText(
+        categoryLabel,
+        names[category] ||
+        category.toUpperCase()
+    );
+
+}
+
+
+function activateCategory(
+    category,
+    options = {}
+) {
+
+    if (!battles[category]) {
 
         return;
 
     }
 
+
+    const battleElements =
+        getBattleElements();
+
+
+    const target =
+        battleElements.find(
+            battle =>
+                battle.dataset.category ===
+                category
+        );
+
+
+    if (!target) {
+
+        return;
+
+    }
+
+
+    activeCategoryIndex =
+        getCategoryIndex(
+            category
+        );
+
+
+    battleElements.forEach(
+        battle => {
+
+            const active =
+                battle === target;
+
+            battle.classList.toggle(
+                "battle-active",
+                active
+            );
+
+            battle.classList.toggle(
+                "battle-hidden",
+                !active
+            );
+
+        }
+    );
+
+
+    updateCategoryNavigation(
+        category
+    );
+
+
+    renderBattle(
+        target
+    );
+
+
+    if (
+        options.updateHash !== false
+    ) {
+
+        history.replaceState(
+            null,
+            "",
+            `#${category}`
+        );
+
+    }
+
+
+    if (
+        options.scroll !== false
+    ) {
+
+        requestAnimationFrame(
+            () => {
+
+                target.scrollIntoView({
+                    behavior:
+                        options.instant
+                            ? "auto"
+                            : "smooth",
+                    block: "start"
+                });
+
+            }
+        );
+
+    }
+
+}
+
+
+/* ============================================================
+   MOVE BETWEEN CATEGORIES
+   ============================================================ */
+
+function moveToCategory(
+    direction
+) {
+
+    const nextIndex =
+        activeCategoryIndex +
+        direction;
+
+
+    if (
+        nextIndex < 0 ||
+        nextIndex >= categoryOrder.length
+    ) {
+
+        return;
+
+    }
+
+
+    const nextCategory =
+        categoryOrder[
+            nextIndex
+        ];
+
+
+    activateCategory(
+        nextCategory
+    );
+
+}
+
+
+/* ============================================================
+   PRODUCT NAVIGATION
+   ============================================================ */
+
+function moveToNextProduct(
+    category
+) {
+
+    const products =
+        battles[category];
+
+    if (!products?.length) {
+
+        return;
+
+    }
+
+
+    const current =
+        battleIndexes[category] || 0;
+
+
+    if (
+        current <
+        products.length - 1
+    ) {
+
+        battleIndexes[category] =
+            current + 1;
+
+        const battle =
+            getBattleElements()
+                .find(
+                    element =>
+                        element.dataset.category ===
+                        category
+                );
+
+        if (battle) {
+
+            renderBattle(
+                battle
+            );
+
+        }
+
+        return;
+
+    }
+
+
+    moveToCategory(
+        1
+    );
+
+}
+
+
+function moveToPreviousProduct(
+    category
+) {
+
+    const products =
+        battles[category];
+
+    if (!products?.length) {
+
+        return;
+
+    }
+
+
+    const current =
+        battleIndexes[category] || 0;
+
+
+    if (
+        current > 0
+    ) {
+
+        battleIndexes[category] =
+            current - 1;
+
+        const battle =
+            getBattleElements()
+                .find(
+                    element =>
+                        element.dataset.category ===
+                        category
+                );
+
+        if (battle) {
+
+            renderBattle(
+                battle
+            );
+
+        }
+
+        return;
+
+    }
+
+
+    moveToCategory(
+        -1
+    );
+
+}
+
+
+/* ============================================================
+   RENDER BATTLE
+   ============================================================ */
+
+function renderBattle(
+    battle
+) {
 
     const category =
         battle.dataset.category;
@@ -2761,8 +2577,7 @@ async function showProduct(
 
 
     if (
-        !products ||
-        products.length === 0
+        !products?.length
     ) {
 
         return;
@@ -2770,16 +2585,12 @@ async function showProduct(
     }
 
 
-    if (index < 0) {
-
-        index =
-            products.length - 1;
-
-    }
+    let index =
+        battleIndexes[category];
 
 
     if (
-        index >= products.length
+        typeof index !== "number"
     ) {
 
         index = 0;
@@ -2787,91 +2598,81 @@ async function showProduct(
     }
 
 
+    index =
+        clamp(
+            index,
+            0,
+            Math.max(
+                0,
+                products.length - 1
+            )
+        );
+
+
     battleIndexes[category] =
         index;
 
 
-    const product =
+    /*
+     * For a true battle presentation,
+     * compare the current product with the
+     * next product.
+     */
+
+    const leftProduct =
         products[index];
 
 
-    updateProductPosition(
-        battle,
-        index,
+    const rightIndex =
+        index + 1 <
         products.length
-    );
+            ? index + 1
+            : 0;
 
 
-    updateDots(
+    const rightProduct =
+        products[rightIndex];
+
+
+    updateCategoryProgress(
         battle,
-        products,
-        index
-    );
-
-
-    updateDiscoveryProgress(
         category
     );
 
 
-    setImage(
-        battle.querySelector(
-            "[data-image]"
-        ),
-        product.image,
-        product.name
-    );
-
-
-    setText(
-        battle.querySelector(
-            "[data-label]"
-        ),
-        `PRODUCT ${index + 1}`
-    );
-
-
-    setText(
-        battle.querySelector(
-            "[data-name]"
-        ),
-        product.name
-    );
-
-
-    setText(
-        battle.querySelector(
-            "[data-brand]"
-        ),
-        product.brand
-    );
-
-
-    setText(
-        battle.querySelector(
-            "[data-description]"
-        ),
-        product.description
-    );
-
-
-    const link =
-        battle.querySelector(
-            "[data-link]"
-        );
-
-
-    if (link) {
-
-        link.href =
-            product.link || "#";
-
-    }
-
-
-    updateScoreUI(
+    buildBattleArena(
         battle,
-        product
+        leftProduct,
+        rightProduct
+    );
+
+
+    updateBattleScore(
+        battle,
+        leftProduct,
+        rightProduct
+    );
+
+
+    updateMomScore(
+        battle,
+        leftProduct,
+        rightProduct
+    );
+
+
+    ensureVoteArea(
+        battle
+    );
+
+
+    ensureResultArea(
+        battle
+    );
+
+
+    attachVoteListeners(
+        battle
     );
 
 
@@ -2880,43 +2681,98 @@ async function showProduct(
     );
 
 
-    const localVote =
-        getConfirmedLocalVote(
-            category,
-            product.id
+    updateBattleDots(
+        battle,
+        products,
+        index
+    );
+
+
+    updateProgressBar(
+        battle,
+        category
+    );
+
+
+    checkExistingVotes(
+        battle,
+        category,
+        leftProduct,
+        rightProduct
+    );
+
+
+    updateNextButton(
+        battle
+    );
+
+}
+
+
+/* ============================================================
+   VOTE LISTENERS
+   ============================================================ */
+
+function attachVoteListeners(
+    battle
+) {
+
+    battle
+        .querySelectorAll(
+            "[data-vote]"
+        )
+        .forEach(
+            button => {
+
+                if (
+                    button.dataset.listenerAttached
+                ) {
+
+                    return;
+
+                }
+
+
+                button.dataset.listenerAttached =
+                    "true";
+
+
+                button.addEventListener(
+                    "click",
+                    event => {
+
+                        event.preventDefault();
+                        event.stopPropagation();
+
+
+                        handleVote(
+                            battle,
+                            button.dataset.vote
+                        );
+
+                    }
+                );
+
+            }
         );
 
-
-    if (localVote) {
-
-        const key =
-            getBattleKey(
-                category,
-                product.id
-            );
+}
 
 
-        confirmedVotes.set(
-            key,
-            localVote
-        );
+/* ============================================================
+   EXISTING VOTES
+   ============================================================ */
 
-
-        showVoteUI(
-            battle,
-            localVote
-        );
-
-
-        return;
-
-    }
-
+async function checkExistingVotes(
+    battle,
+    category,
+    leftProduct,
+    rightProduct
+) {
 
     try {
 
         await startAnonymousAuthentication();
-
 
         if (!currentUser) {
 
@@ -2925,46 +2781,82 @@ async function showProduct(
         }
 
 
-        if (
-            battleIndexes[category] !==
-            index
+        const products =
+            [
+                leftProduct,
+                rightProduct
+            ];
+
+
+        for (
+            const product of products
         ) {
 
-            return;
+            const localVote =
+                getConfirmedLocalVote(
+                    category,
+                    product.id
+                );
+
+
+            if (localVote) {
+
+                confirmedVotes.set(
+                    getBattleKey(
+                        category,
+                        product.id
+                    ),
+                    localVote
+                );
+
+            } else {
+
+                await loadExistingVote(
+                    category,
+                    product
+                );
+
+            }
 
         }
 
 
-        const existingVote =
-            await loadExistingVote(
-                category,
-                product
+        const current =
+            getCurrentProduct(
+                category
             );
 
 
         if (
-            battleIndexes[category] !==
-            index
+            current?.id ===
+            leftProduct.id
         ) {
 
-            return;
+            const vote =
+                confirmedVotes.get(
+                    getBattleKey(
+                        category,
+                        leftProduct.id
+                    )
+                );
 
-        }
 
+            if (vote) {
 
-        if (existingVote) {
+                showVoteUI(
+                    battle,
+                    leftProduct,
+                    vote
+                );
 
-            showVoteUI(
-                battle,
-                existingVote
-            );
+            }
 
         }
 
     } catch (error) {
 
         console.warn(
-            "Could not check existing vote:",
+            "Existing vote check failed:",
             error
         );
 
@@ -2974,53 +2866,267 @@ async function showProduct(
 
 
 /* ============================================================
-   SWIPE SYSTEM
+   PROGRESS BAR
    ============================================================ */
 
-function isSwipeBlockedTarget(
-    target
+function updateProgressBar(
+    battle,
+    category
 ) {
 
-    if (!target) {
+    let progress =
+        battle.querySelector(
+            "[data-progress]"
+        );
 
-        return false;
+
+    if (!progress) {
+
+        progress =
+            createElement(
+                "div",
+                "battle-progress"
+            );
+
+        progress.dataset.progress =
+            "";
+
+
+        const fill =
+            createElement(
+                "div",
+                "battle-progress-fill"
+            );
+
+        fill.dataset.progressFill =
+            "";
+
+
+        progress.appendChild(
+            fill
+        );
+
+
+        battle
+            .querySelector(
+                ".battle-top"
+            )
+            ?.appendChild(
+                progress
+            );
 
     }
 
 
-    return Boolean(
-        target.closest(
-            "button, a, input, select, textarea, label, [data-vote], [data-link], [data-next], [data-prev], [data-next-contender], [data-dots]"
-        )
+    const fill =
+        progress.querySelector(
+            "[data-progress-fill]"
+        );
+
+
+    if (fill) {
+
+        const index =
+            getCategoryIndex(
+                category
+            );
+
+
+        const percentage =
+            (
+                (index + 1) /
+                categoryOrder.length
+            ) * 100;
+
+
+        fill.style.width =
+            `${percentage}%`;
+
+    }
+
+}
+
+
+/* ============================================================
+   DOTS
+   ============================================================ */
+
+function updateBattleDots(
+    battle,
+    products,
+    activeIndex
+) {
+
+    let dots =
+        battle.querySelector(
+            "[data-dots]"
+        );
+
+
+    if (!dots) {
+
+        dots =
+            createElement(
+                "div",
+                "battle-dots"
+            );
+
+        dots.dataset.dots =
+            "";
+
+
+        const footer =
+            battle.querySelector(
+                ".battle-footer"
+            );
+
+
+        if (footer) {
+
+            footer.before(
+                dots
+            );
+
+        } else {
+
+            battle
+                .querySelector(
+                    ".battle-card"
+                )
+                ?.appendChild(
+                    dots
+                );
+
+        }
+
+    }
+
+
+    dots.innerHTML =
+        "";
+
+
+    products.forEach(
+        (_, index) => {
+
+            const dot =
+                createElement(
+                    "button",
+                    "battle-dot"
+                );
+
+            dot.type =
+                "button";
+
+
+            dot.setAttribute(
+                "aria-label",
+                `Battle ${index + 1}`
+            );
+
+
+            if (
+                index === activeIndex
+            ) {
+
+                dot.classList.add(
+                    "active"
+                );
+
+            }
+
+
+            dot.addEventListener(
+                "click",
+                event => {
+
+                    event.preventDefault();
+                    event.stopPropagation();
+
+
+                    battleIndexes[
+                        battle.dataset.category
+                    ] =
+                        index;
+
+
+                    renderBattle(
+                        battle
+                    );
+
+                }
+            );
+
+
+            dots.appendChild(
+                dot
+            );
+
+        }
     );
 
 }
 
 
-/*
- * pointed interaction
- */
+/* ============================================================
+   NEXT BUTTON
+   ============================================================ */
 
-function initializeSwipe(
+function updateNextButton(
     battle
 ) {
 
-    const slideArea =
+    let button =
         battle.querySelector(
-            ".product-slide-area"
+            "[data-next-contender]"
         );
 
 
-    if (!slideArea) {
+    if (!button) {
 
-        return;
+        button =
+            createElement(
+                "button",
+                "next-contender",
+                "SWIPE LEFT FOR THE NEXT BATTLE →"
+            );
+
+        button.type =
+            "button";
+
+        button.dataset.nextContender =
+            "";
+
+
+        const dots =
+            battle.querySelector(
+                "[data-dots]"
+            );
+
+
+        if (dots) {
+
+            dots.after(
+                button
+            );
+
+        } else {
+
+            battle
+                .querySelector(
+                    ".battle-card"
+                )
+                ?.appendChild(
+                    button
+                );
+
+        }
 
     }
 
 
     if (
-        slideArea.dataset.swipeInitialized ===
-        "true"
+        button.dataset.listenerAttached
     ) {
 
         return;
@@ -3028,13 +3134,65 @@ function initializeSwipe(
     }
 
 
-    slideArea.dataset.swipeInitialized =
+    button.dataset.listenerAttached =
         "true";
 
 
-    slideArea.addEventListener(
+    button.addEventListener(
+        "click",
+        event => {
+
+            event.preventDefault();
+            event.stopPropagation();
+
+            moveToNextProduct(
+                battle.dataset.category
+            );
+
+        }
+    );
+
+}
+
+
+/* ============================================================
+   SWIPE
+   ============================================================ */
+
+function setupSwipe(
+    battle,
+    arena
+) {
+
+    let startX = 0;
+    let startY = 0;
+    let currentX = 0;
+    let dragging = false;
+    let pointerId = null;
+
+
+    const reset =
+        () => {
+
+            arena.classList.remove(
+                "is-dragging"
+            );
+
+            arena.style.transform =
+                "";
+
+            dragging =
+                false;
+
+            pointerId =
+                null;
+
+        };
+
+
+    arena.addEventListener(
         "pointerdown",
-        (event) => {
+        event => {
 
             if (
                 event.pointerType ===
@@ -3047,9 +3205,13 @@ function initializeSwipe(
             }
 
 
+            const target =
+                event.target;
+
+
             if (
-                isSwipeBlockedTarget(
-                    event.target
+                target.closest(
+                    "button, a, input, select, textarea"
                 )
             ) {
 
@@ -3058,47 +3220,48 @@ function initializeSwipe(
             }
 
 
-            activeSwipe = {
-                battle,
-                pointerId:
-                    event.pointerId,
-                startX:
-                    event.clientX,
-                startY:
-                    event.clientY,
-                currentX:
-                    event.clientX,
-                currentY:
-                    event.clientY,
-                startedAt:
-                    Date.now(),
-                lockedAxis:
-                    null
-            };
+            pointerId =
+                event.pointerId;
 
 
-            slideArea.setPointerCapture?.(
-                event.pointerId
-            );
+            startX =
+                event.clientX;
+
+            startY =
+                event.clientY;
+
+            currentX =
+                startX;
+
+            dragging =
+                true;
 
 
-            slideArea.classList.add(
+            arena.classList.add(
                 "is-dragging"
             );
+
+
+            try {
+
+                arena.setPointerCapture(
+                    pointerId
+                );
+
+            } catch (_) {}
 
         }
     );
 
 
-    slideArea.addEventListener(
+    arena.addEventListener(
         "pointermove",
-        (event) => {
+        event => {
 
             if (
-                !activeSwipe ||
-                activeSwipe.battle !== battle ||
-                activeSwipe.pointerId !==
-                    event.pointerId
+                !dragging ||
+                event.pointerId !==
+                pointerId
             ) {
 
                 return;
@@ -3106,137 +3269,66 @@ function initializeSwipe(
             }
 
 
-            const dx =
-                event.clientX -
-                activeSwipe.startX;
-
-
-            const dy =
-                event.clientY -
-                activeSwipe.startY;
-
-
-            activeSwipe.currentX =
+            currentX =
                 event.clientX;
 
 
-            activeSwipe.currentY =
+            const currentY =
                 event.clientY;
 
 
-            /*
-             * Decide whether this is horizontal
-             * before applying a card transformation.
-             */
-
-            if (
-                !activeSwipe.lockedAxis
-            ) {
-
-                if (
-                    Math.abs(dx) < 8 &&
-                    Math.abs(dy) < 8
-                ) {
-
-                    return;
-
-                }
+            const deltaX =
+                currentX -
+                startX;
 
 
-                activeSwipe.lockedAxis =
-                    Math.abs(dx) >
-                    Math.abs(dy)
-                        ? "horizontal"
-                        : "vertical";
-
-            }
+            const deltaY =
+                currentY -
+                startY;
 
 
             if (
-                activeSwipe.lockedAxis !==
-                "horizontal"
+                Math.abs(deltaY) >
+                Math.abs(deltaX) &&
+                Math.abs(deltaY) >
+                15
             ) {
+
+                reset();
 
                 return;
 
             }
 
 
-            /*
-             * Once the gesture is clearly horizontal,
-             * prevent the browser from interpreting it
-             * as normal scrolling.
-             */
-
-            if (
-                event.cancelable
-            ) {
-
-                event.preventDefault();
-
-            }
-
-
-            const limitedX =
-                Math.max(
-                    -220,
-                    Math.min(
-                        220,
-                        dx
-                    )
+            const limited =
+                clamp(
+                    deltaX,
+                    -110,
+                    110
                 );
 
 
             const rotation =
-                limitedX *
-                0.045;
+                limited *
+                .025;
 
 
-            const opacity =
-                Math.max(
-                    0.72,
-                    1 -
-                    Math.abs(limitedX) /
-                    500
-                );
+            arena.style.transform =
+                `translateX(${limited}px) rotate(${rotation}deg)`;
 
-
-            slideArea.style.transform =
-                `translate3d(${limitedX}px,0,0) rotate(${rotation}deg)`;
-
-
-            slideArea.style.opacity =
-                opacity;
-
-
-            slideArea.classList.toggle(
-                "swipe-ready-left",
-                limitedX <
-                    -80
-            );
-
-
-            slideArea.classList.toggle(
-                "swipe-ready-right",
-                limitedX >
-                    80
-            );
-
-        },
-        {
-            passive: false
         }
     );
 
 
-    const finishSwipe =
-        (event) => {
+    arena.addEventListener(
+        "pointerup",
+        event => {
 
             if (
-                !activeSwipe ||
-                activeSwipe.battle !== battle ||
-                activeSwipe.pointerId !==
-                    event.pointerId
+                !dragging ||
+                event.pointerId !==
+                pointerId
             ) {
 
                 return;
@@ -3244,118 +3336,59 @@ function initializeSwipe(
             }
 
 
-            const dx =
-                activeSwipe.currentX -
-                activeSwipe.startX;
+            const deltaX =
+                event.clientX -
+                startX;
 
 
-            const dy =
-                activeSwipe.currentY -
-                activeSwipe.startY;
+            reset();
 
 
-            const elapsed =
-                Math.max(
-                    1,
-                    Date.now() -
-                    activeSwipe.startedAt
-                );
+            const threshold =
+                window.innerWidth <
+                650
+                    ? 55
+                    : 80;
 
 
-            const velocity =
-                Math.abs(dx) /
-                elapsed;
-
-
-            const distanceThreshold =
-                Math.min(
-                    125,
-                    Math.max(
-                        75,
-                        window.innerWidth *
-                        0.20
-                    )
-                );
-
-
-            const shouldSwipe =
-                activeSwipe.lockedAxis ===
-                    "horizontal" &&
-                (
-                    Math.abs(dx) >=
-                        distanceThreshold ||
-                    velocity >=
-                        0.65
-                );
-
-
-            slideArea.classList.remove(
-                "is-dragging",
-                "swipe-ready-left",
-                "swipe-ready-right"
-            );
-
-
-            slideArea.style.transform =
-                "";
-
-
-            slideArea.style.opacity =
-                "";
-
-
-            activeSwipe =
-                null;
-
-
-            if (!shouldSwipe) {
+            if (
+                Math.abs(deltaX) <
+                threshold
+            ) {
 
                 return;
 
             }
 
 
-            if (dx < 0) {
+            if (
+                deltaX < 0
+            ) {
 
-                goToNextProduct(
-                    battle
+                animateSwipe(
+                    arena,
+                    "left",
+                    () => {
+
+                        moveToNextProduct(
+                            battle.dataset.category
+                        );
+
+                    }
                 );
 
             } else {
 
-                goToPreviousProduct(
-                    battle
-                );
+                animateSwipe(
+                    arena,
+                    "right",
+                    () => {
 
-            }
+                        moveToPreviousProduct(
+                            battle.dataset.category
+                        );
 
-        };
-
-
-    slideArea.addEventListener(
-        "pointerup",
-        finishSwipe
-    );
-
-
-    slideArea.addEventListener(
-        "pointercancel",
-        finishSwipe
-    );
-
-
-    slideArea.addEventListener(
-        "lostpointercapture",
-        (event) => {
-
-            if (
-                activeSwipe &&
-                activeSwipe.pointerId ===
-                    event.pointerId
-            ) {
-
-                finishSwipe(
-                    event
+                    }
                 );
 
             }
@@ -3363,79 +3396,88 @@ function initializeSwipe(
         }
     );
 
+
+    arena.addEventListener(
+        "pointercancel",
+        reset
+    );
+
 }
 
 
 /* ============================================================
-   SWIPE HINT
+   SWIPE ANIMATION
    ============================================================ */
 
-function initializeSwipeHint(
+function animateSwipe(
+    arena,
+    direction,
+    callback
+) {
+
+    arena.classList.add(
+        direction === "left"
+            ? "swipe-left"
+            : "swipe-right"
+    );
+
+
+    setTimeout(
+        () => {
+
+            arena.classList.remove(
+                "swipe-left",
+                "swipe-right"
+            );
+
+            callback();
+
+        },
+        300
+    );
+
+}
+
+
+/* ============================================================
+   SWIPE MESSAGE
+   ============================================================ */
+
+function showSwipeNextMessage(
     battle
 ) {
 
-    const slideArea =
-        battle.querySelector(
-            ".product-slide-area"
-        );
-
-
-    if (!slideArea) {
-
-        return;
-
-    }
-
-
-    if (
-        slideArea.querySelector(
-            ".mv-swipe-hint"
-        )
-    ) {
-
-        return;
-
-    }
-
-
     const hint =
-        document.createElement(
-            "div"
+        battle.querySelector(
+            ".swipe-hint"
         );
 
 
-    hint.className =
-        "mv-swipe-hint";
+    if (!hint) {
+
+        return;
+
+    }
 
 
-    hint.innerHTML =
-        `
-            <span class="mv-swipe-arrow">←</span>
-            <span>SWIPE FOR NEXT</span>
-        `;
+    const text =
+        hint.querySelector(
+            "span:not(.swipe-hint-arrow)"
+        );
 
 
-    slideArea.appendChild(
-        hint
-    );
+    if (text) {
 
+        text.textContent =
+            "Swipe left for the next battle →";
 
-    window.setTimeout(
-        () => {
-
-            hint.classList.add(
-                "hint-hidden"
-            );
-
-        },
-        5500
-    );
+    }
 
 }
 
 
 /* ============================================================
-   CATEGORY CLICK EVENTS
+   CATEGORY NAV LISTENERS
    ============================================================ */
 
 function initializeCategoryNavigation() {
@@ -3448,8 +3490,7 @@ function initializeCategoryNavigation() {
             link => {
 
                 if (
-                    link.dataset.categoryNavigationInitialized ===
-                    "true"
+                    link.dataset.listenerAttached
                 ) {
 
                     return;
@@ -3457,32 +3498,25 @@ function initializeCategoryNavigation() {
                 }
 
 
-                link.dataset.categoryNavigationInitialized =
+                link.dataset.listenerAttached =
                     "true";
 
 
                 link.addEventListener(
                     "click",
-                    (event) => {
+                    event => {
 
                         const href =
                             link.getAttribute(
                                 "href"
-                            );
-
-
-                        if (
-                            !href ||
-                            !href.startsWith("#")
-                        ) {
-
-                            return;
-
-                        }
+                            ) || "";
 
 
                         const category =
-                            href.slice(1);
+                            href.replace(
+                                "#",
+                                ""
+                            );
 
 
                         if (
@@ -3497,11 +3531,8 @@ function initializeCategoryNavigation() {
                         event.preventDefault();
 
 
-                        displayCategory(
-                            category,
-                            {
-                                animate: true
-                            }
+                        activateCategory(
+                            category
                         );
 
                     }
@@ -3514,82 +3545,7 @@ function initializeCategoryNavigation() {
 
 
 /* ============================================================
-   KEYBOARD NAVIGATION
-   ============================================================ */
-
-function initializeKeyboardNavigation() {
-
-    document.addEventListener(
-        "keydown",
-        (event) => {
-
-            /*
-             * Don't hijack keyboard controls while
-             * typing into an input.
-             */
-
-            if (
-                event.target.matches(
-                    "input, textarea, select"
-                )
-            ) {
-
-                return;
-
-            }
-
-
-            if (
-                event.key ===
-                "ArrowLeft"
-            ) {
-
-                const battle =
-                    getBattleElement(
-                        activeCategory
-                    );
-
-
-                if (battle) {
-
-                    goToPreviousProduct(
-                        battle
-                    );
-
-                }
-
-            }
-
-
-            if (
-                event.key ===
-                "ArrowRight"
-            ) {
-
-                const battle =
-                    getBattleElement(
-                        activeCategory
-                    );
-
-
-                if (battle) {
-
-                    goToNextProduct(
-                        battle
-                    );
-
-                }
-
-            }
-
-        }
-    );
-
-}
-
-
-/* ============================================================
-   INITIALIZE ONE BATTLE
+   INITIALIZE BATTLE
    ============================================================ */
 
 function initializeBattle(
@@ -3600,14 +3556,10 @@ function initializeBattle(
         battle.dataset.category;
 
 
-    if (!category) {
-
-        return;
-
-    }
-
-
-    if (!battles[category]) {
+    if (
+        !category ||
+        !battles[category]
+    ) {
 
         return;
 
@@ -3617,6 +3569,10 @@ function initializeBattle(
     battleIndexes[category] =
         0;
 
+
+    /*
+     * Existing arrow support.
+     */
 
     const next =
         battle.querySelector(
@@ -3628,10 +3584,12 @@ function initializeBattle(
 
         next.addEventListener(
             "click",
-            () => {
+            event => {
 
-                goToNextProduct(
-                    battle
+                event.preventDefault();
+
+                moveToNextProduct(
+                    category
                 );
 
             }
@@ -3650,10 +3608,12 @@ function initializeBattle(
 
         previous.addEventListener(
             "click",
-            () => {
+            event => {
 
-                goToPreviousProduct(
-                    battle
+                event.preventDefault();
+
+                moveToPreviousProduct(
+                    category
                 );
 
             }
@@ -3662,98 +3622,9 @@ function initializeBattle(
     }
 
 
-    const nextContender =
-        battle.querySelector(
-            "[data-next-contender]"
-        );
-
-
-    if (nextContender) {
-
-        nextContender.addEventListener(
-            "click",
-            () => {
-
-                goToNextProduct(
-                    battle
-                );
-
-            }
-        );
-
-    }
-
-
-    battle
-        .querySelectorAll(
-            "[data-vote]"
-        )
-        .forEach(
-            button => {
-
-                button.addEventListener(
-                    "click",
-                    () => {
-
-                        const vote =
-                            button.dataset.vote;
-
-
-                        handleVote(
-                            battle,
-                            vote
-                        );
-
-                    }
-                );
-
-            }
-        );
-
-
-    initializeSwipe(
+    renderBattle(
         battle
     );
-
-
-    initializeSwipeHint(
-        battle
-    );
-
-
-    showProduct(
-        battle,
-        0
-    );
-
-}
-
-
-/* ============================================================
-   INITIAL CATEGORY
-   ============================================================ */
-
-function getInitialCategory() {
-
-    const hash =
-        window.location.hash
-            .replace(
-                "#",
-                ""
-            )
-            .toLowerCase();
-
-
-    if (
-        battles[hash]
-    ) {
-
-        return hash;
-
-    }
-
-
-    return categoryOrder[0];
 
 }
 
@@ -3769,15 +3640,11 @@ async function initializePage() {
     );
 
 
-    const battlesOnPage =
-        document.querySelectorAll(
-            ".product-battle"
-        );
+    const battleElements =
+        getBattleElements();
 
 
-    if (
-        !battlesOnPage.length
-    ) {
+    if (!battleElements.length) {
 
         console.warn(
             "No .product-battle elements found."
@@ -3788,12 +3655,7 @@ async function initializePage() {
     }
 
 
-    /*
-     * Initialize every battle so all existing
-     * functionality remains available.
-     */
-
-    battlesOnPage.forEach(
+    battleElements.forEach(
         battle => {
 
             initializeBattle(
@@ -3804,62 +3666,49 @@ async function initializePage() {
     );
 
 
-    /*
-     * Category navigation.
-     */
-
     initializeCategoryNavigation();
 
 
     /*
-     * Keyboard fallback.
+     * Hide all categories except the
+     * initial category.
      */
 
-    initializeKeyboardNavigation();
+    let initialCategory =
+        "baby";
 
 
-    /*
-     * Start with the requested hash,
-     * otherwise Baby.
-     */
+    const hash =
+        window.location.hash
+            .replace(
+                "#",
+                ""
+            );
 
-    const initialCategory =
-        getInitialCategory();
+
+    if (
+        battles[hash]
+    ) {
+
+        initialCategory =
+            hash;
+
+    }
 
 
-    displayCategory(
+    activateCategory(
         initialCategory,
         {
             updateHash: false,
-            animate: false
+            scroll: false,
+            instant: true
         }
     );
 
 
     /*
-     * Make sure the initial battle starts
-     * at its first product.
-     */
-
-    const initialBattle =
-        getBattleElement(
-            initialCategory
-        );
-
-
-    if (initialBattle) {
-
-        showProduct(
-            initialBattle,
-            battleIndexes[initialCategory] || 0
-        );
-
-    }
-
-
-    /*
-     * Firebase authentication happens after
-     * the visual UI is already available.
+     * Firebase authentication runs
+     * independently from the visual UI.
      */
 
     try {
@@ -3874,29 +3723,18 @@ async function initializePage() {
         );
 
 
-        /*
-         * Re-check currently visible products.
-         */
-
         const activeBattle =
-            getBattleElement(
-                activeCategory
+            battleElements.find(
+                battle =>
+                    battle.dataset.category ===
+                    initialCategory
             );
 
 
         if (activeBattle) {
 
-            const category =
-                activeBattle.dataset.category;
-
-
-            const index =
-                battleIndexes[category] || 0;
-
-
-            await showProduct(
-                activeBattle,
-                index
+            renderBattle(
+                activeBattle
             );
 
         }
@@ -3914,54 +3752,7 @@ async function initializePage() {
 
 
 /* ============================================================
-   HANDLE BROWSER HASH CHANGES
-   ============================================================ */
-
-window.addEventListener(
-    "hashchange",
-    () => {
-
-        const category =
-            getInitialCategory();
-
-
-        if (
-            category !==
-            activeCategory
-        ) {
-
-            displayCategory(
-                category,
-                {
-                    updateHash: false,
-                    animate: true
-                }
-            );
-
-
-            const battle =
-                getBattleElement(
-                    category
-                );
-
-
-            if (battle) {
-
-                showProduct(
-                    battle,
-                    battleIndexes[category] || 0
-                );
-
-            }
-
-        }
-
-    }
-);
-
-
-/* ============================================================
-   START APPLICATION
+   START
    ============================================================ */
 
 if (
