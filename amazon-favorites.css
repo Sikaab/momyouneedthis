@@ -1,39 +1,20 @@
 /* =========================================================
-   MOMYOUNEEDTHIS — MOM VOTED PRODUCT BATTLES
-   ========================================================= */
-
+   MOM VOTED EXPERIENCE
+   MomYouNeedThis
+========================================================= */
 .mom-voted-page {
     --mv-pink: #e85d8f;
     --mv-pink-dark: #d94378;
     --mv-pink-light: #fff0f5;
-
     --mv-purple: #8b6fc9;
-    --mv-purple-light: #f4efff;
-
     --mv-green: #55a982;
-    --mv-green-light: #edf9f3;
-
     --mv-red: #dc6670;
-    --mv-red-light: #fff0f1;
-
-    --mv-yellow: #f4bd48;
-    --mv-yellow-light: #fff8e8;
-
-    --mv-blue: #5b8fd8;
-    --mv-blue-light: #eef5ff;
-
     --mv-text: #302a30;
     --mv-muted: #77717a;
     --mv-border: #eee5ea;
-
     --mv-bg: #fffafc;
     --mv-card: #ffffff;
-
-    --mv-shadow:
-        0 18px 50px rgba(65, 38, 52, 0.08);
-
-    --mv-shadow-heavy:
-        0 25px 70px rgba(65, 38, 52, 0.13);
+    --mv-shadow: 0 18px 50px rgba(65, 38, 52, .08);
 
     max-width: 1120px;
     margin: 0 auto;
@@ -42,10 +23,9 @@
     color: var(--mv-text);
 }
 
-
 /* =========================================================
    HEADER
-   ========================================================= */
+========================================================= */
 
 .mom-voted-header {
     position: relative;
@@ -59,16 +39,11 @@
     margin-bottom: 28px;
 }
 
-.mom-voted-logo-link {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.mom-voted-header .logo {
-    display: block;
+.mom-voted-logo {
     width: 145px;
+    max-width: 100%;
     height: auto;
+    display: block;
 }
 
 .header-right {
@@ -77,249 +52,241 @@
 
     display: flex;
     align-items: center;
+    gap: 12px;
 }
 
 .community-badge {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-
-    padding: 9px 15px;
-
+    padding: 8px 13px;
     border-radius: 999px;
-
     background: var(--mv-pink-light);
     color: var(--mv-pink-dark);
-
     font-size: 11px;
     font-weight: 900;
-    letter-spacing: 0.04em;
+    letter-spacing: .08em;
 }
 
+.live-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: .1em;
+    color: var(--mv-green);
+}
+
+.live-indicator span {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--mv-green);
+    box-shadow: 0 0 0 5px rgba(85, 169, 130, .1);
+}
 
 /* =========================================================
    HERO
-   ========================================================= */
+========================================================= */
 
 .voting-hero {
-    max-width: 850px;
-
-    margin: 0 auto;
-
-    padding:
-        30px
-        10px
-        48px;
-
     text-align: center;
+    padding: 30px 10px 48px;
+    max-width: 850px;
+    margin: 0 auto;
 }
 
-.hero-kicker,
-.section-kicker {
-    margin-bottom: 12px;
-
-    color: var(--mv-pink-dark);
-
+.hero-kicker {
+    display: inline-block;
+    margin-bottom: 15px;
     font-size: 11px;
     font-weight: 900;
-
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
+    letter-spacing: .16em;
+    color: var(--mv-pink-dark);
 }
 
 .voting-hero h1 {
     margin: 0;
-
     font-size: clamp(38px, 6vw, 68px);
-    line-height: 0.98;
-    letter-spacing: -0.045em;
+    line-height: .98;
+    letter-spacing: -.045em;
     font-weight: 900;
 }
 
 .voting-hero h1 span {
+    display: block;
     color: var(--mv-pink);
+    margin-top: 8px;
 }
 
-.voting-hero > p {
-    max-width: 700px;
-
-    margin:
-        24px
-        auto
-        24px;
-
-    color: var(--mv-muted);
-
+.mom-voted-intro {
+    max-width: 650px;
+    margin: 24px auto 0;
     font-size: 17px;
     line-height: 1.7;
+    color: var(--mv-muted);
 }
 
 .hero-mini-proof {
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-wrap: wrap;
-
-    gap: 10px;
-
-    color: var(--mv-muted);
-
-    font-size: 12px;
-    font-weight: 900;
-
-    letter-spacing: 0.04em;
+    gap: 15px;
+    margin-top: 32px;
 }
 
-.hero-mini-proof span:nth-child(2),
-.hero-mini-proof span:nth-child(4) {
+.hero-mini-proof > div:not(.proof-arrow) {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.hero-mini-proof span {
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: .1em;
     color: var(--mv-pink);
 }
 
-.hero-scroll-hint {
-    margin-top: 30px;
-
-    color: var(--mv-pink-dark);
-
-    font-size: 11px;
-    font-weight: 900;
-
-    letter-spacing: 0.12em;
+.hero-mini-proof strong {
+    font-size: 13px;
 }
 
+.proof-arrow {
+    color: #c9bdc5;
+    font-size: 20px;
+}
+
+.hero-scroll-hint {
+    margin-top: 35px;
+    font-size: 11px;
+    font-weight: 900;
+    color: var(--mv-muted);
+    text-transform: uppercase;
+    letter-spacing: .1em;
+}
+
+.hero-scroll-hint span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 25px;
+    height: 25px;
+    margin-right: 7px;
+    border: 1px solid var(--mv-border);
+    border-radius: 50%;
+}
 
 /* =========================================================
    HOLY GRAIL BANNER
-   ========================================================= */
+========================================================= */
 
 .holy-grail-banner {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-
-    gap: 20px;
-
+    gap: 15px;
+    padding: 18px 20px;
     margin-bottom: 28px;
 
-    padding: 18px 20px;
-
-    border:
-        1px solid
-        #f2d8e2;
-
-    border-radius: 20px;
+    border: 1px solid #f1d9e2;
+    border-radius: 18px;
 
     background:
         linear-gradient(
-            135deg,
-            #fff8fb,
-            #fff
+            110deg,
+            #fff5f8,
+            #fffafd
         );
+
+    box-shadow: 0 8px 30px rgba(80, 40, 60, .05);
+}
+
+.holy-grail-banner-icon {
+    width: 45px;
+    height: 45px;
+    flex: 0 0 45px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: 0 5px 15px rgba(80, 40, 60, .08);
+
+    font-size: 21px;
 }
 
 .holy-grail-banner-content {
     display: flex;
-    align-items: center;
-
-    gap: 14px;
-
-    min-width: 0;
+    flex-direction: column;
+    gap: 3px;
+    flex: 1;
 }
 
-.holy-grail-icon {
-    flex: 0 0 auto;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 46px;
-    height: 46px;
-
-    border-radius: 14px;
-
-    background: var(--mv-yellow-light);
-
-    font-size: 23px;
-}
-
-.holy-grail-banner h3 {
-    margin: 0 0 4px;
-
-    font-size: 15px;
+.holy-grail-banner-content strong {
+    font-size: 14px;
     font-weight: 900;
 }
 
-.holy-grail-banner p {
-    margin: 0;
-
+.holy-grail-banner-content span {
+    font-size: 12px;
     color: var(--mv-muted);
-
-    font-size: 13px;
 }
 
-.holy-grail-banner-link {
-    flex: 0 0 auto;
-
+.holy-grail-link {
     display: inline-flex;
     align-items: center;
     justify-content: center;
 
-    padding: 11px 16px;
+    padding: 10px 16px;
 
-    border-radius: 12px;
+    border-radius: 999px;
 
     background: var(--mv-pink);
-
-    color: #fff;
-
-    text-decoration: none;
+    color: white !important;
 
     font-size: 12px;
     font-weight: 900;
 
+    text-decoration: none;
+
+    white-space: nowrap;
+
     transition:
-        transform 0.2s ease,
-        background 0.2s ease;
+        transform .2s ease,
+        background .2s ease;
 }
 
-.holy-grail-banner-link:hover {
-    transform: translateY(-2px);
-
+.holy-grail-link:hover {
     background: var(--mv-pink-dark);
+    transform: translateY(-2px);
 }
-
 
 /* =========================================================
    CATEGORY NAV
-   ========================================================= */
+========================================================= */
 
 .voting-categories {
     position: sticky;
     top: 10px;
-
-    z-index: 50;
+    z-index: 20;
 
     display: flex;
-
     gap: 8px;
 
     overflow-x: auto;
 
     padding: 7px;
+
     margin: 0 0 38px;
 
-    background:
-        rgba(255, 255, 255, 0.94);
-
-    border:
-        1px solid
-        var(--mv-border);
-
+    background: rgba(255,255,255,.92);
+    border: 1px solid var(--mv-border);
     border-radius: 999px;
 
-    box-shadow:
-        0 8px 25px
-        rgba(60, 40, 50, 0.07);
+    box-shadow: 0 8px 25px rgba(60, 40, 50, .07);
 
     backdrop-filter: blur(12px);
 
@@ -336,92 +303,140 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: 6px;
 
-    min-height: 38px;
-
-    padding: 0 15px;
+    padding: 10px 16px;
 
     border-radius: 999px;
 
     color: var(--mv-muted);
-
     text-decoration: none;
 
     font-size: 12px;
     font-weight: 900;
 
-    white-space: nowrap;
-
     transition:
-        background 0.2s ease,
-        color 0.2s ease,
-        transform 0.2s ease;
+        background .2s ease,
+        color .2s ease,
+        transform .2s ease;
 }
 
 .category-link:hover {
+    transform: translateY(-1px);
     color: var(--mv-text);
-
-    background: #f8f4f6;
 }
 
 .category-link.active {
-    color: #fff;
-
     background: var(--mv-text);
-
-    box-shadow:
-        0 6px 16px
-        rgba(48, 42, 48, 0.16);
+    color: #fff;
 }
-
 
 /* =========================================================
-   BATTLE VISIBILITY
-   ========================================================= */
+   DISCOVERY
+========================================================= */
 
-.battle-container {
-    position: relative;
+.discovery-section {
+    margin-bottom: 55px;
 }
+
+.discovery-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 17px;
+}
+
+.section-eyebrow {
+    display: block;
+    margin-bottom: 6px;
+
+    color: var(--mv-pink-dark);
+
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: .15em;
+}
+
+.discovery-heading h2 {
+    margin: 0;
+    font-size: 25px;
+    line-height: 1.15;
+    font-weight: 900;
+}
+
+.battle-count {
+    padding: 7px 12px;
+    border-radius: 999px;
+    background: #f7f4f6;
+    color: var(--mv-muted);
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.discovery-strip {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 3px;
+}
+
+.discovery-strip::-webkit-scrollbar {
+    display: none;
+}
+
+.discovery-filter {
+    flex: 0 0 auto;
+
+    border: 1px solid var(--mv-border);
+    background: white;
+
+    color: var(--mv-muted);
+
+    border-radius: 999px;
+
+    padding: 10px 15px;
+
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 900;
+
+    cursor: pointer;
+
+    transition:
+        all .2s ease;
+}
+
+.discovery-filter:hover {
+    transform: translateY(-1px);
+}
+
+.discovery-filter.active {
+    background: var(--mv-pink);
+    border-color: var(--mv-pink);
+    color: white;
+}
+
+/* =========================================================
+   BATTLE SECTION
+========================================================= */
 
 .product-battle {
+    margin-bottom: 85px;
+    scroll-margin-top: 85px;
+    transition:
+        opacity .3s ease,
+        transform .3s ease;
+}
+
+.product-battle.filtered-out {
     display: none;
-
-    margin-bottom: 70px;
-
-    scroll-margin-top: 100px;
 }
-
-.product-battle.active-category {
-    display: block;
-
-    animation:
-        battleCategoryIn
-        0.35s ease;
-}
-
-@keyframes battleCategoryIn {
-
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-}
-
-
-/* =========================================================
-   BATTLE HEADING
-   ========================================================= */
 
 .battle-heading {
     text-align: center;
-
-    margin-bottom: 22px;
+    margin-bottom: 24px;
 }
 
 .battle-eyebrow {
@@ -429,205 +444,176 @@
     align-items: center;
     justify-content: center;
 
-    margin-bottom: 9px;
-
-    padding: 7px 11px;
-
-    border-radius: 999px;
-
-    background: var(--mv-pink-light);
+    margin-bottom: 8px;
 
     color: var(--mv-pink-dark);
 
     font-size: 10px;
     font-weight: 900;
-
-    letter-spacing: 0.1em;
+    letter-spacing: .14em;
 }
 
 .battle-heading h2 {
     margin: 0;
-
     font-size: clamp(27px, 4vw, 40px);
-
-    line-height: 1.05;
-
+    line-height: 1.1;
     font-weight: 900;
-
-    letter-spacing: -0.035em;
+    letter-spacing: -.025em;
 }
 
 .battle-heading p {
-    margin: 8px 0 0;
+    margin: 10px auto 0;
+    max-width: 600px;
 
     color: var(--mv-muted);
 
     font-size: 14px;
+    line-height: 1.6;
 }
-
 
 /* =========================================================
    BATTLE CARD
-   ========================================================= */
+========================================================= */
 
 .battle-card {
     position: relative;
-
     overflow: hidden;
 
-    background: #fff;
+    background: var(--mv-card);
 
-    border:
-        1px solid
-        var(--mv-border);
-
+    border: 1px solid var(--mv-border);
     border-radius: 30px;
 
-    box-shadow:
-        var(--mv-shadow-heavy);
+    box-shadow: var(--mv-shadow);
 }
-
-
-/* =========================================================
-   BATTLE TOP
-   ========================================================= */
 
 .battle-top {
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     gap: 15px;
 
-    padding: 18px 22px 13px;
+    padding: 18px 25px;
+
+    border-bottom: 1px solid var(--mv-border);
+}
+
+.battle-category {
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: .1em;
+    color: var(--mv-pink-dark);
 }
 
 .battle-position {
     color: var(--mv-muted);
-
     font-size: 10px;
     font-weight: 900;
-
-    letter-spacing: 0.1em;
+    letter-spacing: .08em;
 }
 
-.battle-live {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+/* =========================================================
+   PROGRESS
+========================================================= */
 
-    padding: 7px 11px;
+.battle-progress {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 12px 25px 0;
+}
+
+.battle-progress-track {
+    height: 4px;
+    flex: 1;
+
+    overflow: hidden;
 
     border-radius: 999px;
+    background: #f0eaed;
+}
 
-    background: #fff3f6;
+.battle-progress-fill {
+    width: 50%;
+    height: 100%;
+
+    border-radius: inherit;
+
+    background: var(--mv-pink);
+
+    transition: width .3s ease;
+}
+
+.battle-progress > span {
+    min-width: 30px;
+    text-align: right;
+
+    font-size: 9px;
+    font-weight: 900;
+    color: var(--mv-muted);
+}
+
+/* =========================================================
+   QUESTION
+========================================================= */
+
+.battle-question {
+    text-align: center;
+    padding: 28px 20px 22px;
+}
+
+.battle-question span {
+    display: block;
+    margin-bottom: 5px;
 
     color: var(--mv-pink-dark);
 
     font-size: 9px;
     font-weight: 900;
-
-    letter-spacing: 0.08em;
+    letter-spacing: .16em;
 }
 
-
-/* =========================================================
-   PROGRESS
-   ========================================================= */
-
-.battle-progress {
-    padding: 0 22px;
-}
-
-.battle-progress-track {
-    width: 100%;
-    height: 5px;
-
-    overflow: hidden;
-
-    border-radius: 999px;
-
-    background: #f1e9ed;
-}
-
-.battle-progress-fill {
-    width: 0;
-    height: 100%;
-
-    border-radius: inherit;
-
-    background:
-        linear-gradient(
-            90deg,
-            var(--mv-pink),
-            var(--mv-purple)
-        );
-
-    transition:
-        width 0.35s ease;
-}
-
-
-/* =========================================================
-   QUESTION
-   ========================================================= */
-
-.battle-question {
-    padding:
-        25px
-        20px
-        20px;
-
-    text-align: center;
-
-    font-size: 22px;
-    line-height: 1.1;
-
+.battle-question strong {
+    display: block;
+    font-size: 20px;
     font-weight: 900;
-
-    letter-spacing: -0.02em;
 }
 
+.battle-question small {
+    display: block;
+    margin-top: 5px;
+
+    color: var(--mv-muted);
+
+    font-size: 11px;
+}
 
 /* =========================================================
    PRODUCT VIEWER
-   ========================================================= */
+========================================================= */
 
 .product-viewer {
-    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0;
 
-    padding:
-        0
-        20px
-        20px;
+    padding: 0 20px 20px;
 }
 
-
-/* =========================================================
-   BATTLE ARENA
-   ========================================================= */
-
-.battle-arena {
-    position: relative;
-
+.product-slide-area {
     display: grid;
+    grid-template-columns: minmax(300px, .95fr) minmax(330px, 1.05fr);
+    align-items: center;
 
-    grid-template-columns:
-        minmax(0, 1fr)
-        80px
-        minmax(0, 1fr);
-
-    align-items: stretch;
+    width: 100%;
 
     min-width: 0;
 
+    border: 1px solid #f0e8ec;
+    border-radius: 24px;
+
     overflow: hidden;
-
-    border:
-        1px solid
-        #f0e8ec;
-
-    border-radius: 25px;
 
     background:
         linear-gradient(
@@ -635,271 +621,251 @@
             #fff,
             #fff8fb
         );
-
-    touch-action: pan-y;
 }
 
-
 /* =========================================================
-   PRODUCT SIDE
-   ========================================================= */
+   ARROWS
+========================================================= */
 
-.battle-product-side {
-    position: relative;
+.product-arrow {
+    flex: 0 0 45px;
 
-    display: flex;
-    flex-direction: column;
+    width: 45px;
+    height: 45px;
 
-    min-width: 0;
+    margin: 0 7px;
 
-    padding: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border: 1px solid var(--mv-border);
+    border-radius: 50%;
 
     background: #fff;
 
+    color: var(--mv-text);
+
+    font-family: Arial, sans-serif;
+    font-size: 30px;
+    line-height: 1;
+
+    cursor: pointer;
+
+    box-shadow: 0 6px 18px rgba(60, 40, 50, .07);
+
     transition:
-        transform 0.2s ease,
-        background 0.2s ease;
+        transform .2s ease,
+        background .2s ease;
 }
 
-.battle-product-side:first-child {
-    border-right:
-        1px solid
-        #f1e8ed;
+.product-arrow:hover {
+    transform: scale(1.07);
+    background: var(--mv-pink-light);
 }
 
-.battle-product-side:last-child {
-    border-left:
-        1px solid
-        #f1e8ed;
+.product-arrow-left {
+    order: 1;
 }
 
-.battle-product-side:hover {
-    background: #fffafd;
+.product-slide-area {
+    order: 2;
 }
 
-
-/* =========================================================
-   PRODUCT LABEL
-   ========================================================= */
-
-.product-choice-label {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    gap: 10px;
-
-    min-height: 30px;
-
-    margin-bottom: 10px;
+.product-arrow-right {
+    order: 3;
 }
-
-.product-choice-tag {
-    display: inline-flex;
-    align-items: center;
-
-    padding: 6px 9px;
-
-    border-radius: 8px;
-
-    background: #f7f3f5;
-
-    color: var(--mv-muted);
-
-    font-size: 9px;
-    font-weight: 900;
-
-    letter-spacing: 0.08em;
-}
-
-.product-choice-number {
-    color: #c4b9c0;
-
-    font-size: 10px;
-    font-weight: 900;
-}
-
 
 /* =========================================================
    PRODUCT IMAGE
-   ========================================================= */
+========================================================= */
 
-.battle-product-image-wrap {
+.product-image-wrap {
     position: relative;
+
+    min-height: 470px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    min-height: 310px;
-
-    padding: 18px;
-
-    overflow: hidden;
-
-    border-radius: 20px;
+    padding: 35px;
 
     background:
         radial-gradient(
-            circle at center,
-            #fff 0%,
-            #fff7fa 72%,
-            #fff0f5 100%
+            circle at 50% 45%,
+            #fff,
+            #fff5f8 72%
         );
 }
 
-.battle-product-image-wrap::after {
-    content: "";
-
+.image-glow {
     position: absolute;
 
-    inset: 12px;
+    width: 260px;
+    height: 260px;
 
-    border:
-        1px dashed
-        rgba(232, 93, 143, 0.18);
+    border-radius: 50%;
 
-    border-radius: 17px;
+    background: rgba(232, 93, 143, .08);
 
-    pointer-events: none;
+    filter: blur(5px);
 }
 
 .battle-product-image {
     position: relative;
-    z-index: 2;
-
-    display: block;
+    z-index: 1;
 
     width: 100%;
-    max-width: 300px;
-
-    height: 285px;
+    max-width: 350px;
+    height: 380px;
 
     object-fit: contain;
 
+    display: block;
+
     transition:
-        transform 0.25s ease;
+        opacity .15s ease,
+        transform .25s ease;
 }
 
-.battle-product-side:hover
-.battle-product-image {
-    transform: scale(1.025);
+.battle-product-image.product-changing {
+    opacity: 0;
+    transform: scale(.96);
 }
 
+.product-image-badge {
+    position: absolute;
+    z-index: 3;
+
+    top: 18px;
+    left: 18px;
+
+    padding: 7px 11px;
+
+    border-radius: 999px;
+
+    background: var(--mv-text);
+    color: white;
+
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: .07em;
+}
 
 /* =========================================================
-   PRODUCT DETAILS
-   ========================================================= */
+   PRODUCT INFO
+========================================================= */
 
-.battle-product-details {
-    display: flex;
-    flex-direction: column;
-
-    flex: 1;
-
-    padding:
-        18px
-        5px
-        5px;
+.battle-product-info {
+    padding: 38px 35px;
 }
 
-.battle-product-brand {
-    margin-bottom: 5px;
+.product-label {
+    display: inline-block;
+
+    margin-bottom: 8px;
 
     color: var(--mv-pink-dark);
 
-    font-size: 10px;
+    font-size: 9px;
     font-weight: 900;
-
-    letter-spacing: 0.08em;
-
-    text-transform: uppercase;
+    letter-spacing: .13em;
 }
 
-.battle-product-name {
+.battle-product-info h3 {
     margin: 0;
 
-    font-size: clamp(20px, 2.5vw, 27px);
-
+    font-size: clamp(25px, 3vw, 34px);
     line-height: 1.08;
-
     font-weight: 900;
-
-    letter-spacing: -0.025em;
+    letter-spacing: -.025em;
 }
 
-.battle-product-description {
-    margin:
-        10px
-        0
-        0;
+.product-brand {
+    margin: 8px 0 0;
+
+    color: var(--mv-pink-dark);
+
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.battle-description {
+    margin: 16px 0 0;
 
     color: var(--mv-muted);
 
-    font-size: 12px;
-    line-height: 1.55;
+    font-size: 13px;
+    line-height: 1.65;
 }
 
-
 /* =========================================================
-   SCORE
-   ========================================================= */
+   MOM SCORE
+========================================================= */
 
-.product-score-box {
-    margin-top: 15px;
+.mom-score {
+    margin-top: 25px;
+    padding: 16px;
 
-    padding: 12px;
-
-    border:
-        1px solid
-        #f0e8ec;
-
-    border-radius: 15px;
+    border: 1px solid #f0e5ea;
+    border-radius: 17px;
 
     background: #fff;
 }
 
-.product-score-row {
+.mom-score-top {
     display: flex;
     align-items: center;
     justify-content: space-between;
 
-    gap: 10px;
-
-    margin-bottom: 8px;
+    margin-bottom: 10px;
 }
 
-.product-score-label {
+.mom-score-top > span {
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: .08em;
+}
+
+.mom-score-top > div {
+    display: flex;
+    align-items: baseline;
+    gap: 2px;
+}
+
+.mom-score-top strong {
+    font-size: 23px;
+    font-weight: 900;
+}
+
+.mom-score-top small {
     color: var(--mv-muted);
-
-    font-size: 9px;
-    font-weight: 900;
-
-    letter-spacing: 0.08em;
-
-    text-transform: uppercase;
+    font-size: 10px;
 }
 
-.product-score-number {
-    color: var(--mv-pink-dark);
+.consensus-label {
+    margin-bottom: 8px;
 
-    font-size: 19px;
-    font-weight: 900;
+    font-size: 10px;
+    font-weight: 800;
+    color: var(--mv-muted);
 }
 
-.product-score-bar {
-    width: 100%;
-    height: 5px;
+.consensus-bar {
+    height: 7px;
 
     overflow: hidden;
 
     border-radius: 999px;
 
-    background: #f2eaee;
+    background: #f2edf0;
 }
 
-.product-score-bar-fill {
-    width: 0;
+.consensus-fill {
+    width: 50%;
     height: 100%;
 
     border-radius: inherit;
@@ -908,227 +874,168 @@
         linear-gradient(
             90deg,
             var(--mv-pink),
-            var(--mv-purple)
+            #ef8faf
         );
+
+    transition: width .4s ease;
 }
 
+.consensus-text {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    margin-top: 8px;
+
+    color: var(--mv-muted);
+
+    font-size: 10px;
+}
+
+.consensus-text strong {
+    color: var(--mv-text);
+    font-size: 13px;
+}
 
 /* =========================================================
-   PICK BUTTON
-   ========================================================= */
+   VOTING
+========================================================= */
 
-.product-pick-button {
-    width: 100%;
+.vote-area {
+    margin-top: 20px;
+}
 
-    margin-top: 15px;
-
-    padding: 14px 13px;
-
-    border: none;
-
-    border-radius: 15px;
-
-    background: var(--mv-text);
-
-    color: #fff;
-
-    font-family: inherit;
+.vote-question {
+    margin: 0 0 10px;
 
     font-size: 11px;
     font-weight: 900;
-
-    letter-spacing: 0.035em;
-
-    cursor: pointer;
-
-    transition:
-        transform 0.2s ease,
-        background 0.2s ease,
-        box-shadow 0.2s ease;
 }
 
-.product-pick-button:hover {
-    transform: translateY(-2px);
-
-    background: var(--mv-pink-dark);
-
-    box-shadow:
-        0 10px 22px
-        rgba(217, 67, 120, 0.2);
+.vote-choice-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 9px;
 }
 
-.product-pick-button:active {
-    transform: scale(0.98);
-}
-
-.product-pick-button:disabled {
-    opacity: 0.65;
-
-    cursor: wait;
-
-    transform: none;
-}
-
-
-/* =========================================================
-   AMAZON BUTTON
-   ========================================================= */
-
-.product-shop-link {
+.vote-choice {
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 7px;
 
-    width: 100%;
-
-    margin-top: 9px;
+    min-height: 50px;
 
     padding: 10px;
 
-    border:
-        1px solid
-        #e9e1e5;
-
+    border: 1px solid var(--mv-border);
     border-radius: 13px;
 
-    background: #fff;
+    background: white;
 
-    color: var(--mv-text);
+    color: var(--mv-text) !important;
 
-    text-decoration: none;
-
+    font-family: inherit;
     font-size: 10px;
     font-weight: 900;
 
+    cursor: pointer;
+
+    appearance: none;
+    -webkit-appearance: none;
+
     transition:
-        background 0.2s ease,
-        border-color 0.2s ease;
+        transform .18s ease,
+        border-color .18s ease,
+        box-shadow .18s ease;
 }
 
-.product-shop-link:hover {
-    background: #faf6f8;
-
-    border-color: #dfd3d9;
+.vote-choice,
+.vote-choice span,
+.vote-choice strong {
+    color: var(--mv-text);
 }
 
+.vote-choice:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 20px rgba(60, 40, 50, .08);
+}
 
-/* =========================================================
-   VS COLUMN
-   ========================================================= */
+.vote-yes:hover {
+    border-color: #8bc8aa;
+    background: #f5fcf8;
+}
 
-.battle-vs-column {
-    position: relative;
+.vote-no:hover {
+    border-color: #e4a0a7;
+    background: #fff8f8;
+}
 
-    z-index: 10;
-
-    display: flex;
+.vote-choice-icon {
+    display: inline-flex;
     align-items: center;
     justify-content: center;
 
-    background:
-        linear-gradient(
-            180deg,
-            #fff,
-            #fff5f8,
-            #fff
-        );
-}
+    flex: 0 0 22px;
 
-.battle-vs-line {
-    position: absolute;
-
-    left: 50%;
-
-    top: 0;
-    bottom: 0;
-
-    width: 1px;
-
-    transform: translateX(-50%);
-
-    background:
-        linear-gradient(
-            transparent,
-            #ecdfe5 20%,
-            #ecdfe5 80%,
-            transparent
-        );
-}
-
-.battle-vs-badge {
-    position: relative;
-    z-index: 2;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 57px;
-    height: 57px;
-
-    border:
-        4px solid
-        #fff;
+    width: 22px;
+    height: 22px;
 
     border-radius: 50%;
 
-    background:
-        linear-gradient(
-            135deg,
-            var(--mv-pink),
-            var(--mv-purple)
-        );
-
-    color: #fff;
-
-    box-shadow:
-        0 12px 30px
-        rgba(80, 50, 80, 0.18);
-
-    font-size: 12px;
-    font-weight: 900;
-
-    font-style: italic;
+    font-size: 14px;
 }
 
+.vote-yes .vote-choice-icon {
+    background: #eaf8ef;
+    color: #40966c;
+}
+
+.vote-no .vote-choice-icon {
+    background: #fff0f1;
+    color: #c5535e;
+}
+
+.vote-helper {
+    display: block;
+
+    margin-top: 8px;
+
+    color: #a19aa0;
+
+    font-size: 9px;
+}
 
 /* =========================================================
-   RESULT OVERLAY
-   ========================================================= */
+   RESULT
+========================================================= */
 
-.battle-result {
+.vote-result {
     display: none;
 
-    margin-top: 15px;
+    margin-top: 18px;
+    padding: 15px;
 
-    padding: 14px;
-
-    border:
-        1px solid
-        #eadde3;
-
-    border-radius: 17px;
+    border-radius: 16px;
 
     background:
         linear-gradient(
             135deg,
-            #fff7fa,
-            #fff
+            #fff4f8,
+            #fffafb
         );
+
+    border: 1px solid #f2dce5;
 
     text-align: center;
 }
 
-.battle-result.visible {
+.vote-result.visible {
     display: block;
-
-    animation:
-        resultIn
-        0.3s ease;
+    animation: resultIn .35s ease;
 }
 
 @keyframes resultIn {
-
     from {
         opacity: 0;
         transform: translateY(8px);
@@ -1138,29 +1045,21 @@
         opacity: 1;
         transform: translateY(0);
     }
-
 }
 
-.battle-result-kicker {
-    margin-bottom: 4px;
-
-    color: var(--mv-pink-dark);
-
-    font-size: 9px;
-    font-weight: 900;
-
-    letter-spacing: 0.1em;
+.result-icon {
+    font-size: 23px;
+    margin-bottom: 3px;
 }
 
-.battle-result-title {
-    margin: 0;
-
-    font-size: 18px;
+.vote-result strong {
+    display: block;
+    font-size: 14px;
     font-weight: 900;
 }
 
-.battle-result-text {
-    margin: 5px 0 0;
+.vote-result p {
+    margin: 4px 0 0;
 
     color: var(--mv-muted);
 
@@ -1168,196 +1067,1231 @@
     line-height: 1.5;
 }
 
-
 /* =========================================================
-   SWIPE HINT
-   ========================================================= */
+   SOCIAL COMPARISON
+========================================================= */
 
-.swipe-hint {
+.social-comparison {
+    display: none;
+
+    margin-top: 12px;
+    padding: 15px;
+
+    border: 1px solid var(--mv-border);
+    border-radius: 16px;
+
+    background: white;
+}
+
+.social-comparison.visible {
+    display: block;
+    animation: resultIn .4s ease;
+}
+
+.social-comparison-title {
     display: flex;
     align-items: center;
-    justify-content: center;
+    gap: 6px;
 
-    gap: 8px;
+    margin-bottom: 12px;
 
-    margin-top: 14px;
+    font-size: 11px;
+    font-weight: 900;
+}
 
-    color: #aaa0a7;
+.social-result-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
+    padding: 8px 0;
+
+    border-bottom: 1px solid #f2edf0;
+}
+
+.social-result-row:last-of-type {
+    border-bottom: 0;
+}
+
+.social-result-row span {
     font-size: 9px;
     font-weight: 900;
-
-    letter-spacing: 0.08em;
-
-    text-transform: uppercase;
 }
 
-.swipe-hint-arrow {
-    color: var(--mv-pink);
+.social-result-row strong {
+    font-size: 13px;
+    font-weight: 900;
 }
 
+.no-row strong {
+    color: #b96169;
+}
 
-/* =========================================================
-   BATTLE FOOTER
-   ========================================================= */
+.your-position {
+    margin-top: 10px;
+    padding: 9px;
 
-.battle-footer {
-    padding:
-        14px
-        20px
-        18px;
+    border-radius: 9px;
 
-    color: #9a9197;
+    background: #f8f5f7;
 
     text-align: center;
 
+    color: var(--mv-muted);
+
     font-size: 10px;
     font-weight: 800;
-
-    border-top:
-        1px solid
-        #f4edf0;
 }
-
 
 /* =========================================================
-   SWIPE ANIMATIONS
-   ========================================================= */
+   AMAZON CTA
+========================================================= */
 
-.battle-arena.swiping-left {
-    transform:
-        translateX(-18px)
-        rotate(-0.4deg);
+.product-shop-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
 
-    opacity: 0.75;
+    width: 100%;
+
+    margin-top: 18px;
+    padding: 14px 18px;
+
+    border-radius: 13px;
+
+    background: var(--mv-text);
+    color: white !important;
+
+    text-decoration: none;
+
+    font-size: 12px;
+    font-weight: 900;
+
+    box-shadow: 0 8px 20px rgba(48, 42, 48, .14);
 
     transition:
-        transform 0.16s ease,
-        opacity 0.16s ease;
+        transform .2s ease,
+        box-shadow .2s ease,
+        background .2s ease;
 }
 
-.battle-arena.swiping-right {
-    transform:
-        translateX(18px)
-        rotate(0.4deg);
-
-    opacity: 0.75;
-
-    transition:
-        transform 0.16s ease,
-        opacity 0.16s ease;
+.product-shop-link:hover {
+    transform: translateY(-2px);
+    background: #19161a;
+    box-shadow: 0 12px 26px rgba(48, 42, 48, .2);
 }
-
-.battle-arena.swipe-complete-left {
-    animation:
-        swipeLeftOut
-        0.28s ease;
-}
-
-@keyframes swipeLeftOut {
-
-    0% {
-        transform: translateX(0);
-        opacity: 1;
-    }
-
-    100% {
-        transform: translateX(-100px);
-        opacity: 0;
-    }
-
-}
-
 
 /* =========================================================
-   DISCOVERY
-   ========================================================= */
+   NEXT CONTENDER
+========================================================= */
 
-.discovery-section {
-    margin:
-        80px
-        0
-        70px;
+.next-contender {
+    width: 100%;
 
-    padding:
-        35px
-        25px;
+    margin-top: 9px;
+    padding: 11px;
 
-    border-radius: 25px;
+    border: 0;
+
+    background: transparent;
+
+    color: var(--mv-muted);
+
+    font-family: inherit;
+
+    font-size: 10px;
+    font-weight: 900;
+
+    cursor: pointer;
+
+    transition:
+        color .2s ease,
+        transform .2s ease;
+}
+
+.next-contender span {
+    margin-left: 4px;
+}
+
+.next-contender:hover {
+    color: var(--mv-pink-dark);
+    transform: translateX(2px);
+}
+
+/* =========================================================
+   DOTS
+========================================================= */
+
+.battle-dots {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+
+    padding: 15px 0 5px;
+}
+
+.battle-dot {
+    width: 7px;
+    height: 7px;
+
+    padding: 0;
+
+    border: 0;
+    border-radius: 50%;
+
+    background: #ddd5da;
+
+    cursor: pointer;
+
+    transition:
+        width .2s ease,
+        background .2s ease;
+}
+
+.battle-dot.active {
+    width: 22px;
+    border-radius: 999px;
+    background: var(--mv-pink);
+}
+
+/* =========================================================
+   WINNER
+========================================================= */
+
+.battle-winner {
+    display: none;
+
+    align-items: center;
+    gap: 13px;
+
+    margin: 15px 20px 0;
+    padding: 14px 17px;
+
+    border: 1px solid #eadfc7;
+    border-radius: 15px;
+
+    background:
+        linear-gradient(
+            110deg,
+            #fffaf0,
+            #fffdf8
+        );
+}
+
+.battle-winner.visible {
+    display: flex;
+    animation: resultIn .35s ease;
+}
+
+.winner-icon {
+    font-size: 25px;
+}
+
+.battle-winner strong {
+    display: block;
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.battle-winner p {
+    margin: 2px 0 0;
+
+    color: var(--mv-muted);
+
+    font-size: 10px;
+    line-height: 1.4;
+}
+
+.battle-footer {
+    padding: 17px 25px;
+
+    border-top: 1px solid var(--mv-border);
+
+    text-align: center;
+
+    color: var(--mv-muted);
+
+    font-size: 10px;
+    font-weight: 800;
+}
+
+/* =========================================================
+   KEEP DISCOVERING
+========================================================= */
+
+.keep-discovering {
+    margin: 95px 0;
+
+    padding: 50px 25px;
+
+    border-radius: 28px;
 
     background:
         linear-gradient(
             135deg,
-            #fff7fa,
-            #f8f4ff
+            #fff5f8,
+            #faf7ff
         );
 
     text-align: center;
 }
 
-.discovery-heading h2 {
+.keep-discovering-kicker {
+    display: block;
+
+    margin-bottom: 10px;
+
+    color: var(--mv-pink-dark);
+
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: .15em;
+}
+
+.keep-discovering h2 {
     margin: 0;
 
     font-size: 32px;
-
     font-weight: 900;
-
-    letter-spacing: -0.03em;
+    letter-spacing: -.025em;
 }
 
-.discovery-heading p {
-    margin:
-        9px
-        0
-        0;
+.keep-discovering p {
+    margin: 10px auto 25px;
 
     color: var(--mv-muted);
 
     font-size: 13px;
 }
 
-.battle-count {
-    margin-bottom: 8px;
+.discovery-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.discovery-links a {
+    display: inline-flex;
+
+    padding: 10px 14px;
+
+    border-radius: 999px;
+
+    background: white;
+    border: 1px solid var(--mv-border);
+
+    color: var(--mv-text);
+
+    text-decoration: none;
+
+    font-size: 11px;
+    font-weight: 900;
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+}
+
+.discovery-links a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 18px rgba(60,40,50,.08);
+}
+
+/* =========================================================
+   HOW IT WORKS
+========================================================= */
+
+.voting-explainer {
+    text-align: center;
+
+    max-width: 850px;
+
+    margin: 0 auto 95px;
+}
+
+.voting-explainer > .community-badge {
+    margin-bottom: 13px;
+}
+
+.voting-explainer h2 {
+    margin: 0;
+
+    font-size: 34px;
+    font-weight: 900;
+}
+
+.voting-explainer > p {
+    max-width: 550px;
+
+    margin: 12px auto 35px;
+
+    color: var(--mv-muted);
+
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.explainer-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.explainer-item {
+    padding: 25px 18px;
+
+    border: 1px solid var(--mv-border);
+    border-radius: 20px;
+
+    background: white;
+}
+
+.explainer-item > span {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 34px;
+    height: 34px;
+
+    margin-bottom: 10px;
+
+    border-radius: 50%;
+
+    background: var(--mv-pink-light);
 
     color: var(--mv-pink-dark);
 
     font-size: 10px;
     font-weight: 900;
-
-    letter-spacing: 0.12em;
 }
 
-.discovery-strip {
+.explainer-item h3 {
+    margin: 0;
+
+    font-size: 16px;
+    font-weight: 900;
+}
+
+.explainer-item p {
+    margin: 7px 0 0;
+
+    color: var(--mv-muted);
+
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+/* =========================================================
+   FINAL CTA
+========================================================= */
+
+.holy-grail-final {
+    position: relative;
+    overflow: hidden;
+
+    margin-bottom: 80px;
+    padding: 60px 25px;
+
+    border-radius: 30px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff1f6,
+            #f9f3ff
+        );
+
+    text-align: center;
+}
+
+.holy-grail-final::before {
+    content: "";
+
+    position: absolute;
+
+    width: 220px;
+    height: 220px;
+
+    top: -100px;
+    right: -80px;
+
+    border-radius: 50%;
+
+    background: rgba(232,93,143,.08);
+}
+
+.holy-grail-final-icon {
+    position: relative;
+
+    width: 55px;
+    height: 55px;
+
     display: flex;
     align-items: center;
     justify-content: center;
 
-    flex-wrap: wrap;
+    margin: 0 auto 16px;
 
-    gap: 8px;
+    border-radius: 18px;
 
-    margin-top: 22px;
+    background: white;
+
+    font-size: 26px;
+
+    box-shadow: 0 8px 25px rgba(60,40,50,.08);
 }
 
-.discovery-filter {
-    padding: 10px 15px;
+.holy-grail-final h2 {
+    position: relative;
 
-    border:
-        1px solid
-        #eadfe5;
+    margin: 0;
+
+    font-size: clamp(28px, 4vw, 40px);
+
+    font-weight: 900;
+}
+
+.holy-grail-final p {
+    position: relative;
+
+    max-width: 520px;
+
+    margin: 12px auto 25px;
+
+    color: var(--mv-muted);
+
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.holy-grail-final-button {
+    position: relative;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 14px 21px;
 
     border-radius: 999px;
 
-    background: #fff;
+    background: var(--mv-pink);
+    color: white !important;
 
-    color: var(--mv-text);
+    text-decoration: none;
 
-    font-family: inherit;
+    font-size: 12px;
+    font-weight: 900;
+
+    box-shadow: 0 10px 25px rgba(232,93,143,.2);
+
+    transition:
+        transform .2s ease,
+        background .2s ease;
+}
+
+.holy-grail-final-button:hover {
+    transform: translateY(-2px);
+    background: var(--mv-pink-dark);
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.mom-voted-page footer {
+    padding-top: 35px;
+
+    border-top: 1px solid var(--mv-border);
+
+    text-align: center;
+}
+
+.footer-logo img {
+    width: 140px;
+    max-width: 100%;
+}
+
+.mom-voted-page footer h3 {
+    margin: 10px 0 5px;
+
+    font-size: 14px;
+    font-weight: 900;
+}
+
+.mom-voted-page footer > p {
+    max-width: 400px;
+
+    margin: 0 auto;
+
+    color: var(--mv-muted);
 
     font-size: 11px;
+    line-height: 1.5;
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 5px 20px;
+
+    margin-top: 25px;
+    padding-top: 18px;
+
+    border-top: 1px solid #f4eef1;
+
+    color: #9a9298;
+
+    font-size: 9px;
+}
+
+.footer-bottom p {
+    margin: 0;
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 850px) {
+
+    .product-slide-area {
+        grid-template-columns: 1fr;
+    }
+
+    .product-image-wrap {
+        min-height: 360px;
+    }
+
+    .battle-product-image {
+        height: 310px;
+    }
+
+    .battle-product-info {
+        padding: 30px;
+    }
+
+    .product-arrow {
+        flex: 0 0 42px;
+        width: 42px;
+        height: 42px;
+    }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 650px) {
+
+    .mom-voted-page {
+        padding: 15px 12px 45px;
+    }
+
+    .mom-voted-header {
+        min-height: 45px;
+        margin-bottom: 20px;
+    }
+
+    .mom-voted-logo {
+        width: 125px;
+    }
+
+    .header-right {
+        right: 0;
+        gap: 6px;
+    }
+
+    .community-badge {
+        padding: 7px 9px;
+        font-size: 8px;
+    }
+
+    .live-indicator {
+        font-size: 8px;
+    }
+
+    .voting-hero {
+        padding: 25px 5px 35px;
+    }
+
+    .voting-hero h1 {
+        font-size: 39px;
+    }
+
+    .mom-voted-intro {
+        font-size: 14px;
+    }
+
+    .hero-mini-proof {
+        gap: 7px;
+    }
+
+    .hero-mini-proof strong {
+        font-size: 10px;
+    }
+
+    .hero-mini-proof span {
+        font-size: 8px;
+    }
+
+    .proof-arrow {
+        font-size: 15px;
+    }
+
+    .holy-grail-banner {
+        align-items: flex-start;
+        flex-wrap: wrap;
+        padding: 15px;
+        margin-bottom: 22px;
+    }
+
+    .holy-grail-banner-icon {
+        width: 38px;
+        height: 38px;
+        flex-basis: 38px;
+        font-size: 18px;
+    }
+
+    .holy-grail-banner-content {
+        min-width: calc(100% - 60px);
+    }
+
+    .holy-grail-banner-content span {
+        font-size: 10px;
+    }
+
+    .holy-grail-link {
+        width: 100%;
+        margin-top: 4px;
+    }
+
+    .voting-categories {
+        margin-bottom: 28px;
+        top: 7px;
+    }
+
+    .category-link {
+        padding: 9px 12px;
+        font-size: 10px;
+    }
+
+    .discovery-heading {
+        align-items: flex-start;
+    }
+
+    .discovery-heading h2 {
+        font-size: 21px;
+    }
+
+    .product-battle {
+        margin-bottom: 65px;
+    }
+
+    .battle-card {
+        border-radius: 22px;
+    }
+
+    .battle-top {
+        padding: 15px;
+    }
+
+    .battle-progress {
+        padding: 10px 15px 0;
+    }
+
+    .battle-question {
+        padding: 23px 15px 18px;
+    }
+
+    .battle-question strong {
+        font-size: 18px;
+    }
+
+    .product-viewer {
+        position: relative;
+
+        display: block;
+
+        padding: 0 10px 15px;
+    }
+
+    .product-slide-area {
+        position: relative;
+
+        border-radius: 18px;
+    }
+
+    .product-arrow {
+        position: absolute;
+        z-index: 5;
+
+        top: 150px;
+
+        width: 38px;
+        height: 38px;
+
+        margin: 0;
+
+        font-size: 25px;
+
+        background: rgba(255,255,255,.95);
+    }
+
+    .product-arrow-left {
+        left: 17px;
+    }
+
+    .product-arrow-right {
+        right: 17px;
+    }
+
+    .product-image-wrap {
+        min-height: 300px;
+        padding: 25px 45px;
+    }
+
+    .battle-product-image {
+        height: 245px;
+    }
+
+    .product-image-badge {
+        top: 12px;
+        left: 12px;
+        font-size: 8px;
+    }
+
+    .battle-product-info {
+        padding: 25px 18px 22px;
+    }
+
+    .battle-product-info h3 {
+        font-size: 26px;
+    }
+
+    .battle-description {
+        font-size: 12px;
+    }
+
+    .vote-choice-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .vote-choice {
+        min-height: 48px;
+    }
+
+    .battle-footer {
+        padding: 15px;
+    }
+
+    .keep-discovering {
+        margin: 65px 0;
+        padding: 40px 15px;
+        border-radius: 23px;
+    }
+
+    .keep-discovering h2 {
+        font-size: 27px;
+    }
+
+    .explainer-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .voting-explainer {
+        margin-bottom: 65px;
+    }
+
+    .holy-grail-final {
+        margin-bottom: 55px;
+        padding: 45px 18px;
+        border-radius: 23px;
+    }
+
+    .holy-grail-final h2 {
+        font-size: 28px;
+    }
+}
+
+/* =========================================================
+   SMALL PHONES
+========================================================= */
+
+@media (max-width: 400px) {
+
+    .voting-hero h1 {
+        font-size: 34px;
+    }
+
+    .header-right .community-badge {
+        display: none;
+    }
+
+    .battle-heading h2 {
+        font-size: 26px;
+    }
+
+    .product-image-wrap {
+        min-height: 275px;
+    }
+
+    .product-arrow {
+        top: 138px;
+    }
+
+    .battle-product-image {
+        height: 220px;
+    }
+
+    .battle-product-info h3 {
+        font-size: 24px;
+    }
+}
+
+/* =====================================
+   HOLY GRAIL PRODUCT SUBMISSION
+   MomYouNeedThis
+===================================== */
+
+/* =====================================================
+   PAGE LOGO
+===================================================== */
+
+.holy-grail-logo-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+
+    text-decoration: none;
+
+    margin-bottom: 14px;
+}
+
+.holy-grail-logo-link .logo {
+    display: block;
+
+    width: 145px;
+    max-width: 70vw;
+
+    height: auto;
+}
+
+/* =====================================================
+   HOLY GRAIL FORM CONTAINER
+===================================================== */
+
+.holy-grail-form {
+    width: 100%;
+    max-width: 620px;
+    margin: 34px auto 42px;
+    padding: 32px;
+    background: #ffffff;
+    border: 1px solid rgba(80, 60, 50, 0.08);
+    border-radius: 24px;
+    box-shadow: 0 12px 40px rgba(60, 45, 35, 0.08);
+    box-sizing: border-box;
+}
+
+/* =====================================================
+   FORM FIELDS
+===================================================== */
+
+.holy-grail-field {
+    width: 100%;
+    margin-bottom: 22px;
+}
+
+.holy-grail-field label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 15px;
+    font-weight: 800;
+    color: #3f302a;
+    text-align: left;
+}
+
+.holy-grail-field input {
+    display: block;
+    width: 100%;
+    min-height: 54px;
+    padding: 14px 16px;
+    box-sizing: border-box;
+
+    border: 2px solid #eee4df;
+    border-radius: 14px;
+
+    background: #fffdfc;
+
+    font-family: "Nunito", sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: #3f302a;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+.holy-grail-field input::placeholder {
+    color: #a99b94;
+    font-weight: 600;
+}
+
+.holy-grail-field input:hover {
+    border-color: #e5d5ce;
+}
+
+.holy-grail-field input:focus {
+    border-color: #e6a6b7;
+    background: #ffffff;
+    box-shadow: 0 0 0 4px rgba(230, 166, 183, 0.14);
+}
+
+/* =====================================================
+   ERROR MESSAGE
+===================================================== */
+
+.holy-grail-error {
+    min-height: 20px;
+    margin: 2px 0 14px;
+
+    font-size: 14px;
+    line-height: 1.5;
+    font-weight: 700;
+
+    color: #b42318;
+
+    text-align: left;
+}
+
+/* =====================================================
+   SUBMIT BUTTON
+===================================================== */
+
+.holy-grail-submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    min-height: 56px;
+
+    padding: 14px 22px;
+
+    border: 0;
+    border-radius: 16px;
+
+    background: #e889a2;
+    color: #ffffff;
+
+    font-family: "Nunito", sans-serif;
+    font-size: 16px;
     font-weight: 900;
 
     cursor: pointer;
+
+    box-shadow: 0 8px 20px rgba(200, 105, 130, 0.2);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+.holy-grail-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 26px rgba(200, 105, 130, 0.26);
+    background: #df7894;
+}
+
+.holy-grail-submit:active {
+    transform: translateY(0);
+    box-shadow: 0 6px 14px rgba(200, 105, 130, 0.2);
+}
+
+.holy-grail-submit:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* =====================================================
+   SUCCESS MESSAGE
+===================================================== */
+
+.holy-grail-success {
+    text-align: center;
+    padding: 10px 4px 4px;
+}
+
+.holy-grail-success-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 76px;
+    height: 76px;
+
+    margin: 0 auto 18px;
+
+    border-radius: 50%;
+
+    background: #fff0f4;
+
+    font-size: 34px;
+
+    box-shadow: 0 8px 24px rgba(200, 105, 130, 0.12);
+}
+
+.holy-grail-success h2 {
+    margin: 0 0 12px;
+
+    font-size: 28px;
+    line-height: 1.2;
+    font-weight: 900;
+
+    color: #3f302a;
+}
+
+.holy-grail-success p {
+    margin: 0 auto 24px;
+
+    max-width: 480px;
+
+    font-size: 16px;
+    line-height: 1.65;
+    font-weight: 600;
+
+    color: #756861;
+}
+
+/* =====================================================
+   SUBMIT ANOTHER BUTTON
+===================================================== */
+
+.holy-grail-another {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 48px;
+
+    padding: 12px 20px;
+
+    border: 2px solid #eadbd5;
+    border-radius: 14px;
+
+    background: #ffffff;
+    color: #4a3932;
+
+    font-family: "Nunito", sans-serif;
+    font-size: 14px;
+    font-weight: 900;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.holy-grail-another:hover {
+    background: #fff7f8;
+    border-color: #e6a6b7;
+    transform: translateY(-1px);
+}
+
+/* =====================================================
+   WHAT HAPPENS NEXT
+===================================================== */
+
+.tips {
+    width: 100%;
+    max-width: 680px;
+
+    margin: 0 auto 38px;
+    padding: 28px 30px;
+
+    box-sizing: border-box;
+
+    border-radius: 22px;
+
+    background: #fff8f5;
+    border: 1px solid rgba(80, 60, 50, 0.06);
+}
+
+.tips h2 {
+    margin: 0 0 14px;
+
+    font-size: 22px;
+    line-height: 1.3;
+    font-weight: 900;
+
+    color: #3f302a;
+}
+
+.tips p {
+    margin: 0;
+
+    font-size: 15px;
+    line-height: 1.7;
+    font-weight: 600;
+
+    color: #756861;
+}
+
+.tips strong {
+    color: #4b3932;
+    font-weight: 900;
+}
+
+/* =====================================================
+   BACK TO RECOMMENDATIONS
+===================================================== */
+
+.holy-grail-back {
+    display: flex;
+    justify-content: center;
+
+    margin: 0 auto 48px;
+    padding: 0 16px;
+
+    text-align: center;
+}
+
+.holy-grail-back-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 48px;
+
+    padding: 12px 20px;
+
+    border-radius: 14px;
+
+    background: #ffffff;
+    border: 1px solid #eadbd5;
+
+    color: #4a3932;
+
+    font-size: 14px;
+    font-weight: 900;
+
+    text-decoration: none;
 
     transition:
         transform 0.2s ease,
@@ -1365,735 +2299,105 @@
         border-color 0.2s ease;
 }
 
-.discovery-filter:hover {
+.holy-grail-back-link:hover {
     transform: translateY(-2px);
-
-    background: var(--mv-pink-light);
-
-    border-color: #f0cad8;
+    background: #fff7f8;
+    border-color: #e6a6b7;
 }
 
-
-/* =========================================================
-   HOW IT WORKS
-   ========================================================= */
-
-.how-it-works {
-    margin:
-        70px
-        0;
-}
-
-.how-it-works-heading {
-    text-align: center;
-
-    margin-bottom: 25px;
-}
-
-.how-it-works-heading h2 {
-    margin: 0;
-
-    font-size: 32px;
-
-    font-weight: 900;
-
-    letter-spacing: -0.03em;
-}
-
-.how-it-works-grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, 1fr);
-
-    gap: 15px;
-}
-
-.how-it-works-card {
-    padding: 24px;
-
-    border:
-        1px solid
-        var(--mv-border);
-
-    border-radius: 20px;
-
-    background: #fff;
-
-    box-shadow:
-        0 10px 30px
-        rgba(65, 38, 52, 0.04);
-}
-
-.how-number {
-    margin-bottom: 16px;
-
-    color: var(--mv-pink);
-
-    font-size: 12px;
-    font-weight: 900;
-
-    letter-spacing: 0.1em;
-}
-
-.how-it-works-card h3 {
-    margin: 0 0 8px;
-
-    font-size: 19px;
-    font-weight: 900;
-}
-
-.how-it-works-card p {
-    margin: 0;
-
-    color: var(--mv-muted);
-
-    font-size: 12px;
-
-    line-height: 1.6;
-}
-
-
-/* =========================================================
-   FINAL CTA
-   ========================================================= */
-
-.final-cta {
-    margin:
-        70px
-        0
-        30px;
-
-    padding:
-        45px
-        25px;
-
-    border-radius: 25px;
-
-    background:
-        linear-gradient(
-            135deg,
-            var(--mv-text),
-            #4b3944
-        );
-
-    color: #fff;
-
-    text-align: center;
-}
-
-.final-cta .section-kicker {
-    color: #f8aec7;
-}
-
-.final-cta h2 {
-    margin: 0;
-
-    font-size: clamp(27px, 4vw, 38px);
-
-    font-weight: 900;
-
-    letter-spacing: -0.03em;
-}
-
-.final-cta p {
-    margin:
-        10px
-        0
-        22px;
-
-    color: #ddd2d8;
-
-    font-size: 14px;
-}
-
-.final-cta-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    padding:
-        13px
-        20px;
-
-    border-radius: 14px;
-
-    background: var(--mv-pink);
-
-    color: #fff;
-
-    text-decoration: none;
-
-    font-size: 12px;
-    font-weight: 900;
-
-    transition:
-        transform 0.2s ease,
-        background 0.2s ease;
-}
-
-.final-cta-button:hover {
-    transform: translateY(-2px);
-
-    background: var(--mv-pink-dark);
-}
-
-
-/* =========================================================
-   FOOTER
-   ========================================================= */
-
-.mom-voted-footer {
-    padding-top: 20px;
-
-    border-top:
-        1px solid
-        var(--mv-border);
-
-    text-align: center;
-}
-
-.mom-voted-footer p {
-    margin: 0;
-
-    color: #9a9197;
-
-    font-size: 10px;
-
-    line-height: 1.5;
-}
-
-
-/* =========================================================
-   MOBILE
-   ========================================================= */
-
-@media (max-width: 850px) {
-
-    .mom-voted-page {
-        padding:
-            18px
-            15px
-            55px;
-    }
-
-
-    .header-right {
-        position: static;
-    }
-
-
-    .mom-voted-header {
-        justify-content: space-between;
-    }
-
-
-    .mom-voted-header .logo {
-        width: 135px;
-    }
-
-
-    .holy-grail-banner {
-        align-items: flex-start;
-
-        flex-direction: column;
-    }
-
-
-    .holy-grail-banner-link {
-        width: 100%;
-    }
-
-
-    .battle-arena {
-        grid-template-columns:
-            minmax(0, 1fr)
-            58px
-            minmax(0, 1fr);
-    }
-
-
-    .battle-product-side {
-        padding: 13px;
-    }
-
-
-    .battle-product-image-wrap {
-        min-height: 250px;
-
-        padding: 10px;
-    }
-
-
-    .battle-product-image {
-        height: 230px;
-    }
-
-
-    .battle-product-name {
-        font-size: 20px;
-    }
-
-
-    .battle-vs-badge {
-        width: 48px;
-        height: 48px;
-
-        font-size: 10px;
-    }
-
-}
-
-
-/* =========================================================
-   SMALL MOBILE
-   ========================================================= */
-
-@media (max-width: 650px) {
-
-    .mom-voted-page {
-        padding:
-            12px
-            10px
-            45px;
-    }
-
-
-    .mom-voted-header {
-        margin-bottom: 18px;
-    }
-
-
-    .community-badge {
-        padding:
-            7px
-            10px;
-
-        font-size: 8px;
-    }
-
-
-    .voting-hero {
-        padding:
-            25px
-            5px
-            35px;
-    }
-
-
-    .voting-hero h1 {
-        font-size: 39px;
-    }
-
-
-    .voting-hero > p {
-        font-size: 14px;
-        line-height: 1.6;
-    }
-
-
-    .hero-mini-proof {
-        font-size: 9px;
-    }
-
-
-    .voting-categories {
-        top: 7px;
-
-        margin-bottom: 25px;
-    }
-
-
-    .category-link {
-        min-height: 35px;
-
-        padding:
-            0
-            12px;
-
-        font-size: 10px;
-    }
-
-
-    .battle-heading {
-        margin-bottom: 15px;
-    }
-
-
-    .battle-heading h2 {
-        font-size: 27px;
-    }
-
-
-    .battle-card {
-        border-radius: 22px;
-    }
-
-
-    .battle-top {
-        padding:
-            14px
-            15px
-            11px;
-    }
-
-
-    .battle-progress {
-        padding:
-            0
-            15px;
-    }
-
-
-    .battle-question {
-        padding:
-            20px
-            12px
-            15px;
-
-        font-size: 19px;
-    }
-
-
-    .product-viewer {
-        padding:
-            0
-            10px
-            10px;
-    }
-
-
-    .battle-arena {
-        grid-template-columns:
-            minmax(0, 1fr)
-            44px
-            minmax(0, 1fr);
-
-        border-radius: 18px;
-    }
-
-
-    .battle-product-side {
-        padding: 9px;
-    }
-
-
-    .battle-product-image-wrap {
-        min-height: 185px;
-
-        padding: 5px;
-
-        border-radius: 14px;
-    }
-
-
-    .battle-product-image {
-        height: 170px;
-    }
-
-
-    .battle-product-details {
-        padding:
-            12px
-            2px
-            2px;
-    }
-
-
-    .battle-product-brand {
-        font-size: 8px;
-    }
-
-
-    .battle-product-name {
-        font-size: 16px;
-    }
-
-
-    .battle-product-description {
-        display: none;
-    }
-
-
-    .product-score-box {
-        padding: 8px;
-        margin-top: 9px;
-    }
-
-
-    .product-score-number {
-        font-size: 16px;
-    }
-
-
-    .product-pick-button {
-        margin-top: 9px;
-
-        padding:
-            11px
-            7px;
-
-        border-radius: 11px;
-
-        font-size: 8px;
-    }
-
-
-    .product-shop-link {
-        margin-top: 6px;
-
-        padding: 8px;
-
-        border-radius: 10px;
-
-        font-size: 8px;
-    }
-
-
-    .battle-vs-badge {
-        width: 39px;
-        height: 39px;
-
-        border-width: 3px;
-
-        font-size: 8px;
-    }
-
-
-    .battle-footer {
-        padding:
-            12px
-            10px
-            14px;
-
-        font-size: 8px;
-    }
-
-
-    .discovery-section {
-        margin:
-            50px
-            0;
-
-        padding:
-            30px
-            15px;
-    }
-
-
-    .discovery-heading h2,
-    .how-it-works-heading h2 {
-        font-size: 27px;
-    }
-
-
-    .how-it-works {
-        margin:
-            50px
-            0;
-    }
-
-
-    .how-it-works-grid {
-        grid-template-columns: 1fr;
-    }
-
-
-    .final-cta {
-        margin-top: 50px;
-
-        padding:
-            35px
-            18px;
-    }
-
-}
-
-
-/* =========================================================
-   VERY SMALL MOBILE
-   ========================================================= */
-
-@media (max-width: 400px) {
-
-    .community-badge {
-        display: none;
-    }
-
-
-    .mom-voted-header {
-        justify-content: center;
-    }
-
-
-    .voting-hero h1 {
-        font-size: 34px;
-    }
-
-
-    .battle-arena {
-        grid-template-columns:
-            minmax(0, 1fr)
-            38px
-            minmax(0, 1fr);
-    }
-
-
-    .battle-product-image-wrap {
-        min-height: 160px;
-    }
-
-
-    .battle-product-image {
-        height: 145px;
-    }
-
-
-    .battle-product-name {
-        font-size: 14px;
-    }
-
-
-    .battle-product-brand {
-        font-size: 7px;
-    }
-
-
-    .product-score-label {
-        font-size: 7px;
-    }
-
-
-    .product-score-number {
-        font-size: 14px;
-    }
-
-
-    .product-pick-button {
-        font-size: 7px;
-
-        padding:
-            10px
-            5px;
-    }
-
-
-    .product-shop-link {
-        font-size: 7px;
-    }
-
-
-    .battle-vs-badge {
-        width: 34px;
-        height: 34px;
-
-        font-size: 7px;
-    }
-
-}
-
-
-
-/* ============================================================
-   HOLY GRAIL BANNER
-   ============================================================ */
-
-.holy-grail-banner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-    margin-bottom: 28px;
-    padding: 18px 20px;
-    border: 1px solid #f1c6d5;
-    border-radius: 20px;
-    background: linear-gradient(135deg, #fff3f7, #fff);
-}
-
-.holy-grail-banner h3 {
-    margin: 0 0 4px;
-    font-size: 16px;
-    font-weight: 950;
-    color: var(--mv-navy);
-}
-
-.holy-grail-banner p {
-    margin: 0;
-    font-size: 13px;
-    color: var(--mv-muted);
-}
-
-.holy-grail-banner a {
-    flex-shrink: 0;
-    padding: 11px 16px;
-    border-radius: 13px;
-    background: var(--mv-pink);
-    color: #fff;
-    text-decoration: none;
-    font-size: 12px;
-    font-weight: 900;
-}
-    
-
-/* ============================================================
-   HOLY GRAIL PRODUCT SUBMISSION
-   ============================================================ */
-
-.holy-grail-logo-link {
-    display: block;
-    text-align: center;
-}
-
-.holy-grail-form {
-    max-width: 620px;
-    margin: 0 auto;
-}
-
-.holy-grail-field {
-    margin-bottom: 16px;
-}
-
-.holy-grail-error {
-    display: none;
-}
-
-.holy-grail-submit {
-    width: 100%;
-}
-
-.holy-grail-success {
-    display: none;
-}
-
-.holy-grail-another {
-    display: inline-block;
-}
-
-.tips {
-    margin-top: 20px;
-}
-
-.holy-grail-back {
-    display: inline-block;
-}
+/* =====================================================
+   HIDDEN ATTRIBUTE SAFETY
+===================================================== */
 
 [hidden] {
     display: none !important;
 }
 
+/* =====================================================
+   HOLY GRAIL MOBILE
+===================================================== */
+
 @media (max-width: 700px) {
 
-    .holy-grail-form {
-        width: 100%;
+    .holy-grail-logo-link {
+        margin-bottom: 12px;
     }
 
+    .holy-grail-logo-link .logo {
+        width: 125px;
+    }
+
+    .holy-grail-form {
+        margin-top: 26px;
+        padding: 22px 18px;
+        border-radius: 20px;
+    }
+
+    .holy-grail-field {
+        margin-bottom: 18px;
+    }
+
+    .holy-grail-field input {
+        min-height: 52px;
+        font-size: 16px;
+        border-radius: 13px;
+    }
+
+    .holy-grail-submit {
+        min-height: 54px;
+        border-radius: 14px;
+        font-size: 15px;
+    }
+
+    .holy-grail-success h2 {
+        font-size: 25px;
+    }
+
+    .holy-grail-success p {
+        font-size: 15px;
+    }
+
+    .tips {
+        margin-bottom: 30px;
+        padding: 22px 18px;
+        border-radius: 19px;
+    }
+
+    .tips h2 {
+        font-size: 20px;
+    }
+
+    .tips p {
+        font-size: 14px;
+    }
+
+    .holy-grail-back {
+        margin-bottom: 36px;
+    }
 }
+
+/* =====================================================
+   HOLY GRAIL SMALL PHONES
+===================================================== */
 
 @media (max-width: 420px) {
 
     .holy-grail-form {
-        padding-left: 10px;
-        padding-right: 10px;
+        padding: 20px 15px;
     }
 
+    .holy-grail-success-icon {
+        width: 68px;
+        height: 68px;
+        font-size: 30px;
+    }
+
+    .holy-grail-success h2 {
+        font-size: 23px;
+    }
+
+    .holy-grail-back-link {
+        width: 100%;
+        box-sizing: border-box;
+    }
 }
