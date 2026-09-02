@@ -1460,124 +1460,356 @@ box-shadow:0 10px 25px rgba(0,0,0,.08);
 
 
 /* =====================
-   FREE MOM TOOLS
+   SMART TOOLS / MOM TOOLKIT
 ===================== */
 
-
-.featured-resources{
-
-    background:white;
-
+.smart-tools-section{
+    margin-top:8px;
+    background:linear-gradient(180deg,#fff7fa 0%,#ffffff 100%);
     border-radius:35px;
-
-    padding:40px 25px;
-
-    margin:45px 0;
-
+    padding:42px 30px 34px;
     text-align:center;
+    box-shadow:0 15px 35px rgba(0,0,0,.05);
+    position:relative;
+    overflow:hidden;
+}
 
-    box-shadow:0 10px 25px rgba(0,0,0,.05);
+.smart-tools-section::before{
+    content:"";
+    position:absolute;
+    width:180px;
+    height:180px;
+    border-radius:50%;
+    background:#ffeef3;
+    top:-95px;
+    left:-70px;
+    opacity:.7;
+}
 
+.smart-tools-section::after{
+    content:"";
+    position:absolute;
+    width:150px;
+    height:150px;
+    border-radius:50%;
+    background:#eef5ff;
+    bottom:-90px;
+    right:-55px;
+    opacity:.8;
 }
 
 
-.featured-resources h2{
+/* HEADER */
 
+.smart-tools-header{
+    position:relative;
+    z-index:1;
+    max-width:720px;
+    margin:0 auto 28px;
+}
+
+.smart-tools-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    background:#ffeaf0;
+    color:#c95770;
+    padding:8px 15px;
+    border-radius:999px;
+    font-size:12px;
+    font-weight:900;
+    letter-spacing:.7px;
+    margin-bottom:12px;
+}
+
+.smart-tools-header h2{
     font-size:36px;
-
+    line-height:1.15;
+    margin:0 0 10px;
+    color:#333;
     font-weight:900;
+}
 
-    margin-bottom:15px;
+.smart-tools-header h2 span{
+    color:#e89aaa;
+}
 
+.smart-tools-header p{
+    margin:0 auto;
+    max-width:650px;
+    font-size:17px;
+    line-height:1.6;
+    color:#666;
 }
 
 
-#generators{
+/* TOOL GRID */
 
-    margin-top:35px;
-
-}
-
-
-.featured-grid{
-
+.smart-tools-grid{
+    position:relative;
+    z-index:1;
+    max-width:950px;
+    margin:0 auto;
     display:grid;
-
-    grid-template-columns:repeat(2,1fr);
-
-    gap:20px;
-
-    max-width:850px;
-
-    margin:auto;
-
+    grid-template-columns:1.25fr 1fr 1fr;
+    grid-template-rows:1fr 1fr;
+    gap:15px;
 }
 
 
-.featured-grid a{
+/* FEATURED TOOL */
 
-    background:#fff8fb;
-
-    padding:30px;
-
-    border-radius:25px;
-
+.smart-tool-featured{
+    grid-row:span 2;
+    min-height:300px;
+    padding:25px;
+    border-radius:24px;
+    background:#ffffff;
+    border:1px solid #f0dfe4;
+    box-shadow:0 10px 25px rgba(0,0,0,.06);
     text-decoration:none;
+    color:inherit;
+    text-align:left;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    position:relative;
+    overflow:hidden;
+    transition:.22s ease;
+}
 
-    color:#332b2b;
+.smart-tool-featured::after{
+    content:"";
+    position:absolute;
+    width:140px;
+    height:140px;
+    border-radius:50%;
+    background:#fff0f4;
+    right:-55px;
+    bottom:-55px;
+}
 
-    font-size:22px;
+.smart-tool-featured:hover{
+    transform:translateY(-4px);
+    box-shadow:0 15px 32px rgba(0,0,0,.10);
+    border-color:#e89aaa;
+}
 
+
+/* FEATURED TOP */
+
+.smart-tool-featured-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.smart-tool-icon{
+    width:58px;
+    height:58px;
+    border-radius:18px;
+    background:#fff0f4;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:30px;
+}
+
+.smart-tool-label{
+    font-size:10px;
     font-weight:900;
-
-    transition:.25s ease;
-
+    letter-spacing:.7px;
+    color:#d4667e;
+    background:#fff0f4;
+    padding:7px 10px;
+    border-radius:999px;
 }
 
 
-.featured-grid span{
+/* FEATURED CONTENT */
 
+.smart-tool-content{
+    position:relative;
+    z-index:1;
+    margin-top:25px;
+}
+
+.smart-tool-content h3{
+    font-size:23px;
+    line-height:1.2;
+    margin:0 0 10px;
+    color:#333;
+    font-weight:900;
+}
+
+.smart-tool-content p{
+    margin:0;
+    font-size:14px;
+    line-height:1.55;
+    color:#666;
+    max-width:360px;
+}
+
+.smart-tool-cta{
+    display:inline-block;
+    margin-top:20px;
+    color:#d45f78;
+    font-weight:900;
+    font-size:14px;
+}
+
+
+/* SMALL TOOL CARDS */
+
+.smart-tool-card{
+    min-height:135px;
+    padding:18px;
+    border-radius:20px;
+    background:#fff;
+    border:1px solid #eeeeee;
+    text-decoration:none;
+    color:inherit;
+    text-align:left;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    transition:.22s ease;
+}
+
+.smart-tool-card:hover{
+    transform:translateY(-3px);
+    border-color:#e7a1af;
+    box-shadow:0 10px 24px rgba(0,0,0,.07);
+}
+
+.smart-tool-card-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:12px;
+}
+
+.smart-tool-small-icon{
+    width:40px;
+    height:40px;
+    border-radius:13px;
+    background:#f7f8fc;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:21px;
+}
+
+.smart-tool-arrow{
+    color:#d88999;
+    font-size:19px;
+    font-weight:900;
+}
+
+.smart-tool-category{
     display:block;
+    font-size:9px;
+    font-weight:900;
+    letter-spacing:.8px;
+    color:#a5a5a5;
+    margin-bottom:5px;
+}
 
-    margin-top:12px;
+.smart-tool-card h3{
+    font-size:16px;
+    line-height:1.25;
+    margin:0 0 5px;
+    color:#333;
+    font-weight:900;
+}
 
-    font-size:15px;
-
+.smart-tool-card p{
+    margin:0;
     color:#777;
-
-    font-weight:400;
-
-    line-height:1.5;
-
+    font-size:12px;
+    line-height:1.45;
 }
 
 
-.featured-grid a:hover{
+/* BOTTOM TRUST STRIP */
 
-    transform:translateY(-5px);
-
-    background:white;
-
-    box-shadow:0 10px 25px rgba(0,0,0,.08);
-
+.smart-tools-bottom{
+    position:relative;
+    z-index:1;
+    max-width:700px;
+    margin:22px auto 0;
+    padding-top:17px;
+    border-top:1px solid #f0e6e9;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:28px;
+    flex-wrap:wrap;
+    font-size:12px;
+    font-weight:800;
+    color:#888;
 }
 
 
+/* =====================
+   SMART TOOLS MOBILE
+===================== */
 
-@media(max-width:750px){
+@media(max-width:850px){
 
-.featured-grid{
+    .smart-tools-grid{
+        grid-template-columns:1fr 1fr;
+        grid-template-rows:auto;
+    }
 
-    grid-template-columns:1fr;
+    .smart-tool-featured{
+        grid-column:span 2;
+        grid-row:auto;
+        min-height:240px;
+    }
 
 }
 
+@media(max-width:600px){
 
-.featured-resources h2{
+    .smart-tools-section{
+        padding:30px 17px 27px;
+        border-radius:26px;
+    }
 
-    font-size:28px;
+    .smart-tools-header h2{
+        font-size:28px;
+    }
 
-}
+    .smart-tools-header p{
+        font-size:15px;
+    }
+
+    .smart-tools-grid{
+        grid-template-columns:1fr;
+        gap:12px;
+    }
+
+    .smart-tool-featured{
+        grid-column:auto;
+        min-height:225px;
+        padding:21px;
+    }
+
+    .smart-tool-content h3{
+        font-size:21px;
+    }
+
+    .smart-tool-card{
+        min-height:125px;
+        padding:17px;
+    }
+
+    .smart-tools-bottom{
+        gap:10px 18px;
+        font-size:11px;
+    }
 
 }
 
