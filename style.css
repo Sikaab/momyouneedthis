@@ -401,6 +401,289 @@ button:hover{
     font-size: 12px;
     line-height: 1.6;
 }
+
+/* =========================================================
+   MOM LAB → MOM BATTLES CONNECTION
+   ========================================================= */
+.mom-lab-battle-transition {
+    margin: 28px auto 8px;
+    max-width: 620px;
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    background: #fff7fa;
+    border: 1px solid #f3d9e2;
+    border-radius: 18px;
+    text-align: center;
+}
+.mom-lab-battle-line {
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border: 1px solid #f0d5df;
+    border-radius: 50%;
+    font-size: 21px;
+}
+.mom-lab-battle-transition > div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+}
+.mom-lab-battle-transition strong {
+    color: #1d4f91;
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: .04em;
+}
+.mom-lab-battle-transition span:not(.mom-lab-battle-line):not(.mom-lab-battle-arrow) {
+    margin-top: 3px;
+    color: #777;
+    font-size: 14px;
+    font-weight: 700;
+}
+.mom-lab-battle-arrow {
+    font-size: 22px;
+    color: #e56b91;
+    font-weight: 900;
+}
+/* =========================================================
+   MOM LAB HOME SECTION
+   ========================================================= */
+.mom-lab-home-section {
+    margin: 35px auto;
+    max-width: 1100px;
+    padding: 42px 28px;
+    background: #fff;
+    border-radius: 28px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .06);
+}
+.mom-lab-home-header {
+    max-width: 760px;
+    margin: 0 auto 30px;
+    text-align: center;
+}
+.mom-lab-home-badge {
+    display: inline-block;
+    margin-bottom: 10px;
+    padding: 7px 14px;
+    border-radius: 999px;
+    background: #fff0f5;
+    color: #d9577d;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: .06em;
+}
+.mom-lab-home-header h2 {
+    margin: 0;
+    color: #1d4f91;
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 900;
+    line-height: 1.12;
+}
+.mom-lab-home-header h2 span {
+    color: #e56b91;
+}
+.mom-lab-home-header p {
+    max-width: 680px;
+    margin: 14px auto 0;
+    color: #666;
+    font-size: 16px;
+    line-height: 1.65;
+}
+/* =========================================================
+   LAB CONTENT
+   ========================================================= */
+.mom-lab-home-content {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 22px;
+    align-items: stretch;
+}
+.mom-lab-tests {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+.mom-lab-test {
+    padding: 20px;
+    background: #f8f9fc;
+    border: 1px solid #edf0f5;
+    border-radius: 18px;
+    text-align: center;
+}
+.mom-lab-test-icon {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 28px;
+}
+.mom-lab-test strong {
+    display: block;
+    color: #1d4f91;
+    font-size: 15px;
+    font-weight: 900;
+}
+.mom-lab-test small {
+    display: block;
+    margin-top: 7px;
+    color: #777;
+    font-size: 12px;
+    line-height: 1.45;
+}
+/* =========================================================
+   LAB VERDICT
+   ========================================================= */
+.mom-lab-verdict {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 28px 22px;
+    background: #fff7fa;
+    border: 1px solid #f3d9e2;
+    border-radius: 22px;
+    text-align: center;
+}
+.mom-lab-verdict-label {
+    color: #999;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: .08em;
+}
+.mom-lab-verdict h3 {
+    margin: 9px 0;
+    color: #1d4f91;
+    font-size: 27px;
+    font-weight: 900;
+}
+.mom-lab-verdict-status {
+    display: inline-block;
+    padding: 9px 14px;
+    background: #e9f7ef;
+    color: #258653;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 900;
+}
+.mom-lab-verdict p {
+    max-width: 270px;
+    margin: 13px auto 0;
+    color: #777;
+    font-size: 13px;
+    line-height: 1.5;
+}
+/* =========================================================
+   LAB BUTTON
+   ========================================================= */
+.mom-lab-home-button {
+    display: block;
+    width: fit-content;
+    margin: 24px auto 0;
+    padding: 13px 22px;
+    background: #1d4f91;
+    color: #fff;
+    border-radius: 15px;
+    font-size: 14px;
+    font-weight: 900;
+    text-decoration: none;
+    transition: .2s ease;
+}
+.mom-lab-home-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(29, 79, 145, .2);
+}
+/* =========================================================
+   MOM BATTLES HEADER
+   ========================================================= */
+.amazon-header {
+    max-width: 760px;
+    margin: 0 auto 30px;
+    text-align: center;
+}
+.amazon-badge {
+    display: inline-block;
+    margin-bottom: 10px;
+    padding: 7px 14px;
+    background: #fff0f5;
+    color: #d9577d;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: .06em;
+}
+.amazon-header h2 {
+    margin: 0;
+    color: #1d4f91;
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 900;
+    line-height: 1.12;
+}
+.amazon-header h2 span {
+    color: #e56b91;
+}
+.amazon-header p {
+    max-width: 680px;
+    margin: 14px auto 0;
+    color: #666;
+    font-size: 16px;
+    line-height: 1.65;
+}
+/* =========================================================
+   MOBILE
+   ========================================================= */
+@media (max-width: 800px) {
+    .mom-lab-home-section {
+        padding: 32px 20px;
+    }
+    .mom-lab-home-content {
+        grid-template-columns: 1fr;
+    }
+}
+@media (max-width: 600px) {
+    .mom-lab-home-section {
+        margin: 25px auto;
+        padding: 28px 16px;
+        border-radius: 22px;
+    }
+    .mom-lab-tests {
+        grid-template-columns: 1fr;
+    }
+    .mom-lab-test {
+        padding: 17px;
+    }
+    .mom-lab-battle-transition {
+        margin-top: 22px;
+        padding: 16px 14px;
+        gap: 10px;
+    }
+    .mom-lab-battle-line {
+        width: 36px;
+        height: 36px;
+        flex-basis: 36px;
+        font-size: 18px;
+    }
+    .mom-lab-battle-transition strong {
+        font-size: 12px;
+    }
+    .mom-lab-battle-transition span:not(.mom-lab-battle-line):not(.mom-lab-battle-arrow) {
+        font-size: 12px;
+    }
+    .mom-lab-battle-arrow {
+        font-size: 18px;
+    }
+    .mom-lab-home-button {
+        width: 100%;
+        box-sizing: border-box;
+        text-align: center;
+    }
+}
+
 /* =========================================================
    MOM LAB BUTTON
 ========================================================= */
