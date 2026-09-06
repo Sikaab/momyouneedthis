@@ -986,23 +986,44 @@
 /* =========================================================
    MOBILE
    ========================================================= */
+
 @media (max-width: 640px) {
     .lab-header {
         width: calc(100% - 24px);
-        min-height: 72px;
+        min-height: 82px;
+        padding: 0 4px;
+    }
+    .lab-logo-link {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 150px;
+        display: flex;
+        justify-content: center;
     }
     .lab-logo {
         width: 140px;
+        max-width: 140px;
+        height: auto;
+        display: block;
     }
     .lab-status {
         right: 0;
+        top: 50%;
+        transform: translateY(-50%);
         padding: 6px 8px;
         font-size: 8px;
         gap: 5px;
+        max-width: 105px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
     .status-light {
         width: 6px;
         height: 6px;
+        flex: 0 0 6px;
     }
     /* HERO */
     .lab-hero {
