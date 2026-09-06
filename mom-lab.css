@@ -35,6 +35,8 @@
 .mom-lab-page {
     width: 100%;
     min-height: 100vh;
+    margin: 0;
+    padding: 0;
     background: var(--lab-off-white);
     color: var(--lab-text);
     font-family: "Nunito", sans-serif;
@@ -59,30 +61,45 @@
     width: min(1180px, calc(100% - 40px));
     min-height: 82px;
     margin: 0 auto;
-    display: flex;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    justify-content: center;
 }
+/*
+   IMPORTANT:
+   The logo is placed in the actual center grid column.
+   This prevents the logo from being affected by the status
+   badge and prevents positioning/transform conflicts.
+*/
 .lab-logo-link {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    position: static;
+    grid-column: 2;
+    grid-row: 1;
     display: flex;
     align-items: center;
     justify-content: center;
+    width: max-content;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    transform: none;
     z-index: 2;
 }
 .lab-logo {
     display: block;
     width: 175px;
+    max-width: 175px;
     height: auto;
+    margin: 0;
+    padding: 0;
 }
+/* STATUS */
 .lab-status {
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
+    position: static;
+    grid-column: 3;
+    grid-row: 1;
+    justify-self: end;
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -96,13 +113,16 @@
     letter-spacing: 0.06em;
     white-space: nowrap;
     box-shadow: var(--lab-shadow-sm);
+    transform: none;
 }
 .status-light {
     width: 8px;
     height: 8px;
+    flex: 0 0 8px;
     border-radius: 50%;
     background: #39b86b;
-    box-shadow: 0 0 0 4px rgba(57, 184, 107, 0.12);
+    box-shadow:
+        0 0 0 4px rgba(57, 184, 107, 0.12);
 }
 /* =========================================================
    HERO
@@ -391,7 +411,8 @@
     font-size: 13px;
     font-weight: 900;
     letter-spacing: 0.02em;
-    box-shadow: 0 9px 22px rgba(240, 107, 154, 0.25);
+    box-shadow:
+        0 9px 22px rgba(240, 107, 154, 0.25);
     transition:
         transform 0.18s ease,
         background 0.18s ease,
@@ -400,7 +421,8 @@
 .featured-product-button:hover {
     transform: translateY(-2px);
     background: var(--lab-pink-dark);
-    box-shadow: 0 13px 27px rgba(240, 107, 154, 0.32);
+    box-shadow:
+        0 13px 27px rgba(240, 107, 154, 0.32);
 }
 .featured-product-visual {
     min-height: 100%;
@@ -432,7 +454,8 @@
     background: rgba(255, 255, 255, 0.82);
     border: 1px solid rgba(255, 255, 255, 0.9);
     font-size: 86px;
-    box-shadow: 0 20px 50px rgba(16, 42, 67, 0.12);
+    box-shadow:
+        0 20px 50px rgba(16, 42, 67, 0.12);
 }
 .featured-product-visual > span {
     margin-top: 18px;
@@ -449,7 +472,8 @@
 }
 .lab-product-grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
     gap: 20px;
 }
 .lab-product-card {
@@ -492,7 +516,8 @@
     border-radius: 25px;
     background: var(--lab-white);
     font-size: 58px;
-    box-shadow: 0 12px 30px rgba(16, 42, 67, 0.09);
+    box-shadow:
+        0 12px 30px rgba(16, 42, 67, 0.09);
 }
 .product-status-badge {
     position: absolute;
@@ -667,7 +692,8 @@
 }
 .lab-score-grid {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
     gap: 14px;
 }
 .score-factor {
@@ -949,10 +975,18 @@
     text-align: center;
     border-top: 1px solid var(--lab-border);
 }
+.lab-footer a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+}
 .lab-footer img {
+    display: block;
     width: 145px;
     height: auto;
-    margin-bottom: 12px;
+    margin: 0 auto 12px;
 }
 .lab-footer p {
     margin: 5px 0;
@@ -971,7 +1005,8 @@
    ========================================================= */
 @media (max-width: 980px) {
     .lab-product-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
     }
     .featured-product-inner {
         grid-template-columns: 1fr;
@@ -980,52 +1015,66 @@
         min-height: 300px;
     }
     .lab-score-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
     }
 }
 /* =========================================================
    MOBILE
    ========================================================= */
-
 @media (max-width: 640px) {
+    /* -----------------------------------------
+       HEADER — FIXED
+       ----------------------------------------- */
     .lab-header {
         width: calc(100% - 24px);
         min-height: 82px;
-        padding: 0 4px;
+        padding: 0;
+        grid-template-columns: 1fr auto 1fr;
     }
     .lab-logo-link {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        width: 150px;
+        position: static;
+        grid-column: 2;
+        grid-row: 1;
+        width: max-content;
+        max-width: 150px;
+        margin: 0;
+        padding: 0;
+        transform: none;
         display: flex;
+        align-items: center;
         justify-content: center;
     }
     .lab-logo {
+        display: block;
         width: 140px;
         max-width: 140px;
         height: auto;
-        display: block;
+        margin: 0;
+        padding: 0;
     }
     .lab-status {
-        right: 0;
-        top: 50%;
-        transform: translateY(-50%);
+        position: static;
+        grid-column: 3;
+        grid-row: 1;
+        justify-self: end;
+        max-width: 105px;
         padding: 6px 8px;
         font-size: 8px;
         gap: 5px;
-        max-width: 105px;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
+        transform: none;
     }
     .status-light {
         width: 6px;
         height: 6px;
         flex: 0 0 6px;
     }
-    /* HERO */
+    /* -----------------------------------------
+       HERO
+       ----------------------------------------- */
     .lab-hero {
         width: calc(100% - 24px);
         margin-top: 8px;
@@ -1063,7 +1112,9 @@
     .lab-warning {
         font-size: 9px;
     }
-    /* WIDTHS */
+    /* -----------------------------------------
+       WIDTHS
+       ----------------------------------------- */
     .lab-database,
     .lab-products,
     .lab-score-section,
@@ -1077,7 +1128,9 @@
     .lab-submission {
         width: calc(100% - 24px);
     }
-    /* HEADINGS */
+    /* -----------------------------------------
+       HEADINGS
+       ----------------------------------------- */
     .section-heading {
         margin-bottom: 17px;
     }
@@ -1087,7 +1140,9 @@
     .section-heading h2 {
         font-size: 27px;
     }
-    /* FILTERS */
+    /* -----------------------------------------
+       FILTERS
+       ----------------------------------------- */
     .lab-database {
         margin-bottom: 22px;
     }
@@ -1096,7 +1151,9 @@
         padding: 8px 11px;
         font-size: 9px;
     }
-    /* FEATURED */
+    /* -----------------------------------------
+       FEATURED
+       ----------------------------------------- */
     .lab-featured-product {
         margin-bottom: 42px;
     }
@@ -1141,12 +1198,15 @@
         margin-top: 10px;
         font-size: 8px;
     }
-    /* PRODUCTS */
+    /* -----------------------------------------
+       PRODUCTS
+       ----------------------------------------- */
     .lab-products {
         margin-bottom: 42px;
     }
     .lab-product-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
         gap: 10px;
     }
     .lab-product-card {
@@ -1217,12 +1277,15 @@
         border-radius: 9px;
         font-size: 8px;
     }
-    /* SCORE */
+    /* -----------------------------------------
+       SCORE
+       ----------------------------------------- */
     .lab-score-section {
         margin-bottom: 42px;
     }
     .lab-score-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
         gap: 8px;
     }
     .score-factor {
@@ -1239,7 +1302,9 @@
     .score-factor strong {
         font-size: 9px;
     }
-    /* WINNERS */
+    /* -----------------------------------------
+       WINNERS
+       ----------------------------------------- */
     .lab-winners-section {
         margin-bottom: 30px;
     }
@@ -1264,7 +1329,9 @@
         font-size: 9px;
         line-height: 1.35;
     }
-    /* BATTLE */
+    /* -----------------------------------------
+       BATTLE
+       ----------------------------------------- */
     .lab-battle-connection {
         margin-bottom: 28px;
     }
@@ -1294,7 +1361,9 @@
         padding: 8px 11px;
         font-size: 8px;
     }
-    /* NOMINATION */
+    /* -----------------------------------------
+       NOMINATION
+       ----------------------------------------- */
     .lab-submission {
         margin-bottom: 35px;
     }
@@ -1324,7 +1393,9 @@
         min-height: 43px;
         font-size: 9px;
     }
-    /* FINAL CTA */
+    /* -----------------------------------------
+       FINAL CTA
+       ----------------------------------------- */
     .lab-final-cta {
         margin-bottom: 30px;
     }
@@ -1344,13 +1415,16 @@
     .cta-file a {
         font-size: 8px;
     }
-    /* FOOTER */
+    /* -----------------------------------------
+       FOOTER
+       ----------------------------------------- */
     .lab-footer {
         padding: 22px 0 28px;
+        margin-bottom: 0;
     }
     .lab-footer img {
         width: 120px;
-        margin-bottom: 8px;
+        margin: 0 auto 8px;
     }
     .lab-footer p {
         font-size: 8px;
@@ -1365,6 +1439,7 @@
 @media (max-width: 380px) {
     .lab-logo {
         width: 125px;
+        max-width: 125px;
     }
     .lab-status {
         max-width: 86px;
