@@ -1,46 +1,96 @@
-/* =========================================
-MOM LAB 
-========================================= */
+/* =========================================================
+MOM LAB — MOMYOuNEEDTHIS
+========================================================= */
 
-* {
-    box-sizing: border-box;
-    }
+:root {
+–lab-blue: #1d4f91;
+–lab-blue-dark: #143b70;
+–lab-pink: #e85d8e;
+–lab-pink-dark: #d94779;
 
-body {
-margin: 0;
-font-family: “Nunito”, sans-serif;
-background: #fff8fb;
-color: #333;
+--lab-bg: #ffffff;
+--lab-section-bg: #f7f9fc;
+--lab-pink-bg: #fff1f6;
+--lab-blue-bg: #eef5ff;
+--lab-text: #252525;
+--lab-muted: #6d6d6d;
+--lab-light-text: #929292;
+--lab-border: #e4e8ee;
+--lab-green: #238b4e;
+--lab-green-bg: #eaf8ef;
+--lab-yellow: #a66b00;
+--lab-yellow-bg: #fff6df;
+--lab-red: #b4233c;
+--lab-red-bg: #ffedf0;
+--lab-radius-sm: 10px;
+--lab-radius-md: 16px;
+--lab-radius-lg: 22px;
+--lab-radius-xl: 28px;
+--lab-shadow-sm: 0 4px 14px rgba(25, 45, 70, 0.06);
+--lab-shadow-md: 0 10px 30px rgba(25, 45, 70, 0.08);
+--lab-shadow-lg: 0 18px 45px rgba(25, 45, 70, 0.11);
+
 }
 
-a {
+/* =========================================================
+BASE
+========================================================= */
+
+.mom-lab-page {
+width: 100%;
+min-height: 100vh;
+background: var(–lab-bg);
+color: var(–lab-text);
+font-family: “Nunito”, sans-serif;
+overflow-x: hidden;
+}
+
+.mom-lab-page *,
+.mom-lab-page *::before,
+.mom-lab-page *::after {
+box-sizing: border-box;
+}
+
+.mom-lab-page a {
 text-decoration: none;
 }
 
-img {
+.mom-lab-page img {
 max-width: 100%;
-display: block;
 }
 
-/* =========================================
+.mom-lab-page section {
+width: 100%;
+}
+
+.mom-lab-page h1,
+.mom-lab-page h2,
+.mom-lab-page h3,
+.mom-lab-page p {
+margin-top: 0;
+}
+
+/* =========================================================
 HEADER
-========================================= */
+========================================================= */
 
 .lab-header {
 position: relative;
+width: 100%;
 max-width: 1180px;
+min-height: 82px;
 margin: 0 auto;
-min-height: 78px;
-padding: 16px 24px;
+padding: 18px 24px;
 display: flex;
 align-items: center;
-justify-content: center;
+justify-content: flex-end;
 }
 
 .lab-logo-link {
 position: absolute;
-left: 50%;
 top: 50%;
+left: 50%;
+z-index: 2;
 transform: translate(-50%, -50%);
 display: flex;
 align-items: center;
@@ -48,233 +98,375 @@ justify-content: center;
 }
 
 .lab-logo {
-width: 150px;
+width: 154px;
 height: auto;
+display: block;
 }
 
 .lab-status {
-margin-left: auto;
-display: flex;
-align-items: center;
-gap: 8px;
-font-size: 12px;
-font-weight: 900;
-color: #1d4f91;
-letter-spacing: 0.4px;
-}
-
-.status-light {
-width: 8px;
-height: 8px;
-border-radius: 50%;
-background: #55b96a;
-display: inline-block;
-}
-
-/* =========================================
-HERO
-========================================= */
-
-.lab-hero {
-max-width: 1050px;
-margin: 0 auto;
-padding: 55px 24px 40px;
-text-align: center;
-}
-
-.lab-eyebrow {
-display: inline-block;
-margin-bottom: 12px;
-font-size: 13px;
-font-weight: 900;
-color: #e85d8e;
-letter-spacing: 1.5px;
-text-transform: uppercase;
-}
-
-.lab-hero h1 {
-max-width: 850px;
-margin: 0 auto 18px;
-color: #1d4f91;
-font-size: clamp(34px, 5vw, 58px);
-line-height: 1.05;
-font-weight: 900;
-}
-
-.lab-hero h1 strong {
-color: #e85d8e;
-}
-
-.lab-hero p {
-max-width: 720px;
-margin: 0 auto;
-color: #666;
-font-size: 17px;
-line-height: 1.7;
-}
-
-.lab-warning {
-max-width: 650px;
-margin: 22px auto 0;
-padding: 12px 18px;
-border-radius: 14px;
-background: #fff0f5;
-color: #b54770;
-font-size: 13px;
-font-weight: 800;
-}
-
-/* =========================================
-ARCHIVE NAV
-========================================= */
-
-.lab-archive-nav {
-max-width: 1100px;
-margin: 0 auto 30px;
-padding: 0 20px;
-display: flex;
-justify-content: center;
-gap: 10px;
-flex-wrap: wrap;
-}
-
-.lab-archive-nav a {
-padding: 9px 15px;
-border-radius: 999px;
-background: #fff;
-border: 1px solid #eadde4;
-color: #1d4f91;
-font-size: 13px;
-font-weight: 800;
-transition: 0.2s ease;
-}
-
-.lab-archive-nav a:hover {
-background: #fff0f5;
-border-color: #f0b7cb;
-}
-
-/* =========================================
-FEATURED SURVIVOR
-========================================= */
-
-.lab-featured {
-max-width: 1100px;
-margin: 0 auto 45px;
-padding: 0 20px;
-}
-
-.lab-featured-card {
-background: #fff;
-border: 1px solid #eadde4;
-border-radius: 26px;
-padding: 24px;
-display: grid;
-grid-template-columns: minmax(240px, 0.9fr) minmax(300px, 1.1fr);
-gap: 30px;
-align-items: center;
-box-shadow: 0 8px 24px rgba(50, 30, 40, 0.06);
-}
-
-.lab-featured-image {
-min-height: 260px;
-border-radius: 20px;
-background: #fff8fb;
-display: flex;
-align-items: center;
-justify-content: center;
-overflow: hidden;
-}
-
-.lab-featured-image img {
-width: 100%;
-height: 100%;
-object-fit: contain;
-}
-
-.lab-featured-label {
-color: #e85d8e;
-font-size: 12px;
-font-weight: 900;
-letter-spacing: 1px;
-text-transform: uppercase;
-}
-
-.lab-featured-card h2 {
-margin: 8px 0 10px;
-color: #1d4f91;
-font-size: 30px;
-line-height: 1.15;
-font-weight: 900;
-}
-
-.lab-featured-description {
-margin: 0 0 18px;
-color: #666;
-line-height: 1.6;
-}
-
-.lab-score {
 display: inline-flex;
 align-items: center;
 gap: 7px;
-padding: 8px 13px;
-border-radius: 12px;
-background: #fff0f5;
-color: #e85d8e;
+padding: 8px 11px;
+border: 1px solid #dfe6ef;
+border-radius: 999px;
+background: #fff;
+color: var(–lab-blue);
+font-size: 10px;
 font-weight: 900;
-font-size: 14px;
+letter-spacing: .6px;
+white-space: nowrap;
 }
 
-.lab-verdict {
-margin: 14px 0;
-font-size: 14px;
-font-weight: 900;
-color: #2c8a4b;
+.status-light {
+width: 7px;
+height: 7px;
+border-radius: 50%;
+background: #31a854;
+box-shadow: 0 0 0 3px #e8f7ec;
 }
 
-/* =========================================
-PRODUCT ARCHIVE
-========================================= */
+/* =========================================================
+HERO
+========================================================= */
 
-.lab-products-section {
-max-width: 1120px;
+.lab-hero {
+max-width: 980px;
 margin: 0 auto;
-padding: 0 20px 50px;
-}
-
-.lab-section-heading {
+padding: 48px 24px 52px;
 text-align: center;
-margin-bottom: 24px;
 }
 
-.lab-section-heading span {
-display: block;
-margin-bottom: 6px;
-color: #e85d8e;
+.lab-hero-top {
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 18px;
+margin-bottom: 25px;
+}
+
+.lab-stamp {
+display: inline-flex;
+align-items: center;
+gap: 7px;
+padding: 8px 12px;
+border: 1px solid #e2e7ee;
+border-radius: 999px;
+background: #fff;
+color: var(–lab-blue);
+font-size: 11px;
+font-weight: 900;
+letter-spacing: .7px;
+}
+
+.lab-file-number {
+color: #999;
+font-size: 10px;
+font-weight: 800;
+letter-spacing: 1px;
+}
+
+.lab-kicker {
+margin-bottom: 12px;
+color: var(–lab-pink);
 font-size: 12px;
 font-weight: 900;
-letter-spacing: 1.2px;
+letter-spacing: 1.5px;
+}
+
+.lab-hero h1 {
+margin-bottom: 18px;
+color: var(–lab-blue);
+font-size: clamp(38px, 6vw, 68px);
+line-height: .98;
+font-weight: 900;
+letter-spacing: -1.8px;
+}
+
+.lab-hero h1 span {
+color: var(–lab-pink);
+}
+
+.lab-hero-divider {
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 14px;
+margin: 0 auto 18px;
+color: var(–lab-blue-dark);
+font-size: 14px;
+font-weight: 900;
+letter-spacing: 1.8px;
+}
+
+.lab-hero-divider::before,
+.lab-hero-divider::after {
+content: “”;
+width: 42px;
+height: 2px;
+background: var(–lab-pink);
+border-radius: 999px;
+}
+
+.lab-intro {
+margin-bottom: 13px;
+color: var(–lab-text);
+font-size: 18px;
+font-weight: 700;
+}
+
+.lab-warning {
+display: inline-block;
+margin-bottom: 0;
+padding: 9px 14px;
+border-radius: 999px;
+background: var(–lab-pink-bg);
+color: var(–lab-pink-dark);
+font-size: 12px;
+font-weight: 800;
+}
+
+/* =========================================================
+SHARED SECTION HEADING
+========================================================= */
+
+.section-heading {
+max-width: 720px;
+margin: 0 auto 26px;
+text-align: center;
+}
+
+.section-kicker {
+display: block;
+margin-bottom: 7px;
+color: var(–lab-pink);
+font-size: 11px;
+font-weight: 900;
+letter-spacing: 1.3px;
 text-transform: uppercase;
 }
 
-.lab-section-heading h2 {
-margin: 0;
-color: #1d4f91;
-font-size: 30px;
+.section-heading h2 {
+margin-bottom: 0;
+color: var(–lab-blue);
+font-size: clamp(26px, 4vw, 38px);
+line-height: 1.1;
+font-weight: 900;
+letter-spacing: -.6px;
+}
+
+.section-heading h2 span {
+color: var(–lab-pink);
+}
+
+/* =========================================================
+LAB DATABASE / FILTERS
+========================================================= */
+
+.lab-database {
+max-width: 1120px;
+margin: 0 auto;
+padding: 20px 24px 32px;
+}
+
+.lab-database-nav {
+display: flex;
+justify-content: center;
+align-items: center;
+flex-wrap: wrap;
+gap: 8px;
+}
+
+.database-filter {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+min-height: 38px;
+padding: 8px 14px;
+border: 1px solid var(–lab-border);
+border-radius: 999px;
+background: #fff;
+color: var(–lab-blue);
+font-size: 12px;
+font-weight: 900;
+transition:
+background .2s ease,
+color .2s ease,
+border-color .2s ease,
+transform .2s ease;
+}
+
+.database-filter:hover {
+border-color: #c8d7ea;
+background: var(–lab-blue-bg);
+transform: translateY(-1px);
+}
+
+.database-filter.active {
+border-color: var(–lab-blue);
+background: var(–lab-blue);
+color: #fff;
+}
+
+/* =========================================================
+FEATURED PRODUCT
+PRIMARY CONVERSION AREA
+========================================================= */
+
+.lab-featured-product {
+max-width: 1120px;
+margin: 0 auto;
+padding: 8px 24px 54px;
+}
+
+.featured-product-inner {
+position: relative;
+display: grid;
+grid-template-columns: minmax(0, 1.05fr) minmax(280px, .95fr);
+gap: 40px;
+align-items: center;
+padding: 34px;
+border: 1px solid #dce5f0;
+border-radius: var(–lab-radius-xl);
+background: linear-gradient(135deg, #eef5ff 0%, #fff 58%);
+box-shadow: var(–lab-shadow-md);
+overflow: hidden;
+}
+
+.featured-product-inner::after {
+content: “”;
+position: absolute;
+width: 180px;
+height: 180px;
+right: -70px;
+bottom: -80px;
+border-radius: 50%;
+background: rgba(232, 93, 142, .08);
+pointer-events: none;
+}
+
+.featured-product-copy {
+position: relative;
+z-index: 1;
+}
+
+.featured-label {
+display: inline-flex;
+align-items: center;
+margin-bottom: 12px;
+color: var(–lab-pink);
+font-size: 11px;
+font-weight: 900;
+letter-spacing: 1px;
+}
+
+.featured-product-copy h2 {
+max-width: 580px;
+margin-bottom: 17px;
+color: var(–lab-blue);
+font-size: clamp(28px, 4vw, 43px);
+line-height: 1.04;
+font-weight: 900;
+letter-spacing: -.9px;
+}
+
+.featured-product-copy h2 span {
+color: var(–lab-pink);
+}
+
+.featured-score {
+display: flex;
+align-items: baseline;
+gap: 4px;
+margin-bottom: 8px;
+}
+
+.featured-score strong {
+color: var(–lab-blue);
+font-size: 42px;
+line-height: 1;
 font-weight: 900;
 }
 
-.lab-section-heading p {
-max-width: 650px;
-margin: 8px auto 0;
-color: #777;
-line-height: 1.5;
+.featured-score span {
+color: #7e8792;
+font-size: 15px;
+font-weight: 800;
 }
 
-/* =========================================
-PRODUCT GRID
-========================================= */
+.featured-verdict {
+display: inline-flex;
+margin-bottom: 20px;
+padding: 8px 12px;
+border-radius: 999px;
+background: var(–lab-green-bg);
+color: var(–lab-green);
+font-size: 11px;
+font-weight: 900;
+letter-spacing: .3px;
+}
+
+.featured-product-button {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+width: 100%;
+max-width: 360px;
+min-height: 52px;
+padding: 13px 20px;
+border-radius: 15px;
+background: var(–lab-pink);
+color: #fff;
+font-size: 14px;
+font-weight: 900;
+box-shadow: 0 8px 20px rgba(232, 93, 142, .22);
+transition:
+background .2s ease,
+transform .2s ease,
+box-shadow .2s ease;
+}
+
+.featured-product-button:hover {
+background: var(–lab-pink-dark);
+transform: translateY(-2px);
+box-shadow: 0 12px 26px rgba(232, 93, 142, .28);
+}
+
+.featured-product-visual {
+position: relative;
+z-index: 1;
+text-align: center;
+}
+
+.featured-product-placeholder {
+min-height: 270px;
+display: flex;
+align-items: center;
+justify-content: center;
+border: 1px dashed #c9d6e6;
+border-radius: 22px;
+background: rgba(255, 255, 255, .78);
+font-size: 78px;
+}
+
+.featured-product-visual > span {
+display: block;
+margin-top: 10px;
+color: #9299a3;
+font-size: 9px;
+font-weight: 900;
+letter-spacing: 1.1px;
+}
+
+/* =========================================================
+PRODUCTS
+========================================================= */
+
+.lab-products {
+max-width: 1120px;
+margin: 0 auto;
+padding: 0 24px 58px;
+}
 
 .lab-product-grid {
 display: grid;
@@ -282,341 +474,471 @@ grid-template-columns: repeat(3, minmax(0, 1fr));
 gap: 18px;
 }
 
-/* =========================================
+/* =========================================================
 PRODUCT CARD
-========================================= */
+========================================================= */
 
 .lab-product-card {
 min-width: 0;
-background: #fff;
-border: 1px solid #eadde4;
+display: flex;
+flex-direction: column;
+border: 1px solid var(–lab-border);
 border-radius: 20px;
-padding: 16px;
-box-shadow: 0 7px 20px rgba(50, 30, 40, 0.05);
+background: #fff;
+box-shadow: var(–lab-shadow-sm);
 overflow: hidden;
+transition:
+transform .2s ease,
+box-shadow .2s ease,
+border-color .2s ease;
 }
 
-.lab-product-image {
-height: 190px;
-margin-bottom: 14px;
-border-radius: 16px;
-background: #fff8fb;
+.lab-product-card:hover {
+transform: translateY(-3px);
+border-color: #d5dfeb;
+box-shadow: var(–lab-shadow-md);
+}
+
+.product-card-image {
+position: relative;
+height: 205px;
+padding: 13px;
+background: #f6f9fd;
+}
+
+.product-image-placeholder {
+width: 100%;
+height: 100%;
 display: flex;
 align-items: center;
 justify-content: center;
-overflow: hidden;
+border-radius: 14px;
+background: #fff;
+font-size: 58px;
 }
 
-.lab-product-image img {
-width: 100%;
-height: 100%;
-object-fit: contain;
-}
-
-.lab-product-status {
+.product-status-badge {
+position: absolute;
+top: 21px;
+left: 21px;
+z-index: 2;
 display: inline-flex;
-padding: 5px 9px;
-margin-bottom: 8px;
+align-items: center;
+min-height: 27px;
+padding: 6px 9px;
 border-radius: 999px;
-font-size: 10px;
+font-size: 9px;
 font-weight: 900;
-letter-spacing: 0.5px;
-text-transform: uppercase;
+letter-spacing: .35px;
 }
 
-.lab-product-status.survived {
-background: #eaf8ee;
-color: #2c8a4b;
+.product-status-badge.survived {
+background: var(–lab-green-bg);
+color: var(–lab-green);
 }
 
-.lab-product-status.competing {
-background: #fff3df;
-color: #a86612;
+.product-status-badge.competing {
+background: var(–lab-yellow-bg);
+color: var(–lab-yellow);
 }
 
-.lab-product-status.failed {
-background: #ffe9ed;
-color: #b00020;
+.product-status-badge.failed {
+background: var(–lab-red-bg);
+color: var(–lab-red);
 }
 
-.lab-product-category {
-display: block;
+.product-card-content {
+flex: 1;
+display: flex;
+flex-direction: column;
+padding: 17px;
+}
+
+.product-category {
 margin-bottom: 5px;
-color: #999;
-font-size: 11px;
-font-weight: 800;
-text-transform: uppercase;
+color: #8a929c;
+font-size: 9px;
+font-weight: 900;
+letter-spacing: 1px;
 }
 
-.lab-product-card h3 {
-margin: 0 0 7px;
-color: #1d4f91;
+.product-card-content h3 {
+margin-bottom: 7px;
+color: var(–lab-blue);
 font-size: 18px;
-line-height: 1.2;
+line-height: 1.15;
 font-weight: 900;
 }
 
-.lab-product-description {
-margin: 0 0 12px;
-color: #777;
-font-size: 13px;
+.product-description {
+min-height: 38px;
+margin-bottom: 12px;
+color: #707781;
+font-size: 12px;
 line-height: 1.45;
 }
 
-.lab-product-score {
+/* =========================================================
+PRODUCT SCORE
+========================================================= */
+
+.product-score-row {
 display: flex;
 align-items: center;
 justify-content: space-between;
 gap: 8px;
-margin-bottom: 10px;
+padding: 10px 0;
+border-top: 1px solid #edf0f4;
+border-bottom: 1px solid #edf0f4;
 }
 
-.lab-product-score strong {
-color: #1d4f91;
-font-size: 18px;
+.product-score {
+display: flex;
+align-items: baseline;
+gap: 2px;
+}
+
+.product-score strong {
+color: var(–lab-blue);
+font-size: 23px;
+line-height: 1;
 font-weight: 900;
 }
 
-.lab-product-score span {
-color: #999;
-font-size: 11px;
-font-weight: 800;
-}
-
-/* =========================================
-MINI TEST RESULTS
-========================================= */
-
-.lab-mini-tests {
-display: flex;
-flex-wrap: wrap;
-gap: 6px;
-margin-bottom: 12px;
-}
-
-.lab-mini-test {
-padding: 5px 7px;
-border-radius: 8px;
-background: #f7f5f7;
-color: #666;
+.product-score span {
+color: #8d949d;
 font-size: 10px;
 font-weight: 800;
 }
 
-.lab-mini-test strong {
-color: #1d4f91;
-}
-
-.lab-product-verdict {
-margin-bottom: 12px;
-color: #2c8a4b;
-font-size: 11px;
+.product-score-label {
+color: #a0a5ab;
+font-size: 8px;
 font-weight: 900;
-text-transform: uppercase;
+letter-spacing: .8px;
 }
 
-.lab-product-verdict.failed {
-color: #b00020;
+/* =========================================================
+MINI TESTS
+========================================================= */
+
+.mini-tests {
+display: flex;
+flex-wrap: wrap;
+gap: 5px;
+padding: 11px 0 9px;
 }
 
-/* =========================================
-PRODUCT BUTTONS
-========================================= */
+.mini-tests span {
+display: inline-flex;
+align-items: center;
+min-height: 23px;
+padding: 4px 6px;
+border-radius: 7px;
+background: #f5f7fa;
+color: #626a74;
+font-size: 8px;
+font-weight: 800;
+}
 
-.lab-product-button,
-.lab-featured-button {
+/* =========================================================
+PRODUCT VERDICT
+========================================================= */
+
+.product-verdict {
+margin-bottom: 11px;
+font-size: 9px;
+font-weight: 900;
+letter-spacing: .5px;
+}
+
+.product-verdict.survived {
+color: var(–lab-green);
+}
+
+.product-verdict.competing {
+color: var(–lab-yellow);
+}
+
+.product-verdict.failed {
+color: var(–lab-red);
+}
+
+/* =========================================================
+BUY BUTTONS
+========================================================= */
+
+.product-buy-button {
 display: flex;
 align-items: center;
 justify-content: center;
 width: 100%;
 min-height: 42px;
-padding: 10px 14px;
-border-radius: 13px;
-background: #1d4f91;
+margin-top: auto;
+padding: 10px 12px;
+border-radius: 12px;
+background: var(–lab-blue);
 color: #fff;
-font-size: 12px;
+font-size: 11px;
 font-weight: 900;
-text-align: center;
-transition: 0.2s ease;
+letter-spacing: .15px;
+transition:
+background .2s ease,
+transform .2s ease,
+box-shadow .2s ease;
 }
 
-.lab-product-button:hover,
-.lab-featured-button:hover {
+.product-buy-button:hover {
+background: var(–lab-blue-dark);
 transform: translateY(-1px);
-box-shadow: 0 7px 15px rgba(29, 79, 145, 0.2);
+box-shadow: 0 7px 16px rgba(29, 79, 145, .2);
 }
 
-.lab-product-button.battle {
-background: #e85d8e;
+.competing-product .product-buy-button {
+background: var(–lab-pink);
 }
 
-/* =========================================
+.competing-product .product-buy-button:hover {
+background: var(–lab-pink-dark);
+}
+
+.failed-product .product-buy-button {
+background: #7b8087;
+}
+
+.failed-product .product-buy-button:hover {
+background: #656a71;
+}
+
+/* =========================================================
 SCORE SECTION
-========================================= */
+========================================================= */
 
 .lab-score-section {
 max-width: 1050px;
 margin: 0 auto;
-padding: 30px 20px 55px;
+padding: 12px 24px 58px;
 }
 
 .lab-score-grid {
 display: grid;
-grid-template-columns: repeat(4, 1fr);
-gap: 14px;
+grid-template-columns: repeat(4, minmax(0, 1fr));
+gap: 12px;
 }
 
-.lab-score-item {
-background: #fff;
-border: 1px solid #eadde4;
-border-radius: 18px;
-padding: 18px 14px;
+.score-factor {
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+min-height: 112px;
+padding: 17px 12px;
+border: 1px solid var(–lab-border);
+border-radius: 17px;
+background: var(–lab-section-bg);
 text-align: center;
 }
 
-.lab-score-item strong {
+.score-factor span {
 display: block;
 margin-bottom: 7px;
-color: #1d4f91;
-font-size: 14px;
+font-size: 25px;
 }
 
-.lab-score-item span {
-color: #e85d8e;
-font-size: 21px;
+.score-factor strong {
+color: var(–lab-blue);
+font-size: 12px;
 font-weight: 900;
 }
 
-/* =========================================
+/* =========================================================
 WINNERS
-========================================= */
+========================================================= */
 
 .lab-winners-section {
 max-width: 1050px;
 margin: 0 auto;
-padding: 20px 20px 55px;
-}
-
-.lab-winner-card {
-background: #fff;
-border: 1px solid #eadde4;
-border-radius: 22px;
-padding: 22px;
-display: grid;
-grid-template-columns: 180px 1fr;
-gap: 22px;
-align-items: center;
+padding: 0 24px 48px;
 }
 
 .winner-preview {
-text-align: left;
+display: flex;
+align-items: center;
+gap: 20px;
+padding: 22px 25px;
+border: 1px solid #e8dce3;
+border-radius: 20px;
+background: #fff;
+box-shadow: var(–lab-shadow-sm);
 }
 
-.winner-preview span {
-display: inline-block;
-margin-bottom: 8px;
-padding: 5px 9px;
-border-radius: 999px;
-background: #fff0f5;
-color: #e85d8e;
-font-size: 10px;
+.winner-preview-icon {
+flex: 0 0 62px;
+width: 62px;
+height: 62px;
+display: flex;
+align-items: center;
+justify-content: center;
+border-radius: 17px;
+background: var(–lab-pink-bg);
+font-size: 30px;
+}
+
+.winner-preview-copy > span {
+display: block;
+margin-bottom: 5px;
+color: var(–lab-pink);
+font-size: 9px;
 font-weight: 900;
+letter-spacing: .9px;
 }
 
-.winner-preview h3 {
-margin: 0 0 6px;
-color: #1d4f91;
+.winner-preview-copy h3 {
+margin-bottom: 5px;
+color: var(–lab-blue);
 font-size: 20px;
 font-weight: 900;
 }
 
-.winner-preview p {
-margin: 0;
-color: #777;
-font-size: 14px;
+.winner-preview-copy p {
+margin-bottom: 0;
+color: #707781;
+font-size: 12px;
 line-height: 1.5;
 }
 
-/* =========================================
+/* =========================================================
 MOM BATTLE CONNECTION
-========================================= */
+========================================================= */
 
 .lab-battle-connection {
-max-width: 900px;
+max-width: 1050px;
 margin: 0 auto;
-padding: 25px 20px 55px;
-text-align: center;
+padding: 0 24px 48px;
 }
 
-.lab-battle-connection-inner {
-background: #fff0f5;
-border: 1px solid #f3ccda;
-border-radius: 24px;
-padding: 28px 22px;
+.battle-connection-inner {
+display: grid;
+grid-template-columns: 76px 1fr;
+gap: 20px;
+align-items: center;
+padding: 25px 28px;
+border-radius: 22px;
+background: var(–lab-blue);
+box-shadow: var(–lab-shadow-md);
 }
 
-.lab-battle-connection span {
+.connection-icon {
+width: 76px;
+height: 76px;
+display: flex;
+align-items: center;
+justify-content: center;
+border-radius: 20px;
+background: rgba(255, 255, 255, .12);
+font-size: 35px;
+}
+
+.connection-copy > span {
 display: block;
-margin-bottom: 8px;
-color: #e85d8e;
-font-size: 11px;
+margin-bottom: 6px;
+color: #cfe0f8;
+font-size: 9px;
 font-weight: 900;
 letter-spacing: 1px;
 }
 
-.lab-battle-connection h2 {
-margin: 0 0 8px;
-color: #1d4f91;
+.connection-copy h2 {
+margin-bottom: 6px;
+color: #fff;
 font-size: 27px;
+line-height: 1.1;
 font-weight: 900;
 }
 
-.lab-battle-connection p {
-margin: 0 0 18px;
-color: #666;
+.connection-copy h2 strong {
+color: #ffb2ca;
+}
+
+.connection-copy p {
+margin-bottom: 15px;
+color: #dbe7f7;
+font-size: 12px;
 }
 
 .lab-battle-button {
 display: inline-flex;
 align-items: center;
 justify-content: center;
-padding: 12px 20px;
-border-radius: 14px;
-background: #e85d8e;
+min-height: 43px;
+padding: 10px 17px;
+border-radius: 12px;
+background: var(–lab-pink);
 color: #fff;
-font-size: 13px;
+font-size: 11px;
 font-weight: 900;
+transition:
+background .2s ease,
+transform .2s ease;
 }
 
-/* =========================================
+.lab-battle-button:hover {
+background: var(–lab-pink-dark);
+transform: translateY(-1px);
+}
+
+/* =========================================================
 NOMINATION
-========================================= */
+========================================================= */
 
 .lab-submission {
-max-width: 850px;
+max-width: 900px;
 margin: 0 auto;
-padding: 0 20px 55px;
-text-align: center;
+padding: 0 24px 52px;
 }
 
-.lab-submission-inner {
-background: #fff;
-border: 1px solid #eadde4;
+.submission-card {
+padding: 30px 25px;
+border: 1px solid #e5e8ed;
 border-radius: 22px;
-padding: 26px 22px;
+background: #fff;
+text-align: center;
+box-shadow: var(–lab-shadow-sm);
 }
 
-.lab-submission h2 {
-margin: 0 0 8px;
-color: #1d4f91;
-font-size: 25px;
+.submission-icon {
+width: 55px;
+height: 55px;
+margin: 0 auto 12px;
+display: flex;
+align-items: center;
+justify-content: center;
+border-radius: 16px;
+background: var(–lab-pink-bg);
+font-size: 26px;
+}
+
+.submission-card > span {
+display: block;
+margin-bottom: 7px;
+color: var(–lab-pink);
+font-size: 9px;
+font-weight: 900;
+letter-spacing: 1px;
+}
+
+.submission-card h2 {
+margin-bottom: 8px;
+color: var(–lab-blue);
+font-size: 27px;
 font-weight: 900;
 }
 
-.lab-submission p {
-max-width: 600px;
+.submission-card p {
+max-width: 540px;
 margin: 0 auto 18px;
-color: #777;
+color: #707781;
+font-size: 13px;
 line-height: 1.5;
 }
 
@@ -624,382 +946,577 @@ line-height: 1.5;
 display: inline-flex;
 align-items: center;
 justify-content: center;
-padding: 12px 20px;
-border-radius: 14px;
-background: #1d4f91;
+min-height: 45px;
+padding: 11px 19px;
+border-radius: 13px;
+background: var(–lab-blue);
 color: #fff;
-font-size: 13px;
+font-size: 11px;
 font-weight: 900;
+transition:
+background .2s ease,
+transform .2s ease,
+box-shadow .2s ease;
 }
 
-/* =========================================
+.submission-button:hover {
+background: var(–lab-blue-dark);
+transform: translateY(-1px);
+box-shadow: 0 7px 16px rgba(29, 79, 145, .2);
+}
+
+/* =========================================================
 FINAL CTA
-========================================= */
+========================================================= */
 
 .lab-final-cta {
 max-width: 900px;
 margin: 0 auto;
-padding: 0 20px 55px;
+padding: 0 24px 52px;
+}
+
+.cta-file {
+padding: 25px;
+border-top: 1px solid var(–lab-border);
+border-bottom: 1px solid var(–lab-border);
 text-align: center;
 }
 
-.lab-final-cta a {
-color: #1d4f91;
-font-size: 13px;
+.cta-file > span {
+display: block;
+margin-bottom: 8px;
+color: #969da6;
+font-size: 8px;
+font-weight: 900;
+letter-spacing: 1px;
+}
+
+.cta-file > strong {
+display: block;
+color: var(–lab-blue);
+font-size: 20px;
 font-weight: 900;
 }
 
-/* =========================================
+.cta-line {
+width: 45px;
+height: 2px;
+margin: 12px auto;
+border-radius: 999px;
+background: var(–lab-pink);
+}
+
+.cta-file p {
+margin-bottom: 13px;
+color: #777f89;
+font-size: 11px;
+}
+
+.cta-file a {
+color: var(–lab-blue);
+font-size: 11px;
+font-weight: 900;
+}
+
+.cta-file a:hover {
+color: var(–lab-pink);
+}
+
+/* =========================================================
 FOOTER
-========================================= */
+========================================================= */
 
 .lab-footer {
-margin-top: 20px;
-padding: 30px 20px;
-background: #fff;
-border-top: 1px solid #eadde4;
+padding: 32px 24px;
+border-top: 1px solid var(–lab-border);
+background: #fafbfc;
 text-align: center;
+}
+
+.lab-footer > a {
+display: inline-flex;
+justify-content: center;
 }
 
 .lab-footer img {
 width: 125px;
-margin: 0 auto 10px;
+height: auto;
+margin-bottom: 11px;
 }
 
 .lab-footer p {
-margin: 5px 0;
-color: #888;
-font-size: 12px;
+margin-bottom: 5px;
+color: #858c95;
+font-size: 11px;
 line-height: 1.5;
 }
 
-.lab-footer a {
-color: #1d4f91;
-font-weight: 800;
+.lab-footer .affiliate-disclosure {
+max-width: 480px;
+margin: 8px auto 0;
+color: #a0a5ab;
+font-size: 9px;
 }
 
-/* =========================================
+/* =========================================================
 TABLET
-========================================= */
+========================================================= */
 
-@media (max-width: 900px) {
-
-.lab-featured-card {
-grid-template-columns: 1fr;
-}
-
-.lab-featured-image {
-min-height: 230px;
-}
+@media (max-width: 950px) {
 
 .lab-product-grid {
-grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.featured-product-inner {
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    padding: 27px;
+}
+.featured-product-placeholder {
+    min-height: 230px;
 }
 
-.lab-score-grid {
-grid-template-columns: repeat(2, 1fr);
-}
 }
 
-/* =========================================
+/* =========================================================
 MOBILE
-========================================= */
+========================================================= */
 
 @media (max-width: 600px) {
 
+/* -----------------------------------------
+   HEADER
+----------------------------------------- */
 .lab-header {
-min-height: 68px;
-padding: 12px 14px;
+    min-height: 70px;
+    padding: 12px 14px;
 }
-
 .lab-logo {
-width: 125px;
+    width: 125px;
 }
-
 .lab-status {
-font-size: 9px;
-gap: 5px;
+    padding: 6px 8px;
+    font-size: 8px;
 }
-
 .status-light {
-width: 6px;
-height: 6px;
+    width: 6px;
+    height: 6px;
 }
-
+/* -----------------------------------------
+   HERO
+----------------------------------------- */
 .lab-hero {
-padding: 38px 16px 28px;
+    padding: 28px 15px 35px;
 }
-
+.lab-hero-top {
+    gap: 8px;
+    margin-bottom: 19px;
+}
+.lab-stamp {
+    padding: 7px 9px;
+    font-size: 9px;
+}
+.lab-file-number {
+    font-size: 8px;
+}
+.lab-kicker {
+    margin-bottom: 9px;
+    font-size: 9px;
+    letter-spacing: 1px;
+}
 .lab-hero h1 {
-font-size: 32px;
+    font-size: 37px;
+    letter-spacing: -1px;
 }
-
-.lab-hero p {
-font-size: 14px;
+.lab-hero-divider {
+    gap: 8px;
+    font-size: 10px;
+    letter-spacing: 1.2px;
 }
-
+.lab-hero-divider::before,
+.lab-hero-divider::after {
+    width: 25px;
+}
+.lab-intro {
+    font-size: 14px;
+}
 .lab-warning {
-font-size: 11px;
+    padding: 7px 10px;
+    font-size: 9px;
 }
-
-.lab-archive-nav {
-padding: 0 12px;
-gap: 6px;
-margin-bottom: 22px;
+/* -----------------------------------------
+   SECTION HEADINGS
+----------------------------------------- */
+.section-heading {
+    margin-bottom: 18px;
 }
-
-.lab-archive-nav a {
-padding: 7px 10px;
-font-size: 10px;
+.section-kicker {
+    font-size: 9px;
 }
-
-.lab-featured {
-padding: 0 12px;
-margin-bottom: 32px;
+.section-heading h2 {
+    font-size: 25px;
 }
-
-.lab-featured-card {
-padding: 16px;
-gap: 18px;
-border-radius: 20px;
+/* -----------------------------------------
+   DATABASE
+----------------------------------------- */
+.lab-database {
+    padding: 8px 12px 25px;
 }
-
-.lab-featured-image {
-min-height: 190px;
+.lab-database-nav {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 7px;
 }
-
-.lab-featured-card h2 {
-font-size: 24px;
+.database-filter {
+    min-height: 35px;
+    padding: 7px 5px;
+    font-size: 9px;
+    white-space: nowrap;
 }
-
-.lab-featured-description {
-font-size: 13px;
+.database-filter:first-child {
+    grid-column: 1 / -1;
 }
-
-.lab-products-section {
-padding: 0 12px 35px;
+/* -----------------------------------------
+   FEATURED PRODUCT
+----------------------------------------- */
+.lab-featured-product {
+    padding: 0 12px 36px;
 }
-
-.lab-section-heading {
-margin-bottom: 17px;
+.featured-product-inner {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    padding: 18px;
+    border-radius: 20px;
 }
-
-.lab-section-heading h2 {
-font-size: 24px;
+.featured-product-copy {
+    text-align: center;
 }
-
-/*
-TWO PRODUCTS PER ROW
-This is intentionally compact rather than
-making each product take the whole screen.
-*/
-
+.featured-label {
+    font-size: 9px;
+}
+.featured-product-copy h2 {
+    font-size: 27px;
+    letter-spacing: -.5px;
+}
+.featured-score {
+    justify-content: center;
+}
+.featured-score strong {
+    font-size: 34px;
+}
+.featured-verdict {
+    margin-bottom: 15px;
+    font-size: 9px;
+}
+.featured-product-button {
+    max-width: none;
+    min-height: 48px;
+    font-size: 12px;
+}
+.featured-product-visual {
+    order: 2;
+}
+.featured-product-placeholder {
+    min-height: 155px;
+    border-radius: 15px;
+    font-size: 50px;
+}
+.featured-product-visual > span {
+    font-size: 8px;
+}
+/* -----------------------------------------
+   PRODUCT ARCHIVE
+   TWO CARDS PER ROW
+----------------------------------------- */
+.lab-products {
+    padding: 0 12px 38px;
+}
 .lab-product-grid {
-grid-template-columns: repeat(2, minmax(0, 1fr));
-gap: 10px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
 }
-
 .lab-product-card {
-padding: 10px;
-border-radius: 15px;
+    border-radius: 15px;
 }
-
-.lab-product-image {
-height: 125px;
-margin-bottom: 9px;
-border-radius: 11px;
+.lab-product-card:hover {
+    transform: none;
+    box-shadow: var(--lab-shadow-sm);
 }
-
-.lab-product-status {
-padding: 4px 6px;
-margin-bottom: 6px;
-font-size: 8px;
+/* -----------------------------------------
+   PRODUCT IMAGE
+----------------------------------------- */
+.product-card-image {
+    height: 122px;
+    padding: 8px;
 }
-
-.lab-product-category {
-font-size: 8px;
-margin-bottom: 4px;
+.product-image-placeholder {
+    border-radius: 10px;
+    font-size: 38px;
 }
-
-.lab-product-card h3 {
-font-size: 14px;
-line-height: 1.15;
-margin-bottom: 5px;
+.product-status-badge {
+    top: 12px;
+    left: 12px;
+    min-height: 21px;
+    padding: 4px 5px;
+    font-size: 6.5px;
 }
-
-.lab-product-description {
-font-size: 10px;
-line-height: 1.35;
-margin-bottom: 8px;
+/* -----------------------------------------
+   PRODUCT CONTENT
+----------------------------------------- */
+.product-card-content {
+    padding: 10px;
 }
-
-.lab-product-score {
-margin-bottom: 7px;
+.product-category {
+    margin-bottom: 4px;
+    font-size: 7px;
+    letter-spacing: .7px;
 }
-
-.lab-product-score strong {
-font-size: 14px;
+.product-card-content h3 {
+    margin-bottom: 5px;
+    font-size: 13px;
+    line-height: 1.15;
 }
-
-.lab-product-score span {
-font-size: 8px;
+.product-description {
+    min-height: 0;
+    margin-bottom: 8px;
+    font-size: 9px;
+    line-height: 1.35;
 }
-
-.lab-mini-tests {
-gap: 3px;
-margin-bottom: 8px;
+/* -----------------------------------------
+   SCORE
+----------------------------------------- */
+.product-score-row {
+    padding: 7px 0;
 }
-
-.lab-mini-test {
-padding: 3px 4px;
-border-radius: 5px;
-font-size: 7px;
+.product-score strong {
+    font-size: 17px;
 }
-
-.lab-product-verdict {
-margin-bottom: 8px;
-font-size: 8px;
+.product-score span {
+    font-size: 7px;
 }
-
-.lab-product-button {
-min-height: 34px;
-padding: 7px 5px;
-border-radius: 9px;
-font-size: 9px;
+.product-score-label {
+    font-size: 6px;
+    letter-spacing: .5px;
 }
-
+/* -----------------------------------------
+   TEST BADGES
+----------------------------------------- */
+.mini-tests {
+    gap: 3px;
+    padding: 7px 0 6px;
+}
+.mini-tests span {
+    min-height: 18px;
+    padding: 3px 4px;
+    border-radius: 5px;
+    font-size: 6px;
+}
+/* -----------------------------------------
+   VERDICT
+----------------------------------------- */
+.product-verdict {
+    margin-bottom: 7px;
+    font-size: 7px;
+    letter-spacing: .3px;
+}
+/* -----------------------------------------
+   PRODUCT CTA
+----------------------------------------- */
+.product-buy-button {
+    min-height: 34px;
+    padding: 7px 4px;
+    border-radius: 9px;
+    font-size: 8px;
+}
+/* -----------------------------------------
+   SCORE FACTORS
+----------------------------------------- */
 .lab-score-section {
-padding: 20px 12px 35px;
+    padding: 5px 12px 38px;
 }
-
 .lab-score-grid {
-gap: 8px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
 }
-
-.lab-score-item {
-padding: 13px 8px;
-border-radius: 14px;
+.score-factor {
+    min-height: 82px;
+    padding: 10px 7px;
+    border-radius: 13px;
 }
-
-.lab-score-item strong {
-font-size: 11px;
+.score-factor span {
+    margin-bottom: 4px;
+    font-size: 21px;
 }
-
-.lab-score-item span {
-font-size: 17px;
+.score-factor strong {
+    font-size: 9px;
 }
-
+/* -----------------------------------------
+   WINNERS
+----------------------------------------- */
 .lab-winners-section {
-padding: 10px 12px 35px;
+    padding: 0 12px 35px;
 }
-
-.lab-winner-card {
-grid-template-columns: 1fr;
-gap: 15px;
-padding: 18px;
-}
-
 .winner-preview {
-text-align: center;
+    gap: 12px;
+    padding: 16px;
+    border-radius: 16px;
 }
-
-.winner-preview h3 {
-font-size: 18px;
+.winner-preview-icon {
+    flex: 0 0 48px;
+    width: 48px;
+    height: 48px;
+    border-radius: 13px;
+    font-size: 23px;
 }
-
-.winner-preview p {
-font-size: 12px;
+.winner-preview-copy > span {
+    font-size: 7px;
 }
-
+.winner-preview-copy h3 {
+    font-size: 15px;
+    line-height: 1.2;
+}
+.winner-preview-copy p {
+    font-size: 9px;
+}
+/* -----------------------------------------
+   MOM BATTLES
+----------------------------------------- */
 .lab-battle-connection {
-padding: 15px 12px 35px;
+    padding: 0 12px 35px;
 }
-
-.lab-battle-connection-inner {
-padding: 22px 15px;
-border-radius: 19px;
+.battle-connection-inner {
+    grid-template-columns: 1fr;
+    gap: 13px;
+    padding: 20px 16px;
+    border-radius: 18px;
+    text-align: center;
 }
-
-.lab-battle-connection h2 {
-font-size: 22px;
+.connection-icon {
+    width: 52px;
+    height: 52px;
+    margin: 0 auto;
+    border-radius: 14px;
+    font-size: 25px;
 }
-
-.lab-battle-connection p {
-font-size: 12px;
+.connection-copy > span {
+    font-size: 7px;
 }
-
-.lab-battle-button,
-.submission-button {
-width: 100%;
-padding: 11px 14px;
-font-size: 12px;
+.connection-copy h2 {
+    font-size: 21px;
 }
-
+.connection-copy p {
+    margin-bottom: 14px;
+    font-size: 10px;
+}
+.lab-battle-button {
+    width: 100%;
+    min-height: 42px;
+    font-size: 10px;
+}
+/* -----------------------------------------
+   NOMINATION
+----------------------------------------- */
 .lab-submission {
-padding: 0 12px 35px;
+    padding: 0 12px 35px;
 }
-
-.lab-submission-inner {
-padding: 22px 15px;
-border-radius: 19px;
+.submission-card {
+    padding: 21px 15px;
+    border-radius: 18px;
 }
-
-.lab-submission h2 {
-font-size: 21px;
+.submission-icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 10px;
+    border-radius: 14px;
+    font-size: 23px;
 }
-
-.lab-submission p {
-font-size: 12px;
+.submission-card > span {
+    font-size: 7px;
 }
-
+.submission-card h2 {
+    font-size: 21px;
+}
+.submission-card p {
+    margin-bottom: 15px;
+    font-size: 10px;
+}
+.submission-button {
+    width: 100%;
+    min-height: 42px;
+    font-size: 10px;
+}
+/* -----------------------------------------
+   FINAL CTA
+----------------------------------------- */
 .lab-final-cta {
-padding: 0 12px 35px;
+    padding: 0 12px 35px;
 }
-
+.cta-file {
+    padding: 20px 10px;
+}
+.cta-file > span {
+    font-size: 7px;
+}
+.cta-file > strong {
+    font-size: 17px;
+}
+.cta-file p {
+    font-size: 9px;
+}
+.cta-file a {
+    font-size: 10px;
+}
+/* -----------------------------------------
+   FOOTER
+----------------------------------------- */
 .lab-footer {
-padding: 25px 15px;
+    padding: 25px 15px;
 }
-
 .lab-footer img {
-width: 110px;
+    width: 110px;
 }
+.lab-footer p {
+    font-size: 9px;
+}
+.lab-footer .affiliate-disclosure {
+    font-size: 8px;
 }
 
-/* =========================================
+}
+
+/* =========================================================
 VERY SMALL PHONES
-========================================= */
+========================================================= */
 
 @media (max-width: 380px) {
 
-.lab-status {
-font-size: 8px;
-}
-
 .lab-logo {
-width: 112px;
+    width: 112px;
 }
-
+.lab-status {
+    font-size: 7px;
+}
+.lab-hero h1 {
+    font-size: 33px;
+}
 .lab-product-grid {
-gap: 8px;
+    gap: 7px;
+}
+.product-card-image {
+    height: 108px;
+}
+.product-card-content {
+    padding: 8px;
+}
+.product-card-content h3 {
+    font-size: 12px;
+}
+.product-description {
+    font-size: 8px;
+}
+.product-buy-button {
+    min-height: 32px;
+    font-size: 7px;
 }
 
-.lab-product-card {
-padding: 8px;
-}
-
-.lab-product-image {
-height: 110px;
-}
-
-.lab-product-card h3 {
-font-size: 13px;
-}
-
-.lab-product-description {
-font-size: 9px;
-}
-
-.lab-product-button {
-font-size: 8px;
-}
 }
