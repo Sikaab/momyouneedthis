@@ -457,6 +457,36 @@ button:hover{
     font-weight:800;
 }
 
+/* =========================================================
+   MOM UNIVERSE — SOCIAL SERIES CTA
+========================================================= */
+
+.universe-social {
+    margin-top:auto;
+    padding-top:22px;
+
+    font-size:11px;
+    font-weight:900;
+}
+
+.universe-emergency .universe-social {
+    color:#c95561;
+}
+
+.universe-department .universe-social {
+    color:#7457a9;
+}
+
+
+/* Social-series cards are informational,
+   so don't give them the clickable-card hover treatment. */
+
+.universe-emergency:hover,
+.universe-department:hover {
+    transform:none;
+    box-shadow:none;
+}
+
 
 /* =========================================================
    RESPONSIVE
