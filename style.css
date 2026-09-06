@@ -198,295 +198,294 @@ button:hover{
 
 }
 
-/* =========================================================
-   MOM UNIVERSE
-========================================================= */
 
+/* =========================================================
+   MOM UNIVERSE — SUBTLE STRIP
+========================================================= */
 .universe-kicker {
-    display:inline-block;
-    margin:0 auto 16px;
-    padding:8px 13px;
-
-    background:#fff0f5;
-    border:1px solid #f3d3df;
-    border-radius:999px;
-
-    color:#d94378;
-
-    font-size:10px;
-    font-weight:900;
-    letter-spacing:.13em;
+    display: inline-block;
+    margin-bottom: 12px;
+    padding: 7px 14px;
+    border-radius: 999px;
+    background: #fff0f5;
+    color: #d6537c;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: .5px;
 }
-
-
-/* =========================================================
-   MOM UNIVERSE SECTION
-========================================================= */
-
-.mom-universe-section {
-    max-width:1120px;
-    margin:0 auto;
-
-    padding:85px 20px 90px;
+.mom-universe-strip {
+    width: min(950px, calc(100% - 30px));
+    margin: 22px auto 0;
+    padding: 22px 25px;
+    background: #fff;
+    border: 1px solid #f0dfe6;
+    border-radius: 22px;
+    text-align: center;
+    box-shadow: 0 7px 24px rgba(30, 45, 75, .05);
 }
-
-.mom-universe-header {
-    max-width:760px;
-    margin:0 auto 40px;
-
-    text-align:center;
-}
-
-.mom-universe-badge {
-    display:inline-block;
-
-    margin-bottom:14px;
-    padding:8px 13px;
-
-    background:#252127;
-    color:#fff;
-
-    border-radius:999px;
-
-    font-size:10px;
-    font-weight:900;
-    letter-spacing:.14em;
-}
-
-.mom-universe-header h2 {
-    margin:0 0 14px;
-
-    font-size:clamp(34px,5vw,52px);
-    line-height:1;
-    letter-spacing:-.04em;
-    font-weight:900;
-}
-
-.mom-universe-header h2 span {
-    color:#e85d8f;
-}
-
-.mom-universe-header p {
-    max-width:680px;
-    margin:0 auto;
-
-    color:#746d75;
-
-    font-size:15px;
-    line-height:1.7;
-}
-
-
-/* =========================================================
-   UNIVERSE CARDS
-========================================================= */
-
-.mom-universe-grid {
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:17px;
-}
-
-.universe-card {
-    position:relative;
-
-    min-height:300px;
-
-    display:flex;
-    flex-direction:column;
-
-    padding:25px;
-
-    border-radius:25px;
-
-    text-decoration:none;
-    color:#252127;
-
-    overflow:hidden;
-
-    transition:
-        transform .2s ease,
-        box-shadow .2s ease;
-}
-
-.universe-card:hover {
-    transform:translateY(-5px);
-
-    box-shadow:
-        0 18px 40px rgba(65,38,52,.11);
-}
-
-.universe-emergency {
-    background:#fff0f2;
-    border:1px solid #f3d5da;
-}
-
-.universe-department {
-    background:#f5f1ff;
-    border:1px solid #ded4f4;
-}
-
-.universe-lab {
-    background:#eef8f3;
-    border:1px solid #d4eadf;
-}
-
-.universe-card-top {
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-
-    margin-bottom:24px;
-}
-
-.universe-icon {
-    width:54px;
-    height:54px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    border-radius:17px;
-
-    background:#fff;
-
-    font-size:25px;
-
-    box-shadow:
-        0 7px 20px rgba(50,30,40,.06);
-}
-
-.universe-code {
-    color:#968b92;
-
-    font-size:8px;
-    font-weight:900;
-    letter-spacing:.12em;
-}
-
 .universe-label {
-    display:block;
-
-    margin-bottom:8px;
-
-    font-size:9px;
-    font-weight:900;
-    letter-spacing:.14em;
+    display: inline-block;
+    margin-bottom: 7px;
+    color: #d6537c;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 1px;
 }
-
-.universe-emergency .universe-label {
-    color:#c95561;
+.mom-universe-strip h2 {
+    margin: 0 0 8px;
+    color: #1d4f91;
+    font-size: 20px;
+    font-weight: 900;
 }
-
-.universe-department .universe-label {
-    color:#7457a9;
+.mom-universe-strip p {
+    max-width: 650px;
+    margin: 0 auto 14px;
+    color: #777;
+    font-size: 13px;
+    line-height: 1.6;
 }
-
-.universe-lab .universe-label {
-    color:#4f916f;
+.mom-universe-series {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
 }
-
-.universe-card h3 {
-    margin:0 0 10px;
-
-    font-size:26px;
-    line-height:1.05;
-    letter-spacing:-.025em;
-    font-weight:900;
+.mom-universe-series span,
+.mom-universe-series a {
+    display: inline-flex;
+    align-items: center;
+    padding: 7px 12px;
+    border-radius: 999px;
+    background: #f7f8fb;
+    color: #555;
+    font-size: 11px;
+    font-weight: 900;
+    text-decoration: none;
 }
-
-.universe-card p {
-    margin:0;
-
-    color:#746d75;
-
-    font-size:13px;
-    line-height:1.6;
+.mom-universe-series a {
+    background: #fff0f5;
+    color: #d6537c;
+    border: 1px solid #f3d8e1;
+    transition: .2s ease;
 }
-
-.universe-link {
-    margin-top:auto;
-    padding-top:22px;
-
-    font-size:11px;
-    font-weight:900;
+.mom-universe-series a:hover {
+    transform: translateY(-1px);
+    background: #ffe5ed;
 }
-
-.universe-emergency .universe-link {
-    color:#c95561;
-}
-
-.universe-department .universe-link {
-    color:#7457a9;
-}
-
-.universe-lab .universe-link {
-    color:#4f916f;
-}
-
-
 /* =========================================================
-   UNIVERSE NOTE
+   MOM LAB — HOMEPAGE
 ========================================================= */
-
-.mom-universe-note {
-    max-width:760px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:10px;
-
-    margin:22px auto 0;
-    padding:14px 18px;
-
-    background:#fff;
-
-    border:1px dashed #ddd1d8;
-    border-radius:15px;
-
-    color:#82767e;
-
-    font-size:11px;
-    line-height:1.45;
-    text-align:center;
+.mom-lab-home-section {
+    width: min(1050px, calc(100% - 30px));
+    margin: 32px auto 0;
+    padding: 32px;
+    background: #fff8fb;
+    border: 1px solid #f1dfe7;
+    border-radius: 28px;
+    box-shadow: 0 8px 25px rgba(40, 50, 80, .05);
 }
-
-.mom-universe-note strong {
-    font-weight:800;
+.mom-lab-home-header {
+    text-align: center;
+    margin-bottom: 24px;
 }
-
+.mom-lab-home-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 7px 13px;
+    border-radius: 999px;
+    background: #fff0f5;
+    color: #d6537c;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: .7px;
+}
+.mom-lab-home-header h2 {
+    margin: 12px 0 9px;
+    color: #1d4f91;
+    font-size: 32px;
+    font-weight: 900;
+}
+.mom-lab-home-header h2 span {
+    color: #df5b86;
+}
+.mom-lab-home-header p {
+    max-width: 650px;
+    margin: 0 auto;
+    color: #777;
+    font-size: 14px;
+    line-height: 1.7;
+}
 /* =========================================================
-   MOM UNIVERSE — SOCIAL SERIES CTA
+   MOM LAB TESTS
 ========================================================= */
-
-.universe-social {
-    margin-top:auto;
-    padding-top:22px;
-
-    font-size:11px;
-    font-weight:900;
+.mom-lab-home-content {
+    display: grid;
+    grid-template-columns: 1.25fr .75fr;
+    gap: 18px;
 }
-
-.universe-emergency .universe-social {
-    color:#c95561;
+.mom-lab-tests {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 11px;
 }
-
-.universe-department .universe-social {
-    color:#7457a9;
+.mom-lab-test {
+    padding: 18px;
+    background: #fff;
+    border: 1px solid #ece7ea;
+    border-radius: 18px;
+    transition: .2s ease;
 }
-
-
-/* Social-series cards are informational,
-   so don't give them the clickable-card hover treatment. */
-
-.universe-emergency:hover,
-.universe-department:hover {
-    transform:none;
-    box-shadow:none;
+.mom-lab-test:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 18px rgba(40, 50, 80, .06);
 }
-
+.mom-lab-test-icon {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 23px;
+}
+.mom-lab-test strong {
+    display: block;
+    margin-bottom: 4px;
+    color: #334967;
+    font-size: 14px;
+    font-weight: 900;
+}
+.mom-lab-test small {
+    color: #888;
+    font-size: 11px;
+    line-height: 1.5;
+}
+/* =========================================================
+   MOM LAB VERDICT
+========================================================= */
+.mom-lab-verdict {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 23px;
+    background: #eef8f1;
+    border: 1px solid #dceee2;
+    border-radius: 21px;
+    text-align: center;
+}
+.mom-lab-verdict-label {
+    margin-bottom: 8px;
+    color: #789181;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+.mom-lab-verdict h3 {
+    margin: 0;
+    color: #2e6045;
+    font-size: 19px;
+    font-weight: 900;
+}
+.mom-lab-verdict-status {
+    display: inline-flex;
+    align-self: center;
+    margin: 12px 0;
+    padding: 8px 13px;
+    border-radius: 999px;
+    background: #dff2e6;
+    color: #247447;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: .5px;
+}
+.mom-lab-verdict p {
+    margin: 0;
+    color: #668071;
+    font-size: 12px;
+    line-height: 1.6;
+}
+/* =========================================================
+   MOM LAB BUTTON
+========================================================= */
+.mom-lab-home-button {
+    display: block;
+    width: fit-content;
+    margin: 22px auto 0;
+    padding: 12px 20px;
+    border-radius: 15px;
+    background: #1d4f91;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 900;
+    text-decoration: none;
+    transition: .2s ease;
+}
+.mom-lab-home-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(29, 79, 145, .18);
+}
+/* =========================================================
+   MOBILE
+========================================================= */
+@media (max-width: 900px) {
+    .mom-lab-home-content {
+        grid-template-columns: 1fr;
+    }
+}
+@media (max-width: 600px) {
+    .universe-kicker {
+        font-size: 11px;
+        padding: 6px 11px;
+    }
+    .mom-universe-strip {
+        padding: 18px 15px;
+        border-radius: 18px;
+    }
+    .mom-universe-strip h2 {
+        font-size: 18px;
+    }
+    .mom-universe-strip p {
+        font-size: 12px;
+    }
+    .mom-universe-series {
+        gap: 6px;
+    }
+    .mom-universe-series span,
+    .mom-universe-series a {
+        font-size: 10px;
+        padding: 7px 9px;
+    }
+    .mom-lab-home-section {
+        padding: 24px 15px;
+        border-radius: 22px;
+    }
+    .mom-lab-home-header h2 {
+        font-size: 25px;
+    }
+    .mom-lab-home-header p {
+        font-size: 13px;
+    }
+    .mom-lab-tests {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+    .mom-lab-test {
+        padding: 14px 10px;
+    }
+    .mom-lab-test-icon {
+        font-size: 21px;
+    }
+    .mom-lab-test strong {
+        font-size: 13px;
+    }
+    .mom-lab-test small {
+        font-size: 10px;
+    }
+    .mom-lab-verdict {
+        padding: 20px 15px;
+    }
+    .mom-lab-home-button {
+        width: 100%;
+        text-align: center;
+    }
+}
 
 /* =========================================================
    RESPONSIVE
