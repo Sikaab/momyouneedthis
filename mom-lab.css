@@ -1555,6 +1555,369 @@
 }
 
 /* =========================================================
+   LAB REPORT ARCHIVE
+========================================================= */
+.lab-report-section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 90px 24px;
+}
+.lab-report-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    margin-top: 38px;
+}
+/* =========================================================
+   REPORT CARD
+========================================================= */
+.lab-report-card {
+    position: relative;
+    background: #ffffff;
+    border: 1px solid var(--lab-border);
+    border-radius: 22px;
+    padding: 22px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(37, 33, 39, .06);
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+}
+.lab-report-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 32px rgba(37, 33, 39, .10);
+}
+/* =========================================================
+   REPORT CARD TOP
+========================================================= */
+.report-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 22px;
+}
+.report-card-number {
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: .08em;
+    color: var(--lab-muted);
+}
+.report-card-status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: .06em;
+}
+.report-card-status.survived {
+    background: var(--lab-green-light);
+    color: var(--lab-green);
+}
+.report-card-status.failed {
+    background: var(--lab-red-light);
+    color: var(--lab-red);
+}
+/* =========================================================
+   REPORT CARD PRODUCT
+========================================================= */
+.report-card-product {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+.report-card-image {
+    flex: 0 0 64px;
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--lab-pink-light);
+    border-radius: 17px;
+    font-size: 30px;
+}
+.report-card-product > div:last-child {
+    min-width: 0;
+}
+.report-card-product > div:last-child > span {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: .08em;
+    color: var(--lab-pink-dark);
+}
+.report-card-product h3 {
+    margin: 0;
+    font-size: 17px;
+    line-height: 1.2;
+    color: var(--lab-ink);
+}
+.report-card-product p {
+    margin: 5px 0 0;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--lab-muted);
+}
+/* =========================================================
+   REPORT CARD SCORE
+========================================================= */
+.report-card-score {
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+    margin: 24px 0 18px;
+}
+.report-card-score strong {
+    font-size: 42px;
+    line-height: 1;
+    font-weight: 900;
+    color: var(--lab-pink-dark);
+}
+.report-card-score span {
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--lab-muted);
+}
+/* =========================================================
+   REPORT CARD TESTS
+========================================================= */
+.report-card-tests {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-bottom: 18px;
+}
+.report-card-tests span {
+    display: inline-flex;
+    align-items: center;
+    padding: 7px 9px;
+    background: var(--lab-paper-soft);
+    border: 1px solid var(--lab-border);
+    border-radius: 9px;
+    font-size: 10px;
+    font-weight: 800;
+    color: var(--lab-muted);
+}
+/* =========================================================
+   REPORT CARD VERDICT
+========================================================= */
+.report-card-verdict {
+    padding: 11px 12px;
+    border-radius: 12px;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: .04em;
+    text-align: center;
+}
+.report-card-verdict.survived {
+    background: var(--lab-green-light);
+    color: var(--lab-green);
+}
+.report-card-verdict.failed {
+    background: var(--lab-red-light);
+    color: var(--lab-red);
+}
+/* =========================================================
+   REPORT CARD LINK
+========================================================= */
+.report-card-link {
+    display: block;
+    margin-top: 17px;
+    color: var(--lab-pink-dark);
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: .05em;
+    text-decoration: none;
+    text-align: center;
+}
+.report-card-link:hover {
+    text-decoration: underline;
+}
+/* =========================================================
+   FAILED REPORT
+========================================================= */
+.failed-report .report-card-image {
+    background: var(--lab-red-light);
+}
+.failed-report .report-card-score strong {
+    color: var(--lab-red);
+}
+.failed-report .report-card-link {
+    color: var(--lab-red);
+}
+/* =========================================================
+   ARCHIVE BUTTON
+========================================================= */
+.lab-archive-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    margin: 32px auto 0;
+    padding: 13px 22px;
+    border: 1px solid var(--lab-border);
+    border-radius: 999px;
+    background: #ffffff;
+    color: var(--lab-ink);
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: .05em;
+    text-decoration: none;
+    transition:
+        background .2s ease,
+        border-color .2s ease,
+        transform .2s ease;
+}
+.lab-archive-button:hover {
+    background: var(--lab-pink-light);
+    border-color: #f0c7d7;
+    transform: translateY(-2px);
+}
+/* =========================================================
+   FULL REPORT SECTION
+========================================================= */
+.lab-full-report {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px 24px 90px;
+}
+/* =========================================================
+   EXISTING SAMPLE REPORT — SAFETY / LAYOUT
+========================================================= */
+.sample-report {
+    margin-top: 38px;
+}
+.report-product {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+.report-product-image {
+    flex: 0 0 76px;
+    width: 76px;
+    height: 76px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 18px;
+    background: var(--lab-pink-light);
+    font-size: 36px;
+}
+.report-product > div:last-child {
+    min-width: 0;
+}
+.report-product > div:last-child > span {
+    display: block;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: .08em;
+}
+/* =========================================================
+   LAB TEST GRID — EXTRA SAFETY
+========================================================= */
+.test-grid {
+    align-items: stretch;
+}
+.test-card {
+    height: 100%;
+    box-sizing: border-box;
+}
+.test-card p {
+    max-width: 100%;
+}
+/* =========================================================
+   BATTLE CONNECTION
+========================================================= */
+.lab-battle-connection {
+    padding: 30px 24px 90px;
+}
+.battle-connection-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+/* =========================================================
+   SUBMISSION SECTION
+========================================================= */
+.lab-submission {
+    padding: 0 24px 90px;
+}
+.submission-card {
+    max-width: 800px;
+    margin: 0 auto;
+}
+/* =========================================================
+   FINAL CTA
+========================================================= */
+.lab-final-cta {
+    padding: 0 24px 70px;
+}
+.cta-file {
+    max-width: 900px;
+    margin: 0 auto;
+}
+/* =========================================================
+   MOBILE
+========================================================= */
+@media (max-width: 900px) {
+    .lab-report-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+@media (max-width: 700px) {
+    .lab-report-section {
+        padding: 70px 18px;
+    }
+    .lab-full-report {
+        padding: 10px 18px 70px;
+    }
+    .lab-report-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+    .lab-report-card {
+        padding: 20px;
+    }
+    .lab-battle-connection {
+        padding: 20px 18px 70px;
+    }
+    .lab-submission {
+        padding: 0 18px 70px;
+    }
+    .lab-final-cta {
+        padding: 0 18px 55px;
+    }
+}
+@media (max-width: 480px) {
+    .report-card-product {
+        align-items: flex-start;
+    }
+    .report-card-image {
+        flex-basis: 56px;
+        width: 56px;
+        height: 56px;
+        font-size: 26px;
+    }
+    .report-card-product h3 {
+        font-size: 15px;
+    }
+    .report-card-score strong {
+        font-size: 36px;
+    }
+    .report-card-tests span {
+        font-size: 9px;
+    }
+    .lab-archive-button {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+
+/* =========================================================
 
    FINAL CTA
 
