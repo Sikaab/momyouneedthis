@@ -1146,3 +1146,690 @@ MOBILE
 }
 
 }
+
+/* =====================================
+INDIVIDUAL MOM CREATOR PROFILE
+===================================== */
+
+.creator-profile-page {
+overflow: hidden;
+}
+
+/* =====================================
+HERO
+===================================== */
+
+.creator-profile-hero {
+position: relative;
+max-width: 1100px;
+margin: 30px auto 70px;
+padding: 75px 25px 80px;
+border-radius: 34px;
+background:
+radial-gradient(circle at 14% 22%, rgba(255,255,255,.7) 0 4%, transparent 5%),
+radial-gradient(circle at 87% 70%, rgba(255,255,255,.6) 0 4%, transparent 5%),
+linear-gradient(135deg, #fff1f5 0%, #fff8ee 48%, #eef5ff 100%);
+text-align: center;
+overflow: hidden;
+}
+
+.creator-profile-hero::before {
+content: “”;
+position: absolute;
+width: 260px;
+height: 260px;
+border: 2px dashed rgba(208,90,130,.16);
+border-radius: 50%;
+top: -120px;
+right: -90px;
+}
+
+.creator-profile-hero::after {
+content: “”;
+position: absolute;
+width: 180px;
+height: 180px;
+border: 2px dashed rgba(29,79,145,.12);
+border-radius: 50%;
+bottom: -90px;
+left: -60px;
+}
+
+.creator-profile-hero-inner {
+position: relative;
+z-index: 2;
+max-width: 760px;
+margin: 0 auto;
+}
+
+.creator-profile-eyebrow {
+display: inline-block;
+padding: 9px 17px;
+border-radius: 999px;
+background: #fff;
+color: #d05a82;
+font-size: 11px;
+font-weight: 900;
+letter-spacing: 1px;
+box-shadow: 0 5px 18px rgba(0,0,0,.06);
+}
+
+.creator-profile-hero h1 {
+margin: 23px 0 0;
+color: #222;
+font-size: clamp(46px, 7vw, 72px);
+line-height: 1;
+font-weight: 900;
+letter-spacing: -2px;
+}
+
+.creator-profile-handle {
+margin: 8px 0 20px;
+color: #999;
+font-size: 15px;
+font-weight: 800;
+}
+
+.creator-profile-tagline {
+max-width: 610px;
+margin: 0 auto;
+color: #555;
+font-size: 18px;
+line-height: 1.6;
+font-weight: 600;
+}
+
+.creator-profile-tags {
+display: flex;
+justify-content: center;
+flex-wrap: wrap;
+gap: 8px;
+margin-top: 25px;
+}
+
+.creator-profile-tags span {
+padding: 8px 13px;
+border: 1px solid rgba(208,90,130,.14);
+border-radius: 999px;
+background: rgba(255,255,255,.75);
+color: #555;
+font-size: 11px;
+font-weight: 800;
+}
+
+.creator-profile-decoration {
+position: absolute;
+z-index: 1;
+color: rgba(208,90,130,.28);
+}
+
+.creator-profile-decoration-one {
+top: 27px;
+left: 12%;
+font-size: 32px;
+}
+
+.creator-profile-decoration-two {
+right: 12%;
+bottom: 27px;
+font-size: 40px;
+}
+
+/* =====================================
+FEATURE
+===================================== */
+
+.creator-profile-feature {
+max-width: 1050px;
+margin: 0 auto 95px;
+padding: 0 20px;
+display: grid;
+grid-template-columns: 48% 52%;
+align-items: center;
+gap: 0;
+}
+
+.creator-profile-photo-wrap {
+position: relative;
+}
+
+.creator-profile-photo {
+height: 610px;
+overflow: hidden;
+border-radius: 30px;
+background: #eee;
+box-shadow: 0 18px 45px rgba(0,0,0,.09);
+}
+
+.creator-profile-photo img {
+width: 100%;
+height: 100%;
+display: block;
+object-fit: cover;
+}
+
+.creator-profile-stamp {
+position: absolute;
+right: -18px;
+bottom: 25px;
+width: 105px;
+height: 105px;
+display: flex;
+align-items: center;
+justify-content: center;
+border: 2px solid #222;
+border-radius: 50%;
+background: #fff;
+color: #222;
+font-size: 10px;
+font-weight: 900;
+line-height: 1.15;
+text-align: center;
+transform: rotate(8deg);
+box-shadow: 0 8px 20px rgba(0,0,0,.08);
+}
+
+.creator-profile-feature-copy {
+margin-left: -25px;
+padding: 55px 50px;
+border-radius: 28px;
+background: #fff;
+box-shadow: 0 14px 40px rgba(0,0,0,.065);
+z-index: 2;
+}
+
+.creator-profile-feature-copy h2 {
+margin: 10px 0 20px;
+color: #222;
+font-size: 36px;
+line-height: 1.15;
+font-weight: 900;
+}
+
+.creator-profile-feature-copy h2 span {
+display: block;
+color: #d05a82;
+}
+
+.creator-profile-feature-copy p {
+margin: 0 0 18px;
+color: #666;
+font-size: 15px;
+line-height: 1.75;
+}
+
+.creator-profile-feature-copy p:last-child {
+margin-bottom: 0;
+}
+
+/* =====================================
+SHARED SECTION
+===================================== */
+
+.creator-profile-section {
+max-width: 1000px;
+margin: 0 auto 90px;
+padding: 0 20px;
+}
+
+.creator-profile-section-heading {
+max-width: 700px;
+margin-bottom: 35px;
+}
+
+.creator-profile-section-heading h2 {
+margin: 9px 0 8px;
+color: #222;
+font-size: 34px;
+line-height: 1.2;
+font-weight: 900;
+}
+
+.creator-profile-section-heading p {
+margin: 0;
+color: #888;
+font-size: 15px;
+}
+
+/* =====================================
+CONTENT CARDS
+===================================== */
+
+.creator-profile-content-grid {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 15px;
+}
+
+.creator-profile-content-card {
+padding: 28px;
+border-radius: 22px;
+background: #f8f9fc;
+}
+
+.creator-profile-content-card:nth-child(2) {
+background: #fff4f7;
+}
+
+.creator-profile-content-card:nth-child(3) {
+background: #fff8ee;
+}
+
+.creator-profile-content-card > span {
+display: block;
+margin-bottom: 25px;
+color: #d05a82;
+font-size: 11px;
+font-weight: 900;
+letter-spacing: 1px;
+}
+
+.creator-profile-content-card h3 {
+margin: 0 0 9px;
+color: #222;
+font-size: 19px;
+font-weight: 900;
+}
+
+.creator-profile-content-card p {
+margin: 0;
+color: #777;
+font-size: 13px;
+line-height: 1.65;
+}
+
+/* =====================================
+MOMYOU NEED THIS TEST
+===================================== */
+
+.creator-profile-test {
+max-width: 1050px;
+margin: 0 auto 90px;
+padding: 0 20px;
+}
+
+.creator-profile-test-inner {
+display: grid;
+grid-template-columns: 1fr 280px;
+overflow: hidden;
+border-radius: 28px;
+background: #202c3c;
+}
+
+.creator-profile-test-copy {
+padding: 55px;
+}
+
+.creator-profile-test-copy h2 {
+margin: 10px 0 8px;
+color: #fff;
+font-size: 36px;
+font-weight: 900;
+}
+
+.creator-profile-test-copy p {
+max-width: 600px;
+margin: 0 0 16px;
+color: rgba(255,255,255,.7);
+font-size: 15px;
+line-height: 1.7;
+}
+
+.creator-profile-test-copy p:first-of-type {
+color: #f1b3c5;
+font-size: 22px;
+font-weight: 900;
+}
+
+.creator-profile-test-badge {
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+padding: 35px;
+background: #f1b3c5;
+color: #202c3c;
+text-align: center;
+}
+
+.creator-profile-test-badge > span {
+display: flex;
+align-items: center;
+justify-content: center;
+width: 55px;
+height: 55px;
+margin-bottom: 15px;
+border-radius: 50%;
+background: #fff;
+font-size: 25px;
+font-weight: 900;
+}
+
+.creator-profile-test-badge strong {
+font-size: 15px;
+line-height: 1.15;
+letter-spacing: 1px;
+}
+
+.creator-profile-test-badge small {
+margin-top: 10px;
+font-size: 11px;
+}
+
+/* =====================================
+REASONS
+===================================== */
+
+.creator-profile-reasons {
+max-width: 900px;
+}
+
+.creator-profile-reasons-list {
+border-top: 1px solid #eee;
+}
+
+.creator-profile-reason {
+display: grid;
+grid-template-columns: 60px 1fr;
+gap: 20px;
+padding: 23px 0;
+border-bottom: 1px solid #eee;
+}
+
+.creator-profile-reason > span {
+color: #d05a82;
+font-size: 11px;
+font-weight: 900;
+letter-spacing: 1px;
+}
+
+.creator-profile-reason p {
+margin: 0;
+color: #666;
+font-size: 15px;
+line-height: 1.6;
+}
+
+/* =====================================
+QUOTE
+===================================== */
+
+.creator-profile-quote-section {
+max-width: 850px;
+margin: 0 auto 90px;
+padding: 0 20px;
+}
+
+.creator-profile-quote-card {
+position: relative;
+padding: 55px 60px;
+border-radius: 28px;
+background: #fff4f7;
+text-align: center;
+}
+
+.creator-profile-quote-mark {
+display: block;
+margin-bottom: -8px;
+color: #e7a5bb;
+font-family: Georgia, serif;
+font-size: 75px;
+line-height: .8;
+}
+
+.creator-profile-quote-card blockquote {
+max-width: 650px;
+margin: 0 auto 17px;
+color: #333;
+font-size: 24px;
+line-height: 1.45;
+font-weight: 900;
+}
+
+.creator-profile-quote-source {
+color: #999;
+font-size: 11px;
+font-weight: 900;
+letter-spacing: 1px;
+}
+
+/* =====================================
+FOLLOW CTA
+===================================== */
+
+.creator-profile-follow {
+max-width: 700px;
+margin: 0 auto 80px;
+padding: 0 20px;
+text-align: center;
+}
+
+.creator-profile-follow h2 {
+margin: 9px 0 8px;
+color: #222;
+font-size: 42px;
+font-weight: 900;
+}
+
+.creator-profile-follow p {
+max-width: 560px;
+margin: 0 auto 25px;
+color: #777;
+font-size: 15px;
+line-height: 1.7;
+}
+
+.creator-profile-follow-button,
+.creator-profile-more-button {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+padding: 14px 22px;
+border-radius: 14px;
+background: #d05a82;
+color: #fff;
+text-decoration: none;
+font-size: 12px;
+font-weight: 900;
+letter-spacing: .4px;
+box-shadow: 0 8px 18px rgba(208,90,130,.2);
+transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.creator-profile-follow-button:hover,
+.creator-profile-more-button:hover {
+color: #fff;
+transform: translateY(-2px);
+box-shadow: 0 12px 24px rgba(208,90,130,.26);
+}
+
+/* =====================================
+FIRST 20
+===================================== */
+
+.creator-profile-first20 {
+max-width: 850px;
+margin: 0 auto 80px;
+padding: 0 20px;
+}
+
+.creator-profile-first20-inner {
+display: flex;
+align-items: center;
+gap: 25px;
+padding: 28px 32px;
+border: 1px solid #eee;
+border-radius: 22px;
+background: #fff;
+}
+
+.creator-profile-first20-icon {
+flex-shrink: 0;
+width: 62px;
+height: 62px;
+display: flex;
+align-items: center;
+justify-content: center;
+border-radius: 50%;
+background: #fff1f5;
+font-size: 25px;
+}
+
+.creator-profile-first20-inner h3 {
+margin: 4px 0 5px;
+color: #222;
+font-size: 22px;
+font-weight: 900;
+}
+
+.creator-profile-first20-inner p {
+margin: 0;
+color: #777;
+font-size: 13px;
+line-height: 1.6;
+}
+
+/* =====================================
+MORE CREATORS
+===================================== */
+
+.creator-profile-more {
+max-width: 800px;
+margin: 0 auto 80px;
+padding: 55px 25px;
+text-align: center;
+}
+
+.creator-profile-more h2 {
+margin: 9px 0 7px;
+color: #222;
+font-size: 32px;
+font-weight: 900;
+}
+
+.creator-profile-more > p {
+margin: 0 auto 23px;
+color: #888;
+font-size: 14px;
+}
+
+/* =====================================
+MOBILE
+===================================== */
+
+@media (max-width: 850px) {
+
+.creator-profile-feature {
+    grid-template-columns: 1fr;
+}
+.creator-profile-photo {
+    height: 500px;
+}
+.creator-profile-feature-copy {
+    margin: -30px 20px 0;
+    padding: 38px;
+}
+.creator-profile-content-grid {
+    grid-template-columns: 1fr;
+}
+.creator-profile-test-inner {
+    grid-template-columns: 1fr;
+}
+.creator-profile-test-badge {
+    min-height: 190px;
+}
+
+}
+
+@media (max-width: 600px) {
+
+.creator-profile-hero {
+    margin: 15px 12px 55px;
+    padding: 58px 20px 62px;
+    border-radius: 25px;
+}
+.creator-profile-hero h1 {
+    font-size: 45px;
+    letter-spacing: -1.5px;
+}
+.creator-profile-tagline {
+    font-size: 16px;
+}
+.creator-profile-feature {
+    padding: 0 15px;
+    margin-bottom: 65px;
+}
+.creator-profile-photo {
+    height: 390px;
+    border-radius: 25px;
+}
+.creator-profile-stamp {
+    right: 12px;
+    bottom: 15px;
+    width: 82px;
+    height: 82px;
+    font-size: 8px;
+}
+.creator-profile-feature-copy {
+    margin: -25px 8px 0;
+    padding: 30px 24px;
+    border-radius: 23px;
+}
+.creator-profile-feature-copy h2 {
+    font-size: 29px;
+}
+.creator-profile-feature-copy p {
+    font-size: 14px;
+}
+.creator-profile-section,
+.creator-profile-test,
+.creator-profile-quote-section {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.creator-profile-section-heading h2 {
+    font-size: 28px;
+}
+.creator-profile-test-copy {
+    padding: 35px 25px;
+}
+.creator-profile-test-copy h2 {
+    font-size: 29px;
+}
+.creator-profile-test-badge {
+    min-height: 175px;
+}
+.creator-profile-reason {
+    grid-template-columns: 42px 1fr;
+    gap: 10px;
+}
+.creator-profile-quote-card {
+    padding: 40px 25px;
+}
+.creator-profile-quote-card blockquote {
+    font-size: 20px;
+}
+.creator-profile-follow h2 {
+    font-size: 34px;
+}
+.creator-profile-first20 {
+    padding: 0 15px;
+}
+.creator-profile-first20-inner {
+    align-items: flex-start;
+    padding: 23px;
+    gap: 17px;
+}
+.creator-profile-first20-icon {
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+}
+.creator-profile-first20-inner h3 {
+    font-size: 19px;
+}
+.creator-profile-more {
+    padding: 45px 20px;
+}
+
+}
