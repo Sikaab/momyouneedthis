@@ -1,28 +1,182 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Creator Name | Mom Creators Worth Following | MomYouNeedThis</title>
+<head>
+
+<!-- =========================================================
+     SEO
+========================================================= -->
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<!-- =========================================================
+     ⭐ CHANGE FOR EACH CREATOR
+========================================================= -->
+
+<title>
+    Creator Name | Mom Creator Worth Following | MomYouNeedThis
+</title>
 
 <meta
     name="description"
-    content="Meet Creator Name, one of MomYouNeedThis' Creators Worth Following — a mom creator we think more moms should know about."
+    content="Meet Creator Name, a mom creator we think more moms should know about. Discover why MomYouNeedThis chose her as a Creator Worth Following."
 >
+
+<!-- =========================================================
+     CANONICAL URL
+     ⭐ CHANGE FOR EACH CREATOR
+========================================================= -->
+
+<link
+    rel="canonical"
+    href="https://momyouneedthis.com/mom-creator-name.html"
+>
+
+
+<!-- =========================================================
+     OPEN GRAPH / SOCIAL SEO
+     ⭐ CHANGE CREATOR-SPECIFIC ITEMS
+========================================================= -->
+
+<meta
+    property="og:type"
+    content="profile"
+>
+
+<meta
+    property="og:title"
+    content="Creator Name | Mom Creator Worth Following | MomYouNeedThis"
+>
+
+<meta
+    property="og:description"
+    content="Meet Creator Name — one of MomYouNeedThis' Creators Worth Following."
+>
+
+<meta
+    property="og:url"
+    content="https://momyouneedthis.com/mom-creator-name.html"
+>
+
+<meta
+    property="og:image"
+    content="https://momyouneedthis.com/assets/creator-name.jpg"
+>
+
+<meta
+    property="og:image:alt"
+    content="Creator Name — Mom Creator Worth Following"
+>
+
+<meta
+    property="og:site_name"
+    content="MomYouNeedThis"
+>
+
+
+<!-- =========================================================
+     TWITTER / X
+========================================================= -->
+
+<meta
+    name="twitter:card"
+    content="summary_large_image"
+>
+
+<meta
+    name="twitter:title"
+    content="Creator Name | Mom Creator Worth Following | MomYouNeedThis"
+>
+
+<meta
+    name="twitter:description"
+    content="Meet Creator Name — a mom creator MomYouNeedThis thinks more moms should know about."
+>
+
+<meta
+    name="twitter:image"
+    content="https://momyouneedthis.com/assets/creator-name.jpg"
+>
+
+
+<!-- =========================================================
+     FAVICON
+========================================================= -->
+
+<link
+    rel="icon"
+    href="assets/favicon.png"
+    type="image/png"
+>
+
+
+<!-- =========================================================
+     FONT
+========================================================= -->
 
 <link
     href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap"
     rel="stylesheet"
 >
 
+
+<!-- =========================================================
+     STRUCTURED DATA
+     ⭐ CHANGE CREATOR-SPECIFIC ITEMS
+========================================================= -->
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+
+    "name": "Creator Name | Mom Creator Worth Following",
+
+    "description": "Meet Creator Name, a mom creator featured by MomYouNeedThis as a Creator Worth Following.",
+
+    "url": "https://momyouneedthis.com/mom-creator-name.html",
+
+    "mainEntity": {
+        "@type": "Person",
+
+        "name": "Creator Name",
+
+        "url": "https://www.instagram.com/creatorhandle/",
+
+        "sameAs": [
+            "https://www.instagram.com/creatorhandle/"
+        ],
+
+        "image": "https://momyouneedthis.com/assets/creator-name.jpg",
+
+        "description": "Short description of Creator Name and the type of motherhood content she creates."
+    },
+
+    "isPartOf": {
+        "@type": "WebSite",
+        "name": "MomYouNeedThis",
+        "url": "https://momyouneedthis.com/"
+    }
+}
+</script>
+
+
 <style>
 
 /* =========================================================
-   MOMYOUNEEDTHIS — CSS creator spotlight
+   MOMYOUNEEDTHIS — CREATOR SPOTLIGHT
+   MASTER TEMPLATE
+
+   Everything below can remain the same for every creator.
 ========================================================= */
 
 :root {
+
     --mynt-pink: #d05a82;
     --mynt-pink-dark: #b9476d;
     --mynt-pink-soft: #fff1f5;
@@ -42,82 +196,138 @@
 
     --mynt-white: #ffffff;
 
-    --shadow-soft: 0 12px 35px rgba(32, 44, 60, 0.08);
-    --shadow-card: 0 8px 25px rgba(32, 44, 60, 0.07);
+    --shadow-soft:
+        0 12px 35px rgba(32, 44, 60, 0.08);
+
+    --shadow-card:
+        0 8px 25px rgba(32, 44, 60, 0.07);
 }
+
 
 * {
     box-sizing: border-box;
 }
 
+
 html {
     scroll-behavior: smooth;
 }
 
+
 body {
+
     margin: 0;
+
     font-family: "Nunito", sans-serif;
+
     color: var(--mynt-text);
+
     background: var(--mynt-white);
+
     line-height: 1.6;
 }
 
+
 img {
+
     max-width: 100%;
+
     display: block;
 }
 
+
 a {
+
     color: inherit;
+
     text-decoration: none;
 }
 
-button,
-a {
-    -webkit-tap-highlight-color: transparent;
-}
-
-
-/* =========================================================
-   PAGE
-========================================================= */
 
 .creator-page {
+
     width: 100%;
+
     overflow: hidden;
 }
 
 
 /* =========================================================
-   TOP BAR
+   TOP NAVIGATION
 ========================================================= */
 
 .creator-topbar {
+
     width: min(1180px, calc(100% - 40px));
+
     margin: 0 auto;
+
     padding: 22px 0;
 
     display: flex;
+
     align-items: center;
+
     justify-content: space-between;
+
     gap: 20px;
 }
 
-.creator-back-link,
-.creator-brand-link {
+
+.creator-back-link {
+
     font-size: 14px;
-    font-weight: 800;
+
+    font-weight: 900;
+
     color: var(--mynt-navy);
+
     transition: 0.2s ease;
 }
 
-.creator-back-link:hover,
-.creator-brand-link:hover {
+
+.creator-back-link:hover {
+
     color: var(--mynt-pink);
 }
 
-.creator-brand-link {
-    color: var(--mynt-pink);
+
+.creator-home-button {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 40px;
+
+    padding: 0 17px;
+
+    border-radius: 999px;
+
+    background: var(--mynt-pink-soft);
+
+    color: var(--mynt-pink-dark);
+
+    font-size: 12px;
+
+    font-weight: 900;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.creator-home-button:hover {
+
+    background: var(--mynt-pink);
+
+    color: var(--mynt-white);
+
+    transform: translateY(-2px);
 }
 
 
@@ -126,11 +336,15 @@ a {
 ========================================================= */
 
 .creator-section-label {
+
     display: inline-block;
 
     font-size: 11px;
+
     font-weight: 900;
+
     letter-spacing: 1.8px;
+
     text-transform: uppercase;
 
     color: var(--mynt-pink);
@@ -142,14 +356,16 @@ a {
 ========================================================= */
 
 .creator-spotlight-hero {
+
     position: relative;
 
     width: min(1180px, calc(100% - 40px));
+
     margin: 0 auto 70px;
 
     min-height: 590px;
 
-    padding: 70px 70px 65px;
+    padding: 70px;
 
     border-radius: 34px;
 
@@ -167,20 +383,29 @@ a {
         );
 
     display: grid;
+
     grid-template-columns: 1fr 0.9fr;
+
     align-items: center;
+
     gap: 55px;
 
     overflow: hidden;
 }
 
+
 .creator-hero-content {
+
     position: relative;
+
     z-index: 2;
 }
 
+
 .creator-kicker {
+
     display: inline-flex;
+
     align-items: center;
 
     padding: 9px 15px;
@@ -192,52 +417,73 @@ a {
     color: var(--mynt-pink);
 
     font-size: 11px;
+
     font-weight: 900;
+
     letter-spacing: 1.5px;
 }
 
+
 .creator-spotlight-hero h1 {
+
     margin: 18px 0 3px;
 
     font-size: clamp(48px, 6vw, 78px);
+
     line-height: 0.98;
+
     letter-spacing: -2.5px;
 
     color: var(--mynt-navy);
 }
 
+
 .creator-spotlight-hero h1 span {
+
     display: block;
+
     color: var(--mynt-pink);
 }
 
+
 .creator-handle {
+
     margin: 13px 0 22px;
 
     font-size: 17px;
+
     font-weight: 800;
 
     color: var(--mynt-pink-dark);
 }
 
+
 .creator-hero-description {
+
     max-width: 540px;
 
     margin: 0 0 25px;
 
     font-size: 18px;
+
     line-height: 1.65;
 
     color: #555;
 }
 
+
 .creator-hero-pills {
+
     display: flex;
+
     flex-wrap: wrap;
+
     gap: 9px;
 }
 
+
 .creator-hero-pills span {
+
     padding: 9px 13px;
 
     border-radius: 999px;
@@ -247,9 +493,11 @@ a {
     color: var(--mynt-navy);
 
     font-size: 12px;
+
     font-weight: 800;
 
-    box-shadow: 0 4px 12px rgba(32,44,60,0.04);
+    box-shadow:
+        0 4px 12px rgba(32,44,60,0.04);
 }
 
 
@@ -258,21 +506,27 @@ a {
 ========================================================= */
 
 .creator-hero-photo-wrap {
+
     position: relative;
 
     width: min(410px, 100%);
+
     margin: 0 auto;
 
     z-index: 2;
 }
 
+
 .creator-photo-circle {
+
     position: absolute;
 
     width: 90%;
+
     aspect-ratio: 1;
 
     top: 4%;
+
     left: 5%;
 
     border-radius: 50%;
@@ -282,10 +536,13 @@ a {
     transform: rotate(-7deg);
 }
 
+
 .creator-hero-photo {
+
     position: relative;
 
     width: 100%;
+
     aspect-ratio: 0.9;
 
     object-fit: cover;
@@ -299,13 +556,17 @@ a {
     z-index: 2;
 }
 
+
 .creator-photo-stamp {
+
     position: absolute;
 
     right: -28px;
+
     top: 35px;
 
     width: 120px;
+
     height: 120px;
 
     border-radius: 50%;
@@ -315,24 +576,32 @@ a {
     color: var(--mynt-white);
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
     text-align: center;
 
     font-size: 11px;
+
     line-height: 1.35;
+
     font-weight: 900;
+
     letter-spacing: 0.8px;
 
     transform: rotate(8deg);
 
-    box-shadow: 0 10px 25px rgba(208,90,130,0.2);
+    box-shadow:
+        0 10px 25px rgba(208,90,130,0.2);
 
     z-index: 4;
 }
 
+
 .creator-photo-caption {
+
     position: relative;
 
     margin: 15px auto 0;
@@ -342,6 +611,7 @@ a {
     text-align: center;
 
     font-size: 12px;
+
     line-height: 1.5;
 
     color: var(--mynt-gray);
@@ -349,7 +619,9 @@ a {
     z-index: 5;
 }
 
+
 .creator-photo-caption strong {
+
     display: block;
 
     color: var(--mynt-navy);
@@ -361,23 +633,35 @@ a {
 ========================================================= */
 
 .creator-hero-decoration {
+
     position: absolute;
+
     pointer-events: none;
 
     color: var(--mynt-pink);
+
     opacity: 0.5;
 }
 
+
 .creator-hero-star {
+
     top: 40px;
+
     left: 45%;
+
     font-size: 30px;
+
     transform: rotate(15deg);
 }
 
+
 .creator-hero-flower {
+
     bottom: 35px;
+
     left: 40px;
+
     font-size: 35px;
 }
 
@@ -387,13 +671,17 @@ a {
 ========================================================= */
 
 .creator-intro-section {
+
     padding: 30px 20px 85px;
 
     background: var(--mynt-cream);
 }
 
+
 .creator-intro-card {
+
     width: min(900px, 100%);
+
     margin: 0 auto;
 
     padding: 60px 70px;
@@ -407,20 +695,27 @@ a {
     text-align: center;
 }
 
+
 .creator-intro-card h2 {
+
     margin: 10px 0 18px;
 
     font-size: clamp(34px, 4vw, 48px);
+
     line-height: 1.05;
 
     color: var(--mynt-navy);
 }
 
+
 .creator-intro-card h2 span {
+
     color: var(--mynt-pink);
 }
 
+
 .creator-intro-lead {
+
     margin: 0 auto 28px;
 
     font-size: 21px;
@@ -428,8 +723,11 @@ a {
     color: var(--mynt-navy);
 }
 
+
 .creator-intro-copy {
+
     max-width: 700px;
+
     margin: 0 auto;
 
     color: var(--mynt-gray);
@@ -437,7 +735,9 @@ a {
     font-size: 16px;
 }
 
+
 .creator-intro-copy p {
+
     margin: 0 0 17px;
 }
 
@@ -447,12 +747,15 @@ a {
 ========================================================= */
 
 .creator-test-section {
+
     padding: 90px 20px;
 
     background: var(--mynt-white);
 }
 
+
 .creator-test-header {
+
     max-width: 700px;
 
     margin: 0 auto 42px;
@@ -460,26 +763,33 @@ a {
     text-align: center;
 }
 
+
 .creator-test-header h2,
 .creator-feed-header h2,
 .creator-explore-header h2 {
+
     margin: 10px 0 15px;
 
     font-size: clamp(36px, 4.5vw, 54px);
+
     line-height: 1.05;
 
     color: var(--mynt-navy);
 }
 
+
 .creator-test-header h2 span,
 .creator-feed-header h2 span,
 .creator-explore-header h2 span {
+
     color: var(--mynt-pink);
 }
+
 
 .creator-test-header p,
 .creator-feed-header p,
 .creator-explore-header p {
+
     margin: 0;
 
     color: var(--mynt-gray);
@@ -487,17 +797,24 @@ a {
     font-size: 17px;
 }
 
+
 .creator-test-grid {
+
     width: min(1050px, 100%);
+
     margin: 0 auto;
 
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+
+    grid-template-columns:
+        repeat(3, 1fr);
 
     gap: 20px;
 }
 
+
 .creator-test-card {
+
     padding: 35px 30px;
 
     border-radius: 25px;
@@ -507,26 +824,37 @@ a {
     box-shadow: var(--shadow-card);
 }
 
+
 .creator-test-card-pink {
+
     background: var(--mynt-pink-soft);
 }
 
+
 .creator-test-card-cream {
+
     background: var(--mynt-cream);
 }
 
+
 .creator-test-card-blue {
+
     background: var(--mynt-blue);
 }
 
+
 .creator-test-icon {
+
     width: 55px;
+
     height: 55px;
 
     margin-bottom: 23px;
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
     border-radius: 18px;
@@ -535,10 +863,13 @@ a {
 
     font-size: 26px;
 
-    box-shadow: 0 5px 15px rgba(32,44,60,0.05);
+    box-shadow:
+        0 5px 15px rgba(32,44,60,0.05);
 }
 
+
 .creator-test-card h3 {
+
     margin: 0 0 10px;
 
     font-size: 22px;
@@ -546,12 +877,15 @@ a {
     color: var(--mynt-navy);
 }
 
+
 .creator-test-card p {
+
     margin: 0;
 
     color: var(--mynt-gray);
 
     font-size: 15px;
+
     line-height: 1.65;
 }
 
@@ -561,6 +895,7 @@ a {
 ========================================================= */
 
 .creator-quote-section {
+
     position: relative;
 
     padding: 95px 25px;
@@ -572,12 +907,15 @@ a {
     overflow: hidden;
 }
 
+
 .creator-quote-section blockquote {
+
     width: min(850px, 100%);
 
     margin: 0 auto 22px;
 
     font-size: clamp(28px, 4vw, 47px);
+
     line-height: 1.2;
 
     font-weight: 800;
@@ -585,8 +923,11 @@ a {
     color: var(--mynt-navy);
 }
 
+
 .creator-quote-section > span {
+
     font-size: 13px;
+
     font-weight: 900;
 
     color: var(--mynt-pink);
@@ -594,10 +935,13 @@ a {
     letter-spacing: 1px;
 }
 
+
 .creator-quote-decoration {
+
     position: absolute;
 
     top: 20px;
+
     right: 12%;
 
     font-size: 40px;
@@ -613,12 +957,15 @@ a {
 ========================================================= */
 
 .creator-feed-section {
+
     padding: 90px 20px;
 
     background: var(--mynt-white);
 }
 
+
 .creator-feed-header {
+
     width: min(800px, 100%);
 
     margin: 0 auto 45px;
@@ -626,18 +973,27 @@ a {
     text-align: center;
 }
 
+
 .creator-feed-list {
+
     width: min(850px, 100%);
+
     margin: 0 auto;
 
     display: grid;
+
     gap: 12px;
 }
 
+
 .creator-feed-item {
+
     display: grid;
+
     grid-template-columns: 60px 1fr;
+
     align-items: start;
+
     gap: 22px;
 
     padding: 25px;
@@ -649,20 +1005,29 @@ a {
     transition: transform 0.2s ease;
 }
 
+
 .creator-feed-item:nth-child(even) {
+
     background: var(--mynt-pink-soft);
 }
 
+
 .creator-feed-item:hover {
+
     transform: translateY(-2px);
 }
 
+
 .creator-feed-number {
+
     width: 50px;
+
     height: 50px;
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
     border-radius: 50%;
@@ -672,12 +1037,16 @@ a {
     color: var(--mynt-pink);
 
     font-size: 12px;
+
     font-weight: 900;
 
-    box-shadow: 0 4px 12px rgba(32,44,60,0.05);
+    box-shadow:
+        0 4px 12px rgba(32,44,60,0.05);
 }
 
+
 .creator-feed-item h3 {
+
     margin: 1px 0 5px;
 
     font-size: 20px;
@@ -685,7 +1054,9 @@ a {
     color: var(--mynt-navy);
 }
 
+
 .creator-feed-item p {
+
     margin: 0;
 
     color: var(--mynt-gray);
@@ -699,15 +1070,19 @@ a {
 ========================================================= */
 
 .creator-follow-section {
+
     padding: 80px 20px;
 
     background: var(--mynt-pink-soft);
 }
 
+
 .creator-follow-card {
+
     position: relative;
 
     width: min(800px, 100%);
+
     margin: 0 auto;
 
     padding: 65px 40px;
@@ -723,20 +1098,27 @@ a {
     overflow: hidden;
 }
 
+
 .creator-follow-card h2 {
+
     margin: 10px 0 15px;
 
     font-size: clamp(38px, 5vw, 58px);
+
     line-height: 1;
 
     color: var(--mynt-navy);
 }
 
+
 .creator-follow-card h2 span {
+
     color: var(--mynt-pink);
 }
 
+
 .creator-follow-card p {
+
     width: min(560px, 100%);
 
     margin: 0 auto 28px;
@@ -746,9 +1128,13 @@ a {
     font-size: 17px;
 }
 
+
 .creator-follow-button {
+
     display: inline-flex;
+
     align-items: center;
+
     justify-content: center;
 
     min-height: 52px;
@@ -762,23 +1148,32 @@ a {
     color: var(--mynt-white);
 
     font-size: 13px;
+
     font-weight: 900;
+
     letter-spacing: 0.5px;
 
-    box-shadow: 0 8px 18px rgba(208,90,130,0.2);
+    box-shadow:
+        0 8px 18px rgba(208,90,130,0.2);
 
     transition: 0.2s ease;
 }
 
+
 .creator-follow-button:hover {
+
     background: var(--mynt-pink-dark);
+
     transform: translateY(-2px);
 }
 
+
 .creator-follow-flower {
+
     position: absolute;
 
     right: 35px;
+
     top: 25px;
 
     font-size: 32px;
@@ -794,13 +1189,17 @@ a {
 ========================================================= */
 
 .creator-first20-section {
+
     padding: 75px 20px;
 
     background: var(--mynt-white);
 }
 
+
 .creator-first20-card {
+
     width: min(700px, 100%);
+
     margin: 0 auto;
 
     padding: 45px 40px;
@@ -814,35 +1213,49 @@ a {
     background: var(--mynt-cream);
 }
 
+
 .creator-first20-icon {
+
     font-size: 30px;
+
     margin-bottom: 8px;
 }
 
+
 .creator-first20-small {
+
     display: block;
 
     font-size: 10px;
+
     font-weight: 900;
+
     letter-spacing: 2px;
 
     color: var(--mynt-pink);
 }
 
+
 .creator-first20-card h2 {
+
     margin: 8px 0 14px;
 
     font-size: 38px;
+
     line-height: 1;
 
     color: var(--mynt-navy);
 }
 
+
 .creator-first20-card h2 span {
+
     color: var(--mynt-pink);
 }
 
+
 .creator-first20-card p {
+
     max-width: 580px;
 
     margin: 0 auto;
@@ -858,12 +1271,15 @@ a {
 ========================================================= */
 
 .creator-explore-section {
+
     padding: 85px 20px 95px;
 
     background: var(--mynt-cream);
 }
 
+
 .creator-explore-header {
+
     width: min(760px, 100%);
 
     margin: 0 auto 40px;
@@ -871,17 +1287,24 @@ a {
     text-align: center;
 }
 
+
 .creator-explore-grid {
+
     width: min(1050px, 100%);
+
     margin: 0 auto;
 
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+
+    grid-template-columns:
+        repeat(3, 1fr);
 
     gap: 20px;
 }
 
+
 .creator-explore-card {
+
     position: relative;
 
     padding: 32px 28px 30px;
@@ -899,32 +1322,45 @@ a {
     overflow: hidden;
 }
 
+
 .creator-explore-card:hover {
+
     transform: translateY(-4px);
 
     box-shadow: var(--shadow-soft);
 }
 
+
 .creator-explore-card-pink {
+
     background: var(--mynt-pink-soft);
 }
 
+
 .creator-explore-card-blue {
+
     background: var(--mynt-blue);
 }
 
+
 .creator-explore-card-cream {
+
     background: var(--mynt-white);
 }
 
+
 .creator-explore-icon {
+
     width: 58px;
+
     height: 58px;
 
     margin-bottom: 18px;
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
     border-radius: 19px;
@@ -933,22 +1369,29 @@ a {
 
     font-size: 28px;
 
-    box-shadow: 0 5px 15px rgba(32,44,60,0.05);
+    box-shadow:
+        0 5px 15px rgba(32,44,60,0.05);
 }
 
+
 .creator-explore-label {
+
     display: block;
 
     margin-bottom: 5px;
 
     font-size: 10px;
+
     font-weight: 900;
+
     letter-spacing: 1.5px;
 
     color: var(--mynt-pink);
 }
 
+
 .creator-explore-card h3 {
+
     margin: 0 0 8px;
 
     font-size: 23px;
@@ -956,21 +1399,27 @@ a {
     color: var(--mynt-navy);
 }
 
+
 .creator-explore-card p {
+
     margin: 0 0 18px;
 
     color: var(--mynt-gray);
 
     font-size: 14px;
+
     line-height: 1.6;
 }
 
+
 .creator-explore-link {
+
     display: inline-block;
 
     color: var(--mynt-pink-dark);
 
     font-size: 13px;
+
     font-weight: 900;
 }
 
@@ -980,13 +1429,17 @@ a {
 ========================================================= */
 
 .creator-nominate-section {
+
     padding: 30px 20px 80px;
 
     background: var(--mynt-cream);
 }
 
+
 .creator-nominate-content {
+
     width: min(1050px, 100%);
+
     margin: 0 auto;
 
     padding: 30px 35px;
@@ -996,19 +1449,26 @@ a {
     background: var(--mynt-blue);
 
     display: grid;
-    grid-template-columns: auto 1fr auto;
+
+    grid-template-columns:
+        auto 1fr auto;
 
     align-items: center;
 
     gap: 25px;
 }
 
+
 .creator-nominate-icon {
+
     width: 60px;
+
     height: 60px;
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
     border-radius: 20px;
@@ -1018,30 +1478,41 @@ a {
     font-size: 28px;
 }
 
+
 .creator-nominate-label {
+
     display: block;
 
     font-size: 10px;
+
     font-weight: 900;
+
     letter-spacing: 1.5px;
 
     color: var(--mynt-pink);
 }
 
+
 .creator-nominate-content h2 {
+
     margin: 3px 0 3px;
 
     font-size: 24px;
+
     line-height: 1.2;
 
     color: var(--mynt-navy);
 }
 
+
 .creator-nominate-content h2 span {
+
     color: var(--mynt-pink);
 }
 
+
 .creator-nominate-content p {
+
     margin: 0;
 
     color: var(--mynt-gray);
@@ -1049,9 +1520,13 @@ a {
     font-size: 14px;
 }
 
+
 .creator-nominate-button {
+
     display: inline-flex;
+
     align-items: center;
+
     justify-content: center;
 
     min-height: 48px;
@@ -1065,6 +1540,7 @@ a {
     color: var(--mynt-white);
 
     font-size: 12px;
+
     font-weight: 900;
 
     white-space: nowrap;
@@ -1072,18 +1548,22 @@ a {
     transition: 0.2s ease;
 }
 
+
 .creator-nominate-button:hover {
+
     background: var(--mynt-pink-dark);
+
     transform: translateY(-2px);
 }
 
 
 /* =========================================================
    FOOTER
-   SAME STRUCTURE AS INDEX.HTML
+   SAME NAVIGATION AS INDEX.HTML
 ========================================================= */
 
 footer {
+
     padding: 55px 25px 25px;
 
     background: var(--mynt-navy);
@@ -1093,24 +1573,35 @@ footer {
     text-align: center;
 }
 
+
 .footer-logo {
+
     display: flex;
+
     justify-content: center;
 
     margin-bottom: 12px;
 }
 
+
 .footer-logo a {
+
     display: inline-flex;
 }
 
+
 .footer-logo img {
+
     width: 75px;
+
     max-width: 100%;
+
     height: auto;
 }
 
+
 footer h3 {
+
     margin: 0 0 8px;
 
     font-size: 25px;
@@ -1118,7 +1609,9 @@ footer h3 {
     color: var(--mynt-white);
 }
 
+
 footer > p {
+
     width: min(560px, 100%);
 
     margin: 0 auto 25px;
@@ -1126,49 +1619,68 @@ footer > p {
     color: rgba(255,255,255,0.72);
 
     font-size: 14px;
+
     line-height: 1.6;
 }
 
+
 .footer-links {
+
     width: min(900px, 100%);
+
     margin: 0 auto;
 
     display: flex;
+
     justify-content: center;
+
     flex-wrap: wrap;
 
     gap: 8px 22px;
 }
 
+
 .footer-links a {
+
     color: rgba(255,255,255,0.82);
 
     font-size: 13px;
+
     font-weight: 700;
 
     transition: 0.2s ease;
 }
 
+
 .footer-links a:hover {
+
     color: var(--mynt-pink-medium);
 }
 
+
 .footer-bottom {
+
     width: min(1000px, 100%);
 
     margin: 30px auto 0;
+
     padding-top: 22px;
 
-    border-top: 1px solid rgba(255,255,255,0.12);
+    border-top:
+        1px solid rgba(255,255,255,0.12);
 
     display: flex;
+
     justify-content: center;
+
     flex-wrap: wrap;
 
     gap: 8px 30px;
 }
 
+
 .footer-bottom p {
+
     margin: 0;
 
     color: rgba(255,255,255,0.48);
@@ -1184,24 +1696,32 @@ footer > p {
 @media (max-width: 900px) {
 
     .creator-spotlight-hero {
+
         padding: 55px 45px;
 
-        grid-template-columns: 1fr 0.8fr;
+        grid-template-columns:
+            1fr 0.8fr;
 
         gap: 35px;
     }
 
+
     .creator-photo-stamp {
+
         right: -10px;
     }
 
+
     .creator-test-grid,
     .creator-explore-grid {
+
         grid-template-columns: 1fr;
     }
 
+
     .creator-test-card,
     .creator-explore-card {
+
         min-height: auto;
     }
 
@@ -1215,20 +1735,34 @@ footer > p {
 @media (max-width: 700px) {
 
     .creator-topbar {
-        width: min(100% - 28px, 1180px);
+
+        width:
+            min(100% - 28px, 1180px);
 
         padding: 17px 0;
 
-        gap: 12px;
+        gap: 10px;
     }
 
-    .creator-back-link,
-    .creator-brand-link {
-        font-size: 12px;
+
+    .creator-back-link {
+
+        font-size: 11px;
+    }
+
+
+    .creator-home-button {
+
+        min-height: 36px;
+
+        padding: 0 11px;
+
+        font-size: 9px;
     }
 
 
     .creator-spotlight-hero {
+
         width: calc(100% - 28px);
 
         margin-bottom: 45px;
@@ -1244,51 +1778,76 @@ footer > p {
         gap: 42px;
     }
 
+
     .creator-spotlight-hero h1 {
+
         font-size: 49px;
 
         letter-spacing: -1.8px;
     }
 
+
     .creator-hero-description {
+
         font-size: 16px;
     }
 
+
     .creator-hero-pills {
+
         gap: 7px;
     }
 
+
     .creator-hero-pills span {
+
         font-size: 10px;
+
         padding: 8px 10px;
     }
 
+
     .creator-hero-photo-wrap {
-        width: min(320px, 88%);
+
+        width:
+            min(320px, 88%);
     }
 
+
     .creator-photo-stamp {
+
         width: 95px;
+
         height: 95px;
 
         right: -7px;
+
         top: 25px;
 
         font-size: 9px;
     }
 
+
     .creator-photo-caption {
+
         font-size: 11px;
     }
 
+
     .creator-hero-star {
+
         top: 20px;
+
         left: auto;
+
         right: 30px;
     }
 
+
     .creator-hero-flower {
+
         bottom: 20px;
+
         left: 20px;
     }
 
@@ -1297,32 +1856,42 @@ footer > p {
     .creator-test-section,
     .creator-feed-section,
     .creator-explore-section {
+
         padding: 65px 14px;
     }
 
+
     .creator-intro-card {
+
         padding: 38px 22px;
 
         border-radius: 25px;
     }
 
+
     .creator-intro-card h2 {
+
         font-size: 34px;
     }
 
+
     .creator-intro-lead {
+
         font-size: 18px;
     }
 
 
     .creator-test-grid,
     .creator-explore-grid {
+
         width: 100%;
 
         gap: 14px;
     }
 
+
     .creator-test-card {
+
         padding: 27px 23px;
 
         border-radius: 22px;
@@ -1330,20 +1899,27 @@ footer > p {
 
 
     .creator-quote-section {
+
         padding: 70px 20px;
     }
 
+
     .creator-quote-section blockquote {
+
         font-size: 29px;
     }
 
 
     .creator-feed-list {
+
         gap: 10px;
     }
 
+
     .creator-feed-item {
-        grid-template-columns: 45px 1fr;
+
+        grid-template-columns:
+            45px 1fr;
 
         gap: 14px;
 
@@ -1352,41 +1928,57 @@ footer > p {
         border-radius: 19px;
     }
 
+
     .creator-feed-number {
+
         width: 42px;
+
         height: 42px;
 
         font-size: 10px;
     }
 
+
     .creator-feed-item h3 {
+
         font-size: 18px;
     }
 
+
     .creator-feed-item p {
+
         font-size: 13px;
     }
 
 
     .creator-follow-section {
+
         padding: 55px 14px;
     }
 
+
     .creator-follow-card {
+
         padding: 48px 22px;
 
         border-radius: 25px;
     }
 
+
     .creator-follow-card h2 {
+
         font-size: 41px;
     }
 
+
     .creator-follow-card p {
+
         font-size: 15px;
     }
 
+
     .creator-follow-button {
+
         width: 100%;
 
         font-size: 11px;
@@ -1394,21 +1986,27 @@ footer > p {
 
 
     .creator-first20-section {
+
         padding: 55px 14px;
     }
 
+
     .creator-first20-card {
+
         padding: 35px 22px;
 
         border-radius: 23px;
     }
 
+
     .creator-first20-card h2 {
+
         font-size: 32px;
     }
 
 
     .creator-explore-card {
+
         min-height: auto;
 
         padding: 27px 23px;
@@ -1418,10 +2016,13 @@ footer > p {
 
 
     .creator-nominate-section {
+
         padding: 20px 14px 60px;
     }
 
+
     .creator-nominate-content {
+
         padding: 25px 22px;
 
         grid-template-columns: 1fr;
@@ -1431,47 +2032,67 @@ footer > p {
         border-radius: 22px;
     }
 
+
     .creator-nominate-icon {
+
         width: 50px;
+
         height: 50px;
     }
 
+
     .creator-nominate-content h2 {
+
         font-size: 22px;
     }
 
+
     .creator-nominate-button {
+
         width: 100%;
     }
 
 
     footer {
+
         padding: 45px 18px 22px;
     }
 
+
     footer h3 {
+
         font-size: 22px;
     }
 
+
     footer > p {
+
         font-size: 13px;
     }
 
+
     .footer-links {
+
         gap: 12px 16px;
     }
 
+
     .footer-links a {
+
         font-size: 12px;
     }
 
+
     .footer-bottom {
+
         flex-direction: column;
 
         gap: 6px;
     }
 
+
     .footer-bottom p {
+
         font-size: 10px;
     }
 
@@ -1485,27 +2106,36 @@ footer > p {
 @media (max-width: 380px) {
 
     .creator-spotlight-hero h1 {
+
         font-size: 43px;
     }
 
+
     .creator-hero-pills span {
+
         font-size: 9px;
     }
 
+
     .creator-photo-stamp {
+
         width: 82px;
+
         height: 82px;
 
         font-size: 8px;
     }
 
+
     .creator-quote-section blockquote {
+
         font-size: 26px;
     }
 
 }
 
 </style>
+
 </head>
 
 
@@ -1515,7 +2145,7 @@ footer > p {
 
 
 <!-- =========================================================
-     TOP BAR
+     TOP NAVIGATION
 ========================================================= -->
 
 <div class="creator-topbar">
@@ -1527,21 +2157,27 @@ footer > p {
         ← Mom Creators Worth Following
     </a>
 
+
     <a
         href="index.html"
-        class="creator-brand-link"
+        class="creator-home-button"
     >
-        MomYouNeedThis 🌷
+        🏠 MomYouNeedThis Home
     </a>
 
 </div>
+
+
+<main>
 
 
 <!-- =========================================================
      HERO
 ========================================================= -->
 
-<section class="creator-spotlight-hero">
+<article
+    class="creator-spotlight-hero"
+>
 
     <div class="creator-hero-decoration creator-hero-star">
         ✦
@@ -1558,19 +2194,29 @@ footer > p {
             🌷 MOM CREATOR SPOTLIGHT
         </span>
 
+
+        <!-- ⭐ CHANGE CREATOR NAME -->
+
         <h1>
             Meet
             <span>Creator Name.</span>
         </h1>
 
+
+        <!-- ⭐ CHANGE HANDLE -->
+
         <p class="creator-handle">
             @creatorhandle
         </p>
+
+
+        <!-- ⭐ CHANGE DESCRIPTION -->
 
         <p class="creator-hero-description">
             Fun, simple and actually doable ideas for little ones —
             from a mom creator we think deserves a spot in your feed.
         </p>
+
 
         <div class="creator-hero-pills">
 
@@ -1595,28 +2241,38 @@ footer > p {
 
         <div class="creator-photo-circle"></div>
 
+
+        <!-- ⭐ CHANGE PHOTO -->
+
         <img
             src="assets/creator-name.jpg"
-            alt="Creator Name"
+            alt="Creator Name — Mom Creator Worth Following"
             class="creator-hero-photo"
         >
 
+
         <div class="creator-photo-stamp">
+
             WE THINK<br>
             YOU'LL<br>
             LOVE HER
+
         </div>
 
+
         <div class="creator-photo-caption">
+
             MomYouNeedThis says:
+
             <strong>
                 This is one worth knowing about. 🌷
             </strong>
+
         </div>
 
     </div>
 
-</section>
+</article>
 
 
 <!-- =========================================================
@@ -1631,17 +2287,27 @@ footer > p {
             WHY WE'RE HERE
         </span>
 
+
         <h2>
             Why We Think Moms
             <span>Should Know Her</span>
         </h2>
 
+
         <p class="creator-intro-lead">
+
             We found her.
-            <strong>And we think you should too.</strong>
+
+            <strong>
+                And we think you should too.
+            </strong>
+
         </p>
 
+
         <div class="creator-intro-copy">
+
+            <!-- ⭐ PERSONALIZE THIS SECTION -->
 
             <p>
                 There is a lot of mom content out there.
@@ -1680,10 +2346,12 @@ footer > p {
             THE MOMYOUNEEDTHIS TEST
         </span>
 
+
         <h2>
             So...
             <span>Why Her?</span>
         </h2>
+
 
         <p>
             Because when we discover a mom creator we genuinely
@@ -1695,15 +2363,22 @@ footer > p {
 
     <div class="creator-test-grid">
 
-        <article class="creator-test-card creator-test-card-pink">
+
+        <article
+            class="creator-test-card creator-test-card-pink"
+        >
 
             <div class="creator-test-icon">
                 💗
             </div>
 
+
+            <!-- ⭐ PERSONALIZE -->
+
             <h3>
                 She gets motherhood.
             </h3>
+
 
             <p>
                 Her content feels like it comes from someone
@@ -1715,15 +2390,21 @@ footer > p {
         </article>
 
 
-        <article class="creator-test-card creator-test-card-cream">
+        <article
+            class="creator-test-card creator-test-card-cream"
+        >
 
             <div class="creator-test-icon">
                 ✨
             </div>
 
+
+            <!-- ⭐ PERSONALIZE -->
+
             <h3>
                 She gives you something.
             </h3>
+
 
             <p>
                 Whether it's an idea, a laugh, a little
@@ -1735,15 +2416,21 @@ footer > p {
         </article>
 
 
-        <article class="creator-test-card creator-test-card-blue">
+        <article
+            class="creator-test-card creator-test-card-blue"
+        >
 
             <div class="creator-test-icon">
                 🌷
             </div>
 
+
+            <!-- ⭐ PERSONALIZE -->
+
             <h3>
                 We'd send her to a friend.
             </h3>
+
 
             <p>
                 And honestly, that's our favourite test.
@@ -1768,10 +2455,14 @@ footer > p {
         ✦
     </div>
 
+
+    <!-- ⭐ OPTIONAL: CHANGE THIS QUOTE FOR EACH CREATOR -->
+
     <blockquote>
         “The kind of account you discover and immediately
         wonder how you hadn't found her sooner.”
     </blockquote>
+
 
     <span>
         MomYouNeedThis 🌷
@@ -1792,10 +2483,12 @@ footer > p {
             INSIDE HER FEED
         </span>
 
+
         <h2>
             What You'll
             <span>Find.</span>
         </h2>
+
 
         <p>
             A little preview of why we think Creator Name
@@ -1806,6 +2499,9 @@ footer > p {
 
 
     <div class="creator-feed-list">
+
+
+        <!-- ⭐ CHANGE THESE 4 ITEMS FOR EACH CREATOR -->
 
         <div class="creator-feed-item">
 
@@ -1914,24 +2610,32 @@ footer > p {
             ✿
         </div>
 
+
         <span class="creator-section-label">
             NOW YOU KNOW HER
         </span>
+
+
+        <!-- ⭐ CHANGE CREATOR NAME -->
 
         <h2>
             Go Meet
             <span>Creator Name.</span>
         </h2>
 
+
         <p>
             If her kind of mom content sounds like your kind
             of thing, we think she's worth a follow.
         </p>
 
+
+        <!-- ⭐ CHANGE INSTAGRAM URL + HANDLE -->
+
         <a
             href="https://www.instagram.com/creatorhandle/"
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
             class="creator-follow-button"
         >
             FOLLOW @CREATORHANDLE →
@@ -1954,21 +2658,28 @@ footer > p {
             🌷
         </div>
 
+
         <span class="creator-first20-small">
             MOMYOUNEEDTHIS
         </span>
+
 
         <h2>
             One of Our
             <span>First 20.</span>
         </h2>
 
+
         <p>
+
             Creator Name is one of the first 20 creators
             featured in our
-            <strong>Creators Worth Following</strong>
+            <strong>
+                Creators Worth Following
+            </strong>
             circle as we launch this new part of the
             MomYouNeedThis universe.
+
         </p>
 
     </div>
@@ -1977,7 +2688,7 @@ footer > p {
 
 
 <!-- =========================================================
-     WHILE YOU'RE HERE
+     EXPLORE MOMYOUNEEDTHIS
 ========================================================= -->
 
 <section class="creator-explore-section">
@@ -1988,10 +2699,12 @@ footer > p {
             ✨ WHILE YOU'RE HERE
         </span>
 
+
         <h2>
             A Few More Things
             <span>For Mom Life.</span>
         </h2>
+
 
         <p>
             Since you're here, take a little look around.
@@ -2018,18 +2731,22 @@ footer > p {
                 🎁
             </div>
 
+
             <span class="creator-explore-label">
                 100% FREE
             </span>
+
 
             <h3>
                 Free Mom Resources
             </h3>
 
+
             <p>
                 Printable activities, charts, learning pages
                 and little things made for moms and kids.
             </p>
+
 
             <span class="creator-explore-link">
                 Explore the Free Library →
@@ -2051,19 +2768,23 @@ footer > p {
                 🧰
             </div>
 
+
             <span class="creator-explore-label">
                 MOM UNIVERSE TOOLKIT
             </span>
 
+
             <h3>
                 Free Mom Tools
             </h3>
+
 
             <p>
                 Little tools designed to take some of the
                 guesswork and mental load out of everyday
                 mom life.
             </p>
+
 
             <span class="creator-explore-link">
                 Explore the Tools →
@@ -2085,18 +2806,22 @@ footer > p {
                 🧪
             </div>
 
+
             <span class="creator-explore-label">
                 MOM UNIVERSE
             </span>
+
 
             <h3>
                 Mom Lab
             </h3>
 
+
             <p>
                 Serious investigations into the completely
                 ridiculous tests that mom life throws at us.
             </p>
+
 
             <span class="creator-explore-link">
                 Enter the Mom Lab →
@@ -2121,16 +2846,19 @@ footer > p {
             🌷
         </span>
 
+
         <div>
 
             <span class="creator-nominate-label">
                 KNOW SOMEONE?
             </span>
 
+
             <h2>
                 Know another mom
                 <span>we should feature?</span>
             </h2>
+
 
             <p>
                 Tell us about a creator you think more moms
@@ -2138,6 +2866,7 @@ footer > p {
             </p>
 
         </div>
+
 
         <a
             href="contact.html"
@@ -2151,12 +2880,16 @@ footer > p {
 </section>
 
 
+</main>
+
+
 <!-- =========================================================
      FOOTER
-     SAME NAVIGATION AS INDEX.HTML
+     EXACT SAME NAVIGATION AS INDEX.HTML
 ========================================================= -->
 
 <footer>
+
 
     <div class="footer-logo">
 
@@ -2189,33 +2922,41 @@ footer > p {
             Mom Battles
         </a>
 
+
         <a href="mom-lab.html">
             Mom Lab
         </a>
+
 
         <a href="free-mom-resources.html">
             Free Resources
         </a>
 
+
         <a href="about.html">
             About
         </a>
+
 
         <a href="privacy-policy.html">
             Privacy Policy
         </a>
 
+
         <a href="terms-of-use.html">
             Terms of Use
         </a>
+
 
         <a href="affiliate-disclosure.html">
             Affiliate Disclosure
         </a>
 
+
         <a href="disclaimer.html">
             Disclaimer
         </a>
+
 
         <a href="contact.html">
             Contact
@@ -2230,6 +2971,7 @@ footer > p {
             © 2026 MomYouNeedThis. All rights reserved.
         </p>
 
+
         <p>
             As an Amazon Associate, I earn from qualifying purchases.
         </p>
@@ -2242,4 +2984,5 @@ footer > p {
 </div>
 
 </body>
+
 </html>
