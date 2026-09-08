@@ -1,1325 +1,501 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-  <title>[Creator Name] | Mom Creators Worth Following | MomYouNeedThis</title>
-  <meta
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Creator Name | Mom Creators Worth Following | MomYouNeedThis</title>
+<meta
     name="description"
-    content="Meet [Creator Name], one of the mom creators MomYouNeedThis thinks more moms should know about."
-  >
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap"
+    content="Meet Creator Name, one of MomYouNeedThis' Creators Worth Following — a mom creator we think more moms should know about."
+>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="mom-creators.css">
+<link
+    href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap"
     rel="stylesheet"
-  >
-  <!-- Your existing site CSS -->
-  <link rel="stylesheet" href="style.css">
-  <style>
-    /* ==========================================================
-       MOMYOU NEED THIS
-       CREATOR SPOTLIGHT PAGE
-       ========================================================== */
-    :root {
-      --mynt-pink: #d05a82;
-      --mynt-pink-dark: #b9476d;
-      --mynt-pink-soft: #fff1f5;
-      --mynt-pink-medium: #f1b3c5;
-      --mynt-cream: #fff8ee;
-      --mynt-cream-dark: #f6eadb;
-      --mynt-blue: #eef5ff;
-      --mynt-blue-dark: #dceaff;
-      --mynt-navy: #202c3c;
-      --mynt-text: #222222;
-      --mynt-gray: #666666;
-      --mynt-light-gray: #999999;
-      --mynt-white: #ffffff;
-      --mynt-shadow:
-        0 12px 35px rgba(32, 44, 60, 0.08);
-      --mynt-shadow-small:
-        0 7px 22px rgba(32, 44, 60, 0.06);
-      --mynt-radius: 26px;
-      --mynt-radius-large: 34px;
-    }
-    /* ==========================================================
-       BASE
-       ========================================================== */
-    .creator-spotlight-page {
-      font-family: "Nunito", sans-serif;
-      color: var(--mynt-text);
-      background: #ffffff;
-      overflow: hidden;
-    }
-    .creator-spotlight-page *,
-    .creator-spotlight-page *::before,
-    .creator-spotlight-page *::after {
-      box-sizing: border-box;
-    }
-    .creator-spotlight-page img {
-      display: block;
-      max-width: 100%;
-    }
-    .creator-spotlight-page a {
-      text-decoration: none;
-    }
-    .creator-wrap {
-      width: min(1160px, calc(100% - 40px));
-      margin: 0 auto;
-    }
-    /* ==========================================================
-       SMALL TOP BAR
-       ========================================================== */
-    .creator-topbar {
-      padding: 18px 0;
-      background: #ffffff;
-    }
-    .creator-topbar-inner {
-      width: min(1160px, calc(100% - 40px));
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-    }
-    .creator-back-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      color: #777777;
-      font-size: 11px;
-      font-weight: 900;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      transition: color 0.2s ease;
-    }
-    .creator-back-link:hover {
-      color: var(--mynt-pink);
-    }
-    .creator-top-brand {
-      color: var(--mynt-pink);
-      font-size: 13px;
-      font-weight: 900;
-      letter-spacing: 0.04em;
-    }
-    /* ==========================================================
-       HERO
-       ========================================================== */
-    .creator-hero {
-      position: relative;
-      padding: 55px 0 85px;
-      background:
-        radial-gradient(
-          circle at 7% 18%,
-          rgba(241, 179, 197, 0.22),
-          transparent 24%
-        ),
-        radial-gradient(
-          circle at 94% 18%,
-          rgba(220, 234, 255, 0.65),
-          transparent 26%
-        ),
-        #ffffff;
-    }
-    /* Decorative circles */
-    .creator-hero::before {
-      content: "";
-      position: absolute;
-      width: 125px;
-      height: 125px;
-      left: -48px;
-      top: 145px;
-      border: 3px dashed rgba(208, 90, 130, 0.22);
-      border-radius: 50%;
-      pointer-events: none;
-    }
-    .creator-hero::after {
-      content: "✦";
-      position: absolute;
-      right: 6%;
-      top: 100px;
-      color: var(--mynt-pink-medium);
-      font-size: 35px;
-      transform: rotate(12deg);
-      pointer-events: none;
-    }
-    /* Hero eyebrow */
-    .creator-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 20px;
-      padding: 8px 15px;
-      border-radius: 999px;
-      background: var(--mynt-pink-soft);
-      color: var(--mynt-pink);
-      font-size: 10px;
-      font-weight: 900;
-      letter-spacing: 0.13em;
-      text-transform: uppercase;
-    }
-    /* Hero layout */
-    .creator-hero-grid {
-      display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
-      gap: 55px;
-      align-items: center;
-    }
-    /* Hero copy */
-    .creator-hero-copy {
-      position: relative;
-      z-index: 2;
-    }
-    .creator-hero-copy h1 {
-      max-width: 650px;
-      margin: 0;
-      color: var(--mynt-navy);
-      font-size: clamp(48px, 6.5vw, 82px);
-      font-weight: 900;
-      line-height: 0.98;
-      letter-spacing: -0.045em;
-    }
-    .creator-hero-copy h1 span {
-      color: var(--mynt-pink);
-    }
-    .creator-handle {
-      margin-top: 20px;
-      color: var(--mynt-pink);
-      font-size: 18px;
-      font-weight: 800;
-    }
-    .creator-hero-description {
-      max-width: 550px;
-      margin: 20px 0 0;
-      color: #666666;
-      font-size: 19px;
-      line-height: 1.65;
-    }
-    /* Hero tags */
-    .creator-hero-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 25px;
-    }
-    .creator-pill {
-      padding: 8px 13px;
-      border: 1px solid rgba(208, 90, 130, 0.14);
-      border-radius: 999px;
-      background: #ffffff;
-      color: #555555;
-      font-size: 11px;
-      font-weight: 800;
-      box-shadow: 0 4px 12px rgba(32, 44, 60, 0.04);
-    }
-    /* ==========================================================
-       HERO PHOTO
-       ========================================================== */
-    .creator-photo-area {
-      position: relative;
-      max-width: 500px;
-      margin-left: auto;
-    }
-    .creator-photo-card {
-      position: relative;
-      padding: 12px;
-      border-radius: 32px;
-      background: var(--mynt-pink-soft);
-      box-shadow: var(--mynt-shadow);
-    }
-    .creator-photo {
-      width: 100%;
-      aspect-ratio: 4 / 5;
-      overflow: hidden;
-      border-radius: 25px;
-      background: var(--mynt-cream);
-    }
-    .creator-photo img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-    }
-    /* Decorative sticker */
-    .creator-sticker {
-      position: absolute;
-      top: -25px;
-      right: -20px;
-      width: 105px;
-      height: 105px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 12px;
-      border-radius: 50%;
-      background: var(--mynt-pink);
-      color: #ffffff;
-      font-size: 11px;
-      font-weight: 900;
-      line-height: 1.2;
-      letter-spacing: 0.04em;
-      text-align: center;
-      transform: rotate(9deg);
-      box-shadow:
-        0 10px 25px rgba(208, 90, 130, 0.2);
-    }
-    /* Photo caption */
-    .creator-photo-caption {
-      position: absolute;
-      bottom: 28px;
-      left: -22px;
-      max-width: 240px;
-      padding: 14px 18px;
-      border-radius: 17px;
-      background: rgba(255, 255, 255, 0.96);
-      color: var(--mynt-navy);
-      font-size: 12px;
-      font-weight: 800;
-      line-height: 1.45;
-      box-shadow:
-        0 8px 25px rgba(32, 44, 60, 0.1);
-    }
-    .creator-photo-caption strong {
-      color: var(--mynt-pink);
-    }
-    /* ==========================================================
-       INTRODUCTION
-       ========================================================== */
-    .creator-intro-section {
-      padding: 85px 0;
-      background: var(--mynt-cream);
-    }
-    .creator-intro-card {
-      position: relative;
-      max-width: 940px;
-      margin: 0 auto;
-      padding: 55px 65px;
-      border-radius: var(--mynt-radius-large);
-      background: #ffffff;
-      box-shadow: var(--mynt-shadow-small);
-    }
-    .creator-intro-flower {
-      position: absolute;
-      top: 25px;
-      right: 35px;
-      color: var(--mynt-pink-medium);
-      font-size: 32px;
-      transform: rotate(-12deg);
-    }
-    .creator-section-label {
-      color: var(--mynt-pink);
-      font-size: 10px;
-      font-weight: 900;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-    }
-    .creator-intro-card h2 {
-      max-width: 750px;
-      margin: 12px 0 20px;
-      color: var(--mynt-navy);
-      font-size: clamp(34px, 5vw, 56px);
-      font-weight: 900;
-      line-height: 1.05;
-      letter-spacing: -0.04em;
-    }
-    .creator-intro-card p {
-      max-width: 780px;
-      margin: 0 0 18px;
-      color: #555555;
-      font-size: 18px;
-      line-height: 1.75;
-    }
-    .creator-intro-card p:last-child {
-      margin-bottom: 0;
-    }
-    /* ==========================================================
-       WHY WE CHOSE HER
-       ========================================================== */
-    .creator-why-section {
-      position: relative;
-      padding: 90px 0;
-      background: #ffffff;
-    }
-    .creator-why-section::after {
-      content: "♡";
-      position: absolute;
-      right: 4%;
-      bottom: 55px;
-      color: rgba(208, 90, 130, 0.1);
-      font-size: 95px;
-      transform: rotate(-12deg);
-    }
-    .creator-section-heading {
-      max-width: 700px;
-      margin-bottom: 45px;
-    }
-    .creator-section-heading h2 {
-      margin: 10px 0 0;
-      color: var(--mynt-navy);
-      font-size: clamp(38px, 5vw, 62px);
-      font-weight: 900;
-      line-height: 1.02;
-      letter-spacing: -0.04em;
-    }
-    /* Why cards */
-    .creator-why-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-    }
-    .creator-why-card {
-      min-height: 255px;
-      padding: 30px;
-      border-radius: var(--mynt-radius);
-      box-shadow: var(--mynt-shadow-small);
-      transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
-    }
-    .creator-why-card:hover {
-      transform: translateY(-5px);
-      box-shadow: var(--mynt-shadow);
-    }
-    .creator-why-card:nth-child(1) {
-      background: var(--mynt-pink-soft);
-    }
-    .creator-why-card:nth-child(2) {
-      background: var(--mynt-blue);
-    }
-    .creator-why-card:nth-child(3) {
-      background: var(--mynt-cream);
-    }
-    .creator-card-icon {
-      font-size: 28px;
-    }
-    .creator-why-card h3 {
-      margin: 18px 0 9px;
-      color: var(--mynt-navy);
-      font-size: 23px;
-      font-weight: 900;
-      line-height: 1.1;
-    }
-    .creator-why-card p {
-      margin: 0;
-      color: #666666;
-      font-size: 14px;
-      line-height: 1.65;
-    }
-    /* ==========================================================
-       CREATOR QUOTE
-       ========================================================== */
-    .creator-quote-section {
-      padding: 80px 0;
-      background: var(--mynt-blue);
-    }
-    .creator-quote-card {
-      max-width: 850px;
-      margin: 0 auto;
-      text-align: center;
-    }
-    .creator-quote-mark {
-      color: var(--mynt-pink);
-      font-size: 70px;
-      font-weight: 900;
-      line-height: 0.65;
-    }
-    .creator-quote-text {
-      margin: 25px 0;
-      color: var(--mynt-navy);
-      font-size: clamp(28px, 4vw, 47px);
-      font-weight: 900;
-      line-height: 1.15;
-      letter-spacing: -0.03em;
-    }
-    .creator-quote-credit {
-      color: var(--mynt-pink);
-      font-size: 10px;
-      font-weight: 900;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-    }
-    /* ==========================================================
-       WHAT YOU'LL FIND
-       ========================================================== */
-    .creator-content-section {
-      padding: 95px 0;
-      background: #ffffff;
-    }
-    .creator-content-heading {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 30px;
-      margin-bottom: 45px;
-    }
-    .creator-content-heading h2 {
-      margin: 10px 0 0;
-      color: var(--mynt-navy);
-      font-size: clamp(38px, 5vw, 62px);
-      font-weight: 900;
-      line-height: 1;
-      letter-spacing: -0.04em;
-    }
-    .creator-content-heading p {
-      max-width: 370px;
-      margin: 0;
-      color: #777777;
-      font-size: 16px;
-      line-height: 1.65;
-    }
-    /* Content list */
-    .creator-content-list {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-    .creator-content-item {
-      position: relative;
-      display: flex;
-      align-items: flex-start;
-      gap: 18px;
-      padding: 25px;
-      border: 1px solid rgba(32, 44, 60, 0.07);
-      border-radius: 22px;
-      background: #ffffff;
-      box-shadow:
-        0 5px 18px rgba(32, 44, 60, 0.04);
-    }
-    .creator-content-number {
-      width: 39px;
-      height: 39px;
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      background: var(--mynt-pink-soft);
-      color: var(--mynt-pink);
-      font-size: 11px;
-      font-weight: 900;
-    }
-    .creator-content-item h3 {
-      margin: 1px 0 5px;
-      color: var(--mynt-navy);
-      font-size: 19px;
-      font-weight: 900;
-    }
-    .creator-content-item p {
-      margin: 0;
-      color: #777777;
-      font-size: 14px;
-      line-height: 1.6;
-    }
-    /* ==========================================================
-       FOLLOW HER
-       ========================================================== */
-    .creator-follow-section {
-      padding: 90px 0;
-      background: var(--mynt-pink-soft);
-    }
-    .creator-follow-card {
-      position: relative;
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 55px 35px;
-      overflow: hidden;
-      border-radius: var(--mynt-radius-large);
-      background: #ffffff;
-      text-align: center;
-      box-shadow: var(--mynt-shadow);
-    }
-    .creator-follow-card::before {
-      content: "✿";
-      position: absolute;
-      left: 35px;
-      top: 25px;
-      color: rgba(208, 90, 130, 0.16);
-      font-size: 55px;
-      transform: rotate(-15deg);
-    }
-    .creator-follow-card::after {
-      content: "✦";
-      position: absolute;
-      right: 45px;
-      bottom: 25px;
-      color: rgba(208, 90, 130, 0.14);
-      font-size: 45px;
-    }
-    .creator-follow-kicker {
-      color: var(--mynt-pink);
-      font-size: 10px;
-      font-weight: 900;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-    }
-    .creator-follow-card h2 {
-      margin: 10px 0 14px;
-      color: var(--mynt-navy);
-      font-size: clamp(36px, 5vw, 58px);
-      font-weight: 900;
-      line-height: 1;
-      letter-spacing: -0.04em;
-    }
-    .creator-follow-card p {
-      max-width: 580px;
-      margin: 0 auto 27px;
-      color: #666666;
-      font-size: 17px;
-      line-height: 1.65;
-    }
-    .creator-follow-button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 14px 24px;
-      border-radius: 999px;
-      background: var(--mynt-pink);
-      color: #ffffff;
-      font-size: 12px;
-      font-weight: 900;
-      letter-spacing: 0.07em;
-      text-transform: uppercase;
-      box-shadow:
-        0 7px 18px rgba(208, 90, 130, 0.18);
-      transition:
-        transform 0.2s ease,
-        background 0.2s ease;
-    }
-    .creator-follow-button:hover {
-      background: var(--mynt-pink-dark);
-      transform: translateY(-2px);
-    }
-    /* ==========================================================
-       FIRST 20
-       ========================================================== */
-    .creator-first20-section {
-      padding: 75px 0;
-      background: #ffffff;
-    }
-    .creator-first20 {
-      position: relative;
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 40px;
-      overflow: hidden;
-      border-radius: 27px;
-      background: var(--mynt-cream);
-      text-align: center;
-    }
-    .creator-first20::after {
-      content: "20";
-      position: absolute;
-      right: -15px;
-      bottom: -65px;
-      color: rgba(208, 90, 130, 0.07);
-      font-size: 190px;
-      font-weight: 900;
-      line-height: 1;
-    }
-    .creator-first20-icon {
-      position: relative;
-      font-size: 29px;
-    }
-    .creator-first20-label {
-      position: relative;
-      margin-top: 7px;
-      color: var(--mynt-pink);
-      font-size: 10px;
-      font-weight: 900;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-    }
-    .creator-first20 h2 {
-      position: relative;
-      margin: 10px 0;
-      color: var(--mynt-navy);
-      font-size: clamp(28px, 4vw, 43px);
-      font-weight: 900;
-      line-height: 1.05;
-    }
-    .creator-first20 p {
-      position: relative;
-      max-width: 650px;
-      margin: 0 auto;
-      color: #666666;
-      font-size: 15px;
-      line-height: 1.7;
-    }
-    /* ==========================================================
-       NOMINATE
-       ========================================================== */
-    .creator-nominate-section {
-      padding: 20px 0 90px;
-      background: #ffffff;
-    }
-    .creator-nominate {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 30px;
-      padding: 25px 30px;
-      border-radius: 23px;
-      background: var(--mynt-blue);
-    }
-    .creator-nominate h3 {
-      margin: 0 0 4px;
-      color: var(--mynt-navy);
-      font-size: 20px;
-      font-weight: 900;
-    }
-    .creator-nominate p {
-      margin: 0;
-      color: #777777;
-      font-size: 13px;
-    }
-    .creator-nominate-button {
-      flex-shrink: 0;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 11px 18px;
-      border-radius: 999px;
-      background: #ffffff;
-      color: var(--mynt-pink);
-      font-size: 11px;
-      font-weight: 900;
-      letter-spacing: 0.07em;
-      text-transform: uppercase;
-      box-shadow: var(--mynt-shadow-small);
-    }
-    .creator-nominate-button:hover {
-      color: var(--mynt-pink-dark);
-    }
-    /* ==========================================================
-       FOOTER
-       ========================================================== */
-    .creator-footer {
-      padding: 38px 0;
-      border-top: 1px solid rgba(32, 44, 60, 0.07);
-      background: #ffffff;
-    }
-    .creator-footer-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-    }
-    .creator-footer-brand {
-      color: var(--mynt-pink);
-      font-size: 13px;
-      font-weight: 900;
-    }
-    .creator-footer-text {
-      color: #999999;
-      font-size: 11px;
-    }
-    /* ==========================================================
-       TABLET
-       ========================================================== */
-    @media (max-width: 900px) {
-      .creator-hero-grid {
-        grid-template-columns: 1fr;
-        gap: 45px;
-      }
-      .creator-photo-area {
-        width: min(600px, 100%);
-        margin: 0 auto;
-      }
-      .creator-why-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-      .creator-why-card:last-child {
-        grid-column: span 2;
-      }
-      .creator-content-heading {
-        display: block;
-      }
-      .creator-content-heading p {
-        margin-top: 18px;
-      }
-    }
-    /* ==========================================================
-       MOBILE
-       ========================================================== */
-    @media (max-width: 600px) {
-      .creator-wrap,
-      .creator-topbar-inner {
-        width: calc(100% - 28px);
-      }
-      /* TOP BAR */
-      .creator-topbar {
-        padding: 14px 0;
-      }
-      .creator-back-link {
-        font-size: 9px;
-      }
-      .creator-top-brand {
-        font-size: 10px;
-      }
-      /* HERO */
-      .creator-hero {
-        padding: 38px 0 65px;
-      }
-      .creator-hero::before {
-        width: 80px;
-        height: 80px;
-        left: -40px;
-        top: 180px;
-      }
-      .creator-hero::after {
-        right: 5%;
-        top: 70px;
-        font-size: 24px;
-      }
-      .creator-eyebrow {
-        margin-bottom: 16px;
-        padding: 7px 11px;
-        font-size: 8px;
-      }
-      .creator-hero-copy h1 {
-        font-size: clamp(47px, 14vw, 68px);
-        line-height: 0.94;
-      }
-      .creator-handle {
-        margin-top: 15px;
-        font-size: 16px;
-      }
-      .creator-hero-description {
-        font-size: 16px;
-        line-height: 1.6;
-      }
-      .creator-hero-tags {
-        margin-top: 18px;
-      }
-      .creator-pill {
-        padding: 7px 10px;
-        font-size: 9px;
-      }
-      /* PHOTO */
-      .creator-photo-area {
-        padding: 0 7px;
-      }
-      .creator-photo-card {
-        padding: 8px;
-        border-radius: 25px;
-      }
-      .creator-photo {
-        aspect-ratio: 4 / 5;
-        border-radius: 19px;
-      }
-      .creator-sticker {
-        top: -18px;
-        right: -12px;
-        width: 78px;
-        height: 78px;
-        font-size: 8px;
-      }
-      .creator-photo-caption {
-        left: -3px;
-        bottom: 18px;
-        max-width: 190px;
-        padding: 10px 13px;
-        border-radius: 13px;
-        font-size: 10px;
-      }
-      /* INTRO */
-      .creator-intro-section {
-        padding: 60px 0;
-      }
-      .creator-intro-card {
-        padding: 32px 24px;
-        border-radius: 24px;
-      }
-      .creator-intro-flower {
-        top: 15px;
-        right: 18px;
-        font-size: 23px;
-      }
-      .creator-intro-card h2 {
-        font-size: 36px;
-      }
-      .creator-intro-card p {
-        font-size: 16px;
-        line-height: 1.65;
-      }
-      /* WHY */
-      .creator-why-section {
-        padding: 65px 0;
-      }
-      .creator-section-heading {
-        margin-bottom: 30px;
-      }
-      .creator-section-heading h2 {
-        font-size: 42px;
-      }
-      .creator-why-grid {
-        grid-template-columns: 1fr;
-        gap: 13px;
-      }
-      .creator-why-card,
-      .creator-why-card:last-child {
-        grid-column: auto;
-        min-height: auto;
-        padding: 25px;
-      }
-      /* QUOTE */
-      .creator-quote-section {
-        padding: 65px 0;
-      }
-      .creator-quote-mark {
-        font-size: 52px;
-      }
-      .creator-quote-text {
-        margin: 20px 0;
-        font-size: 30px;
-      }
-      /* CONTENT */
-      .creator-content-section {
-        padding: 70px 0;
-      }
-      .creator-content-heading h2 {
-        font-size: 43px;
-      }
-      .creator-content-list {
-        grid-template-columns: 1fr;
-        gap: 12px;
-      }
-      .creator-content-item {
-        padding: 20px;
-        border-radius: 18px;
-      }
-      .creator-content-number {
-        width: 34px;
-        height: 34px;
-        font-size: 10px;
-      }
-      .creator-content-item h3 {
-        font-size: 17px;
-      }
-      .creator-content-item p {
-        font-size: 13px;
-      }
-      /* FOLLOW */
-      .creator-follow-section {
-        padding: 65px 0;
-      }
-      .creator-follow-card {
-        padding: 42px 22px;
-        border-radius: 25px;
-      }
-      .creator-follow-card::before {
-        left: 15px;
-        top: 15px;
-        font-size: 38px;
-      }
-      .creator-follow-card::after {
-        right: 20px;
-        bottom: 15px;
-        font-size: 32px;
-      }
-      .creator-follow-card h2 {
-        font-size: 42px;
-      }
-      .creator-follow-card p {
-        font-size: 15px;
-      }
-      .creator-follow-button {
-        width: 100%;
-        max-width: 300px;
-      }
-      /* FIRST 20 */
-      .creator-first20-section {
-        padding: 55px 0;
-      }
-      .creator-first20 {
-        padding: 30px 20px;
-        border-radius: 23px;
-      }
-      .creator-first20 h2 {
-        font-size: 32px;
-      }
-      .creator-first20 p {
-        font-size: 14px;
-      }
-      /* NOMINATE */
-      .creator-nominate-section {
-        padding: 10px 0 65px;
-      }
-      .creator-nominate {
-        display: block;
-        padding: 23px;
-        border-radius: 20px;
-      }
-      .creator-nominate-button {
-        width: 100%;
-        margin-top: 18px;
-      }
-      /* FOOTER */
-      .creator-footer {
-        padding: 30px 0;
-      }
-      .creator-footer-inner {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 7px;
-      }
-    }
-  </style>
+>
 </head>
 <body>
-<main class="creator-spotlight-page">
-  <!-- ========================================================
-       TOP NAV
-       ========================================================= -->
-  <div class="creator-topbar">
-    <div class="creator-topbar-inner">
-      <a
-        href="mom-creators.html"
-        class="creator-back-link"
-      >
+<div class="creator-page">
+<!-- =========================================================
+     TOP BAR
+========================================================= -->
+<div class="creator-topbar">
+    <a href="mom-creators.html" class="creator-back-link">
         ← Mom Creators Worth Following
-      </a>
-      <div class="creator-top-brand">
+    </a>
+    <a href="index.html" class="creator-brand-link">
         MomYouNeedThis 🌷
-      </div>
+    </a>
+</div>
+<!-- =========================================================
+     HERO
+========================================================= -->
+<section class="creator-spotlight-hero">
+    <div class="creator-hero-decoration creator-hero-star">
+        ✦
     </div>
-  </div>
-  <!-- ========================================================
-       HERO
-       ========================================================= -->
-  <section class="creator-hero">
-    <div class="creator-wrap">
-      <div class="creator-hero-grid">
-        <!-- HERO COPY -->
-        <div class="creator-hero-copy">
-          <div class="creator-eyebrow">
-            🌷 Mom Creator Spotlight
-          </div>
-          <h1>
+    <div class="creator-hero-decoration creator-hero-flower">
+        ✿
+    </div>
+    <div class="creator-hero-content">
+        <span class="creator-kicker">
+            🌷 MOM CREATOR SPOTLIGHT
+        </span>
+        <h1>
             Meet
-            <span>[Creator Name]</span>.
-          </h1>
-          <div class="creator-handle">
-            @[creatorhandle]
-          </div>
-          <p class="creator-hero-description">
-            [A short, warm sentence that captures what makes this
-            creator special and why a mom would want to know her.]
-          </p>
-          <div class="creator-hero-tags">
-            <span class="creator-pill">
-              ✨ Worth Following
-            </span>
-            <span class="creator-pill">
-              ❤️ Real Mom Life
-            </span>
-            <span class="creator-pill">
-              💡 Actually Helpful
-            </span>
-          </div>
+            <span>Creator Name.</span>
+        </h1>
+        <p class="creator-handle">
+            @creatorhandle
+        </p>
+        <p class="creator-hero-description">
+            Fun, simple and actually doable ideas for little ones —
+            from a mom creator we think deserves a spot in your feed.
+        </p>
+        <div class="creator-hero-pills">
+            <span>✨ Worth Following</span>
+            <span>❤️ Real Mom Life</span>
+            <span>💡 Actually Helpful</span>
         </div>
-        <!-- HERO PHOTO -->
-        <div class="creator-photo-area">
-          <div class="creator-photo-card">
-            <div class="creator-photo">
-              <!-- Replace with creator photo -->
-              <img
-                src="images/creator-name.jpg"
-                alt="[Creator Name] — featured mom creator"
-              >
-            </div>
-          </div>
-          <div class="creator-sticker">
-            WE<br>
-            THINK<br>
+    </div>
+    <div class="creator-hero-photo-wrap">
+        <div class="creator-photo-circle"></div>
+        <img
+            src="assets/creator-name.jpg"
+            alt="Creator Name"
+            class="creator-hero-photo"
+        >
+        <div class="creator-photo-stamp">
+            WE THINK<br>
             YOU'LL<br>
             LOVE HER
-          </div>
-          <div class="creator-photo-caption">
-            <strong>MomYouNeedThis says:</strong><br>
-            This is one worth knowing about. 🌷
-          </div>
         </div>
-      </div>
+        <div class="creator-photo-caption">
+            MomYouNeedThis says:
+            <strong>This is one worth knowing about. 🌷</strong>
+        </div>
     </div>
-  </section>
-  <!-- ========================================================
-       INTRO
-       ========================================================= -->
-  <section class="creator-intro-section">
-    <div class="creator-wrap">
-      <article class="creator-intro-card">
-        <div class="creator-intro-flower">
-          ✿
-        </div>
-        <div class="creator-section-label">
-          Why We Think Moms Should Know Her
-        </div>
+</section>
+<!-- =========================================================
+     WHY WE THINK MOMS SHOULD KNOW HER
+========================================================= -->
+<section class="creator-intro-section">
+    <div class="creator-intro-card">
+        <span class="creator-section-label">
+            WHY WE'RE HERE
+        </span>
         <h2>
-          We found her.<br>
-          And we think you should too.
+            Why We Think Moms
+            <span>Should Know Her</span>
+        </h2>
+        <p class="creator-intro-lead">
+            We found her.
+            <strong>And we think you should too.</strong>
+        </p>
+        <div class="creator-intro-copy">
+            <p>
+                There is a lot of mom content out there.
+                We're not interested in adding more noise.
+            </p>
+            <p>
+                We're looking for the creators who make us stop,
+                smile, save something, learn something or think,
+                <em>"Okay, I needed this."</em>
+            </p>
+            <p>
+                Creator Name is one of those creators.
+                Her content feels genuine, useful and refreshingly
+                easy to connect with — which is exactly why we
+                wanted to put her in front of more moms.
+            </p>
+        </div>
+    </div>
+</section>
+<!-- =========================================================
+     WHY WE CHOSE HER
+========================================================= -->
+<section class="creator-test-section">
+    <div class="creator-test-header">
+        <span class="creator-section-label">
+            THE MOMYOUNEEDTHIS TEST
+        </span>
+        <h2>
+            So...
+            <span>Why Her?</span>
         </h2>
         <p>
-          [Write a personalized introduction about this creator.
-          Explain what immediately stood out when you discovered her.]
+            Because when we discover a mom creator we genuinely
+            love, we want other moms to find her too.
         </p>
-        <p>
-          [Talk specifically about the type of content she creates,
-          the perspective she brings, or the way she makes motherhood
-          easier, funnier, more honest or more relatable.]
-        </p>
-        <p>
-          We aren't looking for the biggest account on the internet.
-          We're looking for the accounts that make us think:
-          <strong>
-            more moms should know about this woman.
-          </strong>
-        </p>
-      </article>
     </div>
-  </section>
-  <!-- ========================================================
-       WHY WE CHOSE HER
-       ========================================================= -->
-  <section class="creator-why-section">
-    <div class="creator-wrap">
-      <div class="creator-section-heading">
-        <div class="creator-section-label">
-          The MomYouNeedThis Test
-        </div>
+    <div class="creator-test-grid">
+        <article class="creator-test-card creator-test-card-pink">
+            <div class="creator-test-icon">
+                💗
+            </div>
+            <h3>
+                She gets motherhood.
+            </h3>
+            <p>
+                Her content feels like it comes from someone
+                who actually understands the beautiful,
+                messy and completely unpredictable reality
+                of mom life.
+            </p>
+        </article>
+        <article class="creator-test-card creator-test-card-cream">
+            <div class="creator-test-icon">
+                ✨
+            </div>
+            <h3>
+                She gives you something.
+            </h3>
+            <p>
+                Whether it's an idea, a laugh, a little
+                inspiration or something you want to save
+                for later, her content leaves you with
+                something worth keeping.
+            </p>
+        </article>
+        <article class="creator-test-card creator-test-card-blue">
+            <div class="creator-test-icon">
+                🌷
+            </div>
+            <h3>
+                We'd send her to a friend.
+            </h3>
+            <p>
+                And honestly, that's our favourite test.
+                If another mom asked us who she should
+                follow, we'd tell her about Creator Name.
+            </p>
+        </article>
+    </div>
+</section>
+<!-- =========================================================
+     FEATURE QUOTE
+========================================================= -->
+<section class="creator-quote-section">
+    <div class="creator-quote-decoration">
+        ✦
+    </div>
+    <blockquote>
+        “The kind of account you discover and immediately
+        wonder how you hadn't found her sooner.”
+    </blockquote>
+    <span>
+        MomYouNeedThis 🌷
+    </span>
+</section>
+<!-- =========================================================
+     WHAT YOU'LL FIND
+========================================================= -->
+<section class="creator-feed-section">
+    <div class="creator-feed-header">
+        <span class="creator-section-label">
+            INSIDE HER FEED
+        </span>
         <h2>
-          So… why her?
-        </h2>
-      </div>
-      <div class="creator-why-grid">
-        <article class="creator-why-card">
-          <div class="creator-card-icon">
-            💗
-          </div>
-          <h3>
-            She gets motherhood.
-          </h3>
-          <p>
-            [Explain the specific way this creator captures
-            real motherhood or makes moms feel seen.]
-          </p>
-        </article>
-        <article class="creator-why-card">
-          <div class="creator-card-icon">
-            ✨
-          </div>
-          <h3>
-            She gives you something.
-          </h3>
-          <p>
-            [Explain what moms actually get from following her:
-            ideas, laughs, inspiration, solutions, discoveries, etc.]
-          </p>
-        </article>
-        <article class="creator-why-card">
-          <div class="creator-card-icon">
-            🌷
-          </div>
-          <h3>
-            We'd send her to a friend.
-          </h3>
-          <p>
-            [Explain why her account has that “you need to follow
-            her” quality that makes a recommendation feel natural.]
-          </p>
-        </article>
-      </div>
-    </div>
-  </section>
-  <!-- ========================================================
-       QUOTE
-       ========================================================= -->
-  <section class="creator-quote-section">
-    <div class="creator-wrap">
-      <div class="creator-quote-card">
-        <div class="creator-quote-mark">
-          “
-        </div>
-        <div class="creator-quote-text">
-          The kind of account you discover and immediately wonder
-          how you hadn't found her sooner.
-        </div>
-        <div class="creator-quote-credit">
-          MomYouNeedThis 🌷
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- ========================================================
-       WHAT YOU'LL FIND
-       ========================================================= -->
-  <section class="creator-content-section">
-    <div class="creator-wrap">
-      <div class="creator-content-heading">
-        <div>
-          <div class="creator-section-label">
-            Inside Her Feed
-          </div>
-          <h2>
-            What you'll find.
-          </h2>
-        </div>
-        <p>
-          A little preview of why we think you'll want this account
-          somewhere in your mom-content rotation.
-        </p>
-      </div>
-      <div class="creator-content-list">
-        <article class="creator-content-item">
-          <div class="creator-content-number">
-            01
-          </div>
-          <div>
-            <h3>
-              [Creator-specific content]
-            </h3>
-            <p>
-              [Describe one of the things she consistently shares
-              that moms will appreciate.]
-            </p>
-          </div>
-        </article>
-        <article class="creator-content-item">
-          <div class="creator-content-number">
-            02
-          </div>
-          <div>
-            <h3>
-              [Creator-specific content]
-            </h3>
-            <p>
-              [Describe another recognizable part of her content.]
-            </p>
-          </div>
-        </article>
-        <article class="creator-content-item">
-          <div class="creator-content-number">
-            03
-          </div>
-          <div>
-            <h3>
-              [Creator-specific content]
-            </h3>
-            <p>
-              [Describe another reason moms would enjoy following her.]
-            </p>
-          </div>
-        </article>
-        <article class="creator-content-item">
-          <div class="creator-content-number">
-            04
-          </div>
-          <div>
-            <h3>
-              [Creator-specific content]
-            </h3>
-            <p>
-              [Add one final creator-specific reason to follow.]
-            </p>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-  <!-- ========================================================
-       FOLLOW HER
-       ========================================================= -->
-  <section class="creator-follow-section">
-    <div class="creator-wrap">
-      <div class="creator-follow-card">
-        <div class="creator-follow-kicker">
-          Now You Know Her
-        </div>
-        <h2>
-          Go meet [Creator Name].
+            What You'll
+            <span>Find.</span>
         </h2>
         <p>
-          If her kind of mom content sounds like your kind of thing,
-          we think she's worth a follow.
+            A little preview of why we think Creator Name
+            belongs on your radar.
         </p>
-        <!-- Replace with creator's actual Instagram URL -->
+    </div>
+    <div class="creator-feed-list">
+        <div class="creator-feed-item">
+            <span class="creator-feed-number">
+                01
+            </span>
+            <div>
+                <h3>
+                    Toddler Activities &amp; Ideas
+                </h3>
+                <p>
+                    Simple ideas that make keeping little ones
+                    entertained, learning and exploring feel
+                    a little easier.
+                </p>
+            </div>
+        </div>
+        <div class="creator-feed-item">
+            <span class="creator-feed-number">
+                02
+            </span>
+            <div>
+                <h3>
+                    Real Mom-Life Moments
+                </h3>
+                <p>
+                    The relatable moments that make you laugh,
+                    nod your head and realize you're definitely
+                    not the only one.
+                </p>
+            </div>
+        </div>
+        <div class="creator-feed-item">
+            <span class="creator-feed-number">
+                03
+            </span>
+            <div>
+                <h3>
+                    Ideas Worth Saving
+                </h3>
+                <p>
+                    The kind of content you see once and
+                    immediately think, "I'm saving that."
+                </p>
+            </div>
+        </div>
+        <div class="creator-feed-item">
+            <span class="creator-feed-number">
+                04
+            </span>
+            <div>
+                <h3>
+                    A Little More Joy
+                </h3>
+                <p>
+                    Because motherhood doesn't always need
+                    another tip. Sometimes it just needs
+                    something that makes you smile.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- =========================================================
+     FOLLOW HER
+========================================================= -->
+<section class="creator-follow-section">
+    <div class="creator-follow-card">
+        <div class="creator-follow-flower">
+            ✿
+        </div>
+        <span class="creator-section-label">
+            NOW YOU KNOW HER
+        </span>
+        <h2>
+            Go Meet
+            <span>Creator Name.</span>
+        </h2>
+        <p>
+            If her kind of mom content sounds like your kind
+            of thing, we think she's worth a follow.
+        </p>
         <a
-          href="https://www.instagram.com/creatorhandle/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="creator-follow-button"
+            href="https://www.instagram.com/creatorhandle/"
+            target="_blank"
+            rel="noopener"
+            class="creator-follow-button"
         >
-          Follow @[creatorhandle] →
+            FOLLOW @CREATORHANDLE →
         </a>
-      </div>
     </div>
-  </section>
-  <!-- ========================================================
-       FIRST 20
-       ========================================================= -->
-  <section class="creator-first20-section">
-    <div class="creator-wrap">
-      <div class="creator-first20">
+</section>
+<!-- =========================================================
+     FIRST 20
+========================================================= -->
+<section class="creator-first20-section">
+    <div class="creator-first20-card">
         <div class="creator-first20-icon">
-          🌷
+            🌷
         </div>
-        <div class="creator-first20-label">
-          MomYouNeedThis
-        </div>
+        <span class="creator-first20-small">
+            MOMYOUNEEDTHIS
+        </span>
         <h2>
-          One of our first 20.
+            One of Our
+            <span>First 20.</span>
         </h2>
         <p>
-          [Creator Name] is one of the first 20 creators we chose
-          to feature as we launched our Mom Creators Worth Following
-          circle — a collection of mom creators we genuinely think
-          more moms should know about.
+            Creator Name is one of the first 20 creators
+            featured in our <strong>Creators Worth Following</strong>
+            circle as we launch this new part of the
+            MomYouNeedThis universe.
         </p>
-      </div>
     </div>
-  </section>
-  <!-- ========================================================
-       NOMINATE
-       ========================================================= -->
-  <section class="creator-nominate-section">
-    <div class="creator-wrap">
-      <div class="creator-nominate">
+</section>
+<!-- =========================================================
+     WHILE YOU'RE HERE
+========================================================= -->
+<section class="creator-explore-section">
+    <div class="creator-explore-header">
+        <span class="creator-section-label">
+            ✨ WHILE YOU'RE HERE
+        </span>
+        <h2>
+            A Few More Things
+            <span>For Mom Life.</span>
+        </h2>
+        <p>
+            Since you're here, take a little look around.
+            Everything below is made to be genuinely useful,
+            helpful or simply a little more fun.
+        </p>
+    </div>
+    <div class="creator-explore-grid">
+        <!-- FREE RESOURCES -->
+        <a
+            href="free-mom-resources.html"
+            class="creator-explore-card creator-explore-card-pink"
+        >
+            <div class="creator-explore-icon">
+                🎁
+            </div>
+            <span class="creator-explore-label">
+                100% FREE
+            </span>
+            <h3>
+                Free Mom Resources
+            </h3>
+            <p>
+                Printable activities, charts, learning pages
+                and little things made for moms and kids.
+            </p>
+            <span class="creator-explore-link">
+                Explore the Free Library →
+            </span>
+        </a>
+        <!-- MOM TOOLS -->
+        <a
+            href="baby-tracker.html"
+            class="creator-explore-card creator-explore-card-blue"
+        >
+            <div class="creator-explore-icon">
+                🧰
+            </div>
+            <span class="creator-explore-label">
+                MOM UNIVERSE TOOLKIT
+            </span>
+            <h3>
+                Free Mom Tools
+            </h3>
+            <p>
+                Little tools designed to take some of the
+                guesswork and mental load out of everyday
+                mom life.
+            </p>
+            <span class="creator-explore-link">
+                Explore the Tools →
+            </span>
+        </a>
+        <!-- MOM LAB -->
+        <a
+            href="mom-lab.html"
+            class="creator-explore-card creator-explore-card-cream"
+        >
+            <div class="creator-explore-icon">
+                🧪
+            </div>
+            <span class="creator-explore-label">
+                MOM UNIVERSE
+            </span>
+            <h3>
+                Mom Lab
+            </h3>
+            <p>
+                Serious investigations into the completely
+                ridiculous tests that mom life throws at us.
+            </p>
+            <span class="creator-explore-link">
+                Enter the Mom Lab →
+            </span>
+        </a>
+    </div>
+</section>
+<!-- =========================================================
+     NOMINATE ANOTHER CREATOR
+========================================================= -->
+<section class="creator-nominate-section">
+    <div class="creator-nominate-content">
+        <span class="creator-nominate-icon">
+            🌷
+        </span>
         <div>
-          <h3>
-            Know another mom we should feature?
-          </h3>
-          <p>
-            Tell us about a creator who deserves to be discovered.
-          </p>
+            <span class="creator-nominate-label">
+                KNOW SOMEONE?
+            </span>
+            <h2>
+                Know another mom
+                <span>we should feature?</span>
+            </h2>
+            <p>
+                Tell us about a creator you think more moms
+                should know about.
+            </p>
         </div>
         <a
-          href="mom-creators-submit.html"
-          class="creator-nominate-button"
+            href="contact.html"
+            class="creator-nominate-button"
         >
-          Nominate Her →
+            NOMINATE HER →
         </a>
-      </div>
     </div>
-  </section>
-  <!-- ========================================================
-       FOOTER
-       ========================================================= -->
-  <footer class="creator-footer">
-    <div class="creator-wrap">
-      <div class="creator-footer-inner">
-        <div class="creator-footer-brand">
-          MomYouNeedThis 🌷
-        </div>
-        <div class="creator-footer-text">
-          Mom Creators Worth Following
-        </div>
-      </div>
+</section>
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+<footer>
+    <div class="footer-logo">
+        <a href="index.html">
+            <img
+                src="assets/logo.svg"
+                alt="MomYouNeedThis"
+            >
+        </a>
     </div>
-  </footer>
-</main>
+    <h3>
+        MomYouNeedThis
+    </h3>
+    <p>
+        Mom finds, smart tools, free resources, real answers
+        and a little chaos from the Mom Universe.
+    </p>
+    <div class="footer-links">
+        <a href="amazon-favorites.html">
+            Mom Battles
+        </a>
+        <a href="mom-lab.html">
+            Mom Lab
+        </a>
+        <a href="free-mom-resources.html">
+            Free Resources
+        </a>
+        <a href="about.html">
+            About
+        </a>
+        <a href="privacy-policy.html">
+            Privacy Policy
+        </a>
+        <a href="terms-of-use.html">
+            Terms of Use
+        </a>
+        <a href="affiliate-disclosure.html">
+            Affiliate Disclosure
+        </a>
+        <a href="disclaimer.html">
+            Disclaimer
+        </a>
+        <a href="contact.html">
+            Contact
+        </a>
+    </div>
+    <div class="footer-bottom">
+        <p>
+            © 2026 MomYouNeedThis. All rights reserved.
+        </p>
+        <p>
+            As an Amazon Associate, I earn from qualifying purchases.
+        </p>
+    </div>
+</footer>
+</div>
+<script src="script.js"></script>
 </body>
 </html>
+
+This keeps the creator as the star of the page, while the new section quietly introduces the rest of MomYouNeedThis. I especially like the “A Few More Things For Mom Life” wording because it feels like an invitation to explore rather than a sales funnel.
