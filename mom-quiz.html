@@ -22,6 +22,7 @@
     rel="stylesheet"
 >
 <link rel="stylesheet" href="style.css">
+
 <style>
     /* =====================================================
        MOM UNIVERSE QUIZ
@@ -30,10 +31,12 @@
         padding:20px 0 50px;
         text-align:center;
     }
+
     .quiz-hero{
         max-width:720px;
         margin:0 auto 28px;
     }
+
     .quiz-badge{
         display:inline-flex;
         align-items:center;
@@ -47,6 +50,7 @@
         font-weight:900;
         letter-spacing:.7px;
     }
+
     .quiz-hero h1{
         margin:0;
         color:#332b2b;
@@ -54,10 +58,12 @@
         line-height:1.05;
         font-weight:900;
     }
+
     .quiz-hero h1 span{
         display:block;
         color:#e89aaa;
     }
+
     .quiz-hero p{
         max-width:600px;
         margin:18px auto 0;
@@ -65,12 +71,14 @@
         font-size:17px;
         line-height:1.6;
     }
+
     .quiz-disclaimer{
         margin-top:10px;
         color:#aaa;
         font-size:11px;
         font-weight:700;
     }
+
     /* =====================================================
        QUIZ CONTAINER
     ===================================================== */
@@ -83,12 +91,14 @@
         box-shadow:0 14px 35px rgba(0,0,0,.06);
         border:1px solid #f1e5e8;
     }
+
     /* =====================================================
        PROGRESS
     ===================================================== */
     .quiz-progress-wrap{
         margin-bottom:28px;
     }
+
     .quiz-progress-top{
         display:flex;
         justify-content:space-between;
@@ -99,6 +109,7 @@
         font-weight:900;
         letter-spacing:.5px;
     }
+
     .quiz-progress-bar{
         width:100%;
         height:8px;
@@ -106,6 +117,7 @@
         background:#f6edf0;
         border-radius:999px;
     }
+
     .quiz-progress-fill{
         width:12.5%;
         height:100%;
@@ -113,12 +125,14 @@
         border-radius:999px;
         transition:width .3s ease;
     }
+
     /* =====================================================
        QUESTION
     ===================================================== */
     .quiz-question{
         animation:quizQuestionIn .35s ease;
     }
+
     .quiz-question-number{
         display:inline-block;
         margin-bottom:12px;
@@ -127,6 +141,7 @@
         font-weight:900;
         letter-spacing:1px;
     }
+
     .quiz-question h2{
         max-width:600px;
         margin:0 auto 25px;
@@ -135,6 +150,7 @@
         line-height:1.2;
         font-weight:900;
     }
+
     /* =====================================================
        ANSWERS
     ===================================================== */
@@ -145,6 +161,7 @@
         max-width:650px;
         margin:0 auto;
     }
+
     .quiz-answer{
         width:100%;
         min-height:82px;
@@ -168,12 +185,14 @@
             border-color .2s ease,
             box-shadow .2s ease;
     }
+
     .quiz-answer:hover{
         transform:translateY(-3px);
         background:#fff;
         border-color:#e89aaa;
         box-shadow:0 8px 20px rgba(0,0,0,.07);
     }
+
     .quiz-answer-icon{
         flex:0 0 43px;
         width:43px;
@@ -185,9 +204,11 @@
         border-radius:14px;
         font-size:21px;
     }
+
     .quiz-answer-text{
         flex:1;
     }
+
     /* =====================================================
        RESULT
     ===================================================== */
@@ -195,9 +216,11 @@
         display:none;
         animation:quizQuestionIn .45s ease;
     }
+
     .quiz-result.show{
         display:block;
     }
+
     .quiz-result-badge{
         display:inline-flex;
         padding:8px 15px;
@@ -208,6 +231,7 @@
         font-weight:900;
         letter-spacing:.8px;
     }
+
     .quiz-result-icon{
         width:105px;
         height:105px;
@@ -221,6 +245,7 @@
         font-size:55px;
         box-shadow:0 10px 25px rgba(0,0,0,.06);
     }
+
     .quiz-result h2{
         margin:0;
         color:#1d4f91;
@@ -228,6 +253,7 @@
         line-height:1.05;
         font-weight:900;
     }
+
     .quiz-result-subtitle{
         max-width:560px;
         margin:12px auto 22px;
@@ -235,6 +261,7 @@
         font-size:16px;
         line-height:1.55;
     }
+
     /* =====================================================
        RESULT STATS
     ===================================================== */
@@ -245,18 +272,21 @@
         grid-template-columns:repeat(3,1fr);
         gap:10px;
     }
+
     .quiz-stat{
         padding:15px 10px;
         background:#f8f9fc;
         border:1px solid #edf0f5;
         border-radius:17px;
     }
+
     .quiz-stat strong{
         display:block;
         color:#1d4f91;
         font-size:20px;
         font-weight:900;
     }
+
     .quiz-stat span{
         display:block;
         margin-top:3px;
@@ -265,6 +295,7 @@
         font-weight:900;
         line-height:1.3;
     }
+
     /* =====================================================
        SPECIAL ABILITY
     ===================================================== */
@@ -276,6 +307,7 @@
         border:1px solid #f5e3a8;
         border-radius:20px;
     }
+
     .quiz-special-label{
         display:block;
         margin-bottom:5px;
@@ -284,11 +316,13 @@
         font-weight:900;
         letter-spacing:.8px;
     }
+
     .quiz-special strong{
         color:#6d5720;
         font-size:16px;
         line-height:1.4;
     }
+
     /* =====================================================
        THREAT LEVEL
     ===================================================== */
@@ -300,12 +334,14 @@
         border:1px solid #f3d9e2;
         border-radius:18px;
     }
+
     .quiz-threat-label{
         color:#999;
         font-size:9px;
         font-weight:900;
         letter-spacing:.9px;
     }
+
     .quiz-threat strong{
         display:block;
         margin-top:4px;
@@ -313,6 +349,7 @@
         font-size:15px;
         font-weight:900;
     }
+
     /* =====================================================
        SHARE AREA
     ===================================================== */
@@ -322,23 +359,27 @@
         padding-top:22px;
         border-top:1px solid #f0e7e9;
     }
+
     .quiz-share-title{
         margin-bottom:5px;
         color:#333;
         font-size:18px;
         font-weight:900;
     }
+
     .quiz-share-text{
         margin-bottom:15px;
         color:#888;
         font-size:12px;
         line-height:1.5;
     }
+
     .quiz-share-buttons{
         display:grid;
         grid-template-columns:1fr 1fr;
         gap:10px;
     }
+
     .quiz-share-button{
         display:flex;
         align-items:center;
@@ -354,34 +395,41 @@
         cursor:pointer;
         transition:.2s ease;
     }
+
     .quiz-share-button:hover{
         transform:translateY(-2px);
     }
+
     .quiz-share-primary{
         background:#e89aaa;
         color:#fff;
     }
+
     .quiz-share-secondary{
         background:#1d4f91;
         color:#fff;
     }
+
     .quiz-share-light{
         background:#fff8fb;
         color:#d05a82;
         border:1px solid #f1dfe5;
     }
+
     .quiz-share-full{
         grid-column:1 / -1;
     }
+
     /* =====================================================
        MOM UNIVERSE NEXT STEP
     ===================================================== */
     .quiz-next-section{
         max-width:650px;
-        margin:32px auto 0;
-        padding:28px 20px 20px;
+        margin:34px auto 0;
+        padding:30px 10px 10px;
         border-top:1px solid #f0e7e9;
     }
+
     .quiz-next-badge{
         display:inline-flex;
         align-items:center;
@@ -394,26 +442,38 @@
         font-weight:900;
         letter-spacing:.8px;
     }
+
     .quiz-next-section h3{
-        margin:13px 0 5px;
+        margin:13px 0 6px;
         color:#332b2b;
-        font-size:clamp(23px,4vw,30px);
-        line-height:1.15;
+        font-size:clamp(25px,4vw,32px);
+        line-height:1.12;
         font-weight:900;
     }
+
     .quiz-next-intro{
-        max-width:500px;
-        margin:0 auto 20px;
-        color:#888;
-        font-size:12px;
+        max-width:520px;
+        margin:0 auto 22px;
+        color:#777;
+        font-size:13px;
         line-height:1.55;
     }
+
+    /* =====================================================
+       PERSONALIZED FEATURED DESTINATION
+    ===================================================== */
     .quiz-next-featured{
+        position:relative;
         display:block;
-        padding:22px 20px;
-        background:#fff8fb;
+        overflow:hidden;
+        padding:25px 20px 22px;
+        background:linear-gradient(
+            135deg,
+            #fff8fb 0%,
+            #ffffff 100%
+        );
         border:1px solid #f1dfe5;
-        border-radius:22px;
+        border-radius:24px;
         color:#332b2b;
         text-decoration:none;
         transition:
@@ -421,62 +481,104 @@
             box-shadow .2s ease,
             border-color .2s ease;
     }
-    .quiz-next-featured:hover{
-        transform:translateY(-4px);
-        border-color:#e89aaa;
-        box-shadow:0 10px 25px rgba(0,0,0,.07);
+
+    .quiz-next-featured::after{
+        content:'';
+        position:absolute;
+        top:-45px;
+        right:-45px;
+        width:130px;
+        height:130px;
+        background:#fff0f5;
+        border-radius:50%;
+        opacity:.8;
     }
+
+    .quiz-next-featured:hover{
+        transform:translateY(-5px);
+        border-color:#e89aaa;
+        box-shadow:0 14px 30px rgba(0,0,0,.09);
+    }
+
     .quiz-next-featured-icon{
-        width:55px;
-        height:55px;
-        margin:0 auto 10px;
+        position:relative;
+        z-index:1;
+        width:62px;
+        height:62px;
+        margin:0 auto 11px;
         display:flex;
         align-items:center;
         justify-content:center;
         background:#fff;
-        border-radius:17px;
-        font-size:28px;
+        border:1px solid #f3e5e8;
+        border-radius:19px;
+        font-size:31px;
+        box-shadow:0 6px 15px rgba(0,0,0,.05);
     }
+
     .quiz-next-featured-label{
         display:block;
         margin-bottom:5px;
         color:#d05a82;
         font-size:9px;
         font-weight:900;
-        letter-spacing:.8px;
+        letter-spacing:.9px;
     }
+
     .quiz-next-featured-title{
         display:block;
         color:#1d4f91;
-        font-size:20px;
+        font-size:22px;
+        line-height:1.15;
         font-weight:900;
     }
+
     .quiz-next-featured-text{
         display:block;
-        max-width:480px;
-        margin:6px auto 12px;
+        max-width:500px;
+        margin:7px auto 14px;
         color:#777;
         font-size:12px;
         line-height:1.5;
     }
+
     .quiz-next-featured-cta{
-        display:inline-block;
-        color:#d05a82;
-        font-size:11px;
+        display:inline-flex;
+        align-items:center;
+        justify-content:center;
+        min-height:38px;
+        padding:9px 15px;
+        background:#e89aaa;
+        border-radius:12px;
+        color:#fff;
+        font-size:10px;
         font-weight:900;
+        letter-spacing:.2px;
     }
+
+    /* =====================================================
+       EXPLORE OTHER PARTS OF THE UNIVERSE
+    ===================================================== */
+    .quiz-explore-heading{
+        margin:27px 0 11px;
+        color:#999;
+        font-size:9px;
+        font-weight:900;
+        letter-spacing:1px;
+    }
+
     .quiz-next-grid{
         display:grid;
         grid-template-columns:1fr 1fr;
         gap:10px;
-        margin-top:10px;
     }
+
     .quiz-next-card{
         display:block;
-        padding:17px 13px;
+        padding:18px 14px;
         background:#fff;
         border:1px solid #edf0f5;
-        border-radius:18px;
+        border-radius:19px;
         color:#332b2b;
         text-decoration:none;
         transition:
@@ -484,29 +586,34 @@
             box-shadow .2s ease,
             border-color .2s ease;
     }
+
     .quiz-next-card:hover{
         transform:translateY(-3px);
         border-color:#e89aaa;
         box-shadow:0 8px 20px rgba(0,0,0,.06);
     }
+
     .quiz-next-card-icon{
         display:block;
         margin-bottom:7px;
-        font-size:25px;
+        font-size:27px;
     }
+
     .quiz-next-card-title{
         display:block;
         color:#1d4f91;
         font-size:13px;
         font-weight:900;
     }
+
     .quiz-next-card-text{
         display:block;
         margin-top:4px;
         color:#999;
         font-size:10px;
-        line-height:1.4;
+        line-height:1.45;
     }
+
     /* =====================================================
        RESULT NOTE
     ===================================================== */
@@ -516,6 +623,7 @@
         font-size:10px;
         line-height:1.5;
     }
+
     /* =====================================================
        RETAKE
     ===================================================== */
@@ -530,73 +638,92 @@
         border:none;
         cursor:pointer;
     }
+
     .quiz-retake:hover{
         color:#d05a82;
         transform:none;
         box-shadow:none;
     }
+
     /* =====================================================
        MOBILE
     ===================================================== */
     @media(max-width:600px){
+
         .mom-quiz-page{
             padding-top:10px;
         }
+
         .quiz-hero h1{
             font-size:39px;
         }
+
         .quiz-hero p{
             font-size:15px;
         }
+
         .quiz-container{
             padding:22px 16px;
             border-radius:25px;
         }
+
         .quiz-question h2{
             font-size:25px;
             margin-bottom:20px;
         }
+
         .quiz-answers{
             grid-template-columns:1fr;
             gap:9px;
         }
+
         .quiz-answer{
             min-height:70px;
             padding:13px;
             font-size:13px;
         }
+
         .quiz-answer-icon{
             flex-basis:39px;
             width:39px;
             height:39px;
             font-size:19px;
         }
+
         .quiz-stats{
             gap:7px;
         }
+
         .quiz-stat{
             padding:13px 6px;
         }
+
         .quiz-stat strong{
             font-size:18px;
         }
+
         .quiz-stat span{
             font-size:8px;
         }
+
         .quiz-share-buttons{
             grid-template-columns:1fr;
         }
+
         .quiz-share-full{
             grid-column:auto;
         }
+
         .quiz-next-section{
-            padding-left:5px;
-            padding-right:5px;
+            padding-left:0;
+            padding-right:0;
         }
+
         .quiz-next-grid{
             grid-template-columns:1fr;
         }
     }
+
     /* =====================================================
        ANIMATION
     ===================================================== */
@@ -612,92 +739,132 @@
     }
 </style>
 </head>
+
 <body>
+
 <div class="page">
+
 <main class="mom-quiz-page">
+
     <section class="quiz-hero">
+
         <img
             src="assets/logo.svg"
             alt="MomYouNeedThis"
             class="logo"
         >
+
         <div class="quiz-badge">
             🌎 MOM UNIVERSE CLASSIFICATION SYSTEM
         </div>
+
         <h1>
             What Kind of Mom
             <span>Are You?</span>
         </h1>
+
         <p>
             Answer 8 completely scientific questions and discover
             your official Mom Universe classification.
         </p>
+
         <div class="quiz-disclaimer">
             🔬 The science is questionable. The results are suspiciously accurate.
         </div>
+
     </section>
+
     <section class="quiz-container" id="quizContainer">
+
         <div class="quiz-progress-wrap" id="progressWrap">
+
             <div class="quiz-progress-top">
+
                 <span id="progressText">
                     QUESTION 1 OF 8
                 </span>
+
                 <span id="progressPercent">
                     13%
                 </span>
+
             </div>
+
             <div class="quiz-progress-bar">
+
                 <div
                     class="quiz-progress-fill"
                     id="progressFill"
                 ></div>
+
             </div>
+
         </div>
+
         <div id="questionArea"></div>
+
         <div
             class="quiz-result"
             id="resultArea"
         >
+
             <div class="quiz-result-badge">
                 ✨ OFFICIAL MOM UNIVERSE CLASSIFICATION
             </div>
+
             <div
                 class="quiz-result-icon"
                 id="resultIcon"
             >
                 🧪
             </div>
+
             <h2 id="resultTitle">
                 Chaos Scientist
             </h2>
+
             <p
                 class="quiz-result-subtitle"
                 id="resultSubtitle"
             ></p>
+
             <div
                 class="quiz-stats"
                 id="resultStats"
             ></div>
+
             <div class="quiz-special">
+
                 <span class="quiz-special-label">
                     SPECIAL ABILITY
                 </span>
+
                 <strong id="resultAbility"></strong>
+
             </div>
+
             <div class="quiz-threat">
+
                 <span class="quiz-threat-label">
                     MOM THREAT LEVEL
                 </span>
+
                 <strong id="resultThreat"></strong>
+
             </div>
+
             <div class="quiz-share-box">
+
                 <div class="quiz-share-title">
                     What are YOU?
                 </div>
+
                 <div class="quiz-share-text">
                     Share your classification and send the next mom into the universe.
                 </div>
+
                 <div class="quiz-share-buttons">
+
                     <button
                         type="button"
                         class="quiz-share-button quiz-share-primary"
@@ -705,6 +872,7 @@
                     >
                         📤 SHARE MY RESULT
                     </button>
+
                     <button
                         type="button"
                         class="quiz-share-button quiz-share-secondary"
@@ -712,6 +880,7 @@
                     >
                         🖼️ SAVE RESULT
                     </button>
+
                     <button
                         type="button"
                         class="quiz-share-button quiz-share-light quiz-share-full"
@@ -719,91 +888,162 @@
                     >
                         🔗 COPY QUIZ LINK
                     </button>
+
                 </div>
+
                 <div class="quiz-result-note">
                     Your result card includes the quiz link so another mom can take the test.
                 </div>
+
             </div>
+
             <!-- =================================================
-                 NEW MOM UNIVERSE NEXT STEP
+                 PERSONALIZED MOM UNIVERSE NEXT STEP
             ================================================= -->
+
             <section class="quiz-next-section">
+
                 <div class="quiz-next-badge">
-                    🌎 MOM UNIVERSE TRANSMISSION
+                    🌎 YOUR MOM UNIVERSE HAS SPOKEN
                 </div>
+
                 <h3>
-                    You've Been Classified.
+                    Your next move is obvious.
                 </h3>
+
                 <p
                     class="quiz-next-intro"
                     id="nextIntro"
                 >
-                    But your assignment isn't over...
+                    Your classification unlocked a recommendation specifically for your kind of mom.
                 </p>
+
                 <a
                     href="mom-lab.html"
                     class="quiz-next-featured"
                     id="nextFeatured"
                 >
+
                     <span
                         class="quiz-next-featured-icon"
                         id="nextFeaturedIcon"
                     >
                         🧪
                     </span>
+
                     <span class="quiz-next-featured-label">
-                        YOUR NEXT ASSIGNMENT
+                        CLASSIFICATION-BASED RECOMMENDATION
                     </span>
+
                     <span
                         class="quiz-next-featured-title"
                         id="nextFeaturedTitle"
                     >
                         ENTER MOM LAB
                     </span>
+
                     <span
                         class="quiz-next-featured-text"
                         id="nextFeaturedText"
                     >
                         Ridiculous tests. Suspicious science. Surprisingly useful results.
                     </span>
+
                     <span
                         class="quiz-next-featured-cta"
                         id="nextFeaturedCta"
                     >
-                        🧪 ENTER THE LAB →
+                        🧪 SEE WHAT'S BEEN TESTED →
                     </span>
+
                 </a>
+
+                <div class="quiz-explore-heading">
+                    OR... YOU COULD EXPLORE THE REST OF THE UNIVERSE 👀
+                </div>
+
                 <div class="quiz-next-grid">
-                    <a
-                        href="mom-emergency-broadcast.html"
-                        class="quiz-next-card"
-                    >
-                        <span class="quiz-next-card-icon">
-                            🚨
-                        </span>
-                        <span class="quiz-next-card-title">
-                            MOM EMERGENCY BROADCAST
-                        </span>
-                        <span class="quiz-next-card-text">
-                            Everything is under control. Probably.
-                        </span>
-                    </a>
+
                     <a
                         href="free-mom-resources.html"
                         class="quiz-next-card"
                     >
+
                         <span class="quiz-next-card-icon">
                             🎁
                         </span>
+
                         <span class="quiz-next-card-title">
-                            FREE MOM STUFF
+                            500+ FREE MOM THINGS
                         </span>
+
                         <span class="quiz-next-card-text">
-                            500+ free printables, tools & useful things.
+                            Printables, tools and useful stuff you can actually use.
                         </span>
+
                     </a>
+
+                    <a
+                        href="amazon-favorites.html"
+                        class="quiz-next-card"
+                    >
+
+                        <span class="quiz-next-card-icon">
+                            ⚔️
+                        </span>
+
+                        <span class="quiz-next-card-title">
+                            MOM BATTLES
+                        </span>
+
+                        <span class="quiz-next-card-text">
+                            Two things enter. Moms decide what wins.
+                        </span>
+
+                    </a>
+
+                    <a
+                        href="mom-blog.html"
+                        class="quiz-next-card"
+                    >
+
+                        <span class="quiz-next-card-icon">
+                            💬
+                        </span>
+
+                        <span class="quiz-next-card-title">
+                            MOM ANSWERS
+                        </span>
+
+                        <span class="quiz-next-card-text">
+                            Need an answer? Find the mom-approved version.
+                        </span>
+
+                    </a>
+
+                    <a
+                        href="free-potty-training-charts.html"
+                        class="quiz-next-card"
+                    >
+
+                        <span class="quiz-next-card-icon">
+                            🚽
+                        </span>
+
+                        <span class="quiz-next-card-title">
+                            POTTY TRAINING
+                        </span>
+
+                        <span class="quiz-next-card-text">
+                            Free charts and tools to make potty training less painful.
+                        </span>
+
+                    </a>
+
                 </div>
+
             </section>
+
             <button
                 type="button"
                 class="quiz-retake"
@@ -811,588 +1051,1111 @@
             >
                 ↻ TAKE THE QUIZ AGAIN
             </button>
+
         </div>
+
     </section>
+
 </main>
+
 <footer>
+
     <div class="footer-logo">
+
         <img
             src="assets/logo.svg"
             alt="MomYouNeedThis"
         >
+
     </div>
+
     <h3>
         MomYouNeedThis
     </h3>
+
     <p>
         Welcome to the Mom Universe.
     </p>
+
     <div class="footer-links">
-        <a href="index.html">Home</a>
+
+        <a href="index.html">
+            Home
+        </a>
+
         <a href="free-mom-resources.html">
             Free Resources
         </a>
+
         <a href="mom-lab.html">
             Mom Lab
         </a>
+
         <a href="amazon-favorites.html">
             Mom Battles
         </a>
+
     </div>
+
     <div class="footer-bottom">
+
         <p>
             © 2026 MomYouNeedThis
         </p>
+
     </div>
+
 </footer>
+
 </div>
+
 <script>
-    const quizUrl = 'https://momyouneedthis.com/mom-quiz.html';
+
+    const quizUrl =
+        'https://momyouneedthis.com/mom-quiz.html';
+
     const questions = [
+
         {
-            question: 'Your toddler is screaming because you gave them the WRONG cup. What do you do?',
+            question:
+                'Your toddler is screaming because you gave them the WRONG cup. What do you do?',
+
             answers: [
+
                 {
-                    icon: '🥤',
-                    text: 'Find the correct cup immediately.',
-                    scores: { diplomat: 3, ceo: 1 }
+                    icon:'🥤',
+                    text:'Find the correct cup immediately.',
+                    scores:{
+                        diplomat:3,
+                        ceo:1
+                    }
                 },
+
                 {
-                    icon: '🧠',
-                    text: 'Ask 14 questions to determine what actually went wrong.',
-                    scores: { detective: 3, scientist: 1 }
+                    icon:'🧠',
+                    text:'Ask 14 questions to determine what actually went wrong.',
+                    scores:{
+                        detective:3,
+                        scientist:1
+                    }
                 },
+
                 {
-                    icon: '🚨',
-                    text: 'Everyone remain calm. We have a situation.',
-                    scores: { commander: 3 }
+                    icon:'🚨',
+                    text:'Everyone remain calm. We have a situation.',
+                    scores:{
+                        commander:3
+                    }
                 },
+
                 {
-                    icon: '🤷‍♀️',
-                    text: 'Honestly? Pick a cup. Any cup.',
-                    scores: { chaos: 3 }
+                    icon:'🤷‍♀️',
+                    text:'Honestly? Pick a cup. Any cup.',
+                    scores:{
+                        chaos:3
+                    }
                 }
+
             ]
         },
+
         {
-            question: 'It is 3:17 AM and your child suddenly needs a very specific stuffed animal.',
-            answers: [
+            question:
+                'It is 3:17 AM and your child suddenly needs a very specific stuffed animal.',
+
+            answers:[
+
                 {
-                    icon: '🔦',
-                    text: 'I locate it in under 30 seconds.',
-                    scores: { detective: 2, commander: 1 }
+                    icon:'🔦',
+                    text:'I locate it in under 30 seconds.',
+                    scores:{
+                        detective:2,
+                        commander:1
+                    }
                 },
+
                 {
-                    icon: '🧸',
-                    text: 'I negotiate a temporary substitute.',
-                    scores: { diplomat: 3 }
+                    icon:'🧸',
+                    text:'I negotiate a temporary substitute.',
+                    scores:{
+                        diplomat:3
+                    }
                 },
+
                 {
-                    icon: '📋',
-                    text: 'I already have an emergency stuffed-animal protocol.',
-                    scores: { ceo: 3 }
+                    icon:'📋',
+                    text:'I already have an emergency stuffed-animal protocol.',
+                    scores:{
+                        ceo:3
+                    }
                 },
+
                 {
-                    icon: '😴',
-                    text: 'If they can find it themselves, Godspeed.',
-                    scores: { chaos: 3 }
+                    icon:'😴',
+                    text:'If they can find it themselves, Godspeed.',
+                    scores:{
+                        chaos:3
+                    }
                 }
+
             ]
         },
+
         {
-            question: 'Your child refuses dinner because the food is touching.',
-            answers: [
+            question:
+                'Your child refuses dinner because the food is touching.',
+
+            answers:[
+
                 {
-                    icon: '🍽️',
-                    text: 'Separate everything. Obviously.',
-                    scores: { diplomat: 3 }
+                    icon:'🍽️',
+                    text:'Separate everything. Obviously.',
+                    scores:{
+                        diplomat:3
+                    }
                 },
+
                 {
-                    icon: '🧪',
-                    text: 'Interesting. I would like to study this phenomenon.',
-                    scores: { scientist: 3 }
+                    icon:'🧪',
+                    text:'Interesting. I would like to study this phenomenon.',
+                    scores:{
+                        scientist:3
+                    }
                 },
+
                 {
-                    icon: '📊',
-                    text: 'I have three backup meals strategically prepared.',
-                    scores: { ceo: 3 }
+                    icon:'📊',
+                    text:'I have three backup meals strategically prepared.',
+                    scores:{
+                        ceo:3
+                    }
                 },
+
                 {
-                    icon: '🍕',
-                    text: 'Cool. Guess we are having crackers.',
-                    scores: { chaos: 3 }
+                    icon:'🍕',
+                    text:'Cool. Guess we are having crackers.',
+                    scores:{
+                        chaos:3
+                    }
                 }
+
             ]
         },
+
         {
-            question: 'You have 12 minutes to leave the house.',
-            answers: [
+            question:
+                'You have 12 minutes to leave the house.',
+
+            answers:[
+
                 {
-                    icon: '⏱️',
-                    text: 'Everyone has already been assigned a task.',
-                    scores: { commander: 3, ceo: 1 }
+                    icon:'⏱️',
+                    text:'Everyone has already been assigned a task.',
+                    scores:{
+                        commander:3,
+                        ceo:1
+                    }
                 },
+
                 {
-                    icon: '👜',
-                    text: 'The diaper bag has enough supplies for a week.',
-                    scores: { ceo: 3 }
+                    icon:'👜',
+                    text:'The diaper bag has enough supplies for a week.',
+                    scores:{
+                        ceo:3
+                    }
                 },
+
                 {
-                    icon: '🏃‍♀️',
-                    text: 'Shoes? Optional. We are leaving.',
-                    scores: { chaos: 3 }
+                    icon:'🏃‍♀️',
+                    text:'Shoes? Optional. We are leaving.',
+                    scores:{
+                        chaos:3
+                    }
                 },
+
                 {
-                    icon: '🍪',
-                    text: 'I can probably bribe everyone out.',
-                    scores: { diplomat: 3 }
+                    icon:'🍪',
+                    text:'I can probably bribe everyone out.',
+                    scores:{
+                        diplomat:3
+                    }
                 }
+
             ]
         },
+
         {
-            question: 'Your child asks “WHY?” for the 47th time.',
-            answers: [
+            question:
+                'Your child asks “WHY?” for the 47th time.',
+
+            answers:[
+
                 {
-                    icon: '🔬',
-                    text: 'I accidentally turn it into a science lesson.',
-                    scores: { scientist: 3 }
+                    icon:'🔬',
+                    text:'I accidentally turn it into a science lesson.',
+                    scores:{
+                        scientist:3
+                    }
                 },
+
                 {
-                    icon: '🧠',
-                    text: 'I answer it. Then the follow-up. Then the follow-up.',
-                    scores: { detective: 3 }
+                    icon:'🧠',
+                    text:'I answer it. Then the follow-up. Then the follow-up.',
+                    scores:{
+                        detective:3
+                    }
                 },
+
                 {
-                    icon: '😇',
-                    text: 'I remain calm because I have evolved.',
-                    scores: { diplomat: 3 }
+                    icon:'😇',
+                    text:'I remain calm because I have evolved.',
+                    scores:{
+                        diplomat:3
+                    }
                 },
+
                 {
-                    icon: '😂',
-                    text: 'I eventually just say “because I said so.”',
-                    scores: { commander: 3 }
+                    icon:'😂',
+                    text:'I eventually just say “because I said so.”',
+                    scores:{
+                        commander:3
+                    }
                 }
+
             ]
         },
+
         {
-            question: 'Your child throws something in public.',
-            answers: [
+            question:
+                'Your child throws something in public.',
+
+            answers:[
+
                 {
-                    icon: '🧘‍♀️',
-                    text: 'Deep breath. Calm response. We got this.',
-                    scores: { diplomat: 3 }
+                    icon:'🧘‍♀️',
+                    text:'Deep breath. Calm response. We got this.',
+                    scores:{
+                        diplomat:3
+                    }
                 },
+
                 {
-                    icon: '🚨',
-                    text: 'I immediately assess the entire environment.',
-                    scores: { commander: 3 }
+                    icon:'🚨',
+                    text:'I immediately assess the entire environment.',
+                    scores:{
+                        commander:3
+                    }
                 },
+
                 {
-                    icon: '👀',
-                    text: 'I need to understand exactly what triggered it.',
-                    scores: { detective: 3 }
+                    icon:'👀',
+                    text:'I need to understand exactly what triggered it.',
+                    scores:{
+                        detective:3
+                    }
                 },
+
                 {
-                    icon: '🤡',
-                    text: 'Well. This is our life now.',
-                    scores: { chaos: 3 }
+                    icon:'🤡',
+                    text:'Well. This is our life now.',
+                    scores:{
+                        chaos:3
+                    }
                 }
+
             ]
         },
+
         {
-            question: 'You finally get 30 minutes alone.',
-            answers: [
+            question:
+                'You finally get 30 minutes alone.',
+
+            answers:[
+
                 {
-                    icon: '🧪',
-                    text: 'I test something I have been curious about.',
-                    scores: { scientist: 3 }
+                    icon:'🧪',
+                    text:'I test something I have been curious about.',
+                    scores:{
+                        scientist:3
+                    }
                 },
+
                 {
-                    icon: '📱',
-                    text: 'I investigate 19 completely unrelated things.',
-                    scores: { detective: 3 }
+                    icon:'📱',
+                    text:'I investigate 19 completely unrelated things.',
+                    scores:{
+                        detective:3
+                    }
                 },
+
                 {
-                    icon: '📋',
-                    text: 'I organize my entire life.',
-                    scores: { ceo: 3 }
+                    icon:'📋',
+                    text:'I organize my entire life.',
+                    scores:{
+                        ceo:3
+                    }
                 },
+
                 {
-                    icon: '🛋️',
-                    text: 'Absolutely nothing. Do not disturb me.',
-                    scores: { chaos: 3 }
+                    icon:'🛋️',
+                    text:'Absolutely nothing. Do not disturb me.',
+                    scores:{
+                        chaos:3
+                    }
                 }
+
             ]
         },
+
         {
-            question: 'Which sentence sounds most like you?',
-            answers: [
+            question:
+                'Which sentence sounds most like you?',
+
+            answers:[
+
                 {
-                    icon: '🤝',
-                    text: '“Let’s find a solution that works for everyone.”',
-                    scores: { diplomat: 4 }
+                    icon:'🤝',
+                    text:'“Let’s find a solution that works for everyone.”',
+                    scores:{
+                        diplomat:4
+                    }
                 },
+
                 {
-                    icon: '🧪',
-                    text: '“I have an experiment.”',
-                    scores: { scientist: 4 }
+                    icon:'🧪',
+                    text:'“I have an experiment.”',
+                    scores:{
+                        scientist:4
+                    }
                 },
+
                 {
-                    icon: '🚨',
-                    text: '“Okay everyone. Here is the plan.”',
-                    scores: { commander: 4 }
+                    icon:'🚨',
+                    text:'“Okay everyone. Here is the plan.”',
+                    scores:{
+                        commander:4
+                    }
                 },
+
                 {
-                    icon: '📋',
-                    text: '“I already thought three steps ahead.”',
-                    scores: { ceo: 4 }
+                    icon:'📋',
+                    text:'“I already thought three steps ahead.”',
+                    scores:{
+                        ceo:4
+                    }
                 }
+
             ]
         }
+
     ];
+
     const results = {
-        diplomat: {
-            icon: '🧸',
-            title: 'Snack Negotiator',
-            subtitle: 'You could probably negotiate peace between two toddlers fighting over the same banana.',
-            ability: 'Turning a full-blown toddler crisis into a mutually acceptable snack agreement.',
-            threat: 'HIGH — especially when snacks are involved.',
-            stats: [
-                ['Negotiation', '98%'],
-                ['Snack Diplomacy', '96%'],
-                ['Saying “Please Stop”', '∞%']
+
+        diplomat:{
+            icon:'🧸',
+            title:'Snack Negotiator',
+            subtitle:
+                'You could probably negotiate peace between two toddlers fighting over the same banana.',
+            ability:
+                'Turning a full-blown toddler crisis into a mutually acceptable snack agreement.',
+            threat:
+                'HIGH — especially when snacks are involved.',
+            stats:[
+                ['Negotiation','98%'],
+                ['Snack Diplomacy','96%'],
+                ['Saying “Please Stop”','∞%']
             ]
         },
-        scientist: {
-            icon: '🧪',
-            title: 'Chaos Scientist',
-            subtitle: 'You do not simply survive motherhood. You conduct experiments and collect highly questionable data.',
-            ability: 'Turning everyday parenting chaos into a completely unnecessary scientific investigation.',
-            threat: 'EXTREME — you have questions and a clipboard.',
-            stats: [
-                ['Curiosity', '99%'],
-                ['Experimentation', '97%'],
-                ['Normal Behavior', '12%']
+
+        scientist:{
+            icon:'🧪',
+            title:'Chaos Scientist',
+            subtitle:
+                'You do not simply survive motherhood. You conduct experiments and collect highly questionable data.',
+            ability:
+                'Turning everyday parenting chaos into a completely unnecessary scientific investigation.',
+            threat:
+                'EXTREME — you have questions and a clipboard.',
+            stats:[
+                ['Curiosity','99%'],
+                ['Experimentation','97%'],
+                ['Normal Behavior','12%']
             ]
         },
-        commander: {
-            icon: '🚨',
-            title: 'Chaos Commander',
-            subtitle: 'When motherhood goes sideways, everyone knows exactly who is in charge.',
-            ability: 'Taking control of a five-person emergency while holding a toddler and a half-eaten granola bar.',
-            threat: 'CRITICAL — you have activated Mom Mode.',
-            stats: [
-                ['Crisis Control', '99%'],
-                ['Emergency Mode', '100%'],
-                ['Patience Before Coffee', '4%']
+
+        commander:{
+            icon:'🚨',
+            title:'Chaos Commander',
+            subtitle:
+                'When motherhood goes sideways, everyone knows exactly who is in charge.',
+            ability:
+                'Taking control of a five-person emergency while holding a toddler and a half-eaten granola bar.',
+            threat:
+                'CRITICAL — you have activated Mom Mode.',
+            stats:[
+                ['Crisis Control','99%'],
+                ['Emergency Mode','100%'],
+                ['Patience Before Coffee','4%']
             ]
         },
-        ceo: {
-            icon: '💼',
-            title: 'Mom CEO',
-            subtitle: 'You have systems, backup systems, snacks, schedules and absolutely no idea how you got here.',
-            ability: 'Managing a household operation with the organizational complexity of a small corporation.',
-            threat: 'VERY HIGH — your diaper bag has inventory management.',
-            stats: [
-                ['Organization', '99%'],
-                ['Preparedness', '100%'],
-                ['Actual Free Time', '3%']
+
+        ceo:{
+            icon:'💼',
+            title:'Mom CEO',
+            subtitle:
+                'You have systems, backup systems, snacks, schedules and absolutely no idea how you got here.',
+            ability:
+                'Managing a household operation with the organizational complexity of a small corporation.',
+            threat:
+                'VERY HIGH — your diaper bag has inventory management.',
+            stats:[
+                ['Organization','99%'],
+                ['Preparedness','100%'],
+                ['Actual Free Time','3%']
             ]
         },
-        detective: {
-            icon: '🔎',
-            title: 'Toddler Detective',
-            subtitle: 'You need to know WHY. What happened. What changed. And who moved the blue cup.',
-            ability: 'Reconstructing an entire toddler incident from three crumbs and one suspicious look.',
-            threat: 'HIGH — nothing escapes your investigation.',
-            stats: [
-                ['Investigation', '99%'],
-                ['Questioning', '97%'],
-                ['Unsolved Mysteries', '∞']
+
+        detective:{
+            icon:'🔎',
+            title:'Toddler Detective',
+            subtitle:
+                'You need to know WHY. What happened. What changed. And who moved the blue cup.',
+            ability:
+                'Reconstructing an entire toddler incident from three crumbs and one suspicious look.',
+            threat:
+                'HIGH — nothing escapes your investigation.',
+            stats:[
+                ['Investigation','99%'],
+                ['Questioning','97%'],
+                ['Unsolved Mysteries','∞']
             ]
         },
-        chaos: {
-            icon: '🌪️',
-            title: 'Chaos Survivor',
-            subtitle: 'You have accepted that plans are fictional and somehow you are still getting everyone home.',
-            ability: 'Functioning remarkably well despite absolutely nothing going according to plan.',
-            threat: 'UNKNOWN — even you do not know what happens next.',
-            stats: [
-                ['Adaptability', '100%'],
-                ['Chaos Tolerance', '99%'],
-                ['Following The Plan', '7%']
+
+        chaos:{
+            icon:'🌪️',
+            title:'Chaos Survivor',
+            subtitle:
+                'You have accepted that plans are fictional and somehow you are still getting everyone home.',
+            ability:
+                'Functioning remarkably well despite absolutely nothing going according to plan.',
+            threat:
+                'UNKNOWN — even you do not know what happens next.',
+            stats:[
+                ['Adaptability','100%'],
+                ['Chaos Tolerance','99%'],
+                ['Following The Plan','7%']
             ]
         }
+
     };
+
     /* =====================================================
-       PERSONALIZED NEXT ASSIGNMENTS
+       PERSONALIZED REAL WEBSITE DESTINATIONS
     ===================================================== */
+
     const nextAssignments = {
-        diplomat: {
-            intro: 'Your negotiation skills have been documented. Mom Headquarters has another situation that may require your expertise.',
-            icon: '🚨',
-            title: 'HANDLE A MOM EMERGENCY',
-            text: 'You have successfully negotiated with toddlers. Now see what is happening at Mom Headquarters.',
-            cta: '🚨 REPORT TO MOM HEADQUARTERS →',
-            url: 'mom-emergency-broadcast.html'
+
+        diplomat:{
+
+            intro:
+                'You were classified as a Snack Negotiator. Which means you have opinions, negotiation skills and absolutely no reason to waste them.',
+
+            icon:'⚔️',
+
+            title:
+                'MOM BATTLES NEED YOU',
+
+            text:
+                'Two things enter. Moms decide what wins. Your diplomatic expertise may finally be put to good use.',
+
+            cta:
+                '⚔️ PICK A SIDE →',
+
+            url:
+                'amazon-favorites.html'
+
         },
-        scientist: {
-            intro: 'Your classification has raised several scientific concerns. There is only one logical next step.',
-            icon: '🧪',
-            title: 'ENTER MOM LAB',
-            text: 'Ridiculous tests. Suspicious science. Surprisingly useful results. Your kind of place.',
-            cta: '🧪 ENTER THE LAB →',
-            url: 'mom-lab.html'
+
+        scientist:{
+
+            intro:
+                'Your classification confirms what we suspected: you are dangerously curious. There is one place on this website where that is encouraged.',
+
+            icon:'🧪',
+
+            title:
+                'ENTER MOM LAB',
+
+            text:
+                'Ridiculous tests. Suspicious science. Real products put through highly questionable motherhood conditions.',
+
+            cta:
+                '🧪 SEE WHAT SURVIVED →',
+
+            url:
+                'mom-lab.html'
+
         },
-        commander: {
-            intro: 'Your command status has been confirmed. Unfortunately, Mom Headquarters has another situation.',
-            icon: '🚨',
-            title: 'YOUR NEXT EMERGENCY AWAITS',
-            text: 'Something has gone terribly wrong. You have been assigned to investigate.',
-            cta: '🚨 VIEW THE EMERGENCY →',
-            url: 'mom-emergency-broadcast.html'
+
+        commander:{
+
+            intro:
+                'You have been classified as a Chaos Commander. Naturally, you should be given access to resources that help keep the operation moving.',
+
+            icon:'🎁',
+
+            title:
+                'OPEN THE FREE MOM VAULT',
+
+            text:
+                '500+ free printables, tools and useful things for the moments when Mom Mode needs backup.',
+
+            cta:
+                '🎁 OPEN THE FREE STUFF →',
+
+            url:
+                'free-mom-resources.html'
+
         },
-        ceo: {
-            intro: 'Your Mom CEO status has been confirmed. Naturally, you should inspect what the Mom Universe is currently testing.',
-            icon: '🧪',
-            title: 'ENTER MOM LAB',
-            text: 'Products are being tested under highly questionable conditions. Someone needs to review the results.',
-            cta: '🧪 REVIEW THE LAB RESULTS →',
-            url: 'mom-lab.html'
+
+        ceo:{
+
+            intro:
+                'Your Mom CEO classification has been confirmed. You clearly appreciate systems, preparation and having a plan before the crisis begins.',
+
+            icon:'🚽',
+
+            title:
+                'YOUR NEXT PROJECT: POTTY TRAINING',
+
+            text:
+                'Charts, tools and printable help for one of motherhood’s most ambitious operations.',
+
+            cta:
+                '🚽 SEE THE POTTY TOOLS →',
+
+            url:
+                'free-potty-training-charts.html'
+
         },
-        detective: {
-            intro: 'You asked too many questions. Fortunately, the Mom Universe has exactly the place for you.',
-            icon: '🧪',
-            title: 'INVESTIGATE MOM LAB',
-            text: 'Follow the evidence. Examine the results. Question everything. Especially the testing methodology.',
-            cta: '🔎 START INVESTIGATING →',
-            url: 'mom-lab.html'
+
+        detective:{
+
+            intro:
+                'You were classified as a Toddler Detective. You ask questions. You follow clues. You investigate suspicious behavior. This feels extremely appropriate.',
+
+            icon:'💬',
+
+            title:
+                'MOM ANSWERS HAS QUESTIONS',
+
+            text:
+                'Find answers to the parenting questions that somehow become 47-question investigations at 2 AM.',
+
+            cta:
+                '🔎 START INVESTIGATING →',
+
+            url:
+                'mom-blog.html'
+
         },
-        chaos: {
-            intro: 'You survived the quiz. Barely. Your next assignment has already been issued.',
-            icon: '🚨',
-            title: 'ENTER THE MOM UNIVERSE',
-            text: 'Something is happening at Mom Headquarters. Honestly, nobody knows what. You should probably look.',
-            cta: '🚨 SEE WHAT IS HAPPENING →',
-            url: 'mom-emergency-broadcast.html'
+
+        chaos:{
+
+            intro:
+                'You survived the quiz. Your classification is Chaos Survivor. Frankly, you deserve to see what else is happening around here.',
+
+            icon:'🧪',
+
+            title:
+                'SEE WHAT MOM LAB IS TESTING',
+
+            text:
+                'Because if your life is already chaos, you might as well watch someone test products under even worse conditions.',
+
+            cta:
+                '🧪 ENTER MOM LAB →',
+
+            url:
+                'mom-lab.html'
+
         }
+
     };
-    let currentQuestion = 0;
+
+    let currentQuestion =
+        0;
+
     const scores = {
-        diplomat: 0,
-        scientist: 0,
-        commander: 0,
-        ceo: 0,
-        detective: 0,
-        chaos: 0
+
+        diplomat:0,
+        scientist:0,
+        commander:0,
+        ceo:0,
+        detective:0,
+        chaos:0
+
     };
-    let currentResultKey = 'chaos';
+
+    let currentResultKey =
+        'chaos';
+
     const questionArea =
-        document.getElementById('questionArea');
+        document.getElementById(
+            'questionArea'
+        );
+
     const progressWrap =
-        document.getElementById('progressWrap');
+        document.getElementById(
+            'progressWrap'
+        );
+
     const progressText =
-        document.getElementById('progressText');
+        document.getElementById(
+            'progressText'
+        );
+
     const progressPercent =
-        document.getElementById('progressPercent');
+        document.getElementById(
+            'progressPercent'
+        );
+
     const progressFill =
-        document.getElementById('progressFill');
+        document.getElementById(
+            'progressFill'
+        );
+
     const resultArea =
-        document.getElementById('resultArea');
+        document.getElementById(
+            'resultArea'
+        );
+
     const resultIcon =
-        document.getElementById('resultIcon');
+        document.getElementById(
+            'resultIcon'
+        );
+
     const resultTitle =
-        document.getElementById('resultTitle');
+        document.getElementById(
+            'resultTitle'
+        );
+
     const resultSubtitle =
-        document.getElementById('resultSubtitle');
+        document.getElementById(
+            'resultSubtitle'
+        );
+
     const resultStats =
-        document.getElementById('resultStats');
+        document.getElementById(
+            'resultStats'
+        );
+
     const resultAbility =
-        document.getElementById('resultAbility');
+        document.getElementById(
+            'resultAbility'
+        );
+
     const resultThreat =
-        document.getElementById('resultThreat');
+        document.getElementById(
+            'resultThreat'
+        );
+
     const shareButton =
-        document.getElementById('shareButton');
+        document.getElementById(
+            'shareButton'
+        );
+
     const saveButton =
-        document.getElementById('saveButton');
+        document.getElementById(
+            'saveButton'
+        );
+
     const copyButton =
-        document.getElementById('copyButton');
+        document.getElementById(
+            'copyButton'
+        );
+
     const retakeButton =
-        document.getElementById('retakeButton');
+        document.getElementById(
+            'retakeButton'
+        );
+
     const nextIntro =
-        document.getElementById('nextIntro');
+        document.getElementById(
+            'nextIntro'
+        );
+
     const nextFeatured =
-        document.getElementById('nextFeatured');
+        document.getElementById(
+            'nextFeatured'
+        );
+
     const nextFeaturedIcon =
-        document.getElementById('nextFeaturedIcon');
+        document.getElementById(
+            'nextFeaturedIcon'
+        );
+
     const nextFeaturedTitle =
-        document.getElementById('nextFeaturedTitle');
+        document.getElementById(
+            'nextFeaturedTitle'
+        );
+
     const nextFeaturedText =
-        document.getElementById('nextFeaturedText');
+        document.getElementById(
+            'nextFeaturedText'
+        );
+
     const nextFeaturedCta =
-        document.getElementById('nextFeaturedCta');
+        document.getElementById(
+            'nextFeaturedCta'
+        );
+
     function showQuestion(){
-        const question = questions[currentQuestion];
-        const questionNumber = currentQuestion + 1;
+
+        const question =
+            questions[currentQuestion];
+
+        const questionNumber =
+            currentQuestion + 1;
+
         const percent =
-            Math.round((questionNumber / questions.length) * 100);
+            Math.round(
+                (questionNumber / questions.length) * 100
+            );
+
         progressText.textContent =
             `QUESTION ${questionNumber} OF ${questions.length}`;
+
         progressPercent.textContent =
             `${percent}%`;
+
         progressFill.style.width =
             `${percent}%`;
-        questionArea.innerHTML = '';
+
+        questionArea.innerHTML =
+            '';
+
         const questionElement =
-            document.createElement('div');
+            document.createElement(
+                'div'
+            );
+
         questionElement.className =
             'quiz-question';
+
         const number =
-            document.createElement('div');
+            document.createElement(
+                'div'
+            );
+
         number.className =
             'quiz-question-number';
+
         number.textContent =
             `QUESTION ${questionNumber}`;
+
         const heading =
-            document.createElement('h2');
+            document.createElement(
+                'h2'
+            );
+
         heading.textContent =
             question.question;
+
         const answers =
-            document.createElement('div');
+            document.createElement(
+                'div'
+            );
+
         answers.className =
             'quiz-answers';
-        question.answers.forEach((answer) => {
-            const button =
-                document.createElement('button');
-            button.type = 'button';
-            button.className =
-                'quiz-answer';
-            const icon =
-                document.createElement('span');
-            icon.className =
-                'quiz-answer-icon';
-            icon.textContent =
-                answer.icon;
-            const text =
-                document.createElement('span');
-            text.className =
-                'quiz-answer-text';
-            text.textContent =
-                answer.text;
-            button.appendChild(icon);
-            button.appendChild(text);
-            button.addEventListener('click', () => {
-                selectAnswer(answer);
-            });
-            answers.appendChild(button);
-        });
-        questionElement.appendChild(number);
-        questionElement.appendChild(heading);
-        questionElement.appendChild(answers);
-        questionArea.appendChild(questionElement);
-    }
-    function selectAnswer(answer){
-        Object.entries(answer.scores).forEach(
-            ([key, value]) => {
-                scores[key] += value;
+
+        question.answers.forEach(
+            (answer) => {
+
+                const button =
+                    document.createElement(
+                        'button'
+                    );
+
+                button.type =
+                    'button';
+
+                button.className =
+                    'quiz-answer';
+
+                const icon =
+                    document.createElement(
+                        'span'
+                    );
+
+                icon.className =
+                    'quiz-answer-icon';
+
+                icon.textContent =
+                    answer.icon;
+
+                const text =
+                    document.createElement(
+                        'span'
+                    );
+
+                text.className =
+                    'quiz-answer-text';
+
+                text.textContent =
+                    answer.text;
+
+                button.appendChild(
+                    icon
+                );
+
+                button.appendChild(
+                    text
+                );
+
+                button.addEventListener(
+                    'click',
+                    () => {
+                        selectAnswer(
+                            answer
+                        );
+                    }
+                );
+
+                answers.appendChild(
+                    button
+                );
+
             }
         );
+
+        questionElement.appendChild(
+            number
+        );
+
+        questionElement.appendChild(
+            heading
+        );
+
+        questionElement.appendChild(
+            answers
+        );
+
+        questionArea.appendChild(
+            questionElement
+        );
+
+    }
+
+    function selectAnswer(
+        answer
+    ){
+
+        Object.entries(
+            answer.scores
+        ).forEach(
+            ([key,value]) => {
+
+                scores[key] +=
+                    value;
+
+            }
+        );
+
         currentQuestion++;
-        if(currentQuestion >= questions.length){
+
+        if(
+            currentQuestion >=
+            questions.length
+        ){
+
             showResult();
+
             return;
+
         }
+
         showQuestion();
+
     }
+
     function getResultKey(){
-        let highestKey = 'chaos';
-        let highestScore = -1;
-        Object.entries(scores).forEach(
-            ([key, score]) => {
-                if(score > highestScore){
-                    highestScore = score;
-                    highestKey = key;
+
+        let highestKey =
+            'chaos';
+
+        let highestScore =
+            -1;
+
+        Object.entries(
+            scores
+        ).forEach(
+            ([key,score]) => {
+
+                if(
+                    score >
+                    highestScore
+                ){
+
+                    highestScore =
+                        score;
+
+                    highestKey =
+                        key;
+
                 }
+
             }
         );
+
         return highestKey;
+
     }
+
     function showResult(){
-        currentResultKey = getResultKey();
+
+        currentResultKey =
+            getResultKey();
+
         const result =
-            results[currentResultKey];
+            results[
+                currentResultKey
+            ];
+
         const next =
-            nextAssignments[currentResultKey];
+            nextAssignments[
+                currentResultKey
+            ];
+
         questionArea.style.display =
             'none';
+
         progressWrap.style.display =
             'none';
-        resultArea.classList.add('show');
+
+        resultArea.classList.add(
+            'show'
+        );
+
         resultIcon.textContent =
             result.icon;
+
         resultTitle.textContent =
             result.title;
+
         resultSubtitle.textContent =
             result.subtitle;
+
         resultAbility.textContent =
             result.ability;
+
         resultThreat.textContent =
             result.threat;
-        resultStats.innerHTML = '';
-        result.stats.forEach(stat => {
-            const card =
-                document.createElement('div');
-            card.className =
-                'quiz-stat';
-            card.innerHTML = `
-                <strong>${stat[1]}</strong>
-                <span>${stat[0]}</span>
-            `;
-            resultStats.appendChild(card);
-        });
+
+        resultStats.innerHTML =
+            '';
+
+        result.stats.forEach(
+            stat => {
+
+                const card =
+                    document.createElement(
+                        'div'
+                    );
+
+                card.className =
+                    'quiz-stat';
+
+                card.innerHTML = `
+                    <strong>${stat[1]}</strong>
+                    <span>${stat[0]}</span>
+                `;
+
+                resultStats.appendChild(
+                    card
+                );
+
+            }
+        );
+
         /* ================================================
-           PERSONALIZE NEXT MOM UNIVERSE ASSIGNMENT
+           PERSONALIZE REAL WEBSITE DESTINATION
         ================================================= */
+
         nextIntro.textContent =
             next.intro;
+
         nextFeatured.href =
             next.url;
+
         nextFeaturedIcon.textContent =
             next.icon;
+
         nextFeaturedTitle.textContent =
             next.title;
+
         nextFeaturedText.textContent =
             next.text;
+
         nextFeaturedCta.textContent =
             next.cta;
+
         window.scrollTo({
+
             top:0,
+
             behavior:'smooth'
+
         });
+
     }
+
     function createResultImage(){
+
         const canvas =
-            document.createElement('canvas');
-        canvas.width = 1080;
-        canvas.height = 1920;
+            document.createElement(
+                'canvas'
+            );
+
+        canvas.width =
+            1080;
+
+        canvas.height =
+            1920;
+
         const context =
-            canvas.getContext('2d');
+            canvas.getContext(
+                '2d'
+            );
+
         if(!context){
+
             return null;
+
         }
+
         const result =
-            results[currentResultKey];
+            results[
+                currentResultKey
+            ];
+
         context.fillStyle =
             '#fffaf8';
+
         context.fillRect(
             0,
             0,
             canvas.width,
             canvas.height
         );
+
         context.fillStyle =
             '#fff0f5';
+
         context.beginPath();
+
         context.arc(
             950,
             100,
@@ -1400,10 +2163,14 @@
             0,
             Math.PI * 2
         );
+
         context.fill();
+
         context.fillStyle =
             '#eef5ff';
+
         context.beginPath();
+
         context.arc(
             50,
             1800,
@@ -1411,9 +2178,12 @@
             0,
             Math.PI * 2
         );
+
         context.fill();
+
         context.fillStyle =
             '#ffffff';
+
         roundRect(
             context,
             65,
@@ -1422,29 +2192,39 @@
             1780,
             48
         );
+
         context.fill();
+
         context.textAlign =
             'center';
+
         context.fillStyle =
             '#d6537c';
+
         context.font =
             '900 28px Nunito';
+
         context.fillText(
             '🌎 MOM UNIVERSE',
             540,
             155
         );
+
         context.fillStyle =
             '#999999';
+
         context.font =
             '900 20px Nunito';
+
         context.fillText(
             'OFFICIAL MOM CLASSIFICATION',
             540,
             205
         );
+
         context.fillStyle =
             '#fff0f5';
+
         roundRect(
             context,
             390,
@@ -1453,18 +2233,24 @@
             300,
             55
         );
+
         context.fill();
+
         context.font =
             '130px Arial';
+
         context.fillText(
             result.icon,
             540,
             465
         );
+
         context.fillStyle =
             '#1d4f91';
+
         context.font =
             '900 64px Nunito';
+
         drawWrappedText(
             context,
             result.title,
@@ -1473,10 +2259,13 @@
             820,
             78
         );
+
         context.fillStyle =
             '#666666';
+
         context.font =
             '700 27px Nunito';
+
         drawWrappedText(
             context,
             result.subtitle,
@@ -1485,46 +2274,64 @@
             760,
             40
         );
+
         const stats =
             result.stats;
-        stats.forEach((stat, index) => {
-            const x =
-                145 + (index * 285);
-            context.fillStyle =
-                '#f8f9fc';
-            roundRect(
-                context,
-                x,
-                1060,
-                245,
-                170,
-                25
-            );
-            context.fill();
-            context.fillStyle =
-                '#1d4f91';
-            context.font =
-                '900 38px Nunito';
-            context.fillText(
-                stat[1],
-                x + 122,
-                1135
-            );
-            context.fillStyle =
-                '#888888';
-            context.font =
-                '900 17px Nunito';
-            drawWrappedText(
-                context,
-                stat[0],
-                x + 122,
-                1175,
-                190,
-                23
-            );
-        });
+
+        stats.forEach(
+            (stat,index) => {
+
+                const x =
+                    145 +
+                    (index * 285);
+
+                context.fillStyle =
+                    '#f8f9fc';
+
+                roundRect(
+                    context,
+                    x,
+                    1060,
+                    245,
+                    170,
+                    25
+                );
+
+                context.fill();
+
+                context.fillStyle =
+                    '#1d4f91';
+
+                context.font =
+                    '900 38px Nunito';
+
+                context.fillText(
+                    stat[1],
+                    x + 122,
+                    1135
+                );
+
+                context.fillStyle =
+                    '#888888';
+
+                context.font =
+                    '900 17px Nunito';
+
+                drawWrappedText(
+                    context,
+                    stat[0],
+                    x + 122,
+                    1175,
+                    190,
+                    23
+                );
+
+            }
+        );
+
         context.fillStyle =
             '#fff8e4';
+
         roundRect(
             context,
             145,
@@ -1533,20 +2340,27 @@
             200,
             30
         );
+
         context.fill();
+
         context.fillStyle =
             '#b58b15';
+
         context.font =
             '900 19px Nunito';
+
         context.fillText(
             'SPECIAL ABILITY',
             540,
             1330
         );
+
         context.fillStyle =
             '#6d5720';
+
         context.font =
             '900 25px Nunito';
+
         drawWrappedText(
             context,
             result.ability,
@@ -1555,8 +2369,10 @@
             680,
             35
         );
+
         context.fillStyle =
             '#fff7fa';
+
         roundRect(
             context,
             145,
@@ -1565,20 +2381,27 @@
             145,
             25
         );
+
         context.fill();
+
         context.fillStyle =
             '#999999';
+
         context.font =
             '900 17px Nunito';
+
         context.fillText(
             'MOM THREAT LEVEL',
             540,
             1555
         );
+
         context.fillStyle =
             '#d9577d';
+
         context.font =
             '900 27px Nunito';
+
         drawWrappedText(
             context,
             result.threat,
@@ -1587,35 +2410,47 @@
             680,
             35
         );
+
         context.fillStyle =
             '#332b2b';
+
         context.font =
             '900 25px Nunito';
+
         context.fillText(
             'WHAT ARE YOU?',
             540,
             1720
         );
+
         context.fillStyle =
             '#d6537c';
+
         context.font =
             '900 24px Nunito';
+
         context.fillText(
             'momyouneedthis.com/mom-quiz.html',
             540,
             1770
         );
+
         context.fillStyle =
             '#aaaaaa';
+
         context.font =
             '700 17px Nunito';
+
         context.fillText(
             'The science is questionable. The classification is official.',
             540,
             1820
         );
+
         return canvas;
+
     }
+
     function roundRect(
         context,
         x,
@@ -1624,53 +2459,66 @@
         height,
         radius
     ){
+
         context.beginPath();
+
         context.moveTo(
             x + radius,
             y
         );
+
         context.lineTo(
             x + width - radius,
             y
         );
+
         context.quadraticCurveTo(
             x + width,
             y,
             x + width,
             y + radius
         );
+
         context.lineTo(
             x + width,
             y + height - radius
         );
+
         context.quadraticCurveTo(
             x + width,
             y + height,
             x + width - radius,
             y + height
         );
+
         context.lineTo(
             x + radius,
             y + height
         );
+
         context.quadraticCurveTo(
             x,
             y + height,
             x,
             y + height - radius
         );
+
         context.lineTo(
             x,
             y + radius
         );
+
         context.quadraticCurveTo(
             x,
             y,
             x + radius,
             y
         );
+
         context.closePath();
+
     }
+
     function drawWrappedText(
         context,
         text,
@@ -1679,88 +2527,166 @@
         maxWidth,
         lineHeight
     ){
+
         const words =
             text.split(' ');
-        const lines = [];
-        let currentLine = '';
-        words.forEach(word => {
-            const testLine =
-                currentLine
-                    ? `${currentLine} ${word}`
-                    : word;
-            const width =
-                context.measureText(testLine).width;
-            if(
-                width > maxWidth &&
-                currentLine
-            ){
-                lines.push(currentLine);
-                currentLine = word;
-            }else{
-                currentLine = testLine;
+
+        const lines =
+            [];
+
+        let currentLine =
+            '';
+
+        words.forEach(
+            word => {
+
+                const testLine =
+                    currentLine
+                        ? `${currentLine} ${word}`
+                        : word;
+
+                const width =
+                    context.measureText(
+                        testLine
+                    ).width;
+
+                if(
+                    width > maxWidth &&
+                    currentLine
+                ){
+
+                    lines.push(
+                        currentLine
+                    );
+
+                    currentLine =
+                        word;
+
+                }else{
+
+                    currentLine =
+                        testLine;
+
+                }
+
             }
-        });
+        );
+
         if(currentLine){
-            lines.push(currentLine);
+
+            lines.push(
+                currentLine
+            );
+
         }
-        lines.forEach((line, index) => {
-            context.fillText(
-                line,
-                centerX,
-                startY + (index * lineHeight)
-            );
-        });
-    }
-    function getResultBlob(){
-        return new Promise(resolve => {
-            const canvas =
-                createResultImage();
-            if(!canvas){
-                resolve(null);
-                return;
+
+        lines.forEach(
+            (line,index) => {
+
+                context.fillText(
+                    line,
+                    centerX,
+                    startY +
+                    (index * lineHeight)
+                );
+
             }
-            canvas.toBlob(
-                blob => resolve(blob),
-                'image/png'
-            );
-        });
+        );
+
     }
+
+    function getResultBlob(){
+
+        return new Promise(
+            resolve => {
+
+                const canvas =
+                    createResultImage();
+
+                if(!canvas){
+
+                    resolve(null);
+
+                    return;
+
+                }
+
+                canvas.toBlob(
+                    blob =>
+                        resolve(blob),
+                    'image/png'
+                );
+
+            }
+        );
+
+    }
+
     saveButton.addEventListener(
         'click',
         async () => {
+
             const blob =
                 await getResultBlob();
+
             if(!blob){
+
                 return;
+
             }
+
             const url =
-                URL.createObjectURL(blob);
+                URL.createObjectURL(
+                    blob
+                );
+
             const link =
-                document.createElement('a');
+                document.createElement(
+                    'a'
+                );
+
             link.href =
                 url;
+
             link.download =
                 `mom-universe-${currentResultKey}.png`;
-            document.body.appendChild(link);
+
+            document.body.appendChild(
+                link
+            );
+
             link.click();
+
             link.remove();
-            URL.revokeObjectURL(url);
+
+            URL.revokeObjectURL(
+                url
+            );
+
         }
     );
+
     shareButton.addEventListener(
         'click',
         async () => {
+
             const result =
-                results[currentResultKey];
+                results[
+                    currentResultKey
+                ];
+
             const shareText =
                 `The Mom Universe has classified me as ${result.title} ${result.icon}. What are you? Take the quiz — it takes under 1 minute!`;
+
             const blob =
                 await getResultBlob();
+
             if(
                 navigator.share &&
                 blob &&
                 typeof File !== 'undefined'
             ){
+
                 const file =
                     new File(
                         [blob],
@@ -1769,139 +2695,273 @@
                             type:'image/png'
                         }
                     );
+
                 const shareData = {
-                    title:'My Mom Universe Classification',
-                    text:shareText,
-                    url:quizUrl,
-                    files:[file]
+
+                    title:
+                        'My Mom Universe Classification',
+
+                    text:
+                        shareText,
+
+                    url:
+                        quizUrl,
+
+                    files:[
+                        file
+                    ]
+
                 };
+
                 if(
                     !navigator.canShare ||
                     navigator.canShare({
-                        files:[file]
+                        files:[
+                            file
+                        ]
                     })
                 ){
+
                     try{
+
                         await navigator.share(
                             shareData
                         );
+
                         return;
+
                     }catch(error){
+
                         if(
                             error instanceof DOMException &&
                             error.name === 'AbortError'
                         ){
+
                             return;
+
                         }
+
                     }
+
                 }
+
             }
-            if(navigator.share){
+
+            if(
+                navigator.share
+            ){
+
                 try{
+
                     await navigator.share({
-                        title:'My Mom Universe Classification',
-                        text:shareText,
-                        url:quizUrl
+
+                        title:
+                            'My Mom Universe Classification',
+
+                        text:
+                            shareText,
+
+                        url:
+                            quizUrl
+
                     });
+
                     return;
+
                 }catch(error){
+
                     if(
                         error instanceof DOMException &&
                         error.name === 'AbortError'
                     ){
+
                         return;
+
                     }
+
                 }
+
             }
+
             if(blob){
+
                 const url =
-                    URL.createObjectURL(blob);
+                    URL.createObjectURL(
+                        blob
+                    );
+
                 const link =
-                    document.createElement('a');
+                    document.createElement(
+                        'a'
+                    );
+
                 link.href =
                     url;
+
                 link.download =
                     `mom-universe-${currentResultKey}.png`;
-                document.body.appendChild(link);
+
+                document.body.appendChild(
+                    link
+                );
+
                 link.click();
+
                 link.remove();
-                URL.revokeObjectURL(url);
+
+                URL.revokeObjectURL(
+                    url
+                );
+
                 return;
+
             }
+
             await copyQuizLink();
+
         }
     );
+
     async function copyQuizLink(){
+
         try{
+
             if(
                 navigator.clipboard &&
                 window.isSecureContext
             ){
+
                 await navigator.clipboard.writeText(
                     quizUrl
                 );
+
             }else{
+
                 const input =
-                    document.createElement('input');
+                    document.createElement(
+                        'input'
+                    );
+
                 input.value =
                     quizUrl;
+
                 input.style.position =
                     'fixed';
+
                 input.style.opacity =
                     '0';
-                document.body.appendChild(input);
+
+                document.body.appendChild(
+                    input
+                );
+
                 input.focus();
+
                 input.select();
+
                 input.setSelectionRange(
                     0,
                     input.value.length
                 );
+
                 const copied =
-                    document.execCommand('copy');
+                    document.execCommand(
+                        'copy'
+                    );
+
                 input.remove();
+
                 if(!copied){
-                    throw new Error('Copy failed');
+
+                    throw new Error(
+                        'Copy failed'
+                    );
+
                 }
+
             }
+
             copyButton.textContent =
                 '✓ QUIZ LINK COPIED';
-            setTimeout(() => {
-                copyButton.textContent =
-                    '🔗 COPY QUIZ LINK';
-            }, 2200);
+
+            setTimeout(
+                () => {
+
+                    copyButton.textContent =
+                        '🔗 COPY QUIZ LINK';
+
+                },
+                2200
+            );
+
         }catch(error){
+
             copyButton.textContent =
                 '⚠️ COPY FAILED — TRY AGAIN';
-            setTimeout(() => {
-                copyButton.textContent =
-                    '🔗 COPY QUIZ LINK';
-            }, 2500);
+
+            setTimeout(
+                () => {
+
+                    copyButton.textContent =
+                        '🔗 COPY QUIZ LINK';
+
+                },
+                2500
+            );
+
         }
+
     }
+
     copyButton.addEventListener(
         'click',
         copyQuizLink
     );
+
     retakeButton.addEventListener(
         'click',
         () => {
-            currentQuestion = 0;
-            Object.keys(scores).forEach(key => {
-                scores[key] = 0;
-            });
-            resultArea.classList.remove('show');
+
+            currentQuestion =
+                0;
+
+            Object.keys(
+                scores
+            ).forEach(
+                key => {
+
+                    scores[key] =
+                        0;
+
+                }
+            );
+
+            resultArea.classList.remove(
+                'show'
+            );
+
             questionArea.style.display =
                 'block';
+
             progressWrap.style.display =
                 'block';
+
             showQuestion();
+
             window.scrollTo({
+
                 top:0,
+
                 behavior:'smooth'
+
             });
+
         }
     );
+
     showQuestion();
+
 </script>
+
 </body>
 </html>
