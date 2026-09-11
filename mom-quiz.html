@@ -613,7 +613,6 @@
 
         </section>
 
-
         <section class="quiz-container" id="quizContainer">
 
             <div class="quiz-progress-wrap" id="progressWrap">
@@ -641,9 +640,7 @@
 
             </div>
 
-
             <div id="questionArea"></div>
-
 
             <div
                 class="quiz-result"
@@ -670,12 +667,10 @@
                     id="resultSubtitle"
                 ></p>
 
-
                 <div
                     class="quiz-stats"
                     id="resultStats"
                 ></div>
-
 
                 <div class="quiz-special">
 
@@ -687,7 +682,6 @@
 
                 </div>
 
-
                 <div class="quiz-threat">
 
                     <span class="quiz-threat-label">
@@ -697,7 +691,6 @@
                     <strong id="resultThreat"></strong>
 
                 </div>
-
 
                 <div class="quiz-share-box">
 
@@ -743,7 +736,6 @@
 
                 </div>
 
-
                 <button
                     type="button"
                     class="quiz-retake"
@@ -757,7 +749,6 @@
         </section>
 
     </main>
-
 
     <footer>
 
@@ -808,19 +799,9 @@
 
 </div>
 
-
 <script>
 
-    /* =====================================================
-       MOM UNIVERSE QUIZ
-    ===================================================== */
-
     const quizUrl = 'https://momyouneedthis.com/mom-quiz.html';
-
-
-    /* =====================================================
-       QUESTIONS
-    ===================================================== */
 
     const questions = [
 
@@ -1034,11 +1015,6 @@
 
     ];
 
-
-    /* =====================================================
-       RESULT DEFINITIONS
-    ===================================================== */
-
     const results = {
 
         diplomat: {
@@ -1121,11 +1097,6 @@
 
     };
 
-
-    /* =====================================================
-       STATE
-    ===================================================== */
-
     let currentQuestion = 0;
 
     const scores = {
@@ -1138,11 +1109,6 @@
     };
 
     let currentResultKey = 'chaos';
-
-
-    /* =====================================================
-       ELEMENTS
-    ===================================================== */
 
     const questionArea =
         document.getElementById('questionArea');
@@ -1192,11 +1158,6 @@
     const retakeButton =
         document.getElementById('retakeButton');
 
-
-    /* =====================================================
-       SHOW QUESTION
-    ===================================================== */
-
     function showQuestion(){
 
         const question = questions[currentQuestion];
@@ -1244,7 +1205,7 @@
         answers.className =
             'quiz-answers';
 
-        question.answers.forEach((answer, index) => {
+        question.answers.forEach((answer) => {
 
             const button =
                 document.createElement('button');
@@ -1296,11 +1257,6 @@
 
     }
 
-
-    /* =====================================================
-       SELECT ANSWER
-    ===================================================== */
-
     function selectAnswer(answer){
 
         Object.entries(answer.scores).forEach(
@@ -1325,11 +1281,6 @@
 
     }
 
-
-    /* =====================================================
-       GET RESULT
-    ===================================================== */
-
     function getResultKey(){
 
         let highestKey = 'chaos';
@@ -1353,11 +1304,6 @@
         return highestKey;
 
     }
-
-
-    /* =====================================================
-       SHOW RESULT
-    ===================================================== */
 
     function showResult(){
 
@@ -1415,20 +1361,7 @@
 
     }
 
-
-    /* =====================================================
-       RESULT CARD CANVAS
-    ===================================================== */
-
     function createResultImage(){
-
-        /*
-         * FIX:
-         * The result object must be defined inside this function
-         * before result.icon is used.
-         */
-        const result =
-            results[currentResultKey];
 
         const canvas =
             document.createElement('canvas');
@@ -1446,9 +1379,8 @@
 
         }
 
-        /*
-         * Background
-         */
+        const result =
+            results[currentResultKey];
 
         context.fillStyle =
             '#fffaf8';
@@ -1459,11 +1391,6 @@
             canvas.width,
             canvas.height
         );
-
-
-        /*
-         * Decorative circles
-         */
 
         context.fillStyle =
             '#fff0f5';
@@ -1495,11 +1422,6 @@
 
         context.fill();
 
-
-        /*
-         * Card
-         */
-
         context.fillStyle =
             '#ffffff';
 
@@ -1513,11 +1435,6 @@
         );
 
         context.fill();
-
-
-        /*
-         * Top branding
-         */
 
         context.textAlign =
             'center';
@@ -1546,11 +1463,6 @@
             205
         );
 
-
-        /*
-         * Result icon
-         */
-
         context.fillStyle =
             '#fff0f5';
 
@@ -1574,11 +1486,6 @@
             465
         );
 
-
-        /*
-         * Result title
-         */
-
         context.fillStyle =
             '#1d4f91';
 
@@ -1594,11 +1501,6 @@
             78
         );
 
-
-        /*
-         * Subtitle
-         */
-
         context.fillStyle =
             '#666666';
 
@@ -1613,11 +1515,6 @@
             760,
             40
         );
-
-
-        /*
-         * Stats
-         */
 
         const stats =
             result.stats;
@@ -1670,11 +1567,6 @@
 
         });
 
-
-        /*
-         * Special ability
-         */
-
         context.fillStyle =
             '#fff8e4';
 
@@ -1715,11 +1607,6 @@
             680,
             35
         );
-
-
-        /*
-         * Threat level
-         */
 
         context.fillStyle =
             '#fff7fa';
@@ -1762,11 +1649,6 @@
             35
         );
 
-
-        /*
-         * Viral CTA
-         */
-
         context.fillStyle =
             '#332b2b';
 
@@ -1791,11 +1673,6 @@
             1770
         );
 
-
-        /*
-         * Footer
-         */
-
         context.fillStyle =
             '#aaaaaa';
 
@@ -1811,11 +1688,6 @@
         return canvas;
 
     }
-
-
-    /* =====================================================
-       CANVAS HELPERS
-    ===================================================== */
 
     function roundRect(
         context,
@@ -1885,7 +1757,6 @@
 
     }
 
-
     function drawWrappedText(
         context,
         text,
@@ -1947,11 +1818,6 @@
 
     }
 
-
-    /* =====================================================
-       CANVAS TO BLOB
-    ===================================================== */
-
     function getResultBlob(){
 
         return new Promise(resolve => {
@@ -1975,11 +1841,6 @@
         });
 
     }
-
-
-    /* =====================================================
-       SAVE RESULT
-    ===================================================== */
 
     saveButton.addEventListener(
         'click',
@@ -2017,11 +1878,6 @@
         }
     );
 
-
-    /* =====================================================
-       SHARE RESULT
-    ===================================================== */
-
     shareButton.addEventListener(
         'click',
         async () => {
@@ -2030,7 +1886,7 @@
                 results[currentResultKey];
 
             const shareText =
-                `The Mom Universe has classified me as ${result.title} ${result.icon}. What are you?`;
+                `The Mom Universe has classified me as ${result.title} ${result.icon}. What are you? Take the quiz — it takes under 1 minute!`;
 
             const blob =
                 await getResultBlob();
@@ -2089,7 +1945,6 @@
 
             }
 
-
             if(navigator.share){
 
                 try{
@@ -2116,12 +1971,6 @@
                 }
 
             }
-
-
-            /*
-             * Desktop / unsupported fallback:
-             * save image instead.
-             */
 
             if(blob){
 
@@ -2154,18 +2003,56 @@
         }
     );
 
-
-    /* =====================================================
-       COPY QUIZ LINK
-    ===================================================== */
-
     async function copyQuizLink(){
 
         try{
 
-            await navigator.clipboard.writeText(
-                quizUrl
-            );
+            if(
+                navigator.clipboard &&
+                window.isSecureContext
+            ){
+
+                await navigator.clipboard.writeText(
+                    quizUrl
+                );
+
+            }else{
+
+                const input =
+                    document.createElement('input');
+
+                input.value =
+                    quizUrl;
+
+                input.style.position =
+                    'fixed';
+
+                input.style.opacity =
+                    '0';
+
+                document.body.appendChild(input);
+
+                input.focus();
+
+                input.select();
+
+                input.setSelectionRange(
+                    0,
+                    input.value.length
+                );
+
+                const copied =
+                    document.execCommand('copy');
+
+                input.remove();
+
+                if(!copied){
+
+                    throw new Error('Copy failed');
+
+                }
+
+            }
 
             copyButton.textContent =
                 '✓ QUIZ LINK COPIED';
@@ -2179,44 +2066,24 @@
 
         }catch(error){
 
-            const input =
-                document.createElement('input');
-
-            input.value =
-                quizUrl;
-
-            document.body.appendChild(input);
-
-            input.select();
-
-            document.execCommand('copy');
-
-            input.remove();
-
             copyButton.textContent =
-                '✓ QUIZ LINK COPIED';
+                '⚠️ COPY FAILED — TRY AGAIN';
 
             setTimeout(() => {
 
                 copyButton.textContent =
                     '🔗 COPY QUIZ LINK';
 
-            }, 2200);
+            }, 2500);
 
         }
 
     }
 
-
     copyButton.addEventListener(
         'click',
         copyQuizLink
     );
-
-
-    /* =====================================================
-       RETAKE
-    ===================================================== */
 
     retakeButton.addEventListener(
         'click',
@@ -2247,11 +2114,6 @@
 
         }
     );
-
-
-    /* =====================================================
-       START
-    ===================================================== */
 
     showQuestion();
 
