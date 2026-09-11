@@ -1,810 +1,854 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>What Kind of Mom Are You? | MomYouNeedThis</title>
-
-    <meta
-        name="description"
-        content="Take the totally scientific Mom Universe quiz and discover your official mom classification."
-    >
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-
-    <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin
-    >
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap"
-        rel="stylesheet"
-    >
-
-    <link rel="stylesheet" href="style.css">
-
-    <style>
-
-        /* =====================================================
-           MOM UNIVERSE QUIZ
-        ===================================================== */
-
+<meta charset="UTF-8">
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+<title>What Kind of Mom Are You? | MomYouNeedThis</title>
+<meta
+    name="description"
+    content="Take the totally scientific Mom Universe quiz and discover your official mom classification."
+>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+>
+<link
+    href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap"
+    rel="stylesheet"
+>
+<link rel="stylesheet" href="style.css">
+<style>
+    /* =====================================================
+       MOM UNIVERSE QUIZ
+    ===================================================== */
+    .mom-quiz-page{
+        padding:20px 0 50px;
+        text-align:center;
+    }
+    .quiz-hero{
+        max-width:720px;
+        margin:0 auto 28px;
+    }
+    .quiz-badge{
+        display:inline-flex;
+        align-items:center;
+        justify-content:center;
+        margin-bottom:13px;
+        padding:8px 16px;
+        border-radius:999px;
+        background:#fff0f5;
+        color:#d6537c;
+        font-size:11px;
+        font-weight:900;
+        letter-spacing:.7px;
+    }
+    .quiz-hero h1{
+        margin:0;
+        color:#332b2b;
+        font-size:clamp(38px,6vw,56px);
+        line-height:1.05;
+        font-weight:900;
+    }
+    .quiz-hero h1 span{
+        display:block;
+        color:#e89aaa;
+    }
+    .quiz-hero p{
+        max-width:600px;
+        margin:18px auto 0;
+        color:#666;
+        font-size:17px;
+        line-height:1.6;
+    }
+    .quiz-disclaimer{
+        margin-top:10px;
+        color:#aaa;
+        font-size:11px;
+        font-weight:700;
+    }
+    /* =====================================================
+       QUIZ CONTAINER
+    ===================================================== */
+    .quiz-container{
+        max-width:760px;
+        margin:0 auto;
+        background:#fff;
+        border-radius:32px;
+        padding:30px;
+        box-shadow:0 14px 35px rgba(0,0,0,.06);
+        border:1px solid #f1e5e8;
+    }
+    /* =====================================================
+       PROGRESS
+    ===================================================== */
+    .quiz-progress-wrap{
+        margin-bottom:28px;
+    }
+    .quiz-progress-top{
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        margin-bottom:8px;
+        color:#999;
+        font-size:11px;
+        font-weight:900;
+        letter-spacing:.5px;
+    }
+    .quiz-progress-bar{
+        width:100%;
+        height:8px;
+        overflow:hidden;
+        background:#f6edf0;
+        border-radius:999px;
+    }
+    .quiz-progress-fill{
+        width:12.5%;
+        height:100%;
+        background:#e89aaa;
+        border-radius:999px;
+        transition:width .3s ease;
+    }
+    /* =====================================================
+       QUESTION
+    ===================================================== */
+    .quiz-question{
+        animation:quizQuestionIn .35s ease;
+    }
+    .quiz-question-number{
+        display:inline-block;
+        margin-bottom:12px;
+        color:#d97f95;
+        font-size:10px;
+        font-weight:900;
+        letter-spacing:1px;
+    }
+    .quiz-question h2{
+        max-width:600px;
+        margin:0 auto 25px;
+        color:#1d4f91;
+        font-size:clamp(24px,4vw,34px);
+        line-height:1.2;
+        font-weight:900;
+    }
+    /* =====================================================
+       ANSWERS
+    ===================================================== */
+    .quiz-answers{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:12px;
+        max-width:650px;
+        margin:0 auto;
+    }
+    .quiz-answer{
+        width:100%;
+        min-height:82px;
+        padding:16px;
+        display:flex;
+        align-items:center;
+        gap:13px;
+        background:#fff8fb;
+        border:1px solid #f1dfe5;
+        border-radius:19px;
+        color:#332b2b;
+        text-align:left;
+        font-family:'Nunito',sans-serif;
+        font-size:14px;
+        font-weight:900;
+        line-height:1.35;
+        cursor:pointer;
+        transition:
+            transform .2s ease,
+            background .2s ease,
+            border-color .2s ease,
+            box-shadow .2s ease;
+    }
+    .quiz-answer:hover{
+        transform:translateY(-3px);
+        background:#fff;
+        border-color:#e89aaa;
+        box-shadow:0 8px 20px rgba(0,0,0,.07);
+    }
+    .quiz-answer-icon{
+        flex:0 0 43px;
+        width:43px;
+        height:43px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        background:#fff;
+        border-radius:14px;
+        font-size:21px;
+    }
+    .quiz-answer-text{
+        flex:1;
+    }
+    /* =====================================================
+       RESULT
+    ===================================================== */
+    .quiz-result{
+        display:none;
+        animation:quizQuestionIn .45s ease;
+    }
+    .quiz-result.show{
+        display:block;
+    }
+    .quiz-result-badge{
+        display:inline-flex;
+        padding:8px 15px;
+        border-radius:999px;
+        background:#fff0f5;
+        color:#d6537c;
+        font-size:10px;
+        font-weight:900;
+        letter-spacing:.8px;
+    }
+    .quiz-result-icon{
+        width:105px;
+        height:105px;
+        margin:20px auto 15px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        background:#fff0f5;
+        border:1px solid #f3d9e2;
+        border-radius:30px;
+        font-size:55px;
+        box-shadow:0 10px 25px rgba(0,0,0,.06);
+    }
+    .quiz-result h2{
+        margin:0;
+        color:#1d4f91;
+        font-size:clamp(30px,5vw,44px);
+        line-height:1.05;
+        font-weight:900;
+    }
+    .quiz-result-subtitle{
+        max-width:560px;
+        margin:12px auto 22px;
+        color:#666;
+        font-size:16px;
+        line-height:1.55;
+    }
+    /* =====================================================
+       RESULT STATS
+    ===================================================== */
+    .quiz-stats{
+        max-width:600px;
+        margin:0 auto 22px;
+        display:grid;
+        grid-template-columns:repeat(3,1fr);
+        gap:10px;
+    }
+    .quiz-stat{
+        padding:15px 10px;
+        background:#f8f9fc;
+        border:1px solid #edf0f5;
+        border-radius:17px;
+    }
+    .quiz-stat strong{
+        display:block;
+        color:#1d4f91;
+        font-size:20px;
+        font-weight:900;
+    }
+    .quiz-stat span{
+        display:block;
+        margin-top:3px;
+        color:#888;
+        font-size:9px;
+        font-weight:900;
+        line-height:1.3;
+    }
+    /* =====================================================
+       SPECIAL ABILITY
+    ===================================================== */
+    .quiz-special{
+        max-width:600px;
+        margin:0 auto 22px;
+        padding:20px;
+        background:#fff8e4;
+        border:1px solid #f5e3a8;
+        border-radius:20px;
+    }
+    .quiz-special-label{
+        display:block;
+        margin-bottom:5px;
+        color:#b58b15;
+        font-size:9px;
+        font-weight:900;
+        letter-spacing:.8px;
+    }
+    .quiz-special strong{
+        color:#6d5720;
+        font-size:16px;
+        line-height:1.4;
+    }
+    /* =====================================================
+       THREAT LEVEL
+    ===================================================== */
+    .quiz-threat{
+        max-width:600px;
+        margin:0 auto 25px;
+        padding:15px 18px;
+        background:#fff7fa;
+        border:1px solid #f3d9e2;
+        border-radius:18px;
+    }
+    .quiz-threat-label{
+        color:#999;
+        font-size:9px;
+        font-weight:900;
+        letter-spacing:.9px;
+    }
+    .quiz-threat strong{
+        display:block;
+        margin-top:4px;
+        color:#d9577d;
+        font-size:15px;
+        font-weight:900;
+    }
+    /* =====================================================
+       SHARE AREA
+    ===================================================== */
+    .quiz-share-box{
+        max-width:600px;
+        margin:0 auto;
+        padding-top:22px;
+        border-top:1px solid #f0e7e9;
+    }
+    .quiz-share-title{
+        margin-bottom:5px;
+        color:#333;
+        font-size:18px;
+        font-weight:900;
+    }
+    .quiz-share-text{
+        margin-bottom:15px;
+        color:#888;
+        font-size:12px;
+        line-height:1.5;
+    }
+    .quiz-share-buttons{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:10px;
+    }
+    .quiz-share-button{
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        gap:7px;
+        min-height:50px;
+        padding:12px 15px;
+        border:none;
+        border-radius:15px;
+        font-family:'Nunito',sans-serif;
+        font-size:12px;
+        font-weight:900;
+        cursor:pointer;
+        transition:.2s ease;
+    }
+    .quiz-share-button:hover{
+        transform:translateY(-2px);
+    }
+    .quiz-share-primary{
+        background:#e89aaa;
+        color:#fff;
+    }
+    .quiz-share-secondary{
+        background:#1d4f91;
+        color:#fff;
+    }
+    .quiz-share-light{
+        background:#fff8fb;
+        color:#d05a82;
+        border:1px solid #f1dfe5;
+    }
+    .quiz-share-full{
+        grid-column:1 / -1;
+    }
+    /* =====================================================
+       MOM UNIVERSE NEXT STEP
+    ===================================================== */
+    .quiz-next-section{
+        max-width:650px;
+        margin:32px auto 0;
+        padding:28px 20px 20px;
+        border-top:1px solid #f0e7e9;
+    }
+    .quiz-next-badge{
+        display:inline-flex;
+        align-items:center;
+        justify-content:center;
+        padding:7px 13px;
+        border-radius:999px;
+        background:#eef5ff;
+        color:#1d4f91;
+        font-size:9px;
+        font-weight:900;
+        letter-spacing:.8px;
+    }
+    .quiz-next-section h3{
+        margin:13px 0 5px;
+        color:#332b2b;
+        font-size:clamp(23px,4vw,30px);
+        line-height:1.15;
+        font-weight:900;
+    }
+    .quiz-next-intro{
+        max-width:500px;
+        margin:0 auto 20px;
+        color:#888;
+        font-size:12px;
+        line-height:1.55;
+    }
+    .quiz-next-featured{
+        display:block;
+        padding:22px 20px;
+        background:#fff8fb;
+        border:1px solid #f1dfe5;
+        border-radius:22px;
+        color:#332b2b;
+        text-decoration:none;
+        transition:
+            transform .2s ease,
+            box-shadow .2s ease,
+            border-color .2s ease;
+    }
+    .quiz-next-featured:hover{
+        transform:translateY(-4px);
+        border-color:#e89aaa;
+        box-shadow:0 10px 25px rgba(0,0,0,.07);
+    }
+    .quiz-next-featured-icon{
+        width:55px;
+        height:55px;
+        margin:0 auto 10px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        background:#fff;
+        border-radius:17px;
+        font-size:28px;
+    }
+    .quiz-next-featured-label{
+        display:block;
+        margin-bottom:5px;
+        color:#d05a82;
+        font-size:9px;
+        font-weight:900;
+        letter-spacing:.8px;
+    }
+    .quiz-next-featured-title{
+        display:block;
+        color:#1d4f91;
+        font-size:20px;
+        font-weight:900;
+    }
+    .quiz-next-featured-text{
+        display:block;
+        max-width:480px;
+        margin:6px auto 12px;
+        color:#777;
+        font-size:12px;
+        line-height:1.5;
+    }
+    .quiz-next-featured-cta{
+        display:inline-block;
+        color:#d05a82;
+        font-size:11px;
+        font-weight:900;
+    }
+    .quiz-next-grid{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:10px;
+        margin-top:10px;
+    }
+    .quiz-next-card{
+        display:block;
+        padding:17px 13px;
+        background:#fff;
+        border:1px solid #edf0f5;
+        border-radius:18px;
+        color:#332b2b;
+        text-decoration:none;
+        transition:
+            transform .2s ease,
+            box-shadow .2s ease,
+            border-color .2s ease;
+    }
+    .quiz-next-card:hover{
+        transform:translateY(-3px);
+        border-color:#e89aaa;
+        box-shadow:0 8px 20px rgba(0,0,0,.06);
+    }
+    .quiz-next-card-icon{
+        display:block;
+        margin-bottom:7px;
+        font-size:25px;
+    }
+    .quiz-next-card-title{
+        display:block;
+        color:#1d4f91;
+        font-size:13px;
+        font-weight:900;
+    }
+    .quiz-next-card-text{
+        display:block;
+        margin-top:4px;
+        color:#999;
+        font-size:10px;
+        line-height:1.4;
+    }
+    /* =====================================================
+       RESULT NOTE
+    ===================================================== */
+    .quiz-result-note{
+        margin-top:18px;
+        color:#aaa;
+        font-size:10px;
+        line-height:1.5;
+    }
+    /* =====================================================
+       RETAKE
+    ===================================================== */
+    .quiz-retake{
+        margin-top:15px;
+        padding:0;
+        background:none;
+        color:#999;
+        font-family:'Nunito',sans-serif;
+        font-size:11px;
+        font-weight:900;
+        border:none;
+        cursor:pointer;
+    }
+    .quiz-retake:hover{
+        color:#d05a82;
+        transform:none;
+        box-shadow:none;
+    }
+    /* =====================================================
+       MOBILE
+    ===================================================== */
+    @media(max-width:600px){
         .mom-quiz-page{
-            padding:20px 0 50px;
-            text-align:center;
+            padding-top:10px;
         }
-
-        .quiz-hero{
-            max-width:720px;
-            margin:0 auto 28px;
-        }
-
-        .quiz-badge{
-            display:inline-flex;
-            align-items:center;
-            justify-content:center;
-            margin-bottom:13px;
-            padding:8px 16px;
-            border-radius:999px;
-            background:#fff0f5;
-            color:#d6537c;
-            font-size:11px;
-            font-weight:900;
-            letter-spacing:.7px;
-        }
-
         .quiz-hero h1{
-            margin:0;
-            color:#332b2b;
-            font-size:clamp(38px,6vw,56px);
-            line-height:1.05;
-            font-weight:900;
+            font-size:39px;
         }
-
-        .quiz-hero h1 span{
-            display:block;
-            color:#e89aaa;
-        }
-
         .quiz-hero p{
-            max-width:600px;
-            margin:18px auto 0;
-            color:#666;
-            font-size:17px;
-            line-height:1.6;
-        }
-
-        .quiz-disclaimer{
-            margin-top:10px;
-            color:#aaa;
-            font-size:11px;
-            font-weight:700;
-        }
-
-
-        /* =====================================================
-           QUIZ CONTAINER
-        ===================================================== */
-
-        .quiz-container{
-            max-width:760px;
-            margin:0 auto;
-            background:#fff;
-            border-radius:32px;
-            padding:30px;
-            box-shadow:0 14px 35px rgba(0,0,0,.06);
-            border:1px solid #f1e5e8;
-        }
-
-
-        /* =====================================================
-           PROGRESS
-        ===================================================== */
-
-        .quiz-progress-wrap{
-            margin-bottom:28px;
-        }
-
-        .quiz-progress-top{
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            margin-bottom:8px;
-            color:#999;
-            font-size:11px;
-            font-weight:900;
-            letter-spacing:.5px;
-        }
-
-        .quiz-progress-bar{
-            width:100%;
-            height:8px;
-            overflow:hidden;
-            background:#f6edf0;
-            border-radius:999px;
-        }
-
-        .quiz-progress-fill{
-            width:12.5%;
-            height:100%;
-            background:#e89aaa;
-            border-radius:999px;
-            transition:width .3s ease;
-        }
-
-
-        /* =====================================================
-           QUESTION
-        ===================================================== */
-
-        .quiz-question{
-            animation:quizQuestionIn .35s ease;
-        }
-
-        .quiz-question-number{
-            display:inline-block;
-            margin-bottom:12px;
-            color:#d97f95;
-            font-size:10px;
-            font-weight:900;
-            letter-spacing:1px;
-        }
-
-        .quiz-question h2{
-            max-width:600px;
-            margin:0 auto 25px;
-            color:#1d4f91;
-            font-size:clamp(24px,4vw,34px);
-            line-height:1.2;
-            font-weight:900;
-        }
-
-
-        /* =====================================================
-           ANSWERS
-        ===================================================== */
-
-        .quiz-answers{
-            display:grid;
-            grid-template-columns:1fr 1fr;
-            gap:12px;
-            max-width:650px;
-            margin:0 auto;
-        }
-
-        .quiz-answer{
-            width:100%;
-            min-height:82px;
-            padding:16px;
-            display:flex;
-            align-items:center;
-            gap:13px;
-            background:#fff8fb;
-            border:1px solid #f1dfe5;
-            border-radius:19px;
-            color:#332b2b;
-            text-align:left;
-            font-family:'Nunito',sans-serif;
-            font-size:14px;
-            font-weight:900;
-            line-height:1.35;
-            cursor:pointer;
-            transition:
-                transform .2s ease,
-                background .2s ease,
-                border-color .2s ease,
-                box-shadow .2s ease;
-        }
-
-        .quiz-answer:hover{
-            transform:translateY(-3px);
-            background:#fff;
-            border-color:#e89aaa;
-            box-shadow:0 8px 20px rgba(0,0,0,.07);
-        }
-
-        .quiz-answer-icon{
-            flex:0 0 43px;
-            width:43px;
-            height:43px;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            background:#fff;
-            border-radius:14px;
-            font-size:21px;
-        }
-
-        .quiz-answer-text{
-            flex:1;
-        }
-
-
-        /* =====================================================
-           RESULT
-        ===================================================== */
-
-        .quiz-result{
-            display:none;
-            animation:quizQuestionIn .45s ease;
-        }
-
-        .quiz-result.show{
-            display:block;
-        }
-
-        .quiz-result-badge{
-            display:inline-flex;
-            padding:8px 15px;
-            border-radius:999px;
-            background:#fff0f5;
-            color:#d6537c;
-            font-size:10px;
-            font-weight:900;
-            letter-spacing:.8px;
-        }
-
-        .quiz-result-icon{
-            width:105px;
-            height:105px;
-            margin:20px auto 15px;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            background:#fff0f5;
-            border:1px solid #f3d9e2;
-            border-radius:30px;
-            font-size:55px;
-            box-shadow:0 10px 25px rgba(0,0,0,.06);
-        }
-
-        .quiz-result h2{
-            margin:0;
-            color:#1d4f91;
-            font-size:clamp(30px,5vw,44px);
-            line-height:1.05;
-            font-weight:900;
-        }
-
-        .quiz-result-subtitle{
-            max-width:560px;
-            margin:12px auto 22px;
-            color:#666;
-            font-size:16px;
-            line-height:1.55;
-        }
-
-
-        /* =====================================================
-           RESULT STATS
-        ===================================================== */
-
-        .quiz-stats{
-            max-width:600px;
-            margin:0 auto 22px;
-            display:grid;
-            grid-template-columns:repeat(3,1fr);
-            gap:10px;
-        }
-
-        .quiz-stat{
-            padding:15px 10px;
-            background:#f8f9fc;
-            border:1px solid #edf0f5;
-            border-radius:17px;
-        }
-
-        .quiz-stat strong{
-            display:block;
-            color:#1d4f91;
-            font-size:20px;
-            font-weight:900;
-        }
-
-        .quiz-stat span{
-            display:block;
-            margin-top:3px;
-            color:#888;
-            font-size:9px;
-            font-weight:900;
-            line-height:1.3;
-        }
-
-
-        /* =====================================================
-           SPECIAL ABILITY
-        ===================================================== */
-
-        .quiz-special{
-            max-width:600px;
-            margin:0 auto 22px;
-            padding:20px;
-            background:#fff8e4;
-            border:1px solid #f5e3a8;
-            border-radius:20px;
-        }
-
-        .quiz-special-label{
-            display:block;
-            margin-bottom:5px;
-            color:#b58b15;
-            font-size:9px;
-            font-weight:900;
-            letter-spacing:.8px;
-        }
-
-        .quiz-special strong{
-            color:#6d5720;
-            font-size:16px;
-            line-height:1.4;
-        }
-
-
-        /* =====================================================
-           THREAT LEVEL
-        ===================================================== */
-
-        .quiz-threat{
-            max-width:600px;
-            margin:0 auto 25px;
-            padding:15px 18px;
-            background:#fff7fa;
-            border:1px solid #f3d9e2;
-            border-radius:18px;
-        }
-
-        .quiz-threat-label{
-            color:#999;
-            font-size:9px;
-            font-weight:900;
-            letter-spacing:.9px;
-        }
-
-        .quiz-threat strong{
-            display:block;
-            margin-top:4px;
-            color:#d9577d;
             font-size:15px;
-            font-weight:900;
         }
-
-
-        /* =====================================================
-           SHARE AREA
-        ===================================================== */
-
-        .quiz-share-box{
-            max-width:600px;
-            margin:0 auto;
-            padding-top:22px;
-            border-top:1px solid #f0e7e9;
+        .quiz-container{
+            padding:22px 16px;
+            border-radius:25px;
         }
-
-        .quiz-share-title{
-            margin-bottom:5px;
-            color:#333;
-            font-size:18px;
-            font-weight:900;
+        .quiz-question h2{
+            font-size:25px;
+            margin-bottom:20px;
         }
-
-        .quiz-share-text{
-            margin-bottom:15px;
-            color:#888;
-            font-size:12px;
-            line-height:1.5;
+        .quiz-answers{
+            grid-template-columns:1fr;
+            gap:9px;
         }
-
-        .quiz-share-buttons{
-            display:grid;
-            grid-template-columns:1fr 1fr;
-            gap:10px;
+        .quiz-answer{
+            min-height:70px;
+            padding:13px;
+            font-size:13px;
         }
-
-        .quiz-share-button{
-            display:flex;
-            align-items:center;
-            justify-content:center;
+        .quiz-answer-icon{
+            flex-basis:39px;
+            width:39px;
+            height:39px;
+            font-size:19px;
+        }
+        .quiz-stats{
             gap:7px;
-            min-height:50px;
-            padding:12px 15px;
-            border:none;
-            border-radius:15px;
-            font-family:'Nunito',sans-serif;
-            font-size:12px;
-            font-weight:900;
-            cursor:pointer;
-            transition:.2s ease;
         }
-
-        .quiz-share-button:hover{
-            transform:translateY(-2px);
+        .quiz-stat{
+            padding:13px 6px;
         }
-
-        .quiz-share-primary{
-            background:#e89aaa;
-            color:#fff;
+        .quiz-stat strong{
+            font-size:18px;
         }
-
-        .quiz-share-secondary{
-            background:#1d4f91;
-            color:#fff;
+        .quiz-stat span{
+            font-size:8px;
         }
-
-        .quiz-share-light{
-            background:#fff8fb;
-            color:#d05a82;
-            border:1px solid #f1dfe5;
+        .quiz-share-buttons{
+            grid-template-columns:1fr;
         }
-
         .quiz-share-full{
-            grid-column:1 / -1;
+            grid-column:auto;
         }
-
-
-        /* =====================================================
-           RESULT NOTE
-        ===================================================== */
-
-        .quiz-result-note{
-            margin-top:18px;
-            color:#aaa;
-            font-size:10px;
-            line-height:1.5;
+        .quiz-next-section{
+            padding-left:5px;
+            padding-right:5px;
         }
-
-
-        /* =====================================================
-           RETAKE
-        ===================================================== */
-
-        .quiz-retake{
-            margin-top:15px;
-            padding:0;
-            background:none;
-            color:#999;
-            font-family:'Nunito',sans-serif;
-            font-size:11px;
-            font-weight:900;
-            border:none;
-            cursor:pointer;
+        .quiz-next-grid{
+            grid-template-columns:1fr;
         }
-
-        .quiz-retake:hover{
-            color:#d05a82;
-            transform:none;
-            box-shadow:none;
+    }
+    /* =====================================================
+       ANIMATION
+    ===================================================== */
+    @keyframes quizQuestionIn{
+        from{
+            opacity:0;
+            transform:translateY(12px);
         }
-
-
-        /* =====================================================
-           MOBILE
-        ===================================================== */
-
-        @media(max-width:600px){
-
-            .mom-quiz-page{
-                padding-top:10px;
-            }
-
-            .quiz-hero h1{
-                font-size:39px;
-            }
-
-            .quiz-hero p{
-                font-size:15px;
-            }
-
-            .quiz-container{
-                padding:22px 16px;
-                border-radius:25px;
-            }
-
-            .quiz-question h2{
-                font-size:25px;
-                margin-bottom:20px;
-            }
-
-            .quiz-answers{
-                grid-template-columns:1fr;
-                gap:9px;
-            }
-
-            .quiz-answer{
-                min-height:70px;
-                padding:13px;
-                font-size:13px;
-            }
-
-            .quiz-answer-icon{
-                flex-basis:39px;
-                width:39px;
-                height:39px;
-                font-size:19px;
-            }
-
-            .quiz-stats{
-                gap:7px;
-            }
-
-            .quiz-stat{
-                padding:13px 6px;
-            }
-
-            .quiz-stat strong{
-                font-size:18px;
-            }
-
-            .quiz-stat span{
-                font-size:8px;
-            }
-
-            .quiz-share-buttons{
-                grid-template-columns:1fr;
-            }
-
-            .quiz-share-full{
-                grid-column:auto;
-            }
-
+        to{
+            opacity:1;
+            transform:translateY(0);
         }
-
-
-        /* =====================================================
-           ANIMATION
-        ===================================================== */
-
-        @keyframes quizQuestionIn{
-
-            from{
-                opacity:0;
-                transform:translateY(12px);
-            }
-
-            to{
-                opacity:1;
-                transform:translateY(0);
-            }
-
-        }
-
-    </style>
-
+    }
+</style>
 </head>
-
 <body>
-
 <div class="page">
-
-    <main class="mom-quiz-page">
-
-        <section class="quiz-hero">
-
-            <img
-                src="assets/logo.svg"
-                alt="MomYouNeedThis"
-                class="logo"
-            >
-
-            <div class="quiz-badge">
-                🌎 MOM UNIVERSE CLASSIFICATION SYSTEM
-            </div>
-
-            <h1>
-                What Kind of Mom
-                <span>Are You?</span>
-            </h1>
-
-            <p>
-                Answer 8 completely scientific questions and discover
-                your official Mom Universe classification.
-            </p>
-
-            <div class="quiz-disclaimer">
-                🔬 The science is questionable. The results are suspiciously accurate.
-            </div>
-
-        </section>
-
-        <section class="quiz-container" id="quizContainer">
-
-            <div class="quiz-progress-wrap" id="progressWrap">
-
-                <div class="quiz-progress-top">
-
-                    <span id="progressText">
-                        QUESTION 1 OF 8
-                    </span>
-
-                    <span id="progressPercent">
-                        13%
-                    </span>
-
-                </div>
-
-                <div class="quiz-progress-bar">
-
-                    <div
-                        class="quiz-progress-fill"
-                        id="progressFill"
-                    ></div>
-
-                </div>
-
-            </div>
-
-            <div id="questionArea"></div>
-
-            <div
-                class="quiz-result"
-                id="resultArea"
-            >
-
-                <div class="quiz-result-badge">
-                    ✨ OFFICIAL MOM UNIVERSE CLASSIFICATION
-                </div>
-
-                <div
-                    class="quiz-result-icon"
-                    id="resultIcon"
-                >
-                    🧪
-                </div>
-
-                <h2 id="resultTitle">
-                    Chaos Scientist
-                </h2>
-
-                <p
-                    class="quiz-result-subtitle"
-                    id="resultSubtitle"
-                ></p>
-
-                <div
-                    class="quiz-stats"
-                    id="resultStats"
-                ></div>
-
-                <div class="quiz-special">
-
-                    <span class="quiz-special-label">
-                        SPECIAL ABILITY
-                    </span>
-
-                    <strong id="resultAbility"></strong>
-
-                </div>
-
-                <div class="quiz-threat">
-
-                    <span class="quiz-threat-label">
-                        MOM THREAT LEVEL
-                    </span>
-
-                    <strong id="resultThreat"></strong>
-
-                </div>
-
-                <div class="quiz-share-box">
-
-                    <div class="quiz-share-title">
-                        What are YOU?
-                    </div>
-
-                    <div class="quiz-share-text">
-                        Share your classification and send the next mom into the universe.
-                    </div>
-
-                    <div class="quiz-share-buttons">
-
-                        <button
-                            type="button"
-                            class="quiz-share-button quiz-share-primary"
-                            id="shareButton"
-                        >
-                            📤 SHARE MY RESULT
-                        </button>
-
-                        <button
-                            type="button"
-                            class="quiz-share-button quiz-share-secondary"
-                            id="saveButton"
-                        >
-                            🖼️ SAVE RESULT
-                        </button>
-
-                        <button
-                            type="button"
-                            class="quiz-share-button quiz-share-light quiz-share-full"
-                            id="copyButton"
-                        >
-                            🔗 COPY QUIZ LINK
-                        </button>
-
-                    </div>
-
-                    <div class="quiz-result-note">
-                        Your result card includes the quiz link so another mom can take the test.
-                    </div>
-
-                </div>
-
-                <button
-                    type="button"
-                    class="quiz-retake"
-                    id="retakeButton"
-                >
-                    ↻ TAKE THE QUIZ AGAIN
-                </button>
-
-            </div>
-
-        </section>
-
-    </main>
-
-    <footer>
-
-        <div class="footer-logo">
-
-            <img
-                src="assets/logo.svg"
-                alt="MomYouNeedThis"
-            >
-
+<main class="mom-quiz-page">
+    <section class="quiz-hero">
+        <img
+            src="assets/logo.svg"
+            alt="MomYouNeedThis"
+            class="logo"
+        >
+        <div class="quiz-badge">
+            🌎 MOM UNIVERSE CLASSIFICATION SYSTEM
         </div>
-
-        <h3>
-            MomYouNeedThis
-        </h3>
-
+        <h1>
+            What Kind of Mom
+            <span>Are You?</span>
+        </h1>
         <p>
-            Welcome to the Mom Universe.
+            Answer 8 completely scientific questions and discover
+            your official Mom Universe classification.
         </p>
-
-        <div class="footer-links">
-
-            <a href="index.html">Home</a>
-
-            <a href="free-mom-resources.html">
-                Free Resources
-            </a>
-
-            <a href="mom-lab.html">
-                Mom Lab
-            </a>
-
-            <a href="amazon-favorites.html">
-                Mom Battles
-            </a>
-
+        <div class="quiz-disclaimer">
+            🔬 The science is questionable. The results are suspiciously accurate.
         </div>
-
-        <div class="footer-bottom">
-
-            <p>
-                © 2026 MomYouNeedThis
-            </p>
-
+    </section>
+    <section class="quiz-container" id="quizContainer">
+        <div class="quiz-progress-wrap" id="progressWrap">
+            <div class="quiz-progress-top">
+                <span id="progressText">
+                    QUESTION 1 OF 8
+                </span>
+                <span id="progressPercent">
+                    13%
+                </span>
+            </div>
+            <div class="quiz-progress-bar">
+                <div
+                    class="quiz-progress-fill"
+                    id="progressFill"
+                ></div>
+            </div>
         </div>
-
-    </footer>
-
+        <div id="questionArea"></div>
+        <div
+            class="quiz-result"
+            id="resultArea"
+        >
+            <div class="quiz-result-badge">
+                ✨ OFFICIAL MOM UNIVERSE CLASSIFICATION
+            </div>
+            <div
+                class="quiz-result-icon"
+                id="resultIcon"
+            >
+                🧪
+            </div>
+            <h2 id="resultTitle">
+                Chaos Scientist
+            </h2>
+            <p
+                class="quiz-result-subtitle"
+                id="resultSubtitle"
+            ></p>
+            <div
+                class="quiz-stats"
+                id="resultStats"
+            ></div>
+            <div class="quiz-special">
+                <span class="quiz-special-label">
+                    SPECIAL ABILITY
+                </span>
+                <strong id="resultAbility"></strong>
+            </div>
+            <div class="quiz-threat">
+                <span class="quiz-threat-label">
+                    MOM THREAT LEVEL
+                </span>
+                <strong id="resultThreat"></strong>
+            </div>
+            <div class="quiz-share-box">
+                <div class="quiz-share-title">
+                    What are YOU?
+                </div>
+                <div class="quiz-share-text">
+                    Share your classification and send the next mom into the universe.
+                </div>
+                <div class="quiz-share-buttons">
+                    <button
+                        type="button"
+                        class="quiz-share-button quiz-share-primary"
+                        id="shareButton"
+                    >
+                        📤 SHARE MY RESULT
+                    </button>
+                    <button
+                        type="button"
+                        class="quiz-share-button quiz-share-secondary"
+                        id="saveButton"
+                    >
+                        🖼️ SAVE RESULT
+                    </button>
+                    <button
+                        type="button"
+                        class="quiz-share-button quiz-share-light quiz-share-full"
+                        id="copyButton"
+                    >
+                        🔗 COPY QUIZ LINK
+                    </button>
+                </div>
+                <div class="quiz-result-note">
+                    Your result card includes the quiz link so another mom can take the test.
+                </div>
+            </div>
+            <!-- =================================================
+                 NEW MOM UNIVERSE NEXT STEP
+            ================================================= -->
+            <section class="quiz-next-section">
+                <div class="quiz-next-badge">
+                    🌎 MOM UNIVERSE TRANSMISSION
+                </div>
+                <h3>
+                    You've Been Classified.
+                </h3>
+                <p
+                    class="quiz-next-intro"
+                    id="nextIntro"
+                >
+                    But your assignment isn't over...
+                </p>
+                <a
+                    href="mom-lab.html"
+                    class="quiz-next-featured"
+                    id="nextFeatured"
+                >
+                    <span
+                        class="quiz-next-featured-icon"
+                        id="nextFeaturedIcon"
+                    >
+                        🧪
+                    </span>
+                    <span class="quiz-next-featured-label">
+                        YOUR NEXT ASSIGNMENT
+                    </span>
+                    <span
+                        class="quiz-next-featured-title"
+                        id="nextFeaturedTitle"
+                    >
+                        ENTER MOM LAB
+                    </span>
+                    <span
+                        class="quiz-next-featured-text"
+                        id="nextFeaturedText"
+                    >
+                        Ridiculous tests. Suspicious science. Surprisingly useful results.
+                    </span>
+                    <span
+                        class="quiz-next-featured-cta"
+                        id="nextFeaturedCta"
+                    >
+                        🧪 ENTER THE LAB →
+                    </span>
+                </a>
+                <div class="quiz-next-grid">
+                    <a
+                        href="mom-emergency-broadcast.html"
+                        class="quiz-next-card"
+                    >
+                        <span class="quiz-next-card-icon">
+                            🚨
+                        </span>
+                        <span class="quiz-next-card-title">
+                            MOM EMERGENCY BROADCAST
+                        </span>
+                        <span class="quiz-next-card-text">
+                            Everything is under control. Probably.
+                        </span>
+                    </a>
+                    <a
+                        href="free-mom-resources.html"
+                        class="quiz-next-card"
+                    >
+                        <span class="quiz-next-card-icon">
+                            🎁
+                        </span>
+                        <span class="quiz-next-card-title">
+                            FREE MOM STUFF
+                        </span>
+                        <span class="quiz-next-card-text">
+                            500+ free printables, tools & useful things.
+                        </span>
+                    </a>
+                </div>
+            </section>
+            <button
+                type="button"
+                class="quiz-retake"
+                id="retakeButton"
+            >
+                ↻ TAKE THE QUIZ AGAIN
+            </button>
+        </div>
+    </section>
+</main>
+<footer>
+    <div class="footer-logo">
+        <img
+            src="assets/logo.svg"
+            alt="MomYouNeedThis"
+        >
+    </div>
+    <h3>
+        MomYouNeedThis
+    </h3>
+    <p>
+        Welcome to the Mom Universe.
+    </p>
+    <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="free-mom-resources.html">
+            Free Resources
+        </a>
+        <a href="mom-lab.html">
+            Mom Lab
+        </a>
+        <a href="amazon-favorites.html">
+            Mom Battles
+        </a>
+    </div>
+    <div class="footer-bottom">
+        <p>
+            © 2026 MomYouNeedThis
+        </p>
+    </div>
+</footer>
 </div>
-
 <script>
-
     const quizUrl = 'https://momyouneedthis.com/mom-quiz.html';
-
     const questions = [
-
         {
             question: 'Your toddler is screaming because you gave them the WRONG cup. What do you do?',
             answers: [
@@ -830,7 +874,6 @@
                 }
             ]
         },
-
         {
             question: 'It is 3:17 AM and your child suddenly needs a very specific stuffed animal.',
             answers: [
@@ -856,7 +899,6 @@
                 }
             ]
         },
-
         {
             question: 'Your child refuses dinner because the food is touching.',
             answers: [
@@ -882,7 +924,6 @@
                 }
             ]
         },
-
         {
             question: 'You have 12 minutes to leave the house.',
             answers: [
@@ -908,7 +949,6 @@
                 }
             ]
         },
-
         {
             question: 'Your child asks “WHY?” for the 47th time.',
             answers: [
@@ -934,7 +974,6 @@
                 }
             ]
         },
-
         {
             question: 'Your child throws something in public.',
             answers: [
@@ -960,7 +999,6 @@
                 }
             ]
         },
-
         {
             question: 'You finally get 30 minutes alone.',
             answers: [
@@ -986,7 +1024,6 @@
                 }
             ]
         },
-
         {
             question: 'Which sentence sounds most like you?',
             answers: [
@@ -1012,11 +1049,8 @@
                 }
             ]
         }
-
     ];
-
     const results = {
-
         diplomat: {
             icon: '🧸',
             title: 'Snack Negotiator',
@@ -1029,7 +1063,6 @@
                 ['Saying “Please Stop”', '∞%']
             ]
         },
-
         scientist: {
             icon: '🧪',
             title: 'Chaos Scientist',
@@ -1042,7 +1075,6 @@
                 ['Normal Behavior', '12%']
             ]
         },
-
         commander: {
             icon: '🚨',
             title: 'Chaos Commander',
@@ -1055,7 +1087,6 @@
                 ['Patience Before Coffee', '4%']
             ]
         },
-
         ceo: {
             icon: '💼',
             title: 'Mom CEO',
@@ -1068,7 +1099,6 @@
                 ['Actual Free Time', '3%']
             ]
         },
-
         detective: {
             icon: '🔎',
             title: 'Toddler Detective',
@@ -1081,7 +1111,6 @@
                 ['Unsolved Mysteries', '∞']
             ]
         },
-
         chaos: {
             icon: '🌪️',
             title: 'Chaos Survivor',
@@ -1094,11 +1123,61 @@
                 ['Following The Plan', '7%']
             ]
         }
-
     };
-
+    /* =====================================================
+       PERSONALIZED NEXT ASSIGNMENTS
+    ===================================================== */
+    const nextAssignments = {
+        diplomat: {
+            intro: 'Your negotiation skills have been documented. Mom Headquarters has another situation that may require your expertise.',
+            icon: '🚨',
+            title: 'HANDLE A MOM EMERGENCY',
+            text: 'You have successfully negotiated with toddlers. Now see what is happening at Mom Headquarters.',
+            cta: '🚨 REPORT TO MOM HEADQUARTERS →',
+            url: 'mom-emergency-broadcast.html'
+        },
+        scientist: {
+            intro: 'Your classification has raised several scientific concerns. There is only one logical next step.',
+            icon: '🧪',
+            title: 'ENTER MOM LAB',
+            text: 'Ridiculous tests. Suspicious science. Surprisingly useful results. Your kind of place.',
+            cta: '🧪 ENTER THE LAB →',
+            url: 'mom-lab.html'
+        },
+        commander: {
+            intro: 'Your command status has been confirmed. Unfortunately, Mom Headquarters has another situation.',
+            icon: '🚨',
+            title: 'YOUR NEXT EMERGENCY AWAITS',
+            text: 'Something has gone terribly wrong. You have been assigned to investigate.',
+            cta: '🚨 VIEW THE EMERGENCY →',
+            url: 'mom-emergency-broadcast.html'
+        },
+        ceo: {
+            intro: 'Your Mom CEO status has been confirmed. Naturally, you should inspect what the Mom Universe is currently testing.',
+            icon: '🧪',
+            title: 'ENTER MOM LAB',
+            text: 'Products are being tested under highly questionable conditions. Someone needs to review the results.',
+            cta: '🧪 REVIEW THE LAB RESULTS →',
+            url: 'mom-lab.html'
+        },
+        detective: {
+            intro: 'You asked too many questions. Fortunately, the Mom Universe has exactly the place for you.',
+            icon: '🧪',
+            title: 'INVESTIGATE MOM LAB',
+            text: 'Follow the evidence. Examine the results. Question everything. Especially the testing methodology.',
+            cta: '🔎 START INVESTIGATING →',
+            url: 'mom-lab.html'
+        },
+        chaos: {
+            intro: 'You survived the quiz. Barely. Your next assignment has already been issued.',
+            icon: '🚨',
+            title: 'ENTER THE MOM UNIVERSE',
+            text: 'Something is happening at Mom Headquarters. Honestly, nobody knows what. You should probably look.',
+            cta: '🚨 SEE WHAT IS HAPPENING →',
+            url: 'mom-emergency-broadcast.html'
+        }
+    };
     let currentQuestion = 0;
-
     const scores = {
         diplomat: 0,
         scientist: 0,
@@ -1107,296 +1186,213 @@
         detective: 0,
         chaos: 0
     };
-
     let currentResultKey = 'chaos';
-
     const questionArea =
         document.getElementById('questionArea');
-
     const progressWrap =
         document.getElementById('progressWrap');
-
     const progressText =
         document.getElementById('progressText');
-
     const progressPercent =
         document.getElementById('progressPercent');
-
     const progressFill =
         document.getElementById('progressFill');
-
     const resultArea =
         document.getElementById('resultArea');
-
     const resultIcon =
         document.getElementById('resultIcon');
-
     const resultTitle =
         document.getElementById('resultTitle');
-
     const resultSubtitle =
         document.getElementById('resultSubtitle');
-
     const resultStats =
         document.getElementById('resultStats');
-
     const resultAbility =
         document.getElementById('resultAbility');
-
     const resultThreat =
         document.getElementById('resultThreat');
-
     const shareButton =
         document.getElementById('shareButton');
-
     const saveButton =
         document.getElementById('saveButton');
-
     const copyButton =
         document.getElementById('copyButton');
-
     const retakeButton =
         document.getElementById('retakeButton');
-
+    const nextIntro =
+        document.getElementById('nextIntro');
+    const nextFeatured =
+        document.getElementById('nextFeatured');
+    const nextFeaturedIcon =
+        document.getElementById('nextFeaturedIcon');
+    const nextFeaturedTitle =
+        document.getElementById('nextFeaturedTitle');
+    const nextFeaturedText =
+        document.getElementById('nextFeaturedText');
+    const nextFeaturedCta =
+        document.getElementById('nextFeaturedCta');
     function showQuestion(){
-
         const question = questions[currentQuestion];
-
         const questionNumber = currentQuestion + 1;
-
         const percent =
             Math.round((questionNumber / questions.length) * 100);
-
         progressText.textContent =
             `QUESTION ${questionNumber} OF ${questions.length}`;
-
         progressPercent.textContent =
             `${percent}%`;
-
         progressFill.style.width =
             `${percent}%`;
-
         questionArea.innerHTML = '';
-
         const questionElement =
             document.createElement('div');
-
         questionElement.className =
             'quiz-question';
-
         const number =
             document.createElement('div');
-
         number.className =
             'quiz-question-number';
-
         number.textContent =
             `QUESTION ${questionNumber}`;
-
         const heading =
             document.createElement('h2');
-
         heading.textContent =
             question.question;
-
         const answers =
             document.createElement('div');
-
         answers.className =
             'quiz-answers';
-
         question.answers.forEach((answer) => {
-
             const button =
                 document.createElement('button');
-
             button.type = 'button';
-
             button.className =
                 'quiz-answer';
-
             const icon =
                 document.createElement('span');
-
             icon.className =
                 'quiz-answer-icon';
-
             icon.textContent =
                 answer.icon;
-
             const text =
                 document.createElement('span');
-
             text.className =
                 'quiz-answer-text';
-
             text.textContent =
                 answer.text;
-
             button.appendChild(icon);
-
             button.appendChild(text);
-
             button.addEventListener('click', () => {
-
                 selectAnswer(answer);
-
             });
-
             answers.appendChild(button);
-
         });
-
         questionElement.appendChild(number);
-
         questionElement.appendChild(heading);
-
         questionElement.appendChild(answers);
-
         questionArea.appendChild(questionElement);
-
     }
-
     function selectAnswer(answer){
-
         Object.entries(answer.scores).forEach(
             ([key, value]) => {
-
                 scores[key] += value;
-
             }
         );
-
         currentQuestion++;
-
         if(currentQuestion >= questions.length){
-
             showResult();
-
             return;
-
         }
-
         showQuestion();
-
     }
-
     function getResultKey(){
-
         let highestKey = 'chaos';
-
         let highestScore = -1;
-
         Object.entries(scores).forEach(
             ([key, score]) => {
-
                 if(score > highestScore){
-
                     highestScore = score;
-
                     highestKey = key;
-
                 }
-
             }
         );
-
         return highestKey;
-
     }
-
     function showResult(){
-
         currentResultKey = getResultKey();
-
         const result =
             results[currentResultKey];
-
+        const next =
+            nextAssignments[currentResultKey];
         questionArea.style.display =
             'none';
-
         progressWrap.style.display =
             'none';
-
         resultArea.classList.add('show');
-
         resultIcon.textContent =
             result.icon;
-
         resultTitle.textContent =
             result.title;
-
         resultSubtitle.textContent =
             result.subtitle;
-
         resultAbility.textContent =
             result.ability;
-
         resultThreat.textContent =
             result.threat;
-
         resultStats.innerHTML = '';
-
         result.stats.forEach(stat => {
-
             const card =
                 document.createElement('div');
-
             card.className =
                 'quiz-stat';
-
             card.innerHTML = `
                 <strong>${stat[1]}</strong>
                 <span>${stat[0]}</span>
             `;
-
             resultStats.appendChild(card);
-
         });
-
+        /* ================================================
+           PERSONALIZE NEXT MOM UNIVERSE ASSIGNMENT
+        ================================================= */
+        nextIntro.textContent =
+            next.intro;
+        nextFeatured.href =
+            next.url;
+        nextFeaturedIcon.textContent =
+            next.icon;
+        nextFeaturedTitle.textContent =
+            next.title;
+        nextFeaturedText.textContent =
+            next.text;
+        nextFeaturedCta.textContent =
+            next.cta;
         window.scrollTo({
             top:0,
             behavior:'smooth'
         });
-
     }
-
     function createResultImage(){
-
         const canvas =
             document.createElement('canvas');
-
         canvas.width = 1080;
-
         canvas.height = 1920;
-
         const context =
             canvas.getContext('2d');
-
         if(!context){
-
             return null;
-
         }
-
         const result =
             results[currentResultKey];
-
         context.fillStyle =
             '#fffaf8';
-
         context.fillRect(
             0,
             0,
             canvas.width,
             canvas.height
         );
-
         context.fillStyle =
             '#fff0f5';
-
         context.beginPath();
-
         context.arc(
             950,
             100,
@@ -1404,14 +1400,10 @@
             0,
             Math.PI * 2
         );
-
         context.fill();
-
         context.fillStyle =
             '#eef5ff';
-
         context.beginPath();
-
         context.arc(
             50,
             1800,
@@ -1419,12 +1411,9 @@
             0,
             Math.PI * 2
         );
-
         context.fill();
-
         context.fillStyle =
             '#ffffff';
-
         roundRect(
             context,
             65,
@@ -1433,39 +1422,29 @@
             1780,
             48
         );
-
         context.fill();
-
         context.textAlign =
             'center';
-
         context.fillStyle =
             '#d6537c';
-
         context.font =
             '900 28px Nunito';
-
         context.fillText(
             '🌎 MOM UNIVERSE',
             540,
             155
         );
-
         context.fillStyle =
             '#999999';
-
         context.font =
             '900 20px Nunito';
-
         context.fillText(
             'OFFICIAL MOM CLASSIFICATION',
             540,
             205
         );
-
         context.fillStyle =
             '#fff0f5';
-
         roundRect(
             context,
             390,
@@ -1474,24 +1453,18 @@
             300,
             55
         );
-
         context.fill();
-
         context.font =
             '130px Arial';
-
         context.fillText(
             result.icon,
             540,
             465
         );
-
         context.fillStyle =
             '#1d4f91';
-
         context.font =
             '900 64px Nunito';
-
         drawWrappedText(
             context,
             result.title,
@@ -1500,13 +1473,10 @@
             820,
             78
         );
-
         context.fillStyle =
             '#666666';
-
         context.font =
             '700 27px Nunito';
-
         drawWrappedText(
             context,
             result.subtitle,
@@ -1515,18 +1485,13 @@
             760,
             40
         );
-
         const stats =
             result.stats;
-
         stats.forEach((stat, index) => {
-
             const x =
                 145 + (index * 285);
-
             context.fillStyle =
                 '#f8f9fc';
-
             roundRect(
                 context,
                 x,
@@ -1535,27 +1500,20 @@
                 170,
                 25
             );
-
             context.fill();
-
             context.fillStyle =
                 '#1d4f91';
-
             context.font =
                 '900 38px Nunito';
-
             context.fillText(
                 stat[1],
                 x + 122,
                 1135
             );
-
             context.fillStyle =
                 '#888888';
-
             context.font =
                 '900 17px Nunito';
-
             drawWrappedText(
                 context,
                 stat[0],
@@ -1564,12 +1522,9 @@
                 190,
                 23
             );
-
         });
-
         context.fillStyle =
             '#fff8e4';
-
         roundRect(
             context,
             145,
@@ -1578,27 +1533,20 @@
             200,
             30
         );
-
         context.fill();
-
         context.fillStyle =
             '#b58b15';
-
         context.font =
             '900 19px Nunito';
-
         context.fillText(
             'SPECIAL ABILITY',
             540,
             1330
         );
-
         context.fillStyle =
             '#6d5720';
-
         context.font =
             '900 25px Nunito';
-
         drawWrappedText(
             context,
             result.ability,
@@ -1607,10 +1555,8 @@
             680,
             35
         );
-
         context.fillStyle =
             '#fff7fa';
-
         roundRect(
             context,
             145,
@@ -1619,27 +1565,20 @@
             145,
             25
         );
-
         context.fill();
-
         context.fillStyle =
             '#999999';
-
         context.font =
             '900 17px Nunito';
-
         context.fillText(
             'MOM THREAT LEVEL',
             540,
             1555
         );
-
         context.fillStyle =
             '#d9577d';
-
         context.font =
             '900 27px Nunito';
-
         drawWrappedText(
             context,
             result.threat,
@@ -1648,47 +1587,35 @@
             680,
             35
         );
-
         context.fillStyle =
             '#332b2b';
-
         context.font =
             '900 25px Nunito';
-
         context.fillText(
             'WHAT ARE YOU?',
             540,
             1720
         );
-
         context.fillStyle =
             '#d6537c';
-
         context.font =
             '900 24px Nunito';
-
         context.fillText(
             'momyouneedthis.com/mom-quiz.html',
             540,
             1770
         );
-
         context.fillStyle =
             '#aaaaaa';
-
         context.font =
             '700 17px Nunito';
-
         context.fillText(
             'The science is questionable. The classification is official.',
             540,
             1820
         );
-
         return canvas;
-
     }
-
     function roundRect(
         context,
         x,
@@ -1697,66 +1624,53 @@
         height,
         radius
     ){
-
         context.beginPath();
-
         context.moveTo(
             x + radius,
             y
         );
-
         context.lineTo(
             x + width - radius,
             y
         );
-
         context.quadraticCurveTo(
             x + width,
             y,
             x + width,
             y + radius
         );
-
         context.lineTo(
             x + width,
             y + height - radius
         );
-
         context.quadraticCurveTo(
             x + width,
             y + height,
             x + width - radius,
             y + height
         );
-
         context.lineTo(
             x + radius,
             y + height
         );
-
         context.quadraticCurveTo(
             x,
             y + height,
             x,
             y + height - radius
         );
-
         context.lineTo(
             x,
             y + radius
         );
-
         context.quadraticCurveTo(
             x,
             y,
             x + radius,
             y
         );
-
         context.closePath();
-
     }
-
     function drawWrappedText(
         context,
         text,
@@ -1765,138 +1679,88 @@
         maxWidth,
         lineHeight
     ){
-
         const words =
             text.split(' ');
-
         const lines = [];
-
         let currentLine = '';
-
         words.forEach(word => {
-
             const testLine =
                 currentLine
                     ? `${currentLine} ${word}`
                     : word;
-
             const width =
                 context.measureText(testLine).width;
-
             if(
                 width > maxWidth &&
                 currentLine
             ){
-
                 lines.push(currentLine);
-
                 currentLine = word;
-
             }else{
-
                 currentLine = testLine;
-
             }
-
         });
-
         if(currentLine){
-
             lines.push(currentLine);
-
         }
-
         lines.forEach((line, index) => {
-
             context.fillText(
                 line,
                 centerX,
                 startY + (index * lineHeight)
             );
-
         });
-
     }
-
     function getResultBlob(){
-
         return new Promise(resolve => {
-
             const canvas =
                 createResultImage();
-
             if(!canvas){
-
                 resolve(null);
-
                 return;
-
             }
-
             canvas.toBlob(
                 blob => resolve(blob),
                 'image/png'
             );
-
         });
-
     }
-
     saveButton.addEventListener(
         'click',
         async () => {
-
             const blob =
                 await getResultBlob();
-
             if(!blob){
-
                 return;
-
             }
-
             const url =
                 URL.createObjectURL(blob);
-
             const link =
                 document.createElement('a');
-
             link.href =
                 url;
-
             link.download =
                 `mom-universe-${currentResultKey}.png`;
-
             document.body.appendChild(link);
-
             link.click();
-
             link.remove();
-
             URL.revokeObjectURL(url);
-
         }
     );
-
     shareButton.addEventListener(
         'click',
         async () => {
-
             const result =
                 results[currentResultKey];
-
             const shareText =
                 `The Mom Universe has classified me as ${result.title} ${result.icon}. What are you? Take the quiz — it takes under 1 minute!`;
-
             const blob =
                 await getResultBlob();
-
             if(
                 navigator.share &&
                 blob &&
                 typeof File !== 'undefined'
             ){
-
                 const file =
                     new File(
                         [blob],
@@ -1905,219 +1769,139 @@
                             type:'image/png'
                         }
                     );
-
                 const shareData = {
                     title:'My Mom Universe Classification',
                     text:shareText,
                     url:quizUrl,
                     files:[file]
                 };
-
                 if(
                     !navigator.canShare ||
                     navigator.canShare({
                         files:[file]
                     })
                 ){
-
                     try{
-
                         await navigator.share(
                             shareData
                         );
-
                         return;
-
                     }catch(error){
-
                         if(
                             error instanceof DOMException &&
                             error.name === 'AbortError'
                         ){
-
                             return;
-
                         }
-
                     }
-
                 }
-
             }
-
             if(navigator.share){
-
                 try{
-
                     await navigator.share({
                         title:'My Mom Universe Classification',
                         text:shareText,
                         url:quizUrl
                     });
-
                     return;
-
                 }catch(error){
-
                     if(
                         error instanceof DOMException &&
                         error.name === 'AbortError'
                     ){
-
                         return;
-
                     }
-
                 }
-
             }
-
             if(blob){
-
                 const url =
                     URL.createObjectURL(blob);
-
                 const link =
                     document.createElement('a');
-
                 link.href =
                     url;
-
                 link.download =
                     `mom-universe-${currentResultKey}.png`;
-
                 document.body.appendChild(link);
-
                 link.click();
-
                 link.remove();
-
                 URL.revokeObjectURL(url);
-
                 return;
-
             }
-
             await copyQuizLink();
-
         }
     );
-
     async function copyQuizLink(){
-
         try{
-
             if(
                 navigator.clipboard &&
                 window.isSecureContext
             ){
-
                 await navigator.clipboard.writeText(
                     quizUrl
                 );
-
             }else{
-
                 const input =
                     document.createElement('input');
-
                 input.value =
                     quizUrl;
-
                 input.style.position =
                     'fixed';
-
                 input.style.opacity =
                     '0';
-
                 document.body.appendChild(input);
-
                 input.focus();
-
                 input.select();
-
                 input.setSelectionRange(
                     0,
                     input.value.length
                 );
-
                 const copied =
                     document.execCommand('copy');
-
                 input.remove();
-
                 if(!copied){
-
                     throw new Error('Copy failed');
-
                 }
-
             }
-
             copyButton.textContent =
                 '✓ QUIZ LINK COPIED';
-
             setTimeout(() => {
-
                 copyButton.textContent =
                     '🔗 COPY QUIZ LINK';
-
             }, 2200);
-
         }catch(error){
-
             copyButton.textContent =
                 '⚠️ COPY FAILED — TRY AGAIN';
-
             setTimeout(() => {
-
                 copyButton.textContent =
                     '🔗 COPY QUIZ LINK';
-
             }, 2500);
-
         }
-
     }
-
     copyButton.addEventListener(
         'click',
         copyQuizLink
     );
-
     retakeButton.addEventListener(
         'click',
         () => {
-
             currentQuestion = 0;
-
             Object.keys(scores).forEach(key => {
-
                 scores[key] = 0;
-
             });
-
             resultArea.classList.remove('show');
-
             questionArea.style.display =
                 'block';
-
             progressWrap.style.display =
                 'block';
-
             showQuestion();
-
             window.scrollTo({
                 top:0,
                 behavior:'smooth'
             });
-
         }
     );
-
     showQuestion();
-
 </script>
-
 </body>
 </html>
