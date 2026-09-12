@@ -1,12 +1,15 @@
 /* =========================================================
    MOM BATTLES — MOMYOuNEEDTHIS
    ========================================================= */
+
 .mom-voted-page {
     background: #fffaf8;
 }
+
 /* =========================================================
    HEADER
    ========================================================= */
+
 .mom-voted-header {
     max-width: 1100px;
     margin: 0 auto;
@@ -16,16 +19,19 @@
     justify-content: space-between;
     gap: 16px;
 }
+
 .mom-voted-logo-link {
     display: inline-flex;
     align-items: center;
 }
+
 .mom-voted-logo {
     width: 170px;
     max-width: 48vw;
     height: auto;
     display: block;
 }
+
 .community-badge {
     display: inline-flex;
     align-items: center;
@@ -40,15 +46,18 @@
     letter-spacing: .04em;
     white-space: nowrap;
 }
+
 /* =========================================================
    HERO
    ========================================================= */
+
 .voting-hero {
     max-width: 850px;
     margin: 0 auto;
     padding: 28px 18px 30px;
     text-align: center;
 }
+
 .hero-kicker {
     display: inline-flex;
     align-items: center;
@@ -62,6 +71,7 @@
     font-weight: 900;
     letter-spacing: .08em;
 }
+
 .voting-hero h1 {
     margin: 0;
     color: #1d4f91;
@@ -70,9 +80,11 @@
     font-weight: 900;
     letter-spacing: -.035em;
 }
+
 .voting-hero h1 span {
     color: #e89aaa;
 }
+
 .mom-voted-intro {
     margin: 15px auto 0;
     color: #686868;
@@ -80,9 +92,11 @@
     line-height: 1.55;
     font-weight: 700;
 }
+
 /* =========================================================
    CATEGORY NAV
    ========================================================= */
+
 .battle-category-nav {
     max-width: 1100px;
     margin: 0 auto 34px;
@@ -94,9 +108,11 @@
     overflow-x: auto;
     scrollbar-width: none;
 }
+
 .battle-category-nav::-webkit-scrollbar {
     display: none;
 }
+
 .battle-category-nav a {
     flex: 0 0 auto;
     display: inline-flex;
@@ -116,23 +132,28 @@
         border-color .2s ease,
         transform .2s ease;
 }
+
 .battle-category-nav a:hover {
     background: #fff0f3;
     border-color: #e89aaa;
     color: #c95f79;
     transform: translateY(-1px);
 }
+
 /* =========================================================
    BATTLE SECTION
    ========================================================= */
+
 .product-battle {
     max-width: 1100px;
     margin: 0 auto 42px;
     padding: 0 18px;
 }
+
 .battle-heading {
     margin-bottom: 13px;
 }
+
 .battle-heading h2 {
     margin: 0;
     color: #1d4f91;
@@ -140,15 +161,18 @@
     line-height: 1.15;
     font-weight: 900;
 }
+
 .battle-heading p {
     margin: 5px 0 0;
     color: #777;
     font-size: 14px;
     font-weight: 700;
 }
+
 /* =========================================================
    MAIN BATTLE CARD
    ========================================================= */
+
 .battle-card {
     position: relative;
     background: #fff;
@@ -159,10 +183,12 @@
         0 10px 35px rgba(39, 27, 30, .07);
     overflow: hidden;
 }
+
 /* =========================================================
    BATTLE CARD HEADER
    HEAD TO HEAD ←       → MOM BATTLES
    ========================================================= */
+
 .battle-card-header {
     width: 100%;
     display: flex;
@@ -173,6 +199,7 @@
     padding: 0 4px;
     box-sizing: border-box;
 }
+
 .battle-card-header > :first-child {
     flex: 0 0 auto;
     text-align: left;
@@ -183,6 +210,7 @@
     letter-spacing: .08em;
     text-transform: uppercase;
 }
+
 .battle-card-header > :last-child {
     flex: 0 0 auto;
     margin-left: auto;
@@ -194,58 +222,63 @@
     letter-spacing: .08em;
     text-transform: uppercase;
 }
+
 /* =========================================================
    CONTENDERS
    ========================================================= */
+
 .contenders {
     position: relative;
     display: grid;
     grid-template-columns:
         minmax(0, 1fr)
         minmax(0, 1fr);
-    /*
-       CRITICAL:
-       Both product cards occupy the exact same grid row.
-       This gives both cards identical available height.
-    */
     grid-template-rows: 1fr;
     align-items: stretch;
     gap: 0;
 }
+
 /* =========================================================
    PRODUCT CARD
    ========================================================= */
+
 .contender {
     position: relative;
     min-width: 0;
     min-height: 0;
+    height: 100%;
     background: #fff;
     border: 2px solid #f0e7e9;
     border-radius: 22px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    height: 100%;
+    box-sizing: border-box;
     transition:
         transform .22s ease,
         border-color .22s ease,
         box-shadow .22s ease,
         opacity .22s ease;
 }
+
 .contender:first-child {
     margin-right: 16px;
 }
+
 .contender:last-child {
     margin-left: 16px;
 }
+
 /* =========================================================
    LEADING PRODUCT
    ========================================================= */
+
 .contender.leading {
     border-color: #e8c86f;
     box-shadow:
         0 8px 25px rgba(213, 172, 55, .15);
 }
+
 .contender.leading::before {
     content: "🔥";
     position: absolute;
@@ -263,17 +296,21 @@
         0 4px 14px rgba(0, 0, 0, .10);
     z-index: 4;
 }
+
 .contender.trailing {
     opacity: .97;
 }
+
 /* =========================================================
    WINNER STATE
    ========================================================= */
+
 .contender.winner {
     border-color: #e3bd4c;
     box-shadow:
         0 10px 30px rgba(211, 169, 43, .18);
 }
+
 .contender.winner::before {
     content: "🏆";
     position: absolute;
@@ -291,25 +328,42 @@
         0 4px 14px rgba(0, 0, 0, .10);
     z-index: 4;
 }
+
 /* =========================================================
    SELECTED PRODUCT
+   FULL-CARD FRAME
    ========================================================= */
+
 .contender.selected {
     border-color: #e89aaa;
     box-shadow:
         0 10px 28px rgba(232, 154, 170, .20);
 }
+
+/*
+   The selected frame is drawn completely inside the
+   product card. It follows the card's exact dimensions
+   and rounded corners.
+*/
+
 .contender.selected::after {
     content: "";
     position: absolute;
-    inset: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    box-sizing: border-box;
     border: 3px solid #e89aaa;
-    border-radius: 20px;
+    border-radius: inherit;
     pointer-events: none;
+    z-index: 20;
 }
+
 /* =========================================================
    LEADER BADGE
    ========================================================= */
+
 .battle-leader-badge {
     position: absolute;
     top: 12px;
@@ -331,9 +385,11 @@
     box-shadow:
         0 4px 12px rgba(0, 0, 0, .07);
 }
+
 /* =========================================================
    PRODUCT IMAGE
    ========================================================= */
+
 .contender-image {
     position: relative;
     width: 100%;
@@ -345,6 +401,7 @@
     overflow: hidden;
     flex-shrink: 0;
 }
+
 .contender-image img {
     width: 100%;
     height: 100%;
@@ -354,12 +411,15 @@
     transition:
         transform .25s ease;
 }
+
 .contender:hover .contender-image img {
     transform: scale(1.035);
 }
+
 /* =========================================================
    PRODUCT BADGE
    ========================================================= */
+
 .product-badge {
     position: absolute;
     left: 12px;
@@ -376,29 +436,52 @@
     box-shadow:
         0 3px 10px rgba(0, 0, 0, .07);
 }
+
 /* =========================================================
    PRODUCT CONTENT
    ========================================================= */
+
 .contender-content {
     padding: 17px 16px 16px;
-    display: flex;
-    flex-direction: column;
-    flex: 1 1 auto;
+    display: grid;
+
     /*
-       VERY IMPORTANT:
-       Content itself is allowed to stretch to the
-       exact same height in both contender cards.
+       Fixed structural rows:
+       label
+       name
+       brand
+       description
+       flexible spacer
+       score
+       product button
+       vote button
     */
+
+    grid-template-rows:
+        auto
+        auto
+        auto
+        auto
+        minmax(0, 1fr)
+        auto
+        auto
+        auto;
+
+    flex: 1 1 auto;
     min-height: 0;
     box-sizing: border-box;
 }
+
 /* =========================================================
    PRODUCT LABEL
    ========================================================= */
+
 .contender-content [data-label-1],
 .contender-content [data-label-2] {
     display: block;
+    height: 12px;
     min-height: 12px;
+    max-height: 12px;
     margin: 0 0 5px;
     color: #d6537c;
     font-size: 10px;
@@ -406,58 +489,60 @@
     font-weight: 900;
     letter-spacing: .08em;
     text-transform: uppercase;
-    flex-shrink: 0;
+    overflow: hidden;
 }
+
 /* =========================================================
    PRODUCT NAME
    ========================================================= */
+
 .contender-content [data-name-1],
 .contender-content [data-name-2] {
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
     overflow: hidden;
-    margin: 0;
+    height: 44px;
     min-height: 44px;
     max-height: 44px;
+    margin: 0;
     color: #222;
     font-size: 19px;
     line-height: 1.15;
     font-weight: 900;
-    flex-shrink: 0;
 }
+
 /* =========================================================
    PRODUCT BRAND
    ========================================================= */
+
 .contender-content [data-brand-1],
 .contender-content [data-brand-2] {
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 1;
     overflow: hidden;
-    margin: 4px 0 0;
+    height: 17px;
     min-height: 17px;
     max-height: 17px;
+    margin: 4px 0 0;
     color: #888;
     font-size: 12px;
     line-height: 1.35;
     font-weight: 800;
-    flex-shrink: 0;
 }
+
 /* =========================================================
    PRODUCT DESCRIPTION
    EXACTLY 3 LINES RESERVED
    ========================================================= */
+
 .contender-content [data-description-1],
 .contender-content [data-description-2] {
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
     overflow: hidden;
-    /*
-       Reserve the exact same height even when
-       one description is much shorter.
-    */
     height: calc(13px * 1.45 * 3);
     min-height: calc(13px * 1.45 * 3);
     max-height: calc(13px * 1.45 * 3);
@@ -466,12 +551,12 @@
     font-size: 13px;
     line-height: 1.45;
     font-weight: 600;
-    flex-shrink: 0;
 }
+
 /* =========================================================
    BOTTOM PRODUCT AREA
-   SCORE + BUTTONS ALWAYS STAY TOGETHER
    ========================================================= */
+
 .product-rating {
     display: flex;
     align-items: center;
@@ -481,31 +566,30 @@
     min-height: 40px;
     max-height: 40px;
     box-sizing: border-box;
-    /*
-       This pushes the complete bottom stack
-       to the bottom of the product card.
-    */
-    margin-top: auto;
+    margin-top: 0;
     padding: 10px 11px;
     border-radius: 13px;
     background: #f7f9fc;
-    flex-shrink: 0;
 }
+
 .product-rating strong {
     color: #1d4f91;
     font-size: 17px;
     line-height: 1;
     font-weight: 900;
 }
+
 .product-rating span {
     color: #777;
     font-size: 11px;
     line-height: 1.2;
     font-weight: 800;
 }
+
 /* =========================================================
    PRODUCT / AMAZON LINK
    ========================================================= */
+
 .product-shop-link {
     display: flex;
     align-items: center;
@@ -524,21 +608,23 @@
     line-height: 1.2;
     font-weight: 900;
     text-decoration: none;
-    flex-shrink: 0;
     transition:
         transform .2s ease,
         box-shadow .2s ease,
         background .2s ease;
 }
+
 .product-shop-link:hover {
     background: #17427c;
     transform: translateY(-2px);
     box-shadow:
         0 8px 18px rgba(29, 79, 145, .20);
 }
+
 /* =========================================================
    VOTE BUTTON
    ========================================================= */
+
 .vote-button {
     display: flex;
     align-items: center;
@@ -559,37 +645,42 @@
     line-height: 1.2;
     font-weight: 900;
     cursor: pointer;
-    flex-shrink: 0;
     transition:
         transform .2s ease,
         background .2s ease,
         box-shadow .2s ease,
         opacity .2s ease;
 }
+
 .vote-button:hover {
     background: #d98296;
     transform: translateY(-2px);
     box-shadow:
         0 8px 18px rgba(232, 154, 170, .25);
 }
+
 .vote-button:active {
     transform: translateY(0);
 }
+
 .vote-button:disabled {
     cursor: default;
     opacity: .65;
     transform: none;
     box-shadow: none;
 }
+
 .vote-button.selected,
 .contender.selected .vote-button {
     background: #d6537c;
     box-shadow:
         0 7px 17px rgba(214, 83, 124, .20);
 }
+
 /* =========================================================
    VS / LIGHTNING DIVIDER
    ========================================================= */
+
 .versus {
     position: absolute;
     left: 50%;
@@ -603,6 +694,7 @@
     justify-content: center;
     pointer-events: none;
 }
+
 .versus::before {
     content: "";
     position: absolute;
@@ -620,6 +712,7 @@
     filter:
         drop-shadow(0 4px 8px rgba(214, 83, 124, .28));
 }
+
 .versus::after {
     content: "";
     position: absolute;
@@ -630,9 +723,11 @@
     box-shadow:
         0 7px 20px rgba(0, 0, 0, .12);
 }
+
 /* =========================================================
    VS CIRCLE
    ========================================================= */
+
 .versus span {
     position: relative;
     z-index: 2;
@@ -650,9 +745,11 @@
     box-shadow:
         0 6px 17px rgba(29, 79, 145, .25);
 }
+
 /* =========================================================
    BATTLE RESULT
    ========================================================= */
+
 .battle-result {
     display: none;
     margin-top: 16px;
@@ -662,11 +759,13 @@
     border: 1px solid #f1dce2;
     text-align: center;
 }
+
 .battle-result.visible,
 .battle-result.show,
 .battle-result.active {
     display: block;
 }
+
 .battle-result [data-result-title] {
     display: block;
     color: #1d4f91;
@@ -674,6 +773,7 @@
     line-height: 1.2;
     font-weight: 900;
 }
+
 .battle-result [data-result-text] {
     margin: 5px 0 0;
     color: #777;
@@ -681,21 +781,25 @@
     line-height: 1.4;
     font-weight: 700;
 }
+
 /* =========================================================
    RESULT PERCENTAGES
    ========================================================= */
+
 .result-percentages {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
     margin-top: 14px;
 }
+
 .result-percentages > div {
     padding: 11px;
     border-radius: 14px;
     background: #fff;
     border: 1px solid #eee3e6;
 }
+
 .result-percentages span {
     display: block;
     color: #888;
@@ -705,6 +809,7 @@
     letter-spacing: .05em;
     text-transform: uppercase;
 }
+
 .result-percentages strong {
     display: block;
     margin-top: 4px;
@@ -713,6 +818,7 @@
     line-height: 1;
     font-weight: 900;
 }
+
 .your-position {
     margin: 12px 0 0;
     color: #666;
@@ -720,9 +826,11 @@
     line-height: 1.4;
     font-weight: 800;
 }
+
 /* =========================================================
    BATTLE FOOTER
    ========================================================= */
+
 .battle-footer {
     display: flex;
     align-items: center;
@@ -730,6 +838,7 @@
     margin-top: 15px;
     text-align: center;
 }
+
 .battle-footer p {
     margin: 0;
     color: #888;
@@ -737,21 +846,27 @@
     line-height: 1.4;
     font-weight: 700;
 }
+
 /* =========================================================
    COMPLETED BATTLE
    ========================================================= */
+
 .product-battle.vote-complete .vote-button {
     cursor: default;
 }
+
 .product-battle.vote-complete .vote-button:not(.selected) {
     opacity: .55;
 }
+
 .product-battle.vote-complete .contender:not(.selected) {
     opacity: .88;
 }
+
 /* =========================================================
    HOLY GRAIL FINAL
    ========================================================= */
+
 .holy-grail-final {
     max-width: 760px;
     margin: 65px auto 35px;
@@ -763,6 +878,7 @@
     box-shadow:
         0 10px 30px rgba(39, 27, 30, .06);
 }
+
 .holy-grail-final-icon {
     width: 58px;
     height: 58px;
@@ -774,6 +890,7 @@
     background: #fff0f3;
     font-size: 27px;
 }
+
 .section-eyebrow {
     display: block;
     color: #d6537c;
@@ -783,6 +900,7 @@
     letter-spacing: .1em;
     text-transform: uppercase;
 }
+
 .holy-grail-final h2 {
     margin: 7px 0 0;
     color: #1d4f91;
@@ -790,6 +908,7 @@
     line-height: 1.1;
     font-weight: 900;
 }
+
 .holy-grail-final p {
     max-width: 550px;
     margin: 10px auto 0;
@@ -798,6 +917,7 @@
     line-height: 1.5;
     font-weight: 700;
 }
+
 .holy-grail-final-button {
     display: inline-flex;
     align-items: center;
@@ -817,51 +937,81 @@
         background .2s ease,
         box-shadow .2s ease;
 }
+
 .holy-grail-final-button:hover {
     background: #d98296;
     transform: translateY(-2px);
     box-shadow:
         0 9px 20px rgba(232, 154, 170, .23);
 }
+
 /* =========================================================
    TABLET
    ========================================================= */
+
 @media (max-width: 800px) {
+
     .mom-voted-header {
         padding-left: 15px;
         padding-right: 15px;
     }
+
     .battle-category-nav {
         justify-content: flex-start;
         padding-left: 15px;
         padding-right: 15px;
     }
+
     .product-battle {
         padding-left: 15px;
         padding-right: 15px;
     }
+
     .battle-card {
         padding: 14px;
         border-radius: 23px;
     }
+
     .battle-card-header {
         margin-bottom: 12px;
     }
+
     .contender:first-child {
         margin-right: 10px;
     }
+
     .contender:last-child {
         margin-left: 10px;
     }
+
     .contender-content {
         padding: 14px 13px 13px;
     }
+
+    .contender-content [data-label-1],
+    .contender-content [data-label-2] {
+        height: 11px;
+        min-height: 11px;
+        max-height: 11px;
+        font-size: 9px;
+    }
+
     .contender-content [data-name-1],
     .contender-content [data-name-2] {
+        height: 40px;
         min-height: 40px;
         max-height: 40px;
         font-size: 17px;
     }
+
+    .contender-content [data-brand-1],
+    .contender-content [data-brand-2] {
+        height: 16px;
+        min-height: 16px;
+        max-height: 16px;
+        font-size: 11px;
+    }
+
     .contender-content [data-description-1],
     .contender-content [data-description-2] {
         height: calc(12px * 1.45 * 3);
@@ -869,169 +1019,225 @@
         max-height: calc(12px * 1.45 * 3);
         font-size: 12px;
     }
+
     .product-rating {
         height: 40px;
         min-height: 40px;
         max-height: 40px;
     }
+
     .product-shop-link {
         height: 43px;
         min-height: 43px;
         max-height: 43px;
     }
+
     .vote-button {
         height: 46px;
         min-height: 46px;
         max-height: 46px;
     }
+
     .versus {
         width: 64px;
         height: 104px;
     }
+
     .versus::after {
         width: 50px;
         height: 50px;
     }
+
     .versus span {
         width: 43px;
         height: 43px;
         font-size: 15px;
     }
 }
+
 /* =========================================================
    MOBILE
    ========================================================= */
+
 @media (max-width: 600px) {
+
     .mom-voted-header {
         padding-top: 14px;
         padding-bottom: 5px;
     }
+
     .mom-voted-logo {
         width: 145px;
     }
+
     .community-badge {
         padding: 7px 10px;
         font-size: 10px;
     }
+
     /* -----------------------------------------------------
        Hero
        ----------------------------------------------------- */
+
     .voting-hero {
         padding-top: 22px;
         padding-bottom: 24px;
     }
+
     .voting-hero h1 {
         font-size: 36px;
     }
+
     .mom-voted-intro {
         font-size: 15px;
     }
+
     /* -----------------------------------------------------
        Category navigation
        ----------------------------------------------------- */
+
     .battle-category-nav {
         margin-bottom: 27px;
         gap: 6px;
     }
+
     .battle-category-nav a {
         padding: 8px 12px;
         font-size: 12px;
     }
+
     /* -----------------------------------------------------
        Battle
        ----------------------------------------------------- */
+
     .product-battle {
         margin-bottom: 30px;
     }
+
     .battle-heading h2 {
         font-size: 21px;
     }
+
     .battle-heading p {
         font-size: 12px;
     }
+
     .battle-card {
         padding: 9px;
         border-radius: 20px;
     }
+
     /* -----------------------------------------------------
        Battle card header
        ----------------------------------------------------- */
+
     .battle-card-header {
         gap: 8px;
         margin: 0 2px 10px;
         padding: 0 2px;
     }
+
     .battle-card-header > :first-child,
     .battle-card-header > :last-child {
         font-size: 8px;
         letter-spacing: .06em;
     }
-    /*
-       Products ALWAYS stay side-by-side.
-    */
+
+    /* -----------------------------------------------------
+       Products ALWAYS stay side-by-side
+       ----------------------------------------------------- */
+
     .contenders {
         grid-template-columns:
             minmax(0, 1fr)
             minmax(0, 1fr);
         grid-template-rows: 1fr;
     }
+
     .contender {
         border-radius: 17px;
     }
+
     .contender:first-child {
         margin-right: 7px;
     }
+
     .contender:last-child {
         margin-left: 7px;
     }
+
     /* -----------------------------------------------------
        Product image
        ----------------------------------------------------- */
+
     .contender-image {
         aspect-ratio: 1 / 1;
     }
+
     .contender-image img {
         padding: 9px;
     }
+
     /* -----------------------------------------------------
        Product badge
        ----------------------------------------------------- */
+
     .product-badge {
         left: 7px;
         bottom: 7px;
         padding: 5px 7px;
         font-size: 8px;
     }
+
     /* -----------------------------------------------------
        Product content
        ----------------------------------------------------- */
+
     .contender-content {
         padding: 11px 9px 10px;
+
+        grid-template-rows:
+            auto
+            auto
+            auto
+            auto
+            minmax(0, 1fr)
+            auto
+            auto
+            auto;
     }
+
     .contender-content [data-label-1],
     .contender-content [data-label-2] {
+        height: 10px;
         min-height: 10px;
         max-height: 10px;
         margin-bottom: 4px;
         font-size: 8px;
     }
+
     .contender-content [data-name-1],
     .contender-content [data-name-2] {
+        height: 32px;
         min-height: 32px;
         max-height: 32px;
         font-size: 14px;
         line-height: 1.12;
     }
+
     .contender-content [data-brand-1],
     .contender-content [data-brand-2] {
+        height: 13px;
         min-height: 13px;
         max-height: 13px;
         font-size: 9px;
     }
+
     /* -----------------------------------------------------
        Description
-       EXACT SAME HEIGHT
+       EXACT SAME HEIGHT + ELLIPSIS
        ----------------------------------------------------- */
+
     .contender-content [data-description-1],
     .contender-content [data-description-2] {
         display: -webkit-box;
@@ -1045,28 +1251,34 @@
         font-size: 10px;
         line-height: 1.35;
     }
+
     /* -----------------------------------------------------
        SCORE
        EXACT SAME POSITION
        ----------------------------------------------------- */
+
     .product-rating {
         height: 34px;
         min-height: 34px;
         max-height: 34px;
-        margin-top: auto;
+        margin-top: 0;
         padding: 7px 8px;
         border-radius: 10px;
     }
+
     .product-rating strong {
         font-size: 14px;
     }
+
     .product-rating span {
         font-size: 8px;
     }
+
     /* -----------------------------------------------------
        PRODUCT BUTTON
        EXACT SAME POSITION
        ----------------------------------------------------- */
+
     .product-shop-link {
         height: 37px;
         min-height: 37px;
@@ -1076,10 +1288,12 @@
         border-radius: 10px;
         font-size: 10px;
     }
+
     /* -----------------------------------------------------
        VOTE BUTTON
        EXACT SAME POSITION
        ----------------------------------------------------- */
+
     .vote-button {
         height: 40px;
         min-height: 40px;
@@ -1089,9 +1303,11 @@
         border-radius: 10px;
         font-size: 10px;
     }
+
     /* -----------------------------------------------------
        Leader / winner
        ----------------------------------------------------- */
+
     .contender.leading::before,
     .contender.winner::before {
         top: 6px;
@@ -1100,126 +1316,189 @@
         height: 28px;
         font-size: 15px;
     }
+
     .battle-leader-badge {
         top: 7px;
         left: 7px;
         padding: 5px 7px;
         font-size: 7px;
     }
+
+    /* -----------------------------------------------------
+       SELECTED FRAME
+       Keep the frame completely inside the card.
+       ----------------------------------------------------- */
+
+    .contender.selected::after {
+        inset: 0;
+        border-width: 3px;
+        border-radius: inherit;
+        box-sizing: border-box;
+    }
+
     /* -----------------------------------------------------
        VS
        ----------------------------------------------------- */
+
     .versus {
         width: 50px;
         height: 84px;
     }
+
     .versus::after {
         width: 41px;
         height: 41px;
     }
+
     .versus span {
         width: 36px;
         height: 36px;
         font-size: 12px;
     }
+
     /* -----------------------------------------------------
        Result
        ----------------------------------------------------- */
+
     .battle-result {
         margin-top: 10px;
         padding: 14px;
         border-radius: 15px;
     }
+
     .battle-result [data-result-title] {
         font-size: 16px;
     }
+
     .battle-result [data-result-text] {
         font-size: 11px;
     }
+
     .result-percentages {
         gap: 7px;
         margin-top: 10px;
     }
+
     .result-percentages > div {
         padding: 9px 7px;
         border-radius: 11px;
     }
+
     .result-percentages span {
         font-size: 8px;
     }
+
     .result-percentages strong {
         font-size: 18px;
     }
+
     .your-position {
         font-size: 10px;
     }
+
     /* -----------------------------------------------------
        Battle footer
        ----------------------------------------------------- */
+
     .battle-footer {
         margin-top: 10px;
     }
+
     .battle-footer p {
         font-size: 10px;
     }
+
     /* -----------------------------------------------------
        Holy Grail
        ----------------------------------------------------- */
+
     .holy-grail-final {
         margin: 45px 15px 25px;
         padding: 27px 17px;
         border-radius: 21px;
     }
+
     .holy-grail-final h2 {
         font-size: 25px;
     }
+
     .holy-grail-final p {
         font-size: 12px;
     }
+
     .holy-grail-final-button {
         width: 100%;
         font-size: 13px;
     }
 }
+
 /* =========================================================
    VERY SMALL PHONES
    ========================================================= */
+
 @media (max-width: 380px) {
+
     .community-badge {
         font-size: 9px;
         padding: 6px 8px;
     }
+
     .mom-voted-logo {
         width: 130px;
     }
+
     .voting-hero h1 {
         font-size: 32px;
     }
+
     .battle-card {
         padding: 7px;
     }
+
     .battle-card-header {
         margin-bottom: 8px;
     }
+
     .battle-card-header > :first-child,
     .battle-card-header > :last-child {
         font-size: 7px;
     }
+
     .contender:first-child {
         margin-right: 5px;
     }
+
     .contender:last-child {
         margin-left: 5px;
     }
+
     .contender-content {
         padding: 9px 7px;
     }
+
+    .contender-content [data-label-1],
+    .contender-content [data-label-2] {
+        height: 9px;
+        min-height: 9px;
+        max-height: 9px;
+    }
+
     .contender-content [data-name-1],
     .contender-content [data-name-2] {
-        min-height: 29px;
-        max-height: 29px;
+        height: 26.88px;
+        min-height: 26.88px;
+        max-height: 26.88px;
         font-size: 12px;
     }
+
+    .contender-content [data-brand-1],
+    .contender-content [data-brand-2] {
+        height: 12px;
+        min-height: 12px;
+        max-height: 12px;
+        font-size: 8px;
+    }
+
     .contender-content [data-description-1],
     .contender-content [data-description-2] {
         height: calc(9px * 1.35 * 4);
@@ -1227,31 +1506,43 @@
         max-height: calc(9px * 1.35 * 4);
         font-size: 9px;
     }
+
     .product-rating {
         height: 32px;
         min-height: 32px;
         max-height: 32px;
     }
+
     .product-shop-link {
         height: 35px;
         min-height: 35px;
         max-height: 35px;
         font-size: 9px;
     }
+
     .vote-button {
         height: 38px;
         min-height: 38px;
         max-height: 38px;
         font-size: 9px;
     }
+
+    .contender.selected::after {
+        inset: 0;
+        border-width: 3px;
+        border-radius: inherit;
+    }
+
     .versus {
         width: 43px;
         height: 76px;
     }
+
     .versus::after {
         width: 37px;
         height: 37px;
     }
+
     .versus span {
         width: 32px;
         height: 32px;
