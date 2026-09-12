@@ -120,6 +120,7 @@
 
 .battle-category-nav a {
     flex: 0 0 auto;
+
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -186,9 +187,11 @@
 
 .battle-card {
     position: relative;
+
     background: #fff;
     border: 1px solid #eee3e5;
     border-radius: 28px;
+
     padding: 18px;
 
     box-shadow:
@@ -205,8 +208,11 @@
 .contenders {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+
     align-items: stretch;
+
     gap: 0;
+
     position: relative;
 }
 
@@ -217,9 +223,11 @@
 
 .contender {
     position: relative;
+
     min-width: 0;
 
     background: #fff;
+
     border: 2px solid #f0e7e9;
     border-radius: 22px;
 
@@ -257,6 +265,7 @@
 
 .contender.leading::before {
     content: "🔥";
+
     position: absolute;
     top: 10px;
     right: 10px;
@@ -297,6 +306,7 @@
 
 .contender.winner::before {
     content: "🏆";
+
     position: absolute;
     top: 10px;
     right: 10px;
@@ -333,6 +343,7 @@
 
 .contender.selected::after {
     content: "";
+
     position: absolute;
     inset: 0;
 
@@ -351,6 +362,7 @@
     position: absolute;
     top: 12px;
     left: 12px;
+
     z-index: 5;
 
     display: inline-flex;
@@ -358,6 +370,7 @@
     justify-content: center;
 
     padding: 7px 10px;
+
     border-radius: 999px;
 
     background: #fff7dc;
@@ -367,6 +380,7 @@
 
     font-size: 10px;
     line-height: 1;
+
     font-weight: 900;
     letter-spacing: .05em;
     text-transform: uppercase;
@@ -420,8 +434,10 @@
 
 .product-badge {
     position: absolute;
+
     left: 12px;
     bottom: 12px;
+
     z-index: 3;
 
     padding: 6px 9px;
@@ -444,6 +460,7 @@
 
 /* =========================================================
    PRODUCT CONTENT
+   LOCKED VERTICAL STRUCTURE
    ========================================================= */
 
 .contender-content {
@@ -451,55 +468,103 @@
 
     display: flex;
     flex-direction: column;
+
     flex: 1;
+
+    min-height: 0;
 }
 
-.contender-content > * {
-    min-width: 0;
-}
+
+/* ---------------------------------------------------------
+   Label
+   --------------------------------------------------------- */
 
 .contender-content [data-label-1],
 .contender-content [data-label-2] {
-    display: inline-block;
-    margin-bottom: 5px;
+    display: block;
+
+    min-height: 12px;
+
+    margin: 0 0 5px;
 
     color: #d6537c;
 
     font-size: 10px;
+    line-height: 1.2;
+
     font-weight: 900;
     letter-spacing: .08em;
     text-transform: uppercase;
 }
 
+
+/* ---------------------------------------------------------
+   Product name
+   --------------------------------------------------------- */
+
 .contender-content [data-name-1],
 .contender-content [data-name-2] {
     margin: 0;
+
+    /*
+       Reserve room for approximately two lines.
+       This keeps the brand and everything underneath
+       at the same vertical position.
+    */
+
+    min-height: 44px;
 
     color: #222;
 
     font-size: 19px;
     line-height: 1.15;
+
     font-weight: 900;
 }
 
+
+/* ---------------------------------------------------------
+   Brand
+   --------------------------------------------------------- */
+
 .contender-content [data-brand-1],
 .contender-content [data-brand-2] {
-    margin-top: 4px;
+    margin: 4px 0 0;
+
+    min-height: 17px;
 
     color: #888;
 
     font-size: 12px;
+    line-height: 1.35;
+
     font-weight: 800;
 }
+
+
+/* ---------------------------------------------------------
+   Description
+   --------------------------------------------------------- */
 
 .contender-content [data-description-1],
 .contender-content [data-description-2] {
     margin: 10px 0 0;
 
+    /*
+       Reserve the same amount of space for descriptions.
+
+       This is the important part:
+       a short description will NOT cause its buttons
+       to move upward.
+    */
+
+    min-height: 57px;
+
     color: #666;
 
     font-size: 13px;
     line-height: 1.45;
+
     font-weight: 600;
 }
 
@@ -512,30 +577,43 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 8px;
+
+    width: 100%;
+    min-height: 40px;
+
+    box-sizing: border-box;
 
     margin-top: 14px;
     padding: 10px 11px;
 
     border-radius: 13px;
+
     background: #f7f9fc;
+
+    flex-shrink: 0;
 }
 
 .product-rating strong {
     color: #1d4f91;
+
     font-size: 17px;
+    line-height: 1;
+
     font-weight: 900;
 }
 
 .product-rating span {
     color: #777;
+
     font-size: 11px;
+    line-height: 1.2;
+
     font-weight: 800;
 }
 
 
 /* =========================================================
-   AMAZON / PRODUCT LINK
+   PRODUCT / AMAZON LINK
    ========================================================= */
 
 .product-shop-link {
@@ -543,10 +621,12 @@
     align-items: center;
     justify-content: center;
 
+    width: 100%;
     min-height: 43px;
 
-    margin-top: 12px;
+    box-sizing: border-box;
 
+    margin-top: 12px;
     padding: 10px 13px;
 
     border-radius: 13px;
@@ -555,8 +635,12 @@
     color: #fff !important;
 
     font-size: 13px;
+    line-height: 1.2;
+
     font-weight: 900;
     text-decoration: none;
+
+    flex-shrink: 0;
 
     transition:
         transform .2s ease,
@@ -566,6 +650,7 @@
 
 .product-shop-link:hover {
     background: #17427c;
+
     transform: translateY(-2px);
 
     box-shadow:
@@ -581,8 +666,9 @@
     width: 100%;
     min-height: 46px;
 
-    margin-top: 10px;
+    box-sizing: border-box;
 
+    margin-top: 10px;
     padding: 11px 13px;
 
     border: 0;
@@ -592,10 +678,15 @@
     color: #fff;
 
     font-family: inherit;
+
     font-size: 14px;
+    line-height: 1.2;
+
     font-weight: 900;
 
     cursor: pointer;
+
+    flex-shrink: 0;
 
     transition:
         transform .2s ease,
@@ -624,9 +715,6 @@
     box-shadow: none;
 }
 
-
-/* Selected vote */
-
 .vote-button.selected,
 .contender.selected .vote-button {
     background: #d6537c;
@@ -637,7 +725,7 @@
 
 
 /* =========================================================
-   VS DIVIDER
+   VS / LIGHTNING DIVIDER
    ========================================================= */
 
 .versus {
@@ -661,16 +749,12 @@
 }
 
 
-/*
-   Jagged lightning shape.
-   The actual divider is created with clip-path.
-*/
+/* Lightning bolt */
 
 .versus::before {
     content: "";
 
     position: absolute;
-
     inset: 0;
 
     background: #e89aaa;
@@ -689,6 +773,9 @@
         drop-shadow(0 4px 7px rgba(232, 154, 170, .25));
 }
 
+
+/* White separation behind VS */
+
 .versus::after {
     content: "";
 
@@ -705,8 +792,12 @@
         0 7px 20px rgba(0, 0, 0, .12);
 }
 
+
+/* VS circle */
+
 .versus span {
     position: relative;
+
     z-index: 2;
 
     display: flex;
@@ -723,6 +814,7 @@
 
     font-size: 17px;
     line-height: 1;
+
     font-weight: 900;
 
     box-shadow:
@@ -761,6 +853,7 @@
 
     font-size: 19px;
     line-height: 1.2;
+
     font-weight: 900;
 }
 
@@ -771,6 +864,7 @@
 
     font-size: 13px;
     line-height: 1.4;
+
     font-weight: 700;
 }
 
@@ -782,6 +876,7 @@
 .result-percentages {
     display: grid;
     grid-template-columns: 1fr 1fr;
+
     gap: 10px;
 
     margin-top: 14px;
@@ -802,6 +897,8 @@
     color: #888;
 
     font-size: 10px;
+    line-height: 1.2;
+
     font-weight: 900;
     letter-spacing: .05em;
     text-transform: uppercase;
@@ -816,6 +913,7 @@
 
     font-size: 22px;
     line-height: 1;
+
     font-weight: 900;
 }
 
@@ -825,6 +923,8 @@
     color: #666;
 
     font-size: 12px;
+    line-height: 1.4;
+
     font-weight: 800;
 }
 
@@ -850,6 +950,7 @@
 
     font-size: 12px;
     line-height: 1.4;
+
     font-weight: 700;
 }
 
@@ -884,6 +985,7 @@
     text-align: center;
 
     background: #fff;
+
     border: 1px solid #eee3e5;
     border-radius: 26px;
 
@@ -914,6 +1016,8 @@
     color: #d6537c;
 
     font-size: 10px;
+    line-height: 1.2;
+
     font-weight: 900;
     letter-spacing: .1em;
     text-transform: uppercase;
@@ -926,6 +1030,7 @@
 
     font-size: clamp(25px, 5vw, 34px);
     line-height: 1.1;
+
     font-weight: 900;
 }
 
@@ -938,6 +1043,7 @@
 
     font-size: 14px;
     line-height: 1.5;
+
     font-weight: 700;
 }
 
@@ -946,10 +1052,9 @@
     align-items: center;
     justify-content: center;
 
-    margin-top: 18px;
-
     min-height: 46px;
 
+    margin-top: 18px;
     padding: 11px 20px;
 
     border-radius: 15px;
@@ -958,6 +1063,8 @@
     color: #fff;
 
     font-size: 14px;
+    line-height: 1.2;
+
     font-weight: 900;
     text-decoration: none;
 
@@ -990,6 +1097,7 @@
 
     .battle-category-nav {
         justify-content: flex-start;
+
         padding-left: 15px;
         padding-right: 15px;
     }
@@ -1019,11 +1127,15 @@
     .contender-content [data-name-1],
     .contender-content [data-name-2] {
         font-size: 17px;
+
+        min-height: 40px;
     }
 
     .contender-content [data-description-1],
     .contender-content [data-description-2] {
         font-size: 12px;
+
+        min-height: 53px;
     }
 
     .versus {
@@ -1039,6 +1151,7 @@
     .versus span {
         width: 41px;
         height: 41px;
+
         font-size: 15px;
     }
 }
@@ -1061,8 +1174,14 @@
 
     .community-badge {
         padding: 7px 10px;
+
         font-size: 10px;
     }
+
+
+    /* -----------------------------------------------------
+       Hero
+       ----------------------------------------------------- */
 
     .voting-hero {
         padding-top: 22px;
@@ -1077,6 +1196,11 @@
         font-size: 15px;
     }
 
+
+    /* -----------------------------------------------------
+       Category navigation
+       ----------------------------------------------------- */
+
     .battle-category-nav {
         margin-bottom: 27px;
         gap: 6px;
@@ -1084,8 +1208,14 @@
 
     .battle-category-nav a {
         padding: 8px 12px;
+
         font-size: 12px;
     }
+
+
+    /* -----------------------------------------------------
+       Battle
+       ----------------------------------------------------- */
 
     .product-battle {
         margin-bottom: 30px;
@@ -1101,8 +1231,10 @@
 
     .battle-card {
         padding: 9px;
+
         border-radius: 20px;
     }
+
 
     /*
        IMPORTANT:
@@ -1110,7 +1242,9 @@
     */
 
     .contenders {
-        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        grid-template-columns:
+            minmax(0, 1fr)
+            minmax(0, 1fr);
     }
 
     .contender {
@@ -1125,6 +1259,11 @@
         margin-left: 7px;
     }
 
+
+    /* -----------------------------------------------------
+       Product image
+       ----------------------------------------------------- */
+
     .contender-image {
         aspect-ratio: 1 / 1;
     }
@@ -1133,12 +1272,24 @@
         padding: 9px;
     }
 
+
+    /* -----------------------------------------------------
+       Product badge
+       ----------------------------------------------------- */
+
     .product-badge {
         left: 7px;
         bottom: 7px;
+
         padding: 5px 7px;
+
         font-size: 8px;
     }
+
+
+    /* -----------------------------------------------------
+       LOCKED MOBILE PRODUCT LAYOUT
+       ----------------------------------------------------- */
 
     .contender-content {
         padding: 11px 9px 10px;
@@ -1146,31 +1297,57 @@
 
     .contender-content [data-label-1],
     .contender-content [data-label-2] {
-        font-size: 8px;
+        min-height: 10px;
+
         margin-bottom: 4px;
+
+        font-size: 8px;
     }
 
     .contender-content [data-name-1],
     .contender-content [data-name-2] {
+        /*
+           Two-line reserved height.
+        */
+
+        min-height: 32px;
+
         font-size: 14px;
         line-height: 1.12;
     }
 
     .contender-content [data-brand-1],
     .contender-content [data-brand-2] {
+        min-height: 13px;
+
         font-size: 9px;
     }
 
     .contender-content [data-description-1],
     .contender-content [data-description-2] {
+        /*
+           Same reserved height on both products.
+        */
+
+        min-height: 54px;
+
+        margin-top: 7px;
+
         font-size: 10px;
         line-height: 1.35;
-        margin-top: 7px;
     }
 
+
+    /* -----------------------------------------------------
+       Score
+       ----------------------------------------------------- */
+
     .product-rating {
+        min-height: 34px;
+
         margin-top: 9px;
         padding: 7px 8px;
+
         border-radius: 10px;
     }
 
@@ -1182,41 +1359,37 @@
         font-size: 8px;
     }
 
+
+    /* -----------------------------------------------------
+       Buttons
+       ----------------------------------------------------- */
+
     .product-shop-link {
         min-height: 37px;
+
         margin-top: 8px;
         padding: 8px 7px;
+
         border-radius: 10px;
+
         font-size: 10px;
     }
 
     .vote-button {
         min-height: 40px;
+
         margin-top: 7px;
         padding: 8px 6px;
+
         border-radius: 10px;
+
         font-size: 10px;
     }
 
-    /*
-       Smaller VS badge, but still visually dominant.
-    */
 
-    .versus {
-        width: 48px;
-        height: 82px;
-    }
-
-    .versus::after {
-        width: 40px;
-        height: 40px;
-    }
-
-    .versus span {
-        width: 35px;
-        height: 35px;
-        font-size: 12px;
-    }
+    /* -----------------------------------------------------
+       Leader / winner indicators
+       ----------------------------------------------------- */
 
     .contender.leading::before,
     .contender.winner::before {
@@ -1238,9 +1411,37 @@
         font-size: 7px;
     }
 
+
+    /* -----------------------------------------------------
+       VS
+       ----------------------------------------------------- */
+
+    .versus {
+        width: 48px;
+        height: 82px;
+    }
+
+    .versus::after {
+        width: 40px;
+        height: 40px;
+    }
+
+    .versus span {
+        width: 35px;
+        height: 35px;
+
+        font-size: 12px;
+    }
+
+
+    /* -----------------------------------------------------
+       Result
+       ----------------------------------------------------- */
+
     .battle-result {
         margin-top: 10px;
         padding: 14px;
+
         border-radius: 15px;
     }
 
@@ -1254,11 +1455,13 @@
 
     .result-percentages {
         gap: 7px;
+
         margin-top: 10px;
     }
 
     .result-percentages > div {
         padding: 9px 7px;
+
         border-radius: 11px;
     }
 
@@ -1274,6 +1477,11 @@
         font-size: 10px;
     }
 
+
+    /* -----------------------------------------------------
+       Battle footer
+       ----------------------------------------------------- */
+
     .battle-footer {
         margin-top: 10px;
     }
@@ -1282,9 +1490,15 @@
         font-size: 10px;
     }
 
+
+    /* -----------------------------------------------------
+       Holy Grail
+       ----------------------------------------------------- */
+
     .holy-grail-final {
         margin: 45px 15px 25px;
         padding: 27px 17px;
+
         border-radius: 21px;
     }
 
@@ -1298,6 +1512,7 @@
 
     .holy-grail-final-button {
         width: 100%;
+
         font-size: 13px;
     }
 }
@@ -1340,11 +1555,15 @@
 
     .contender-content [data-name-1],
     .contender-content [data-name-2] {
+        min-height: 29px;
+
         font-size: 12px;
     }
 
     .contender-content [data-description-1],
     .contender-content [data-description-2] {
+        min-height: 49px;
+
         font-size: 9px;
     }
 
@@ -1369,6 +1588,7 @@
     .versus span {
         width: 31px;
         height: 31px;
+
         font-size: 10px;
     }
 }
