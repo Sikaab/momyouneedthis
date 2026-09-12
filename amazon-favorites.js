@@ -1103,7 +1103,7 @@ function showVoteUI(
             otherPercentage
         ) {
             yourPosition.textContent =
-                "You're with the majority. 💗";
+                "You're with the majority. 🙌";
         } else if (
             selectedPercentage <
             otherPercentage
@@ -1112,7 +1112,7 @@ function showVoteUI(
                 "You're with the minority. 👀";
         } else {
             yourPosition.textContent =
-                "It's a tie. Moms are split!";
+                "It's a tie. Moms are split! 🤷🏻‍♀️";
         }
     }
     /*
