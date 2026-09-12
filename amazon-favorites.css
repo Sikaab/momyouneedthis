@@ -15,9 +15,11 @@
     max-width: 1100px;
     margin: 0 auto;
     padding: 20px 18px 8px;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     gap: 16px;
 }
 
@@ -30,6 +32,7 @@
     width: 170px;
     max-width: 48vw;
     height: auto;
+
     display: block;
 }
 
@@ -37,14 +40,20 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+
     padding: 8px 13px;
+
     border-radius: 999px;
+
     background: #fff;
     border: 1px solid #f0d8de;
+
     color: #b85d70;
+
     font-size: 12px;
     font-weight: 900;
     letter-spacing: .04em;
+
     white-space: nowrap;
 }
 
@@ -56,7 +65,9 @@
 .voting-hero {
     max-width: 850px;
     margin: 0 auto;
+
     padding: 28px 18px 30px;
+
     text-align: center;
 }
 
@@ -64,11 +75,15 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+
     padding: 8px 14px;
     margin-bottom: 12px;
+
     border-radius: 999px;
+
     background: #fff0f3;
     color: #d6537c;
+
     font-size: 12px;
     font-weight: 900;
     letter-spacing: .08em;
@@ -76,9 +91,12 @@
 
 .voting-hero h1 {
     margin: 0;
+
     color: #1d4f91;
+
     font-size: clamp(34px, 6vw, 56px);
     line-height: 1.05;
+
     font-weight: 900;
     letter-spacing: -.035em;
 }
@@ -89,9 +107,12 @@
 
 .mom-voted-intro {
     margin: 15px auto 0;
+
     color: #686868;
+
     font-size: 17px;
     line-height: 1.55;
+
     font-weight: 700;
 }
 
@@ -103,14 +124,17 @@
 .battle-category-nav {
     max-width: 1100px;
     margin: 0 auto 34px;
+
     padding: 0 18px;
 
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+
     gap: 8px;
 
     overflow-x: auto;
+
     scrollbar-width: none;
 }
 
@@ -126,14 +150,17 @@
     justify-content: center;
 
     padding: 9px 15px;
+
     border-radius: 999px;
 
     background: #fff;
     border: 1px solid #eadfe2;
 
     color: #555;
+
     font-size: 13px;
     font-weight: 900;
+
     text-decoration: none;
 
     transition:
@@ -145,8 +172,11 @@
 
 .battle-category-nav a:hover {
     background: #fff0f3;
+
     border-color: #e89aaa;
+
     color: #c95f79;
+
     transform: translateY(-1px);
 }
 
@@ -157,7 +187,9 @@
 
 .product-battle {
     max-width: 1100px;
+
     margin: 0 auto 42px;
+
     padding: 0 18px;
 }
 
@@ -167,16 +199,22 @@
 
 .battle-heading h2 {
     margin: 0;
+
     color: #1d4f91;
+
     font-size: 24px;
     line-height: 1.15;
+
     font-weight: 900;
 }
 
 .battle-heading p {
     margin: 5px 0 0;
+
     color: #777;
+
     font-size: 14px;
+
     font-weight: 700;
 }
 
@@ -189,6 +227,7 @@
     position: relative;
 
     background: #fff;
+
     border: 1px solid #eee3e5;
     border-radius: 28px;
 
@@ -202,18 +241,82 @@
 
 
 /* =========================================================
+   BATTLE CARD HEADER
+   HEAD TO HEAD ←       → MOM BATTLES
+   ========================================================= */
+
+.battle-card-header {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 16px;
+
+    margin: 0 4px 15px;
+    padding: 0 4px;
+
+    box-sizing: border-box;
+}
+
+/*
+   This intentionally uses the first and last children
+   rather than relying on specific class names.
+
+   That way the existing HTML can keep its current
+   structure while the two labels are pushed apart.
+*/
+
+.battle-card-header > :first-child {
+    flex: 0 0 auto;
+
+    text-align: left;
+
+    color: #1d4f91;
+
+    font-size: 11px;
+    line-height: 1.2;
+
+    font-weight: 900;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.battle-card-header > :last-child {
+    flex: 0 0 auto;
+
+    margin-left: auto;
+
+    text-align: right;
+
+    color: #d6537c;
+
+    font-size: 11px;
+    line-height: 1.2;
+
+    font-weight: 900;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
    CONTENDERS
    ========================================================= */
 
 .contenders {
+    position: relative;
+
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        minmax(0, 1fr);
 
     align-items: stretch;
 
     gap: 0;
-
-    position: relative;
 }
 
 
@@ -267,6 +370,7 @@
     content: "🔥";
 
     position: absolute;
+
     top: 10px;
     right: 10px;
 
@@ -278,6 +382,7 @@
     justify-content: center;
 
     background: #fff;
+
     border-radius: 50%;
 
     font-size: 21px;
@@ -308,6 +413,7 @@
     content: "🏆";
 
     position: absolute;
+
     top: 10px;
     right: 10px;
 
@@ -319,6 +425,7 @@
     justify-content: center;
 
     background: #fff;
+
     border-radius: 50%;
 
     font-size: 20px;
@@ -345,6 +452,7 @@
     content: "";
 
     position: absolute;
+
     inset: 0;
 
     border: 3px solid #e89aaa;
@@ -360,6 +468,7 @@
 
 .battle-leader-badge {
     position: absolute;
+
     top: 12px;
     left: 12px;
 
@@ -374,6 +483,7 @@
     border-radius: 999px;
 
     background: #fff7dc;
+
     border: 1px solid #efd27b;
 
     color: #876814;
@@ -383,6 +493,7 @@
 
     font-weight: 900;
     letter-spacing: .05em;
+
     text-transform: uppercase;
 
     box-shadow:
@@ -398,6 +509,7 @@
     position: relative;
 
     width: 100%;
+
     aspect-ratio: 1 / 1;
 
     background: #faf8f7;
@@ -445,6 +557,7 @@
     border-radius: 999px;
 
     background: #fff;
+
     border: 1px solid #eee4e5;
 
     color: #555;
@@ -475,9 +588,9 @@
 }
 
 
-/* ---------------------------------------------------------
-   Label
-   --------------------------------------------------------- */
+/* =========================================================
+   PRODUCT LABEL
+   ========================================================= */
 
 .contender-content [data-label-1],
 .contender-content [data-label-2] {
@@ -494,22 +607,22 @@
 
     font-weight: 900;
     letter-spacing: .08em;
+
     text-transform: uppercase;
 }
 
 
-/* ---------------------------------------------------------
-   Product name
-   --------------------------------------------------------- */
+/* =========================================================
+   PRODUCT NAME
+   ========================================================= */
 
 .contender-content [data-name-1],
 .contender-content [data-name-2] {
     margin: 0;
 
     /*
-       Reserve room for approximately two lines.
-       This keeps the brand and everything underneath
-       at the same vertical position.
+       Reserves room for approximately two lines
+       so the brand always begins at the same height.
     */
 
     min-height: 44px;
@@ -523,9 +636,9 @@
 }
 
 
-/* ---------------------------------------------------------
-   Brand
-   --------------------------------------------------------- */
+/* =========================================================
+   PRODUCT BRAND
+   ========================================================= */
 
 .contender-content [data-brand-1],
 .contender-content [data-brand-2] {
@@ -542,20 +655,17 @@
 }
 
 
-/* ---------------------------------------------------------
-   Description
-   --------------------------------------------------------- */
+/* =========================================================
+   PRODUCT DESCRIPTION
+   ========================================================= */
 
 .contender-content [data-description-1],
 .contender-content [data-description-2] {
     margin: 10px 0 0;
 
     /*
-       Reserve the same amount of space for descriptions.
-
-       This is the important part:
-       a short description will NOT cause its buttons
-       to move upward.
+       Same reserved height for both descriptions.
+       This keeps the score and buttons aligned.
     */
 
     min-height: 57px;
@@ -579,6 +689,7 @@
     justify-content: space-between;
 
     width: 100%;
+
     min-height: 40px;
 
     box-sizing: border-box;
@@ -622,6 +733,7 @@
     justify-content: center;
 
     width: 100%;
+
     min-height: 43px;
 
     box-sizing: border-box;
@@ -664,6 +776,7 @@
 
 .vote-button {
     width: 100%;
+
     min-height: 46px;
 
     box-sizing: border-box;
@@ -710,8 +823,11 @@
 
 .vote-button:disabled {
     cursor: default;
+
     opacity: .65;
+
     transform: none;
+
     box-shadow: none;
 }
 
@@ -755,6 +871,7 @@
     content: "";
 
     position: absolute;
+
     inset: 0;
 
     background: #e89aaa;
@@ -835,6 +952,7 @@
     border-radius: 19px;
 
     background: #fff7f9;
+
     border: 1px solid #f1dce2;
 
     text-align: center;
@@ -875,6 +993,7 @@
 
 .result-percentages {
     display: grid;
+
     grid-template-columns: 1fr 1fr;
 
     gap: 10px;
@@ -888,6 +1007,7 @@
     border-radius: 14px;
 
     background: #fff;
+
     border: 1px solid #eee3e6;
 }
 
@@ -901,6 +1021,7 @@
 
     font-weight: 900;
     letter-spacing: .05em;
+
     text-transform: uppercase;
 }
 
@@ -980,6 +1101,7 @@
     max-width: 760px;
 
     margin: 65px auto 35px;
+
     padding: 35px 22px;
 
     text-align: center;
@@ -1020,6 +1142,7 @@
 
     font-weight: 900;
     letter-spacing: .1em;
+
     text-transform: uppercase;
 }
 
@@ -1109,7 +1232,12 @@
 
     .battle-card {
         padding: 14px;
+
         border-radius: 23px;
+    }
+
+    .battle-card-header {
+        margin-bottom: 12px;
     }
 
     .contender:first-child {
@@ -1126,16 +1254,16 @@
 
     .contender-content [data-name-1],
     .contender-content [data-name-2] {
-        font-size: 17px;
-
         min-height: 40px;
+
+        font-size: 17px;
     }
 
     .contender-content [data-description-1],
     .contender-content [data-description-2] {
-        font-size: 12px;
-
         min-height: 53px;
+
+        font-size: 12px;
     }
 
     .versus {
@@ -1203,6 +1331,7 @@
 
     .battle-category-nav {
         margin-bottom: 27px;
+
         gap: 6px;
     }
 
@@ -1236,9 +1365,26 @@
     }
 
 
+    /* -----------------------------------------------------
+       Battle card header
+       ----------------------------------------------------- */
+
+    .battle-card-header {
+        gap: 8px;
+
+        margin: 0 2px 10px;
+        padding: 0 2px;
+    }
+
+    .battle-card-header > :first-child,
+    .battle-card-header > :last-child {
+        font-size: 8px;
+        letter-spacing: .06em;
+    }
+
+
     /*
-       IMPORTANT:
-       Products stay side-by-side on mobile.
+       Products ALWAYS stay side-by-side.
     */
 
     .contenders {
@@ -1288,7 +1434,7 @@
 
 
     /* -----------------------------------------------------
-       LOCKED MOBILE PRODUCT LAYOUT
+       Locked product layout
        ----------------------------------------------------- */
 
     .contender-content {
@@ -1306,10 +1452,6 @@
 
     .contender-content [data-name-1],
     .contender-content [data-name-2] {
-        /*
-           Two-line reserved height.
-        */
-
         min-height: 32px;
 
         font-size: 14px;
@@ -1325,10 +1467,6 @@
 
     .contender-content [data-description-1],
     .contender-content [data-description-2] {
-        /*
-           Same reserved height on both products.
-        */
-
         min-height: 54px;
 
         margin-top: 7px;
@@ -1388,7 +1526,7 @@
 
 
     /* -----------------------------------------------------
-       Leader / winner indicators
+       Leader / winner
        ----------------------------------------------------- */
 
     .contender.leading::before,
@@ -1440,6 +1578,7 @@
 
     .battle-result {
         margin-top: 10px;
+
         padding: 14px;
 
         border-radius: 15px;
@@ -1497,6 +1636,7 @@
 
     .holy-grail-final {
         margin: 45px 15px 25px;
+
         padding: 27px 17px;
 
         border-radius: 21px;
@@ -1539,6 +1679,15 @@
 
     .battle-card {
         padding: 7px;
+    }
+
+    .battle-card-header {
+        margin-bottom: 8px;
+    }
+
+    .battle-card-header > :first-child,
+    .battle-card-header > :last-child {
+        font-size: 7px;
     }
 
     .contender:first-child {
