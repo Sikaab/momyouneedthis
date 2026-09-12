@@ -2,370 +2,542 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>
-        Share Your Mom Holy Grail | MomYouNeedThis
-    </title>
-
-    <meta
-        name="description"
-        content="Tell MomYouNeedThis about the baby, toddler or parenting product you absolutely swear by."
-    >
-
-    <!-- Main site styles -->
-
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
-
-    <!-- Mom recommendations / Holy Grail styles -->
-
-    <link
-        rel="stylesheet"
-        href="amazon-favorites.css"
-    >
-
-    <!-- Google Font -->
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap"
-        rel="stylesheet"
-    >
-
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+<title>
+    Share Your Mom Holy Grail | MomYouNeedThis
+</title>
+<meta
+    name="description"
+    content="Tell MomYouNeedThis about the baby, toddler or parenting product you absolutely swear by."
+>
+<!-- Main site styles -->
+<link
+    rel="stylesheet"
+    href="style.css"
+>
+<!-- Shared recommendation styles -->
+<link
+    rel="stylesheet"
+    href="amazon-favorites.css"
+>
+<!-- Google Font -->
+<link
+    href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap"
+    rel="stylesheet"
+>
+<!-- =====================================================
+     HOLY GRAIL PAGE STYLES
+     Kept directly in this file so this page is self-contained.
+====================================================== -->
+<style>
+    /* =====================================================
+       PAGE
+    ====================================================== */
+    .holy-grail-logo-link{
+        display:block;
+        text-decoration:none;
+    }
+    .holy-grail-logo-link .logo{
+        display:block;
+        width:110px;
+        max-width:100%;
+        margin:0 auto 20px;
+    }
+    /* =====================================================
+       BADGE
+    ====================================================== */
+    .resource-page .amazon-badge{
+        display:inline-block;
+        margin:0 auto 18px;
+        padding:8px 15px;
+        border-radius:999px;
+        background:#fff0f5;
+        color:#d6537c;
+        font-size:12px;
+        font-weight:900;
+        letter-spacing:.4px;
+    }
+    /* =====================================================
+       HERO
+    ====================================================== */
+    .resource-page h1{
+        margin-top:8px;
+        margin-bottom:16px;
+        color:#332b2b;
+        font-size:46px;
+        line-height:1.08;
+        font-weight:900;
+    }
+    .resource-page h1 span{
+        display:block;
+        color:#e89aaa;
+    }
+    .resource-page .intro{
+        max-width:600px;
+        margin:0 auto 28px;
+        color:#665d5d;
+        font-size:18px;
+        line-height:1.6;
+    }
+    .resource-page .intro strong{
+        color:#332b2b;
+    }
+    /* =====================================================
+       FORM CARD
+    ====================================================== */
+    .holy-grail-form{
+        width:100%;
+        max-width:600px;
+        margin:0 auto;
+        padding:28px;
+        background:#ffffff;
+        border:1px solid #eee3e7;
+        border-radius:26px;
+        box-shadow:0 10px 30px rgba(51,43,43,.07);
+        text-align:left;
+    }
+    /* =====================================================
+       FORM FIELDS
+    ====================================================== */
+    .holy-grail-field{
+        margin-bottom:20px;
+    }
+    .holy-grail-field label{
+        display:block;
+        margin-bottom:8px;
+        color:#332b2b;
+        font-size:15px;
+        font-weight:900;
+    }
+    .holy-grail-field input{
+        display:block;
+        width:100%;
+        box-sizing:border-box;
+        padding:14px 16px;
+        border:1px solid #e5dfe1;
+        border-radius:14px;
+        outline:none;
+        background:#fff;
+        color:#332b2b;
+        font-family:'Nunito',sans-serif;
+        font-size:16px;
+        transition:border-color .2s ease, box-shadow .2s ease;
+    }
+    .holy-grail-field input::placeholder{
+        color:#aaa;
+    }
+    .holy-grail-field input:focus{
+        border-color:#e89aaa;
+        box-shadow:0 0 0 4px rgba(232,154,170,.12);
+    }
+    /* =====================================================
+       ERROR
+    ====================================================== */
+    .holy-grail-error{
+        min-height:20px;
+        margin:0 0 10px;
+        color:#b4233d;
+        font-size:14px;
+        font-weight:800;
+        line-height:1.4;
+    }
+    /* =====================================================
+       SUBMIT BUTTON
+    ====================================================== */
+    .holy-grail-submit{
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        width:100%;
+        min-height:54px;
+        padding:15px 22px;
+        border:0;
+        border-radius:16px;
+        background:#e89aaa;
+        color:#ffffff;
+        font-family:'Nunito',sans-serif;
+        font-size:16px;
+        font-weight:900;
+        cursor:pointer;
+        transition:transform .2s ease, box-shadow .2s ease, opacity .2s ease;
+    }
+    .holy-grail-submit:hover{
+        transform:translateY(-2px);
+        box-shadow:0 10px 22px rgba(232,154,170,.28);
+    }
+    .holy-grail-submit:active{
+        transform:translateY(0);
+    }
+    .holy-grail-submit:disabled{
+        opacity:.65;
+        cursor:not-allowed;
+        transform:none;
+        box-shadow:none;
+    }
+    /* =====================================================
+       SUCCESS MESSAGE
+    ====================================================== */
+    .holy-grail-success{
+        text-align:center;
+    }
+    .holy-grail-success[hidden]{
+        display:none;
+    }
+    .holy-grail-success-icon{
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        width:64px;
+        height:64px;
+        margin:0 auto 16px;
+        border-radius:50%;
+        background:#fff0f5;
+        font-size:30px;
+    }
+    .holy-grail-success h2{
+        margin:0 0 10px;
+        color:#332b2b;
+        font-size:26px;
+        font-weight:900;
+    }
+    .holy-grail-success p{
+        margin:0 auto 22px;
+        color:#665d5d;
+        font-size:16px;
+        line-height:1.6;
+    }
+    /* =====================================================
+       SUBMIT ANOTHER
+    ====================================================== */
+    .holy-grail-another{
+        width:100%;
+        padding:13px 20px;
+        border:1px solid #e2ebf8;
+        border-radius:14px;
+        background:#eef5ff;
+        color:#1d4f91;
+        font-family:'Nunito',sans-serif;
+        font-size:15px;
+        font-weight:900;
+        cursor:pointer;
+        transition:background .2s ease, transform .2s ease;
+    }
+    .holy-grail-another:hover{
+        background:#e3edff;
+        transform:translateY(-1px);
+    }
+    /* =====================================================
+       WHAT HAPPENS NEXT
+    ====================================================== */
+    .resource-page .tips{
+        max-width:600px;
+        margin:28px auto 0;
+        padding:24px;
+        border:1px solid #e2ebf8;
+        border-radius:22px;
+        background:#f6f9ff;
+        text-align:center;
+    }
+    .resource-page .tips h2{
+        margin:0 0 12px;
+        color:#1d4f91;
+        font-size:21px;
+        font-weight:900;
+    }
+    .resource-page .tips p{
+        margin:0;
+        color:#665d5d;
+        font-size:15px;
+        line-height:1.65;
+    }
+    .resource-page .tips strong{
+        color:#332b2b;
+    }
+    /* =====================================================
+       BACK LINK
+    ====================================================== */
+    .holy-grail-back{
+        margin:25px auto 0;
+        text-align:center;
+    }
+    .holy-grail-back-link{
+        display:inline-block;
+        color:#1d4f91;
+        font-size:15px;
+        font-weight:900;
+        text-decoration:none;
+        transition:color .2s ease;
+    }
+    .holy-grail-back-link:hover{
+        color:#173f73;
+        text-decoration:underline;
+    }
+    /* =====================================================
+       FOOTER
+    ====================================================== */
+    .resource-page footer{
+        margin-top:45px;
+        padding-top:30px;
+        border-top:1px solid #eee3e7;
+        text-align:center;
+    }
+    .resource-page .footer-logo img{
+        display:block;
+        width:72px;
+        margin:0 auto 12px;
+    }
+    .resource-page footer h3{
+        margin:0 0 6px;
+        color:#332b2b;
+        font-size:18px;
+        font-weight:900;
+    }
+    .resource-page footer > p{
+        max-width:430px;
+        margin:0 auto;
+        color:#777;
+        font-size:14px;
+        line-height:1.5;
+    }
+    .resource-page .footer-bottom{
+        display:flex;
+        justify-content:center;
+        gap:20px;
+        flex-wrap:wrap;
+        margin-top:22px;
+        color:#999;
+        font-size:12px;
+        line-height:1.4;
+    }
+    .resource-page .footer-bottom p{
+        margin:0;
+    }
+    /* =====================================================
+       MOBILE
+    ====================================================== */
+    @media(max-width:640px){
+        .resource-page h1{
+            font-size:36px;
+        }
+        .resource-page .intro{
+            font-size:16px;
+        }
+        .holy-grail-form{
+            padding:20px;
+            border-radius:22px;
+        }
+        .resource-page .tips{
+            padding:20px;
+            border-radius:20px;
+        }
+    }
+    @media(max-width:380px){
+        .resource-page h1{
+            font-size:32px;
+        }
+        .holy-grail-form{
+            padding:17px;
+        }
+        .holy-grail-submit{
+            font-size:15px;
+        }
+    }
+</style>
 </head>
-
-
 <body>
-
 <div class="page">
-
 <section class="resource-page">
-
-
-    <!-- =====================================================
-         LOGO
-    ====================================================== -->
-
-    <a
-        href="index.html"
-        class="holy-grail-logo-link"
-        aria-label="MomYouNeedThis home"
+<!-- =====================================================
+     LOGO
+====================================================== -->
+<a
+    href="index.html"
+    class="holy-grail-logo-link"
+    aria-label="MomYouNeedThis home"
+>
+    <img
+        src="assets/logo.svg"
+        class="logo"
+        alt="MomYouNeedThis"
     >
-
+</a>
+<!-- =====================================================
+     BADGE
+====================================================== -->
+<span class="amazon-badge">
+    💗 MOM-TO-MOM RECOMMENDATIONS
+</span>
+<!-- =====================================================
+     HERO
+====================================================== -->
+<h1>
+    What's Your
+    <span>Mom Holy Grail?</span>
+</h1>
+<p class="intro">
+    What's the one baby, toddler or parenting product
+    you would recommend to another mom without hesitation?
+    <br><br>
+    <strong>
+        Tell us about it.
+    </strong>
+</p>
+<!-- =====================================================
+     SUBMISSION FORM
+====================================================== -->
+<div class="holy-grail-form">
+    <form
+        id="holyGrailForm"
+        novalidate
+    >
+        <!-- PRODUCT NAME -->
+        <div class="holy-grail-field">
+            <label for="productName">
+                Product name
+            </label>
+            <input
+                type="text"
+                id="productName"
+                name="productName"
+                placeholder="e.g. Hatch Rest"
+                maxlength="150"
+                autocomplete="off"
+                required
+            >
+        </div>
+        <!-- BRAND -->
+        <div class="holy-grail-field">
+            <label for="brandName">
+                Brand
+            </label>
+            <input
+                type="text"
+                id="brandName"
+                name="brandName"
+                placeholder="e.g. Hatch"
+                maxlength="100"
+                autocomplete="off"
+                required
+            >
+        </div>
+        <!-- ERROR MESSAGE -->
+        <p
+            id="holyGrailError"
+            class="holy-grail-error"
+            role="alert"
+            aria-live="polite"
+        ></p>
+        <!-- SUBMIT BUTTON -->
+        <button
+            type="submit"
+            id="holyGrailSubmit"
+            class="holy-grail-submit"
+        >
+            <span id="submitText">
+                💗 Submit My Holy Grail
+            </span>
+            <span
+                id="submitLoading"
+                hidden
+            >
+                Sending...
+            </span>
+        </button>
+    </form>
+    <!-- =================================================
+         SUCCESS MESSAGE
+    ================================================== -->
+    <div
+        id="holyGrailSuccess"
+        class="holy-grail-success"
+        hidden
+    >
+        <div class="holy-grail-success-icon">
+            💗
+        </div>
+        <h2>
+            Thank you, Mom!
+        </h2>
+        <p>
+            Your recommendation was sent.
+            <br>
+            We may feature it in a future
+            Mom-Approved Product Battle.
+        </p>
+        <button
+            type="button"
+            id="submitAnother"
+            class="holy-grail-another"
+        >
+            Submit Another Product
+        </button>
+    </div>
+</div>
+<!-- =====================================================
+     WHAT HAPPENS NEXT
+====================================================== -->
+<div class="tips">
+    <h2>
+        🏆 What Happens Next?
+    </h2>
+    <p>
+        We collect recommendations from moms
+        and look for the products that keep coming up.
+        <br><br>
+        Those products can then be added to our
+        <strong>Mom-Approved Product Battles</strong>,
+        where moms get to vote for their favorites.
+    </p>
+</div>
+<!-- =====================================================
+     BACK TO RECOMMENDATIONS
+====================================================== -->
+<div class="holy-grail-back">
+    <a
+        href="amazon-favorites.html"
+        class="holy-grail-back-link"
+    >
+        🗳️ See Mom-Approved Recommendations
+    </a>
+</div>
+<!-- =====================================================
+     FOOTER
+====================================================== -->
+<footer>
+    <div class="footer-logo">
         <img
             src="assets/logo.svg"
-            class="logo"
             alt="MomYouNeedThis"
         >
-
-    </a>
-
-
-    <!-- =====================================================
-         BADGE
-    ====================================================== -->
-
-    <span class="amazon-badge">
-
-        💗 MOM-TO-MOM RECOMMENDATIONS
-
-    </span>
-
-
-    <!-- =====================================================
-         HERO
-    ====================================================== -->
-
-    <h1>
-
-        What's Your
-        <span>Mom Holy Grail?</span>
-
-    </h1>
-
-
-    <p class="intro">
-
-        What's the one baby, toddler or parenting product
-        you would recommend to another mom without hesitation?
-
-        <br><br>
-
-        <strong>
-            Tell us about it.
-        </strong>
-
+    </div>
+    <h3>
+        MomYouNeedThis
+    </h3>
+    <p>
+        Helping moms discover things that make
+        everyday life a little easier.
     </p>
-
-
-    <!-- =====================================================
-         SUBMISSION FORM
-    ====================================================== -->
-
-    <div class="holy-grail-form">
-
-        <form
-            id="holyGrailForm"
-            novalidate
-        >
-
-
-            <!-- PRODUCT NAME -->
-
-            <div class="holy-grail-field">
-
-                <label for="productName">
-
-                    Product name
-
-                </label>
-
-                <input
-                    type="text"
-                    id="productName"
-                    name="productName"
-                    placeholder="e.g. Hatch Rest"
-                    maxlength="150"
-                    autocomplete="off"
-                    required
-                >
-
-            </div>
-
-
-            <!-- BRAND -->
-
-            <div class="holy-grail-field">
-
-                <label for="brandName">
-
-                    Brand
-
-                </label>
-
-                <input
-                    type="text"
-                    id="brandName"
-                    name="brandName"
-                    placeholder="e.g. Hatch"
-                    maxlength="100"
-                    autocomplete="off"
-                    required
-                >
-
-            </div>
-
-
-            <!-- ERROR MESSAGE -->
-
-            <p
-                id="holyGrailError"
-                class="holy-grail-error"
-                role="alert"
-                aria-live="polite"
-            ></p>
-
-
-            <!-- SUBMIT BUTTON -->
-
-            <button
-                type="submit"
-                id="holyGrailSubmit"
-                class="holy-grail-submit"
-            >
-
-                <span id="submitText">
-
-                    💗 Submit My Holy Grail
-
-                </span>
-
-                <span
-                    id="submitLoading"
-                    hidden
-                >
-
-                    Sending...
-
-                </span>
-
-            </button>
-
-
-        </form>
-
-
-        <!-- =================================================
-             SUCCESS MESSAGE
-        ================================================== -->
-
-        <div
-            id="holyGrailSuccess"
-            class="holy-grail-success"
-            hidden
-        >
-
-            <div class="holy-grail-success-icon">
-
-                💗
-
-            </div>
-
-
-            <h2>
-
-                Thank you, Mom!
-
-            </h2>
-
-
-            <p>
-
-                Your recommendation was sent.
-
-                <br>
-
-                We may feature it in a future
-                Mom-Approved Product Battle.
-
-            </p>
-
-
-            <button
-                type="button"
-                id="submitAnother"
-                class="holy-grail-another"
-            >
-
-                Submit Another Product
-
-            </button>
-
-        </div>
-
-    </div>
-
-
-    <!-- =====================================================
-         WHAT HAPPENS NEXT
-    ====================================================== -->
-
-    <div class="tips">
-
-        <h2>
-
-            🏆 What Happens Next?
-
-        </h2>
-
-
+    <div class="footer-bottom">
         <p>
-
-            We collect recommendations from moms
-            and look for the products that keep coming up.
-
-            <br><br>
-
-            Those products can then be added to our
-            <strong>Mom-Approved Product Battles</strong>,
-            where moms get to vote for their favorites.
-
+            © 2026 MomYouNeedThis
         </p>
-
-    </div>
-
-
-    <!-- =====================================================
-         BACK TO RECOMMENDATIONS
-    ====================================================== -->
-
-    <div class="holy-grail-back">
-
-        <a
-            href="amazon-favorites.html"
-            class="holy-grail-back-link"
-        >
-
-            🗳️ See Mom-Approved Recommendations
-
-        </a>
-
-    </div>
-
-
-    <!-- =====================================================
-         FOOTER
-    ====================================================== -->
-
-    <footer>
-
-        <div class="footer-logo">
-
-            <img
-                src="assets/logo.svg"
-                alt="MomYouNeedThis"
-            >
-
-        </div>
-
-
-        <h3>
-
-            MomYouNeedThis
-
-        </h3>
-
-
         <p>
-
-            Helping moms discover things that make
-            everyday life a little easier.
-
+            As an Amazon Associate, I earn from
+            qualifying purchases.
         </p>
-
-
-        <div class="footer-bottom">
-
-            <p>
-
-                © 2026 MomYouNeedThis
-
-            </p>
-
-
-            <p>
-
-                As an Amazon Associate, I earn from
-                qualifying purchases.
-
-            </p>
-
-        </div>
-
-    </footer>
-
-
+    </div>
+</footer>
 </section>
-
 </div>
-
-
 <!-- =========================================================
      HOLY GRAIL JAVASCRIPT
 ========================================================= -->
-
 <script
     type="module"
     src="submit-holy-grail.js"
 ></script>
-
-
 </body>
-
 </html>
