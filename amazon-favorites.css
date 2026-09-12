@@ -1,6 +1,5 @@
 /* =========================================================
    MOM BATTLES — MOMYOuNEEDTHIS
-   Clean / premium / playful / mobile-first
    ========================================================= */
 .mom-voted-page {
     background: #fffaf8;
@@ -204,6 +203,12 @@
     grid-template-columns:
         minmax(0, 1fr)
         minmax(0, 1fr);
+    /*
+       CRITICAL:
+       Both product cards occupy the exact same grid row.
+       This gives both cards identical available height.
+    */
+    grid-template-rows: 1fr;
     align-items: stretch;
     gap: 0;
 }
@@ -213,12 +218,14 @@
 .contender {
     position: relative;
     min-width: 0;
+    min-height: 0;
     background: #fff;
     border: 2px solid #f0e7e9;
     border-radius: 22px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    height: 100%;
     transition:
         transform .22s ease,
         border-color .22s ease,
@@ -336,6 +343,7 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    flex-shrink: 0;
 }
 .contender-image img {
     width: 100%;
@@ -370,14 +378,19 @@
 }
 /* =========================================================
    PRODUCT CONTENT
-   FLEX STRUCTURE
    ========================================================= */
 .contender-content {
     padding: 17px 16px 16px;
     display: flex;
     flex-direction: column;
-    flex: 1;
+    flex: 1 1 auto;
+    /*
+       VERY IMPORTANT:
+       Content itself is allowed to stretch to the
+       exact same height in both contender cards.
+    */
     min-height: 0;
+    box-sizing: border-box;
 }
 /* =========================================================
    PRODUCT LABEL
@@ -393,34 +406,47 @@
     font-weight: 900;
     letter-spacing: .08em;
     text-transform: uppercase;
+    flex-shrink: 0;
 }
 /* =========================================================
    PRODUCT NAME
    ========================================================= */
 .contender-content [data-name-1],
 .contender-content [data-name-2] {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
     margin: 0;
     min-height: 44px;
+    max-height: 44px;
     color: #222;
     font-size: 19px;
     line-height: 1.15;
     font-weight: 900;
+    flex-shrink: 0;
 }
 /* =========================================================
    PRODUCT BRAND
    ========================================================= */
 .contender-content [data-brand-1],
 .contender-content [data-brand-2] {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
     margin: 4px 0 0;
     min-height: 17px;
+    max-height: 17px;
     color: #888;
     font-size: 12px;
     line-height: 1.35;
     font-weight: 800;
+    flex-shrink: 0;
 }
 /* =========================================================
    PRODUCT DESCRIPTION
-   MAX 3 LINES + AUTOMATIC …
+   EXACTLY 3 LINES RESERVED
    ========================================================= */
 .contender-content [data-description-1],
 .contender-content [data-description-2] {
@@ -428,6 +454,11 @@
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
     overflow: hidden;
+    /*
+       Reserve the exact same height even when
+       one description is much shorter.
+    */
+    height: calc(13px * 1.45 * 3);
     min-height: calc(13px * 1.45 * 3);
     max-height: calc(13px * 1.45 * 3);
     margin: 10px 0 0;
@@ -435,22 +466,24 @@
     font-size: 13px;
     line-height: 1.45;
     font-weight: 600;
+    flex-shrink: 0;
 }
 /* =========================================================
-   SCORE
-   PUSHED TO BOTTOM
+   BOTTOM PRODUCT AREA
+   SCORE + BUTTONS ALWAYS STAY TOGETHER
    ========================================================= */
 .product-rating {
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    height: 40px;
     min-height: 40px;
+    max-height: 40px;
     box-sizing: border-box;
     /*
-       This is the key alignment fix.
-       The score moves to the bottom of both
-       contender cards regardless of description length.
+       This pushes the complete bottom stack
+       to the bottom of the product card.
     */
     margin-top: auto;
     padding: 10px 11px;
@@ -478,7 +511,9 @@
     align-items: center;
     justify-content: center;
     width: 100%;
+    height: 43px;
     min-height: 43px;
+    max-height: 43px;
     box-sizing: border-box;
     margin-top: 12px;
     padding: 10px 13px;
@@ -505,8 +540,13 @@
    VOTE BUTTON
    ========================================================= */
 .vote-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
+    height: 46px;
     min-height: 46px;
+    max-height: 46px;
     box-sizing: border-box;
     margin-top: 10px;
     padding: 11px 13px;
@@ -563,12 +603,6 @@
     justify-content: center;
     pointer-events: none;
 }
-/*
-   Stronger darker-pink lightning bolt.
-   Pink = MomYouNeedThis / voting interaction.
-   Blue = product/shopping.
-   Gold = winner.
-*/
 .versus::before {
     content: "";
     position: absolute;
@@ -586,10 +620,6 @@
     filter:
         drop-shadow(0 4px 8px rgba(214, 83, 124, .28));
 }
-/*
-   White knockout makes the VS area
-   extremely easy to read.
-*/
 .versus::after {
     content: "";
     position: absolute;
@@ -829,13 +859,30 @@
     .contender-content [data-name-1],
     .contender-content [data-name-2] {
         min-height: 40px;
+        max-height: 40px;
         font-size: 17px;
     }
     .contender-content [data-description-1],
     .contender-content [data-description-2] {
+        height: calc(12px * 1.45 * 3);
         min-height: calc(12px * 1.45 * 3);
         max-height: calc(12px * 1.45 * 3);
         font-size: 12px;
+    }
+    .product-rating {
+        height: 40px;
+        min-height: 40px;
+        max-height: 40px;
+    }
+    .product-shop-link {
+        height: 43px;
+        min-height: 43px;
+        max-height: 43px;
+    }
+    .vote-button {
+        height: 46px;
+        min-height: 46px;
+        max-height: 46px;
     }
     .versus {
         width: 64px;
@@ -926,6 +973,7 @@
         grid-template-columns:
             minmax(0, 1fr)
             minmax(0, 1fr);
+        grid-template-rows: 1fr;
     }
     .contender {
         border-radius: 17px;
@@ -963,23 +1011,26 @@
     .contender-content [data-label-1],
     .contender-content [data-label-2] {
         min-height: 10px;
+        max-height: 10px;
         margin-bottom: 4px;
         font-size: 8px;
     }
     .contender-content [data-name-1],
     .contender-content [data-name-2] {
         min-height: 32px;
+        max-height: 32px;
         font-size: 14px;
         line-height: 1.12;
     }
     .contender-content [data-brand-1],
     .contender-content [data-brand-2] {
         min-height: 13px;
+        max-height: 13px;
         font-size: 9px;
     }
     /* -----------------------------------------------------
        Description
-       4 lines maximum + …
+       EXACT SAME HEIGHT
        ----------------------------------------------------- */
     .contender-content [data-description-1],
     .contender-content [data-description-2] {
@@ -987,6 +1038,7 @@
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 4;
         overflow: hidden;
+        height: calc(10px * 1.35 * 4);
         min-height: calc(10px * 1.35 * 4);
         max-height: calc(10px * 1.35 * 4);
         margin-top: 7px;
@@ -994,11 +1046,13 @@
         line-height: 1.35;
     }
     /* -----------------------------------------------------
-       Score
-       Pushed to bottom of card
+       SCORE
+       EXACT SAME POSITION
        ----------------------------------------------------- */
     .product-rating {
+        height: 34px;
         min-height: 34px;
+        max-height: 34px;
         margin-top: auto;
         padding: 7px 8px;
         border-radius: 10px;
@@ -1010,17 +1064,26 @@
         font-size: 8px;
     }
     /* -----------------------------------------------------
-       Buttons
+       PRODUCT BUTTON
+       EXACT SAME POSITION
        ----------------------------------------------------- */
     .product-shop-link {
+        height: 37px;
         min-height: 37px;
+        max-height: 37px;
         margin-top: 8px;
         padding: 8px 7px;
         border-radius: 10px;
         font-size: 10px;
     }
+    /* -----------------------------------------------------
+       VOTE BUTTON
+       EXACT SAME POSITION
+       ----------------------------------------------------- */
     .vote-button {
+        height: 40px;
         min-height: 40px;
+        max-height: 40px;
         margin-top: 7px;
         padding: 8px 6px;
         border-radius: 10px;
@@ -1154,18 +1217,31 @@
     .contender-content [data-name-1],
     .contender-content [data-name-2] {
         min-height: 29px;
+        max-height: 29px;
         font-size: 12px;
     }
     .contender-content [data-description-1],
     .contender-content [data-description-2] {
+        height: calc(9px * 1.35 * 4);
         min-height: calc(9px * 1.35 * 4);
         max-height: calc(9px * 1.35 * 4);
         font-size: 9px;
     }
+    .product-rating {
+        height: 32px;
+        min-height: 32px;
+        max-height: 32px;
+    }
     .product-shop-link {
+        height: 35px;
+        min-height: 35px;
+        max-height: 35px;
         font-size: 9px;
     }
     .vote-button {
+        height: 38px;
+        min-height: 38px;
+        max-height: 38px;
         font-size: 9px;
     }
     .versus {
