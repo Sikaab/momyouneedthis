@@ -341,18 +341,18 @@
 }
 
 /*
-   The selected frame is drawn completely inside the
-   product card. It follows the card's exact dimensions
-   and rounded corners.
+   The selected frame extends over the 2px card border
+   so the pink outline follows the exact OUTER dimensions
+   of the product card.
 */
 
 .contender.selected::after {
     content: "";
     position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    top: -2px;
+    right: -2px;
+    bottom: -2px;
+    left: -2px;
     box-sizing: border-box;
     border: 3px solid #e89aaa;
     border-radius: inherit;
@@ -1325,18 +1325,6 @@
     }
 
     /* -----------------------------------------------------
-       SELECTED FRAME
-       Keep the frame completely inside the card.
-       ----------------------------------------------------- */
-
-    .contender.selected::after {
-        inset: 0;
-        border-width: 3px;
-        border-radius: inherit;
-        box-sizing: border-box;
-    }
-
-    /* -----------------------------------------------------
        VS
        ----------------------------------------------------- */
 
@@ -1525,12 +1513,6 @@
         min-height: 38px;
         max-height: 38px;
         font-size: 9px;
-    }
-
-    .contender.selected::after {
-        inset: 0;
-        border-width: 3px;
-        border-radius: inherit;
     }
 
     .versus {
