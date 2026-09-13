@@ -218,7 +218,7 @@ letter-spacing:.6px;
 }
 
 /* =====================================================
-THE TWO PRODUCTS + LIGHTNING
+TWO PRODUCTS + LIGHTNING
 ===================================================== */
 
 .contenders{
@@ -241,10 +241,6 @@ border:2px solid #f0e5e8;
 border-radius:22px;
 overflow:hidden;
 
-/* IMPORTANT:
-   Keeps every product card the same usable height
-   and allows the score/buttons to sit at the bottom.
-*/
 display:flex;
 flex-direction:column;
 transition:
@@ -326,7 +322,7 @@ display:inline-flex;
 
 /* =====================================================
 TWO ANIMATED LEADER FIRES
-MOVED TO THE OTHER SIDE
+BOTH ON THE RIGHT SIDE
 ===================================================== */
 
 .leader-fire{
@@ -338,11 +334,6 @@ line-height:1;
 pointer-events:none;
 transform-origin:center;
 }
-
-/*
-Both fires are now on the RIGHT side of the
-leading card, slightly staggered.
-*/
 
 .leader-fire-left{
 right:10px;
@@ -451,10 +442,6 @@ PRODUCT CONTENT
 padding:17px;
 text-align:center;
 
-/*
-   Makes the content area flexible so the lower
-   score/buttons area aligns between both cards.
-*/
 display:flex;
 flex-direction:column;
 flex:1;
@@ -495,16 +482,8 @@ max-width:260px;
 }
 
 /* =====================================================
-BOTTOM PRODUCT ACTION AREA
-Keeps score + buttons aligned
-===================================================== */
-
-.product-actions{
-margin-top:auto;
-}
-
-/* =====================================================
 MOM SCORE
+FIXED TO THE BOTTOM OF CONTENT AREA
 ===================================================== */
 
 .product-rating{
@@ -512,12 +491,21 @@ display:flex;
 align-items:baseline;
 justify-content:center;
 gap:5px;
-margin:12px 0;
+
+/*
+   This is the important alignment rule.
+   It consumes all remaining vertical space above
+   the score, forcing both scores to the same level.
+*/
+margin-top:auto;
+margin-bottom:12px;
 padding:10px;
 background:#fff;
 border:1px solid #eee3e7;
 border-radius:14px;
+box-sizing:border-box;
 flex-shrink:0;
+
 }
 
 .product-rating span{
@@ -541,31 +529,35 @@ font-weight:800;
 
 /* =====================================================
 BUTTONS
+FIXED HEIGHT + SAME BOTTOM POSITION
 ===================================================== */
 
 .product-shop-link,
 .vote-button{
 width:100%;
+height:44px;
 min-height:44px;
+
 display:flex;
 align-items:center;
 justify-content:center;
+box-sizing:border-box;
 border-radius:13px;
-font-family:‘Nunito’,sans-serif;
+font-family:'Nunito',sans-serif;
 font-size:12px;
 font-weight:900;
 text-decoration:none;
 cursor:pointer;
 transition:.2s ease;
-box-sizing:border-box;
 flex-shrink:0;
+
 }
 
 .product-shop-link{
 background:#1d4f91;
 color:#fff;
 border:2px solid #1d4f91;
-margin-top:8px;
+margin-top:0;
 }
 
 .product-shop-link:hover{
@@ -606,7 +598,7 @@ opacity:.65;
 
 /* =====================================================
 LIGHTNING DIVIDER
-WARM GOLDEN LIGHTNING
+COMPACT + CHUNKY + ELECTRIC BLUE
 ===================================================== */
 
 .versus{
@@ -620,55 +612,65 @@ min-height:100%;
 overflow:visible;
 }
 
+/*
+Main lightning bolt.
+
+It deliberately does NOT stretch from the top
+of the cards to the bottom. It stays compact,
+chunky and centred between them.
+*/
+
 .versus::before{
 content:””;
 position:absolute;
-top:18%;
-bottom:18%;
-left:50%;
-width:26px;
-transform:translateX(-50%);
 
-/*
-   Warm electric gold:
-   stands apart from the pink selection frame
-   while still fitting the warm MomYouNeedThis palette.
-*/
-background:#f6c453;
+top:17%;
+bottom:17%;
+left:50%;
+width:28px;
+transform:translateX(-50%);
+background:#4b8cff;
 clip-path:polygon(
-    58% 0%,
-    8% 42%,
-    39% 42%,
-    20% 100%,
-    92% 35%,
-    57% 35%,
-    78% 0%
+    62% 0%,
+    10% 43%,
+    42% 43%,
+    22% 100%,
+    94% 34%,
+    59% 34%,
+    80% 0%
 );
 opacity:.98;
 
 }
 
+/*
+Subtle blue energy glow behind the bolt.
+*/
+
 .versus::after{
 content:””;
 position:absolute;
-top:20%;
-bottom:20%;
+
+top:19%;
+bottom:19%;
 left:50%;
-width:30px;
+width:32px;
 transform:translateX(-50%);
-background:rgba(246,196,83,.18);
+background:rgba(75,140,255,.18);
 filter:blur(7px);
 pointer-events:none;
+
 }
 
 /* =====================================================
 VS
-No white background / no white halo
+NO WHITE BACKGROUND / NO WHITE HALO
 ===================================================== */
 
 .versus span{
 position:relative;
 z-index:3;
+
 width:58px;
 height:58px;
 display:flex;
@@ -682,6 +684,7 @@ font-size:19px;
 font-weight:900;
 letter-spacing:-.5px;
 box-shadow:none;
+
 }
 
 /* =====================================================
@@ -961,12 +964,12 @@ MOBILE
 .versus::before{
     top:22%;
     bottom:22%;
-    width:18px;
+    width:19px;
 }
 .versus::after{
     top:23%;
     bottom:23%;
-    width:22px;
+    width:23px;
 }
 /* Smaller cards */
 .battle-card{
@@ -1034,11 +1037,16 @@ MOBILE
     font-size:9px;
     line-height:1.35;
 }
+/* =================================================
+   MOBILE MOM SCORE
+   PUSHED TO SAME BOTTOM LEVEL
+================================================= */
 .product-rating{
-    gap:3px;
-    margin:8px 0;
+    margin-top:auto;
+    margin-bottom:8px;
     padding:7px 4px;
     border-radius:10px;
+    gap:3px;
 }
 .product-rating span{
     font-size:7px;
@@ -1049,12 +1057,20 @@ MOBILE
 .product-rating small{
     font-size:7px;
 }
+/* =================================================
+   MOBILE BUTTONS
+   IDENTICAL HEIGHT
+================================================= */
 .product-shop-link,
 .vote-button{
+    height:38px;
     min-height:38px;
     padding:6px 3px;
     border-radius:10px;
     font-size:8px;
+}
+.vote-button{
+    margin-top:7px;
 }
 .battle-result{
     padding:13px 10px;
@@ -1088,7 +1104,9 @@ MOBILE
     padding-top:10px;
     font-size:9px;
 }
-/* Categories */
+/* =================================================
+   CATEGORIES
+================================================= */
 .voting-categories{
     justify-content:flex-start;
     flex-wrap:nowrap;
@@ -1106,7 +1124,9 @@ MOBILE
     font-size:10px;
     padding:7px 10px;
 }
-/* CTA */
+/* =================================================
+   CTA
+================================================= */
 .holy-grail-final{
     margin:50px 0 35px;
     padding:28px 18px;
@@ -1158,6 +1178,8 @@ VERY SMALL PHONES
 .product-shop-link,
 .vote-button{
     font-size:7px;
+    height:36px;
+    min-height:36px;
 }
 
 }
