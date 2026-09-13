@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="UTF-8">
-
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1.0"
     >
-
-    <title>Mom Battles | MomYouNeedThis</title>
+    <title>
+        Mom Battles | MomYouNeedThis
+    </title>
 
     <meta
         name="description"
-        content="Two mom-approved products. One choice. Vote for your favourite in MomYouNeedThis Mom Battles."
+        content="Which mom-approved product wins? Compare products, see what moms prefer, and vote for your pick."
     >
 
     <link
@@ -41,7 +40,7 @@
 
     <!-- =====================================================
          HEADER
-         ===================================================== -->
+    ====================================================== -->
 
     <header class="mom-voted-header">
 
@@ -49,32 +48,34 @@
             href="index.html"
             class="mom-voted-logo-link"
         >
+
             <img
                 src="assets/logo.svg"
-                alt="MomYouNeedThis"
                 class="mom-voted-logo"
+                alt="MomYouNeedThis"
             >
+
         </a>
 
-        <div class="community-badge">
+        <span class="community-badge">
             🗳️ MOMS DECIDE
-        </div>
+        </span>
 
     </header>
 
-
     <!-- =====================================================
          HERO
-         ===================================================== -->
+    ====================================================== -->
 
     <section class="voting-hero">
 
-        <div class="hero-kicker">
+        <span class="hero-kicker">
             ⚔️ MOM BATTLES
-        </div>
+        </span>
 
         <h1>
-            Which one would <span>you pick?</span>
+            Which one would
+            <span>you pick?</span>
         </h1>
 
         <p class="mom-voted-intro">
@@ -85,83 +86,107 @@
 
     </section>
 
-
     <!-- =====================================================
          CATEGORY NAVIGATION
-         ===================================================== -->
+    ====================================================== -->
 
-    <nav class="battle-category-nav">
+    <nav
+        class="voting-categories"
+        aria-label="Product categories"
+    >
 
-        <a href="#baby">
+        <a
+            href="#baby"
+            class="category-link active"
+        >
             👶 Baby
         </a>
 
-        <a href="#toddler">
+        <a
+            href="#toddler"
+            class="category-link"
+        >
             🧸 Toddler
         </a>
 
-        <a href="#sleep">
+        <a
+            href="#sleep"
+            class="category-link"
+        >
             😴 Sleep
         </a>
 
-        <a href="#potty">
+        <a
+            href="#potty"
+            class="category-link"
+        >
             🚽 Potty
         </a>
 
-        <a href="#feeding">
-            🥣 Feeding
+        <a
+            href="#feeding"
+            class="category-link"
+        >
+            🍽️ Feeding
         </a>
 
-        <a href="#under25">
-            💸 Under $25
+        <a
+            href="#under25"
+            class="category-link"
+        >
+            💰 Under $25
         </a>
 
     </nav>
 
-
     <!-- =====================================================
-         BABY BATTLE
-         ===================================================== -->
+         BABY
+    ====================================================== -->
 
     <section
         class="product-battle"
         id="baby"
+        data-category="baby"
+        data-filter-tags="new trending"
     >
 
         <div class="battle-heading">
 
+            <span class="battle-eyebrow">
+                👶 BABY BATTLE
+            </span>
+
             <h2>
-                👶 Baby
+                Which Baby Product Wins?
             </h2>
 
             <p>
-                Which baby find gets your vote?
+                Pick the one you'd actually want.
             </p>
 
         </div>
-
 
         <div class="battle-card">
 
             <div class="battle-card-header">
 
                 <span>
-                    HEAD TO HEAD
+                    ⚔️ HEAD TO HEAD
                 </span>
 
-                <span>
-                    MOM BATTLES
-                </span>
+                <strong>
+                    MOM BATTLE
+                </strong>
 
             </div>
 
-
             <div class="contenders">
 
+                <!-- PRODUCT 1 -->
+
                 <article
-                    class="contender leading"
-                    data-category="baby"
-                    data-product-id="babyeinstein-aquarium"
+                    class="contender"
+                    data-product="1"
                 >
 
                     <span class="battle-leader-badge">
@@ -175,78 +200,98 @@
 
                     <div class="contender-image">
 
+                        <span class="product-badge">
+                            MOM PICK
+                        </span>
+
                         <img
                             src="assets/babyeinstein-aquarium.jpeg"
                             alt="Baby Einstein Soother Musical Crib Toy"
+                            data-image-1
                         >
-
-                        <span class="product-badge">
-                            MOM FAVOURITE
-                        </span>
 
                     </div>
 
                     <div class="contender-content">
 
-                        <span data-label-1>
-                            BABY PICK
+                        <span
+                            class="product-label"
+                            data-label-1
+                        >
+                            PRODUCT 1
                         </span>
 
                         <h3 data-name-1>
                             Soother Musical Crib Toy
                         </h3>
 
-                        <p data-brand-1>
+                        <p
+                            class="product-brand"
+                            data-brand-1
+                        >
                             Baby Einstein
                         </p>
 
-                        <p data-description-1>
-                            A soothing musical crib toy designed to entertain and calm baby during quiet moments.
+                        <p
+                            class="battle-description"
+                            data-description-1
+                        >
+                            A popular option for keeping little ones
+                            entertained during quiet moments and daily routines.
                         </p>
 
                         <div class="product-rating">
 
                             <span>
-                                MOM SCORE
+                                 MOM SCORE
                             </span>
 
-                            <strong>
+                            <strong data-score-1>
                                 8.4
                             </strong>
+
+                            <small>
+                                /10
+                            </small>
 
                         </div>
 
                         <a
                             href="https://amzn.to/4fNqr9j"
-                            class="product-shop-link"
                             target="_blank"
-                            rel="nofollow sponsored noopener"
+                            rel="noopener noreferrer nofollow sponsored"
+                            class="product-shop-link"
+                            data-link-1
                         >
-                            ⭐ SEE ON AMAZON
+                            🛍️ VIEW PRODUCT →
                         </a>
 
                         <button
                             type="button"
                             class="vote-button"
-                            data-product="babyeinstein-aquarium"
+                            data-vote="yes"
+                            data-product="1"
                         >
-                            VOTE FOR THIS
+                            💗 PICK THIS ONE
                         </button>
 
                     </div>
 
                 </article>
 
+                <!-- LIGHTNING + VS -->
 
                 <div class="versus">
-                    <span>VS</span>
+                    <span>
+                        VS
+                    </span>
                 </div>
 
+                <!-- PRODUCT 2 -->
 
                 <article
                     class="contender"
-                    data-category="baby"
-                    data-product-id="baby-favorite"
+                    data-product="2"
                 >
 
                     <span class="battle-leader-badge">
@@ -260,33 +305,44 @@
 
                     <div class="contender-image">
 
-                        <img
-                            src="assets/product2.jpg"
-                            alt="Baby product contender"
-                        >
-
                         <span class="product-badge">
                             MOM PICK
                         </span>
+
+                        <img
+                            src="assets/product2.jpg"
+                            alt="Baby product contender"
+                            data-image-2
+                        >
 
                     </div>
 
                     <div class="contender-content">
 
-                        <span data-label-2>
-                            BABY PICK
+                        <span
+                            class="product-label"
+                            data-label-2
+                        >
+                            PRODUCT 2
                         </span>
 
                         <h3 data-name-2>
                             Baby Favorite
                         </h3>
 
-                        <p data-brand-2>
+                        <p
+                            class="product-brand"
+                            data-brand-2
+                        >
                             Mom Pick
                         </p>
 
-                        <p data-description-2>
-                            A mom-approved contender chosen for everyday baby life and easy family routines.
+                        <p
+                            class="battle-description"
+                            data-description-2
+                        >
+                            Another mom-approved option going head-to-head
+                            with today's contender.
                         </p>
 
                         <div class="product-rating">
@@ -295,25 +351,31 @@
                                 MOM SCORE
                             </span>
 
-                            <strong>
+                            <strong data-score-2>
                                 8.2
                             </strong>
+
+                            <small>
+                                /10
+                            </small>
 
                         </div>
 
                         <a
                             href="#"
                             class="product-shop-link"
+                            data-link-2
                         >
-                            ⭐ SEE PRODUCT
+                            🛍️ VIEW PRODUCT →
                         </a>
 
                         <button
                             type="button"
                             class="vote-button"
-                            data-product="baby-favorite"
+                            data-vote="no"
+                            data-product="2"
                         >
-                            VOTE FOR THIS
+                            💗 PICK THIS ONE
                         </button>
 
                     </div>
@@ -322,15 +384,20 @@
 
             </div>
 
+            <!-- RESULT -->
 
-            <div class="battle-result">
+            <div
+                class="battle-result"
+                data-result
+                aria-live="polite"
+            >
 
                 <strong data-result-title>
-                    MOM VERDICT
+                    You picked one!
                 </strong>
 
                 <p data-result-text>
-                    See what moms picked.
+                    Now see how other moms voted.
                 </p>
 
                 <div class="result-percentages">
@@ -338,10 +405,10 @@
                     <div>
 
                         <span>
-                            Soother Musical Crib Toy
+                            PRODUCT 1
                         </span>
 
-                        <strong>
+                        <strong data-yes-percentage>
                             62%
                         </strong>
 
@@ -350,10 +417,10 @@
                     <div>
 
                         <span>
-                            Baby Favorite
+                            PRODUCT 2
                         </span>
 
-                        <strong>
+                        <strong data-no-percentage>
                             38%
                         </strong>
 
@@ -361,67 +428,62 @@
 
                 </div>
 
-                <p class="your-position"></p>
+                <p
+                    class="your-position"
+                    data-your-position
+                >
+                    You're with the majority.
+                </p>
 
             </div>
 
-
             <div class="battle-footer">
-
-                <p>
-                    Every vote helps decide the mom-approved winner.
-                </p>
-
+                🗳️ Moms decide what wins.
             </div>
 
         </div>
 
     </section>
 
-
     <!-- =====================================================
-         TODDLER BATTLE
-         ===================================================== -->
+         TODDLER
+    ====================================================== -->
 
     <section
         class="product-battle"
         id="toddler"
+        data-category="toddler"
+        data-filter-tags="trending"
     >
 
         <div class="battle-heading">
 
+            <span class="battle-eyebrow">
+                🧸 TODDLER BATTLE
+            </span>
+
             <h2>
-                🧸 Toddler
+                Toddler Favorites
             </h2>
 
             <p>
-                Which toddler find gets your vote?
+                Which one would earn a spot in your home?
             </p>
 
         </div>
 
-
         <div class="battle-card">
 
             <div class="battle-card-header">
-
-                <span>
-                    HEAD TO HEAD
-                </span>
-
-                <span>
-                    MOM BATTLES
-                </span>
-
+                <span>⚔️ HEAD TO HEAD</span>
+                <strong>MOM BATTLE</strong>
             </div>
-
 
             <div class="contenders">
 
                 <article
                     class="contender"
-                    data-category="toddler"
-                    data-product-id="toddler-favorite"
+                    data-product="1"
                 >
 
                     <span class="battle-leader-badge">
@@ -435,76 +497,80 @@
 
                     <div class="contender-image">
 
-                        <img
-                            src="assets/product2.jpg"
-                            alt="Toddler favorite"
-                        >
-
                         <span class="product-badge">
                             MOM PICK
                         </span>
+
+                        <img
+                            src="assets/product2.jpg"
+                            alt="Toddler favorite"
+                            data-image-1
+                        >
 
                     </div>
 
                     <div class="contender-content">
 
-                        <span data-label-1>
-                            TODDLER PICK
+                        <span class="product-label" data-label-1>
+                            PRODUCT 1
                         </span>
 
                         <h3 data-name-1>
                             Toddler Favorite
                         </h3>
 
-                        <p data-brand-1>
+                        <p class="product-brand" data-brand-1>
                             MomYouNeedThis Pick
                         </p>
 
-                        <p data-description-1>
-                            A practical toddler favourite designed to make everyday play and routines a little easier.
+                        <p
+                            class="battle-description"
+                            data-description-1
+                        >
+                            A practical everyday product designed to make
+                            life with toddlers a little easier.
                         </p>
 
                         <div class="product-rating">
 
-                            <span>
-                                MOM SCORE
-                            </span>
+                            <span> MOM SCORE</span>
 
-                            <strong>
+                            <strong data-score-1>
                                 8.1
                             </strong>
+
+                            <small>/10</small>
 
                         </div>
 
                         <a
                             href="#"
                             class="product-shop-link"
+                            data-link-1
                         >
-                            ⭐ SEE PRODUCT
+                            🛍️ VIEW PRODUCT →
                         </a>
 
                         <button
                             type="button"
                             class="vote-button"
-                            data-product="toddler-favorite"
+                            data-vote="yes"
+                            data-product="1"
                         >
-                            VOTE FOR THIS
+                            💗 PICK THIS ONE
                         </button>
 
                     </div>
 
                 </article>
 
-
                 <div class="versus">
                     <span>VS</span>
                 </div>
 
-
                 <article
-                    class="contender leading"
-                    data-category="toddler"
-                    data-product-id="toddler-contender"
+                    class="contender"
+                    data-product="2"
                 >
 
                     <span class="battle-leader-badge">
@@ -518,60 +584,67 @@
 
                     <div class="contender-image">
 
-                        <img
-                            src="assets/product2.jpg"
-                            alt="Toddler product contender"
-                        >
-
                         <span class="product-badge">
                             MOM PICK
                         </span>
+
+                        <img
+                            src="assets/product2.jpg"
+                            alt="Toddler product contender"
+                            data-image-2
+                        >
 
                     </div>
 
                     <div class="contender-content">
 
-                        <span data-label-2>
-                            TODDLER PICK
+                        <span class="product-label" data-label-2>
+                            PRODUCT 2
                         </span>
 
                         <h3 data-name-2>
                             Toddler Contender
                         </h3>
 
-                        <p data-brand-2>
+                        <p class="product-brand" data-brand-2>
                             Mom Pick
                         </p>
 
-                        <p data-description-2>
-                            A mom-picked toddler contender made for busy families, everyday play and simple routines.
+                        <p
+                            class="battle-description"
+                            data-description-2
+                        >
+                            A second contender ready to face the toddler
+                            chaos test.
                         </p>
 
                         <div class="product-rating">
 
-                            <span>
-                                MOM SCORE
-                            </span>
+                            <span>MOM SCORE</span>
 
-                            <strong>
+                            <strong data-score-2>
                                 8.3
                             </strong>
+
+                            <small>/10</small>
 
                         </div>
 
                         <a
                             href="#"
                             class="product-shop-link"
+                            data-link-2
                         >
-                            ⭐ SEE PRODUCT
+                            🛍️ VIEW PRODUCT →
                         </a>
 
                         <button
                             type="button"
                             class="vote-button"
-                            data-product="toddler-contender"
+                            data-vote="no"
+                            data-product="2"
                         >
-                            VOTE FOR THIS
+                            💗 PICK THIS ONE
                         </button>
 
                     </div>
@@ -580,106 +653,94 @@
 
             </div>
 
-
-            <div class="battle-result">
+            <div
+                class="battle-result"
+                data-result
+                aria-live="polite"
+            >
 
                 <strong data-result-title>
-                    MOM VERDICT
+                    You picked one!
                 </strong>
 
                 <p data-result-text>
-                    See what moms picked.
+                    Now see how other moms voted.
                 </p>
 
                 <div class="result-percentages">
 
                     <div>
-
-                        <span>
-                            Toddler Favorite
-                        </span>
-
-                        <strong>
+                        <span>PRODUCT 1</span>
+                        <strong data-yes-percentage>
                             57%
                         </strong>
-
                     </div>
 
                     <div>
-
-                        <span>
-                            Toddler Contender
-                        </span>
-
-                        <strong>
+                        <span>PRODUCT 2</span>
+                        <strong data-no-percentage>
                             43%
                         </strong>
-
                     </div>
 
                 </div>
 
-                <p class="your-position"></p>
+                <p
+                    class="your-position"
+                    data-your-position
+                >
+                    You're with the majority.
+                </p>
 
             </div>
 
-
             <div class="battle-footer">
-
-                <p>
-                    Every vote helps decide the mom-approved winner.
-                </p>
-
+                🗳️ Your vote helps another mom decide.
             </div>
 
         </div>
 
     </section>
 
-
     <!-- =====================================================
-         SLEEP BATTLE
-         ===================================================== -->
+         SLEEP
+    ====================================================== -->
 
     <section
         class="product-battle"
         id="sleep"
+        data-category="sleep"
+        data-filter-tags="favorite trending"
     >
 
         <div class="battle-heading">
 
+            <span class="battle-eyebrow">
+                😴 SLEEP BATTLE
+            </span>
+
             <h2>
-                😴 Sleep
+                Which Sleep Helper Wins?
             </h2>
 
             <p>
-                Which sleep find gets your vote?
+                Which one would you tell another tired mom about?
             </p>
 
         </div>
 
-
         <div class="battle-card">
 
             <div class="battle-card-header">
-
-                <span>
-                    HEAD TO HEAD
-                </span>
-
-                <span>
-                    MOM BATTLES
-                </span>
-
+                <span>⚔️ HEAD TO HEAD</span>
+                <strong>MOM BATTLE</strong>
             </div>
-
 
             <div class="contenders">
 
                 <article
-                    class="contender leading"
-                    data-category="sleep"
-                    data-product-id="white-noise-machine"
+                    class="contender"
+                    data-product="1"
                 >
 
                     <span class="battle-leader-badge">
@@ -693,78 +754,82 @@
 
                     <div class="contender-image">
 
+                        <span class="product-badge">
+                            MOM FAVORITE
+                        </span>
+
                         <img
                             src="assets/white-noise-machine.jpeg"
                             alt="White noise machine"
+                            data-image-1
                         >
-
-                        <span class="product-badge">
-                            MOM FAVOURITE
-                        </span>
 
                     </div>
 
                     <div class="contender-content">
 
-                        <span data-label-1>
-                            SLEEP PICK
+                        <span class="product-label" data-label-1>
+                            PRODUCT 1
                         </span>
 
                         <h3 data-name-1>
                             White Noise Machine
                         </h3>
 
-                        <p data-brand-1>
+                        <p class="product-brand" data-brand-1>
                             Parent Favorite
                         </p>
 
-                        <p data-description-1>
-                            A simple sleep essential that helps create a consistent, calming sound environment.
+                        <p
+                            class="battle-description"
+                            data-description-1
+                        >
+                            A popular choice for creating a consistent
+                            sleep environment for little ones.
                         </p>
 
                         <div class="product-rating">
 
-                            <span>
-                                MOM SCORE
-                            </span>
+                            <span>MOM SCORE</span>
 
-                            <strong>
+                            <strong data-score-1>
                                 8.7
                             </strong>
+
+                            <small>/10</small>
 
                         </div>
 
                         <a
                             href="https://amzn.to/4z8LxGC"
-                            class="product-shop-link"
                             target="_blank"
-                            rel="nofollow sponsored noopener"
+                            rel="noopener noreferrer nofollow sponsored"
+                            class="product-shop-link"
+                            data-link-1
                         >
-                            ⭐ SEE ON AMAZON
+                            🛍️ VIEW PRODUCT →
                         </a>
 
                         <button
                             type="button"
                             class="vote-button"
-                            data-product="white-noise-machine"
+                            data-vote="yes"
+                            data-product="1"
                         >
-                            VOTE FOR THIS
+                            💗 PICK THIS ONE
                         </button>
 
                     </div>
 
                 </article>
 
-
                 <div class="versus">
                     <span>VS</span>
                 </div>
 
-
                 <article
                     class="contender"
-                    data-category="sleep"
-                    data-product-id="sleep-favorite"
+                    data-product="2"
                 >
 
                     <span class="battle-leader-badge">
@@ -778,60 +843,67 @@
 
                     <div class="contender-image">
 
+                        <span class="product-badge">
+                            MOM FAVORITE
+                        </span>
+
                         <img
                             src="assets/product2.jpg"
                             alt="Sleep product contender"
+                            data-image-2
                         >
-
-                        <span class="product-badge">
-                            MOM PICK
-                        </span>
 
                     </div>
 
                     <div class="contender-content">
 
-                        <span data-label-2>
-                            SLEEP PICK
+                        <span class="product-label" data-label-2>
+                            PRODUCT 2
                         </span>
 
                         <h3 data-name-2>
                             Sleep Favorite
                         </h3>
 
-                        <p data-brand-2>
+                        <p class="product-brand" data-brand-2>
                             Mom Pick
                         </p>
 
-                        <p data-description-2>
-                            A mom-approved sleep contender for families looking for a little more calm at bedtime.
+                        <p
+                            class="battle-description"
+                            data-description-2
+                        >
+                            Another sleep-time contender ready for the
+                            mom vote.
                         </p>
 
                         <div class="product-rating">
 
-                            <span>
-                                MOM SCORE
-                            </span>
+                            <span> MOM SCORE</span>
 
-                            <strong>
+                            <strong data-score-2>
                                 8.4
                             </strong>
+
+                            <small>/10</small>
 
                         </div>
 
                         <a
                             href="#"
                             class="product-shop-link"
+                            data-link-2
                         >
-                            ⭐ SEE PRODUCT
+                            🛍️ VIEW PRODUCT →
                         </a>
 
                         <button
                             type="button"
                             class="vote-button"
-                            data-product="sleep-favorite"
+                            data-vote="no"
+                            data-product="2"
                         >
-                            VOTE FOR THIS
+                            💗 PICK THIS ONE
                         </button>
 
                     </div>
@@ -840,106 +912,94 @@
 
             </div>
 
-
-            <div class="battle-result">
+            <div
+                class="battle-result"
+                data-result
+                aria-live="polite"
+            >
 
                 <strong data-result-title>
-                    MOM VERDICT
+                    You picked one!
                 </strong>
 
                 <p data-result-text>
-                    See what moms picked.
+                    Now see how other moms voted.
                 </p>
 
                 <div class="result-percentages">
 
                     <div>
-
-                        <span>
-                            White Noise Machine
-                        </span>
-
-                        <strong>
+                        <span>PRODUCT 1</span>
+                        <strong data-yes-percentage>
                             71%
                         </strong>
-
                     </div>
 
                     <div>
-
-                        <span>
-                            Sleep Favorite
-                        </span>
-
-                        <strong>
+                        <span>PRODUCT 2</span>
+                        <strong data-no-percentage>
                             29%
                         </strong>
-
                     </div>
 
                 </div>
 
-                <p class="your-position"></p>
+                <p
+                    class="your-position"
+                    data-your-position
+                >
+                    You're with the majority.
+                </p>
 
             </div>
 
-
             <div class="battle-footer">
-
-                <p>
-                    Every vote helps decide the mom-approved winner.
-                </p>
-
+                💗 Your vote could help another tired mom.
             </div>
 
         </div>
 
     </section>
 
-
     <!-- =====================================================
-         POTTY BATTLE
-         ===================================================== -->
+         POTTY
+    ====================================================== -->
 
     <section
         class="product-battle"
         id="potty"
+        data-category="potty"
+        data-filter-tags="favorite"
     >
 
         <div class="battle-heading">
 
+            <span class="battle-eyebrow">
+                🚽 POTTY BATTLE
+            </span>
+
             <h2>
-                🚽 Potty
+                Potty Training Favorites
             </h2>
 
             <p>
-                Which potty-training find gets your vote?
+                Which one would you recommend?
             </p>
 
         </div>
 
-
         <div class="battle-card">
 
             <div class="battle-card-header">
-
-                <span>
-                    HEAD TO HEAD
-                </span>
-
-                <span>
-                    MOM BATTLES
-                </span>
-
+                <span>⚔️ HEAD TO HEAD</span>
+                <strong>MOM BATTLE</strong>
             </div>
-
 
             <div class="contenders">
 
                 <article
-                    class="contender leading"
-                    data-category="potty"
-                    data-product-id="babybjorn-potty-toilet"
+                    class="contender"
+                    data-product="1"
                 >
 
                     <span class="battle-leader-badge">
@@ -953,78 +1013,82 @@
 
                     <div class="contender-image">
 
+                        <span class="product-badge">
+                            MOM PICK
+                        </span>
+
                         <img
                             src="assets/babybjorn-potty-toilet.jpeg"
                             alt="BabyBjörn potty"
+                            data-image-1
                         >
-
-                        <span class="product-badge">
-                            MOM FAVOURITE
-                        </span>
 
                     </div>
 
                     <div class="contender-content">
 
-                        <span data-label-1>
-                            POTTY PICK
+                        <span class="product-label" data-label-1>
+                            PRODUCT 1
                         </span>
 
                         <h3 data-name-1>
                             Potty Training Seat
                         </h3>
 
-                        <p data-brand-1>
+                        <p class="product-brand" data-brand-1>
                             BabyBjörn
                         </p>
 
-                        <p data-description-1>
-                            A practical potty-training essential designed to make early toilet learning more comfortable.
+                        <p
+                            class="battle-description"
+                            data-description-1
+                        >
+                            A simple potty-training option designed to help
+                            toddlers feel comfortable and confident.
                         </p>
 
                         <div class="product-rating">
 
-                            <span>
-                                MOM SCORE
-                            </span>
+                            <span> MOM SCORE</span>
 
-                            <strong>
+                            <strong data-score-1>
                                 8.6
                             </strong>
+
+                            <small>/10</small>
 
                         </div>
 
                         <a
                             href="https://amzn.to/3S23eqS"
-                            class="product-shop-link"
                             target="_blank"
-                            rel="nofollow sponsored noopener"
+                            rel="noopener noreferrer nofollow sponsored"
+                            class="product-shop-link"
+                            data-link-1
                         >
-                            ⭐ SEE ON AMAZON
+                            🛍️ VIEW PRODUCT →
                         </a>
 
                         <button
                             type="button"
                             class="vote-button"
-                            data-product="babybjorn-potty-toilet"
+                            data-vote="yes"
+                            data-product="1"
                         >
-                            VOTE FOR THIS
+                            💗 PICK THIS ONE
                         </button>
 
                     </div>
 
                 </article>
 
-
                 <div class="versus">
                     <span>VS</span>
                 </div>
 
-
                 <article
                     class="contender"
-                    data-category="potty"
-                    data-product-id="potty-contender"
+                    data-product="2"
                 >
 
                     <span class="battle-leader-badge">
@@ -1037,61 +1101,69 @@
                     >🔥</span>
 
                     <div class="contender-image">
+
+                        <span class="product-badge">
+                            MOM PICK
+                        </span>
 
                         <img
                             src="assets/product2.jpg"
                             alt="Potty training contender"
+                            data-image-2
                         >
-
-                        <span class="product-badge">
-                            MOM PICK
-                        </span>
 
                     </div>
 
                     <div class="contender-content">
 
-                        <span data-label-2>
-                            POTTY PICK
+                        <span class="product-label" data-label-2>
+                            PRODUCT 2
                         </span>
 
                         <h3 data-name-2>
                             Potty Contender
                         </h3>
 
-                        <p data-brand-2>
+                        <p class="product-brand" data-brand-2>
                             Mom Pick
                         </p>
 
-                        <p data-description-2>
-                            A mom-picked potty-training contender for families starting the transition to the toilet.
+                        <p
+                            class="battle-description"
+                            data-description-2
+                        >
+                            Another potty-training option ready for the
+                            mom vote.
                         </p>
 
                         <div class="product-rating">
 
                             <span>
-                                MOM SCORE
-                            </span>
+MOM SCORE</span>
 
-                            <strong>
+                            <strong data-score-2>
                                 8.2
                             </strong>
+
+                            <small>/10</small>
 
                         </div>
 
                         <a
                             href="#"
                             class="product-shop-link"
+                            data-link-2
                         >
-                            ⭐ SEE PRODUCT
+                            🛍️ VIEW PRODUCT →
                         </a>
 
                         <button
                             type="button"
                             class="vote-button"
-                            data-product="potty-contender"
+                            data-vote="no"
+                            data-product="2"
                         >
-                            VOTE FOR THIS
+                            💗 PICK THIS ONE
                         </button>
 
                     </div>
@@ -1100,106 +1172,94 @@
 
             </div>
 
-
-            <div class="battle-result">
+            <div
+                class="battle-result"
+                data-result
+                aria-live="polite"
+            >
 
                 <strong data-result-title>
-                    MOM VERDICT
+                    You picked one!
                 </strong>
 
                 <p data-result-text>
-                    See what moms picked.
+                    Now see how other moms voted.
                 </p>
 
                 <div class="result-percentages">
 
                     <div>
-
-                        <span>
-                            Potty Training Seat
-                        </span>
-
-                        <strong>
+                        <span>PRODUCT 1</span>
+                        <strong data-yes-percentage>
                             68%
                         </strong>
-
                     </div>
 
                     <div>
-
-                        <span>
-                            Potty Contender
-                        </span>
-
-                        <strong>
+                        <span>PRODUCT 2</span>
+                        <strong data-no-percentage>
                             32%
                         </strong>
-
                     </div>
 
                 </div>
 
-                <p class="your-position"></p>
+                <p
+                    class="your-position"
+                    data-your-position
+                >
+                    You're with the majority.
+                </p>
 
             </div>
 
-
             <div class="battle-footer">
-
-                <p>
-                    Every vote helps decide the mom-approved winner.
-                </p>
-
+                🗳️ Help another parent skip the guesswork.
             </div>
 
         </div>
 
     </section>
 
-
     <!-- =====================================================
-         FEEDING BATTLE
-         ===================================================== -->
+         FEEDING
+    ====================================================== -->
 
     <section
         class="product-battle"
         id="feeding"
+        data-category="feeding"
+        data-filter-tags="new"
     >
 
         <div class="battle-heading">
 
+            <span class="battle-eyebrow">
+                🍽️ FEEDING BATTLE
+            </span>
+
             <h2>
-                🥣 Feeding
+                Feeding Favorites
             </h2>
 
             <p>
-                Which feeding find gets your vote?
+                Which one would make your routine easier?
             </p>
 
         </div>
 
-
         <div class="battle-card">
 
             <div class="battle-card-header">
-
-                <span>
-                    HEAD TO HEAD
-                </span>
-
-                <span>
-                    MOM BATTLES
-                </span>
-
+                <span>⚔️ HEAD TO HEAD</span>
+                <strong>MOM BATTLE</strong>
             </div>
-
 
             <div class="contenders">
 
                 <article
-                    class="contender leading"
-                    data-category="feeding"
-                    data-product-id="feeding-favorite"
+                    class="contender"
+                    data-product="1"
                 >
 
                     <span class="battle-leader-badge">
@@ -1212,77 +1272,81 @@
                     >🔥</span>
 
                     <div class="contender-image">
+
+                        <span class="product-badge">
+                            NEW BATTLE
+                        </span>
 
                         <img
                             src="assets/product2.jpg"
                             alt="Feeding product"
+                            data-image-1
                         >
-
-                        <span class="product-badge">
-                            MOM PICK
-                        </span>
 
                     </div>
 
                     <div class="contender-content">
 
-                        <span data-label-1>
-                            FEEDING PICK
+                        <span class="product-label" data-label-1>
+                            PRODUCT 1
                         </span>
 
                         <h3 data-name-1>
                             Feeding Favorite
                         </h3>
 
-                        <p data-brand-1>
+                        <p class="product-brand" data-brand-1>
                             Mom Pick
                         </p>
 
-                        <p data-description-1>
-                            A mom-approved feeding contender selected for practical everyday mealtimes.
+                        <p
+                            class="battle-description"
+                            data-description-1
+                        >
+                            A practical feeding favorite designed to make
+                            everyday mealtimes a little easier.
                         </p>
 
                         <div class="product-rating">
 
-                            <span>
-                                MOM SCORE
-                            </span>
+                            <span> MOM SCORE</span>
 
-                            <strong>
+                            <strong data-score-1>
                                 8.0
                             </strong>
+
+                            <small>/10</small>
 
                         </div>
 
                         <a
                             href="#"
                             class="product-shop-link"
+                            data-link-1
                         >
-                            ⭐ SEE PRODUCT
+                            🛍️ VIEW PRODUCT →
                         </a>
 
                         <button
                             type="button"
                             class="vote-button"
-                            data-product="feeding-favorite"
+                            data-vote="yes"
+                            data-product="1"
                         >
-                            VOTE FOR THIS
+                            💗 PICK THIS ONE
                         </button>
 
                     </div>
 
                 </article>
 
-
                 <div class="versus">
                     <span>VS</span>
                 </div>
 
-
                 <article
                     class="contender"
-                    data-category="feeding"
-                    data-product-id="feeding-contender"
+                    data-product="2"
                 >
 
                     <span class="battle-leader-badge">
@@ -1295,61 +1359,68 @@
                     >🔥</span>
 
                     <div class="contender-image">
+
+                        <span class="product-badge">
+                            NEW BATTLE
+                        </span>
 
                         <img
                             src="assets/product2.jpg"
                             alt="Feeding contender"
+                            data-image-2
                         >
-
-                        <span class="product-badge">
-                            MOM PICK
-                        </span>
 
                     </div>
 
                     <div class="contender-content">
 
-                        <span data-label-2>
-                            FEEDING PICK
+                        <span class="product-label" data-label-2>
+                            PRODUCT 2
                         </span>
 
                         <h3 data-name-2>
                             Feeding Contender
                         </h3>
 
-                        <p data-brand-2>
+                        <p class="product-brand" data-brand-2>
                             Mom Pick
                         </p>
 
-                        <p data-description-2>
-                            Another mom-picked option ready to battle for feeding-favourite status.
+                        <p
+                            class="battle-description"
+                            data-description-2
+                        >
+                            Another everyday feeding option ready to face
+                            the mom vote.
                         </p>
 
                         <div class="product-rating">
 
-                            <span>
-                                MOM SCORE
-                            </span>
+                            <span>MOM SCORE</span>
 
-                            <strong>
+                            <strong data-score-2>
                                 8.2
                             </strong>
+
+                            <small>/10</small>
 
                         </div>
 
                         <a
                             href="#"
                             class="product-shop-link"
+                            data-link-2
                         >
-                            ⭐ SEE PRODUCT
+                            🛍️ VIEW PRODUCT →
                         </a>
 
                         <button
                             type="button"
                             class="vote-button"
-                            data-product="feeding-contender"
+                            data-vote="no"
+                            data-product="2"
                         >
-                            VOTE FOR THIS
+                            💗 PICK THIS ONE
                         </button>
 
                     </div>
@@ -1358,106 +1429,94 @@
 
             </div>
 
-
-            <div class="battle-result">
+            <div
+                class="battle-result"
+                data-result
+                aria-live="polite"
+            >
 
                 <strong data-result-title>
-                    MOM VERDICT
+                    You picked one!
                 </strong>
 
                 <p data-result-text>
-                    See what moms picked.
+                    Now see how other moms voted.
                 </p>
 
                 <div class="result-percentages">
 
                     <div>
-
-                        <span>
-                            Feeding Favorite
-                        </span>
-
-                        <strong>
+                        <span>PRODUCT 1</span>
+                        <strong data-yes-percentage>
                             54%
                         </strong>
-
                     </div>
 
                     <div>
-
-                        <span>
-                            Feeding Contender
-                        </span>
-
-                        <strong>
+                        <span>PRODUCT 2</span>
+                        <strong data-no-percentage>
                             46%
                         </strong>
-
                     </div>
 
                 </div>
 
-                <p class="your-position"></p>
+                <p
+                    class="your-position"
+                    data-your-position
+                >
+                    You're with the majority.
+                </p>
 
             </div>
 
-
             <div class="battle-footer">
-
-                <p>
-                    Every vote helps decide the mom-approved winner.
-                </p>
-
+                🍽️ Your vote helps another mom decide.
             </div>
 
         </div>
 
     </section>
 
-
     <!-- =====================================================
-         UNDER $25 BATTLE
-         ===================================================== -->
+         UNDER $25
+    ====================================================== -->
 
     <section
         class="product-battle"
         id="under25"
+        data-category="under25"
+        data-filter-tags="trending favorite"
     >
 
         <div class="battle-heading">
 
+            <span class="battle-eyebrow">
+                💰 UNDER $25
+            </span>
+
             <h2>
-                💸 Under $25
+                Mom Finds Under $25
             </h2>
 
             <p>
-                Which budget find gets your vote?
+                Small price. Big question. Which one wins?
             </p>
 
         </div>
 
-
         <div class="battle-card">
 
             <div class="battle-card-header">
-
-                <span>
-                    HEAD TO HEAD
-                </span>
-
-                <span>
-                    MOM BATTLES
-                </span>
-
+                <span>⚔️ HEAD TO HEAD</span>
+                <strong>MOM BATTLE</strong>
             </div>
-
 
             <div class="contenders">
 
                 <article
-                    class="contender leading"
-                    data-category="under25"
-                    data-product-id="budget-mom-find"
+                    class="contender"
+                    data-product="1"
                 >
 
                     <span class="battle-leader-badge">
@@ -1471,76 +1530,80 @@
 
                     <div class="contender-image">
 
+                        <span class="product-badge">
+                            UNDER $25
+                        </span>
+
                         <img
                             src="assets/product2.jpg"
                             alt="Mom find under $25"
+                            data-image-1
                         >
-
-                        <span class="product-badge">
-                            MOM PICK
-                        </span>
 
                     </div>
 
                     <div class="contender-content">
 
-                        <span data-label-1>
-                            BUDGET PICK
+                        <span class="product-label" data-label-1>
+                            PRODUCT 1
                         </span>
 
                         <h3 data-name-1>
                             Budget Mom Find
                         </h3>
 
-                        <p data-brand-1>
+                        <p class="product-brand" data-brand-1>
                             MomYouNeedThis Pick
                         </p>
 
-                        <p data-description-1>
-                            A budget-friendly mom find chosen for usefulness without blowing the family budget.
+                        <p
+                            class="battle-description"
+                            data-description-1
+                        >
+                            A useful little find that could make everyday
+                            parenting just a bit easier.
                         </p>
 
                         <div class="product-rating">
 
-                            <span>
-                                MOM SCORE
-                            </span>
+                            <span>MOM SCORE</span>
 
-                            <strong>
+                            <strong data-score-1>
                                 8.3
                             </strong>
+
+                            <small>/10</small>
 
                         </div>
 
                         <a
                             href="#"
                             class="product-shop-link"
+                            data-link-1
                         >
-                            ⭐ SEE PRODUCT
+                            🛍️ VIEW PRODUCT →
                         </a>
 
                         <button
                             type="button"
                             class="vote-button"
-                            data-product="budget-mom-find"
+                            data-vote="yes"
+                            data-product="1"
                         >
-                            VOTE FOR THIS
+                            💗 PICK THIS ONE
                         </button>
 
                     </div>
 
                 </article>
 
-
                 <div class="versus">
                     <span>VS</span>
                 </div>
 
-
                 <article
                     class="contender"
-                    data-category="under25"
-                    data-product-id="budget-contender"
+                    data-product="2"
                 >
 
                     <span class="battle-leader-badge">
@@ -1554,60 +1617,66 @@
 
                     <div class="contender-image">
 
+                        <span class="product-badge">
+                            UNDER $25
+                        </span>
+
                         <img
                             src="assets/product2.jpg"
                             alt="Budget product contender"
+                            data-image-2
                         >
-
-                        <span class="product-badge">
-                            MOM PICK
-                        </span>
 
                     </div>
 
                     <div class="contender-content">
 
-                        <span data-label-2>
-                            BUDGET PICK
+                        <span class="product-label" data-label-2>
+                            PRODUCT 2
                         </span>
 
                         <h3 data-name-2>
                             Budget Contender
                         </h3>
 
-                        <p data-brand-2>
+                        <p class="product-brand" data-brand-2>
                             Mom Pick
                         </p>
 
-                        <p data-description-2>
-                            A wallet-friendly contender going head-to-head for the budget mom-favourite title.
+                        <p
+                            class="battle-description"
+                            data-description-2
+                        >
+                            Another affordable find ready for the mom vote.
                         </p>
 
                         <div class="product-rating">
 
-                            <span>
-                                MOM SCORE
-                            </span>
+                            <span>MOM SCORE</span>
 
-                            <strong>
+                            <strong data-score-2>
                                 8.1
                             </strong>
+
+                            <small>/10</small>
 
                         </div>
 
                         <a
                             href="#"
                             class="product-shop-link"
+                            data-link-2
                         >
-                            ⭐ SEE PRODUCT
+                            🛍️ VIEW PRODUCT →
                         </a>
 
                         <button
                             type="button"
                             class="vote-button"
-                            data-product="budget-contender"
+                            data-vote="no"
+                            data-product="2"
                         >
-                            VOTE FOR THIS
+                            💗 PICK THIS ONE
                         </button>
 
                     </div>
@@ -1616,66 +1685,58 @@
 
             </div>
 
-
-            <div class="battle-result">
+            <div
+                class="battle-result"
+                data-result
+                aria-live="polite"
+            >
 
                 <strong data-result-title>
-                    MOM VERDICT
+                    You picked one!
                 </strong>
 
                 <p data-result-text>
-                    See what moms picked.
+                    Now see how other moms voted.
                 </p>
 
                 <div class="result-percentages">
 
                     <div>
-
-                        <span>
-                            Budget Mom Find
-                        </span>
-
-                        <strong>
+                        <span>PRODUCT 1</span>
+                        <strong data-yes-percentage>
                             63%
                         </strong>
-
                     </div>
 
                     <div>
-
-                        <span>
-                            Budget Contender
-                        </span>
-
-                        <strong>
+                        <span>PRODUCT 2</span>
+                        <strong data-no-percentage>
                             37%
                         </strong>
-
                     </div>
 
                 </div>
 
-                <p class="your-position"></p>
+                <p
+                    class="your-position"
+                    data-your-position
+                >
+                    You're with the majority.
+                </p>
 
             </div>
 
-
             <div class="battle-footer">
-
-                <p>
-                    Every vote helps decide the mom-approved winner.
-                </p>
-
+                💰 Which one would you actually buy?
             </div>
 
         </div>
 
     </section>
 
-
     <!-- =====================================================
          HOLY GRAIL CTA
-         ===================================================== -->
+    ====================================================== -->
 
     <section class="holy-grail-final">
 
@@ -1692,7 +1753,8 @@
         </h2>
 
         <p>
-            Know a product you recommend every time another mom asks what to buy?
+            Know a product you recommend every time another
+            mom asks what to buy?
         </p>
 
         <a
@@ -1704,10 +1766,9 @@
 
     </section>
 
-
     <!-- =====================================================
          FOOTER
-         ===================================================== -->
+    ====================================================== -->
 
     <footer>
 
@@ -1725,7 +1786,8 @@
         </h3>
 
         <p>
-            Mom finds, free tools, printables and things that actually make life easier.
+            Helping moms discover products and resources
+            that make everyday life easier.
         </p>
 
         <div class="footer-bottom">
@@ -1735,7 +1797,8 @@
             </p>
 
             <p>
-                As an Amazon Associate, we may earn from qualifying purchases.
+                Some product links may be affiliate links.
+                As an Amazon Associate, I earn from qualifying purchases.
             </p>
 
         </div>
@@ -1746,11 +1809,11 @@
 
 </div>
 
-
 <script
     type="module"
     src="amazon-favorites.js"
 ></script>
 
 </body>
+
 </html>
