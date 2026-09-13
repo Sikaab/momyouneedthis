@@ -16,71 +16,65 @@
  * Vote document:
  *     UID_category_productId
  *
- * Existing votes:
- *     Loaded from localStorage only.
+ * Local storage:
+ * - Remembers whether this browser has already voted
+ * - Remembers the selected product for each battle
  *
+ * IMPORTANT:
+ * - Product information comes ONLY from mom-battles.json
+ * - Voting logic stays in this file
+ * - The HTML structure is not rebuilt or replaced
+ * - The .versus element is left untouched
  * ============================================================
  */
-
 /* ============================================================
    FIREBASE IMPORTS
    ============================================================ */
-
 import { app, db } from "./firebase-config.js";
-
 import {
     getAuth,
     signInAnonymously,
     onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
-
 import {
     doc,
     setDoc,
     serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
-
 /* ============================================================
-   FIREBASE AUTH
+   FIREBASE AUTH STATE
    ============================================================ */
-
 let auth = null;
 let currentUser = null;
 let authenticationReady = false;
 let authenticationPromise = null;
-
 /* ============================================================
    PRODUCT DATA
    ============================================================ */
-
 let battles = {};
-
-/*
- * Load battle/product data from the external JSON file.
- *
- * Product information is intentionally kept outside
- * JavaScript so it can be updated without touching
- * the application logic.
- */
+/* ============================================================
+   APPLICATION STATE
+   ============================================================ */
+const voteInProgress = new Set();
+const confirmedVotes = new Map();
+const confirmedBattleChoices = new Map();
+/* ============================================================
+   LOAD JSON
+   ============================================================ */
 async function loadBattleData() {
     try {
-        const response =
-            await fetch(
-                "mom-battles.json",
-                {
-                    cache: "no-store"
-                }
-            );
-
+        const response = await fetch(
+            "mom-battles.json",
+            {
+                cache: "no-store"
+            }
+        );
         if (!response.ok) {
             throw new Error(
                 `Could not load mom-battles.json (${response.status}).`
             );
         }
-
-        const data =
-            await response.json();
-
+        const data = await response.json();
         if (
             !data ||
             !data.battles ||
@@ -90,33 +84,25 @@ async function loadBattleData() {
                 "mom-battles.json does not contain a valid battles object."
             );
         }
-
-        battles =
-            data.battles;
-
+        battles = data.battles;
         console.log(
-            "Mom Battles data loaded successfully."
+            "Mom Battles data loaded successfully.",
+            battles
         );
-
         return battles;
     } catch (error) {
         console.error(
             "Mom Battles JSON could not be loaded:",
             error
         );
-
         throw error;
     }
 }
-
 /* ============================================================
    FIREBASE INITIALIZATION
    ============================================================ */
-
 try {
-    auth =
-        getAuth(app);
-
+    auth = getAuth(app);
     console.log(
         "Firebase Authentication initialized."
     );
@@ -126,7 +112,6 @@ try {
         error
     );
 }
-
 if (!db) {
     console.error(
         "Firestore database was not initialized. " +
@@ -137,75 +122,97 @@ if (!db) {
         "Firestore initialized."
     );
 }
-
-/* ============================================================
-   STATE
-   ============================================================ */
-
-const battleIndexes = {};
-const voteInProgress = new Set();
-const confirmedVotes = new Map();
-const confirmedBattleChoices = new Map();
-
 /* ============================================================
    BATTLE HELPERS
    ============================================================ */
-
-function getBattleData(
-    category
-) {
+function normalizeId(value) {
+    if (
+        value === null ||
+        value === undefined
+    ) {
+        return "";
+    }
+    return String(value);
+}
+function getBattleData(category) {
+    if (!category) {
+        return null;
+    }
     return battles[category] || null;
 }
-
-function getBattleProducts(
-    category
-) {
-    const battle =
-        getBattleData(
-            category
-        );
-
+function getBattleProducts(category) {
+    const battle = getBattleData(category);
     if (
         !battle ||
-        !Array.isArray(
-            battle.products
-        ) ||
+        !Array.isArray(battle.products) ||
         battle.products.length < 2
     ) {
         return [];
     }
-
-    return battle.products.slice(
-        0,
-        2
-    );
+    return battle.products
+        .slice(0, 2)
+        .map(product => ({
+            ...product,
+            id: normalizeId(product.id)
+        }));
 }
-
-/*
- * Safely get a product percentage.
- */
-function getProductPercentage(
-    product
-) {
+/* ============================================================
+   PRODUCT PERCENTAGE
+   ============================================================ */
+function getProductPercentage(product) {
     if (!product) {
         return 0;
     }
-
+    const percentage =
+        Number(product.percentage);
+    if (!Number.isFinite(percentage)) {
+        return 0;
+    }
     return Math.max(
         0,
         Math.min(
             100,
-            Number(
-                product.percentage
-            ) || 0
+            percentage
         )
     );
 }
-
+/* ============================================================
+   BATTLE / VOTE KEYS
+   ============================================================ */
+function getBattleKey(
+    category,
+    productId
+) {
+    return (
+        `${normalizeId(category)}_${normalizeId(productId)}`
+    );
+}
+function getVoteDocumentId(
+    category,
+    productId,
+    uid
+) {
+    /*
+     * Firestore document IDs cannot contain "/".
+     * Category/product IDs are sanitized so the
+     * generated ID remains safe.
+     */
+    const safeCategory =
+        normalizeId(category)
+            .replace(/\//g, "_");
+    const safeProductId =
+        normalizeId(productId)
+            .replace(/\//g, "_");
+    const safeUid =
+        normalizeId(uid)
+            .replace(/\//g, "_");
+    return (
+        `${safeUid}_${safeCategory}_${safeProductId}`
+    );
+}
 /* ============================================================
    AUTHENTICATION
    ============================================================ */
-
 function startAnonymousAuthentication() {
     if (!auth) {
         return Promise.reject(
@@ -214,114 +221,89 @@ function startAnonymousAuthentication() {
             )
         );
     }
-
     if (auth.currentUser) {
         currentUser =
             auth.currentUser;
-
         authenticationReady =
             true;
-
         return Promise.resolve(
             currentUser
         );
     }
-
     if (authenticationPromise) {
         return authenticationPromise;
     }
-
     authenticationPromise =
         new Promise(
             (resolve, reject) => {
                 let finished = false;
-                let unsubscribe = null;
-
+                let unsubscribe =
+                    null;
                 const finishSuccess =
-                    (user) => {
+                    user => {
                         if (finished) {
                             return;
                         }
-
                         finished = true;
-
                         currentUser =
                             user;
-
                         authenticationReady =
                             true;
-
                         if (unsubscribe) {
                             unsubscribe();
                         }
-
                         console.log(
-                            "Firebase user ready:",
+                            "Firebase anonymous user ready:",
                             user.uid
                         );
-
                         resolve(
                             user
                         );
                     };
-
                 const finishError =
-                    (error) => {
+                    error => {
                         if (finished) {
                             return;
                         }
-
                         finished = true;
-
                         authenticationReady =
                             false;
-
                         currentUser =
                             null;
-
                         authenticationPromise =
                             null;
-
                         if (unsubscribe) {
                             unsubscribe();
                         }
-
                         console.error(
                             "Firebase authentication error:",
                             error
                         );
-
                         reject(
                             error
                         );
                     };
-
                 unsubscribe =
                     onAuthStateChanged(
                         auth,
-                        async (user) => {
+                        async user => {
                             if (finished) {
                                 return;
                             }
-
                             if (user) {
                                 finishSuccess(
                                     user
                                 );
-
                                 return;
                             }
-
                             try {
                                 console.log(
                                     "Creating anonymous Firebase user..."
                                 );
-
                                 const credential =
                                     await signInAnonymously(
                                         auth
                                     );
-
                                 if (
                                     credential &&
                                     credential.user
@@ -335,17 +317,12 @@ function startAnonymousAuthentication() {
                                     );
                                 }
                             } catch (error) {
-                                console.error(
-                                    "Anonymous authentication failed:",
-                                    error
-                                );
-
                                 finishError(
                                     error
                                 );
                             }
                         },
-                        (error) => {
+                        error => {
                             finishError(
                                 error
                             );
@@ -353,31 +330,26 @@ function startAnonymousAuthentication() {
                     );
             }
         );
-
     return authenticationPromise;
 }
-
 /* ============================================================
    LOCAL STORAGE
    ============================================================ */
-
 function getLocalVoteKey(
     category,
     productId
 ) {
     return (
-        `momYouNeedThis_vote_${category}_${productId}`
+        `momYouNeedThis_vote_${normalizeId(category)}_${normalizeId(productId)}`
     );
 }
-
 function getLocalBattleChoiceKey(
     category
 ) {
     return (
-        `momYouNeedThis_battle_${category}`
+        `momYouNeedThis_battle_${normalizeId(category)}`
     );
 }
-
 function saveConfirmedVoteLocally(
     category,
     productId,
@@ -389,7 +361,6 @@ function saveConfirmedVoteLocally(
     ) {
         return;
     }
-
     try {
         localStorage.setItem(
             getLocalVoteKey(
@@ -405,7 +376,6 @@ function saveConfirmedVoteLocally(
         );
     }
 }
-
 function getConfirmedLocalVote(
     category,
     productId
@@ -418,7 +388,6 @@ function getConfirmedLocalVote(
                     productId
                 )
             );
-
         if (
             vote === "yes" ||
             vote === "no"
@@ -431,10 +400,8 @@ function getConfirmedLocalVote(
             error
         );
     }
-
     return null;
 }
-
 function saveBattleChoiceLocally(
     category,
     productId
@@ -444,7 +411,7 @@ function saveBattleChoiceLocally(
             getLocalBattleChoiceKey(
                 category
             ),
-            productId
+            normalizeId(productId)
         );
     } catch (error) {
         console.warn(
@@ -453,7 +420,6 @@ function saveBattleChoiceLocally(
         );
     }
 }
-
 function getLocalBattleChoice(
     category
 ) {
@@ -464,32 +430,33 @@ function getLocalBattleChoice(
                     category
                 )
             );
-
-        return productId || null;
+        return productId
+            ? normalizeId(productId)
+            : null;
     } catch (error) {
         console.warn(
             "Could not read local battle choice:",
             error
         );
     }
-
     return null;
 }
-
 /* ============================================================
    UI HELPERS
    ============================================================ */
-
 function setText(
     element,
     value
 ) {
-    if (element) {
-        element.textContent =
-            value;
+    if (!element) {
+        return;
     }
+    element.textContent =
+        value === null ||
+        value === undefined
+            ? ""
+            : String(value);
 }
-
 function setImage(
     imageElement,
     src,
@@ -498,33 +465,32 @@ function setImage(
     if (!imageElement) {
         return;
     }
-
     imageElement.onerror =
         () => {
             console.warn(
                 "Product image failed to load:",
                 src
             );
-
             imageElement.classList.add(
                 "image-load-error"
             );
         };
-
     imageElement.src =
-        src;
-
+        src || "";
     imageElement.alt =
         alt || "";
 }
-
 function getProductSelector(
     position,
     attribute
 ) {
-    return `[data-${attribute}-${position}]`;
+    return (
+        `[data-${attribute}-${position}]`
+    );
 }
-
+/* ============================================================
+   UPDATE STATIC BATTLE CONTENT
+   ============================================================ */
 function updateBattleStaticContent(
     battle,
     battleData
@@ -535,59 +501,55 @@ function updateBattleStaticContent(
     ) {
         return;
     }
-
-    battle.dataset.filterTags =
-        battleData.filterTags || "";
-
+    if (
+        battleData.filterTags !==
+        undefined
+    ) {
+        battle.dataset.filterTags =
+            battleData.filterTags || "";
+    }
     setText(
         battle.querySelector(
             ".battle-eyebrow"
         ),
         battleData.eyebrow
     );
-
     setText(
         battle.querySelector(
             ".battle-heading h2"
         ),
         battleData.title
     );
-
     setText(
         battle.querySelector(
             ".battle-heading p"
         ),
         battleData.intro
     );
-
     setText(
         battle.querySelector(
             ".battle-card-header span"
         ),
         battleData.headerLeft
     );
-
     setText(
         battle.querySelector(
             ".battle-card-header strong"
         ),
         battleData.headerRight
     );
-
     setText(
         battle.querySelector(
             "[data-result-title]"
         ),
         battleData.resultTitle
     );
-
     setText(
         battle.querySelector(
             "[data-result-text]"
         ),
         battleData.resultText
     );
-
     setText(
         battle.querySelector(
             ".battle-footer"
@@ -595,11 +557,9 @@ function updateBattleStaticContent(
         battleData.footer
     );
 }
-
 /* ============================================================
-   LEADER / WINNER STATE
+   LEADER STATE
    ============================================================ */
-
 function updateBattleLeaderState(
     battle,
     products
@@ -610,142 +570,111 @@ function updateBattleLeaderState(
     ) {
         return;
     }
-
     const product1 =
         products[0];
-
     const product2 =
         products[1];
-
     const percentage1 =
         getProductPercentage(
             product1
         );
-
     const percentage2 =
         getProductPercentage(
             product2
         );
-
     const contender1 =
         battle.querySelector(
             '.contender[data-product="1"]'
         );
-
     const contender2 =
         battle.querySelector(
             '.contender[data-product="2"]'
         );
-
-    [
-        contender1,
-        contender2
-    ].forEach(
-        contender => {
-            if (!contender) {
-                return;
-            }
-
-            contender.classList.remove(
-                "leading"
-            );
-
-            contender.classList.remove(
-                "trailing"
-            );
-
-            contender.classList.remove(
-                "winner"
-            );
-        }
-    );
-
+    if (
+        !contender1 ||
+        !contender2
+    ) {
+        return;
+    }
     /*
-     * Remove the dynamically generated leader badges.
+     * Keep the existing HTML leader badges.
+     * We only show/hide them.
      *
-     * The original badge in the HTML is only a fallback.
+     * IMPORTANT:
+     * We do NOT remove them and we do NOT
+     * modify the .versus element.
      */
-    battle
-        .querySelectorAll(
+    const badge1 =
+        contender1.querySelector(
             ".battle-leader-badge"
-        )
-        .forEach(
-            badge => {
-                badge.remove();
-            }
         );
-
+    const badge2 =
+        contender2.querySelector(
+            ".battle-leader-badge"
+        );
+    contender1.classList.remove(
+        "leading",
+        "trailing"
+    );
+    contender2.classList.remove(
+        "leading",
+        "trailing"
+    );
+    if (badge1) {
+        badge1.hidden =
+            true;
+    }
+    if (badge2) {
+        badge2.hidden =
+            true;
+    }
     if (
         percentage1 ===
         percentage2
     ) {
         return;
     }
-
-    const product1IsLeading =
+    if (
         percentage1 >
-        percentage2;
-
-    const leadingContender =
-        product1IsLeading
-            ? contender1
-            : contender2;
-
-    const trailingContender =
-        product1IsLeading
-            ? contender2
-            : contender1;
-
-    if (leadingContender) {
-        leadingContender.classList.add(
+        percentage2
+    ) {
+        contender1.classList.add(
             "leading"
         );
-    }
-
-    if (trailingContender) {
-        trailingContender.classList.add(
+        contender2.classList.add(
             "trailing"
         );
-    }
-
-    if (leadingContender) {
-        const badge =
-            document.createElement(
-                "span"
-            );
-
-        badge.className =
-            "battle-leader-badge";
-
-        badge.textContent =
-            "🔥 LEADING";
-
-        const image =
-            leadingContender.querySelector(
-                ".contender-image"
-            );
-
-        if (image) {
-            image.appendChild(
-                badge
-            );
+        if (badge1) {
+            badge1.hidden =
+                false;
+        }
+    } else {
+        contender1.classList.add(
+            "trailing"
+        );
+        contender2.classList.add(
+            "leading"
+        );
+        if (badge2) {
+            badge2.hidden =
+                false;
         }
     }
 }
-
 /* ============================================================
-   DISPLAY BOTH PRODUCTS
+   DISPLAY PRODUCT CARD
    ============================================================ */
-
 function updateProductCard(
     battle,
     product,
     position
 ) {
-    if (!product) {
+    if (
+        !battle ||
+        !product
+    ) {
         return;
     }
-
     const image =
         battle.querySelector(
             getProductSelector(
@@ -753,7 +682,6 @@ function updateProductCard(
                 "image"
             )
         );
-
     const badge =
         battle.querySelector(
             getProductSelector(
@@ -761,7 +689,6 @@ function updateProductCard(
                 "badge"
             )
         );
-
     const label =
         battle.querySelector(
             getProductSelector(
@@ -769,7 +696,6 @@ function updateProductCard(
                 "label"
             )
         );
-
     const name =
         battle.querySelector(
             getProductSelector(
@@ -777,7 +703,6 @@ function updateProductCard(
                 "name"
             )
         );
-
     const brand =
         battle.querySelector(
             getProductSelector(
@@ -785,7 +710,6 @@ function updateProductCard(
                 "brand"
             )
         );
-
     const description =
         battle.querySelector(
             getProductSelector(
@@ -793,7 +717,6 @@ function updateProductCard(
                 "description"
             )
         );
-
     const score =
         battle.querySelector(
             getProductSelector(
@@ -801,7 +724,6 @@ function updateProductCard(
                 "score"
             )
         );
-
     const link =
         battle.querySelector(
             getProductSelector(
@@ -809,148 +731,126 @@ function updateProductCard(
                 "link"
             )
         );
-
     setImage(
         image,
         product.image,
-        product.alt || product.name
+        product.alt ||
+            product.name
     );
-
     setText(
         badge,
         product.badge || ""
     );
-
     setText(
         label,
         `PRODUCT ${position}`
     );
-
     setText(
         name,
-        product.name
+        product.name || ""
     );
-
     setText(
         brand,
-        product.brand
+        product.brand || ""
     );
-
     setText(
         description,
-        product.description
+        product.description || ""
     );
-
     setText(
         score,
-        product.score
+        product.score ?? 0
     );
-
     if (link) {
-        link.href =
+        const productLink =
             product.link || "#";
-
+        link.href =
+            productLink;
         if (
-            product.link &&
-            product.link !== "#"
+            productLink !== "#"
         ) {
             link.target =
                 "_blank";
-
             link.rel =
                 "noopener noreferrer nofollow sponsored";
         } else {
             link.removeAttribute(
                 "target"
             );
-
             link.removeAttribute(
                 "rel"
             );
         }
     }
 }
-
 /* ============================================================
-   RESULT PERCENTAGES
+   PERCENTAGES
    ============================================================ */
-
 function updateBattlePercentages(
     battle,
     products
 ) {
     if (
+        !battle ||
         products.length < 2
     ) {
         return;
     }
-
     const percentage1 =
         getProductPercentage(
             products[0]
         );
-
     const percentage2 =
         getProductPercentage(
             products[1]
         );
-
     setText(
         battle.querySelector(
             "[data-yes-percentage]"
         ),
         `${percentage1}%`
     );
-
     setText(
         battle.querySelector(
             "[data-no-percentage]"
         ),
         `${percentage2}%`
     );
-
     setText(
         battle.querySelector(
             "[data-percentage-1]"
         ),
         `${percentage1}%`
     );
-
     setText(
         battle.querySelector(
             "[data-percentage-2]"
         ),
         `${percentage2}%`
     );
-
     updateBattleLeaderState(
         battle,
         products
     );
 }
-
 /* ============================================================
    RESET VOTE UI
    ============================================================ */
-
 function resetVoteUI(
     battle
 ) {
     if (!battle) {
         return;
     }
-
     const result =
         battle.querySelector(
             "[data-result]"
         );
-
     if (result) {
         result.classList.remove(
             "visible"
         );
     }
-
     battle
         .querySelectorAll(
             "[data-vote]"
@@ -959,25 +859,20 @@ function resetVoteUI(
             button => {
                 button.disabled =
                     false;
-
                 button.classList.remove(
                     "selected"
                 );
-
                 button.classList.remove(
                     "loading"
                 );
-
                 button.textContent =
                     "💗 PICK THIS ONE";
-
                 button.setAttribute(
                     "aria-pressed",
                     "false"
                 );
             }
         );
-
     battle
         .querySelectorAll(
             ".contender"
@@ -989,16 +884,13 @@ function resetVoteUI(
                 );
             }
         );
-
     battle.classList.remove(
         "vote-complete"
     );
 }
-
 /* ============================================================
    SHOW SUCCESSFUL VOTE
    ============================================================ */
-
 function showVoteUI(
     battle,
     selectedProductId
@@ -1006,66 +898,63 @@ function showVoteUI(
     if (!battle) {
         return;
     }
-
     const category =
         battle.dataset.category;
-
     const products =
         getBattleProducts(
             category
         );
-
     if (
         products.length < 2
     ) {
         return;
     }
-
+    const normalizedSelectedId =
+        normalizeId(
+            selectedProductId
+        );
     const selectedIndex =
         products.findIndex(
             product =>
-                product.id ===
-                selectedProductId
+                normalizeId(
+                    product.id
+                ) ===
+                normalizedSelectedId
         );
-
     if (
         selectedIndex === -1
     ) {
         return;
     }
-
     const selectedProduct =
         products[
             selectedIndex
         ];
-
     const otherProduct =
-        products.find(
-            product =>
-                product.id !==
-                selectedProductId
-        );
-
+        products[
+            selectedIndex === 0
+                ? 1
+                : 0
+        ];
     const result =
         battle.querySelector(
             "[data-result]"
         );
-
     const resultTitle =
         battle.querySelector(
             "[data-result-title]"
         );
-
     const resultText =
         battle.querySelector(
             "[data-result-text]"
         );
-
     const yourPosition =
         battle.querySelector(
             "[data-your-position]"
         );
-
+    /*
+     * Clear previous selection.
+     */
     battle
         .querySelectorAll(
             ".contender"
@@ -1077,7 +966,9 @@ function showVoteUI(
                 );
             }
         );
-
+    /*
+     * Update both buttons.
+     */
     battle
         .querySelectorAll(
             "[data-vote]"
@@ -1088,14 +979,11 @@ function showVoteUI(
                     Number(
                         button.dataset.product
                     );
-
                 button.disabled =
                     true;
-
                 button.classList.remove(
                     "loading"
                 );
-
                 if (
                     productNumber ===
                     selectedIndex + 1
@@ -1103,10 +991,8 @@ function showVoteUI(
                     button.classList.add(
                         "selected"
                     );
-
                     button.textContent =
                         "💗 YOUR PICK";
-
                     button.setAttribute(
                         "aria-pressed",
                         "true"
@@ -1115,10 +1001,8 @@ function showVoteUI(
                     button.classList.remove(
                         "selected"
                     );
-
                     button.textContent =
                         "PICK THIS ONE";
-
                     button.setAttribute(
                         "aria-pressed",
                         "false"
@@ -1126,48 +1010,45 @@ function showVoteUI(
                 }
             }
         );
-
+    /*
+     * Highlight selected contender.
+     */
     const selectedCard =
         battle.querySelector(
             `.contender[data-product="${selectedIndex + 1}"]`
         );
-
     if (selectedCard) {
         selectedCard.classList.add(
             "selected"
         );
     }
-
     battle.classList.add(
         "vote-complete"
     );
-
+    /*
+     * Show result.
+     */
     if (result) {
         result.classList.add(
             "visible"
         );
     }
-
     setText(
         resultTitle,
         `You picked ${selectedProduct.name}!`
     );
-
     setText(
         resultText,
         "Here's how moms are voting."
     );
-
     const selectedPercentage =
         getProductPercentage(
             selectedProduct
         );
-
     const otherPercentage =
         getProductPercentage(
             otherProduct
         );
-
     if (yourPosition) {
         if (
             selectedPercentage >
@@ -1186,17 +1067,18 @@ function showVoteUI(
                 "It's a tie. Moms are split! 🤷🏻‍♀️";
         }
     }
-
+    /*
+     * Recalculate leader classes after
+     * showing the selected state.
+     */
     updateBattleLeaderState(
         battle,
         products
     );
 }
-
 /* ============================================================
    SHOW VOTE ERROR
    ============================================================ */
-
 function showVoteError(
     battle,
     message
@@ -1204,38 +1086,31 @@ function showVoteError(
     if (!battle) {
         return;
     }
-
     const result =
         battle.querySelector(
             "[data-result]"
         );
-
     const resultTitle =
         battle.querySelector(
             "[data-result-title]"
         );
-
     const resultText =
         battle.querySelector(
             "[data-result-text]"
         );
-
     if (result) {
         result.classList.add(
             "visible"
         );
     }
-
     setText(
         resultTitle,
         "Vote not registered"
     );
-
     setText(
         resultText,
         message
     );
-
     battle
         .querySelectorAll(
             "[data-vote]"
@@ -1244,25 +1119,20 @@ function showVoteError(
             button => {
                 button.disabled =
                     false;
-
                 button.classList.remove(
                     "loading"
                 );
-
                 button.classList.remove(
                     "selected"
                 );
-
                 button.textContent =
                     "💗 PICK THIS ONE";
-
                 button.setAttribute(
                     "aria-pressed",
                     "false"
                 );
             }
         );
-
     battle
         .querySelectorAll(
             ".contender"
@@ -1274,16 +1144,13 @@ function showVoteError(
                 );
             }
         );
-
     battle.classList.remove(
         "vote-complete"
     );
 }
-
 /* ============================================================
-   SAVE VOTE
+   SAVE VOTE TO FIRESTORE
    ============================================================ */
-
 async function saveVote(
     category,
     product,
@@ -1294,7 +1161,6 @@ async function saveVote(
             "No product was selected."
         );
     }
-
     if (
         vote !== "yes" &&
         vote !== "no"
@@ -1303,84 +1169,87 @@ async function saveVote(
             "Invalid vote."
         );
     }
-
+    /*
+     * Make absolutely sure authentication
+     * exists before writing to Firestore.
+     */
     if (
         !authenticationReady ||
         !currentUser
     ) {
         await startAnonymousAuthentication();
     }
-
     if (!currentUser) {
         throw new Error(
             "No authenticated Firebase user exists."
         );
     }
-
     if (!db) {
         throw new Error(
             "Firestore is not initialized."
         );
     }
-
-    const key =
-        getBattleKey(
-            category,
+    const normalizedCategory =
+        normalizeId(
+            category
+        );
+    const normalizedProductId =
+        normalizeId(
             product.id
         );
-
+    const key =
+        getBattleKey(
+            normalizedCategory,
+            normalizedProductId
+        );
+    /*
+     * Prevent duplicate simultaneous clicks.
+     */
     if (
         voteInProgress.has(key)
     ) {
         return false;
     }
-
+    /*
+     * Prevent a second vote from the
+     * same browser/session state.
+     */
     if (
         confirmedVotes.has(key)
     ) {
         return false;
     }
-
     voteInProgress.add(
         key
     );
-
     try {
         const documentId =
             getVoteDocumentId(
-                category,
-                product.id,
+                normalizedCategory,
+                normalizedProductId,
                 currentUser.uid
             );
-
         const voteRef =
             doc(
                 db,
                 "productVotes",
                 documentId
             );
-
         await setDoc(
             voteRef,
             {
                 uid:
                     currentUser.uid,
-
                 category:
-                    category,
-
+                    normalizedCategory,
                 productId:
-                    product.id,
-
+                    normalizedProductId,
                 productName:
-                    product.name,
-
+                    product.name || "",
                 productBrand:
-                    product.brand,
-
+                    product.brand || "",
                 vote:
                     vote,
-
                 createdAt:
                     serverTimestamp()
             },
@@ -1388,42 +1257,34 @@ async function saveVote(
                 merge: false
             }
         );
-
         confirmedVotes.set(
             key,
             vote
         );
-
         saveConfirmedVoteLocally(
-            category,
-            product.id,
+            normalizedCategory,
+            normalizedProductId,
             vote
         );
-
         console.log(
             "Vote successfully saved:",
             {
                 uid:
                     currentUser.uid,
-
                 category:
-                    category,
-
+                    normalizedCategory,
                 productId:
-                    product.id,
-
+                    normalizedProductId,
                 vote:
                     vote
             }
         );
-
         return true;
     } catch (error) {
         console.error(
             "Vote was NOT saved:",
             error
         );
-
         throw error;
     } finally {
         voteInProgress.delete(
@@ -1431,11 +1292,9 @@ async function saveVote(
         );
     }
 }
-
 /* ============================================================
    FIREBASE ERROR MESSAGES
    ============================================================ */
-
 function getReadableFirebaseError(
     error
 ) {
@@ -1444,12 +1303,10 @@ function getReadableFirebaseError(
             "Your vote could not be registered."
         );
     }
-
     console.error(
         "Full Firebase error:",
         error
     );
-
     if (
         error.code ===
         "permission-denied"
@@ -1460,7 +1317,6 @@ function getReadableFirebaseError(
             "and your Firestore rules allow authenticated users to create votes."
         );
     }
-
     if (
         error.code ===
         "auth/operation-not-allowed"
@@ -1470,7 +1326,6 @@ function getReadableFirebaseError(
             "in your Firebase project."
         );
     }
-
     if (
         error.code ===
         "auth/network-request-failed"
@@ -1480,7 +1335,6 @@ function getReadableFirebaseError(
             "Your vote was not saved."
         );
     }
-
     if (
         error.code ===
         "unavailable"
@@ -1490,7 +1344,6 @@ function getReadableFirebaseError(
             "Your vote was not saved."
         );
     }
-
     if (
         error.code ===
         "failed-precondition"
@@ -1500,17 +1353,14 @@ function getReadableFirebaseError(
             "Please try again."
         );
     }
-
     return (
         "Your vote could not be registered. " +
         "Please try again."
     );
 }
-
 /* ============================================================
    HANDLE BATTLE VOTE
    ============================================================ */
-
 async function handleBattleVote(
     battle,
     productIndex
@@ -1518,88 +1368,110 @@ async function handleBattleVote(
     if (!battle) {
         return;
     }
-
     const category =
         battle.dataset.category;
-
+    if (!category) {
+        return;
+    }
     const products =
         getBattleProducts(
             category
         );
-
     if (
         products.length < 2
     ) {
         console.warn(
             `Battle "${category}" does not have two products.`
         );
-
         return;
     }
-
+    if (
+        productIndex !== 0 &&
+        productIndex !== 1
+    ) {
+        return;
+    }
     const product =
         products[
             productIndex
         ];
-
     if (!product) {
         return;
     }
-
+    const normalizedProductId =
+        normalizeId(
+            product.id
+        );
+    /*
+     * Do not allow another selection
+     * after this battle has already been
+     * completed.
+     */
     const existingBattleChoice =
         confirmedBattleChoices.get(
             category
         );
-
     if (
         existingBattleChoice
     ) {
         return;
     }
-
+    /*
+     * Check local storage before Firebase.
+     */
     const localBattleChoice =
         getLocalBattleChoice(
             category
         );
-
     if (localBattleChoice) {
         const matchingProduct =
             products.find(
                 item =>
-                    item.id ===
-                    localBattleChoice
+                    normalizeId(
+                        item.id
+                    ) ===
+                    normalizeId(
+                        localBattleChoice
+                    )
             );
-
         if (matchingProduct) {
             confirmedBattleChoices.set(
                 category,
-                localBattleChoice
+                normalizeId(
+                    matchingProduct.id
+                )
             );
-
             showVoteUI(
                 battle,
-                localBattleChoice
+                matchingProduct.id
             );
-
             return;
         }
     }
-
+    /*
+     * The button itself identifies the
+     * selected product.
+     *
+     * We keep the existing yes/no vote
+     * model by storing "yes" for the
+     * selected product.
+     */
     const vote =
         "yes";
-
     const key =
         getBattleKey(
             category,
-            product.id
+            normalizedProductId
         );
-
     if (
         voteInProgress.has(key)
     ) {
         return;
     }
-
+    /*
+     * Make sure Firebase authentication
+     * is ready before changing the button.
+     */
     try {
         await startAnonymousAuthentication();
     } catch (error) {
@@ -1607,41 +1479,36 @@ async function handleBattleVote(
             "Authentication error:",
             error
         );
-
         showVoteError(
             battle,
             "We couldn't connect your vote. Please try again."
         );
-
         return;
     }
-
     if (!currentUser) {
         showVoteError(
             battle,
             "We couldn't create your voting session. Please try again."
         );
-
         return;
     }
-
+    /*
+     * Only the clicked button enters
+     * the saving state.
+     */
     const selectedButton =
         battle.querySelector(
             `[data-vote][data-product="${productIndex + 1}"]`
         );
-
     if (selectedButton) {
         selectedButton.disabled =
             true;
-
         selectedButton.classList.add(
             "loading"
         );
-
         selectedButton.textContent =
             "SAVING YOUR PICK…";
     }
-
     try {
         const saved =
             await saveVote(
@@ -1649,29 +1516,26 @@ async function handleBattleVote(
                 product,
                 vote
             );
-
-        if (saved) {
-            confirmedBattleChoices.set(
-                category,
-                product.id
-            );
-
-            saveBattleChoiceLocally(
-                category,
-                product.id
-            );
-
-            showVoteUI(
-                battle,
-                product.id
-            );
+        if (!saved) {
+            return;
         }
+        confirmedBattleChoices.set(
+            category,
+            normalizedProductId
+        );
+        saveBattleChoiceLocally(
+            category,
+            normalizedProductId
+        );
+        showVoteUI(
+            battle,
+            normalizedProductId
+        );
     } catch (error) {
         console.error(
             "Vote registration failed:",
             error
         );
-
         showVoteError(
             battle,
             getReadableFirebaseError(
@@ -1680,124 +1544,132 @@ async function handleBattleVote(
         );
     }
 }
-
 /* ============================================================
-   LOAD EXISTING BATTLE CHOICE
+   LOAD EXISTING LOCAL BATTLE CHOICE
    ============================================================ */
-
 function loadExistingBattleChoice(
     battle
 ) {
+    if (!battle) {
+        return null;
+    }
     const category =
         battle.dataset.category;
-
+    if (!category) {
+        return null;
+    }
     const products =
         getBattleProducts(
             category
         );
-
     if (
         products.length < 2
     ) {
         return null;
     }
-
     const localChoice =
         getLocalBattleChoice(
             category
         );
-
     if (!localChoice) {
         return null;
     }
-
     const matchingProduct =
         products.find(
             product =>
-                product.id ===
-                localChoice
+                normalizeId(
+                    product.id
+                ) ===
+                normalizeId(
+                    localChoice
+                )
         );
-
     if (!matchingProduct) {
         return null;
     }
-
+    const productId =
+        normalizeId(
+            matchingProduct.id
+        );
     confirmedBattleChoices.set(
         category,
-        localChoice
+        productId
     );
-
-    return localChoice;
+    /*
+     * Also remember the vote locally
+     * for the selected product.
+     */
+    const localVote =
+        getConfirmedLocalVote(
+            category,
+            productId
+        );
+    if (localVote) {
+        confirmedVotes.set(
+            getBattleKey(
+                category,
+                productId
+            ),
+            localVote
+        );
+    }
+    return productId;
 }
-
 /* ============================================================
    INITIALIZE ONE BATTLE
    ============================================================ */
-
 function initializeBattle(
     battle
 ) {
+    if (!battle) {
+        return;
+    }
     const category =
         battle.dataset.category;
-
     if (!category) {
         console.warn(
             "Battle has no data-category:",
             battle
         );
-
         return;
     }
-
     const battleData =
         getBattleData(
             category
         );
-
     if (!battleData) {
         console.warn(
             `No JSON data found for battle "${category}".`
         );
-
         return;
     }
-
     const products =
         getBattleProducts(
             category
         );
-
     if (
         products.length < 2
     ) {
         console.warn(
             `Battle "${category}" needs at least two products.`
         );
-
         return;
     }
-
-    battleIndexes[category] =
-        0;
-
     /*
-     * Populate editable battle content
-     * from JSON.
+     * Populate battle content from JSON.
      */
     updateBattleStaticContent(
         battle,
         battleData
     );
-
     /*
-     * Give each contender an explicit
-     * product number.
+     * Ensure the two contender cards
+     * have the expected product numbers.
      */
     const contenders =
         battle.querySelectorAll(
             ".contender"
         );
-
     contenders.forEach(
         (contender, index) => {
             if (
@@ -1810,39 +1682,39 @@ function initializeBattle(
             }
         }
     );
-
     /*
-     * Display both products.
+     * Display Product 1.
      */
     updateProductCard(
         battle,
         products[0],
         1
     );
-
+    /*
+     * Display Product 2.
+     */
     updateProductCard(
         battle,
         products[1],
         2
     );
-
     /*
-     * Update percentages and leader state.
+     * Display percentages / leader.
      */
     updateBattlePercentages(
         battle,
         products
     );
-
     /*
-     * Reset voting UI.
+     * Start with a clean vote state.
      */
     resetVoteUI(
         battle
     );
-
     /*
-     * Vote buttons.
+     * Add vote listeners.
+     *
+     * Each button is attached once here.
      */
     battle
         .querySelectorAll(
@@ -1857,7 +1729,6 @@ function initializeBattle(
                             Number(
                                 button.dataset.product
                             );
-
                         if (
                             productNumber !==
                                 1 &&
@@ -1866,7 +1737,6 @@ function initializeBattle(
                         ) {
                             return;
                         }
-
                         handleBattleVote(
                             battle,
                             productNumber - 1
@@ -1876,19 +1746,15 @@ function initializeBattle(
             }
         );
 }
-
 /* ============================================================
    INITIALIZE PAGE
    ============================================================ */
-
 async function initializePage() {
     console.log(
-        "MomYouNeedThis voting page initializing..."
+        "MomYouNeedThis Mom Battles initializing..."
     );
-
     /*
-     * Product data must load before battles
-     * are initialized.
+     * Load product/battle data first.
      */
     try {
         await loadBattleData();
@@ -1897,29 +1763,22 @@ async function initializePage() {
             "Mom Battles page could not initialize:",
             error
         );
-
         return;
     }
-
     const battlesOnPage =
         document.querySelectorAll(
             ".product-battle"
         );
-
     if (
         !battlesOnPage.length
     ) {
         console.warn(
             "No .product-battle elements found."
         );
-
         return;
     }
-
     /*
-     * Render every battle immediately.
-     *
-     * Firebase does not block product rendering.
+     * Render every battle.
      */
     battlesOnPage.forEach(
         battle => {
@@ -1928,9 +1787,8 @@ async function initializePage() {
             );
         }
     );
-
     /*
-     * Load existing local choices immediately.
+     * Restore locally remembered votes.
      */
     battlesOnPage.forEach(
         battle => {
@@ -1938,7 +1796,6 @@ async function initializePage() {
                 loadExistingBattleChoice(
                     battle
                 );
-
             if (existingChoice) {
                 showVoteUI(
                     battle,
@@ -1947,15 +1804,14 @@ async function initializePage() {
             }
         }
     );
-
     /*
-     * Firebase authentication still starts
-     * in the background.
+     * Start Firebase authentication in
+     * the background so the page itself
+     * does not wait unnecessarily.
      */
     try {
         const user =
             await startAnonymousAuthentication();
-
         console.log(
             "Firebase authentication ready:",
             user.uid
@@ -1967,11 +1823,9 @@ async function initializePage() {
         );
     }
 }
-
 /* ============================================================
    START APPLICATION
    ============================================================ */
-
 if (
     document.readyState ===
     "loading"
