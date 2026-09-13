@@ -318,12 +318,12 @@
 
 /* =====================================================
    TWO ANIMATED LEADER FIRES
+   Same side, slightly staggered
 ===================================================== */
 
 .leader-fire{
     display:none;
     position:absolute;
-    top:48px;
     z-index:6;
     font-size:22px;
     line-height:1;
@@ -333,26 +333,48 @@
 
 .leader-fire-left{
     left:10px;
+    top:42px;
 }
 
 .leader-fire-right{
-    right:10px;
+    left:28px;
+    top:58px;
 }
 
 .contender.leading .leader-fire{
     display:block;
-    animation:leaderFire 1.4s ease-in-out infinite;
 }
 
-@keyframes leaderFire{
+.contender.leading .leader-fire-left{
+    animation:leaderFireLeft 1.4s ease-in-out infinite;
+}
+
+.contender.leading .leader-fire-right{
+    animation:leaderFireRight 1.4s ease-in-out infinite;
+}
+
+@keyframes leaderFireLeft{
 
     0%,
     100%{
-        transform:translateY(0) rotate(-3deg);
+        transform:translateY(0) rotate(-5deg);
     }
 
     50%{
-        transform:translateY(-3px) rotate(3deg);
+        transform:translateY(-4px) rotate(4deg);
+    }
+
+}
+
+@keyframes leaderFireRight{
+
+    0%,
+    100%{
+        transform:translateY(0) rotate(4deg);
+    }
+
+    50%{
+        transform:translateY(-3px) rotate(-5deg);
     }
 
 }
@@ -548,6 +570,7 @@
 
 /* =====================================================
    LIGHTNING DIVIDER
+   Shorter + chunkier lightning bolt
 ===================================================== */
 
 .versus{
@@ -561,50 +584,46 @@
     overflow:visible;
 }
 
-/* MAIN LIGHTNING BOLT */
-
 .versus::before{
     content:"";
     position:absolute;
-    top:-20px;
-    bottom:-20px;
+    top:18%;
+    bottom:18%;
     left:50%;
-    width:24px;
+    width:26px;
     transform:translateX(-50%);
     background:#e89aaa;
 
     clip-path:polygon(
         58% 0%,
-        18% 36%,
-        43% 36%,
-        20% 63%,
-        48% 63%,
-        32% 100%,
-        82% 48%,
-        55% 48%,
-        78% 22%,
-        51% 22%
+        8% 42%,
+        39% 42%,
+        20% 100%,
+        92% 35%,
+        57% 35%,
+        78% 0%
     );
 
     opacity:.95;
 }
 
-/* SOFT LIGHTNING GLOW */
-
 .versus::after{
     content:"";
     position:absolute;
-    top:0;
-    bottom:0;
+    top:20%;
+    bottom:20%;
     left:50%;
-    width:38px;
+    width:30px;
     transform:translateX(-50%);
-    background:rgba(232,154,170,.16);
-    filter:blur(9px);
+    background:rgba(232,154,170,.15);
+    filter:blur(7px);
     pointer-events:none;
 }
 
-/* VS — NO WHITE BACKGROUND OR HALO */
+/* =====================================================
+   VS
+   No white background / no white halo
+===================================================== */
 
 .versus span{
     position:relative;
@@ -912,12 +931,18 @@
         box-shadow:none;
     }
 
+    /* Shorter mobile lightning */
+
     .versus::before{
-        width:17px;
+        top:22%;
+        bottom:22%;
+        width:18px;
     }
 
     .versus::after{
-        width:25px;
+        top:23%;
+        bottom:23%;
+        width:22px;
     }
 
     /* Smaller cards */
@@ -962,19 +987,20 @@
         font-size:7px;
     }
 
-    /* Two leader fires */
+    /* Two animated fires on the same side */
 
     .leader-fire{
-        top:32px;
         font-size:16px;
     }
 
     .leader-fire-left{
         left:5px;
+        top:28px;
     }
 
     .leader-fire-right{
-        right:5px;
+        left:18px;
+        top:39px;
     }
 
     .contender-content{
