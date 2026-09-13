@@ -20,11 +20,6 @@
  * - Remembers whether this browser has already voted
  * - Remembers the selected product for each battle
  *
- * IMPORTANT:
- * - Product information comes ONLY from mom-battles.json
- * - Voting logic stays in this file
- * - The HTML structure is not rebuilt or replaced
- * - The .versus element is left untouched
  * ============================================================
  */
 /* ============================================================
