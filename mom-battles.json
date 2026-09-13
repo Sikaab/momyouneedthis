@@ -1,0 +1,243 @@
+{
+    "battles": {
+        "baby": {
+            "category": "baby",
+            "eyebrow": "👶 BABY BATTLE",
+            "title": "Which Baby Product Wins?",
+            "intro": "Pick the one you'd actually want.",
+            "filterTags": "new trending",
+            "headerLeft": "⚔️ HEAD TO HEAD",
+            "headerRight": "MOM BATTLE",
+            "productBadge": "MOM PICK",
+            "resultTitle": "You picked one!",
+            "resultText": "Now see how other moms voted.",
+            "footer": "🗳️ Moms decide what wins.",
+            "products": [
+                {
+                    "id": "baby-einstein-soother",
+                    "name": "Soother Musical Crib Toy",
+                    "brand": "Baby Einstein",
+                    "image": "assets/babyeinstein-aquarium.jpeg",
+                    "alt": "Baby Einstein Soother Musical Crib Toy",
+                    "description": "A popular option for keeping little ones entertained during quiet moments and daily routines.",
+                    "score": "8.4",
+                    "percentage": 62,
+                    "link": "https://amzn.to/4fNqr9j",
+                    "badge": "MOM PICK"
+                },
+                {
+                    "id": "baby-einstein-aquarium",
+                    "name": "Baby Einstein Aquarium",
+                    "brand": "Baby Einstein",
+                    "image": "assets/babyeinstein-aquarium.jpeg",
+                    "alt": "Baby Einstein Aquarium",
+                    "description": "A colorful interactive option designed to keep babies engaged during everyday routines.",
+                    "score": "8.2",
+                    "percentage": 59,
+                    "link": "https://amzn.to/4fNqr9j",
+                    "badge": "MOM PICK"
+                }
+            ]
+        },
+
+        "toddler": {
+            "category": "toddler",
+            "eyebrow": "🧸 TODDLER BATTLE",
+            "title": "Toddler Favorites",
+            "intro": "Which one would earn a spot in your home?",
+            "filterTags": "trending",
+            "headerLeft": "⚔️ HEAD TO HEAD",
+            "headerRight": "MOM BATTLE",
+            "productBadge": "MOM PICK",
+            "resultTitle": "You picked one!",
+            "resultText": "Now see how other moms voted.",
+            "footer": "🗳️ Your vote helps another mom decide.",
+            "products": [
+                {
+                    "id": "toddler-favorite-1",
+                    "name": "Toddler Favorite",
+                    "brand": "MomYouNeedThis Pick",
+                    "image": "assets/product2.jpg",
+                    "alt": "Toddler favorite",
+                    "description": "A practical everyday product designed to make life with toddlers a little easier.",
+                    "score": "8.1",
+                    "percentage": 57,
+                    "link": "#",
+                    "badge": "MOM PICK"
+                },
+                {
+                    "id": "toddler-favorite-2",
+                    "name": "Toddler Favorite #2",
+                    "brand": "MomYouNeedThis Pick",
+                    "image": "assets/product2.jpg",
+                    "alt": "Toddler product contender",
+                    "description": "Another practical favorite parents may find useful during everyday toddler life.",
+                    "score": "8.3",
+                    "percentage": 61,
+                    "link": "#",
+                    "badge": "MOM PICK"
+                }
+            ]
+        },
+
+        "sleep": {
+            "category": "sleep",
+            "eyebrow": "😴 SLEEP BATTLE",
+            "title": "Which Sleep Helper Wins?",
+            "intro": "Which one would you tell another tired mom about?",
+            "filterTags": "favorite trending",
+            "headerLeft": "⚔️ HEAD TO HEAD",
+            "headerRight": "MOM BATTLE",
+            "productBadge": "MOM FAVORITE",
+            "resultTitle": "You picked one!",
+            "resultText": "Now see how other moms voted.",
+            "footer": "💗 Your vote could help another tired mom.",
+            "products": [
+                {
+                    "id": "white-noise-machine",
+                    "name": "White Noise Machine",
+                    "brand": "Parent Favorite",
+                    "image": "assets/white-noise-machine.jpeg",
+                    "alt": "White noise machine",
+                    "description": "A popular choice for creating a consistent sleep environment for little ones.",
+                    "score": "8.7",
+                    "percentage": 71,
+                    "link": "https://amzn.to/4z8LxGC",
+                    "badge": "MOM FAVORITE"
+                },
+                {
+                    "id": "sleep-helper-2",
+                    "name": "Sleep Helper",
+                    "brand": "Parent Favorite",
+                    "image": "assets/white-noise-machine.jpeg",
+                    "alt": "Sleep product contender",
+                    "description": "A simple sleep-support product designed to make bedtime routines easier.",
+                    "score": "8.4",
+                    "percentage": 65,
+                    "link": "https://amzn.to/4z8LxGC",
+                    "badge": "MOM FAVORITE"
+                }
+            ]
+        },
+
+        "potty": {
+            "category": "potty",
+            "eyebrow": "🚽 POTTY BATTLE",
+            "title": "Potty Training Favorites",
+            "intro": "Which one would you recommend?",
+            "filterTags": "favorite",
+            "headerLeft": "⚔️ HEAD TO HEAD",
+            "headerRight": "MOM BATTLE",
+            "productBadge": "MOM PICK",
+            "resultTitle": "You picked one!",
+            "resultText": "Now see how other moms voted.",
+            "footer": "🗳️ Help another parent skip the guesswork.",
+            "products": [
+                {
+                    "id": "babybjorn-potty",
+                    "name": "Potty Training Seat",
+                    "brand": "BabyBjörn",
+                    "image": "assets/babybjorn-potty-toilet.jpeg",
+                    "alt": "BabyBjörn potty",
+                    "description": "A simple potty-training option designed to help toddlers feel comfortable and confident.",
+                    "score": "8.6",
+                    "percentage": 68,
+                    "link": "https://amzn.to/3S23eqS",
+                    "badge": "MOM PICK"
+                },
+                {
+                    "id": "potty-training-seat-2",
+                    "name": "Potty Training Favorite",
+                    "brand": "Mom Pick",
+                    "image": "assets/babybjorn-potty-toilet.jpeg",
+                    "alt": "Potty training contender",
+                    "description": "Another popular potty-training option designed for everyday use.",
+                    "score": "8.2",
+                    "percentage": 61,
+                    "link": "https://amzn.to/3S23eqS",
+                    "badge": "MOM PICK"
+                }
+            ]
+        },
+
+        "feeding": {
+            "category": "feeding",
+            "eyebrow": "🍽️ FEEDING BATTLE",
+            "title": "Feeding Favorites",
+            "intro": "Which one would make your routine easier?",
+            "filterTags": "new",
+            "headerLeft": "⚔️ HEAD TO HEAD",
+            "headerRight": "MOM BATTLE",
+            "productBadge": "NEW BATTLE",
+            "resultTitle": "You picked one!",
+            "resultText": "Now see how other moms voted.",
+            "footer": "🍽️ Your vote helps another mom decide.",
+            "products": [
+                {
+                    "id": "feeding-favorite-1",
+                    "name": "Feeding Favorite",
+                    "brand": "Mom Pick",
+                    "image": "assets/product2.jpg",
+                    "alt": "Feeding product",
+                    "description": "A practical feeding favorite designed to make everyday mealtimes a little easier.",
+                    "score": "8.0",
+                    "percentage": 54,
+                    "link": "#",
+                    "badge": "NEW BATTLE"
+                },
+                {
+                    "id": "feeding-favorite-2",
+                    "name": "Feeding Favorite #2",
+                    "brand": "Mom Pick",
+                    "image": "assets/product2.jpg",
+                    "alt": "Feeding contender",
+                    "description": "A useful everyday feeding product designed to simplify mealtime routines.",
+                    "score": "8.2",
+                    "percentage": 58,
+                    "link": "#",
+                    "badge": "NEW BATTLE"
+                }
+            ]
+        },
+
+        "under25": {
+            "category": "under25",
+            "eyebrow": "💰 UNDER $25",
+            "title": "Mom Finds Under $25",
+            "intro": "Small price. Big question. Which one wins?",
+            "filterTags": "trending favorite",
+            "headerLeft": "⚔️ HEAD TO HEAD",
+            "headerRight": "MOM BATTLE",
+            "productBadge": "UNDER $25",
+            "resultTitle": "You picked one!",
+            "resultText": "Now see how other moms voted.",
+            "footer": "💰 Which one would you actually buy?",
+            "products": [
+                {
+                    "id": "under25-find-1",
+                    "name": "Budget Mom Find",
+                    "brand": "MomYouNeedThis Pick",
+                    "image": "assets/product2.jpg",
+                    "alt": "Mom find under $25",
+                    "description": "A useful little find that could make everyday parenting just a bit easier.",
+                    "score": "8.3",
+                    "percentage": 63,
+                    "link": "#",
+                    "badge": "UNDER $25"
+                },
+                {
+                    "id": "under25-find-2",
+                    "name": "Budget Mom Find #2",
+                    "brand": "MomYouNeedThis Pick",
+                    "image": "assets/product2.jpg",
+                    "alt": "Budget product contender",
+                    "description": "A small everyday find that could make a practical difference for parents.",
+                    "score": "8.1",
+                    "percentage": 59,
+                    "link": "#",
+                    "badge": "UNDER $25"
+                }
+            ]
+        }
+    }
+}
