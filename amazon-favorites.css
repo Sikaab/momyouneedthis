@@ -1,1185 +1,1163 @@
 /* =====================================================
-   MOM BATTLES
+MOM BATTLES
 ===================================================== */
 
 .mom-voted-page{
-    width:100%;
-    max-width:1100px;
-    margin:0 auto;
+width:100%;
+max-width:1100px;
+margin:0 auto;
 }
 
 /* =====================================================
-   HEADER
+HEADER
 ===================================================== */
 
 .mom-voted-header{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:20px;
-    padding:10px 0 28px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:20px;
+padding:10px 0 28px;
 }
 
 .mom-voted-logo-link{
-    display:inline-flex;
-    align-items:center;
-    text-decoration:none;
+display:inline-flex;
+align-items:center;
+text-decoration:none;
 }
 
 .mom-voted-logo{
-    width:95px;
-    height:auto;
-    display:block;
+width:95px;
+height:auto;
+display:block;
 }
 
 .community-badge{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    padding:8px 14px;
-    border-radius:999px;
-    background:#fff0f5;
-    color:#d6537c;
-    font-size:12px;
-    font-weight:900;
-    letter-spacing:.4px;
-    white-space:nowrap;
+display:inline-flex;
+align-items:center;
+justify-content:center;
+padding:8px 14px;
+border-radius:999px;
+background:#fff0f5;
+color:#d6537c;
+font-size:12px;
+font-weight:900;
+letter-spacing:.4px;
+white-space:nowrap;
 }
 
 /* =====================================================
-   HERO
+HERO
 ===================================================== */
 
 .voting-hero{
-    text-align:center;
-    padding:20px 20px 34px;
+text-align:center;
+padding:20px 20px 34px;
 }
 
 .hero-kicker{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    padding:8px 15px;
-    margin-bottom:15px;
-    border-radius:999px;
-    background:#fff0f5;
-    color:#d6537c;
-    font-size:12px;
-    font-weight:900;
-    letter-spacing:.7px;
+display:inline-flex;
+align-items:center;
+justify-content:center;
+padding:8px 15px;
+margin-bottom:15px;
+border-radius:999px;
+background:#fff0f5;
+color:#d6537c;
+font-size:12px;
+font-weight:900;
+letter-spacing:.7px;
 }
 
 .voting-hero h1{
-    margin:0;
-    font-size:48px;
-    line-height:1.05;
-    font-weight:900;
-    color:#332b2b;
+margin:0;
+font-size:48px;
+line-height:1.05;
+font-weight:900;
+color:#332b2b;
 }
 
 .voting-hero h1 span{
-    display:block;
-    color:#e89aaa;
+display:block;
+color:#e89aaa;
 }
 
 .mom-voted-intro{
-    margin:16px auto 0;
-    max-width:500px;
-    color:#777;
-    font-size:17px;
-    line-height:1.5;
-    font-weight:600;
+margin:16px auto 0;
+max-width:500px;
+color:#777;
+font-size:17px;
+line-height:1.5;
+font-weight:600;
 }
 
 /* =====================================================
-   CATEGORY NAV
+CATEGORY NAV
 ===================================================== */
 
 .voting-categories{
-    display:flex;
-    justify-content:center;
-    flex-wrap:wrap;
-    gap:8px;
-    margin:0 auto 40px;
-    padding:10px;
-    background:#fff;
-    border:1px solid #eee3e7;
-    border-radius:18px;
-    position:sticky;
-    top:10px;
-    z-index:20;
-    box-shadow:0 6px 20px rgba(51,43,43,.05);
+display:flex;
+justify-content:center;
+flex-wrap:wrap;
+gap:8px;
+margin:0 auto 40px;
+padding:10px;
+background:#fff;
+border:1px solid #eee3e7;
+border-radius:18px;
+position:sticky;
+top:10px;
+z-index:20;
+box-shadow:0 6px 20px rgba(51,43,43,.05);
 }
 
 .category-link{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    padding:9px 14px;
-    border-radius:999px;
-    text-decoration:none;
-    color:#777;
-    background:#fffaf8;
-    font-size:13px;
-    font-weight:900;
-    transition:.2s ease;
+display:inline-flex;
+align-items:center;
+justify-content:center;
+padding:9px 14px;
+border-radius:999px;
+text-decoration:none;
+color:#777;
+background:#fffaf8;
+font-size:13px;
+font-weight:900;
+transition:.2s ease;
 }
 
 .category-link:hover{
-    color:#1d4f91;
-    background:#eef5ff;
+color:#1d4f91;
+background:#eef5ff;
 }
 
 .category-link.active{
-    background:#e89aaa;
-    color:#fff;
+background:#e89aaa;
+color:#fff;
 }
 
 /* =====================================================
-   BATTLE
+BATTLE
 ===================================================== */
 
 .product-battle{
-    scroll-margin-top:90px;
-    margin-bottom:58px;
+scroll-margin-top:90px;
+margin-bottom:58px;
 }
 
 .battle-heading{
-    text-align:center;
-    margin-bottom:18px;
+text-align:center;
+margin-bottom:18px;
 }
 
 .battle-eyebrow{
-    display:inline-block;
-    margin-bottom:8px;
-    color:#d6537c;
-    font-size:12px;
-    font-weight:900;
-    letter-spacing:.8px;
+display:inline-block;
+margin-bottom:8px;
+color:#d6537c;
+font-size:12px;
+font-weight:900;
+letter-spacing:.8px;
 }
 
 .battle-heading h2{
-    margin:0;
-    color:#332b2b;
-    font-size:28px;
-    line-height:1.15;
-    font-weight:900;
+margin:0;
+color:#332b2b;
+font-size:28px;
+line-height:1.15;
+font-weight:900;
 }
 
 .battle-heading p{
-    margin:8px 0 0;
-    color:#777;
-    font-size:15px;
-    font-weight:600;
+margin:8px 0 0;
+color:#777;
+font-size:15px;
+font-weight:600;
 }
 
 /* =====================================================
-   BATTLE CARD
+BATTLE CARD
 ===================================================== */
 
 .battle-card{
-    position:relative;
-    background:#fff;
-    border:1px solid #eee3e7;
-    border-radius:26px;
-    padding:18px;
-    box-shadow:0 10px 30px rgba(51,43,43,.07);
-    overflow:hidden;
+position:relative;
+background:#fff;
+border:1px solid #eee3e7;
+border-radius:26px;
+padding:18px;
+box-shadow:0 10px 30px rgba(51,43,43,.07);
+overflow:hidden;
 }
 
 /* =====================================================
-   BATTLE HEADER
+BATTLE HEADER
 ===================================================== */
 
 .battle-card-header{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:10px;
-    margin-bottom:18px;
-    text-align:center;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:10px;
+margin-bottom:18px;
+text-align:center;
 }
 
 .battle-card-header span{
-    color:#999;
-    font-size:10px;
-    font-weight:900;
-    letter-spacing:.7px;
+color:#999;
+font-size:10px;
+font-weight:900;
+letter-spacing:.7px;
 }
 
 .battle-card-header strong{
-    padding:5px 9px;
-    border-radius:999px;
-    background:#fff0f5;
-    color:#d6537c;
-    font-size:10px;
-    font-weight:900;
-    letter-spacing:.6px;
+padding:5px 9px;
+border-radius:999px;
+background:#fff0f5;
+color:#d6537c;
+font-size:10px;
+font-weight:900;
+letter-spacing:.6px;
 }
 
 /* =====================================================
-   THE TWO PRODUCTS + LIGHTNING
+THE TWO PRODUCTS + LIGHTNING
 ===================================================== */
 
 .contenders{
-    display:grid;
-    grid-template-columns:minmax(0,1fr) 72px minmax(0,1fr);
-    align-items:stretch;
-    gap:0;
-    position:relative;
+display:grid;
+grid-template-columns:minmax(0,1fr) 72px minmax(0,1fr);
+align-items:stretch;
+gap:0;
+position:relative;
 }
 
 /* =====================================================
-   PRODUCT CARD
+PRODUCT CARD
 ===================================================== */
 
 .contender{
-    position:relative;
-    min-width:0;
-    background:#fffaf8;
-    border:2px solid #f0e5e8;
-    border-radius:22px;
-    overflow:hidden;
-    transition:
-        border-color .25s ease,
-        box-shadow .25s ease,
-        transform .25s ease;
+position:relative;
+min-width:0;
+background:#fffaf8;
+border:2px solid #f0e5e8;
+border-radius:22px;
+overflow:hidden;
+
+/* IMPORTANT:
+   Keeps every product card the same usable height
+   and allows the score/buttons to sit at the bottom.
+*/
+display:flex;
+flex-direction:column;
+transition:
+    border-color .25s ease,
+    box-shadow .25s ease,
+    transform .25s ease;
+
 }
 
 .contender:hover{
-    border-color:#e5c6ce;
-    box-shadow:0 10px 25px rgba(51,43,43,.08);
+border-color:#e5c6ce;
+box-shadow:0 10px 25px rgba(51,43,43,.08);
 }
 
 .contender.leading{
-    border-color:#f0b84f;
-    box-shadow:
-        0 0 0 3px rgba(240,184,79,.12),
-        0 12px 30px rgba(240,184,79,.12);
+border-color:#f0b84f;
+box-shadow:
+0 0 0 3px rgba(240,184,79,.12),
+0 12px 30px rgba(240,184,79,.12);
 }
 
 .contender.selected{
-    border-color:#e89aaa;
-    box-shadow:
-        0 0 0 3px rgba(232,154,170,.16),
-        0 12px 30px rgba(232,154,170,.12);
+border-color:#e89aaa;
+box-shadow:
+0 0 0 3px rgba(232,154,170,.16),
+0 12px 30px rgba(232,154,170,.12);
 }
 
 .contender.winner{
-    border-color:#d4a52c;
-    box-shadow:
-        0 0 0 3px rgba(212,165,44,.15),
-        0 12px 30px rgba(212,165,44,.16);
+border-color:#d4a52c;
+box-shadow:
+0 0 0 3px rgba(212,165,44,.15),
+0 12px 30px rgba(212,165,44,.16);
 }
 
 /* =====================================================
-   SELECTED PRODUCT FRAME
+SELECTED PRODUCT FRAME
 ===================================================== */
 
 .contender.selected::after{
-    content:"";
-    position:absolute;
-    top:-2px;
-    right:-2px;
-    bottom:-2px;
-    left:-2px;
-    box-sizing:border-box;
-    border:3px solid #e89aaa;
-    border-radius:inherit;
-    pointer-events:none;
-    z-index:20;
+content:””;
+position:absolute;
+top:-2px;
+right:-2px;
+bottom:-2px;
+left:-2px;
+box-sizing:border-box;
+border:3px solid #e89aaa;
+border-radius:inherit;
+pointer-events:none;
+z-index:20;
 }
 
 /* =====================================================
-   LEADING BADGE
+LEADING BADGE
 ===================================================== */
 
 .battle-leader-badge{
-    position:absolute;
-    top:12px;
-    left:12px;
-    z-index:5;
-    display:none;
-    align-items:center;
-    gap:4px;
-    padding:6px 9px;
-    border-radius:999px;
-    background:#fff8e5;
-    color:#9a6b00;
-    border:1px solid #efd98f;
-    font-size:10px;
-    font-weight:900;
-    letter-spacing:.4px;
+position:absolute;
+top:12px;
+left:12px;
+z-index:5;
+display:none;
+align-items:center;
+gap:4px;
+padding:6px 9px;
+border-radius:999px;
+background:#fff8e5;
+color:#9a6b00;
+border:1px solid #efd98f;
+font-size:10px;
+font-weight:900;
+letter-spacing:.4px;
 }
 
 .contender.leading .battle-leader-badge{
-    display:inline-flex;
+display:inline-flex;
 }
 
 /* =====================================================
-   TWO ANIMATED LEADER FIRES
-   Same side, slightly staggered
+TWO ANIMATED LEADER FIRES
+MOVED TO THE OTHER SIDE
 ===================================================== */
 
 .leader-fire{
-    display:none;
-    position:absolute;
-    z-index:6;
-    font-size:22px;
-    line-height:1;
-    pointer-events:none;
-    transform-origin:center;
+display:none;
+position:absolute;
+z-index:6;
+font-size:22px;
+line-height:1;
+pointer-events:none;
+transform-origin:center;
 }
 
+/*
+Both fires are now on the RIGHT side of the
+leading card, slightly staggered.
+*/
+
 .leader-fire-left{
-    left:10px;
-    top:42px;
+right:10px;
+left:auto;
+top:42px;
 }
 
 .leader-fire-right{
-    left:28px;
-    top:58px;
+right:28px;
+left:auto;
+top:58px;
 }
 
 .contender.leading .leader-fire{
-    display:block;
+display:block;
 }
 
 .contender.leading .leader-fire-left{
-    animation:leaderFireLeft 1.4s ease-in-out infinite;
+animation:leaderFireLeft 1.4s ease-in-out infinite;
 }
 
 .contender.leading .leader-fire-right{
-    animation:leaderFireRight 1.4s ease-in-out infinite;
+animation:leaderFireRight 1.4s ease-in-out infinite;
 }
 
 @keyframes leaderFireLeft{
 
-    0%,
-    100%{
-        transform:translateY(0) rotate(-5deg);
-    }
-
-    50%{
-        transform:translateY(-4px) rotate(4deg);
-    }
+0%,
+100%{
+    transform:translateY(0) rotate(5deg);
+}
+50%{
+    transform:translateY(-4px) rotate(-4deg);
+}
 
 }
 
 @keyframes leaderFireRight{
 
-    0%,
-    100%{
-        transform:translateY(0) rotate(4deg);
-    }
-
-    50%{
-        transform:translateY(-3px) rotate(-5deg);
-    }
+0%,
+100%{
+    transform:translateY(0) rotate(-4deg);
+}
+50%{
+    transform:translateY(-3px) rotate(5deg);
+}
 
 }
 
 /* =====================================================
-   PRODUCT IMAGE
+PRODUCT IMAGE
 ===================================================== */
 
 .contender-image{
-    position:relative;
-    width:100%;
-    aspect-ratio:1 / .88;
-    background:#fff;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    overflow:hidden;
-    padding:12px;
+position:relative;
+width:100%;
+aspect-ratio:1 / .88;
+background:#fff;
+display:flex;
+align-items:center;
+justify-content:center;
+overflow:hidden;
+padding:12px;
+flex-shrink:0;
 }
 
 .contender-image img{
-    width:100%;
-    height:100%;
-    object-fit:contain;
-    display:block;
-    transition:transform .25s ease;
+width:100%;
+height:100%;
+object-fit:contain;
+display:block;
+transition:transform .25s ease;
 }
 
 .contender:hover .contender-image img{
-    transform:scale(1.03);
+transform:scale(1.03);
 }
 
 .contender-image img.image-load-error{
-    opacity:.35;
+opacity:.35;
 }
 
 /* =====================================================
-   PRODUCT BADGE
+PRODUCT BADGE
 ===================================================== */
 
 .product-badge{
-    position:absolute;
-    right:10px;
-    top:10px;
-    z-index:3;
-    padding:5px 8px;
-    border-radius:999px;
-    background:#eef5ff;
-    color:#1d4f91;
-    font-size:9px;
-    font-weight:900;
-    letter-spacing:.4px;
+position:absolute;
+right:10px;
+top:10px;
+z-index:3;
+padding:5px 8px;
+border-radius:999px;
+background:#eef5ff;
+color:#1d4f91;
+font-size:9px;
+font-weight:900;
+letter-spacing:.4px;
 }
 
 /* =====================================================
-   PRODUCT CONTENT
+PRODUCT CONTENT
 ===================================================== */
 
 .contender-content{
-    padding:17px;
-    text-align:center;
+padding:17px;
+text-align:center;
+
+/*
+   Makes the content area flexible so the lower
+   score/buttons area aligns between both cards.
+*/
+display:flex;
+flex-direction:column;
+flex:1;
+min-height:0;
+
 }
 
 .product-label{
-    display:block;
-    margin-bottom:6px;
-    color:#999;
-    font-size:9px;
-    font-weight:900;
-    letter-spacing:.8px;
+display:block;
+margin-bottom:6px;
+color:#999;
+font-size:9px;
+font-weight:900;
+letter-spacing:.8px;
 }
 
 .contender-content h3{
-    margin:0;
-    color:#332b2b;
-    font-size:19px;
-    line-height:1.2;
-    font-weight:900;
+margin:0;
+color:#332b2b;
+font-size:19px;
+line-height:1.2;
+font-weight:900;
 }
 
 .product-brand{
-    margin:5px 0 0;
-    color:#d6537c;
-    font-size:12px;
-    font-weight:800;
+margin:5px 0 0;
+color:#d6537c;
+font-size:12px;
+font-weight:800;
 }
 
 .battle-description{
-    margin:10px auto 14px;
-    color:#777;
-    font-size:12px;
-    line-height:1.45;
-    max-width:260px;
+margin:10px auto 14px;
+color:#777;
+font-size:12px;
+line-height:1.45;
+max-width:260px;
 }
 
 /* =====================================================
-   MOM SCORE
+BOTTOM PRODUCT ACTION AREA
+Keeps score + buttons aligned
+===================================================== */
+
+.product-actions{
+margin-top:auto;
+}
+
+/* =====================================================
+MOM SCORE
 ===================================================== */
 
 .product-rating{
-    display:flex;
-    align-items:baseline;
-    justify-content:center;
-    gap:5px;
-    margin:12px 0;
-    padding:10px;
-    background:#fff;
-    border:1px solid #eee3e7;
-    border-radius:14px;
+display:flex;
+align-items:baseline;
+justify-content:center;
+gap:5px;
+margin:12px 0;
+padding:10px;
+background:#fff;
+border:1px solid #eee3e7;
+border-radius:14px;
+flex-shrink:0;
 }
 
 .product-rating span{
-    color:#777;
-    font-size:10px;
-    font-weight:900;
-    letter-spacing:.3px;
+color:#777;
+font-size:10px;
+font-weight:900;
+letter-spacing:.3px;
 }
 
 .product-rating strong{
-    color:#1d4f91;
-    font-size:22px;
-    font-weight:900;
+color:#1d4f91;
+font-size:22px;
+font-weight:900;
 }
 
 .product-rating small{
-    color:#999;
-    font-size:10px;
-    font-weight:800;
+color:#999;
+font-size:10px;
+font-weight:800;
 }
 
 /* =====================================================
-   BUTTONS
+BUTTONS
 ===================================================== */
 
 .product-shop-link,
 .vote-button{
-    width:100%;
-    min-height:44px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border-radius:13px;
-    font-family:'Nunito',sans-serif;
-    font-size:12px;
-    font-weight:900;
-    text-decoration:none;
-    cursor:pointer;
-    transition:.2s ease;
+width:100%;
+min-height:44px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:13px;
+font-family:‘Nunito’,sans-serif;
+font-size:12px;
+font-weight:900;
+text-decoration:none;
+cursor:pointer;
+transition:.2s ease;
+box-sizing:border-box;
+flex-shrink:0;
 }
 
 .product-shop-link{
-    background:#1d4f91;
-    color:#fff;
-    border:2px solid #1d4f91;
-    margin-top:8px;
+background:#1d4f91;
+color:#fff;
+border:2px solid #1d4f91;
+margin-top:8px;
 }
 
 .product-shop-link:hover{
-    background:#173f73;
-    border-color:#173f73;
-    transform:translateY(-2px);
-    box-shadow:0 8px 18px rgba(29,79,145,.2);
+background:#173f73;
+border-color:#173f73;
+transform:translateY(-2px);
+box-shadow:0 8px 18px rgba(29,79,145,.2);
 }
 
 .vote-button{
-    margin-top:8px;
-    background:#e89aaa;
-    color:#fff;
-    border:2px solid #e89aaa;
+margin-top:8px;
+background:#e89aaa;
+color:#fff;
+border:2px solid #e89aaa;
 }
 
 .vote-button:hover:not(:disabled){
-    background:#d6537c;
-    border-color:#d6537c;
-    transform:translateY(-2px);
-    box-shadow:0 8px 18px rgba(232,154,170,.25);
+background:#d6537c;
+border-color:#d6537c;
+transform:translateY(-2px);
+box-shadow:0 8px 18px rgba(232,154,170,.25);
 }
 
 .vote-button:disabled{
-    cursor:default;
-    opacity:.72;
+cursor:default;
+opacity:.72;
 }
 
 .vote-button.selected{
-    background:#d6537c;
-    border-color:#d6537c;
-    opacity:1;
+background:#d6537c;
+border-color:#d6537c;
+opacity:1;
 }
 
 .vote-button.loading{
-    opacity:.65;
+opacity:.65;
 }
 
 /* =====================================================
-   LIGHTNING DIVIDER
-   Shorter + chunkier lightning bolt
+LIGHTNING DIVIDER
+WARM GOLDEN LIGHTNING
 ===================================================== */
 
 .versus{
-    position:relative;
-    z-index:10;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    width:72px;
-    min-height:100%;
-    overflow:visible;
+position:relative;
+z-index:10;
+display:flex;
+align-items:center;
+justify-content:center;
+width:72px;
+min-height:100%;
+overflow:visible;
 }
 
 .versus::before{
-    content:"";
-    position:absolute;
-    top:18%;
-    bottom:18%;
-    left:50%;
-    width:26px;
-    transform:translateX(-50%);
-    background:#e89aaa;
+content:””;
+position:absolute;
+top:18%;
+bottom:18%;
+left:50%;
+width:26px;
+transform:translateX(-50%);
 
-    clip-path:polygon(
-        58% 0%,
-        8% 42%,
-        39% 42%,
-        20% 100%,
-        92% 35%,
-        57% 35%,
-        78% 0%
-    );
+/*
+   Warm electric gold:
+   stands apart from the pink selection frame
+   while still fitting the warm MomYouNeedThis palette.
+*/
+background:#f6c453;
+clip-path:polygon(
+    58% 0%,
+    8% 42%,
+    39% 42%,
+    20% 100%,
+    92% 35%,
+    57% 35%,
+    78% 0%
+);
+opacity:.98;
 
-    opacity:.95;
 }
 
 .versus::after{
-    content:"";
-    position:absolute;
-    top:20%;
-    bottom:20%;
-    left:50%;
-    width:30px;
-    transform:translateX(-50%);
-    background:rgba(232,154,170,.15);
-    filter:blur(7px);
-    pointer-events:none;
+content:””;
+position:absolute;
+top:20%;
+bottom:20%;
+left:50%;
+width:30px;
+transform:translateX(-50%);
+background:rgba(246,196,83,.18);
+filter:blur(7px);
+pointer-events:none;
 }
 
 /* =====================================================
-   VS
-   No white background / no white halo
+VS
+No white background / no white halo
 ===================================================== */
 
 .versus span{
-    position:relative;
-    z-index:3;
-    width:58px;
-    height:58px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border-radius:50%;
-    background:transparent;
-    border:4px solid #e89aaa;
-    color:#d6537c;
-    font-size:19px;
-    font-weight:900;
-    letter-spacing:-.5px;
-    box-shadow:none;
+position:relative;
+z-index:3;
+width:58px;
+height:58px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:50%;
+background:transparent;
+border:4px solid #e89aaa;
+color:#d6537c;
+font-size:19px;
+font-weight:900;
+letter-spacing:-.5px;
+box-shadow:none;
 }
 
 /* =====================================================
-   BATTLE RESULT
+BATTLE RESULT
 ===================================================== */
 
 .battle-result{
-    display:none;
-    margin-top:18px;
-    padding:18px;
-    text-align:center;
-    background:#fff0f5;
-    border:1px solid #f2d4dc;
-    border-radius:18px;
+display:none;
+margin-top:18px;
+padding:18px;
+text-align:center;
+background:#fff0f5;
+border:1px solid #f2d4dc;
+border-radius:18px;
 }
 
 .battle-result.visible{
-    display:block;
-    animation:resultReveal .3s ease;
+display:block;
+animation:resultReveal .3s ease;
 }
 
 @keyframes resultReveal{
 
-    from{
-        opacity:0;
-        transform:translateY(6px);
-    }
-
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
+from{
+    opacity:0;
+    transform:translateY(6px);
+}
+to{
+    opacity:1;
+    transform:translateY(0);
+}
 
 }
 
 .battle-result > strong{
-    display:block;
-    color:#332b2b;
-    font-size:18px;
-    font-weight:900;
+display:block;
+color:#332b2b;
+font-size:18px;
+font-weight:900;
 }
 
 .battle-result > p{
-    margin:5px 0 0;
-    color:#777;
-    font-size:13px;
-    font-weight:600;
+margin:5px 0 0;
+color:#777;
+font-size:13px;
+font-weight:600;
 }
 
 /* =====================================================
-   RESULT PERCENTAGES
+RESULT PERCENTAGES
 ===================================================== */
 
 .result-percentages{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px;
-    margin-top:14px;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+margin-top:14px;
 }
 
 .result-percentages div{
-    padding:10px;
-    background:#fff;
-    border:1px solid #eee3e7;
-    border-radius:13px;
+padding:10px;
+background:#fff;
+border:1px solid #eee3e7;
+border-radius:13px;
 }
 
 .result-percentages span{
-    display:block;
-    color:#999;
-    font-size:9px;
-    font-weight:900;
-    letter-spacing:.5px;
+display:block;
+color:#999;
+font-size:9px;
+font-weight:900;
+letter-spacing:.5px;
 }
 
 .result-percentages strong{
-    display:block;
-    margin-top:3px;
-    color:#1d4f91;
-    font-size:22px;
-    font-weight:900;
+display:block;
+margin-top:3px;
+color:#1d4f91;
+font-size:22px;
+font-weight:900;
 }
 
 .your-position{
-    margin-top:12px !important;
-    color:#d6537c !important;
-    font-weight:900 !important;
+margin-top:12px !important;
+color:#d6537c !important;
+font-weight:900 !important;
 }
 
 /* =====================================================
-   BATTLE FOOTER
+BATTLE FOOTER
 ===================================================== */
 
 .battle-footer{
-    margin-top:16px;
-    padding-top:13px;
-    border-top:1px solid #eee3e7;
-    text-align:center;
-    color:#999;
-    font-size:11px;
-    font-weight:800;
+margin-top:16px;
+padding-top:13px;
+border-top:1px solid #eee3e7;
+text-align:center;
+color:#999;
+font-size:11px;
+font-weight:800;
 }
 
 /* =====================================================
-   HOLY GRAIL CTA
+HOLY GRAIL CTA
 ===================================================== */
 
 .holy-grail-final{
-    margin:70px 0 45px;
-    padding:38px 25px;
-    text-align:center;
-    background:#eef5ff;
-    border:1px solid #dfeafa;
-    border-radius:26px;
+margin:70px 0 45px;
+padding:38px 25px;
+text-align:center;
+background:#eef5ff;
+border:1px solid #dfeafa;
+border-radius:26px;
 }
 
 .holy-grail-final-icon{
-    font-size:32px;
-    line-height:1;
-    margin-bottom:12px;
+font-size:32px;
+line-height:1;
+margin-bottom:12px;
 }
 
 .holy-grail-final .section-eyebrow{
-    display:inline-block;
-    color:#1d4f91;
-    font-size:11px;
-    font-weight:900;
-    letter-spacing:.7px;
+display:inline-block;
+color:#1d4f91;
+font-size:11px;
+font-weight:900;
+letter-spacing:.7px;
 }
 
 .holy-grail-final h2{
-    margin:8px 0 8px;
-    color:#332b2b;
-    font-size:28px;
-    font-weight:900;
+margin:8px 0 8px;
+color:#332b2b;
+font-size:28px;
+font-weight:900;
 }
 
 .holy-grail-final p{
-    max-width:500px;
-    margin:0 auto 18px;
-    color:#777;
-    font-size:14px;
-    line-height:1.5;
+max-width:500px;
+margin:0 auto 18px;
+color:#777;
+font-size:14px;
+line-height:1.5;
 }
 
 .holy-grail-final-button{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    min-height:46px;
-    padding:12px 22px;
-    border-radius:999px;
-    background:#1d4f91;
-    color:#fff;
-    text-decoration:none;
-    font-size:13px;
-    font-weight:900;
-    transition:.2s ease;
+display:inline-flex;
+align-items:center;
+justify-content:center;
+min-height:46px;
+padding:12px 22px;
+border-radius:999px;
+background:#1d4f91;
+color:#fff;
+text-decoration:none;
+font-size:13px;
+font-weight:900;
+transition:.2s ease;
 }
 
 .holy-grail-final-button:hover{
-    background:#173f73;
-    transform:translateY(-2px);
-    box-shadow:0 8px 18px rgba(29,79,145,.2);
+background:#173f73;
+transform:translateY(-2px);
+box-shadow:0 8px 18px rgba(29,79,145,.2);
 }
 
 /* =====================================================
-   FOOTER
+FOOTER
 ===================================================== */
 
 .mom-voted-page footer{
-    text-align:center;
-    padding:30px 10px 10px;
+text-align:center;
+padding:30px 10px 10px;
 }
 
 .mom-voted-page .footer-logo img{
-    width:70px;
-    display:block;
-    margin:0 auto 10px;
+width:70px;
+display:block;
+margin:0 auto 10px;
 }
 
 .mom-voted-page footer h3{
-    margin:0;
-    color:#332b2b;
-    font-size:17px;
-    font-weight:900;
+margin:0;
+color:#332b2b;
+font-size:17px;
+font-weight:900;
 }
 
 .mom-voted-page footer > p{
-    max-width:450px;
-    margin:7px auto 0;
-    color:#777;
-    font-size:12px;
-    line-height:1.5;
+max-width:450px;
+margin:7px auto 0;
+color:#777;
+font-size:12px;
+line-height:1.5;
 }
 
 .footer-bottom{
-    margin-top:20px;
-    padding-top:15px;
-    border-top:1px solid #eee3e7;
+margin-top:20px;
+padding-top:15px;
+border-top:1px solid #eee3e7;
 }
 
 .footer-bottom p{
-    margin:4px 0;
-    color:#999;
-    font-size:10px;
-    line-height:1.4;
+margin:4px 0;
+color:#999;
+font-size:10px;
+line-height:1.4;
 }
 
 /* =====================================================
-   TABLET
+TABLET
 ===================================================== */
 
 @media(max-width:900px){
 
-    .page{
-        padding-left:15px;
-        padding-right:15px;
-    }
-
-    .voting-hero h1{
-        font-size:42px;
-    }
-
-    .contenders{
-        grid-template-columns:minmax(0,1fr) 62px minmax(0,1fr);
-    }
-
-    .versus{
-        width:62px;
-    }
-
-    .versus span{
-        width:52px;
-        height:52px;
-        font-size:17px;
-    }
+.page{
+    padding-left:15px;
+    padding-right:15px;
+}
+.voting-hero h1{
+    font-size:42px;
+}
+.contenders{
+    grid-template-columns:minmax(0,1fr) 62px minmax(0,1fr);
+}
+.versus{
+    width:62px;
+}
+.versus span{
+    width:52px;
+    height:52px;
+    font-size:17px;
+}
 
 }
 
 /* =====================================================
-   MOBILE
+MOBILE
 ===================================================== */
 
 @media(max-width:640px){
 
-    .mom-voted-header{
-        padding-bottom:20px;
-    }
-
-    .mom-voted-logo{
-        width:82px;
-    }
-
-    .community-badge{
-        font-size:10px;
-        padding:7px 10px;
-    }
-
-    .voting-hero{
-        padding:12px 8px 25px;
-    }
-
-    .voting-hero h1{
-        font-size:35px;
-    }
-
-    .mom-voted-intro{
-        font-size:14px;
-    }
-
-    /* Keep BOTH products beside each other */
-
-    .contenders{
-        grid-template-columns:minmax(0,1fr) 48px minmax(0,1fr);
-    }
-
-    .versus{
-        width:48px;
-    }
-
-    .versus span{
-        width:46px;
-        height:46px;
-        border-width:3px;
-        font-size:15px;
-        background:transparent;
-        box-shadow:none;
-    }
-
-    /* Shorter mobile lightning */
-
-    .versus::before{
-        top:22%;
-        bottom:22%;
-        width:18px;
-    }
-
-    .versus::after{
-        top:23%;
-        bottom:23%;
-        width:22px;
-    }
-
-    /* Smaller cards */
-
-    .battle-card{
-        padding:10px;
-        border-radius:21px;
-    }
-
-    .battle-card-header{
-        margin-bottom:12px;
-    }
-
-    .battle-card-header span{
-        font-size:8px;
-    }
-
-    .battle-card-header strong{
-        font-size:8px;
-    }
-
-    .contender{
-        border-radius:17px;
-    }
-
-    .contender-image{
-        aspect-ratio:1 / .92;
-        padding:7px;
-    }
-
-    .product-badge{
-        top:6px;
-        right:6px;
-        padding:4px 5px;
-        font-size:7px;
-    }
-
-    .battle-leader-badge{
-        top:6px;
-        left:6px;
-        padding:4px 5px;
-        font-size:7px;
-    }
-
-    /* Two animated fires on the same side */
-
-    .leader-fire{
-        font-size:16px;
-    }
-
-    .leader-fire-left{
-        left:5px;
-        top:28px;
-    }
-
-    .leader-fire-right{
-        left:18px;
-        top:39px;
-    }
-
-    .contender-content{
-        padding:10px 7px 11px;
-    }
-
-    .product-label{
-        margin-bottom:4px;
-        font-size:7px;
-    }
-
-    .contender-content h3{
-        font-size:13px;
-    }
-
-    .product-brand{
-        margin-top:3px;
-        font-size:9px;
-    }
-
-    .battle-description{
-        margin:7px auto 9px;
-        font-size:9px;
-        line-height:1.35;
-    }
-
-    .product-rating{
-        gap:3px;
-        margin:8px 0;
-        padding:7px 4px;
-        border-radius:10px;
-    }
-
-    .product-rating span{
-        font-size:7px;
-    }
-
-    .product-rating strong{
-        font-size:17px;
-    }
-
-    .product-rating small{
-        font-size:7px;
-    }
-
-    .product-shop-link,
-    .vote-button{
-        min-height:38px;
-        padding:6px 3px;
-        border-radius:10px;
-        font-size:8px;
-    }
-
-    .battle-result{
-        padding:13px 10px;
-        margin-top:12px;
-    }
-
-    .battle-result > strong{
-        font-size:15px;
-    }
-
-    .battle-result > p{
-        font-size:11px;
-    }
-
-    .result-percentages{
-        gap:7px;
-        margin-top:10px;
-    }
-
-    .result-percentages div{
-        padding:8px 5px;
-        border-radius:10px;
-    }
-
-    .result-percentages span{
-        font-size:7px;
-    }
-
-    .result-percentages strong{
-        font-size:18px;
-    }
-
-    .your-position{
-        font-size:11px !important;
-    }
-
-    .battle-footer{
-        margin-top:11px;
-        padding-top:10px;
-        font-size:9px;
-    }
-
-    /* Categories */
-
-    .voting-categories{
-        justify-content:flex-start;
-        flex-wrap:nowrap;
-        overflow-x:auto;
-        scrollbar-width:none;
-        border-radius:15px;
-        padding:7px;
-        margin-bottom:30px;
-    }
-
-    .voting-categories::-webkit-scrollbar{
-        display:none;
-    }
-
-    .category-link{
-        flex:0 0 auto;
-        font-size:10px;
-        padding:7px 10px;
-    }
-
-    /* CTA */
-
-    .holy-grail-final{
-        margin:50px 0 35px;
-        padding:28px 18px;
-        border-radius:21px;
-    }
-
-    .holy-grail-final h2{
-        font-size:23px;
-    }
-
-    .holy-grail-final p{
-        font-size:12px;
-    }
-
-    .holy-grail-final-button{
-        width:100%;
-        font-size:12px;
-    }
+.mom-voted-header{
+    padding-bottom:20px;
+}
+.mom-voted-logo{
+    width:82px;
+}
+.community-badge{
+    font-size:10px;
+    padding:7px 10px;
+}
+.voting-hero{
+    padding:12px 8px 25px;
+}
+.voting-hero h1{
+    font-size:35px;
+}
+.mom-voted-intro{
+    font-size:14px;
+}
+/* Keep BOTH products beside each other */
+.contenders{
+    grid-template-columns:minmax(0,1fr) 48px minmax(0,1fr);
+}
+.versus{
+    width:48px;
+}
+.versus span{
+    width:46px;
+    height:46px;
+    border-width:3px;
+    font-size:15px;
+    background:transparent;
+    box-shadow:none;
+}
+/* Shorter mobile lightning */
+.versus::before{
+    top:22%;
+    bottom:22%;
+    width:18px;
+}
+.versus::after{
+    top:23%;
+    bottom:23%;
+    width:22px;
+}
+/* Smaller cards */
+.battle-card{
+    padding:10px;
+    border-radius:21px;
+}
+.battle-card-header{
+    margin-bottom:12px;
+}
+.battle-card-header span{
+    font-size:8px;
+}
+.battle-card-header strong{
+    font-size:8px;
+}
+.contender{
+    border-radius:17px;
+}
+.contender-image{
+    aspect-ratio:1 / .92;
+    padding:7px;
+}
+.product-badge{
+    top:6px;
+    right:6px;
+    padding:4px 5px;
+    font-size:7px;
+}
+.battle-leader-badge{
+    top:6px;
+    left:6px;
+    padding:4px 5px;
+    font-size:7px;
+}
+/* Two animated fires on the RIGHT side */
+.leader-fire{
+    font-size:16px;
+}
+.leader-fire-left{
+    right:5px;
+    left:auto;
+    top:28px;
+}
+.leader-fire-right{
+    right:18px;
+    left:auto;
+    top:39px;
+}
+.contender-content{
+    padding:10px 7px 11px;
+}
+.product-label{
+    margin-bottom:4px;
+    font-size:7px;
+}
+.contender-content h3{
+    font-size:13px;
+}
+.product-brand{
+    margin-top:3px;
+    font-size:9px;
+}
+.battle-description{
+    margin:7px auto 9px;
+    font-size:9px;
+    line-height:1.35;
+}
+.product-rating{
+    gap:3px;
+    margin:8px 0;
+    padding:7px 4px;
+    border-radius:10px;
+}
+.product-rating span{
+    font-size:7px;
+}
+.product-rating strong{
+    font-size:17px;
+}
+.product-rating small{
+    font-size:7px;
+}
+.product-shop-link,
+.vote-button{
+    min-height:38px;
+    padding:6px 3px;
+    border-radius:10px;
+    font-size:8px;
+}
+.battle-result{
+    padding:13px 10px;
+    margin-top:12px;
+}
+.battle-result > strong{
+    font-size:15px;
+}
+.battle-result > p{
+    font-size:11px;
+}
+.result-percentages{
+    gap:7px;
+    margin-top:10px;
+}
+.result-percentages div{
+    padding:8px 5px;
+    border-radius:10px;
+}
+.result-percentages span{
+    font-size:7px;
+}
+.result-percentages strong{
+    font-size:18px;
+}
+.your-position{
+    font-size:11px !important;
+}
+.battle-footer{
+    margin-top:11px;
+    padding-top:10px;
+    font-size:9px;
+}
+/* Categories */
+.voting-categories{
+    justify-content:flex-start;
+    flex-wrap:nowrap;
+    overflow-x:auto;
+    scrollbar-width:none;
+    border-radius:15px;
+    padding:7px;
+    margin-bottom:30px;
+}
+.voting-categories::-webkit-scrollbar{
+    display:none;
+}
+.category-link{
+    flex:0 0 auto;
+    font-size:10px;
+    padding:7px 10px;
+}
+/* CTA */
+.holy-grail-final{
+    margin:50px 0 35px;
+    padding:28px 18px;
+    border-radius:21px;
+}
+.holy-grail-final h2{
+    font-size:23px;
+}
+.holy-grail-final p{
+    font-size:12px;
+}
+.holy-grail-final-button{
+    width:100%;
+    font-size:12px;
+}
 
 }
 
 /* =====================================================
-   VERY SMALL PHONES
+VERY SMALL PHONES
 ===================================================== */
 
 @media(max-width:380px){
 
-    .page{
-        padding-left:9px;
-        padding-right:9px;
-    }
-
-    .voting-hero h1{
-        font-size:31px;
-    }
-
-    .contenders{
-        grid-template-columns:minmax(0,1fr) 42px minmax(0,1fr);
-    }
-
-    .versus{
-        width:42px;
-    }
-
-    .versus span{
-        width:41px;
-        height:41px;
-        font-size:13px;
-    }
-
-    .contender-content h3{
-        font-size:12px;
-    }
-
-    .battle-description{
-        font-size:8px;
-    }
-
-    .product-shop-link,
-    .vote-button{
-        font-size:7px;
-    }
+.page{
+    padding-left:9px;
+    padding-right:9px;
+}
+.voting-hero h1{
+    font-size:31px;
+}
+.contenders{
+    grid-template-columns:minmax(0,1fr) 42px minmax(0,1fr);
+}
+.versus{
+    width:42px;
+}
+.versus span{
+    width:41px;
+    height:41px;
+    font-size:13px;
+}
+.contender-content h3{
+    font-size:12px;
+}
+.battle-description{
+    font-size:8px;
+}
+.product-shop-link,
+.vote-button{
+    font-size:7px;
+}
 
 }
