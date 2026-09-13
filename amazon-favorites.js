@@ -13,6 +13,9 @@
  * Vote document:
  *     UID_category_productId
  *
+ * Existing votes:
+ *     Loaded from localStorage only.
+ *
  * ============================================================
  */
 
@@ -31,7 +34,6 @@ import {
 import {
     doc,
     setDoc,
-    getDoc,
     serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
 
@@ -1417,122 +1419,6 @@ function showVoteError(
 }
 
 /* ============================================================
-   LOAD EXISTING VOTE
-   ============================================================ */
-
-async function loadExistingVote(
-    category,
-    product
-) {
-    if (
-        !currentUser ||
-        !db
-    ) {
-        return null;
-    }
-
-    const key =
-        getBattleKey(
-            category,
-            product.id
-        );
-
-    /*
-     * Already confirmed during this session.
-     */
-    if (
-        confirmedVotes.has(key)
-    ) {
-        return confirmedVotes.get(
-            key
-        );
-    }
-
-    const documentId =
-        getVoteDocumentId(
-            category,
-            product.id,
-            currentUser.uid
-        );
-
-    try {
-        const voteRef =
-            doc(
-                db,
-                "productVotes",
-                documentId
-            );
-
-        const snapshot =
-            await getDoc(
-                voteRef
-            );
-
-        if (
-            !snapshot.exists()
-        ) {
-            return null;
-        }
-
-        const data =
-            snapshot.data();
-
-        /*
-         * Verify the document belongs
-         * to the current anonymous user.
-         */
-        if (
-            data.uid !==
-            currentUser.uid
-        ) {
-            console.warn(
-                "Vote document UID does not match current user."
-            );
-
-            return null;
-        }
-
-        /*
-         * Validate vote.
-         */
-        if (
-            data.vote !== "yes" &&
-            data.vote !== "no"
-        ) {
-            console.warn(
-                "Invalid vote value found in Firestore."
-            );
-
-            return null;
-        }
-
-        confirmedVotes.set(
-            key,
-            data.vote
-        );
-
-        saveConfirmedVoteLocally(
-            category,
-            product.id,
-            data.vote
-        );
-
-        return data.vote;
-    } catch (error) {
-        /*
-         * A failed READ is never treated
-         * as a successful vote.
-         */
-        console.warn(
-            "Could not check existing Firestore vote:",
-            error
-        );
-
-        return null;
-    }
-}
-
-/* ============================================================
    SAVE VOTE
    ============================================================ */
 
@@ -1656,6 +1542,9 @@ async function saveVote(
 
         /*
          * Firestore accepted the vote.
+         *
+         * Only now do we consider the vote
+         * confirmed and save it locally.
          */
         confirmedVotes.set(
             key,
@@ -1820,6 +1709,8 @@ async function handleBattleVote(
 
     /*
      * One choice per battle.
+     *
+     * First check the in-memory confirmed state.
      */
     const existingBattleChoice =
         confirmedBattleChoices.get(
@@ -1833,7 +1724,11 @@ async function handleBattleVote(
     }
 
     /*
-     * Also check localStorage.
+     * Check localStorage.
+     *
+     * This is now the ONLY way the voting UI
+     * determines whether this browser has already
+     * completed this battle.
      */
     const localBattleChoice =
         getLocalBattleChoice(
@@ -1915,36 +1810,15 @@ async function handleBattleVote(
     }
 
     /*
-     * Check whether this exact product
-     * already has a confirmed vote.
+     * --------------------------------------------------------
+     * IMPORTANT
+     * --------------------------------------------------------
+     *
+     * There is intentionally NO getDoc()
+     * and NO Firestore existing-vote check here.
+     *
+     * Existing votes are determined from localStorage only.
      */
-    const existingProductVote =
-        await loadExistingVote(
-            category,
-            product
-        );
-
-    if (
-        existingProductVote ===
-        "yes"
-    ) {
-        confirmedBattleChoices.set(
-            category,
-            product.id
-        );
-
-        saveBattleChoiceLocally(
-            category,
-            product.id
-        );
-
-        showVoteUI(
-            battle,
-            product.id
-        );
-
-        return;
-    }
 
     /*
      * Disable ONLY the clicked button while
@@ -2017,7 +1891,7 @@ async function handleBattleVote(
    LOAD EXISTING BATTLE CHOICE
    ============================================================ */
 
-async function loadExistingBattleChoice(
+function loadExistingBattleChoice(
     battle
 ) {
     const category =
@@ -2035,74 +1909,41 @@ async function loadExistingBattleChoice(
     }
 
     /*
-     * Check localStorage first.
+     * Existing battle choices are loaded
+     * exclusively from localStorage.
+     *
+     * No Firestore read is performed here.
      */
     const localChoice =
         getLocalBattleChoice(
             category
         );
 
-    if (localChoice) {
-        const matchingProduct =
-            products.find(
-                product =>
-                    product.id ===
-                    localChoice
-            );
-
-        if (matchingProduct) {
-            confirmedBattleChoices.set(
-                category,
-                localChoice
-            );
-
-            return localChoice;
-        }
-    }
-
-    /*
-     * If there is no local choice,
-     * check Firestore for YES votes.
-     */
-    if (!currentUser || !db) {
+    if (!localChoice) {
         return null;
     }
 
-    for (
-        const product of products
-    ) {
-        try {
-            const existingVote =
-                await loadExistingVote(
-                    category,
-                    product
-                );
+    const matchingProduct =
+        products.find(
+            product =>
+                product.id ===
+                localChoice
+        );
 
-            if (
-                existingVote ===
-                "yes"
-            ) {
-                confirmedBattleChoices.set(
-                    category,
-                    product.id
-                );
-
-                saveBattleChoiceLocally(
-                    category,
-                    product.id
-                );
-
-                return product.id;
-            }
-        } catch (error) {
-            console.warn(
-                "Could not check existing battle vote:",
-                error
-            );
-        }
+    /*
+     * Only trust the local choice if
+     * the product still belongs to this battle.
+     */
+    if (!matchingProduct) {
+        return null;
     }
 
-    return null;
+    confirmedBattleChoices.set(
+        category,
+        localChoice
+    );
+
+    return localChoice;
 }
 
 /* ============================================================
@@ -2276,25 +2117,17 @@ async function initializePage() {
     );
 
     /*
-     * Start Firebase authentication.
+     * --------------------------------------------------------
+     * LOAD EXISTING LOCAL CHOICES
+     * --------------------------------------------------------
+     *
+     * This happens immediately and does NOT require
+     * Firebase authentication or Firestore.
      */
-    try {
-        const user =
-            await startAnonymousAuthentication();
-
-        console.log(
-            "Firebase authentication ready:",
-            user.uid
-        );
-
-        /*
-         * Check existing votes for every battle.
-         */
-        for (
-            const battle of battlesOnPage
-        ) {
+    battlesOnPage.forEach(
+        battle => {
             const existingChoice =
-                await loadExistingBattleChoice(
+                loadExistingBattleChoice(
                     battle
                 );
 
@@ -2305,6 +2138,25 @@ async function initializePage() {
                 );
             }
         }
+    );
+
+    /*
+     * --------------------------------------------------------
+     * START FIREBASE AUTHENTICATION
+     * --------------------------------------------------------
+     *
+     * Authentication is still required when a NEW
+     * vote is submitted because the vote must be
+     * written to Firestore under the anonymous UID.
+     */
+    try {
+        const user =
+            await startAnonymousAuthentication();
+
+        console.log(
+            "Firebase authentication ready:",
+            user.uid
+        );
     } catch (error) {
         console.error(
             "Firebase authentication could not start:",
