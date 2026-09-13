@@ -3,6 +3,9 @@
  * MOMYOU NEED THIS — MOM BATTLES
  * ============================================================
  *
+ * Product/battle content:
+ *     mom-battles.json
+ *
  * Firebase:
  * - Anonymous Authentication
  * - Firestore
@@ -46,11 +49,73 @@ let currentUser = null;
 let authenticationReady = false;
 let authenticationPromise = null;
 
+/* ============================================================
+   PRODUCT DATA
+   ============================================================ */
+
+let battles = {};
+
 /*
- * Initialize Firebase Authentication.
+ * Load battle/product data from the external JSON file.
+ *
+ * Product information is intentionally kept outside
+ * JavaScript so it can be updated without touching
+ * the application logic.
  */
+async function loadBattleData() {
+    try {
+        const response =
+            await fetch(
+                "mom-battles.json",
+                {
+                    cache: "no-store"
+                }
+            );
+
+        if (!response.ok) {
+            throw new Error(
+                `Could not load mom-battles.json (${response.status}).`
+            );
+        }
+
+        const data =
+            await response.json();
+
+        if (
+            !data ||
+            !data.battles ||
+            typeof data.battles !== "object"
+        ) {
+            throw new Error(
+                "mom-battles.json does not contain a valid battles object."
+            );
+        }
+
+        battles =
+            data.battles;
+
+        console.log(
+            "Mom Battles data loaded successfully."
+        );
+
+        return battles;
+    } catch (error) {
+        console.error(
+            "Mom Battles JSON could not be loaded:",
+            error
+        );
+
+        throw error;
+    }
+}
+
+/* ============================================================
+   FIREBASE INITIALIZATION
+   ============================================================ */
+
 try {
-    auth = getAuth(app);
+    auth =
+        getAuth(app);
 
     console.log(
         "Firebase Authentication initialized."
@@ -62,9 +127,6 @@ try {
     );
 }
 
-/*
- * Check Firestore.
- */
 if (!db) {
     console.error(
         "Firestore database was not initialized. " +
@@ -86,218 +148,34 @@ const confirmedVotes = new Map();
 const confirmedBattleChoices = new Map();
 
 /* ============================================================
-   PRODUCT DATA
+   BATTLE HELPERS
    ============================================================ */
 
-const battles = {
-    baby: [
-        {
-            id: "baby-einstein-soother",
-            name: "Soother Musical Crib Toy",
-            brand: "Baby Einstein",
-            image:
-                "assets/babyeinstein-aquarium.jpeg",
-            description:
-                "A popular option for keeping little ones entertained during quiet moments and daily routines.",
-            score: "8.4",
-            percentage: 62,
-            link:
-                "https://amzn.to/4fNqr9j"
-        },
-        {
-            id: "baby-einstein-aquarium",
-            name: "Baby Einstein Aquarium",
-            brand: "Baby Einstein",
-            image:
-                "assets/babyeinstein-aquarium.jpeg",
-            description:
-                "A colorful interactive option designed to keep babies engaged during everyday routines.",
-            score: "8.2",
-            percentage: 59,
-            link:
-                "https://amzn.to/4fNqr9j"
-        }
-    ],
-
-    toddler: [
-        {
-            id: "toddler-favorite-1",
-            name: "Toddler Favorite",
-            brand:
-                "MomYouNeedThis Pick",
-            image:
-                "assets/product2.jpg",
-            description:
-                "A practical everyday product designed to make life with toddlers a little easier.",
-            score: "8.1",
-            percentage: 57,
-            link: "#"
-        },
-        {
-            id: "toddler-favorite-2",
-            name: "Toddler Favorite #2",
-            brand:
-                "MomYouNeedThis Pick",
-            image:
-                "assets/product2.jpg",
-            description:
-                "Another practical favorite parents may find useful during everyday toddler life.",
-            score: "8.3",
-            percentage: 61,
-            link: "#"
-        }
-    ],
-
-    sleep: [
-        {
-            id: "white-noise-machine",
-            name: "White Noise Machine",
-            brand:
-                "Parent Favorite",
-            image:
-                "assets/white-noise-machine.jpeg",
-            description:
-                "A popular choice for creating a consistent sleep environment for little ones.",
-            score: "8.7",
-            percentage: 71,
-            link:
-                "https://amzn.to/4z8LxGC"
-        },
-        {
-            id: "sleep-helper-2",
-            name: "Sleep Helper",
-            brand:
-                "Parent Favorite",
-            image:
-                "assets/white-noise-machine.jpeg",
-            description:
-                "A simple sleep-support product designed to make bedtime routines easier.",
-            score: "8.4",
-            percentage: 65,
-            link:
-                "https://amzn.to/4z8LxGC"
-        }
-    ],
-
-    potty: [
-        {
-            id: "babybjorn-potty",
-            name: "Potty Training Seat",
-            brand: "BabyBjörn",
-            image:
-                "assets/babybjorn-potty-toilet.jpeg",
-            description:
-                "A simple potty-training option designed to help toddlers feel comfortable and confident.",
-            score: "8.6",
-            percentage: 68,
-            link:
-                "https://amzn.to/3S23eqS"
-        },
-        {
-            id: "potty-training-seat-2",
-            name: "Potty Training Favorite",
-            brand: "Mom Pick",
-            image:
-                "assets/babybjorn-potty-toilet.jpeg",
-            description:
-                "Another popular potty-training option designed for everyday use.",
-            score: "8.2",
-            percentage: 61,
-            link:
-                "https://amzn.to/3S23eqS"
-        }
-    ],
-
-    feeding: [
-        {
-            id: "feeding-favorite-1",
-            name: "Feeding Favorite",
-            brand: "Mom Pick",
-            image:
-                "assets/product2.jpg",
-            description:
-                "A practical feeding favorite designed to make everyday mealtimes a little easier.",
-            score: "8.0",
-            percentage: 54,
-            link: "#"
-        },
-        {
-            id: "feeding-favorite-2",
-            name: "Feeding Favorite #2",
-            brand: "Mom Pick",
-            image:
-                "assets/product2.jpg",
-            description:
-                "A useful everyday feeding product designed to simplify mealtime routines.",
-            score: "8.2",
-            percentage: 58,
-            link: "#"
-        }
-    ],
-
-    under25: [
-        {
-            id: "under25-find-1",
-            name: "Budget Mom Find",
-            brand:
-                "MomYouNeedThis Pick",
-            image:
-                "assets/product2.jpg",
-            description:
-                "A useful little find that could make everyday parenting just a bit easier.",
-            score: "8.3",
-            percentage: 63,
-            link: "#"
-        },
-        {
-            id: "under25-find-2",
-            name: "Budget Mom Find #2",
-            brand:
-                "MomYouNeedThis Pick",
-            image:
-                "assets/product2.jpg",
-            description:
-                "A small everyday find that could make a practical difference for parents.",
-            score: "8.1",
-            percentage: 59,
-            link: "#"
-        }
-    ]
-};
-
-/* ============================================================
-   UTILITY FUNCTIONS
-   ============================================================ */
-
-function getBattleKey(
-    category,
-    productId
+function getBattleData(
+    category
 ) {
-    return `${category}_${productId}`;
-}
-
-function getVoteDocumentId(
-    category,
-    productId,
-    uid
-) {
-    return `${uid}_${category}_${productId}`;
+    return battles[category] || null;
 }
 
 function getBattleProducts(
     category
 ) {
-    const products =
-        battles[category];
+    const battle =
+        getBattleData(
+            category
+        );
 
     if (
-        !products ||
-        products.length < 2
+        !battle ||
+        !Array.isArray(
+            battle.products
+        ) ||
+        battle.products.length < 2
     ) {
         return [];
     }
 
-    return products.slice(
+    return battle.products.slice(
         0,
         2
     );
@@ -337,9 +215,6 @@ function startAnonymousAuthentication() {
         );
     }
 
-    /*
-     * Already authenticated.
-     */
     if (auth.currentUser) {
         currentUser =
             auth.currentUser;
@@ -352,9 +227,6 @@ function startAnonymousAuthentication() {
         );
     }
 
-    /*
-     * Authentication is already being established.
-     */
     if (authenticationPromise) {
         return authenticationPromise;
     }
@@ -432,9 +304,6 @@ function startAnonymousAuthentication() {
                                 return;
                             }
 
-                            /*
-                             * Existing Firebase user.
-                             */
                             if (user) {
                                 finishSuccess(
                                     user
@@ -443,11 +312,6 @@ function startAnonymousAuthentication() {
                                 return;
                             }
 
-                            /*
-                             * No user exists.
-                             *
-                             * Create anonymous user.
-                             */
                             try {
                                 console.log(
                                     "Creating anonymous Firebase user..."
@@ -661,6 +525,77 @@ function getProductSelector(
     return `[data-${attribute}-${position}]`;
 }
 
+function updateBattleStaticContent(
+    battle,
+    battleData
+) {
+    if (
+        !battle ||
+        !battleData
+    ) {
+        return;
+    }
+
+    battle.dataset.filterTags =
+        battleData.filterTags || "";
+
+    setText(
+        battle.querySelector(
+            ".battle-eyebrow"
+        ),
+        battleData.eyebrow
+    );
+
+    setText(
+        battle.querySelector(
+            ".battle-heading h2"
+        ),
+        battleData.title
+    );
+
+    setText(
+        battle.querySelector(
+            ".battle-heading p"
+        ),
+        battleData.intro
+    );
+
+    setText(
+        battle.querySelector(
+            ".battle-card-header span"
+        ),
+        battleData.headerLeft
+    );
+
+    setText(
+        battle.querySelector(
+            ".battle-card-header strong"
+        ),
+        battleData.headerRight
+    );
+
+    setText(
+        battle.querySelector(
+            "[data-result-title]"
+        ),
+        battleData.resultTitle
+    );
+
+    setText(
+        battle.querySelector(
+            "[data-result-text]"
+        ),
+        battleData.resultText
+    );
+
+    setText(
+        battle.querySelector(
+            ".battle-footer"
+        ),
+        battleData.footer
+    );
+}
+
 /* ============================================================
    LEADER / WINNER STATE
    ============================================================ */
@@ -702,13 +637,6 @@ function updateBattleLeaderState(
             '.contender[data-product="2"]'
         );
 
-    /*
-     * Clear only leader-related states.
-     *
-     * Selection is handled separately so the
-     * selected pink frame never gets mixed with
-     * the winner/leader treatment.
-     */
     [
         contender1,
         contender2
@@ -733,7 +661,9 @@ function updateBattleLeaderState(
     );
 
     /*
-     * Remove existing leader badges.
+     * Remove the dynamically generated leader badges.
+     *
+     * The original badge in the HTML is only a fallback.
      */
     battle
         .querySelectorAll(
@@ -745,9 +675,6 @@ function updateBattleLeaderState(
             }
         );
 
-    /*
-     * Equal percentages = no leader.
-     */
     if (
         percentage1 ===
         percentage2
@@ -781,12 +708,6 @@ function updateBattleLeaderState(
         );
     }
 
-    /*
-     * Add the existing dynamic leader badge.
-     *
-     * This is informational only.
-     * It does not create or position another frame.
-     */
     if (leadingContender) {
         const badge =
             document.createElement(
@@ -830,6 +751,14 @@ function updateProductCard(
             getProductSelector(
                 position,
                 "image"
+            )
+        );
+
+    const badge =
+        battle.querySelector(
+            getProductSelector(
+                position,
+                "badge"
             )
         );
 
@@ -884,7 +813,12 @@ function updateProductCard(
     setImage(
         image,
         product.image,
-        product.name
+        product.alt || product.name
+    );
+
+    setText(
+        badge,
+        product.badge || ""
     );
 
     setText(
@@ -916,9 +850,6 @@ function updateProductCard(
         link.href =
             product.link || "#";
 
-        /*
-         * Only real product links open in a new tab.
-         */
         if (
             product.link &&
             product.link !== "#"
@@ -964,12 +895,6 @@ function updateBattlePercentages(
             products[1]
         );
 
-    /*
-     * These percentages come directly from
-     * the battle data.
-     *
-     * The user's vote does not alter them.
-     */
     setText(
         battle.querySelector(
             "[data-yes-percentage]"
@@ -984,9 +909,6 @@ function updateBattlePercentages(
         `${percentage2}%`
     );
 
-    /*
-     * Optional percentage labels.
-     */
     setText(
         battle.querySelector(
             "[data-percentage-1]"
@@ -1029,9 +951,6 @@ function resetVoteUI(
         );
     }
 
-    /*
-     * Reset vote buttons.
-     */
     battle
         .querySelectorAll(
             "[data-vote]"
@@ -1059,12 +978,6 @@ function resetVoteUI(
             }
         );
 
-    /*
-     * Reset only the user's selection.
-     *
-     * Do not touch leading/trailing/winner
-     * states here.
-     */
     battle
         .querySelectorAll(
             ".contender"
@@ -1153,16 +1066,6 @@ function showVoteUI(
             "[data-your-position]"
         );
 
-    /*
-     * --------------------------------------------------------
-     * CLEAR PREVIOUS USER SELECTION
-     * --------------------------------------------------------
-     *
-     * Important:
-     * Only one contender can ever have the selected
-     * state. The selected class is the single source
-     * of truth for the pink selection frame.
-     */
     battle
         .querySelectorAll(
             ".contender"
@@ -1174,12 +1077,6 @@ function showVoteUI(
                 );
             }
         );
-
-    /*
-     * --------------------------------------------------------
-     * UPDATE VOTE BUTTONS
-     * --------------------------------------------------------
-     */
 
     battle
         .querySelectorAll(
@@ -1230,16 +1127,6 @@ function showVoteUI(
             }
         );
 
-    /*
-     * --------------------------------------------------------
-     * APPLY ONE SELECTION TO ONE CONTENDER
-     * --------------------------------------------------------
-     *
-     * The JS does not create any border/frame element.
-     *
-     * CSS is solely responsible for the visual
-     * selected treatment.
-     */
     const selectedCard =
         battle.querySelector(
             `.contender[data-product="${selectedIndex + 1}"]`
@@ -1251,16 +1138,10 @@ function showVoteUI(
         );
     }
 
-    /*
-     * Mark completed battle.
-     */
     battle.classList.add(
         "vote-complete"
     );
 
-    /*
-     * Show result panel.
-     */
     if (result) {
         result.classList.add(
             "visible"
@@ -1277,14 +1158,6 @@ function showVoteUI(
         "Here's how moms are voting."
     );
 
-    /*
-     * Compare the stored battle percentages.
-     *
-     * IMPORTANT:
-     * These percentages are supplied by the
-     * product data. The individual vote does
-     * not artificially change them.
-     */
     const selectedPercentage =
         getProductPercentage(
             selectedProduct
@@ -1314,13 +1187,6 @@ function showVoteUI(
         }
     }
 
-    /*
-     * Re-apply leader state.
-     *
-     * This intentionally happens AFTER the selected
-     * class is applied so the two visual states remain
-     * independent.
-     */
     updateBattleLeaderState(
         battle,
         products
@@ -1397,10 +1263,6 @@ function showVoteError(
             }
         );
 
-    /*
-     * A failed vote must never leave the
-     * selected product visually selected.
-     */
     battle
         .querySelectorAll(
             ".contender"
@@ -1442,9 +1304,6 @@ async function saveVote(
         );
     }
 
-    /*
-     * Make sure authentication exists.
-     */
     if (
         !authenticationReady ||
         !currentUser
@@ -1470,18 +1329,12 @@ async function saveVote(
             product.id
         );
 
-    /*
-     * Prevent duplicate simultaneous writes.
-     */
     if (
         voteInProgress.has(key)
     ) {
         return false;
     }
 
-    /*
-     * A confirmed vote cannot be replaced.
-     */
     if (
         confirmedVotes.has(key)
     ) {
@@ -1507,10 +1360,6 @@ async function saveVote(
                 documentId
             );
 
-        /*
-         * Firestore must confirm the write
-         * before the UI reports success.
-         */
         await setDoc(
             voteRef,
             {
@@ -1540,12 +1389,6 @@ async function saveVote(
             }
         );
 
-        /*
-         * Firestore accepted the vote.
-         *
-         * Only now do we consider the vote
-         * confirmed and save it locally.
-         */
         confirmedVotes.set(
             key,
             vote
@@ -1576,10 +1419,6 @@ async function saveVote(
 
         return true;
     } catch (error) {
-        /*
-         * Nothing is cached when Firestore
-         * rejects the write.
-         */
         console.error(
             "Vote was NOT saved:",
             error
@@ -1707,11 +1546,6 @@ async function handleBattleVote(
         return;
     }
 
-    /*
-     * One choice per battle.
-     *
-     * First check the in-memory confirmed state.
-     */
     const existingBattleChoice =
         confirmedBattleChoices.get(
             category
@@ -1723,13 +1557,6 @@ async function handleBattleVote(
         return;
     }
 
-    /*
-     * Check localStorage.
-     *
-     * This is now the ONLY way the voting UI
-     * determines whether this browser has already
-     * completed this battle.
-     */
     const localBattleChoice =
         getLocalBattleChoice(
             category
@@ -1743,10 +1570,6 @@ async function handleBattleVote(
                     localBattleChoice
             );
 
-        /*
-         * Only trust the local choice if
-         * it still belongs to this battle.
-         */
         if (matchingProduct) {
             confirmedBattleChoices.set(
                 category,
@@ -1762,10 +1585,6 @@ async function handleBattleVote(
         }
     }
 
-    /*
-     * The selected product is represented
-     * by a YES vote.
-     */
     const vote =
         "yes";
 
@@ -1781,9 +1600,6 @@ async function handleBattleVote(
         return;
     }
 
-    /*
-     * Authenticate first.
-     */
     try {
         await startAnonymousAuthentication();
     } catch (error) {
@@ -1809,21 +1625,6 @@ async function handleBattleVote(
         return;
     }
 
-    /*
-     * --------------------------------------------------------
-     * IMPORTANT
-     * --------------------------------------------------------
-     *
-     * There is intentionally NO getDoc()
-     * and NO Firestore existing-vote check here.
-     *
-     * Existing votes are determined from localStorage only.
-     */
-
-    /*
-     * Disable ONLY the clicked button while
-     * Firestore is saving.
-     */
     const selectedButton =
         battle.querySelector(
             `[data-vote][data-product="${productIndex + 1}"]`
@@ -1841,9 +1642,6 @@ async function handleBattleVote(
             "SAVING YOUR PICK…";
     }
 
-    /*
-     * Save the vote.
-     */
     try {
         const saved =
             await saveVote(
@@ -1852,10 +1650,6 @@ async function handleBattleVote(
                 vote
             );
 
-        /*
-         * ONLY after Firestore confirms the write
-         * do we permanently record the battle choice.
-         */
         if (saved) {
             confirmedBattleChoices.set(
                 category,
@@ -1908,12 +1702,6 @@ function loadExistingBattleChoice(
         return null;
     }
 
-    /*
-     * Existing battle choices are loaded
-     * exclusively from localStorage.
-     *
-     * No Firestore read is performed here.
-     */
     const localChoice =
         getLocalBattleChoice(
             category
@@ -1930,10 +1718,6 @@ function loadExistingBattleChoice(
                 localChoice
         );
 
-    /*
-     * Only trust the local choice if
-     * the product still belongs to this battle.
-     */
     if (!matchingProduct) {
         return null;
     }
@@ -1965,6 +1749,19 @@ function initializeBattle(
         return;
     }
 
+    const battleData =
+        getBattleData(
+            category
+        );
+
+    if (!battleData) {
+        console.warn(
+            `No JSON data found for battle "${category}".`
+        );
+
+        return;
+    }
+
     const products =
         getBattleProducts(
             category
@@ -1984,10 +1781,17 @@ function initializeBattle(
         0;
 
     /*
-     * Give each contender an explicit product number.
-     *
-     * This makes the JS independent of DOM order
-     * and fixes the old nth-of-type issue.
+     * Populate editable battle content
+     * from JSON.
+     */
+    updateBattleStaticContent(
+        battle,
+        battleData
+    );
+
+    /*
+     * Give each contender an explicit
+     * product number.
      */
     const contenders =
         battle.querySelectorAll(
@@ -2038,14 +1842,8 @@ function initializeBattle(
     );
 
     /*
-     * --------------------------------------------------------
-     * VOTE BUTTONS
-     * --------------------------------------------------------
-     *
-     * Use the explicit data-product value.
-     * Never rely on nth-of-type().
+     * Vote buttons.
      */
-
     battle
         .querySelectorAll(
             "[data-vote]"
@@ -2088,6 +1886,21 @@ async function initializePage() {
         "MomYouNeedThis voting page initializing..."
     );
 
+    /*
+     * Product data must load before battles
+     * are initialized.
+     */
+    try {
+        await loadBattleData();
+    } catch (error) {
+        console.error(
+            "Mom Battles page could not initialize:",
+            error
+        );
+
+        return;
+    }
+
     const battlesOnPage =
         document.querySelectorAll(
             ".product-battle"
@@ -2106,7 +1919,7 @@ async function initializePage() {
     /*
      * Render every battle immediately.
      *
-     * Firebase does not block the page.
+     * Firebase does not block product rendering.
      */
     battlesOnPage.forEach(
         battle => {
@@ -2117,12 +1930,7 @@ async function initializePage() {
     );
 
     /*
-     * --------------------------------------------------------
-     * LOAD EXISTING LOCAL CHOICES
-     * --------------------------------------------------------
-     *
-     * This happens immediately and does NOT require
-     * Firebase authentication or Firestore.
+     * Load existing local choices immediately.
      */
     battlesOnPage.forEach(
         battle => {
@@ -2141,13 +1949,8 @@ async function initializePage() {
     );
 
     /*
-     * --------------------------------------------------------
-     * START FIREBASE AUTHENTICATION
-     * --------------------------------------------------------
-     *
-     * Authentication is still required when a NEW
-     * vote is submitted because the vote must be
-     * written to Firestore under the anonymous UID.
+     * Firebase authentication still starts
+     * in the background.
      */
     try {
         const user =
@@ -2162,13 +1965,6 @@ async function initializePage() {
             "Firebase authentication could not start:",
             error
         );
-
-        /*
-         * The page still works visually.
-         *
-         * If a user attempts to vote,
-         * the error is shown properly.
-         */
     }
 }
 
