@@ -165,24 +165,25 @@ box-shadow:
 transform: perspective(700px) rotateX(3deg);
 }
 
-/*
-Slightly imperfect roof silhouette.
-*/
+/* =========================================================
+PERFECT ROOF SHAPE
+========================================================= */
 
 .lab-building-roof::before {
-content: "";
+    content: "";
 
-position: absolute;
-left: -14px;
-right: 34px;
-top: -18px;
-height: 30px;
-border-radius: 20px 12px 7px 6px;
-background: #f1d4d9;
-border: 1px solid #e4c1c8;
-transform:
-    rotate(-1deg)
-    skewX(-4deg);
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -16px;
+    height: 30px;
+
+    border-radius: 24px 24px 10px 10px;
+    background: #f3d6dc;
+    border: 1px solid #e4c1c8;
+
+    box-shadow:
+        0 4px 0 #e8cbd0;
 }
 
 /* =========================================================
