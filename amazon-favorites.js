@@ -1764,6 +1764,8 @@ async function handleBattleVote(
         if (!saved) {
             return;
         }
+        
+        createVoteCelebration(selectedButton);
 
         confirmedBattleChoices.set(
             category,
