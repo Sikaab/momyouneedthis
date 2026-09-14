@@ -185,19 +185,6 @@ transform:
     skewX(-4deg);
 }
 
-.lab-building-roof::after {
-content: "";
-
-position: absolute;
-right: -18px;
-top: -8px;
-width: 70px;
-height: 24px;
-border-radius: 50%;
-background: #f3d9de;
-transform: rotate(7deg);
-}
-
 /* =========================================================
 NEON SIGN
 ========================================================= */
