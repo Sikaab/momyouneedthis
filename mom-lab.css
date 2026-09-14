@@ -570,24 +570,123 @@ letter-spacing: 0.07em;
 GROUND
 ========================================================= */
 
-.lab-building-ground {
-height: 24px;
+/* =========================================================
+GRASS + LITTLE FLOWERS
+========================================================= */
 
-display: flex;
-align-items: center;
-justify-content: center;
-gap: 9px;
-margin-top: 4px;
-color: #c6a6ab;
-font-size: 10px;
+.lab-building-ground {
+    position: relative;
+
+    height: 48px;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 12px;
+
+    margin-top: 4px;
+
+    color: #79a27d;
+    font-size: 13px;
 }
 
+/* Grass line */
 .lab-building-ground div {
-width: 75%;
+    position: relative;
+    z-index: 3;
 
-height: 2px;
-border-radius: 999px;
-background: #eadfdb;
+    width: 82%;
+    height: 8px;
+
+    border-radius: 60% 60% 8px 8px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #8aaa82,
+            #739b78,
+            #8aaa82
+        );
+
+    box-shadow:
+        0 -3px 0 rgba(94, 150, 118, 0.18);
+}
+
+/* Small grass blades */
+.lab-building-ground div::before {
+    content: "";
+
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -6px;
+
+    height: 10px;
+
+    background:
+        repeating-linear-gradient(
+            105deg,
+            transparent 0,
+            transparent 8px,
+            #739b78 9px,
+            #739b78 11px,
+            transparent 12px,
+            transparent 19px
+        );
+
+    opacity: 0.75;
+}
+
+/* =========================================================
+SUBTLE ROOTS
+========================================================= */
+
+.lab-building-ground::before {
+    content: "";
+
+    position: absolute;
+
+    left: 30%;
+    bottom: 5px;
+
+    width: 42%;
+    height: 35px;
+
+    z-index: 1;
+
+    border-bottom: 1px solid rgba(150, 117, 102, 0.18);
+    border-left: 1px solid rgba(150, 117, 102, 0.15);
+
+    border-radius: 0 0 0 70%;
+
+    transform: rotate(-8deg);
+
+    opacity: 0.65;
+}
+
+/* =========================================================
+TINY FLOWERS
+========================================================= */
+
+.lab-building-ground > span:first-child,
+.lab-building-ground > span:last-child {
+    position: relative;
+    z-index: 4;
+
+    display: flex;
+    align-items: flex-end;
+
+    height: 32px;
+
+    font-size: 13px;
+}
+
+.lab-building-ground > span:first-child {
+    transform: translateY(-3px) rotate(-5deg);
+}
+
+.lab-building-ground > span:last-child {
+    transform: translateY(-2px) rotate(5deg);
 }
 
 /* =========================================================
