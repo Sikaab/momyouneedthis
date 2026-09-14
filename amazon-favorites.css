@@ -244,9 +244,9 @@ overflow:hidden;
 display:flex;
 flex-direction:column;
 transition:
-    border-color .25s ease,
-    box-shadow .25s ease,
-    transform .25s ease;
+border-color .25s ease,
+box-shadow .25s ease,
+transform .25s ease;
 
 }
 
@@ -363,10 +363,10 @@ animation:leaderFireRight 1.4s ease-in-out infinite;
 
 0%,
 100%{
-    transform:translateY(0) rotate(5deg);
+transform:translateY(0) rotate(5deg);
 }
 50%{
-    transform:translateY(-4px) rotate(-4deg);
+transform:translateY(-4px) rotate(-4deg);
 }
 
 }
@@ -375,10 +375,10 @@ animation:leaderFireRight 1.4s ease-in-out infinite;
 
 0%,
 100%{
-    transform:translateY(0) rotate(-4deg);
+transform:translateY(0) rotate(-4deg);
 }
 50%{
-    transform:translateY(-3px) rotate(5deg);
+transform:translateY(-3px) rotate(5deg);
 }
 
 }
@@ -493,9 +493,9 @@ justify-content:center;
 gap:5px;
 
 /*
-   This is the important alignment rule.
-   It consumes all remaining vertical space above
-   the score, forcing both scores to the same level.
+This is the important alignment rule.
+It consumes all remaining vertical space above
+the score, forcing both scores to the same level.
 */
 margin-top:auto;
 margin-bottom:12px;
@@ -543,7 +543,7 @@ align-items:center;
 justify-content:center;
 box-sizing:border-box;
 border-radius:13px;
-font-family:'Nunito',sans-serif;
+font-family:‘Nunito’,sans-serif;
 font-size:12px;
 font-weight:900;
 text-decoration:none;
@@ -612,14 +612,15 @@ min-height:100%;
 overflow:visible;
 }
 
+/* Existing lightning bolt moved UNDER the VS */
 .versus::before{
-content:"";
+content:””;
 position:absolute;
 z-index:2;
 
 top:calc(50% + 32px);
-bottom:auto;
 left:50%;
+
 width:28px;
 height:50px;
 
@@ -628,30 +629,27 @@ transform:translateX(-50%);
 background:#4b8cff;
 
 clip-path:polygon(
-    62% 0%,
-    10% 43%,
-    42% 43%,
-    22% 100%,
-    94% 34%,
-    59% 34%,
-    80% 0%
+62% 0%,
+10% 43%,
+42% 43%,
+22% 100%,
+94% 34%,
+59% 34%,
+80% 0%
 );
 
 opacity:.98;
 }
 
-/*
-Subtle blue energy glow behind the bolt.
-*/
-
+/* Existing soft blue glow preserved */
 .versus::after{
-content:"";
+content:””;
 position:absolute;
 z-index:1;
 
 top:calc(50% + 32px);
-bottom:auto;
 left:50%;
+
 width:32px;
 height:50px;
 
@@ -709,12 +707,12 @@ animation:resultReveal .3s ease;
 @keyframes resultReveal{
 
 from{
-    opacity:0;
-    transform:translateY(6px);
+opacity:0;
+transform:translateY(6px);
 }
 to{
-    opacity:1;
-    transform:translateY(0);
+opacity:1;
+transform:translateY(0);
 }
 
 }
@@ -900,22 +898,38 @@ TABLET
 @media(max-width:900px){
 
 .page{
-    padding-left:15px;
-    padding-right:15px;
+padding-left:15px;
+padding-right:15px;
 }
+
 .voting-hero h1{
-    font-size:42px;
+font-size:42px;
 }
+
 .contenders{
-    grid-template-columns:minmax(0,1fr) 62px minmax(0,1fr);
+grid-template-columns:minmax(0,1fr) 62px minmax(0,1fr);
 }
+
 .versus{
-    width:62px;
+width:62px;
 }
+
 .versus span{
-    width:52px;
-    height:52px;
-    font-size:17px;
+width:52px;
+height:52px;
+font-size:17px;
+}
+
+.versus::before{
+top:calc(50% + 30px);
+width:22px;
+height:46px;
+}
+
+.versus::after{
+top:calc(50% + 29px);
+width:26px;
+height:46px;
 }
 
 }
@@ -927,220 +941,272 @@ MOBILE
 @media(max-width:640px){
 
 .mom-voted-header{
-    padding-bottom:20px;
+padding-bottom:20px;
 }
+
 .mom-voted-logo{
-    width:82px;
+width:82px;
 }
+
 .community-badge{
-    font-size:10px;
-    padding:7px 10px;
+font-size:10px;
+padding:7px 10px;
 }
+
 .voting-hero{
-    padding:12px 8px 25px;
+padding:12px 8px 25px;
 }
+
 .voting-hero h1{
-    font-size:35px;
+font-size:35px;
 }
+
 .mom-voted-intro{
-    font-size:14px;
+font-size:14px;
 }
+
 /* Keep BOTH products beside each other */
 .contenders{
-    grid-template-columns:minmax(0,1fr) 48px minmax(0,1fr);
+grid-template-columns:minmax(0,1fr) 48px minmax(0,1fr);
 }
+
 .versus{
-    width:48px;
+width:48px;
 }
+
 .versus span{
-    width:46px;
-    height:46px;
-    border-width:3px;
-    font-size:15px;
-    background:transparent;
-    box-shadow:none;
+width:46px;
+height:46px;
+border-width:3px;
+font-size:15px;
+background:transparent;
+box-shadow:none;
 }
-/* Shorter mobile lightning */
+
+/* Fixed mobile lightning under VS */
 .versus::before{
-    top:22%;
-    bottom:22%;
-    width:19px;
+top:calc(50% + 30px);
+width:19px;
+height:42px;
 }
+
 .versus::after{
-    top:23%;
-    bottom:23%;
-    width:23px;
+top:calc(50% + 29px);
+width:23px;
+height:42px;
 }
+
 /* Smaller cards */
 .battle-card{
-    padding:10px;
-    border-radius:21px;
+padding:10px;
+border-radius:21px;
 }
+
 .battle-card-header{
-    margin-bottom:12px;
+margin-bottom:12px;
 }
+
 .battle-card-header span{
-    font-size:8px;
+font-size:8px;
 }
+
 .battle-card-header strong{
-    font-size:8px;
+font-size:8px;
 }
+
 .contender{
-    border-radius:17px;
+border-radius:17px;
 }
+
 .contender-image{
-    aspect-ratio:1 / .92;
-    padding:7px;
+aspect-ratio:1 / .92;
+padding:7px;
 }
+
 .product-badge{
-    top:6px;
-    right:6px;
-    padding:4px 5px;
-    font-size:7px;
+top:6px;
+right:6px;
+padding:4px 5px;
+font-size:7px;
 }
+
 .battle-leader-badge{
-    top:6px;
-    left:6px;
-    padding:4px 5px;
-    font-size:7px;
+top:6px;
+left:6px;
+padding:4px 5px;
+font-size:7px;
 }
+
 /* Two animated fires on the RIGHT side */
 .leader-fire{
-    font-size:16px;
+font-size:16px;
 }
+
 .leader-fire-left{
-    right:5px;
-    left:auto;
-    top:28px;
+right:5px;
+left:auto;
+top:28px;
 }
+
 .leader-fire-right{
-    right:18px;
-    left:auto;
-    top:39px;
+right:18px;
+left:auto;
+top:39px;
 }
+
 .contender-content{
-    padding:10px 7px 11px;
+padding:10px 7px 11px;
 }
+
 .product-label{
-    margin-bottom:4px;
-    font-size:7px;
+margin-bottom:4px;
+font-size:7px;
 }
+
 .contender-content h3{
-    font-size:13px;
+font-size:13px;
 }
+
 .product-brand{
-    margin-top:3px;
-    font-size:9px;
+margin-top:3px;
+font-size:9px;
 }
+
 .battle-description{
-    margin:7px auto 9px;
-    font-size:9px;
-    line-height:1.35;
+margin:7px auto 9px;
+font-size:9px;
+line-height:1.35;
 }
+
 /* =================================================
-   MOBILE MOM SCORE
-   PUSHED TO SAME BOTTOM LEVEL
+MOBILE MOM SCORE
+PUSHED TO SAME BOTTOM LEVEL
 ================================================= */
+
 .product-rating{
-    margin-top:auto;
-    margin-bottom:8px;
-    padding:7px 4px;
-    border-radius:10px;
-    gap:3px;
+margin-top:auto;
+margin-bottom:8px;
+padding:7px 4px;
+border-radius:10px;
+gap:3px;
 }
+
 .product-rating span{
-    font-size:7px;
+font-size:7px;
 }
+
 .product-rating strong{
-    font-size:17px;
+font-size:17px;
 }
+
 .product-rating small{
-    font-size:7px;
+font-size:7px;
 }
+
 /* =================================================
-   MOBILE BUTTONS
-   IDENTICAL HEIGHT
+MOBILE BUTTONS
+IDENTICAL HEIGHT
 ================================================= */
+
 .product-shop-link,
 .vote-button{
-    height:38px;
-    min-height:38px;
-    padding:6px 3px;
-    border-radius:10px;
-    font-size:8px;
+height:38px;
+min-height:38px;
+padding:6px 3px;
+border-radius:10px;
+font-size:8px;
 }
+
 .vote-button{
-    margin-top:7px;
+margin-top:7px;
 }
+
 .battle-result{
-    padding:13px 10px;
-    margin-top:12px;
+padding:13px 10px;
+margin-top:12px;
 }
+
 .battle-result > strong{
-    font-size:15px;
+font-size:15px;
 }
+
 .battle-result > p{
-    font-size:11px;
+font-size:11px;
 }
+
 .result-percentages{
-    gap:7px;
-    margin-top:10px;
+gap:7px;
+margin-top:10px;
 }
+
 .result-percentages div{
-    padding:8px 5px;
-    border-radius:10px;
+padding:8px 5px;
+border-radius:10px;
 }
+
 .result-percentages span{
-    font-size:7px;
+font-size:7px;
 }
+
 .result-percentages strong{
-    font-size:18px;
+font-size:18px;
 }
+
 .your-position{
-    font-size:11px !important;
+font-size:11px !important;
 }
+
 .battle-footer{
-    margin-top:11px;
-    padding-top:10px;
-    font-size:9px;
+margin-top:11px;
+padding-top:10px;
+font-size:9px;
 }
+
 /* =================================================
-   CATEGORIES
+CATEGORIES
 ================================================= */
+
 .voting-categories{
-    justify-content:flex-start;
-    flex-wrap:nowrap;
-    overflow-x:auto;
-    scrollbar-width:none;
-    border-radius:15px;
-    padding:7px;
-    margin-bottom:30px;
+justify-content:flex-start;
+flex-wrap:nowrap;
+overflow-x:auto;
+scrollbar-width:none;
+border-radius:15px;
+padding:7px;
+margin-bottom:30px;
 }
+
 .voting-categories::-webkit-scrollbar{
-    display:none;
+display:none;
 }
+
 .category-link{
-    flex:0 0 auto;
-    font-size:10px;
-    padding:7px 10px;
+flex:0 0 auto;
+font-size:10px;
+padding:7px 10px;
 }
+
 /* =================================================
-   CTA
+CTA
 ================================================= */
+
 .holy-grail-final{
-    margin:50px 0 35px;
-    padding:28px 18px;
-    border-radius:21px;
+margin:50px 0 35px;
+padding:28px 18px;
+border-radius:21px;
 }
+
 .holy-grail-final h2{
-    font-size:23px;
+font-size:23px;
 }
+
 .holy-grail-final p{
-    font-size:12px;
+font-size:12px;
 }
+
 .holy-grail-final-button{
-    width:100%;
-    font-size:12px;
+width:100%;
+font-size:12px;
 }
 
 }
@@ -1152,34 +1218,54 @@ VERY SMALL PHONES
 @media(max-width:380px){
 
 .page{
-    padding-left:9px;
-    padding-right:9px;
+padding-left:9px;
+padding-right:9px;
 }
+
 .voting-hero h1{
-    font-size:31px;
+font-size:31px;
 }
+
 .contenders{
-    grid-template-columns:minmax(0,1fr) 42px minmax(0,1fr);
+grid-template-columns:minmax(0,1fr) 42px minmax(0,1fr);
 }
+
 .versus{
-    width:42px;
+width:42px;
 }
+
 .versus span{
-    width:41px;
-    height:41px;
-    font-size:13px;
+width:41px;
+height:41px;
+font-size:13px;
 }
+
+/* Fixed very-small-phone lightning under VS */
+.versus::before{
+top:calc(50% + 27px);
+width:18px;
+height:37px;
+}
+
+.versus::after{
+top:calc(50% + 26px);
+width:22px;
+height:37px;
+}
+
 .contender-content h3{
-    font-size:12px;
+font-size:12px;
 }
+
 .battle-description{
-    font-size:8px;
+font-size:8px;
 }
+
 .product-shop-link,
 .vote-button{
-    font-size:7px;
-    height:36px;
-    min-height:36px;
+font-size:7px;
+height:36px;
+min-height:36px;
 }
 
 }
