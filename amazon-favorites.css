@@ -235,39 +235,52 @@ overflow:visible;
 position:absolute;
 left:0;
 top:0;
-font-size:21px;
+font-size:25px;
 line-height:1;
 opacity:0;
-transform:translate(-50%,-50%) scale(.3) rotate(0deg);
-animation:voteEmojiBurst .75s cubic-bezier(.2,.8,.25,1) forwards;
+
+transform:
+translate(-50%,-50%)
+scale(.35)
+rotate(0deg);
+
+animation:
+voteEmojiBurst 1.15s cubic-bezier(.16,.75,.25,1) forwards;
 }
 
 @keyframes voteEmojiBurst{
 
 0%{
 opacity:0;
+
 transform:
 translate(-50%,-50%)
-scale(.3)
+scale(.35)
 rotate(0deg);
 }
 
-20%{
+15%{
 opacity:1;
+
 transform:
 translate(-50%,-50%)
-scale(1.15)
-rotate(calc(var(--emoji-rotation) * -.5));
+scale(1.2)
+rotate(calc(var(--emoji-rotation) * -.35));
+}
+
+65%{
+opacity:1;
 }
 
 100%{
 opacity:0;
+
 transform:
 translate(
 calc(-50% + var(--emoji-x)),
 calc(-50% + var(--emoji-y))
 )
-scale(.8)
+scale(.9)
 rotate(var(--emoji-rotation));
 }
 
@@ -276,7 +289,7 @@ rotate(var(--emoji-rotation));
 @media(max-width:640px){
 
 .vote-celebration-emoji{
-font-size:17px;
+font-size:20px;
 }
 
 }
@@ -289,6 +302,7 @@ opacity:0;
 }
 
 }
+
 
 /* =====================================================
 TWO PRODUCTS + LIGHTNING
