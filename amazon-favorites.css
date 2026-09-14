@@ -612,24 +612,21 @@ min-height:100%;
 overflow:visible;
 }
 
-/*
-Main lightning bolt.
-
-It deliberately does NOT stretch from the top
-of the cards to the bottom. It stays compact,
-chunky and centred between them.
-*/
-
 .versus::before{
-content:””;
+content:"";
 position:absolute;
+z-index:2;
 
-top:17%;
-bottom:17%;
+top:calc(50% + 32px);
+bottom:auto;
 left:50%;
 width:28px;
+height:50px;
+
 transform:translateX(-50%);
+
 background:#4b8cff;
+
 clip-path:polygon(
     62% 0%,
     10% 43%,
@@ -639,8 +636,8 @@ clip-path:polygon(
     59% 34%,
     80% 0%
 );
-opacity:.98;
 
+opacity:.98;
 }
 
 /*
@@ -648,23 +645,26 @@ Subtle blue energy glow behind the bolt.
 */
 
 .versus::after{
-content:””;
+content:"";
 position:absolute;
+z-index:1;
 
-top:19%;
-bottom:19%;
+top:calc(50% + 32px);
+bottom:auto;
 left:50%;
 width:32px;
+height:50px;
+
 transform:translateX(-50%);
+
 background:rgba(75,140,255,.18);
 filter:blur(7px);
-pointer-events:none;
 
+pointer-events:none;
 }
 
 /* =====================================================
 VS
-NO WHITE BACKGROUND / NO WHITE HALO
 ===================================================== */
 
 .versus span{
