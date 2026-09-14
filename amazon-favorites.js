@@ -185,6 +185,76 @@ function getBattleProducts(category) {
         }));
 }
 
+function createVoteCelebration(button) {
+    const emojiSets = [
+        ["💗", "✨", "🎉", "🙌", "💖", "⭐", "🥳"],
+        ["💗", "🔥", "✨", "👏", "💅", "🎉", "💖"],
+        ["🩷", "✨", "👑", "🙌", "💗", "🎊", "⭐"],
+        ["💖", "🎉", "🔥", "🥳", "✨", "👏", "💗"]
+    ];
+
+    const emojis =
+        emojiSets[Math.floor(Math.random() * emojiSets.length)];
+
+    const rect = button.getBoundingClientRect();
+
+    const celebration = document.createElement("div");
+
+    celebration.className = "vote-celebration";
+
+    celebration.style.left = `${rect.left + rect.width / 2}px`;
+    celebration.style.top = `${rect.top + rect.height / 2}px`;
+
+    emojis.forEach((emoji, index) => {
+        const element = document.createElement("span");
+
+        element.className = "vote-celebration-emoji";
+        element.textContent = emoji;
+
+        const angle =
+            (Math.PI * 2 * index) / emojis.length +
+            (Math.random() - 0.5) * 0.5;
+
+        const distance =
+            55 + Math.random() * 45;
+
+        const x =
+            Math.cos(angle) * distance;
+
+        const y =
+            Math.sin(angle) * distance - 15;
+
+        const rotation =
+            -35 + Math.random() * 70;
+
+        element.style.setProperty(
+            "--emoji-x",
+            `${x}px`
+        );
+
+        element.style.setProperty(
+            "--emoji-y",
+            `${y}px`
+        );
+
+        element.style.setProperty(
+            "--emoji-rotation",
+            `${rotation}deg`
+        );
+
+        element.style.animationDelay =
+            `${index * 0.025}s`;
+
+        celebration.appendChild(element);
+    });
+
+    document.body.appendChild(celebration);
+
+    window.setTimeout(() => {
+        celebration.remove();
+    }, 1000);
+}
+
 /* ============================================================
    PRODUCT PERCENTAGE
    ============================================================ */
