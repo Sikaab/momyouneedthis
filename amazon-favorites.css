@@ -492,11 +492,6 @@ align-items:baseline;
 justify-content:center;
 gap:5px;
 
-/*
-This is the important alignment rule.
-It consumes all remaining vertical space above
-the score, forcing both scores to the same level.
-*/
 margin-top:auto;
 margin-bottom:12px;
 padding:10px;
@@ -598,7 +593,6 @@ opacity:.65;
 
 /* =====================================================
 LIGHTNING DIVIDER
-COMPACT + CHUNKY + ELECTRIC BLUE
 ===================================================== */
 
 .versus{
@@ -612,17 +606,21 @@ min-height:100%;
 overflow:visible;
 }
 
-/* Existing lightning bolt moved UNDER the VS */
+/* =====================================================
+LIGHTNING BOLT
+DIRECTLY UNDER VS
+===================================================== */
+
 .versus::before{
 content:””;
 position:absolute;
 z-index:2;
 
-top:calc(50% + 32px);
+top:calc(50% + 34px);
 left:50%;
 
 width:28px;
-height:50px;
+height:48px;
 
 transform:translateX(-50%);
 
@@ -641,17 +639,20 @@ clip-path:polygon(
 opacity:.98;
 }
 
-/* Existing soft blue glow preserved */
+/* =====================================================
+SOFT BLUE GLOW
+===================================================== */
+
 .versus::after{
 content:””;
 position:absolute;
 z-index:1;
 
-top:calc(50% + 32px);
+top:calc(50% + 34px);
 left:50%;
 
 width:32px;
-height:50px;
+height:48px;
 
 transform:translateX(-50%);
 
@@ -920,16 +921,17 @@ height:52px;
 font-size:17px;
 }
 
+/* Tablet lightning */
 .versus::before{
-top:calc(50% + 30px);
+top:calc(50% + 31px);
 width:22px;
-height:46px;
+height:44px;
 }
 
 .versus::after{
-top:calc(50% + 29px);
+top:calc(50% + 31px);
 width:26px;
-height:46px;
+height:44px;
 }
 
 }
@@ -983,17 +985,17 @@ background:transparent;
 box-shadow:none;
 }
 
-/* Fixed mobile lightning under VS */
+/* Mobile lightning directly under VS */
 .versus::before{
-top:calc(50% + 30px);
+top:calc(50% + 28px);
 width:19px;
-height:42px;
+height:40px;
 }
 
 .versus::after{
-top:calc(50% + 29px);
+top:calc(50% + 28px);
 width:23px;
-height:42px;
+height:40px;
 }
 
 /* Smaller cards */
@@ -1240,17 +1242,17 @@ height:41px;
 font-size:13px;
 }
 
-/* Fixed very-small-phone lightning under VS */
+/* Very small phone lightning */
 .versus::before{
-top:calc(50% + 27px);
+top:calc(50% + 25px);
 width:18px;
-height:37px;
+height:36px;
 }
 
 .versus::after{
-top:calc(50% + 26px);
+top:calc(50% + 25px);
 width:22px;
-height:37px;
+height:36px;
 }
 
 .contender-content h3{
