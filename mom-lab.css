@@ -521,53 +521,7 @@ GROUND
         );
     opacity: 0.75;
 }
-/* =========================================================
-SUBTLE BROWN ROOTS
-========================================================= */
-.lab-building-ground::before {
-    content: "";
-    position: absolute;
-    left: 25%;
-    bottom: 7px;
-    width: 48%;
-    height: 72px;
-    z-index: 1;
-    pointer-events: none;
-    border-left: 1.5px solid rgba(125, 88, 69, 0.28);
-    border-bottom: 1.5px solid rgba(125, 88, 69, 0.25);
-    border-radius: 0 0 0 85%;
-    transform: rotate(-18deg);
-    opacity: 0.72;
-}
-/* Second asymmetrical root */
-.lab-building-ground::after {
-    content: "";
-    position: absolute;
-    left: 48%;
-    bottom: 6px;
-    width: 38%;
-    height: 60px;
-    z-index: 1;
-    pointer-events: none;
-    border-right: 1.5px solid rgba(125, 88, 69, 0.22);
-    border-bottom: 1.5px solid rgba(125, 88, 69, 0.20);
-    border-radius: 0 0 75% 0;
-    transform: rotate(13deg);
-    opacity: 0.65;
-}
-/* Tiny root branch */
-.lab-building-ground div::after {
-    content: "";
-    position: absolute;
-    left: 31%;
-    top: 3px;
-    width: 25%;
-    height: 38px;
-    border-left: 1px solid rgba(125, 88, 69, 0.20);
-    border-radius: 0 0 0 80%;
-    transform: rotate(-25deg);
-    opacity: 0.7;
-}
+
 /* =========================================================
 ASYMMETRICAL FLOWERS
 ========================================================= */
