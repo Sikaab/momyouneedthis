@@ -171,21 +171,90 @@ button:hover{
 
 /* =========================================================
    MOM LAB — HOMEPAGE
-   LUXURY GLASS WINDOW
+   LUXURY GLASS WINDOW + SHEER CURTAINS
 ========================================================= */
 
 .mom-lab-home-section {
     position: relative;
     max-width: 1100px;
     margin: 0 auto 20px;
-    background: #f7f1ec;
-    border: 1px solid #e6dcd6;
+
+    background: #ffffff;
+
+    border: 1px solid #eee3e3;
     border-radius: 28px;
+
     overflow: hidden;
+
     box-shadow:
-        0 20px 50px rgba(65, 55, 50, 0.12),
-        0 3px 10px rgba(65, 55, 50, 0.05);
+        0 20px 50px rgba(80, 55, 65, 0.10),
+        0 3px 12px rgba(80, 55, 65, 0.04);
 }
+
+
+/* =========================================================
+   SHEER CURTAINS
+========================================================= */
+
+/*
+   Very subtle transparent curtains hanging along the
+   outside edges of the window.
+
+   They are intentionally translucent so the Mom Lab
+   content remains completely readable.
+*/
+
+.mom-lab-home-section::before,
+.mom-lab-home-section::after {
+    content: "";
+
+    position: absolute;
+    top: 0;
+    bottom: 0;
+
+    width: 8%;
+
+    z-index: 10;
+
+    pointer-events: none;
+
+    opacity: 0.48;
+}
+
+/* Left curtain */
+.mom-lab-home-section::before {
+    left: 0;
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.82) 0px,
+            rgba(255, 255, 255, 0.82) 7px,
+            rgba(244, 220, 227, 0.28) 11px,
+            rgba(255, 255, 255, 0.64) 16px
+        );
+
+    box-shadow:
+        7px 0 18px rgba(190, 145, 160, 0.07);
+}
+
+/* Right curtain */
+.mom-lab-home-section::after {
+    right: 0;
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.64) 0px,
+            rgba(244, 220, 227, 0.28) 5px,
+            rgba(255, 255, 255, 0.82) 11px,
+            rgba(255, 255, 255, 0.82) 18px
+        );
+
+    box-shadow:
+        -7px 0 18px rgba(190, 145, 160, 0.07);
+}
+
 
 /* =========================================================
    WINDOW HEADER
@@ -193,22 +262,32 @@ button:hover{
 
 .mom-lab-home-header {
     position: relative;
+    z-index: 2;
+
     padding: 30px 32px 27px;
+
     text-align: center;
-    background: #fffaf7;
-    border-bottom: 1px solid #e5dad5;
+
+    background: #ffffff;
+
+    border-bottom: 1px solid #eee3e3;
 }
 
-/* Refined architectural accent */
+/* Small luxury accent */
 .mom-lab-home-header::before {
     content: "";
+
     position: absolute;
     top: 0;
     left: 50%;
+
     width: 70px;
     height: 3px;
+
     transform: translateX(-50%);
+
     background: #e89aaa;
+
     border-radius: 0 0 4px 4px;
 }
 
@@ -216,13 +295,14 @@ button:hover{
     display: inline-flex;
     align-items: center;
     justify-content: center;
+
     padding: 7px 15px;
     margin-bottom: 12px;
 
-    background: #fff0f4;
+    background: #fff4f6;
     color: #cf6f87;
 
-    border: 1px solid #f1d7df;
+    border: 1px solid #f1dce2;
     border-radius: 999px;
 
     font-size: 0.9rem;
@@ -237,52 +317,63 @@ button:hover{
 
     font-size: clamp(1.9rem, 4vw, 2.55rem);
     line-height: 1.12;
+
     font-weight: 900;
+
     letter-spacing: -0.025em;
 }
 
 .mom-lab-home-header h2 span {
     display: block;
+
     color: #cf6f87;
 }
 
 .mom-lab-home-header p {
     max-width: 690px;
+
     margin: 12px auto 0;
 
     color: #817779;
 
     font-size: 1rem;
     line-height: 1.55;
+
     font-weight: 600;
 }
 
 
 /* =========================================================
-   WINDOW FRAME + GLASS
+   WINDOW + FRAME
 ========================================================= */
 
 .mom-lab-home-content {
     position: relative;
+    z-index: 1;
 
     display: grid;
     grid-template-columns: 1fr 1fr;
 
     gap: 0;
+
     padding: 10px;
 
     background:
         linear-gradient(
             135deg,
-            #e9dfd9 0%,
-            #f1e9e4 48%,
-            #e5d9d2 100%
+            #f7e9ed 0%,
+            #fff8fa 45%,
+            #f4e5e9 100%
         );
 
     overflow: hidden;
 }
 
-/* Soft architectural reflections */
+
+/* =========================================================
+   SUBTLE LIGHT THROUGH THE WINDOW
+========================================================= */
+
 .mom-lab-home-content::before {
     content: "";
 
@@ -292,53 +383,37 @@ button:hover{
     background:
         linear-gradient(
             115deg,
-            rgba(255, 255, 255, 0.52) 0%,
-            rgba(255, 255, 255, 0) 28%
+            rgba(255, 255, 255, 0.72) 0%,
+            rgba(255, 255, 255, 0) 30%
         ),
         linear-gradient(
             295deg,
-            rgba(255, 255, 255, 0.28) 0%,
-            rgba(255, 255, 255, 0) 35%
+            rgba(255, 255, 255, 0.42) 0%,
+            rgba(255, 255, 255, 0) 38%
         );
 
     pointer-events: none;
-    z-index: 0;
-}
 
-/* Central architectural frame */
-.mom-lab-home-content::after {
-    content: "";
-
-    position: absolute;
-
-    top: 0;
-    bottom: 0;
-    left: 50%;
-
-    width: 1px;
-
-    background: rgba(190, 170, 160, 0.25);
-
-    pointer-events: none;
     z-index: 0;
 }
 
 
 /* =========================================================
-   TEST WINDOW PANES
+   TEST PANES
 ========================================================= */
 
 .mom-lab-tests {
     position: relative;
-    z-index: 1;
+    z-index: 2;
 
     display: grid;
     grid-template-columns: 1fr 1fr;
 
     gap: 7px;
+
     padding: 0;
 
-    background: #e5d9d2;
+    background: #f1dfe5;
 }
 
 
@@ -350,25 +425,30 @@ button:hover{
     position: relative;
 
     display: grid;
+
     grid-template-columns: 50px minmax(0, 1fr);
+
     align-items: center;
+
     column-gap: 15px;
 
     min-height: 128px;
+
     padding: 25px 22px;
 
     background:
         linear-gradient(
             135deg,
-            rgba(255, 255, 255, 0.94),
-            rgba(255, 250, 247, 0.82)
+            rgba(255, 255, 255, 0.98),
+            rgba(255, 251, 252, 0.91)
         );
 
-    border: 1px solid rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.95);
+
     border-radius: 3px;
 
     box-shadow:
-        inset 0 0 0 1px rgba(224, 211, 204, 0.35);
+        inset 0 0 0 1px rgba(236, 219, 224, 0.45);
 
     overflow: hidden;
 }
@@ -392,7 +472,7 @@ button:hover{
     background:
         linear-gradient(
             105deg,
-            rgba(255, 255, 255, 0.68),
+            rgba(255, 255, 255, 0.78),
             rgba(255, 255, 255, 0)
         );
 
@@ -401,7 +481,8 @@ button:hover{
     pointer-events: none;
 }
 
-/* Fine highlight along top edge */
+
+/* Fine highlight across glass */
 .mom-lab-test::after {
     content: "";
 
@@ -413,7 +494,7 @@ button:hover{
 
     height: 1px;
 
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.98);
 
     pointer-events: none;
 }
@@ -436,15 +517,16 @@ button:hover{
 
     margin: 0;
 
-    background: rgba(255, 240, 244, 0.88);
+    background: rgba(255, 241, 245, 0.92);
 
-    border: 1px solid #f0dce2;
+    border: 1px solid #f1dce2;
+
     border-radius: 15px;
 
     font-size: 1.55rem;
 
     box-shadow:
-        0 5px 12px rgba(65, 55, 50, 0.07);
+        0 5px 12px rgba(80, 55, 65, 0.06);
 }
 
 
@@ -457,6 +539,7 @@ button:hover{
     z-index: 2;
 
     min-width: 0;
+
     text-align: left;
 }
 
@@ -469,6 +552,7 @@ button:hover{
 
     font-size: 1.08rem;
     line-height: 1.25;
+
     font-weight: 900;
 
     letter-spacing: -0.01em;
@@ -482,7 +566,7 @@ button:hover{
     font-size: 0.95rem;
     line-height: 1.48;
 
-    /* Regular, not bold */
+    /* Regular weight */
     font-weight: 400;
 }
 
@@ -493,28 +577,31 @@ button:hover{
 
 .mom-lab-verdict {
     position: relative;
-    z-index: 1;
+    z-index: 2;
 
     display: flex;
     flex-direction: column;
+
     align-items: center;
     justify-content: center;
 
     min-height: 263px;
+
     padding: 30px;
 
     background:
         linear-gradient(
             135deg,
-            rgba(255, 252, 248, 0.96),
-            rgba(255, 248, 232, 0.92)
+            rgba(255, 255, 255, 0.98),
+            rgba(255, 250, 240, 0.94)
         );
 
     border: 0;
+
     border-radius: 3px;
 
     box-shadow:
-        inset 0 0 0 1px rgba(224, 211, 204, 0.35);
+        inset 0 0 0 1px rgba(236, 219, 224, 0.42);
 
     text-align: center;
 
@@ -522,7 +609,10 @@ button:hover{
 }
 
 
-/* Verdict glass reflection */
+/* =========================================================
+   VERDICT GLASS REFLECTION
+========================================================= */
+
 .mom-lab-verdict::before {
     content: "";
 
@@ -537,7 +627,7 @@ button:hover{
     background:
         linear-gradient(
             105deg,
-            rgba(255, 255, 255, 0.65),
+            rgba(255, 255, 255, 0.72),
             rgba(255, 255, 255, 0)
         );
 
@@ -563,6 +653,7 @@ button:hover{
 
     font-size: 0.88rem;
     line-height: 1.3;
+
     font-weight: 900;
 
     letter-spacing: 0.11em;
@@ -578,6 +669,7 @@ button:hover{
 
     font-size: clamp(1.8rem, 3vw, 2.2rem);
     line-height: 1.08;
+
     font-weight: 900;
 
     letter-spacing: -0.025em;
@@ -588,6 +680,7 @@ button:hover{
     z-index: 2;
 
     display: inline-flex;
+
     align-items: center;
     justify-content: center;
 
@@ -597,10 +690,12 @@ button:hover{
     color: #5e9676;
 
     border: 1px solid #d9ebdf;
+
     border-radius: 999px;
 
     font-size: 0.88rem;
     line-height: 1.35;
+
     font-weight: 900;
 
     letter-spacing: 0.025em;
@@ -619,7 +714,7 @@ button:hover{
     font-size: 0.95rem;
     line-height: 1.5;
 
-    /* Regular, not bold */
+    /* Regular weight */
     font-weight: 400;
 }
 
@@ -629,11 +724,15 @@ button:hover{
 ========================================================= */
 
 .mom-lab-home-button {
+    position: relative;
+    z-index: 2;
+
     display: block;
 
     width: fit-content;
 
     margin: 23px auto 28px;
+
     padding: 14px 25px;
 
     background: #e89aaa;
@@ -643,6 +742,7 @@ button:hover{
 
     font-size: 0.96rem;
     line-height: 1.2;
+
     font-weight: 900;
 
     text-decoration: none;
@@ -671,7 +771,15 @@ button:hover{
 
     .mom-lab-home-section {
         margin: 0 16px 20px;
+
         border-radius: 23px;
+    }
+
+    /* Keep curtains subtle on smaller screens */
+    .mom-lab-home-section::before,
+    .mom-lab-home-section::after {
+        width: 5%;
+        opacity: 0.34;
     }
 
     .mom-lab-home-header {
@@ -689,21 +797,27 @@ button:hover{
 
     .mom-lab-home-content {
         display: block;
+
         padding: 7px;
     }
 
     .mom-lab-tests {
         grid-template-columns: 1fr 1fr;
+
         gap: 5px;
     }
 
     .mom-lab-test {
         display: grid;
+
         grid-template-columns: 43px minmax(0, 1fr);
+
         align-items: center;
+
         column-gap: 10px;
 
         min-height: 132px;
+
         padding: 18px 14px;
     }
 
@@ -720,18 +834,22 @@ button:hover{
 
     .mom-lab-test-copy strong {
         font-size: 1rem;
+
         margin-bottom: 5px;
     }
 
     .mom-lab-test-copy small {
         font-size: 0.88rem;
         line-height: 1.42;
+
         font-weight: 400;
     }
 
     .mom-lab-verdict {
         min-height: 225px;
+
         margin-top: 5px;
+
         padding: 25px 18px;
     }
 
@@ -746,12 +864,15 @@ button:hover{
     .mom-lab-verdict p {
         font-size: 0.92rem;
         line-height: 1.45;
+
         font-weight: 400;
     }
 
     .mom-lab-home-button {
         margin: 20px auto 23px;
+
         padding: 13px 21px;
+
         font-size: 0.92rem;
     }
 }
@@ -768,6 +889,12 @@ button:hover{
         margin-right: 10px;
     }
 
+    .mom-lab-home-section::before,
+    .mom-lab-home-section::after {
+        width: 4%;
+        opacity: 0.28;
+    }
+
     .mom-lab-home-header h2 {
         font-size: 1.62rem;
     }
@@ -782,14 +909,17 @@ button:hover{
 
     .mom-lab-tests {
         grid-template-columns: 1fr 1fr;
+
         gap: 4px;
     }
 
     .mom-lab-test {
         grid-template-columns: 40px minmax(0, 1fr);
+
         column-gap: 9px;
 
         min-height: 145px;
+
         padding: 16px 11px;
     }
 
@@ -809,6 +939,7 @@ button:hover{
     .mom-lab-test-copy small {
         font-size: 0.88rem;
         line-height: 1.42;
+
         font-weight: 400;
     }
 
