@@ -171,593 +171,366 @@ button:hover{
 
 /* =========================================================
    MOM LAB — HOMEPAGE
-   ACTUAL LAB WINDOW / DISPLAY WINDOW
-   HTML UNCHANGED
+   FOUR-PANE LAB WINDOW
 ========================================================= */
 
 .mom-lab-home-section {
     position: relative;
-    width: min(1000px, calc(100% - 40px));
-    margin: 0 auto 52px;
-    padding: 0;
-
-    box-sizing: border-box;
-
-    /* Neutral building/wall — NOT pink */
-    background: var(--lab-cream, #fffaf5);
-
-    border: 1px solid #eadfdc;
-    border-radius: 24px;
-
-    box-shadow:
-        0 8px 24px rgba(65, 55, 56, 0.07);
-
+    max-width: 1100px;
+    margin: 70px auto;
+    background: #fffaf5;
+    border: 8px solid #d98296;
+    border-radius: 26px;
     overflow: hidden;
+    box-shadow:
+        0 16px 40px rgba(80, 55, 55, 0.12),
+        inset 0 0 0 3px rgba(255, 255, 255, 0.55);
 }
 
-
 /* =========================================================
-   WINDOW TOP FRAME
+   WINDOW HEADER
 ========================================================= */
 
 .mom-lab-home-header {
     position: relative;
-
-    max-width: none;
-    margin: 0;
-
-    padding: 22px 48px 20px;
-
-    box-sizing: border-box;
-
-    /* Pink window frame */
-    background: var(--lab-pink, #e89aaa);
-
-    border: 0;
-    border-bottom: 7px solid var(--lab-pink-dark, #cf6f87);
-
+    padding: 27px 30px 25px;
     text-align: center;
+    background: #e89aaa;
+    border-bottom: 8px solid #d98296;
 }
 
-
-/* Window frame screws */
-
+/* Window screws */
 .mom-lab-home-header::before,
 .mom-lab-home-header::after {
     content: "";
-
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-
-    width: 9px;
-    height: 9px;
-
-    background: #fff8fa;
-
-    border: 2px solid rgba(207, 111, 135, 0.65);
+    top: 14px;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
-
+    background: #fff0f4;
     box-shadow:
-        inset 0 1px 2px rgba(65, 55, 56, 0.12);
+        inset 0 1px 2px rgba(80, 40, 50, 0.2),
+        0 1px 1px rgba(255, 255, 255, 0.5);
 }
 
 .mom-lab-home-header::before {
-    left: 18px;
+    left: 16px;
 }
 
 .mom-lab-home-header::after {
-    right: 18px;
+    right: 16px;
 }
-
-
-/* =========================================================
-   LAB LABEL
-========================================================= */
 
 .mom-lab-home-badge {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-
-    padding: 6px 13px;
-    margin-bottom: 8px;
-
-    background: #ffffff;
-
-    border: 1px solid rgba(207, 111, 135, 0.35);
+    padding: 7px 15px;
+    margin-bottom: 11px;
     border-radius: 999px;
-
-    color: var(--lab-pink-dark, #cf6f87);
-
-    font-size: 9px;
-    line-height: 1;
+    background: #ffffff;
+    color: #cf6f87;
+    font-size: 0.9rem;
     font-weight: 900;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-
-    box-shadow:
-        0 2px 5px rgba(65, 55, 56, 0.08);
+    letter-spacing: 0.04em;
 }
-
-
-/* =========================================================
-   WINDOW SIGN
-========================================================= */
 
 .mom-lab-home-header h2 {
     margin: 0;
-
     color: #ffffff;
-
-    font-size: clamp(25px, 3vw, 34px);
-    line-height: 1.08;
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    line-height: 1.12;
     font-weight: 900;
-    letter-spacing: -0.025em;
 }
 
 .mom-lab-home-header h2 span {
-    color: #fff8fa;
+    display: block;
 }
 
 .mom-lab-home-header p {
     max-width: 680px;
-
-    margin: 8px auto 0;
-
-    color: rgba(255, 255, 255, 0.94);
-
-    font-size: 12px;
+    margin: 12px auto 0;
+    color: #ffffff;
+    font-size: 1rem;
     line-height: 1.5;
-    font-weight: 600;
+    font-weight: 700;
 }
 
-
 /* =========================================================
-   WINDOW GLASS AREA
+   THE ACTUAL WINDOW
 ========================================================= */
 
 .mom-lab-home-content {
     position: relative;
-
     display: grid;
-    grid-template-columns:
-        minmax(0, 1.45fr)
-        minmax(240px, 0.7fr);
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    padding: 0;
+    background: #d98296;
+}
 
-    gap: 14px;
+/*
+    The content itself becomes the window frame.
 
-    margin: 0;
+    Every gap between panes is the physical frame.
+*/
 
-    padding: 18px;
+.mom-lab-tests {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    padding: 6px;
+    background: #d98296;
+}
 
-    box-sizing: border-box;
+/* =========================================================
+   GLASS PANES
+========================================================= */
+
+.mom-lab-test {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    min-height: 125px;
+    padding: 23px 20px;
 
     /* Glass */
     background:
         linear-gradient(
             135deg,
-            #ffffff 0%,
-            #fffdfd 45%,
-            #fff8fa 100%
+            rgba(255, 255, 255, 0.96),
+            rgba(255, 248, 250, 0.88)
         );
 
     border: 0;
-
-    text-align: left;
-}
-
-
-/*
-   Glass reflection.
-   Very subtle so it reads as glass without making
-   the cards look washed out.
-*/
-
-.mom-lab-home-content::before {
-    content: "";
-
-    position: absolute;
-
-    top: 0;
-    left: 0;
-
-    width: 42%;
-    height: 100%;
-
-    background:
-        linear-gradient(
-            115deg,
-            rgba(255, 255, 255, 0.55),
-            rgba(255, 255, 255, 0) 65%
-        );
-
-    pointer-events: none;
-
-    z-index: 1;
-}
-
-
-/* =========================================================
-   WINDOW VERTICAL FRAME
-========================================================= */
-
-/*
-   This creates the visual impression that the content
-   sits inside a framed display window.
-*/
-
-.mom-lab-home-content::after {
-    content: "";
-
-    position: absolute;
-
-    top: 0;
-    bottom: 0;
-
-    left: calc(100% - 252px);
-
-    width: 5px;
-
-    background: var(--lab-pink, #e89aaa);
-
-    opacity: 0.9;
-
-    pointer-events: none;
-
-    z-index: 3;
-}
-
-
-/* Keep actual content above glass reflection */
-
-.mom-lab-tests,
-.mom-lab-verdict {
-    position: relative;
-    z-index: 2;
-}
-
-
-/* =========================================================
-   TEST PANELS
-========================================================= */
-
-.mom-lab-tests {
-    display: grid;
-
-    grid-template-columns:
-        repeat(2, minmax(0, 1fr));
-
-    gap: 10px;
-
-    min-width: 0;
-}
-
-
-.mom-lab-test {
-    position: relative;
-
-    min-width: 0;
-    min-height: 88px;
-
-    display: grid;
-
-    grid-template-columns:
-        42px
-        minmax(0, 1fr);
-
-    grid-template-rows:
-        auto
-        auto;
-
-    column-gap: 11px;
-
-    align-items: center;
-
-    padding: 13px;
-
-    box-sizing: border-box;
-
-    background: rgba(255, 255, 255, 0.96);
-
-    border: 1px solid #eadfe1;
-
-    border-radius: 18px;
-
-    box-shadow:
-        0 3px 10px rgba(65, 55, 56, 0.05);
-
+    border-radius: 0;
+    box-shadow: none;
     overflow: hidden;
 }
 
-
-/* Little pink frame at top of each test panel */
-
+/* Glass reflection */
 .mom-lab-test::before {
     content: "";
-
     position: absolute;
-
-    top: 0;
-    left: 12px;
-    right: 12px;
-
-    height: 3px;
-
-    background: #f2d1d8;
-
-    border-radius:
-        0 0 5px 5px;
+    top: -30%;
+    left: -25%;
+    width: 70%;
+    height: 170%;
+    background: linear-gradient(
+        120deg,
+        rgba(255, 255, 255, 0.62),
+        rgba(255, 255, 255, 0)
+    );
+    transform: rotate(8deg);
+    pointer-events: none;
 }
 
-
-/* =========================================================
-   TEST ICONS
-========================================================= */
+/* Small top frame detail */
+.mom-lab-test::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: rgba(207, 111, 135, 0.28);
+    pointer-events: none;
+}
 
 .mom-lab-test-icon {
-    grid-column: 1;
-    grid-row: 1 / 3;
+    position: relative;
+    z-index: 2;
+    flex: 0 0 auto;
 
-    width: 42px;
-    height: 42px;
+    width: 50px;
+    height: 50px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    margin: 0;
+    border-radius: 14px;
+    background: rgba(255, 240, 244, 0.92);
 
-    border-radius: 13px;
+    font-size: 1.6rem;
 
-    background: var(--lab-pink-light, #fff0f4);
-
-    font-size: 21px;
-    line-height: 1;
+    box-shadow:
+        0 3px 10px rgba(80, 55, 55, 0.07);
 }
 
-.mom-lab-test:nth-child(1) .mom-lab-test-icon {
-    background: var(--lab-gold-light, #fff8e8);
+.mom-lab-test-copy {
+    position: relative;
+    z-index: 2;
+    min-width: 0;
 }
 
-.mom-lab-test:nth-child(2) .mom-lab-test-icon {
-    background: var(--lab-purple-light, #f4f0f8);
-}
-
-.mom-lab-test:nth-child(3) .mom-lab-test-icon {
-    background: var(--lab-pink-light, #fff0f4);
-}
-
-.mom-lab-test:nth-child(4) .mom-lab-test-icon {
-    background: var(--lab-green-light, #edf7f1);
-}
-
-
-/* =========================================================
-   TEST TEXT
-========================================================= */
-
-.mom-lab-test strong {
-    grid-column: 2;
-    grid-row: 1;
-
+.mom-lab-test-copy strong {
     display: block;
+    margin-bottom: 6px;
 
-    margin: 0;
-
-    color: var(--lab-text, #413738);
-
-    font-size: 13px;
-    line-height: 1.15;
+    color: #413738;
+    font-size: 1.08rem;
+    line-height: 1.25;
     font-weight: 900;
 }
 
-.mom-lab-test small {
-    grid-column: 2;
-    grid-row: 2;
-
+.mom-lab-test-copy small {
     display: block;
 
-    margin-top: 4px;
-
-    color: var(--lab-muted, #817779);
-
+    color: #817779;
     font-size: 0.95rem;
-    line-height: 1.4;
+    line-height: 1.45;
     font-weight: 600;
 }
 
-
 /* =========================================================
-   VERDICT PANEL
+   VERDICT PANE
 ========================================================= */
 
 .mom-lab-verdict {
     position: relative;
-
-    min-width: 0;
+    z-index: 1;
 
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 
-    padding: 20px 18px;
+    min-height: 256px;
+    padding: 28px;
 
-    box-sizing: border-box;
-
+    /* Glass with warm lab-paper feel */
     background:
         linear-gradient(
-            180deg,
-            #fff8e8 0%,
-            #fffdf8 100%
+            135deg,
+            rgba(255, 255, 255, 0.97),
+            rgba(255, 248, 232, 0.94)
         );
 
-    border: 1px solid #eadfc9;
-
-    border-radius: 20px;
-
-    box-shadow:
-        0 3px 10px rgba(65, 55, 56, 0.04);
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
 
     text-align: center;
+    overflow: hidden;
 }
 
-
-/* Result-panel indicator */
-
+/* Glass reflection */
 .mom-lab-verdict::before {
     content: "";
-
     position: absolute;
-
-    top: 10px;
-    left: 12px;
-
-    width: 6px;
-    height: 6px;
-
-    background: var(--lab-gold, #bd9450);
-
-    border-radius: 50%;
-
-    box-shadow:
-        10px 0 0 #e8d7b6,
-        20px 0 0 #f1e7d3;
+    top: -30%;
+    left: -25%;
+    width: 70%;
+    height: 170%;
+    background: linear-gradient(
+        120deg,
+        rgba(255, 255, 255, 0.58),
+        rgba(255, 255, 255, 0)
+    );
+    transform: rotate(8deg);
+    pointer-events: none;
 }
 
-
 .mom-lab-verdict-label {
-    display: inline-flex;
+    position: relative;
+    z-index: 2;
 
+    display: block;
     margin-bottom: 7px;
 
-    color: var(--lab-gold, #bd9450);
-
-    font-size: 8px;
-    line-height: 1;
+    color: #bd9450;
+    font-size: 0.88rem;
+    line-height: 1.3;
     font-weight: 900;
-
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
+    letter-spacing: 0.08em;
 }
 
 .mom-lab-verdict h3 {
-    margin: 0;
+    position: relative;
+    z-index: 2;
 
-    color: var(--lab-text, #413738);
+    margin: 0 0 13px;
 
-    font-size: 25px;
-    line-height: 1;
-
+    color: #413738;
+    font-size: clamp(1.7rem, 3vw, 2.15rem);
+    line-height: 1.1;
     font-weight: 900;
-
-    letter-spacing: -0.025em;
 }
 
 .mom-lab-verdict-status {
-    display: inline-flex;
+    position: relative;
+    z-index: 2;
 
+    display: inline-flex;
     align-items: center;
     justify-content: center;
 
-    margin-top: 9px;
-    padding: 7px 10px;
-
-    background: var(--lab-green-light, #edf7f1);
-
-    border: 1px solid #d8eadf;
+    padding: 8px 14px;
 
     border-radius: 999px;
+    background: #edf7f1;
+    color: #5e9676;
 
-    color: var(--lab-green, #5e9676);
-
-    font-size: 0.85rem;
-    line-height: 1;
-
+    font-size: 0.88rem;
+    line-height: 1.35;
     font-weight: 900;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.03em;
 }
 
 .mom-lab-verdict p {
-    max-width: 215px;
+    position: relative;
+    z-index: 2;
 
-    margin: 10px auto 0;
+    max-width: 390px;
+    margin: 14px auto 0;
 
-    color: var(--lab-muted, #817779);
-
+    color: #817779;
     font-size: 0.95rem;
-    line-height: 1.45;
-
+    line-height: 1.5;
     font-weight: 600;
 }
 
-
 /* =========================================================
-   BOTTOM WINDOW FRAME
+   WINDOW BOTTOM BUTTON
 ========================================================= */
 
 .mom-lab-home-button {
-    position: relative;
-    z-index: 4;
+    display: block;
+    width: fit-content;
 
-    display: inline-flex;
-
-    align-items: center;
-    justify-content: center;
-
-    gap: 5px;
-
-    min-height: 42px;
-
-    margin: 0 0 20px;
-    padding: 0 19px;
-
-    background: var(--lab-pink, #e89aaa);
-
-    border: 1px solid var(--lab-pink-dark, #cf6f87);
+    margin: 22px auto 26px;
+    padding: 14px 24px;
 
     border-radius: 999px;
 
+    background: #e89aaa;
     color: #ffffff;
 
-    font-size: 10px;
-    line-height: 1;
-
+    font-size: 0.96rem;
+    line-height: 1.2;
     font-weight: 900;
-
-    letter-spacing: 0.03em;
 
     text-decoration: none;
 
     box-shadow:
-        0 5px 12px rgba(207, 111, 135, 0.15);
+        0 7px 18px rgba(207, 111, 135, 0.20);
 
     transition:
-        transform 0.18s ease,
-        background 0.18s ease,
-        box-shadow 0.18s ease;
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 .mom-lab-home-button:hover {
-    background: var(--lab-pink-dark, #cf6f87);
-
-    border-color: var(--lab-pink-dark, #cf6f87);
-
-    color: #ffffff;
-
-    text-decoration: none;
-
     transform: translateY(-2px);
 
     box-shadow:
-        0 8px 18px rgba(207, 111, 135, 0.2);
+        0 10px 22px rgba(207, 111, 135, 0.25);
 }
-
-.mom-lab-home-button:active {
-    transform: translateY(0);
-}
-
 
 /* =========================================================
    MOBILE
@@ -766,156 +539,132 @@ button:hover{
 @media (max-width: 760px) {
 
     .mom-lab-home-section {
-        width: calc(100% - 24px);
-
-        margin-bottom: 38px;
-
+        margin: 50px 16px;
+        border-width: 6px;
         border-radius: 22px;
     }
 
     .mom-lab-home-header {
-        padding: 20px 32px 18px;
-
+        padding: 23px 18px 21px;
         border-bottom-width: 6px;
     }
 
-    .mom-lab-home-header::before {
-        left: 11px;
-    }
-
-    .mom-lab-home-header::after {
-        right: 11px;
-    }
-
     .mom-lab-home-header h2 {
-        font-size: 25px;
+        font-size: 1.75rem;
     }
 
     .mom-lab-home-header p {
-        font-size: 11px;
+        font-size: 0.95rem;
         line-height: 1.45;
     }
 
+    /* Keep the actual window frame */
     .mom-lab-home-content {
-        grid-template-columns: 1fr;
-
-        gap: 10px;
-
-        padding: 13px;
-    }
-
-    /*
-       Hide the desktop vertical mullion when stacked.
-       The frame is still represented by the outer window.
-    */
-    .mom-lab-home-content::after {
-        display: none;
+        display: block;
+        background: #d98296;
     }
 
     .mom-lab-tests {
-        grid-template-columns:
-            repeat(2, minmax(0, 1fr));
-
-        gap: 8px;
+        grid-template-columns: 1fr 1fr;
+        gap: 5px;
+        padding: 5px;
     }
 
     .mom-lab-test {
-        min-height: 86px;
-
-        grid-template-columns:
-            36px
-            minmax(0, 1fr);
-
-        column-gap: 8px;
-
-        padding: 11px;
-
-        border-radius: 16px;
-    }
-
-    .mom-lab-test::before {
-        left: 10px;
-        right: 10px;
+        min-height: 125px;
+        padding: 17px 14px;
+        gap: 10px;
     }
 
     .mom-lab-test-icon {
-        width: 36px;
-        height: 36px;
-
-        border-radius: 11px;
-
-        font-size: 18px;
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        font-size: 1.4rem;
     }
 
-    .mom-lab-test strong {
-        font-size: 11px;
+    .mom-lab-test-copy strong {
+        font-size: 1rem;
+        margin-bottom: 5px;
     }
 
-    .mom-lab-test small {
-        margin-top: 3px;
-
-        font-size: 8px;
-        line-height: 1.35;
+    .mom-lab-test-copy small {
+        font-size: 0.88rem;
+        line-height: 1.4;
     }
 
     .mom-lab-verdict {
-        padding: 18px 15px;
-
-        border-radius: 17px;
+        min-height: 220px;
+        margin-top: 5px;
+        padding: 24px 18px;
     }
 
-    .mom-lab-verdict h3 {
-        font-size: 23px;
+    .mom-lab-verdict-label {
+        font-size: 0.84rem;
+    }
+
+    .mom-lab-verdict-status {
+        font-size: 0.84rem;
     }
 
     .mom-lab-verdict p {
-        max-width: 270px;
-
-        font-size: 9px;
+        font-size: 0.92rem;
+        line-height: 1.45;
     }
 
     .mom-lab-home-button {
-        width: calc(100% - 26px);
-
-        margin: 0 13px 15px;
-
-        min-height: 41px;
+        margin: 19px auto 21px;
+        padding: 13px 20px;
+        font-size: 0.92rem;
     }
 }
 
-
-/* =========================================================
-   SMALL PHONES
-========================================================= */
-
-@media (max-width: 420px) {
+@media (max-width: 480px) {
 
     .mom-lab-home-section {
-        width: calc(100% - 18px);
-    }
-
-    .mom-lab-home-header {
-        padding: 18px 28px 16px;
+        margin-left: 10px;
+        margin-right: 10px;
     }
 
     .mom-lab-home-header h2 {
-        font-size: 23px;
+        font-size: 1.6rem;
     }
 
     .mom-lab-home-header p {
-        font-size: 10px;
-    }
-
-    .mom-lab-home-content {
-        padding: 10px;
+        font-size: 0.92rem;
     }
 
     .mom-lab-tests {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
+        gap: 4px;
+        padding: 4px;
     }
 
     .mom-lab-test {
-        min-height: 78px;
+        min-height: 140px;
+        padding: 16px 11px;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+    }
+
+    .mom-lab-test-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.3rem;
+    }
+
+    .mom-lab-test-copy strong {
+        font-size: 0.98rem;
+    }
+
+    .mom-lab-test-copy small {
+        font-size: 0.86rem;
+        line-height: 1.4;
+    }
+
+    .mom-lab-verdict {
+        min-height: 215px;
     }
 }
 
