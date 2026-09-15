@@ -54,36 +54,6 @@ body{
     padding-bottom:8px;
 }
 
-.hero-button{
-
-    display:inline-flex;
-    justify-content:center;
-    align-items:center;
-
-    background:#e89aaa;
-    color:white;
-
-    padding:18px 35px;
-
-    border-radius:50px;
-
-    font-size:18px;
-    font-weight:900;
-
-    text-decoration:none;
-
-    transition:.25s ease;
-
-}
-
-.hero-button:hover{
-
-    transform:translateY(-3px);
-
-    box-shadow:0 12px 30px rgba(232,154,170,.35);
-
-}
-
 .hero-text{
 
     width:100%;
@@ -2704,7 +2674,8 @@ box-shadow:0 10px 25px rgba(0,0,0,.08);
     font-size:11px;
 }
 
-.free-library-button{
+.free-library-button,
+.hero-button {
     display:inline-flex;
     align-items:center;
     justify-content:center;
@@ -2719,7 +2690,8 @@ box-shadow:0 10px 25px rgba(0,0,0,.08);
     transition:.2s ease;
 }
 
-.free-library-button:hover{
+.free-library-button:hover,
+.hero-button:hover {
     transform:translateY(-2px);
     box-shadow:0 7px 16px rgba(29,79,145,.2);
 }
