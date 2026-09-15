@@ -34,6 +34,7 @@ MOMYOU NEED THIS — MOM’S LAB
 --lab-shadow-lg:
     0 16px 42px rgba(70, 50, 50, 0.075);
 }
+
 /* =========================================================
 PAGE
 ========================================================= */
@@ -47,17 +48,21 @@ color: var(--lab-text);
 font-family: "Nunito", sans-serif;
 overflow-x: hidden;
 }
+
 .mom-lab-page *,
 .mom-lab-page *::before,
 .mom-lab-page *::after {
 box-sizing: border-box;
 }
+
 .mom-lab-page a {
 text-decoration: none;
 }
+
 .mom-lab-page img {
 max-width: 100%;
 }
+
 /* =========================================================
 HEADER
 ========================================================= */
@@ -69,6 +74,7 @@ display: grid;
 grid-template-columns: 1fr auto 1fr;
 align-items: center;
 }
+
 .lab-logo-link {
 grid-column: 2;
 grid-row: 1;
@@ -78,12 +84,14 @@ justify-content: center;
 width: max-content;
 z-index: 3;
 }
+
 .lab-logo {
 display: block;
 width: 170px;
 max-width: 170px;
 height: auto;
 }
+
 .lab-status {
 grid-column: 3;
 grid-row: 1;
@@ -101,6 +109,7 @@ font-weight: 900;
 letter-spacing: 0.07em;
 box-shadow: var(--lab-shadow-sm);
 }
+
 .status-light {
 width: 7px;
 height: 7px;
@@ -109,6 +118,7 @@ background: #69a982;
 box-shadow:
     0 0 0 4px rgba(105, 169, 130, 0.11);
 }
+
 /* =========================================================
 THE BUILDING
 ========================================================= */
@@ -118,6 +128,7 @@ width: min(1180px, calc(100% - 40px));
 margin: 6px auto 48px;
 padding-top: 54px;
 }
+
 /* =========================================================
 ROOF
 ========================================================= */
@@ -138,24 +149,26 @@ box-shadow:
     0 14px 28px rgba(100, 65, 70, 0.06);
 transform: perspective(700px) rotateX(3deg);
 }
+
 /* =========================================================
 PERFECT CENTERED ROOF CAP
 ========================================================= */
 .lab-building-roof::before {
-    content: "";
-    position: absolute;
-    left: 50%;
-    right: auto;
-    top: -16px;
-    width: calc(100% - 16px);
-    height: 30px;
-    transform: translateX(-50%);
-    border-radius: 24px 24px 10px 10px;
-    background: #f3d6dc;
-    border: 1px solid #e4c1c8;
-    box-shadow:
-        0 4px 0 #e8cbd0;
+content: "";
+position: absolute;
+left: 50%;
+right: auto;
+top: -16px;
+width: calc(100% - 16px);
+height: 30px;
+transform: translateX(-50%);
+border-radius: 24px 24px 10px 10px;
+background: #f3d6dc;
+border: 1px solid #e4c1c8;
+box-shadow:
+    0 4px 0 #e8cbd0;
 }
+
 /* =========================================================
 NEON SIGN
 ========================================================= */
@@ -178,6 +191,7 @@ box-shadow:
     inset 0 0 10px rgba(255, 255, 255, 0.45);
 transform-origin: center;
 }
+
 .roof-neon span {
 color: #fff;
 font-size: 30px;
@@ -190,6 +204,7 @@ text-shadow:
     0 0 18px rgba(232, 154, 170, 0.9);
 white-space: nowrap;
 }
+
 /* =========================================================
 BUILDING BODY
 ========================================================= */
@@ -207,6 +222,7 @@ background: #fff;
 box-shadow:
     0 13px 35px rgba(80, 60, 60, 0.075);
 }
+
 /* =========================================================
 SIDE WALL
 ========================================================= */
@@ -222,6 +238,7 @@ background:
     );
 border-right: 1px solid #eee2df;
 }
+
 .side-window {
 width: 62px;
 height: 83px;
@@ -237,6 +254,7 @@ background:
 box-shadow:
     inset 0 0 0 1px #e8d4d2;
 }
+
 .side-window::after {
 content: "";
 display: block;
@@ -245,6 +263,7 @@ height: 100%;
 margin: 0 auto;
 background: #e8d6d5;
 }
+
 .side-line {
 width: 42px;
 height: 3px;
@@ -252,6 +271,7 @@ margin: 0 auto 9px;
 border-radius: 999px;
 background: var(--lab-pink);
 }
+
 .side-text {
 display: block;
 text-align: center;
@@ -260,6 +280,7 @@ font-size: 8px;
 font-weight: 900;
 letter-spacing: 0.15em;
 }
+
 /* =========================================================
 STOREFRONT
 ========================================================= */
@@ -268,6 +289,7 @@ position: relative;
 padding: 20px 22px 0;
 background: #fffdfc;
 }
+
 .storefront-top {
 display: flex;
 align-items: center;
@@ -276,16 +298,19 @@ gap: 9px;
 height: 23px;
 margin-bottom: 8px;
 }
+
 .storefront-label {
 color: var(--lab-pink-dark);
 font-size: 8px;
 font-weight: 900;
 letter-spacing: 0.13em;
 }
+
 .storefront-light {
 color: #6faa80;
 font-size: 10px;
 }
+
 /* =========================================================
 STOREFRONT WINDOW
 ========================================================= */
@@ -306,6 +331,7 @@ box-shadow:
     inset 0 0 0 1px #dfc8c4,
     0 7px 0 #e9d4d0;
 }
+
 .window-glow {
 position: absolute;
 inset: 0;
@@ -317,6 +343,7 @@ background:
         transparent 75%
     );
 }
+
 .window-products {
 position: absolute;
 inset: 0;
@@ -326,6 +353,7 @@ justify-content: center;
 gap: 19px;
 padding: 20px 20px 16px;
 }
+
 .window-product {
 width: 69px;
 height: 76px;
@@ -339,15 +367,19 @@ font-size: 34px;
 box-shadow:
     0 8px 18px rgba(80, 60, 60, 0.07);
 }
+
 .window-product-one {
 transform: rotate(-2deg);
 }
+
 .window-product-two {
 transform: translateY(-6px) rotate(2deg);
 }
+
 .window-product-three {
 transform: rotate(-3deg);
 }
+
 .window-frame-left,
 .window-frame-right {
 position: absolute;
@@ -356,12 +388,15 @@ bottom: 0;
 width: 5px;
 background: #efd9d5;
 }
+
 .window-frame-left {
 left: 34%;
 }
+
 .window-frame-right {
 left: 67%;
 }
+
 /* =========================================================
 AWNING
 ========================================================= */
@@ -371,17 +406,20 @@ justify-content: center;
 gap: 10px;
 margin-top: 11px;
 }
+
 .storefront-awning span {
 color: #9d8c8e;
 font-size: 8px;
 font-weight: 900;
 letter-spacing: 0.08em;
 }
+
 .storefront-awning span:not(:last-child)::after {
 content: "•";
 margin-left: 10px;
 color: var(--lab-pink);
 }
+
 /* =========================================================
 DOOR
 ========================================================= */
@@ -399,7 +437,11 @@ background:
         #fff
     );
 border-left: 1px solid #eee3e0;
+color: inherit;
+text-decoration: none !important;
+cursor: pointer;
 }
+
 .lab-door {
 position: relative;
 width: 104px;
@@ -416,6 +458,7 @@ box-shadow:
     inset 0 0 0 1px #ddceca,
     0 7px 0 #e5d5d1;
 }
+
 .door-glass {
 position: absolute;
 top: 10px;
@@ -435,12 +478,14 @@ background:
         rgba(247, 238, 243, 0.85)
     );
 }
+
 .door-glass span {
 color: var(--lab-pink-dark);
 font-size: 7px;
 font-weight: 900;
 letter-spacing: 0.08em;
 }
+
 .door-glass strong {
 color: var(--lab-purple);
 font-size: 15px;
@@ -449,6 +494,7 @@ font-weight: 900;
 letter-spacing: 0.04em;
 text-align: center;
 }
+
 .door-handle {
 position: absolute;
 right: 10px;
@@ -460,6 +506,7 @@ background: #caaeb1;
 box-shadow:
     0 0 0 3px rgba(202, 174, 177, 0.12);
 }
+
 .door-note {
 max-width: 120px;
 margin-top: 17px;
@@ -470,91 +517,92 @@ line-height: 1.35;
 font-weight: 900;
 letter-spacing: 0.07em;
 }
+
 /* =========================================================
 GROUND
 ========================================================= */
 .lab-building-ground {
-    position: relative;
-    height: 48px;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    gap: 12px;
-    margin-top: 4px;
-    color: #79a27d;
-    font-size: 13px;
+position: relative;
+height: 48px;
+display: flex;
+align-items: flex-end;
+justify-content: center;
+gap: 12px;
+margin-top: 4px;
+color: #79a27d;
+font-size: 13px;
 }
-/* Grass line */
+
 .lab-building-ground div {
-    position: relative;
-    z-index: 3;
-    width: 82%;
-    height: 8px;
-    border-radius: 60% 60% 8px 8px;
-    background:
-        linear-gradient(
-            90deg,
-            #8aaa82,
-            #739b78,
-            #8aaa82
-        );
-    box-shadow:
-        0 -3px 0 rgba(94, 150, 118, 0.18);
+position: relative;
+z-index: 3;
+width: 82%;
+height: 8px;
+border-radius: 60% 60% 8px 8px;
+background:
+    linear-gradient(
+        90deg,
+        #8aaa82,
+        #739b78,
+        #8aaa82
+    );
+box-shadow:
+    0 -3px 0 rgba(94, 150, 118, 0.18);
 }
-/* Small grass blades */
+
 .lab-building-ground div::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: -6px;
-    height: 10px;
-    background:
-        repeating-linear-gradient(
-            105deg,
-            transparent 0,
-            transparent 8px,
-            #739b78 9px,
-            #739b78 11px,
-            transparent 12px,
-            transparent 19px
-        );
-    opacity: 0.75;
+content: "";
+position: absolute;
+left: 0;
+right: 0;
+top: -6px;
+height: 10px;
+background:
+    repeating-linear-gradient(
+        105deg,
+        transparent 0,
+        transparent 8px,
+        #739b78 9px,
+        #739b78 11px,
+        transparent 12px,
+        transparent 19px
+    );
+opacity: 0.75;
 }
 
 /* =========================================================
 ASYMMETRICAL FLOWERS
 ========================================================= */
-/* Replace the existing decorative emojis with flowers */
 .lab-building-ground > span:first-child,
 .lab-building-ground > span:last-child {
-    position: relative;
-    z-index: 4;
-    display: flex;
-    align-items: flex-end;
-    height: 38px;
-    font-size: 0;
+position: relative;
+z-index: 4;
+display: flex;
+align-items: flex-end;
+height: 38px;
+font-size: 0;
 }
-/* Left flower */
+
 .lab-building-ground > span:first-child::before {
-    content: "🌷";
-    display: block;
-    font-size: 22px;
-    line-height: 1;
-    transform:
-        translateY(-1px)
-        rotate(-9deg);
+content: "🌷";
+display: block;
+font-size: 22px;
+line-height: 1;
+transform:
+    translateY(-1px)
+    rotate(-9deg);
 }
-/* Right flower — intentionally different */
+
 .lab-building-ground > span:last-child::before {
-    content: "🌼";
-    display: block;
-    font-size: 21px;
-    line-height: 1;
-    transform:
-        translateY(-4px)
-        rotate(8deg);
+content: "🌼";
+display: block;
+font-size: 21px;
+line-height: 1;
+transform:
+    translateY(-4px)
+    rotate(8deg);
 }
+
 /* =========================================================
 INTRO
 ========================================================= */
@@ -566,9 +614,14 @@ align-items: flex-end;
 justify-content: space-between;
 gap: 30px;
 }
+
 .intro-copy {
+width: 100%;
 max-width: 650px;
+margin: 0 auto;
+text-align: center;
 }
+
 .section-kicker {
 display: block;
 margin-bottom: 6px;
@@ -577,6 +630,7 @@ font-size: 9px;
 font-weight: 900;
 letter-spacing: 0.13em;
 }
+
 .intro-copy h1 {
 margin: 0;
 color: var(--lab-text);
@@ -585,15 +639,18 @@ line-height: 1.02;
 letter-spacing: -0.035em;
 font-weight: 900;
 }
+
 .intro-copy h1 span {
 color: var(--lab-pink-dark);
 }
+
 .intro-copy p {
 margin: 9px 0 0;
 color: var(--lab-muted);
 font-size: 13px;
 font-weight: 700;
 }
+
 .intro-note {
 flex: 0 0 auto;
 max-width: 250px;
@@ -606,12 +663,15 @@ font-size: 9px;
 line-height: 1.4;
 box-shadow: var(--lab-shadow-sm);
 }
+
 .intro-note span {
 margin-right: 4px;
 }
+
 .intro-note strong {
 color: var(--lab-pink-dark);
 }
+
 /* =========================================================
 SHARED CONTENT WIDTH
 ========================================================= */
@@ -623,22 +683,27 @@ width: min(1180px, calc(100% - 40px));
 margin-left: auto;
 margin-right: auto;
 }
+
 /* =========================================================
 FILTERS
 ========================================================= */
 .lab-database {
 margin-bottom: 25px;
 }
+
 .lab-database-nav {
 display: flex;
+justify-content: center;
 gap: 8px;
 overflow-x: auto;
 padding: 2px 1px 7px;
 scrollbar-width: none;
 }
+
 .lab-database-nav::-webkit-scrollbar {
 display: none;
 }
+
 .database-filter {
 flex: 0 0 auto;
 display: inline-flex;
@@ -658,11 +723,13 @@ transition:
     background 0.18s ease,
     border-color 0.18s ease;
 }
+
 .database-filter:hover {
 transform: translateY(-2px);
 border-color: #e8bcc8;
 background: #fff9fa;
 }
+
 .database-filter.active {
 border-color: var(--lab-pink);
 background: var(--lab-pink);
@@ -670,12 +737,15 @@ color: #fff !important;
 box-shadow:
     0 7px 18px rgba(232, 154, 170, 0.17);
 }
+
 /* =========================================================
 SECTION HEADINGS
 ========================================================= */
 .section-heading {
 margin-bottom: 21px;
+text-align: center;
 }
+
 .section-heading h2 {
 margin: 0;
 color: var(--lab-text);
@@ -684,15 +754,18 @@ line-height: 1.04;
 letter-spacing: -0.025em;
 font-weight: 900;
 }
+
 .section-heading h2 span {
 color: var(--lab-pink-dark);
 }
+
 .section-heading > p {
 margin: 7px 0 0;
 color: var(--lab-muted);
 font-size: 12px;
 font-weight: 600;
 }
+
 /* =========================================================
 FEATURED PRODUCT
 ========================================================= */
@@ -700,6 +773,7 @@ FEATURED PRODUCT
 width: min(960px, calc(100% - 40px));
 margin: 0 auto 52px;
 }
+
 .featured-product-inner {
 display: grid;
 grid-template-columns: 1.15fr 0.85fr;
@@ -710,6 +784,7 @@ border-radius: var(--lab-radius-xl);
 background: #fff;
 box-shadow: var(--lab-shadow-md);
 }
+
 .featured-product-copy {
 display: flex;
 flex-direction: column;
@@ -717,6 +792,7 @@ justify-content: center;
 align-items: flex-start;
 padding: 32px 37px;
 }
+
 .featured-label {
 display: inline-flex;
 padding: 6px 10px;
@@ -728,6 +804,7 @@ font-size: 8px;
 font-weight: 900;
 letter-spacing: 0.09em;
 }
+
 .featured-product-copy h2 {
 max-width: 500px;
 margin: 13px 0 8px;
@@ -737,9 +814,11 @@ line-height: 1;
 letter-spacing: -0.035em;
 font-weight: 900;
 }
+
 .featured-product-copy h2 span {
 color: var(--lab-pink-dark);
 }
+
 .featured-description {
 max-width: 475px;
 margin: 0;
@@ -748,28 +827,33 @@ font-size: 12px;
 line-height: 1.5;
 font-weight: 600;
 }
+
 .featured-bottom {
 display: flex;
 align-items: center;
 gap: 12px;
 margin-top: 13px;
 }
+
 .featured-score {
 display: flex;
 align-items: baseline;
 gap: 3px;
 }
+
 .featured-score strong {
 color: var(--lab-text);
 font-size: 46px;
 line-height: 1;
 font-weight: 900;
 }
+
 .featured-score span {
 color: var(--lab-muted);
 font-size: 11px;
 font-weight: 800;
 }
+
 .featured-verdict {
 padding: 7px 9px;
 border: 1px solid #d8eadf;
@@ -780,6 +864,7 @@ font-size: 8px;
 font-weight: 900;
 letter-spacing: 0.05em;
 }
+
 .featured-product-button {
 display: inline-flex;
 align-items: center;
@@ -798,10 +883,12 @@ transition:
     transform 0.18s ease,
     background 0.18s ease;
 }
+
 .featured-product-button:hover {
 transform: translateY(-2px);
 background: var(--lab-pink-dark);
 }
+
 /* =========================================================
 FEATURED VISUAL
 ========================================================= */
@@ -826,6 +913,7 @@ background:
         #f7f1f6
     );
 }
+
 .featured-visual-label {
 position: absolute;
 top: 20px;
@@ -835,6 +923,7 @@ font-size: 7px;
 font-weight: 900;
 letter-spacing: 0.13em;
 }
+
 .featured-product-placeholder {
 position: relative;
 z-index: 1;
@@ -851,24 +940,28 @@ box-shadow:
     0 13px 30px rgba(70, 50, 50, 0.07);
 transform: rotate(-2deg);
 }
+
 .featured-visual-caption {
 display: flex;
 align-items: center;
 gap: 6px;
 margin-top: 13px;
 }
+
 .featured-visual-caption span {
 color: #aaa0a2;
 font-size: 7px;
 font-weight: 900;
 letter-spacing: 0.1em;
 }
+
 .featured-visual-caption strong {
 color: var(--lab-green);
 font-size: 8px;
 font-weight: 900;
 letter-spacing: 0.08em;
 }
+
 /* =========================================================
 PRODUCTS
 IMPORTANT:
@@ -877,12 +970,14 @@ CARD DIMENSIONS PRESERVED
 .lab-products {
 margin-bottom: 58px;
 }
+
 .lab-product-grid {
 display: grid;
 grid-template-columns:
     repeat(3, minmax(0, 1fr));
 gap: 20px;
 }
+
 /* =========================================================
 PRODUCT CARD
 ========================================================= */
@@ -901,11 +996,13 @@ transition:
     box-shadow 0.2s ease,
     border-color 0.2s ease;
 }
+
 .lab-product-card:hover {
 transform: translateY(-4px);
 border-color: #e7d2d5;
 box-shadow: var(--lab-shadow-md);
 }
+
 /* =========================================================
 PRODUCT IMAGE
 SAME SIZE
@@ -924,6 +1021,7 @@ background:
         #fdf1f4
     );
 }
+
 .product-image-placeholder {
 width: 125px;
 height: 125px;
@@ -936,45 +1034,19 @@ font-size: 58px;
 box-shadow:
     0 12px 30px rgba(70, 50, 50, 0.06);
 }
-/* =========================================================
-STATUS BADGES
-========================================================= */
-.product-status-badge {
-position: absolute;
-top: 13px;
-left: 13px;
-z-index: 4;
-display: inline-flex;
-align-items: center;
-padding: 7px 10px;
-border-radius: 999px;
-font-size: 9px;
-font-weight: 900;
-}
-.product-status-badge.survived {
-border: 1px solid #d8eadf;
-background: var(--lab-green-light);
-color: var(--lab-green);
-}
-.product-status-badge.competing {
-border: 1px solid #ecd7df;
-background: var(--lab-pink-light);
-color: var(--lab-pink-dark);
-}
-.product-status-badge.failed {
-border: 1px solid #f0d7da;
-background: var(--lab-red-light);
-color: var(--lab-red);
-}
+
 /* =========================================================
 PRODUCT CONTENT
 ========================================================= */
 .product-card-content {
 display: flex;
 flex-direction: column;
+align-items: center;
 flex: 1;
 padding: 20px;
+text-align: center;
 }
+
 .product-category {
 display: block;
 margin-bottom: 7px;
@@ -983,6 +1055,7 @@ font-size: 9px;
 font-weight: 900;
 letter-spacing: 0.12em;
 }
+
 .product-card-content h3 {
 margin: 0;
 color: var(--lab-text);
@@ -990,6 +1063,7 @@ font-size: 21px;
 line-height: 1.12;
 font-weight: 900;
 }
+
 .product-description {
 min-height: 42px;
 margin: 9px 0 17px;
@@ -998,10 +1072,12 @@ font-size: 13px;
 line-height: 1.5;
 font-weight: 600;
 }
+
 /* =========================================================
 SCORE
 ========================================================= */
 .product-score-row {
+width: 100%;
 display: flex;
 align-items: center;
 justify-content: space-between;
@@ -1009,37 +1085,44 @@ padding: 12px 0;
 border-top: 1px solid var(--lab-border);
 border-bottom: 1px solid var(--lab-border);
 }
+
 .product-score {
 display: flex;
 align-items: baseline;
 gap: 3px;
 }
+
 .product-score strong {
 color: var(--lab-text);
 font-size: 29px;
 line-height: 1;
 font-weight: 900;
 }
+
 .product-score span {
 color: var(--lab-muted);
 font-size: 11px;
 font-weight: 800;
 }
+
 .product-score-label {
 color: var(--lab-light-text);
 font-size: 8px;
 font-weight: 900;
 letter-spacing: 0.08em;
 }
+
 /* =========================================================
 MINI TESTS
 ========================================================= */
 .mini-tests {
 display: flex;
 flex-wrap: wrap;
+justify-content: center;
 gap: 6px;
 margin: 14px 0;
 }
+
 .mini-tests span {
 display: inline-flex;
 align-items: center;
@@ -1052,88 +1135,80 @@ font-size: 9px;
 line-height: 1.2;
 font-weight: 800;
 }
-/* =========================================================
-VERDICT
-========================================================= */
-.product-verdict {
-width: 100%;
-margin-top: auto;
-margin-bottom: 10px;
-padding: 9px 10px;
-border-radius: 9px;
-text-align: center;
-font-size: 9px;
-font-weight: 900;
-letter-spacing: 0.05em;
-}
-.product-verdict.survived {
-border: 1px solid #d8eadf;
-background: var(--lab-green-light);
-color: var(--lab-green);
-}
-.product-verdict.competing {
-border: 1px solid #ecd7df;
-background: var(--lab-pink-light);
-color: var(--lab-pink-dark);
-}
-.product-verdict.failed {
-border: 1px solid #f0d7da;
-background: var(--lab-red-light);
-color: var(--lab-red);
-}
+
 /* =========================================================
 PRODUCT BUTTON
 ========================================================= */
 .product-buy-button {
 width: 100%;
-min-height: 48px;
+min-height: 52px;
 display: flex;
 align-items: center;
 justify-content: center;
 border-radius: 999px;
 background: var(--lab-pink);
+border: 2px solid var(--lab-pink);
 color: #fff !important;
-font-size: 10px;
+font-size: 11px;
 font-weight: 900;
-letter-spacing: 0.04em;
+letter-spacing: 0.06em;
 box-shadow:
-    0 7px 17px rgba(232, 154, 170, 0.12);
+    0 8px 20px rgba(232, 154, 170, 0.24);
 transition:
     transform 0.18s ease,
-    background 0.18s ease;
+    background 0.18s ease,
+    box-shadow 0.18s ease;
 }
+
 .product-buy-button:hover {
 transform: translateY(-2px);
 background: var(--lab-pink-dark);
+border-color: var(--lab-pink-dark);
+box-shadow:
+    0 11px 24px rgba(207, 111, 135, 0.24);
 }
+
 .product-buy-button.failed-button {
 background: #c78691;
+border-color: #c78691;
 }
+
 .product-buy-button.failed-button:hover {
 background: var(--lab-red);
+border-color: var(--lab-red);
 }
+
 /* =========================================================
 PRODUCT SHUTTER
-FULL CARD CLICK-TO-OPEN DOOR
+TWO-PANEL SWINGING DOOR
 ========================================================= */
 .hidden-test-card .product-card-image {
 position: static;
 }
+
 .product-shutter {
 position: absolute;
 inset: 0;
 z-index: 5;
 display: flex;
-flex-direction: column;
 align-items: center;
 justify-content: center;
-gap: 8px;
 width: 100%;
 height: 100%;
 padding: 0;
 border: 0;
 border-radius: 0;
 cursor: pointer;
+background: transparent;
+perspective: 900px;
+}
+
+.shutter-door-left,
+.shutter-door-right {
+position: absolute;
+top: 0;
+bottom: 0;
+width: 50%;
 background:
     repeating-linear-gradient(
         90deg,
@@ -1143,71 +1218,115 @@ background:
         #ecd3d6 18px
     );
 box-shadow:
-    inset 0 0 0 1px rgba(200, 165, 170, 0.3),
-    0 8px 18px rgba(70, 50, 50, 0.08);
+    inset 0 0 0 1px rgba(200, 165, 170, 0.3);
+backface-visibility: hidden;
 transition:
-    transform 0.55s cubic-bezier(.2,.8,.2,1),
-    opacity 0.2s ease;
+    transform 0.7s cubic-bezier(.2,.8,.2,1);
 }
-.product-shutter:hover {
+
+.shutter-door-left {
+left: 0;
+transform-origin: left center;
+border-right: 1px solid rgba(170, 130, 135, 0.25);
+}
+
+.shutter-door-right {
+right: 0;
+transform-origin: right center;
+border-left: 1px solid rgba(170, 130, 135, 0.25);
+}
+
+.product-shutter:hover .shutter-door-left,
+.product-shutter:hover .shutter-door-right {
 background:
-repeating-linear-gradient(
-90deg,
-#f1dadd 0,
-#f1dadd 16px,
-#e9cdd1 16px,
-#e9cdd1 18px
-);
+    repeating-linear-gradient(
+        90deg,
+        #f1dadd 0,
+        #f1dadd 16px,
+        #e9cdd1 16px,
+        #e9cdd1 18px
+    );
 }
-.product-shutter-pink {
+
+.product-shutter-pink .shutter-door-left,
+.product-shutter-pink .shutter-door-right {
 background:
-repeating-linear-gradient(
-90deg,
-#f0d6df 0,
-#f0d6df 16px,
-#e8c8d2 16px,
-#e8c8d2 18px
-);
+    repeating-linear-gradient(
+        90deg,
+        #f0d6df 0,
+        #f0d6df 16px,
+        #e8c8d2 16px,
+        #e8c8d2 18px
+    );
 }
-.product-shutter-pink:hover {
+
+.product-shutter-pink:hover .shutter-door-left,
+.product-shutter-pink:hover .shutter-door-right {
 background:
-repeating-linear-gradient(
-90deg,
-#edced9 0,
-#edced9 16px,
-#e3bdca 16px,
-#e3bdca 18px
-);
+    repeating-linear-gradient(
+        90deg,
+        #edced9 0,
+        #edced9 16px,
+        #e3bdca 16px,
+        #e3bdca 18px
+    );
 }
-.hidden-test-card.is-open .product-shutter {
-transform: translateY(-103%);
+
+.hidden-test-card.is-open .shutter-door-left {
+transform: rotateY(-105deg);
 }
+
+.hidden-test-card.is-open .shutter-door-right {
+transform: rotateY(105deg);
+}
+
+.shutter-center-content {
+position: relative;
+z-index: 3;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+gap: 8px;
+pointer-events: none;
+transition:
+    opacity 0.25s ease;
+}
+
+.hidden-test-card.is-open .shutter-center-content {
+opacity: 0;
+}
+
 .shutter-handle {
 width: 32px;
 height: 5px;
 border-radius: 999px;
-background: rgba(255, 255, 255, 0.88);
+background: rgba(255, 255, 255, 0.92);
 box-shadow:
     0 2px 5px rgba(80, 50, 55, 0.12);
 }
+
 .shutter-label {
-color: rgba(108, 75, 80, 0.78);
+color: rgba(108, 75, 80, 0.82);
 font-size: 8px;
 font-weight: 900;
 letter-spacing: 0.14em;
 }
+
 /* =========================================================
 SCORE SECTION
 ========================================================= */
 .lab-score-section {
 margin-bottom: 58px;
 }
+
 .lab-score-grid {
 display: grid;
 grid-template-columns:
     repeat(4, minmax(0, 1fr));
 gap: 13px;
 }
+
 .score-factor {
 display: flex;
 align-items: center;
@@ -1221,10 +1340,12 @@ transition:
     transform 0.18s ease,
     box-shadow 0.18s ease;
 }
+
 .score-factor:hover {
 transform: translateY(-2px);
 box-shadow: var(--lab-shadow-md);
 }
+
 .score-factor > span {
 width: 39px;
 height: 39px;
@@ -1236,18 +1357,21 @@ border-radius: 12px;
 background: var(--lab-pink-soft);
 font-size: 18px;
 }
+
 .score-factor strong {
 color: var(--lab-text);
 font-size: 12px;
 line-height: 1.25;
 font-weight: 900;
 }
+
 /* =========================================================
 WINNERS
 ========================================================= */
 .lab-winners-section {
 margin-bottom: 38px;
 }
+
 .winner-preview {
 display: flex;
 align-items: center;
@@ -1258,6 +1382,7 @@ border-radius: var(--lab-radius-lg);
 background: var(--lab-gold-light);
 box-shadow: var(--lab-shadow-sm);
 }
+
 .winner-preview-icon {
 width: 55px;
 height: 55px;
@@ -1270,6 +1395,7 @@ background: #fff;
 font-size: 27px;
 box-shadow: var(--lab-shadow-sm);
 }
+
 .winner-preview-copy span {
 display: block;
 margin-bottom: 4px;
@@ -1278,12 +1404,14 @@ font-size: 8px;
 font-weight: 900;
 letter-spacing: 0.1em;
 }
+
 .winner-preview-copy h3 {
 margin: 0 0 4px;
 color: var(--lab-text);
 font-size: 18px;
 font-weight: 900;
 }
+
 .winner-preview-copy p {
 margin: 0;
 color: var(--lab-muted);
@@ -1291,6 +1419,7 @@ font-size: 11px;
 line-height: 1.4;
 font-weight: 600;
 }
+
 /* =========================================================
 MOM BATTLES
 ========================================================= */
@@ -1298,6 +1427,7 @@ MOM BATTLES
 width: min(960px, calc(100% - 40px));
 margin: 0 auto 34px;
 }
+
 .battle-connection-inner {
 display: flex;
 align-items: center;
@@ -1314,6 +1444,11 @@ background:
     );
 box-shadow: var(--lab-shadow-sm);
 }
+
+.connection-copy {
+text-align: center;
+}
+
 .connection-copy > span {
 display: block;
 margin-bottom: 4px;
@@ -1322,6 +1457,7 @@ font-size: 8px;
 font-weight: 900;
 letter-spacing: 0.12em;
 }
+
 .connection-copy h2 {
 margin: 0;
 color: var(--lab-text);
@@ -1329,15 +1465,18 @@ font-size: 24px;
 line-height: 1.1;
 font-weight: 900;
 }
+
 .connection-copy h2 strong {
 color: var(--lab-pink-dark);
 }
+
 .connection-copy p {
 margin: 5px 0 12px;
 color: var(--lab-muted);
 font-size: 11px;
 font-weight: 600;
 }
+
 .lab-battle-button {
 display: inline-flex;
 align-items: center;
@@ -1345,7 +1484,7 @@ justify-content: center;
 min-height: 41px;
 padding: 8px 14px;
 border-radius: 999px;
-background: var(--lab-text);
+background: #e89a3a;
 color: #fff !important;
 font-size: 9px;
 font-weight: 900;
@@ -1353,10 +1492,12 @@ transition:
     transform 0.18s ease,
     background 0.18s ease;
 }
+
 .lab-battle-button:hover {
 transform: translateY(-2px);
-background: var(--lab-pink-dark);
+background: #d77f20;
 }
+
 .connection-icon {
 width: 58px;
 height: 58px;
@@ -1368,6 +1509,7 @@ border-radius: 17px;
 background: var(--lab-pink-light);
 font-size: 27px;
 }
+
 /* =========================================================
 SUBMISSION
 ========================================================= */
@@ -1375,6 +1517,7 @@ SUBMISSION
 width: min(760px, calc(100% - 40px));
 margin: 0 auto 48px;
 }
+
 .submission-card {
 padding: 30px 25px;
 text-align: center;
@@ -1383,6 +1526,7 @@ border-radius: var(--lab-radius-xl);
 background: #fff;
 box-shadow: var(--lab-shadow-md);
 }
+
 .submission-icon {
 width: 49px;
 height: 49px;
@@ -1394,6 +1538,7 @@ border-radius: 14px;
 background: var(--lab-pink-light);
 font-size: 23px;
 }
+
 .submission-card > span {
 display: block;
 margin-bottom: 5px;
@@ -1402,12 +1547,14 @@ font-size: 8px;
 font-weight: 900;
 letter-spacing: 0.11em;
 }
+
 .submission-card h2 {
 margin: 0;
 color: var(--lab-text);
 font-size: clamp(27px, 3.5vw, 37px);
 font-weight: 900;
 }
+
 .submission-card p {
 max-width: 500px;
 margin: 7px auto 16px;
@@ -1416,6 +1563,7 @@ font-size: 12px;
 line-height: 1.5;
 font-weight: 600;
 }
+
 .submission-button {
 display: inline-flex;
 align-items: center;
@@ -1431,57 +1579,12 @@ transition:
     transform 0.18s ease,
     background 0.18s ease;
 }
+
 .submission-button:hover {
 transform: translateY(-2px);
 background: var(--lab-pink-dark);
 }
-/* =========================================================
-FINAL CTA
-========================================================= */
-.lab-final-cta {
-width: min(960px, calc(100% - 40px));
-margin: 0 auto 37px;
-}
-.cta-file {
-padding: 23px 25px;
-text-align: center;
-border: 1px solid #e8dfdf;
-border-radius: var(--lab-radius-lg);
-background: rgba(255, 255, 255, 0.72);
-box-shadow: var(--lab-shadow-sm);
-}
-.cta-file > span {
-display: block;
-margin-bottom: 4px;
-color: var(--lab-pink-dark);
-font-size: 8px;
-font-weight: 900;
-letter-spacing: 0.12em;
-}
-.cta-file strong {
-display: block;
-color: var(--lab-text);
-font-size: 21px;
-font-weight: 900;
-}
-.cta-line {
-width: 40px;
-height: 3px;
-margin: 10px auto;
-border-radius: 999px;
-background: var(--lab-pink);
-}
-.cta-file p {
-margin: 0 0 10px;
-color: var(--lab-muted);
-font-size: 10px;
-font-weight: 600;
-}
-.cta-file a {
-color: var(--lab-pink-dark) !important;
-font-size: 9px;
-font-weight: 900;
-}
+
 /* =========================================================
 FOOTER
 ========================================================= */
@@ -1492,24 +1595,28 @@ padding: 24px 0 31px;
 text-align: center;
 border-top: 1px solid var(--lab-border);
 }
+
 .lab-footer img {
 display: block;
 width: 135px;
 height: auto;
 margin: 0 auto 9px;
 }
+
 .lab-footer p {
 margin: 4px 0;
 color: var(--lab-muted);
 font-size: 9px;
 font-weight: 600;
 }
+
 .lab-footer .affiliate-disclosure {
 max-width: 600px;
 margin: 7px auto 0;
 color: #aaa0a2;
 font-size: 8px;
 }
+
 /* =========================================================
 TABLET
 ========================================================= */
@@ -1518,22 +1625,27 @@ TABLET
     grid-template-columns:
         0.55fr 1.7fr 0.65fr;
 }
+
 .lab-product-grid {
     grid-template-columns:
         repeat(2, minmax(0, 1fr));
 }
+
 .lab-score-grid {
     grid-template-columns:
         repeat(2, minmax(0, 1fr));
 }
+
 .roof-neon span {
     font-size: 27px;
 }
 }
+
 /* =========================================================
 MOBILE
 ========================================================= */
 @media (max-width: 640px) {
+
 /* -----------------------------------------
    HEADER
 ----------------------------------------- */
@@ -1541,15 +1653,18 @@ MOBILE
     width: calc(100% - 24px);
     min-height: 73px;
 }
+
 .lab-logo {
     width: 140px;
     max-width: 140px;
 }
+
 .lab-status {
     max-width: 91px;
     padding: 6px 8px;
     font-size: 7px;
 }
+
 /* -----------------------------------------
    BUILDING
 ----------------------------------------- */
@@ -1558,10 +1673,12 @@ MOBILE
     padding-top: 39px;
     margin-bottom: 34px;
 }
+
 .lab-building-roof {
     height: 88px;
     border-radius: 20px 20px 4px 4px;
 }
+
 .lab-building-roof::before {
     left: 50%;
     right: auto;
@@ -1570,16 +1687,19 @@ MOBILE
     height: 22px;
     transform: translateX(-50%);
 }
+
 .roof-neon {
     top: 12px;
     min-width: 205px;
     padding: 10px 17px;
     border-radius: 8px;
 }
+
 .roof-neon span {
     font-size: 22px;
     letter-spacing: 0.07em;
 }
+
 /* -----------------------------------------
    BUILDING BODY
    SIDE WALL + STORE + DOOR
@@ -1589,69 +1709,85 @@ MOBILE
     min-height: 204px;
     border-radius: 0 0 17px 17px;
 }
+
 .building-side {
     min-height: 204px;
     padding: 24px 7px;
 }
+
 .side-window {
     width: 35px;
     height: 52px;
     margin-bottom: 17px;
     border-width: 4px;
 }
+
 .side-line {
     width: 25px;
     margin-bottom: 6px;
 }
+
 .side-text {
     font-size: 5px;
 }
+
 /* -----------------------------------------
    STOREFRONT
 ----------------------------------------- */
 .lab-storefront {
     padding: 13px 9px 0;
 }
+
 .storefront-top {
     height: 15px;
     gap: 5px;
     margin-bottom: 5px;
 }
+
 .storefront-label {
     font-size: 5px;
 }
+
 .storefront-light {
     font-size: 6px;
 }
+
 .storefront-window {
     height: 128px;
     border-width: 5px;
     border-radius: 11px 11px 3px 3px;
 }
+
 .window-products {
     gap: 7px;
     padding: 12px 7px 9px;
 }
+
 .window-product {
     width: 38px;
     height: 48px;
     border-radius: 9px 9px 5px 5px;
     font-size: 20px;
 }
+
 .window-frame-left,
 .window-frame-right {
     width: 3px;
 }
+
 .storefront-awning {
     gap: 4px;
     margin-top: 7px;
 }
+
 .storefront-awning span {
     font-size: 5px;
 }
+
 .storefront-awning span:not(:last-child)::after {
     margin-left: 4px;
 }
+
 /* -----------------------------------------
    DOOR
 ----------------------------------------- */
@@ -1659,41 +1795,49 @@ MOBILE
     min-height: 204px;
     padding: 15px 5px;
 }
+
 .lab-door {
     width: 52px;
     height: 119px;
     border-width: 5px;
     border-radius: 8px 8px 2px 2px;
 }
+
 .door-glass {
     top: 6px;
     left: 5px;
     right: 5px;
     height: 59px;
 }
+
 .door-glass span {
     font-size: 4px;
 }
+
 .door-glass strong {
     font-size: 9px;
 }
+
 .door-handle {
     right: 5px;
     top: 79px;
     width: 4px;
     height: 4px;
 }
+
 .door-note {
     max-width: 60px;
     margin-top: 9px;
     font-size: 4px;
 }
+
 .lab-building-ground {
     height: 17px;
     margin-top: 2px;
     gap: 5px;
     font-size: 6px;
 }
+
 /* -----------------------------------------
    INTRO
 ----------------------------------------- */
@@ -1702,22 +1846,31 @@ MOBILE
     display: block;
     margin-bottom: 23px;
 }
+
+.intro-copy {
+    text-align: center;
+}
+
 .section-kicker {
     font-size: 7px;
 }
+
 .intro-copy h1 {
     font-size: 29px;
 }
+
 .intro-copy p {
     margin-top: 7px;
     font-size: 10px;
 }
+
 .intro-note {
     max-width: none;
     margin-top: 12px;
     padding: 9px 10px;
     font-size: 8px;
 }
+
 /* -----------------------------------------
    CONTENT WIDTH
 ----------------------------------------- */
@@ -1727,103 +1880,132 @@ MOBILE
 .lab-winners-section,
 .lab-featured-product,
 .lab-battle-connection,
-.lab-final-cta,
 .lab-footer,
 .lab-submission {
     width: calc(100% - 24px);
 }
+
 /* -----------------------------------------
    FILTERS
 ----------------------------------------- */
 .lab-database {
     margin-bottom: 18px;
 }
+
+.lab-database-nav {
+    justify-content: center;
+}
+
 .database-filter {
     min-height: 34px;
     padding: 7px 10px;
     font-size: 7px;
 }
+
 /* -----------------------------------------
    FEATURED
 ----------------------------------------- */
 .lab-featured-product {
     margin-bottom: 34px;
 }
+
 .featured-product-inner {
     grid-template-columns: 1fr;
     min-height: 0;
     border-radius: 20px;
 }
+
 .featured-product-copy {
+    align-items: center;
     padding: 21px 18px;
+    text-align: center;
 }
+
 .featured-label {
     padding: 5px 8px;
     font-size: 7px;
 }
+
 .featured-product-copy h2 {
     margin: 10px 0 7px;
     font-size: 29px;
 }
+
 .featured-description {
     font-size: 9px;
 }
+
 .featured-bottom {
     margin-top: 10px;
 }
+
 .featured-score strong {
     font-size: 39px;
 }
+
 .featured-score span {
     font-size: 9px;
 }
+
 .featured-verdict {
     padding: 6px 8px;
     font-size: 7px;
 }
+
 .featured-product-button {
     width: 100%;
     min-height: 43px;
     margin-top: 12px;
     font-size: 8px;
 }
+
 .featured-product-visual {
     min-height: 155px;
     padding: 18px;
 }
+
 .featured-visual-label {
     top: 14px;
     font-size: 6px;
 }
+
 .featured-product-placeholder {
     width: 100px;
     height: 100px;
     border-radius: 20px;
     font-size: 42px;
 }
+
 .featured-visual-caption {
     margin-top: 8px;
 }
+
 .featured-visual-caption span,
 .featured-visual-caption strong {
     font-size: 6px;
 }
+
 /* -----------------------------------------
    PRODUCT SECTION
 ----------------------------------------- */
 .lab-products {
     margin-bottom: 39px;
 }
+
 .section-heading {
     margin-bottom: 15px;
+    text-align: center;
 }
+
 .section-heading h2 {
     font-size: 25px;
 }
+
 .section-heading > p {
     font-size: 9px;
     line-height: 1.4;
 }
+
 /* -----------------------------------------
    PRODUCT GRID
    SAME CARD DIMENSIONS
@@ -1833,173 +2015,208 @@ MOBILE
         repeat(2, minmax(0, 1fr));
     gap: 10px;
 }
+
 .lab-product-card {
     border-radius: 16px;
 }
+
 .product-card-image {
     height: 132px;
     padding: 12px;
 }
+
 .product-image-placeholder {
     width: 78px;
     height: 78px;
     border-radius: 17px;
     font-size: 36px;
 }
-.product-status-badge {
-    top: 7px;
-    left: 7px;
-    padding: 5px 6px;
-    font-size: 6.5px;
-}
+
 .product-card-content {
     padding: 12px;
+    text-align: center;
 }
+
 .product-category {
     margin-bottom: 5px;
     font-size: 7px;
 }
+
 .product-card-content h3 {
     font-size: 15px;
     line-height: 1.12;
 }
+
 .product-description {
     min-height: 0;
     margin: 6px 0 10px;
     font-size: 10px;
     line-height: 1.35;
 }
+
 .product-score-row {
     padding: 9px 0;
 }
+
 .product-score strong {
     font-size: 23px;
 }
+
 .product-score span {
     font-size: 8px;
 }
+
 .product-score-label {
     font-size: 6.5px;
 }
+
 .mini-tests {
+    justify-content: center;
     gap: 4px;
     margin: 9px 0;
 }
+
 .mini-tests span {
     padding: 4px 5px;
     font-size: 6.5px;
     border-radius: 6px;
 }
-.product-verdict {
-    margin-bottom: 7px;
-    padding: 7px 5px;
-    font-size: 6.5px;
-    border-radius: 7px;
-}
+
 .product-buy-button {
-    min-height: 41px;
-    font-size: 7px;
+    min-height: 46px;
+    font-size: 7.5px;
 }
+
 .shutter-label {
     font-size: 7px;
 }
+
 .shutter-handle {
     width: 25px;
     height: 4px;
 }
+
 /* -----------------------------------------
    SCORE
 ----------------------------------------- */
 .lab-score-section {
     margin-bottom: 39px;
 }
+
 .lab-score-grid {
     grid-template-columns:
         repeat(2, minmax(0, 1fr));
     gap: 8px;
 }
+
 .score-factor {
     gap: 7px;
     padding: 10px 9px;
     border-radius: 13px;
 }
+
 .score-factor > span {
     width: 29px;
     height: 29px;
     border-radius: 9px;
     font-size: 13px;
 }
+
 .score-factor strong {
     font-size: 8px;
 }
+
 /* -----------------------------------------
    WINNERS
 ----------------------------------------- */
 .lab-winners-section {
     margin-bottom: 27px;
 }
+
 .winner-preview {
     gap: 10px;
     padding: 14px;
     border-radius: 15px;
 }
+
 .winner-preview-icon {
     width: 42px;
     height: 42px;
     border-radius: 11px;
     font-size: 20px;
 }
+
+.winner-preview-copy {
+    text-align: center;
+}
+
 .winner-preview-copy span {
     font-size: 6px;
 }
+
 .winner-preview-copy h3 {
     font-size: 13px;
 }
+
 .winner-preview-copy p {
     font-size: 7.5px;
 }
+
 /* -----------------------------------------
    BATTLES
 ----------------------------------------- */
 .lab-battle-connection {
     margin-bottom: 24px;
 }
+
 .battle-connection-inner {
     gap: 13px;
     padding: 16px 14px;
     border-radius: 16px;
 }
+
+.connection-copy {
+    text-align: center;
+}
+
 .connection-copy > span {
     font-size: 6px;
 }
+
 .connection-copy h2 {
     font-size: 17px;
 }
+
 .connection-copy p {
     margin: 4px 0 8px;
     font-size: 7.5px;
 }
+
 .lab-battle-button {
     min-height: 35px;
     padding: 7px 10px;
     font-size: 6.5px;
 }
+
 .connection-icon {
     width: 40px;
     height: 40px;
     border-radius: 11px;
     font-size: 18px;
 }
+
 /* -----------------------------------------
    SUBMISSION
 ----------------------------------------- */
 .lab-submission {
     margin-bottom: 31px;
 }
+
 .submission-card {
     padding: 22px 15px;
     border-radius: 19px;
 }
+
 .submission-icon {
     width: 42px;
     height: 42px;
@@ -2007,64 +2224,47 @@ MOBILE
     border-radius: 11px;
     font-size: 19px;
 }
+
 .submission-card > span {
     font-size: 6.5px;
 }
+
 .submission-card h2 {
     font-size: 25px;
 }
+
 .submission-card p {
     margin: 6px auto 13px;
     font-size: 8px;
 }
+
 .submission-button {
     width: 100%;
     min-height: 41px;
     font-size: 7px;
 }
-/* -----------------------------------------
-   FINAL
------------------------------------------ */
-.lab-final-cta {
-    margin-bottom: 27px;
-}
-.cta-file {
-    padding: 19px 13px;
-    border-radius: 15px;
-}
-.cta-file > span {
-    font-size: 6px;
-}
-.cta-file strong {
-    font-size: 17px;
-}
-.cta-line {
-    width: 37px;
-    margin: 8px auto;
-}
-.cta-file p {
-    font-size: 7px;
-}
-.cta-file a {
-    font-size: 7px;
-}
+
 /* -----------------------------------------
    FOOTER
 ----------------------------------------- */
 .lab-footer {
     padding: 20px 0 26px;
 }
+
 .lab-footer img {
     width: 115px;
     margin-bottom: 6px;
 }
+
 .lab-footer p {
     font-size: 7px;
 }
+
 .lab-footer .affiliate-disclosure {
     font-size: 6.5px;
 }
 }
+
 /* =========================================================
 VERY SMALL PHONES
 ========================================================= */
@@ -2072,28 +2272,37 @@ VERY SMALL PHONES
 .roof-neon {
     min-width: 180px;
 }
+
 .roof-neon span {
     font-size: 19px;
 }
+
 .lab-building-body {
     grid-template-columns: 0.43fr 1.72fr 0.48fr;
 }
+
 .product-card-content {
     padding: 10px;
+    text-align: center;
 }
+
 .product-card-content h3 {
     font-size: 14px;
 }
+
 .product-description {
     font-size: 9px;
 }
+
 .mini-tests span {
     font-size: 6px;
 }
+
 .product-buy-button {
     font-size: 6.5px;
 }
 }
+
 /* =========================================================
 ACCESSIBILITY
 ========================================================= */
@@ -2102,11 +2311,11 @@ ACCESSIBILITY
 .database-filter:focus-visible,
 .featured-product-button:focus-visible,
 .lab-battle-button:focus-visible,
-.submission-button:focus-visible,
-.cta-file a:focus-visible {
+.submission-button:focus-visible {
 outline: 3px solid rgba(232, 154, 170, 0.42);
 outline-offset: 3px;
 }
+
 /* =========================================================
 REDUCED MOTION
 ========================================================= */
@@ -2118,9 +2327,12 @@ REDUCED MOTION
 .product-shutter,
 .lab-battle-button,
 .submission-button,
-.score-factor {
+.score-factor,
+.shutter-door-left,
+.shutter-door-right {
     transition: none;
 }
+
 .lab-product-card:hover,
 .database-filter:hover,
 .featured-product-button:hover,
