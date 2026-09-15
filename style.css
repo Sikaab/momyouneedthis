@@ -4892,24 +4892,31 @@ html{
 ========================================================= */
 
 
-.mom-lab-home-section > * {
+.mom-lab-home-header,
+
+.mom-lab-home-content {
+
     position: relative;
+
     z-index: 2;
+
 }
 
-.mom-lab-home-section img,
-.mom-lab-home-section svg,
-.mom-lab-home-section i,
-.mom-lab-home-section span,
-.mom-lab-home-section strong,
-.mom-lab-home-section h1,
-.mom-lab-home-section h2,
-.mom-lab-home-section h3,
-.mom-lab-home-section p,
-.mom-lab-home-section a {
+.mom-lab-home-tests,
+
+.mom-lab-tests,
+
+.mom-lab-test,
+
+.mom-lab-test-icon,
+
+.mom-lab-test-copy,
+
+.mom-lab-home-button {
+
     position: relative;
-    z-index: 3;
-}
+
+    z-index: 2;
 
 
 /* =========================================================
