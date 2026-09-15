@@ -1248,23 +1248,21 @@ PRODUCT BUTTON
     border-color: var(--lab-red);
 }
 
+
+
+
 /* =========================================================
 FULL-CARD TEST DOORS
 ========================================================= */
 
 /*
-    The shutter belongs to the WHOLE product card.
+    FULL-CARD OPENING DOORS
 
-    It covers:
-    ✓ image
-    ✓ badge
-    ✓ title
-    ✓ description
-    ✓ score
-    ✓ mini tests
-    ✓ buy button
+    The HTML only contains the existing .product-shutter
+    button, so the two physical doors are created with
+    ::before and ::after.
 
-    The two doors each occupy exactly half of the card.
+    This keeps the existing HTML and JavaScript unchanged.
 */
 
 .hidden-test-card {
@@ -1272,11 +1270,10 @@ FULL-CARD TEST DOORS
     overflow: hidden;
 }
 
-/* Full-card door container */
-
 .hidden-test-card .product-shutter {
     position: absolute;
     inset: 0;
+
     z-index: 50;
 
     width: 100%;
@@ -1286,6 +1283,7 @@ FULL-CARD TEST DOORS
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
 
     margin: 0;
     padding: 0;
@@ -1300,7 +1298,6 @@ FULL-CARD TEST DOORS
     overflow: hidden;
 
     perspective: 1200px;
-    transform-style: preserve-3d;
 
     -webkit-appearance: none;
     appearance: none;
@@ -1308,12 +1305,15 @@ FULL-CARD TEST DOORS
     font: inherit;
 }
 
+
 /* =========================================================
-INDIVIDUAL DOORS
+LEFT + RIGHT DOORS
 ========================================================= */
 
-.hidden-test-card .shutter-door-left,
-.hidden-test-card .shutter-door-right {
+.hidden-test-card .product-shutter::before,
+.hidden-test-card .product-shutter::after {
+    content: "";
+
     position: absolute;
 
     top: 0;
@@ -1324,13 +1324,15 @@ INDIVIDUAL DOORS
 
     z-index: 1;
 
+    border: 0;
+
     background:
         linear-gradient(
             90deg,
-            rgba(255, 255, 255, 0.22),
-            transparent 14%,
-            transparent 85%,
-            rgba(120, 80, 90, 0.08)
+            rgba(255, 255, 255, 0.25),
+            transparent 18%,
+            transparent 82%,
+            rgba(120, 80, 90, 0.09)
         ),
         repeating-linear-gradient(
             90deg,
@@ -1340,133 +1342,79 @@ INDIVIDUAL DOORS
             #e5c8ce 20px
         );
 
-    border: 0;
-
     box-shadow:
         inset 0 0 0 1px rgba(180, 135, 145, 0.28),
-        inset 0 0 22px rgba(110, 75, 80, 0.05);
+        inset 0 0 22px rgba(110, 75, 80, 0.06);
 
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
-
-    transform-style: preserve-3d;
 
     transition:
         transform 0.72s cubic-bezier(.2, .8, .2, 1),
         box-shadow 0.25s ease;
 }
 
-/* LEFT DOOR */
 
-.hidden-test-card .shutter-door-left {
+/* =========================================================
+LEFT DOOR
+========================================================= */
+
+.hidden-test-card .product-shutter::before {
     left: 0;
-    right: auto;
 
     transform-origin: left center;
 
     border-right:
-        2px solid rgba(155, 110, 120, 0.34);
+        2px solid rgba(155, 110, 120, 0.38);
 }
 
-/* RIGHT DOOR */
 
-.hidden-test-card .shutter-door-right {
+/* =========================================================
+RIGHT DOOR
+========================================================= */
+
+.hidden-test-card .product-shutter::after {
     right: 0;
-    left: auto;
 
     transform-origin: right center;
 
     border-left:
-        2px solid rgba(155, 110, 120, 0.34);
+        2px solid rgba(155, 110, 120, 0.38);
 }
+
 
 /* =========================================================
-DOOR PANELS
+DOOR INNER PANELS
 ========================================================= */
 
-/*
-    Gives each half a more obvious "door" appearance
-    instead of looking like two flat color blocks.
-*/
-
-.hidden-test-card .shutter-door-left::before,
-.hidden-test-card .shutter-door-right::before {
-    content: "";
-
-    position: absolute;
-    top: 7%;
-    bottom: 7%;
-
-    width: 72%;
-
-    border: 1px solid rgba(255, 255, 255, 0.36);
-    border-radius: 9px;
-
-    background:
-        linear-gradient(
-            180deg,
-            rgba(255, 255, 255, 0.12),
-            rgba(255, 255, 255, 0.02)
-        );
-
-    box-shadow:
-        inset 0 0 12px rgba(110, 75, 80, 0.035);
+.hidden-test-card .product-shutter::before,
+.hidden-test-card .product-shutter::after {
+    /* Keep the doors visually dimensional */
 }
 
-.hidden-test-card .shutter-door-left::before {
-    right: 9%;
+
+/* =========================================================
+DOOR CENTER LINE
+========================================================= */
+
+.hidden-test-card .product-shutter {
+    border-radius: inherit;
 }
 
-.hidden-test-card .shutter-door-right::before {
-    left: 9%;
-}
-
-/* Door highlight */
-
-.hidden-test-card .shutter-door-left::after,
-.hidden-test-card .shutter-door-right::after {
-    content: "";
-
-    position: absolute;
-    top: 0;
-    bottom: 0;
-
-    width: 34%;
-
-    pointer-events: none;
-
-    background:
-        linear-gradient(
-            90deg,
-            rgba(255, 255, 255, 0.24),
-            transparent
-        );
-}
-
-.hidden-test-card .shutter-door-left::after {
-    left: 0;
-}
-
-.hidden-test-card .shutter-door-right::after {
-    right: 0;
-    transform: scaleX(-1);
-}
 
 /* =========================================================
 PINK DOORS
 ========================================================= */
 
-.hidden-test-card.product-shutter-pink
-    .shutter-door-left,
-.hidden-test-card.product-shutter-pink
-    .shutter-door-right {
+.hidden-test-card.product-shutter-pink .product-shutter::before,
+.hidden-test-card.product-shutter-pink .product-shutter::after {
     background:
         linear-gradient(
             90deg,
-            rgba(255, 255, 255, 0.22),
-            transparent 14%,
-            transparent 85%,
-            rgba(120, 80, 90, 0.08)
+            rgba(255, 255, 255, 0.25),
+            transparent 18%,
+            transparent 82%,
+            rgba(120, 80, 90, 0.09)
         ),
         repeating-linear-gradient(
             90deg,
@@ -1477,124 +1425,158 @@ PINK DOORS
         );
 }
 
-.hidden-test-card.product-shutter-pink:hover
-    .shutter-door-left,
-.hidden-test-card.product-shutter-pink:hover
-    .shutter-door-right {
-    box-shadow:
-        inset 0 0 0 1px rgba(180, 135, 145, 0.35),
-        inset 0 0 25px rgba(110, 75, 80, 0.07);
-}
 
 /* =========================================================
 DOOR OPENING
 ========================================================= */
 
-.hidden-test-card.is-open .shutter-door-left {
+.hidden-test-card.is-open .product-shutter::before {
     transform:
         rotateY(-108deg);
 }
 
-.hidden-test-card.is-open .shutter-door-right {
+.hidden-test-card.is-open .product-shutter::after {
     transform:
         rotateY(108deg);
 }
 
+
 /* =========================================================
-CENTER LOCKED CONTENT
+CENTER CONTENT
 ========================================================= */
 
-.hidden-test-card .shutter-center-content {
-    position: absolute;
-
-    left: 50%;
-    top: 50%;
-
-    z-index: 60;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    gap: 10px;
-
-    width: max-content;
-    max-width: 78%;
-
-    padding: 15px 19px;
-
-    transform:
-        translate(-50%, -50%);
-
-    border: 1px solid rgba(255, 255, 255, 0.62);
-    border-radius: 15px;
-
-    background:
-        rgba(255, 250, 251, 0.86);
-
-    box-shadow:
-        0 8px 25px rgba(80, 55, 60, 0.08);
-
-    pointer-events: none;
-
-    text-align: center;
-
-    transition:
-        opacity 0.25s ease,
-        transform 0.25s ease;
-}
-
-.hidden-test-card.is-open .shutter-center-content {
-    opacity: 0;
-
-    transform:
-        translate(-50%, -50%)
-        scale(0.92);
-}
-
-/* Door handle / pull */
-
-.shutter-handle {
+.hidden-test-card .shutter-handle,
+.hidden-test-card .shutter-label {
     position: relative;
 
+    z-index: 5;
+}
+
+
+/* =========================================================
+DOOR HANDLE
+========================================================= */
+
+.hidden-test-card .shutter-handle {
     width: 38px;
     height: 6px;
 
     border-radius: 999px;
 
-    background: #fff;
+    background: #ffffff;
 
     box-shadow:
         0 2px 6px rgba(80, 50, 55, 0.15);
 }
 
-.shutter-label {
+
+/* =========================================================
+DOOR LABEL
+========================================================= */
+
+.hidden-test-card .shutter-label {
+    margin-top: 10px;
+
     color: #765d63;
 
     font-size: 10px;
     line-height: 1.2;
 
     font-weight: 900;
+
     letter-spacing: 0.13em;
 
     white-space: nowrap;
+
+    text-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.8);
 }
+
 
 /* =========================================================
-DOOR INTERACTION
+DOOR HOVER
 ========================================================= */
 
-.hidden-test-card .product-shutter:hover
-    .shutter-center-content {
-    transform:
-        translate(-50%, -50%)
-        scale(1.03);
+.hidden-test-card .product-shutter:hover::before,
+.hidden-test-card .product-shutter:hover::after {
+    box-shadow:
+        inset 0 0 0 1px rgba(180, 135, 145, 0.35),
+        inset 0 0 25px rgba(110, 75, 80, 0.08);
 }
+
+
+/* =========================================================
+OPEN STATE
+========================================================= */
 
 .hidden-test-card.is-open .product-shutter {
     pointer-events: none;
 }
+
+
+/* =========================================================
+MOBILE DOORS
+========================================================= */
+
+@media (max-width: 640px) {
+
+    .hidden-test-card .product-shutter {
+        inset: 0;
+
+        width: 100%;
+        height: 100%;
+        min-height: 100%;
+
+        perspective: 900px;
+    }
+
+    .hidden-test-card .product-shutter::before,
+    .hidden-test-card .product-shutter::after {
+        top: 0;
+        bottom: 0;
+
+        width: 50%;
+        height: 100%;
+    }
+
+    .hidden-test-card .shutter-label {
+        margin-top: 8px;
+
+        font-size: 8px;
+
+        letter-spacing: 0.11em;
+    }
+
+    .hidden-test-card .shutter-handle {
+        width: 29px;
+        height: 4px;
+    }
+}
+
+
+/* =========================================================
+VERY SMALL PHONES
+========================================================= */
+
+@media (max-width: 380px) {
+
+    .hidden-test-card .product-shutter {
+        inset: 0;
+
+        width: 100%;
+        height: 100%;
+    }
+
+    .hidden-test-card .shutter-label {
+        font-size: 7px;
+    }
+
+    .hidden-test-card .shutter-handle {
+        width: 25px;
+        height: 4px;
+    }
+}
+
 
 /* =========================================================
 WINNERS
