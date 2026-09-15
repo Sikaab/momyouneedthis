@@ -4823,7 +4823,7 @@ html{
 
     width: 105px;
 
-    z-index: 1;
+    z-index: 3;
 
     pointer-events: none;
 
@@ -4899,7 +4899,7 @@ html{
 
     text-align: center;
 
-    background: #ffffff;
+    background: transparent;
 
     border-bottom: 1px solid #eee3e3;
 }
