@@ -4823,7 +4823,7 @@ html{
 
     width: 105px;
 
-    z-index: 1;
+    z-index: 0;
 
     pointer-events: none;
 
@@ -4831,7 +4831,9 @@ html{
 }
 
 
-/* LEFT CURTAIN */
+/* =========================================================
+   LEFT CURTAIN
+========================================================= */
 
 .mom-lab-home-section::before {
     left: 0;
@@ -4859,7 +4861,9 @@ html{
 }
 
 
-/* RIGHT CURTAIN */
+/* =========================================================
+   RIGHT CURTAIN
+========================================================= */
 
 .mom-lab-home-section::after {
     right: 0;
@@ -4888,35 +4892,14 @@ html{
 
 
 /* =========================================================
-   TEXT + ICONS ABOVE CURTAINS
+   KEEP THE EXISTING CONTENT ABOVE THE CURTAINS
 ========================================================= */
 
-
-.mom-lab-home-header,
-
-.mom-lab-home-content {
-
+.mom-lab-home-section > .mom-lab-home-header,
+.mom-lab-home-section > .mom-lab-home-content {
     position: relative;
-
-    z-index: 2;
-
+    z-index: 1;
 }
-
-.mom-lab-home-tests,
-
-.mom-lab-tests,
-
-.mom-lab-test,
-
-.mom-lab-test-icon,
-
-.mom-lab-test-copy,
-
-.mom-lab-home-button {
-
-    position: relative;
-
-    z-index: 2;
 
 
 /* =========================================================
