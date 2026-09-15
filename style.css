@@ -4689,9 +4689,11 @@ html{
 
 @media(max-width:750px){
 
+   @media(max-width:750px){
+
     .page{
 
-        padding:25px 16px 50px;
+        padding:0 16px 50px;
 
     }
 
