@@ -46,202 +46,723 @@ body{
    HERO
 ===================== */
 
-.hero{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-    padding-bottom:8px;
+.hero {
+    position: relative;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+    padding: 18px 20px 8px;
+
+    overflow: hidden;
 }
 
-.hero-text{
 
-    width:100%;
+/* =========================================================
+   SUBTLE MOM UNIVERSE ATMOSPHERE
+========================================================= */
 
-    max-width:650px;
+.hero::before {
+    content: "";
 
-    margin:0 auto;
+    position: absolute;
 
+    width: 620px;
+    height: 620px;
+
+    top: -320px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(232, 154, 170, 0.16) 0%,
+            rgba(232, 154, 170, 0.07) 35%,
+            rgba(232, 154, 170, 0) 70%
+        );
+
+    pointer-events: none;
 }
 
-.logo{
 
-    width:110px;
+/* =========================================================
+   SUBTLE ORBIT
+========================================================= */
 
-    display:block;
+.hero::after {
+    content: "";
 
-    margin:0 auto 20px;
+    position: absolute;
 
+    width: 570px;
+    height: 180px;
+
+    top: 70px;
+    left: 50%;
+
+    transform:
+        translateX(-50%)
+        rotate(-7deg);
+
+    border: 1px solid rgba(232, 154, 170, 0.13);
+
+    border-radius: 50%;
+
+    pointer-events: none;
 }
 
-.hero h1{
 
-    font-size:55px;
+/* =========================================================
+   HERO CONTENT
+========================================================= */
 
-    font-weight:900;
+.hero-text {
+    position: relative;
+    z-index: 2;
 
-    line-height:1.05;
+    width: 100%;
 
-    margin-top:20px;
+    max-width: 720px;
 
+    margin: 0 auto;
 }
 
-.hero h1 span{
 
-    display:block;
+/* =========================================================
+   LOGO
+========================================================= */
 
-    color:#e89aaa;
+.logo {
+    position: relative;
 
+    width: 112px;
+
+    display: block;
+
+    margin: 0 auto 17px;
+
+    filter:
+        drop-shadow(
+            0 8px 16px rgba(207, 111, 135, 0.10)
+        );
 }
 
-.hero-text p{
 
-    font-size:21px;
+/* =========================================================
+   MOM UNIVERSE KICKER
+========================================================= */
 
-    line-height:1.5;
+.universe-kicker {
+    position: relative;
 
-    margin:25px auto;
+    display: inline-flex;
 
-    max-width:450px;
+    align-items: center;
+    justify-content: center;
 
+    margin-bottom: 14px;
+
+    padding: 8px 16px;
+
+    border-radius: 999px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff1f5,
+            #fff8fa
+        );
+
+    border: 1px solid #f1dce3;
+
+    color: #d6537c;
+
+    font-size: 12px;
+
+    font-weight: 900;
+
+    letter-spacing: 0.6px;
+
+    box-shadow:
+        0 5px 18px rgba(207, 111, 135, 0.07);
 }
 
-.hero-shop-text{
 
-    margin:12px 0 0;
+/* Tiny decorative dots */
 
-    font-size:15px;
+.universe-kicker::before,
+.universe-kicker::after {
+    content: "";
 
-    color:#777;
+    width: 4px;
+    height: 4px;
 
-    font-weight:700;
+    margin: 0 8px;
 
+    border-radius: 50%;
+
+    background: #e89aaa;
+
+    opacity: 0.65;
 }
 
-button{
 
-    background:#e89aaa;
+/* =========================================================
+   HERO HEADLINE
+========================================================= */
 
-    color:white;
+.hero h1 {
+    position: relative;
 
-    border:none;
+    max-width: 680px;
 
-    padding:18px 35px;
+    margin: 15px auto 0;
 
-    border-radius:50px;
+    color: #413738;
 
-    font-size:18px;
+    font-size: clamp(44px, 6vw, 58px);
 
-    font-weight:900;
+    font-weight: 900;
 
-    cursor:pointer;
+    line-height: 1.02;
 
-    transition:.25s ease;
-
+    letter-spacing: -1.8px;
 }
 
-button:hover{
+.hero h1 span {
+    display: block;
 
-    transform:translateY(-3px);
+    color: #e89aaa;
 
-    box-shadow:0 12px 30px rgba(232,154,170,.35);
-
+    margin-top: 2px;
 }
 
-.rating{
 
-    margin-top:15px;
+/* =========================================================
+   HEADLINE UNDERLINE DETAIL
+========================================================= */
 
-    color:#f5b52c;
+.hero h1::after {
+    content: "";
 
-    font-size:20px;
+    display: block;
 
+    width: 48px;
+    height: 3px;
+
+    margin: 17px auto 0;
+
+    background: #e89aaa;
+
+    border-radius: 999px;
+
+    opacity: 0.65;
 }
 
-.rating p{
 
-    color:#555;
+/* =========================================================
+   HERO DESCRIPTION
+========================================================= */
 
-    font-size:15px;
+.hero-text p {
+    font-size: 20px;
 
-    margin-top:5px;
+    line-height: 1.5;
 
+    margin: 22px auto;
 
+    max-width: 500px;
+
+    color: #655b5d;
+
+    font-weight: 500;
 }
+
+
+/* =========================================================
+   HERO BUTTON
+========================================================= */
+
+button {
+    position: relative;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            135deg,
+            #e89aaa,
+            #d98296
+        );
+
+    color: white;
+
+    border: none;
+
+    padding: 18px 35px;
+
+    border-radius: 50px;
+
+    font-size: 18px;
+
+    font-weight: 900;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+/* Soft shine */
+
+button::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -80%;
+
+    width: 45%;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.35),
+            transparent
+        );
+
+    transform: skewX(-20deg);
+
+    transition: left 0.55s ease;
+}
+
+button:hover::before {
+    left: 135%;
+}
+
+button:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 12px 30px rgba(232, 154, 170, 0.30);
+}
+
+
+/* =========================================================
+   HERO SHOP TEXT
+========================================================= */
+
+.hero-shop-text {
+    margin: 12px 0 0;
+
+    font-size: 15px;
+
+    color: #777;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   RATING
+========================================================= */
+
+.rating {
+    margin-top: 15px;
+
+    color: #f5b52c;
+
+    font-size: 20px;
+
+    letter-spacing: 1px;
+}
+
+.rating p {
+    color: #555;
+
+    font-size: 15px;
+
+    margin-top: 5px;
+
+    font-weight: 500;
+}
+
 
 /* =========================================================
    MOM UNIVERSE — SUBTLE STRIP
 ========================================================= */
-.universe-kicker {
-    display: inline-block;
-    margin-bottom: 12px;
-    padding: 7px 14px;
-    border-radius: 999px;
-    background: #fff0f5;
-    color: #d6537c;
-    font-size: 12px;
-    font-weight: 900;
-    letter-spacing: .5px;
-}
+
 .mom-universe-strip {
+    position: relative;
+
     width: min(950px, calc(100% - 30px));
+
     margin: 22px auto 0;
+
     padding: 22px 25px;
-    background: #fff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #fff8fa
+        );
+
     border: 1px solid #f0dfe6;
+
     border-radius: 22px;
+
     text-align: center;
-    box-shadow: 0 7px 24px rgba(30, 45, 75, .05);
+
+    box-shadow:
+        0 7px 24px rgba(80, 55, 65, 0.05);
+
+    overflow: hidden;
 }
+
+
+/* Subtle pink light */
+
+.mom-universe-strip::before {
+    content: "";
+
+    position: absolute;
+
+    width: 180px;
+    height: 180px;
+
+    top: -110px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(232, 154, 170, 0.12),
+            rgba(232, 154, 170, 0)
+        );
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   UNIVERSE LABEL
+========================================================= */
+
 .universe-label {
+    position: relative;
+
     display: inline-block;
+
     margin-bottom: 7px;
+
     color: #d6537c;
+
     font-size: 11px;
+
     font-weight: 900;
+
     letter-spacing: 1px;
 }
+
+
+/* =========================================================
+   UNIVERSE STRIP TITLE
+========================================================= */
+
 .mom-universe-strip h2 {
+    position: relative;
+
     margin: 0 0 8px;
-    color: #1d4f91;
+
+    color: #413738;
+
     font-size: 20px;
+
     font-weight: 900;
 }
+
+
+/* =========================================================
+   UNIVERSE STRIP DESCRIPTION
+========================================================= */
+
 .mom-universe-strip p {
+    position: relative;
+
     max-width: 650px;
+
     margin: 0 auto 14px;
+
     color: #777;
+
     font-size: 13px;
+
     line-height: 1.6;
 }
+
+
+/* =========================================================
+   UNIVERSE SERIES
+========================================================= */
+
 .mom-universe-series {
+    position: relative;
+
     display: flex;
+
     justify-content: center;
     align-items: center;
+
     flex-wrap: wrap;
+
     gap: 8px;
 }
+
 .mom-universe-series span,
 .mom-universe-series a {
     display: inline-flex;
+
     align-items: center;
+
     padding: 7px 12px;
+
     border-radius: 999px;
-    background: #f7f8fb;
-    color: #555;
+
+    background: #fff7f9;
+
+    color: #655b5d;
+
+    border: 1px solid #f2e3e7;
+
     font-size: 11px;
+
     font-weight: 900;
+
     text-decoration: none;
 }
+
+
+/* Clickable series */
+
 .mom-universe-series a {
     background: #fff0f5;
+
     color: #d6537c;
+
     border: 1px solid #f3d8e1;
-    transition: .2s ease;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
 }
+
 .mom-universe-series a:hover {
-    transform: translateY(-1px);
+    transform: translateY(-2px);
+
     background: #ffe5ed;
+
+    box-shadow:
+        0 5px 14px rgba(207, 111, 135, 0.10);
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 760px) {
+
+    .hero {
+        padding: 14px 18px 8px;
+    }
+
+    .hero::before {
+        width: 500px;
+        height: 500px;
+
+        top: -270px;
+    }
+
+    .hero::after {
+        width: 460px;
+
+        top: 62px;
+    }
+
+    .logo {
+        width: 105px;
+
+        margin-bottom: 15px;
+    }
+
+    .universe-kicker {
+        font-size: 11px;
+
+        padding: 7px 14px;
+    }
+
+    .hero h1 {
+        font-size: clamp(39px, 8vw, 50px);
+
+        letter-spacing: -1.4px;
+    }
+
+    .hero-text p {
+        font-size: 18px;
+
+        max-width: 470px;
+    }
+
+    button {
+        font-size: 17px;
+
+        padding: 17px 32px;
+    }
+}
+
+
+/* =========================================================
+   SMALL PHONES
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .hero {
+        padding: 8px 15px 5px;
+    }
+
+    .hero::before {
+        width: 390px;
+        height: 390px;
+
+        top: -215px;
+    }
+
+    .hero::after {
+        width: 350px;
+        height: 125px;
+
+        top: 58px;
+    }
+
+    .logo {
+        width: 96px;
+
+        margin-bottom: 13px;
+    }
+
+    .universe-kicker {
+        margin-bottom: 11px;
+
+        padding: 7px 11px;
+
+        font-size: 10px;
+
+        letter-spacing: 0.45px;
+    }
+
+    .universe-kicker::before,
+    .universe-kicker::after {
+        width: 3px;
+        height: 3px;
+
+        margin: 0 6px;
+    }
+
+    .hero h1 {
+        font-size: 38px;
+
+        line-height: 1.04;
+
+        letter-spacing: -1.2px;
+
+        margin-top: 12px;
+    }
+
+    .hero h1::after {
+        width: 40px;
+
+        height: 3px;
+
+        margin-top: 14px;
+    }
+
+    .hero-text p {
+        font-size: 17px;
+
+        line-height: 1.48;
+
+        margin: 19px auto;
+
+        max-width: 400px;
+    }
+
+    button {
+        padding: 16px 28px;
+
+        font-size: 16px;
+    }
+
+    .hero-shop-text {
+        font-size: 14px;
+    }
+
+    .rating {
+        margin-top: 13px;
+
+        font-size: 18px;
+    }
+
+    .rating p {
+        font-size: 14px;
+    }
+
+    .mom-universe-strip {
+        width: calc(100% - 20px);
+
+        margin-top: 18px;
+
+        padding: 19px 15px;
+
+        border-radius: 19px;
+    }
+
+    .mom-universe-strip h2 {
+        font-size: 18px;
+    }
+
+    .mom-universe-strip p {
+        font-size: 12px;
+    }
+
+    .mom-universe-series {
+        gap: 6px;
+    }
+
+    .mom-universe-series span,
+    .mom-universe-series a {
+        padding: 6px 10px;
+
+        font-size: 10px;
+    }
 }
 
 /* =========================================================
