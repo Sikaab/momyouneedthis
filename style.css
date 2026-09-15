@@ -4891,9 +4891,24 @@ html{
    TEXT + ICONS ABOVE CURTAINS
 ========================================================= */
 
+
 .mom-lab-home-section > * {
     position: relative;
     z-index: 2;
+}
+
+.mom-lab-home-section img,
+.mom-lab-home-section svg,
+.mom-lab-home-section i,
+.mom-lab-home-section span,
+.mom-lab-home-section strong,
+.mom-lab-home-section h1,
+.mom-lab-home-section h2,
+.mom-lab-home-section h3,
+.mom-lab-home-section p,
+.mom-lab-home-section a {
+    position: relative;
+    z-index: 3;
 }
 
 
