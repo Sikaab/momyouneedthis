@@ -1691,19 +1691,6 @@ MOM BATTLES
     box-shadow: var(--lab-shadow-sm);
 }
 
-.connection-icon {
-    flex: 0 0 62px;
-    width: 62px;
-    height: 62px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid #f0dce2;
-    border-radius: 18px;
-    background: var(--lab-pink-light);
-    font-size: 29px;
-}
-
 .connection-copy {
     flex: 1;
     min-width: 0;
