@@ -421,7 +421,7 @@ color: var(--lab-pink);
 }
 
 /* =========================================================
-DOOR
+BUILDING DOOR
 ========================================================= */
 .lab-door-area {
 position: relative;
@@ -661,6 +661,7 @@ background: #fff;
 color: #867778;
 font-size: 9px;
 line-height: 1.4;
+text-align: center;
 box-shadow: var(--lab-shadow-sm);
 }
 
@@ -760,10 +761,13 @@ color: var(--lab-pink-dark);
 }
 
 .section-heading > p {
-margin: 7px 0 0;
+max-width: 620px;
+margin: 7px auto 0;
 color: var(--lab-muted);
 font-size: 12px;
+line-height: 1.45;
 font-weight: 600;
+text-align: center;
 }
 
 /* =========================================================
@@ -789,8 +793,9 @@ box-shadow: var(--lab-shadow-md);
 display: flex;
 flex-direction: column;
 justify-content: center;
-align-items: flex-start;
+align-items: center;
 padding: 32px 37px;
+text-align: center;
 }
 
 .featured-label {
@@ -821,16 +826,18 @@ color: var(--lab-pink-dark);
 
 .featured-description {
 max-width: 475px;
-margin: 0;
+margin: 0 auto;
 color: var(--lab-muted);
 font-size: 12px;
 line-height: 1.5;
 font-weight: 600;
+text-align: center;
 }
 
 .featured-bottom {
 display: flex;
 align-items: center;
+justify-content: center;
 gap: 12px;
 margin-top: 13px;
 }
@@ -1036,6 +1043,41 @@ box-shadow:
 }
 
 /* =========================================================
+STATUS BADGES
+DO NOT REMOVE
+========================================================= */
+.product-status-badge {
+position: absolute;
+top: 13px;
+left: 13px;
+z-index: 4;
+display: inline-flex;
+align-items: center;
+padding: 7px 10px;
+border-radius: 999px;
+font-size: 9px;
+font-weight: 900;
+}
+
+.product-status-badge.survived {
+border: 1px solid #d8eadf;
+background: var(--lab-green-light);
+color: var(--lab-green);
+}
+
+.product-status-badge.competing {
+border: 1px solid #ecd7df;
+background: var(--lab-pink-light);
+color: var(--lab-pink-dark);
+}
+
+.product-status-badge.failed {
+border: 1px solid #f0d7da;
+background: var(--lab-red-light);
+color: var(--lab-red);
+}
+
+/* =========================================================
 PRODUCT CONTENT
 ========================================================= */
 .product-card-content {
@@ -1062,6 +1104,7 @@ color: var(--lab-text);
 font-size: 21px;
 line-height: 1.12;
 font-weight: 900;
+text-align: center;
 }
 
 .product-description {
@@ -1071,6 +1114,7 @@ color: var(--lab-muted);
 font-size: 13px;
 line-height: 1.5;
 font-weight: 600;
+text-align: center;
 }
 
 /* =========================================================
@@ -1080,7 +1124,8 @@ SCORE
 width: 100%;
 display: flex;
 align-items: center;
-justify-content: space-between;
+justify-content: center;
+gap: 18px;
 padding: 12px 0;
 border-top: 1px solid var(--lab-border);
 border-bottom: 1px solid var(--lab-border);
@@ -1118,6 +1163,7 @@ MINI TESTS
 .mini-tests {
 display: flex;
 flex-wrap: wrap;
+align-items: center;
 justify-content: center;
 gap: 6px;
 margin: 14px 0;
@@ -1134,10 +1180,12 @@ color: #6f6567;
 font-size: 9px;
 line-height: 1.2;
 font-weight: 800;
+text-align: center;
 }
 
 /* =========================================================
 PRODUCT BUTTON
+ORANGE
 ========================================================= */
 .product-buy-button {
 width: 100%;
@@ -1145,15 +1193,17 @@ min-height: 52px;
 display: flex;
 align-items: center;
 justify-content: center;
+margin-top: 4px;
 border-radius: 999px;
-background: var(--lab-pink);
-border: 2px solid var(--lab-pink);
+background: #e89a3a;
+border: 2px solid #e89a3a;
 color: #fff !important;
 font-size: 11px;
 font-weight: 900;
-letter-spacing: 0.06em;
+letter-spacing: 0.07em;
+text-align: center;
 box-shadow:
-    0 8px 20px rgba(232, 154, 170, 0.24);
+    0 8px 20px rgba(232, 154, 58, 0.25);
 transition:
     transform 0.18s ease,
     background 0.18s ease,
@@ -1162,15 +1212,17 @@ transition:
 
 .product-buy-button:hover {
 transform: translateY(-2px);
-background: var(--lab-pink-dark);
-border-color: var(--lab-pink-dark);
+background: #d77f20;
+border-color: #d77f20;
 box-shadow:
-    0 11px 24px rgba(207, 111, 135, 0.24);
+    0 11px 25px rgba(215, 127, 32, 0.28);
 }
 
 .product-buy-button.failed-button {
-background: #c78691;
-border-color: #c78691;
+background: #c96f79;
+border-color: #c96f79;
+box-shadow:
+    0 8px 20px rgba(185, 86, 98, 0.20);
 }
 
 .product-buy-button.failed-button:hover {
@@ -1179,9 +1231,11 @@ border-color: var(--lab-red);
 }
 
 /* =========================================================
-PRODUCT SHUTTER
-TWO-PANEL SWINGING DOOR
+PRODUCT DOORS
+TWO-PANEL SWINGING DOORS
+PRODUCT 02 / 03 / 05
 ========================================================= */
+
 .hidden-test-card .product-card-image {
 position: static;
 }
@@ -1272,6 +1326,10 @@ background:
     );
 }
 
+/* ACTUAL DOUBLE-DOOR OPENING:
+   LEFT PANEL SWINGS LEFT
+   RIGHT PANEL SWINGS RIGHT
+*/
 .hidden-test-card.is-open .shutter-door-left {
 transform: rotateY(-105deg);
 }
@@ -1396,6 +1454,11 @@ font-size: 27px;
 box-shadow: var(--lab-shadow-sm);
 }
 
+.winner-preview-copy {
+flex: 1;
+text-align: center;
+}
+
 .winner-preview-copy span {
 display: block;
 margin-bottom: 4px;
@@ -1447,6 +1510,7 @@ box-shadow: var(--lab-shadow-sm);
 
 .connection-copy {
 text-align: center;
+flex: 1;
 }
 
 .connection-copy > span {
@@ -1789,7 +1853,7 @@ MOBILE
 }
 
 /* -----------------------------------------
-   DOOR
+   BUILDING DOOR
 ----------------------------------------- */
 .lab-door-area {
     min-height: 204px;
@@ -1869,6 +1933,7 @@ MOBILE
     margin-top: 12px;
     padding: 9px 10px;
     font-size: 8px;
+    text-align: center;
 }
 
 /* -----------------------------------------
@@ -1893,7 +1958,7 @@ MOBILE
 }
 
 .lab-database-nav {
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .database-filter {
@@ -2002,8 +2067,11 @@ MOBILE
 }
 
 .section-heading > p {
-    font-size: 9px;
-    line-height: 1.4;
+    max-width: 320px;
+    margin: 7px auto 0;
+    font-size: 10px;
+    line-height: 1.45;
+    text-align: center;
 }
 
 /* -----------------------------------------
@@ -2038,23 +2106,27 @@ MOBILE
 }
 
 .product-category {
-    margin-bottom: 5px;
-    font-size: 7px;
+    margin-bottom: 6px;
+    font-size: 8px;
 }
 
 .product-card-content h3 {
-    font-size: 15px;
-    line-height: 1.12;
+    font-size: 16px;
+    line-height: 1.15;
 }
 
 .product-description {
+    max-width: 190px;
     min-height: 0;
-    margin: 6px 0 10px;
-    font-size: 10px;
-    line-height: 1.35;
+    margin: 7px 0 11px;
+    font-size: 11px;
+    line-height: 1.4;
 }
 
 .product-score-row {
+    width: 100%;
+    justify-content: center;
+    gap: 12px;
     padding: 9px 0;
 }
 
@@ -2067,7 +2139,7 @@ MOBILE
 }
 
 .product-score-label {
-    font-size: 6.5px;
+    font-size: 7.5px;
 }
 
 .mini-tests {
@@ -2077,14 +2149,29 @@ MOBILE
 }
 
 .mini-tests span {
-    padding: 4px 5px;
-    font-size: 6.5px;
-    border-radius: 6px;
+    padding: 5px 6px;
+    font-size: 7.5px;
+    border-radius: 7px;
+    text-align: center;
 }
 
 .product-buy-button {
     min-height: 46px;
-    font-size: 7.5px;
+    font-size: 8px;
+    letter-spacing: 0.06em;
+}
+
+/* -----------------------------------------
+   PRODUCT DOORS — MOBILE
+----------------------------------------- */
+.product-shutter {
+    perspective: 700px;
+}
+
+.shutter-door-left,
+.shutter-door-right {
+    transition:
+        transform 0.65s cubic-bezier(.2,.8,.2,1);
 }
 
 .shutter-label {
@@ -2177,25 +2264,26 @@ MOBILE
 
 .connection-copy {
     text-align: center;
+    flex: 1;
 }
 
 .connection-copy > span {
-    font-size: 6px;
+    font-size: 7px;
 }
 
 .connection-copy h2 {
-    font-size: 17px;
+    font-size: 18px;
 }
 
 .connection-copy p {
     margin: 4px 0 8px;
-    font-size: 7.5px;
+    font-size: 8.5px;
 }
 
 .lab-battle-button {
     min-height: 35px;
     padding: 7px 10px;
-    font-size: 6.5px;
+    font-size: 7.5px;
 }
 
 .connection-icon {
@@ -2291,15 +2379,28 @@ VERY SMALL PHONES
 }
 
 .product-description {
-    font-size: 9px;
+    font-size: 9.5px;
 }
 
 .mini-tests span {
-    font-size: 6px;
+    font-size: 6.5px;
 }
 
 .product-buy-button {
+    min-height: 44px;
+    font-size: 7.5px;
+}
+
+/* -----------------------------------------
+   PRODUCT DOORS — VERY SMALL PHONES
+----------------------------------------- */
+.shutter-label {
     font-size: 6.5px;
+}
+
+.shutter-handle {
+    width: 23px;
+    height: 4px;
 }
 }
 
@@ -2311,7 +2412,8 @@ ACCESSIBILITY
 .database-filter:focus-visible,
 .featured-product-button:focus-visible,
 .lab-battle-button:focus-visible,
-.submission-button:focus-visible {
+.submission-button:focus-visible,
+.lab-door-area:focus-visible {
 outline: 3px solid rgba(232, 154, 170, 0.42);
 outline-offset: 3px;
 }
@@ -2329,7 +2431,8 @@ REDUCED MOTION
 .submission-button,
 .score-factor,
 .shutter-door-left,
-.shutter-door-right {
+.shutter-door-right,
+.shutter-center-content {
     transition: none;
 }
 
@@ -2340,6 +2443,11 @@ REDUCED MOTION
 .lab-battle-button:hover,
 .submission-button:hover,
 .score-factor:hover {
+    transform: none;
+}
+
+.hidden-test-card.is-open .shutter-door-left,
+.hidden-test-card.is-open .shutter-door-right {
     transform: none;
 }
 }
