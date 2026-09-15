@@ -1025,8 +1025,17 @@ PRODUCT CARD
 PRODUCT IMAGE
 ========================================================= */
 
+/*
+    IMPORTANT:
+    This is intentionally NOT position: relative.
+
+    The hidden-test doors need .lab-product-card itself
+    to be the positioning context so the doors cover
+    the ENTIRE card.
+*/
+
 .product-card-image {
-    position: relative;
+    position: static;
     height: 210px;
     display: flex;
     align-items: center;
@@ -1245,17 +1254,18 @@ FULL-CARD TEST DOORS
 ========================================================= */
 
 /*
-    IMPORTANT:
-    The doors are positioned relative to the ENTIRE
-    .lab-product-card, not .product-card-image.
+    The shutter belongs to the WHOLE product card.
 
-    This means the doors cover:
-    - product image
-    - product title
-    - description
-    - score
-    - mini tests
-    - buy button
+    It covers:
+    ✓ image
+    ✓ badge
+    ✓ title
+    ✓ description
+    ✓ score
+    ✓ mini tests
+    ✓ buy button
+
+    The two doors each occupy exactly half of the card.
 */
 
 .hidden-test-card {
@@ -1263,76 +1273,173 @@ FULL-CARD TEST DOORS
     overflow: hidden;
 }
 
+/* Full-card door container */
+
 .hidden-test-card .product-shutter {
     position: absolute;
     inset: 0;
-    z-index: 20;
+    z-index: 50;
+
     width: 100%;
     height: 100%;
+    min-height: 100%;
+
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0;
+
     margin: 0;
+    padding: 0;
+
     border: 0;
     border-radius: inherit;
+
     background: transparent;
+
     cursor: pointer;
+
     overflow: hidden;
-    perspective: 1100px;
+
+    perspective: 1200px;
+    transform-style: preserve-3d;
+
+    -webkit-appearance: none;
+    appearance: none;
+
+    font: inherit;
 }
 
-/* Each door takes exactly half of the ENTIRE card */
+/* =========================================================
+INDIVIDUAL DOORS
+========================================================= */
 
 .hidden-test-card .shutter-door-left,
 .hidden-test-card .shutter-door-right {
     position: absolute;
+
     top: 0;
     bottom: 0;
+
     width: 50%;
     height: 100%;
+
+    z-index: 1;
+
     background:
+        linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.22),
+            transparent 14%,
+            transparent 85%,
+            rgba(120, 80, 90, 0.08)
+        ),
         repeating-linear-gradient(
             90deg,
-            #f3dfe0 0,
-            #f3dfe0 18px,
-            #ecd3d6 18px,
-            #ecd3d6 20px
+            #efdadd 0,
+            #efdadd 17px,
+            #e5c8ce 17px,
+            #e5c8ce 20px
         );
+
+    border: 0;
+
     box-shadow:
-        inset 0 0 0 1px rgba(200, 165, 170, 0.30);
+        inset 0 0 0 1px rgba(180, 135, 145, 0.28),
+        inset 0 0 22px rgba(110, 75, 80, 0.05);
+
     backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+
     transform-style: preserve-3d;
+
     transition:
-        transform 0.72s cubic-bezier(.2, .8, .2, 1);
+        transform 0.72s cubic-bezier(.2, .8, .2, 1),
+        box-shadow 0.25s ease;
 }
+
+/* LEFT DOOR */
 
 .hidden-test-card .shutter-door-left {
     left: 0;
+    right: auto;
+
     transform-origin: left center;
-    border-right: 1px solid rgba(170, 130, 135, 0.30);
+
+    border-right:
+        2px solid rgba(155, 110, 120, 0.34);
 }
+
+/* RIGHT DOOR */
 
 .hidden-test-card .shutter-door-right {
     right: 0;
+    left: auto;
+
     transform-origin: right center;
-    border-left: 1px solid rgba(170, 130, 135, 0.30);
+
+    border-left:
+        2px solid rgba(155, 110, 120, 0.34);
 }
 
-/* Slight highlight on the doors */
+/* =========================================================
+DOOR PANELS
+========================================================= */
+
+/*
+    Gives each half a more obvious "door" appearance
+    instead of looking like two flat color blocks.
+*/
+
+.hidden-test-card .shutter-door-left::before,
+.hidden-test-card .shutter-door-right::before {
+    content: "";
+
+    position: absolute;
+    top: 7%;
+    bottom: 7%;
+
+    width: 72%;
+
+    border: 1px solid rgba(255, 255, 255, 0.36);
+    border-radius: 9px;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.12),
+            rgba(255, 255, 255, 0.02)
+        );
+
+    box-shadow:
+        inset 0 0 12px rgba(110, 75, 80, 0.035);
+}
+
+.hidden-test-card .shutter-door-left::before {
+    right: 9%;
+}
+
+.hidden-test-card .shutter-door-right::before {
+    left: 9%;
+}
+
+/* Door highlight */
 
 .hidden-test-card .shutter-door-left::after,
 .hidden-test-card .shutter-door-right::after {
     content: "";
+
     position: absolute;
     top: 0;
     bottom: 0;
-    width: 45%;
+
+    width: 34%;
+
     pointer-events: none;
+
     background:
         linear-gradient(
             90deg,
-            rgba(255, 255, 255, 0.18),
+            rgba(255, 255, 255, 0.24),
             transparent
         );
 }
@@ -1346,19 +1453,28 @@ FULL-CARD TEST DOORS
     transform: scaleX(-1);
 }
 
-/* Pink version */
+/* =========================================================
+PINK DOORS
+========================================================= */
 
 .hidden-test-card.product-shutter-pink
     .shutter-door-left,
 .hidden-test-card.product-shutter-pink
     .shutter-door-right {
     background:
+        linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.22),
+            transparent 14%,
+            transparent 85%,
+            rgba(120, 80, 90, 0.08)
+        ),
         repeating-linear-gradient(
             90deg,
             #f0d6df 0,
-            #f0d6df 18px,
-            #e8c8d2 18px,
-            #e8c8d2 20px
+            #f0d6df 17px,
+            #e7c5d0 17px,
+            #e7c5d0 20px
         );
 }
 
@@ -1366,43 +1482,65 @@ FULL-CARD TEST DOORS
     .shutter-door-left,
 .hidden-test-card.product-shutter-pink:hover
     .shutter-door-right {
-    background:
-        repeating-linear-gradient(
-            90deg,
-            #edced9 0,
-            #edced9 18px,
-            #e3bdca 18px,
-            #e3bdca 20px
-        );
+    box-shadow:
+        inset 0 0 0 1px rgba(180, 135, 145, 0.35),
+        inset 0 0 25px rgba(110, 75, 80, 0.07);
 }
 
-/* Door opening */
+/* =========================================================
+DOOR OPENING
+========================================================= */
 
 .hidden-test-card.is-open .shutter-door-left {
-    transform: rotateY(-105deg);
+    transform:
+        rotateY(-108deg);
 }
 
 .hidden-test-card.is-open .shutter-door-right {
-    transform: rotateY(105deg);
+    transform:
+        rotateY(108deg);
 }
 
-/* Center text */
+/* =========================================================
+CENTER LOCKED CONTENT
+========================================================= */
 
 .hidden-test-card .shutter-center-content {
     position: absolute;
+
     left: 50%;
     top: 50%;
-    z-index: 25;
+
+    z-index: 60;
+
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
     gap: 10px;
+
     width: max-content;
-    max-width: 80%;
-    transform: translate(-50%, -50%);
+    max-width: 78%;
+
+    padding: 15px 19px;
+
+    transform:
+        translate(-50%, -50%);
+
+    border: 1px solid rgba(255, 255, 255, 0.62);
+    border-radius: 15px;
+
+    background:
+        rgba(255, 250, 251, 0.86);
+
+    box-shadow:
+        0 8px 25px rgba(80, 55, 60, 0.08);
+
     pointer-events: none;
+
     text-align: center;
+
     transition:
         opacity 0.25s ease,
         transform 0.25s ease;
@@ -1410,44 +1548,50 @@ FULL-CARD TEST DOORS
 
 .hidden-test-card.is-open .shutter-center-content {
     opacity: 0;
+
     transform:
         translate(-50%, -50%)
-        scale(0.94);
+        scale(0.92);
 }
 
+/* Door handle / pull */
+
 .shutter-handle {
-    width: 34px;
-    height: 5px;
+    position: relative;
+
+    width: 38px;
+    height: 6px;
+
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.94);
+
+    background: #fff;
+
     box-shadow:
-        0 2px 5px rgba(80, 50, 55, 0.12);
+        0 2px 6px rgba(80, 50, 55, 0.15);
 }
 
 .shutter-label {
-    color: rgba(108, 75, 80, 0.88);
+    color: #765d63;
+
     font-size: 10px;
     line-height: 1.2;
+
     font-weight: 900;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.13em;
+
     white-space: nowrap;
 }
 
-/*
-    Make sure the overlay remains visually flush with
-    the rounded product card.
-*/
+/* =========================================================
+DOOR INTERACTION
+========================================================= */
 
-.hidden-test-card .product-shutter,
-.hidden-test-card .shutter-door-left,
-.hidden-test-card .shutter-door-right {
-    border-radius: inherit;
+.hidden-test-card .product-shutter:hover
+    .shutter-center-content {
+    transform:
+        translate(-50%, -50%)
+        scale(1.03);
 }
-
-/*
-    When the doors open, the underlying card can be
-    interacted with again.
-*/
 
 .hidden-test-card.is-open .product-shutter {
     pointer-events: none;
@@ -1607,6 +1751,156 @@ MOM BATTLES
 }
 
 /* =========================================================
+INDIVIDUAL LAB TESTS
+========================================================= */
+
+/*
+    These are the individual test cards appearing AFTER
+    the main Lab/product section.
+
+    The layout is intentionally consistent:
+    
+    [ EMOJI ]  TEST NAME
+               Description / details
+
+    The icon is always on the LEFT so all tests line up.
+*/
+
+.lab-tests-section {
+    width: min(960px, calc(100% - 40px));
+    margin: 0 auto 52px;
+}
+
+.lab-tests-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+    gap: 17px;
+}
+
+.lab-test-card {
+    position: relative;
+
+    min-width: 0;
+    min-height: 155px;
+
+    display: flex;
+    align-items: flex-start;
+
+    padding: 20px 18px;
+
+    border: 1px solid #eadfe1;
+    border-radius: 20px;
+
+    background: #fff;
+
+    box-shadow: var(--lab-shadow-sm);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.lab-test-card:hover {
+    transform: translateY(-3px);
+
+    border-color: #e5cbd1;
+
+    box-shadow:
+        0 10px 25px rgba(70, 50, 50, 0.07);
+}
+
+/* =========================================================
+TEST ICON
+========================================================= */
+
+.lab-test-icon {
+    width: 48px;
+    height: 48px;
+
+    flex: 0 0 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-right: 13px;
+
+    border-radius: 14px;
+
+    background: var(--lab-pink-light);
+
+    font-size: 24px;
+
+    box-shadow:
+        inset 0 0 0 1px rgba(232, 154, 170, 0.12);
+}
+
+/* Different soft backgrounds */
+
+.lab-test-card:nth-child(1) .lab-test-icon {
+    background: var(--lab-gold-light);
+}
+
+.lab-test-card:nth-child(2) .lab-test-icon {
+    background: var(--lab-purple-light);
+}
+
+.lab-test-card:nth-child(3) .lab-test-icon {
+    background: var(--lab-blue-light);
+}
+
+/* =========================================================
+TEST COPY
+========================================================= */
+
+.lab-test-copy {
+    min-width: 0;
+    flex: 1;
+    text-align: left;
+}
+
+.lab-test-copy h3 {
+    margin: 1px 0 5px;
+
+    color: var(--lab-text);
+
+    font-size: 17px;
+    line-height: 1.15;
+
+    font-weight: 900;
+}
+
+.lab-test-copy p {
+    margin: 0;
+
+    color: var(--lab-muted);
+
+    font-size: 11px;
+    line-height: 1.5;
+
+    font-weight: 600;
+}
+
+/* Small label inside a test */
+
+.lab-test-label {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: var(--lab-pink-dark);
+
+    font-size: 8px;
+    line-height: 1;
+
+    font-weight: 900;
+
+    letter-spacing: 0.12em;
+}
+
+/* =========================================================
 SUBMISSION
 ========================================================= */
 
@@ -1727,6 +2021,11 @@ TABLET
     }
 
     .lab-product-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .lab-tests-grid {
         grid-template-columns:
             repeat(2, minmax(0, 1fr));
     }
@@ -1973,7 +2272,8 @@ MOBILE
     .lab-featured-product,
     .lab-battle-connection,
     .lab-footer,
-    .lab-submission {
+    .lab-submission,
+    .lab-tests-section {
         width: calc(100% - 24px);
     }
 
@@ -2101,7 +2401,14 @@ MOBILE
         border-radius: 16px;
     }
 
+    /*
+        Keep this STATIC on mobile too.
+        Otherwise the doors will only cover the
+        image instead of the whole card.
+    */
+
     .product-card-image {
+        position: static;
         height: 132px;
         padding: 12px;
     }
@@ -2188,12 +2495,15 @@ MOBILE
         inset: 0;
         width: 100%;
         height: 100%;
+        min-height: 100%;
         border-radius: inherit;
-        perspective: 800px;
+        perspective: 900px;
     }
 
     .hidden-test-card .shutter-door-left,
     .hidden-test-card .shutter-door-right {
+        top: 0;
+        bottom: 0;
         width: 50%;
         height: 100%;
     }
@@ -2201,6 +2511,8 @@ MOBILE
     .hidden-test-card .shutter-center-content {
         gap: 8px;
         max-width: 82%;
+        padding: 12px 14px;
+        border-radius: 12px;
     }
 
     .shutter-label {
@@ -2213,7 +2525,50 @@ MOBILE
         height: 4px;
     }
 
-    /* SCORE FACTOR CSS REMOVED */
+    /* =====================================================
+       INDIVIDUAL TESTS
+       ===================================================== */
+
+    .lab-tests-section {
+        margin-bottom: 39px;
+    }
+
+    .lab-tests-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .lab-test-card {
+        min-height: 0;
+        padding: 15px 14px;
+        border-radius: 15px;
+    }
+
+    .lab-test-icon {
+        width: 43px;
+        height: 43px;
+        flex-basis: 43px;
+        margin-right: 11px;
+        border-radius: 12px;
+        font-size: 21px;
+    }
+
+    .lab-test-copy h3 {
+        margin-top: 1px;
+        margin-bottom: 4px;
+        font-size: 15px;
+        line-height: 1.15;
+    }
+
+    .lab-test-copy p {
+        font-size: 10px;
+        line-height: 1.45;
+    }
+
+    .lab-test-label {
+        margin-bottom: 4px;
+        font-size: 7px;
+    }
 
     /* WINNERS */
 
@@ -2418,6 +2773,7 @@ VERY SMALL PHONES
 
     .hidden-test-card .shutter-center-content {
         gap: 7px;
+        padding: 10px 12px;
     }
 
     .shutter-label {
@@ -2427,6 +2783,29 @@ VERY SMALL PHONES
     .shutter-handle {
         width: 25px;
         height: 4px;
+    }
+
+    /* INDIVIDUAL TESTS */
+
+    .lab-test-card {
+        padding: 13px 12px;
+    }
+
+    .lab-test-icon {
+        width: 40px;
+        height: 40px;
+        flex-basis: 40px;
+        margin-right: 10px;
+        border-radius: 11px;
+        font-size: 19px;
+    }
+
+    .lab-test-copy h3 {
+        font-size: 14px;
+    }
+
+    .lab-test-copy p {
+        font-size: 9px;
     }
 
     .winner-preview {
@@ -2492,7 +2871,8 @@ REDUCED MOTION
     .submission-button,
     .shutter-door-left,
     .shutter-door-right,
-    .shutter-center-content {
+    .shutter-center-content,
+    .lab-test-card {
         transition: none;
     }
 
@@ -2501,7 +2881,8 @@ REDUCED MOTION
     .featured-product-button:hover,
     .product-buy-button:hover,
     .lab-battle-button:hover,
-    .submission-button:hover {
+    .submission-button:hover,
+    .lab-test-card:hover {
         transform: none;
     }
 }
