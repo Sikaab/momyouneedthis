@@ -1248,9 +1248,6 @@ PRODUCT BUTTON
     border-color: var(--lab-red);
 }
 
-
-
-
 /* =========================================================
 FULL-CARD TEST DOORS
 ========================================================= */
@@ -1262,12 +1259,15 @@ FULL-CARD TEST DOORS
     button, so the two physical doors are created with
     ::before and ::after.
 
-    This keeps the existing HTML and JavaScript unchanged.
+    The card itself provides the perspective so the
+    panels stay flat when closed.
 */
 
 .hidden-test-card {
     position: relative;
     overflow: hidden;
+    perspective: 1200px;
+    -webkit-perspective: 1200px;
 }
 
 .hidden-test-card .product-shutter {
@@ -1297,14 +1297,11 @@ FULL-CARD TEST DOORS
 
     overflow: hidden;
 
-    perspective: 1200px;
-
     -webkit-appearance: none;
     appearance: none;
 
     font: inherit;
 }
-
 
 /* =========================================================
 LEFT + RIGHT DOORS
@@ -1324,15 +1321,17 @@ LEFT + RIGHT DOORS
 
     z-index: 1;
 
+    display: block;
+
     border: 0;
 
     background:
         linear-gradient(
             90deg,
-            rgba(255, 255, 255, 0.25),
-            transparent 18%,
-            transparent 82%,
-            rgba(120, 80, 90, 0.09)
+            rgba(255, 255, 255, 0.30) 0%,
+            rgba(255, 255, 255, 0) 20%,
+            rgba(255, 255, 255, 0) 80%,
+            rgba(120, 80, 90, 0.10) 100%
         ),
         repeating-linear-gradient(
             90deg,
@@ -1343,17 +1342,21 @@ LEFT + RIGHT DOORS
         );
 
     box-shadow:
-        inset 0 0 0 1px rgba(180, 135, 145, 0.28),
+        inset 0 0 0 1px rgba(180, 135, 145, 0.25),
         inset 0 0 22px rgba(110, 75, 80, 0.06);
 
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
 
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+
+    transform: rotateY(0deg);
+
     transition:
         transform 0.72s cubic-bezier(.2, .8, .2, 1),
         box-shadow 0.25s ease;
 }
-
 
 /* =========================================================
 LEFT DOOR
@@ -1366,8 +1369,11 @@ LEFT DOOR
 
     border-right:
         2px solid rgba(155, 110, 120, 0.38);
-}
 
+    box-shadow:
+        inset -1px 0 rgba(155, 110, 120, 0.14),
+        inset 0 0 22px rgba(110, 75, 80, 0.06);
+}
 
 /* =========================================================
 RIGHT DOOR
@@ -1380,27 +1386,11 @@ RIGHT DOOR
 
     border-left:
         2px solid rgba(155, 110, 120, 0.38);
+
+    box-shadow:
+        inset 1px 0 rgba(155, 110, 120, 0.14),
+        inset 0 0 22px rgba(110, 75, 80, 0.06);
 }
-
-
-/* =========================================================
-DOOR INNER PANELS
-========================================================= */
-
-.hidden-test-card .product-shutter::before,
-.hidden-test-card .product-shutter::after {
-    /* Keep the doors visually dimensional */
-}
-
-
-/* =========================================================
-DOOR CENTER LINE
-========================================================= */
-
-.hidden-test-card .product-shutter {
-    border-radius: inherit;
-}
-
 
 /* =========================================================
 PINK DOORS
@@ -1411,10 +1401,10 @@ PINK DOORS
     background:
         linear-gradient(
             90deg,
-            rgba(255, 255, 255, 0.25),
-            transparent 18%,
-            transparent 82%,
-            rgba(120, 80, 90, 0.09)
+            rgba(255, 255, 255, 0.30) 0%,
+            rgba(255, 255, 255, 0) 20%,
+            rgba(255, 255, 255, 0) 80%,
+            rgba(120, 80, 90, 0.10) 100%
         ),
         repeating-linear-gradient(
             90deg,
@@ -1425,33 +1415,15 @@ PINK DOORS
         );
 }
 
-
 /* =========================================================
-DOOR OPENING
-========================================================= */
-
-.hidden-test-card.is-open .product-shutter::before {
-    transform:
-        rotateY(-108deg);
-}
-
-.hidden-test-card.is-open .product-shutter::after {
-    transform:
-        rotateY(108deg);
-}
-
-
-/* =========================================================
-CENTER CONTENT
+DOOR CENTER CONTENT
 ========================================================= */
 
 .hidden-test-card .shutter-handle,
 .hidden-test-card .shutter-label {
     position: relative;
-
     z-index: 5;
 }
-
 
 /* =========================================================
 DOOR HANDLE
@@ -1468,7 +1440,6 @@ DOOR HANDLE
     box-shadow:
         0 2px 6px rgba(80, 50, 55, 0.15);
 }
-
 
 /* =========================================================
 DOOR LABEL
@@ -1492,7 +1463,6 @@ DOOR LABEL
         0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
-
 /* =========================================================
 DOOR HOVER
 ========================================================= */
@@ -1504,21 +1474,32 @@ DOOR HOVER
         inset 0 0 25px rgba(110, 75, 80, 0.08);
 }
 
-
 /* =========================================================
-OPEN STATE
+OPENING
 ========================================================= */
+
+.hidden-test-card.is-open .product-shutter::before {
+    transform: rotateY(-88deg);
+}
+
+.hidden-test-card.is-open .product-shutter::after {
+    transform: rotateY(88deg);
+}
 
 .hidden-test-card.is-open .product-shutter {
     pointer-events: none;
 }
-
 
 /* =========================================================
 MOBILE DOORS
 ========================================================= */
 
 @media (max-width: 640px) {
+
+    .hidden-test-card {
+        perspective: 900px;
+        -webkit-perspective: 900px;
+    }
 
     .hidden-test-card .product-shutter {
         inset: 0;
@@ -1527,7 +1508,7 @@ MOBILE DOORS
         height: 100%;
         min-height: 100%;
 
-        perspective: 900px;
+        border-radius: inherit;
     }
 
     .hidden-test-card .product-shutter::before,
@@ -1537,6 +1518,26 @@ MOBILE DOORS
 
         width: 50%;
         height: 100%;
+
+        transform: rotateY(0deg);
+    }
+
+    .hidden-test-card .product-shutter::before {
+        left: 0;
+        transform-origin: left center;
+    }
+
+    .hidden-test-card .product-shutter::after {
+        right: 0;
+        transform-origin: right center;
+    }
+
+    .hidden-test-card.is-open .product-shutter::before {
+        transform: rotateY(-88deg);
+    }
+
+    .hidden-test-card.is-open .product-shutter::after {
+        transform: rotateY(88deg);
     }
 
     .hidden-test-card .shutter-label {
@@ -1553,18 +1554,46 @@ MOBILE DOORS
     }
 }
 
-
 /* =========================================================
 VERY SMALL PHONES
 ========================================================= */
 
 @media (max-width: 380px) {
 
+    .hidden-test-card {
+        perspective: 850px;
+        -webkit-perspective: 850px;
+    }
+
     .hidden-test-card .product-shutter {
         inset: 0;
 
         width: 100%;
         height: 100%;
+    }
+
+    .hidden-test-card .product-shutter::before,
+    .hidden-test-card .product-shutter::after {
+        width: 50%;
+        height: 100%;
+
+        transform: rotateY(0deg);
+    }
+
+    .hidden-test-card .product-shutter::before {
+        left: 0;
+    }
+
+    .hidden-test-card .product-shutter::after {
+        right: 0;
+    }
+
+    .hidden-test-card.is-open .product-shutter::before {
+        transform: rotateY(-88deg);
+    }
+
+    .hidden-test-card.is-open .product-shutter::after {
+        transform: rotateY(88deg);
     }
 
     .hidden-test-card .shutter-label {
@@ -1576,7 +1605,6 @@ VERY SMALL PHONES
         height: 4px;
     }
 }
-
 
 /* =========================================================
 WINNERS
@@ -1646,7 +1674,6 @@ MOM BATTLES
 /* =====================================================
    FROM THE LAB TO THE ARENA
 ====================================================== */
-
 
 .lab-battle-connection {
     width: min(960px, calc(100% - 40px));
@@ -1737,7 +1764,6 @@ MOM BATTLES
     box-shadow: var(--lab-shadow-sm);
 }
 
-
 /* =====================================================
    MOBILE
 ====================================================== */
@@ -1778,7 +1804,6 @@ MOM BATTLES
         font-size: 9px;
     }
 }
-
 
 /* =========================================================
 TESTS — WE TEST FOR REAL LIFE
@@ -2303,8 +2328,6 @@ MOBILE — LOWER SECTIONS
         line-height: 1.4;
     }
 
-
-
     /* =====================================================
        NOMINATION
        ===================================================== */
@@ -2499,7 +2522,6 @@ VERY SMALL PHONES — LOWER SECTIONS
         font-size: 8px;
     }
 }
-
 
 /* =========================================================
 FOOTER
@@ -2926,12 +2948,6 @@ MOBILE
         border-radius: 16px;
     }
 
-    /*
-        Keep this STATIC on mobile too.
-        Otherwise the doors will only cover the
-        image instead of the whole card.
-    */
-
     .product-card-image {
         position: static;
         height: 132px;
@@ -3016,36 +3032,51 @@ MOBILE
        FULL-CARD DOORS — MOBILE
        ===================================================== */
 
+    .hidden-test-card {
+        perspective: 900px;
+        -webkit-perspective: 900px;
+    }
+
     .hidden-test-card .product-shutter {
         inset: 0;
         width: 100%;
         height: 100%;
         min-height: 100%;
         border-radius: inherit;
-        perspective: 900px;
     }
 
-    .hidden-test-card .shutter-door-left,
-    .hidden-test-card .shutter-door-right {
-        top: 0;
-        bottom: 0;
+    .hidden-test-card .product-shutter::before,
+    .hidden-test-card .product-shutter::after {
         width: 50%;
         height: 100%;
+        transform: rotateY(0deg);
     }
 
-    .hidden-test-card .shutter-center-content {
-        gap: 8px;
-        max-width: 82%;
-        padding: 12px 14px;
-        border-radius: 12px;
+    .hidden-test-card .product-shutter::before {
+        left: 0;
+        transform-origin: left center;
     }
 
-    .shutter-label {
+    .hidden-test-card .product-shutter::after {
+        right: 0;
+        transform-origin: right center;
+    }
+
+    .hidden-test-card.is-open .product-shutter::before {
+        transform: rotateY(-88deg);
+    }
+
+    .hidden-test-card.is-open .product-shutter::after {
+        transform: rotateY(88deg);
+    }
+
+    .hidden-test-card .shutter-label {
+        margin-top: 8px;
         font-size: 8px;
         letter-spacing: 0.11em;
     }
 
-    .shutter-handle {
+    .hidden-test-card .shutter-handle {
         width: 29px;
         height: 4px;
     }
@@ -3290,22 +3321,45 @@ VERY SMALL PHONES
 
     /* FULL-CARD DOORS */
 
+    .hidden-test-card {
+        perspective: 850px;
+        -webkit-perspective: 850px;
+    }
+
     .hidden-test-card .product-shutter {
         inset: 0;
         width: 100%;
         height: 100%;
     }
 
-    .hidden-test-card .shutter-center-content {
-        gap: 7px;
-        padding: 10px 12px;
+    .hidden-test-card .product-shutter::before,
+    .hidden-test-card .product-shutter::after {
+        width: 50%;
+        height: 100%;
+        transform: rotateY(0deg);
     }
 
-    .shutter-label {
+    .hidden-test-card .product-shutter::before {
+        left: 0;
+    }
+
+    .hidden-test-card .product-shutter::after {
+        right: 0;
+    }
+
+    .hidden-test-card.is-open .product-shutter::before {
+        transform: rotateY(-88deg);
+    }
+
+    .hidden-test-card.is-open .product-shutter::after {
+        transform: rotateY(88deg);
+    }
+
+    .hidden-test-card .shutter-label {
         font-size: 7px;
     }
 
-    .shutter-handle {
+    .hidden-test-card .shutter-handle {
         width: 25px;
         height: 4px;
     }
