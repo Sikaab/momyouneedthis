@@ -1749,49 +1749,92 @@ MOM BATTLES
     font-size: 28px;
 }
 
+
 /* =========================================================
 INDIVIDUAL LAB TESTS
 ========================================================= */
 
 /*
-    These are the individual test cards appearing AFTER
-    the main Lab/product section.
+    REAL-LIFE TESTS
 
-    The layout is intentionally consistent:
-    
-    [ EMOJI ]  TEST NAME
-               Description / details
+    This section is designed to feel like a continuation
+    of the Mom Lab rather than a separate card collection.
 
-    The icon is always on the LEFT so all tests line up.
+    Consistent structure:
+    [ ICON ]  LABEL
+              TITLE
+              DESCRIPTION
+
+    All cards use the same internal alignment and height.
 */
 
 .lab-tests-section {
     width: min(960px, calc(100% - 40px));
-    margin: 0 auto 52px;
+    margin: 0 auto 46px;
 }
+
+.lab-tests-section .section-heading {
+    margin-bottom: 22px;
+}
+
+.lab-tests-section .section-heading h2 {
+    margin: 0;
+    color: var(--lab-text);
+    font-size: clamp(27px, 3.4vw, 38px);
+    line-height: 1.04;
+    letter-spacing: -0.025em;
+    font-weight: 900;
+}
+
+.lab-tests-section .section-heading h2 span {
+    color: var(--lab-pink-dark);
+}
+
+.lab-tests-section .section-heading > p {
+    max-width: 600px;
+    margin: 9px auto 0;
+    color: var(--lab-muted);
+    font-size: 13px;
+    line-height: 1.5;
+    font-weight: 600;
+}
+
+/* =========================================================
+TEST GRID
+========================================================= */
 
 .lab-tests-grid {
     display: grid;
     grid-template-columns:
         repeat(3, minmax(0, 1fr));
-    gap: 17px;
+    gap: 15px;
 }
+
+/* =========================================================
+TEST CARD
+========================================================= */
 
 .lab-test-card {
     position: relative;
-
     min-width: 0;
-    min-height: 155px;
+    min-height: 168px;
 
-    display: flex;
-    align-items: flex-start;
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr);
+    align-items: start;
+    column-gap: 13px;
 
-    padding: 20px 18px;
+    padding: 21px 19px;
 
     border: 1px solid #eadfe1;
     border-radius: 20px;
 
-    background: #fff;
+    background:
+        linear-gradient(
+            145deg,
+            #ffffff 0%,
+            #fffafb 100%
+        );
 
     box-shadow: var(--lab-shadow-sm);
 
@@ -1803,11 +1846,9 @@ INDIVIDUAL LAB TESTS
 
 .lab-test-card:hover {
     transform: translateY(-3px);
-
     border-color: #e5cbd1;
-
     box-shadow:
-        0 10px 25px rgba(70, 50, 50, 0.07);
+        0 11px 28px rgba(70, 50, 50, 0.075);
 }
 
 /* =========================================================
@@ -1818,36 +1859,47 @@ TEST ICON
     width: 48px;
     height: 48px;
 
-    flex: 0 0 48px;
+    flex: none;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    margin-right: 13px;
+    margin: 0;
 
+    border: 1px solid rgba(232, 154, 170, 0.12);
     border-radius: 14px;
 
     background: var(--lab-pink-light);
 
     font-size: 24px;
+    line-height: 1;
 
     box-shadow:
-        inset 0 0 0 1px rgba(232, 154, 170, 0.12);
+        inset 0 0 0 1px rgba(255, 255, 255, 0.6);
 }
 
-/* Different soft backgrounds */
+/* Keep the accents soft and on-brand.
+   No blue. */
 
 .lab-test-card:nth-child(1) .lab-test-icon {
     background: var(--lab-gold-light);
+    border-color: #f0e3c6;
 }
 
 .lab-test-card:nth-child(2) .lab-test-icon {
     background: var(--lab-purple-light);
+    border-color: #e5ddec;
 }
 
 .lab-test-card:nth-child(3) .lab-test-icon {
-    background: var(--lab-blue-light);
+    background: var(--lab-pink-light);
+    border-color: #f0dce2;
+}
+
+.lab-test-card:nth-child(4) .lab-test-icon {
+    background: var(--lab-green-light);
+    border-color: #dcece2;
 }
 
 /* =========================================================
@@ -1856,12 +1908,27 @@ TEST COPY
 
 .lab-test-copy {
     min-width: 0;
-    flex: 1;
+    padding-top: 1px;
     text-align: left;
 }
 
+.lab-test-label {
+    display: block;
+
+    margin: 0 0 5px;
+
+    color: var(--lab-pink-dark);
+
+    font-size: 8px;
+    line-height: 1;
+
+    font-weight: 900;
+
+    letter-spacing: 0.12em;
+}
+
 .lab-test-copy h3 {
-    margin: 1px 0 5px;
+    margin: 0 0 6px;
 
     color: var(--lab-text);
 
@@ -1882,75 +1949,343 @@ TEST COPY
     font-weight: 600;
 }
 
-/* Small label inside a test */
+/* =========================================================
+WINNERS
+========================================================= */
 
-.lab-test-label {
+/*
+    Keep the Winners section on the same content rail
+    as the Real-Life Tests and Mom Battles sections.
+*/
+
+.lab-winners-section {
+    width: min(960px, calc(100% - 40px));
+    margin: 0 auto 34px;
+}
+
+.lab-winners-section .section-heading {
+    margin-bottom: 20px;
+}
+
+.winner-preview {
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: 55px minmax(0, 1fr);
+    align-items: center;
+    column-gap: 17px;
+
+    padding: 21px 23px;
+
+    border: 1px solid #f0dfb7;
+    border-radius: var(--lab-radius-lg);
+
+    background:
+        linear-gradient(
+            135deg,
+            #fffaf0 0%,
+            #fff8e8 100%
+        );
+
+    box-shadow: var(--lab-shadow-sm);
+}
+
+.winner-preview-icon {
+    width: 55px;
+    height: 55px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 16px;
+
+    background: #fff;
+
+    font-size: 27px;
+    line-height: 1;
+
+    box-shadow: var(--lab-shadow-sm);
+}
+
+.winner-preview-copy {
+    min-width: 0;
+    text-align: left;
+}
+
+.winner-preview-copy span {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: var(--lab-gold);
+
+    font-size: 9px;
+    line-height: 1;
+
+    font-weight: 900;
+    letter-spacing: 0.1em;
+}
+
+.winner-preview-copy h3 {
+    margin: 0 0 4px;
+
+    color: var(--lab-text);
+
+    font-size: 19px;
+    line-height: 1.15;
+
+    font-weight: 900;
+}
+
+.winner-preview-copy p {
+    margin: 0;
+
+    color: var(--lab-muted);
+
+    font-size: 12px;
+    line-height: 1.45;
+
+    font-weight: 600;
+}
+
+/* =========================================================
+MOM BATTLES
+========================================================= */
+
+/*
+    Same 960px content rail as:
+    - Real-Life Tests
+    - Winners
+
+    This makes the entire lower page visually line up.
+*/
+
+.lab-battle-connection {
+    width: min(960px, calc(100% - 40px));
+    margin: 0 auto 36px;
+}
+
+.battle-connection-inner {
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: 60px minmax(0, 1fr);
+    align-items: center;
+    column-gap: 20px;
+
+    padding: 23px 27px;
+
+    border: 1px solid #eadfe5;
+    border-radius: var(--lab-radius-lg);
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff3f6 0%,
+            #ffffff 72%
+        );
+
+    box-shadow: var(--lab-shadow-sm);
+}
+
+.connection-icon {
+    width: 60px;
+    height: 60px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 17px;
+
+    background: var(--lab-pink-light);
+
+    font-size: 28px;
+    line-height: 1;
+
+    box-shadow:
+        inset 0 0 0 1px rgba(232, 154, 170, 0.10);
+}
+
+.connection-copy {
+    min-width: 0;
+    text-align: left;
+}
+
+.connection-copy > span {
     display: block;
 
     margin-bottom: 5px;
 
     color: var(--lab-pink-dark);
 
-    font-size: 8px;
+    font-size: 9px;
     line-height: 1;
 
     font-weight: 900;
-
     letter-spacing: 0.12em;
+}
+
+.connection-copy h2 {
+    margin: 0;
+
+    color: var(--lab-text);
+
+    font-size: 25px;
+    line-height: 1.1;
+
+    font-weight: 900;
+}
+
+.connection-copy h2 strong {
+    color: var(--lab-pink-dark);
+}
+
+.connection-copy p {
+    max-width: 650px;
+
+    margin: 7px 0 13px;
+
+    color: var(--lab-muted);
+
+    font-size: 12px;
+    line-height: 1.5;
+
+    font-weight: 600;
+}
+
+.lab-battle-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 44px;
+
+    padding: 9px 17px;
+
+    border-radius: 999px;
+
+    background: #e89a3a;
+
+    color: #fff !important;
+
+    font-size: 10px;
+    line-height: 1;
+
+    font-weight: 900;
+    letter-spacing: 0.04em;
+
+    box-shadow:
+        0 7px 18px rgba(232, 154, 58, 0.18);
+
+    transition:
+        transform 0.18s ease,
+        background 0.18s ease,
+        box-shadow 0.18s ease;
+}
+
+.lab-battle-button:hover {
+    transform: translateY(-2px);
+    background: #d77f20;
+
+    box-shadow:
+        0 10px 23px rgba(215, 127, 32, 0.23);
 }
 
 /* =========================================================
 SUBMISSION
 ========================================================= */
 
+/*
+    The submission CTA stays visually smaller,
+    but sits on the same 960px page rail so its
+    left/right alignment is consistent with the
+    sections above.
+*/
+
 .lab-submission {
-    width: min(760px, calc(100% - 40px));
+    width: min(960px, calc(100% - 40px));
     margin: 0 auto 48px;
 }
 
 .submission-card {
+    width: min(760px, 100%);
+    margin: 0 auto;
+
     padding: 30px 25px;
+
     text-align: center;
+
     border: 1px solid #eadfe2;
     border-radius: var(--lab-radius-xl);
-    background: #fff;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffffff 0%,
+            #fff9fb 100%
+        );
+
     box-shadow: var(--lab-shadow-md);
 }
 
 .submission-icon {
     width: 50px;
     height: 50px;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     margin: 0 auto 12px;
+
     border-radius: 14px;
+
     background: var(--lab-pink-light);
+
     font-size: 23px;
+    line-height: 1;
+
+    box-shadow:
+        inset 0 0 0 1px rgba(232, 154, 170, 0.10);
 }
 
 .submission-card > span {
     display: block;
+
     margin-bottom: 5px;
+
     color: var(--lab-pink-dark);
+
     font-size: 9px;
+    line-height: 1;
+
     font-weight: 900;
     letter-spacing: 0.11em;
 }
 
 .submission-card h2 {
     margin: 0;
+
     color: var(--lab-text);
+
     font-size: clamp(27px, 3.5vw, 37px);
+    line-height: 1.05;
+
     font-weight: 900;
 }
 
 .submission-card p {
     max-width: 500px;
-    margin: 8px auto 17px;
+
+    margin: 9px auto 17px;
+
     color: var(--lab-muted);
+
     font-size: 13px;
     line-height: 1.5;
+
     font-weight: 600;
 }
 
@@ -1958,21 +2293,392 @@ SUBMISSION
     display: inline-flex;
     align-items: center;
     justify-content: center;
+
     min-height: 46px;
-    padding: 10px 18px;
+
+    padding: 10px 19px;
+
     border-radius: 999px;
+
     background: var(--lab-pink);
+
     color: #fff !important;
+
     font-size: 10px;
+    line-height: 1;
+
     font-weight: 900;
+
+    box-shadow:
+        0 7px 18px rgba(232, 154, 170, 0.16);
+
     transition:
         transform 0.18s ease,
-        background 0.18s ease;
+        background 0.18s ease,
+        box-shadow 0.18s ease;
 }
 
 .submission-button:hover {
     transform: translateY(-2px);
+
     background: var(--lab-pink-dark);
+
+    box-shadow:
+        0 10px 22px rgba(207, 111, 135, 0.18);
+}
+
+/* =========================================================
+TABLET — LOWER SECTIONS
+========================================================= */
+
+@media (max-width: 980px) {
+
+    .lab-tests-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .lab-test-card {
+        min-height: 160px;
+    }
+}
+
+/* =========================================================
+MOBILE — LOWER SECTIONS
+========================================================= */
+
+@media (max-width: 640px) {
+
+    /*
+        All lower sections share the same outer width.
+        This is what keeps the page visually aligned.
+    */
+
+    .lab-tests-section,
+    .lab-winners-section,
+    .lab-battle-connection,
+    .lab-submission {
+        width: calc(100% - 24px);
+    }
+
+    /* =====================================================
+       REAL-LIFE TESTS
+       ===================================================== */
+
+    .lab-tests-section {
+        margin-bottom: 34px;
+    }
+
+    .lab-tests-section .section-heading {
+        margin-bottom: 17px;
+    }
+
+    .lab-tests-section .section-heading h2 {
+        font-size: 27px;
+        line-height: 1.08;
+    }
+
+    .lab-tests-section .section-heading > p {
+        max-width: 330px;
+        margin-top: 8px;
+        font-size: 11px;
+        line-height: 1.5;
+    }
+
+    .lab-tests-grid {
+        grid-template-columns: 1fr;
+        gap: 9px;
+    }
+
+    .lab-test-card {
+        min-height: 0;
+
+        grid-template-columns:
+            43px minmax(0, 1fr);
+
+        column-gap: 11px;
+
+        padding: 15px 14px;
+
+        border-radius: 15px;
+    }
+
+    .lab-test-icon {
+        width: 43px;
+        height: 43px;
+
+        flex: none;
+
+        margin: 0;
+
+        border-radius: 12px;
+
+        font-size: 21px;
+    }
+
+    .lab-test-copy {
+        padding-top: 0;
+    }
+
+    .lab-test-label {
+        margin-bottom: 4px;
+        font-size: 7px;
+    }
+
+    .lab-test-copy h3 {
+        margin: 0 0 4px;
+        font-size: 15px;
+        line-height: 1.15;
+    }
+
+    .lab-test-copy p {
+        font-size: 10px;
+        line-height: 1.45;
+    }
+
+    /* =====================================================
+       WINNERS
+       ===================================================== */
+
+    .lab-winners-section {
+        margin-bottom: 27px;
+    }
+
+    .lab-winners-section .section-heading {
+        margin-bottom: 16px;
+    }
+
+    .winner-preview {
+        grid-template-columns:
+            44px minmax(0, 1fr);
+
+        column-gap: 11px;
+
+        padding: 15px;
+
+        border-radius: 15px;
+    }
+
+    .winner-preview-icon {
+        width: 44px;
+        height: 44px;
+
+        border-radius: 11px;
+
+        font-size: 21px;
+    }
+
+    .winner-preview-copy {
+        text-align: left;
+    }
+
+    .winner-preview-copy span {
+        margin-bottom: 4px;
+        font-size: 7px;
+    }
+
+    .winner-preview-copy h3 {
+        margin-bottom: 4px;
+        font-size: 14px;
+        line-height: 1.15;
+    }
+
+    .winner-preview-copy p {
+        font-size: 9px;
+        line-height: 1.4;
+    }
+
+    /* =====================================================
+       MOM BATTLES
+       ===================================================== */
+
+    .lab-battle-connection {
+        margin-bottom: 28px;
+    }
+
+    .battle-connection-inner {
+        grid-template-columns:
+            44px minmax(0, 1fr);
+
+        column-gap: 11px;
+
+        padding: 17px 14px;
+
+        border-radius: 16px;
+    }
+
+    .connection-icon {
+        width: 44px;
+        height: 44px;
+
+        border-radius: 12px;
+
+        font-size: 20px;
+    }
+
+    .connection-copy {
+        text-align: left;
+    }
+
+    .connection-copy > span {
+        margin-bottom: 4px;
+        font-size: 8px;
+    }
+
+    .connection-copy h2 {
+        font-size: 20px;
+        line-height: 1.1;
+    }
+
+    .connection-copy p {
+        margin: 5px 0 10px;
+        font-size: 10px;
+        line-height: 1.4;
+    }
+
+    .lab-battle-button {
+        min-height: 44px;
+
+        padding: 8px 12px;
+
+        font-size: 8.5px;
+    }
+
+    /* =====================================================
+       SUBMISSION
+       ===================================================== */
+
+    .lab-submission {
+        margin-bottom: 34px;
+    }
+
+    .submission-card {
+        width: 100%;
+
+        padding: 24px 15px;
+
+        border-radius: 19px;
+    }
+
+    .submission-icon {
+        width: 44px;
+        height: 44px;
+
+        margin-bottom: 11px;
+
+        border-radius: 11px;
+
+        font-size: 20px;
+    }
+
+    .submission-card > span {
+        font-size: 7.5px;
+    }
+
+    .submission-card h2 {
+        font-size: 26px;
+        line-height: 1.08;
+    }
+
+    .submission-card p {
+        margin: 7px auto 14px;
+        font-size: 10px;
+        line-height: 1.5;
+    }
+
+    .submission-button {
+        width: 100%;
+        min-height: 46px;
+        font-size: 9px;
+    }
+}
+
+/* =========================================================
+VERY SMALL PHONES — LOWER SECTIONS
+========================================================= */
+
+@media (max-width: 380px) {
+
+    .lab-test-card {
+        grid-template-columns:
+            40px minmax(0, 1fr);
+
+        column-gap: 10px;
+
+        padding: 13px 12px;
+    }
+
+    .lab-test-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 11px;
+        font-size: 19px;
+    }
+
+    .lab-test-copy h3 {
+        font-size: 14px;
+    }
+
+    .lab-test-copy p {
+        font-size: 9px;
+    }
+
+    .winner-preview {
+        grid-template-columns:
+            40px minmax(0, 1fr);
+
+        column-gap: 10px;
+
+        padding: 13px;
+    }
+
+    .winner-preview-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 19px;
+    }
+
+    .winner-preview-copy h3 {
+        font-size: 13px;
+    }
+
+    .winner-preview-copy p {
+        font-size: 8.5px;
+    }
+
+    .battle-connection-inner {
+        grid-template-columns:
+            40px minmax(0, 1fr);
+
+        column-gap: 10px;
+
+        padding: 15px 12px;
+    }
+
+    .connection-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 11px;
+        font-size: 19px;
+    }
+
+    .connection-copy h2 {
+        font-size: 18px;
+    }
+
+    .connection-copy p {
+        font-size: 9px;
+    }
+
+    .lab-battle-button {
+        font-size: 8px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .submission-card {
+        padding: 22px 13px;
+    }
 }
 
 /* =========================================================
