@@ -1643,20 +1643,14 @@ TEST GRID
 ========================================================= */
 
 .lab-score-grid {
-    display: grid;
-    grid-template-columns:
-        repeat(4, minmax(0, 1fr));
-    gap: 12px;
+    display: flex;
+    flex-direction:row;
+    align-items:center;
 }
 
 .score-factor {
     min-width: 0;
     min-height: 74px;
-
-    display: grid;
-    grid-template-columns: 44px minmax(0, 1fr);
-    align-items: center;
-    gap: 12px;
 
     padding: 14px 15px;
 
