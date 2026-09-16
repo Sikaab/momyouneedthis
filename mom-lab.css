@@ -2031,7 +2031,7 @@ MOBILE
     }
 
     .battle-connection-inner {
-        align-items: flex-start;
+        align-items: center;
         gap: 13px;
         padding: 20px 17px;
         border-radius: 20px;
