@@ -1644,14 +1644,16 @@ TEST GRID
 
 .lab-score-grid {
     display: flex;
-    flex-direction:row;
+    flex-direction:column;
     align-items:center;
 }
 
 .score-factor {
     min-width: 0;
     min-height: 74px;
-
+display:flex;
+flex-direction: row;
+align-items:center;
     padding: 14px 15px;
 
     border: 1px solid #eadfe1;
