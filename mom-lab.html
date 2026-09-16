@@ -187,13 +187,6 @@
         </a>
 
         <a
-            href="#competing"
-            class="database-filter"
-        >
-            ⚔️ Competing
-        </a>
-
-        <a
             href="#winners"
             class="database-filter"
         >
@@ -360,56 +353,6 @@
 
 
 <!-- =====================================================
-     MOM VOTED WINNERS
-====================================================== -->
-
-<section
-    class="lab-winners-section"
-    id="winners"
->
-
-    <div class="section-heading">
-
-        <span class="section-kicker">
-            AFTER THE LAB
-        </span>
-
-        <h2>
-            Moms get the
-            <span>final say.</span>
-        </h2>
-
-    </div>
-
-    <div class="winner-preview">
-
-        <div class="winner-preview-icon">
-            🏆
-        </div>
-
-        <div class="winner-preview-copy">
-
-            <span>
-                MOM VOTE
-            </span>
-
-            <h3>
-                The Lab tests it. Moms decide.
-            </h3>
-
-            <p>
-                Survivors can earn their shot in the Mom Battles,
-                where moms choose what wins.
-            </p>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
      MOM BATTLES
 ====================================================== -->
 
@@ -429,7 +372,7 @@
             </h2>
 
             <p>
-                The products that survive can face off in Mom Battles.
+                The products that survive can face off in Mom Battles, where you decide what wins.
             </p>
 
             <a
@@ -510,10 +453,6 @@
 
     function getStatusClass(status) {
 
-        if (status === "competing") {
-            return "competing";
-        }
-
         if (status === "failed") {
             return "failed";
         }
@@ -524,10 +463,6 @@
 
 
     function getStatusText(status) {
-
-        if (status === "competing") {
-            return "⚔️ COMPETING";
-        }
 
         if (status === "failed") {
             return "💥 FAILED";
