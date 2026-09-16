@@ -882,27 +882,34 @@ FEATURED PRODUCT
 }
 
 .featured-product-button {
-    display: inline-flex;
+       width: 100%;
+    min-height: 52px;
+    display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 46px;
-    margin-top: 14px;
-    padding: 10px 18px;
+    margin-top: 4px;
     border-radius: 999px;
-    background: var(--lab-pink);
+    background: #e89a3a;
+    border: 2px solid #e89a3a;
     color: #fff !important;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 900;
+    letter-spacing: 0.07em;
+    text-align: center;
     box-shadow:
-        0 7px 18px rgba(232, 154, 170, 0.16);
+        0 8px 20px rgba(232, 154, 58, 0.25);
     transition:
         transform 0.18s ease,
-        background 0.18s ease;
+        background 0.18s ease,
+        box-shadow 0.18s ease;
 }
 
 .featured-product-button:hover {
-    transform: translateY(-2px);
-    background: var(--lab-pink-dark);
+     transform: translateY(-2px);
+    background: #d77f20;
+    border-color: #d77f20;
+    box-shadow:
+        0 11px 25px rgba(215, 127, 32, 0.28);
 }
 
 /* =========================================================
