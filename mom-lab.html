@@ -708,11 +708,11 @@
         try {
 
             const response =
-                await fetch("products.json");
+                await fetch("mom-lab.json");
 
             if (!response.ok) {
                 throw new Error(
-                    "Unable to load products.json."
+                    "Unable to load mom-lab.json."
                 );
             }
 
@@ -724,7 +724,7 @@
                 !Array.isArray(data.products)
             ) {
                 throw new Error(
-                    "products.json must contain a products array."
+                    "mom-lab.json must contain a products array."
                 );
             }
 
