@@ -2770,6 +2770,8 @@ MOBILE
 
     .lab-footer {
         padding: 20px 0 26px;
+        margin-left:auto;
+        margin-right: auto;
     }
 
     .lab-footer img {
