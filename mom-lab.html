@@ -312,15 +312,6 @@
     const productGrid =
         document.getElementById("labProductGrid");
 
-    const featuredDescription =
-        document.getElementById("featuredDescription");
-
-    const featuredButton =
-        document.getElementById("featuredButton");
-
-    const featuredImage =
-        document.getElementById("featuredImage");
-
 
     function escapeHTML(value) {
 
@@ -457,23 +448,6 @@
     }
 
 
-    function updateFeaturedProduct(product) {
-
-        if (!product) {
-            return;
-        }
-
-        featuredDescription.textContent =
-            product.description;
-
-        featuredButton.href =
-            product.url;
-
-        featuredImage.textContent =
-            product.image;
-
-    }
-
 
     function setupShutters() {
 
@@ -553,15 +527,7 @@
                 products
                     .map(createProductCard)
                     .join("");
-
-            const featuredProduct =
-                products.find(function (product) {
-                    return product.featured === true;
-                });
-
-            updateFeaturedProduct(
-                featuredProduct
-            );
+            
 
             setupShutters();
 
