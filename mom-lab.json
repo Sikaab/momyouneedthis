@@ -1,0 +1,76 @@
+{
+  "products": [
+    {
+      "id": "product-01",
+      "name": "Example Baby Product",
+      "category": "BABY",
+      "description": "A practical baby find worth knowing about.",
+      "image": "🍼",
+      "status": "survived",
+      "buttonText": "VIEW PRODUCT →",
+      "url": "#",
+      "hidden": false,
+      "featured": true
+    },
+    {
+      "id": "product-02",
+      "name": "Example Toddler Find",
+      "category": "TODDLER",
+      "description": "Survived an unreasonable amount of toddler chaos.",
+      "image": "🧸",
+      "status": "survived",
+      "buttonText": "VIEW PRODUCT →",
+      "url": "#",
+      "hidden": false,
+      "featured": false
+    },
+    {
+      "id": "product-03",
+      "name": "Example Bath-Time Find",
+      "category": "BATH & CARE",
+      "description": "Because bath time has enough disasters already.",
+      "image": "🛁",
+      "status": "survived",
+      "buttonText": "VIEW PRODUCT →",
+      "url": "#",
+      "hidden": true,
+      "featured": false
+    },
+    {
+      "id": "product-04",
+      "name": "Example Mom-Life Find",
+      "category": "MOM LIFE",
+      "description": "Tested with approximately one free hand.",
+      "image": "👜",
+      "status": "survived",
+      "buttonText": "VIEW PRODUCT →",
+      "url": "#",
+      "hidden": false,
+      "featured": false
+    },
+    {
+      "id": "product-05",
+      "name": "Example Battle Contender",
+      "category": "MOM BATTLE",
+      "description": "A Lab survivor officially entering the arena.",
+      "image": "⭐",
+      "status": "competing",
+      "buttonText": "SEE BATTLE →",
+      "url": "amazon-favorites.html",
+      "hidden": true,
+      "featured": false
+    },
+    {
+      "id": "product-06",
+      "name": "Example Lab Failure",
+      "category": "LAB FAILURE",
+      "description": "Gravity, toddler chaos and reality won.",
+      "image": "💥",
+      "status": "failed",
+      "buttonText": "SEE PRODUCT →",
+      "url": "#",
+      "hidden": false,
+      "featured": false
+    }
+  ]
+}
