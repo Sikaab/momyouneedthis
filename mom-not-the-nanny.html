@@ -14,12 +14,12 @@ content=“width=device-width, initial-scale=1.0”
      ⭐ CHANGE FOR EACH CREATOR
 ========================================================= -->
 <title>
-    Ana Balich | Mom Creator Worth Following | MomYouNeedThis
+    Not the Nanny | Mom Creator Worth Following | MomYouNeedThis
 </title>
 
 <meta
 name=“description”
-content=“Meet Ana Balich of Not the Nanny, a mom creator bringing humor, honesty and wildly relatable parenting moments to your feed. Discover why MomYouNeedThis chose her as a Creator Worth Following.”
+content=“Meet Ana Balich of Not the Nanny, a mom creator bringing humor, honesty and heart to parenting, motherhood and family life.”
 
 <!-- =========================================================
      CANONICAL URL
@@ -27,7 +27,7 @@ content=“Meet Ana Balich of Not the Nanny, a mom creator bringing humor, hones
 ========================================================= -->
 <link
     rel="canonical"
-    href="https://momyouneedthis.com/mom-not-the-nanny.html"
+    href="https://momyouneedthis.com/not-the-nanny.html"
 >
 <!-- =========================================================
      OPEN GRAPH / SOCIAL SEO
@@ -40,15 +40,15 @@ content=“profile”
 
 <meta
 property=“og:title”
-content=“Ana Balich | Mom Creator Worth Following | MomYouNeedThis”
+content=“Not the Nanny | Mom Creator Worth Following | MomYouNeedThis”
 
 <meta
 property=“og:description”
-content=“Meet Ana Balich — one of MomYouNeedThis’ Creators Worth Following.”
+content=“Meet Ana Balich of Not the Nanny — one of MomYouNeedThis’ Creators Worth Following.”
 
 <meta
 property=“og:url”
-content=“https://momyouneedthis.com/mom-not-the-nanny.html”
+content=“https://momyouneedthis.com/not-the-nanny.html”
 
 <meta
 property=“og:image”
@@ -72,7 +72,7 @@ content=“summary_large_image”
 
 <meta
 name=“twitter:title”
-content=“Ana Balich | Mom Creator Worth Following | MomYouNeedThis”
+content=“Not the Nanny | Mom Creator Worth Following | MomYouNeedThis”
 
 <meta
 name=“twitter:description”
@@ -105,18 +105,19 @@ content=“https://momyouneedthis.com/assets/not-thenanny.jpg”
 {
     "@context": "https://schema.org",
     "@type": "ProfilePage",
-    "name": "Ana Balich | Mom Creator Worth Following",
-    "description": "Meet Ana Balich, creator of Not the Nanny, featured by MomYouNeedThis as a Creator Worth Following.",
-    "url": "https://momyouneedthis.com/mom-not-the-nanny.html",
+    "name": "Not the Nanny | Mom Creator Worth Following",
+    "description": "Meet Ana Balich of Not the Nanny, a mom creator bringing humor and advice to parenting, motherhood and raising biracial and multicultural kids.",
+    "url": "https://momyouneedthis.com/not-the-nanny.html",
     "mainEntity": {
         "@type": "Person",
         "name": "Ana Balich",
         "url": "https://www.instagram.com/not_thenanny/",
         "sameAs": [
-            "https://www.instagram.com/not_thenanny/"
+            "https://www.instagram.com/not_thenanny/",
+            "https://notthenannyblog.com/"
         ],
         "image": "https://momyouneedthis.com/assets/not-thenanny.jpg",
-        "description": "Ana Balich creates humorous, relatable parenting and motherhood content through Not the Nanny."
+        "description": "Ana Balich is the creator of Not the Nanny, sharing humor and advice about parenting, motherhood and raising biracial and multicultural kids."
     },
     "isPartOf": {
         "@type": "WebSite",
@@ -129,7 +130,7 @@ content=“https://momyouneedthis.com/assets/not-thenanny.jpg”
 /* =========================================================
    MOMYOUNEEDTHIS — CREATOR SPOTLIGHT
    MASTER TEMPLATE
-   Everything below can remain the same for every creator.
+   MOBILE-FIRST
 ========================================================= */
 :root {
     --mynt-pink: #d05a82;
@@ -179,16 +180,17 @@ a {
    TOP NAVIGATION
 ========================================================= */
 .creator-topbar {
-    width: min(1180px, calc(100% - 40px));
+    width:
+        min(100% - 28px, 1180px);
     margin: 0 auto;
-    padding: 22px 0;
+    padding: 17px 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 20px;
+    gap: 10px;
 }
 .creator-back-link {
-    font-size: 14px;
+    font-size: 11px;
     font-weight: 900;
     color: var(--mynt-navy);
     transition: 0.2s ease;
@@ -200,12 +202,12 @@ a {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-height: 40px;
-    padding: 0 17px;
+    min-height: 36px;
+    padding: 0 11px;
     border-radius: 999px;
     background: var(--mynt-pink-soft);
     color: var(--mynt-pink-dark);
-    font-size: 12px;
+    font-size: 9px;
     font-weight: 900;
     transition:
         background 0.2s ease,
@@ -233,11 +235,11 @@ a {
 ========================================================= */
 .creator-spotlight-hero {
     position: relative;
-    width: min(1180px, calc(100% - 40px));
-    margin: 0 auto 70px;
-    min-height: 590px;
-    padding: 70px;
-    border-radius: 34px;
+    width: calc(100% - 28px);
+    margin: 0 auto 45px;
+    min-height: auto;
+    padding: 42px 22px 38px;
+    border-radius: 27px;
     background:
         radial-gradient(
             circle at 10% 15%,
@@ -251,9 +253,9 @@ a {
             #eef5ff 100%
         );
     display: grid;
-    grid-template-columns: 1fr 0.9fr;
+    grid-template-columns: 1fr;
     align-items: center;
-    gap: 55px;
+    gap: 42px;
     overflow: hidden;
 }
 .creator-hero-content {
@@ -273,9 +275,9 @@ a {
 }
 .creator-spotlight-hero h1 {
     margin: 18px 0 3px;
-    font-size: clamp(48px, 6vw, 78px);
+    font-size: 49px;
     line-height: 0.98;
-    letter-spacing: -2.5px;
+    letter-spacing: -1.8px;
     color: var(--mynt-navy);
 }
 .creator-spotlight-hero h1 span {
@@ -291,21 +293,21 @@ a {
 .creator-hero-description {
     max-width: 540px;
     margin: 0 0 25px;
-    font-size: 18px;
+    font-size: 16px;
     line-height: 1.65;
     color: #555;
 }
 .creator-hero-pills {
     display: flex;
     flex-wrap: wrap;
-    gap: 9px;
+    gap: 7px;
 }
 .creator-hero-pills span {
-    padding: 9px 13px;
+    padding: 8px 10px;
     border-radius: 999px;
     background: rgba(255,255,255,0.8);
     color: var(--mynt-navy);
-    font-size: 12px;
+    font-size: 10px;
     font-weight: 800;
     box-shadow:
         0 4px 12px rgba(32,44,60,0.04);
@@ -315,7 +317,8 @@ a {
 ========================================================= */
 .creator-hero-photo-wrap {
     position: relative;
-    width: min(410px, 100%);
+    width:
+        min(320px, 88%);
     margin: 0 auto;
     z-index: 2;
 }
@@ -339,12 +342,32 @@ a {
     box-shadow: var(--shadow-soft);
     z-index: 2;
 }
+/* =========================================================
+   INLINE SVG FALLBACK
+========================================================= */
+.creator-photo-fallback {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 0.9;
+    border-radius: 34px;
+    border: 10px solid var(--mynt-white);
+    box-shadow: var(--shadow-soft);
+    z-index: 2;
+    display: none;
+    overflow: hidden;
+    background: var(--mynt-pink-soft);
+}
+.creator-photo-fallback svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
 .creator-photo-stamp {
     position: absolute;
-    right: -28px;
-    top: 35px;
-    width: 120px;
-    height: 120px;
+    right: -7px;
+    top: 25px;
+    width: 95px;
+    height: 95px;
     border-radius: 50%;
     background: var(--mynt-pink);
     color: var(--mynt-white);
@@ -352,7 +375,7 @@ a {
     align-items: center;
     justify-content: center;
     text-align: center;
-    font-size: 11px;
+    font-size: 9px;
     line-height: 1.35;
     font-weight: 900;
     letter-spacing: 0.8px;
@@ -366,7 +389,7 @@ a {
     margin: 15px auto 0;
     max-width: 360px;
     text-align: center;
-    font-size: 12px;
+    font-size: 11px;
     line-height: 1.5;
     color: var(--mynt-gray);
     z-index: 5;
@@ -385,35 +408,36 @@ a {
     opacity: 0.5;
 }
 .creator-hero-star {
-    top: 40px;
-    left: 45%;
+    top: 20px;
+    left: auto;
+    right: 30px;
     font-size: 30px;
     transform: rotate(15deg);
 }
 .creator-hero-flower {
-    bottom: 35px;
-    left: 40px;
+    bottom: 20px;
+    left: 20px;
     font-size: 35px;
 }
 /* =========================================================
    INTRO
 ========================================================= */
 .creator-intro-section {
-    padding: 30px 20px 85px;
+    padding: 65px 14px;
     background: var(--mynt-cream);
 }
 .creator-intro-card {
     width: min(900px, 100%);
     margin: 0 auto;
-    padding: 60px 70px;
-    border-radius: 30px;
+    padding: 38px 22px;
+    border-radius: 25px;
     background: var(--mynt-white);
     box-shadow: var(--shadow-card);
     text-align: center;
 }
 .creator-intro-card h2 {
     margin: 10px 0 18px;
-    font-size: clamp(34px, 4vw, 48px);
+    font-size: 34px;
     line-height: 1.05;
     color: var(--mynt-navy);
 }
@@ -422,7 +446,7 @@ a {
 }
 .creator-intro-lead {
     margin: 0 auto 28px;
-    font-size: 21px;
+    font-size: 18px;
     color: var(--mynt-navy);
 }
 .creator-intro-copy {
@@ -438,7 +462,7 @@ a {
    MOMYOUNEEDTHIS TEST
 ========================================================= */
 .creator-test-section {
-    padding: 90px 20px;
+    padding: 65px 14px;
     background: var(--mynt-white);
 }
 .creator-test-header {
@@ -467,17 +491,16 @@ a {
     font-size: 17px;
 }
 .creator-test-grid {
-    width: min(1050px, 100%);
+    width: 100%;
     margin: 0 auto;
     display: grid;
-    grid-template-columns:
-        repeat(3, 1fr);
-    gap: 20px;
+    grid-template-columns: 1fr;
+    gap: 14px;
 }
 .creator-test-card {
-    padding: 35px 30px;
-    border-radius: 25px;
-    min-height: 290px;
+    padding: 27px 23px;
+    border-radius: 22px;
+    min-height: auto;
     box-shadow: var(--shadow-card);
 }
 .creator-test-card-pink {
@@ -518,7 +541,7 @@ a {
 ========================================================= */
 .creator-quote-section {
     position: relative;
-    padding: 95px 25px;
+    padding: 70px 20px;
     background: var(--mynt-blue);
     text-align: center;
     overflow: hidden;
@@ -526,7 +549,7 @@ a {
 .creator-quote-section blockquote {
     width: min(850px, 100%);
     margin: 0 auto 22px;
-    font-size: clamp(28px, 4vw, 47px);
+    font-size: 29px;
     line-height: 1.2;
     font-weight: 800;
     color: var(--mynt-navy);
@@ -549,7 +572,7 @@ a {
    FEED
 ========================================================= */
 .creator-feed-section {
-    padding: 90px 20px;
+    padding: 65px 14px;
     background: var(--mynt-white);
 }
 .creator-feed-header {
@@ -561,15 +584,16 @@ a {
     width: min(850px, 100%);
     margin: 0 auto;
     display: grid;
-    gap: 12px;
+    gap: 10px;
 }
 .creator-feed-item {
     display: grid;
-    grid-template-columns: 60px 1fr;
+    grid-template-columns:
+        45px 1fr;
     align-items: start;
-    gap: 22px;
-    padding: 25px;
-    border-radius: 22px;
+    gap: 14px;
+    padding: 20px;
+    border-radius: 19px;
     background: var(--mynt-cream);
     transition: transform 0.2s ease;
 }
@@ -580,42 +604,42 @@ a {
     transform: translateY(-2px);
 }
 .creator-feed-number {
-    width: 50px;
-    height: 50px;
+    width: 42px;
+    height: 42px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
     background: var(--mynt-white);
     color: var(--mynt-pink);
-    font-size: 12px;
+    font-size: 10px;
     font-weight: 900;
     box-shadow:
         0 4px 12px rgba(32,44,60,0.05);
 }
 .creator-feed-item h3 {
     margin: 1px 0 5px;
-    font-size: 20px;
+    font-size: 18px;
     color: var(--mynt-navy);
 }
 .creator-feed-item p {
     margin: 0;
     color: var(--mynt-gray);
-    font-size: 15px;
+    font-size: 13px;
 }
 /* =========================================================
    FOLLOW
 ========================================================= */
 .creator-follow-section {
-    padding: 80px 20px;
+    padding: 55px 14px;
     background: var(--mynt-pink-soft);
 }
 .creator-follow-card {
     position: relative;
     width: min(800px, 100%);
     margin: 0 auto;
-    padding: 65px 40px;
-    border-radius: 32px;
+    padding: 48px 22px;
+    border-radius: 25px;
     background: var(--mynt-white);
     box-shadow: var(--shadow-soft);
     text-align: center;
@@ -623,7 +647,7 @@ a {
 }
 .creator-follow-card h2 {
     margin: 10px 0 15px;
-    font-size: clamp(38px, 5vw, 58px);
+    font-size: 41px;
     line-height: 1;
     color: var(--mynt-navy);
 }
@@ -634,18 +658,19 @@ a {
     width: min(560px, 100%);
     margin: 0 auto 28px;
     color: var(--mynt-gray);
-    font-size: 17px;
+    font-size: 15px;
 }
 .creator-follow-button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     min-height: 52px;
+    width: 100%;
     padding: 0 25px;
     border-radius: 999px;
     background: var(--mynt-pink);
     color: var(--mynt-white);
-    font-size: 13px;
+    font-size: 11px;
     font-weight: 900;
     letter-spacing: 0.5px;
     box-shadow:
@@ -668,15 +693,15 @@ a {
    FIRST 20
 ========================================================= */
 .creator-first20-section {
-    padding: 75px 20px;
+    padding: 55px 14px;
     background: var(--mynt-white);
 }
 .creator-first20-card {
     width: min(700px, 100%);
     margin: 0 auto;
-    padding: 45px 40px;
+    padding: 35px 22px;
     border: 2px dashed var(--mynt-pink-medium);
-    border-radius: 28px;
+    border-radius: 23px;
     text-align: center;
     background: var(--mynt-cream);
 }
@@ -693,7 +718,7 @@ a {
 }
 .creator-first20-card h2 {
     margin: 8px 0 14px;
-    font-size: 38px;
+    font-size: 32px;
     line-height: 1;
     color: var(--mynt-navy);
 }
@@ -710,7 +735,7 @@ a {
    EXPLORE MOMYOUNEEDTHIS
 ========================================================= */
 .creator-explore-section {
-    padding: 85px 20px 95px;
+    padding: 65px 14px;
     background: var(--mynt-cream);
 }
 .creator-explore-header {
@@ -719,18 +744,17 @@ a {
     text-align: center;
 }
 .creator-explore-grid {
-    width: min(1050px, 100%);
+    width: 100%;
     margin: 0 auto;
     display: grid;
-    grid-template-columns:
-        repeat(3, 1fr);
-    gap: 20px;
+    grid-template-columns: 1fr;
+    gap: 14px;
 }
 .creator-explore-card {
     position: relative;
-    padding: 32px 28px 30px;
-    min-height: 285px;
-    border-radius: 27px;
+    padding: 27px 23px;
+    min-height: auto;
+    border-radius: 23px;
     box-shadow: var(--shadow-card);
     transition:
         transform 0.2s ease,
@@ -792,24 +816,23 @@ a {
    NOMINATE
 ========================================================= */
 .creator-nominate-section {
-    padding: 30px 20px 80px;
+    padding: 20px 14px 60px;
     background: var(--mynt-cream);
 }
 .creator-nominate-content {
     width: min(1050px, 100%);
     margin: 0 auto;
-    padding: 30px 35px;
-    border-radius: 25px;
+    padding: 25px 22px;
+    border-radius: 22px;
     background: var(--mynt-blue);
     display: grid;
-    grid-template-columns:
-        auto 1fr auto;
+    grid-template-columns: 1fr;
     align-items: center;
-    gap: 25px;
+    gap: 16px;
 }
 .creator-nominate-icon {
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -826,7 +849,7 @@ a {
 }
 .creator-nominate-content h2 {
     margin: 3px 0 3px;
-    font-size: 24px;
+    font-size: 22px;
     line-height: 1.2;
     color: var(--mynt-navy);
 }
@@ -842,6 +865,7 @@ a {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    width: 100%;
     min-height: 48px;
     padding: 0 20px;
     border-radius: 999px;
@@ -858,10 +882,9 @@ a {
 }
 /* =========================================================
    FOOTER
-   SAME NAVIGATION AS INDEX.HTML
 ========================================================= */
 footer {
-    padding: 55px 25px 25px;
+    padding: 45px 18px 22px;
     background: var(--mynt-navy);
     color: var(--mynt-white);
     text-align: center;
@@ -881,14 +904,14 @@ footer {
 }
 footer h3 {
     margin: 0 0 8px;
-    font-size: 25px;
+    font-size: 22px;
     color: var(--mynt-white);
 }
 footer > p {
     width: min(560px, 100%);
     margin: 0 auto 25px;
     color: rgba(255,255,255,0.72);
-    font-size: 14px;
+    font-size: 13px;
     line-height: 1.6;
 }
 .footer-links {
@@ -897,11 +920,11 @@ footer > p {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 8px 22px;
+    gap: 12px 16px;
 }
 .footer-links a {
     color: rgba(255,255,255,0.82);
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 700;
     transition: 0.2s ease;
 }
@@ -915,225 +938,228 @@ footer > p {
     border-top:
         1px solid rgba(255,255,255,0.12);
     display: flex;
+    flex-direction: column;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 8px 30px;
+    gap: 6px;
 }
 .footer-bottom p {
     margin: 0;
     color: rgba(255,255,255,0.48);
-    font-size: 11px;
+    font-size: 10px;
 }
 /* =========================================================
    TABLET
 ========================================================= */
-@media (max-width: 900px) {
+@media (min-width: 701px) {
+    .creator-topbar {
+        width:
+            min(100% - 40px, 1180px);
+        padding: 22px 0;
+        gap: 20px;
+    }
+    .creator-back-link {
+        font-size: 14px;
+    }
+    .creator-home-button {
+        min-height: 40px;
+        padding: 0 17px;
+        font-size: 12px;
+    }
     .creator-spotlight-hero {
+        width: min(1180px, calc(100% - 40px));
+        margin: 0 auto 70px;
         padding: 55px 45px;
         grid-template-columns:
             1fr 0.8fr;
         gap: 35px;
     }
-    .creator-photo-stamp {
-        right: -10px;
-    }
-    .creator-test-grid,
-    .creator-explore-grid {
-        grid-template-columns: 1fr;
-    }
-    .creator-test-card,
-    .creator-explore-card {
-        min-height: auto;
-    }
-}
-/* =========================================================
-   MOBILE
-========================================================= */
-@media (max-width: 700px) {
-    .creator-topbar {
-        width:
-            min(100% - 28px, 1180px);
-        padding: 17px 0;
-        gap: 10px;
-    }
-    .creator-back-link {
-        font-size: 11px;
-    }
-    .creator-home-button {
-        min-height: 36px;
-        padding: 0 11px;
-        font-size: 9px;
-    }
-    .creator-spotlight-hero {
-        width: calc(100% - 28px);
-        margin-bottom: 45px;
-        padding: 42px 22px 38px;
-        min-height: auto;
-        border-radius: 27px;
-        grid-template-columns: 1fr;
-        gap: 42px;
-    }
     .creator-spotlight-hero h1 {
-        font-size: 49px;
-        letter-spacing: -1.8px;
+        font-size: clamp(48px, 6vw, 78px);
+        letter-spacing: -2.5px;
     }
     .creator-hero-description {
-        font-size: 16px;
+        font-size: 18px;
     }
     .creator-hero-pills {
-        gap: 7px;
+        gap: 9px;
     }
     .creator-hero-pills span {
-        font-size: 10px;
-        padding: 8px 10px;
+        font-size: 12px;
+        padding: 9px 13px;
     }
     .creator-hero-photo-wrap {
-        width:
-            min(320px, 88%);
+        width: min(410px, 100%);
     }
     .creator-photo-stamp {
-        width: 95px;
-        height: 95px;
-        right: -7px;
-        top: 25px;
-        font-size: 9px;
-    }
-    .creator-photo-caption {
+        right: -10px;
+        top: 35px;
+        width: 120px;
+        height: 120px;
         font-size: 11px;
     }
+    .creator-photo-caption {
+        font-size: 12px;
+    }
     .creator-hero-star {
-        top: 20px;
-        left: auto;
-        right: 30px;
+        top: 40px;
+        left: 45%;
+        right: auto;
     }
     .creator-hero-flower {
-        bottom: 20px;
-        left: 20px;
+        bottom: 35px;
+        left: 40px;
     }
     .creator-intro-section,
     .creator-test-section,
     .creator-feed-section,
     .creator-explore-section {
-        padding: 65px 14px;
+        padding: 90px 20px;
     }
     .creator-intro-card {
-        padding: 38px 22px;
-        border-radius: 25px;
+        padding: 60px 70px;
+        border-radius: 30px;
     }
     .creator-intro-card h2 {
-        font-size: 34px;
+        font-size: clamp(34px, 4vw, 48px);
     }
     .creator-intro-lead {
-        font-size: 18px;
+        font-size: 21px;
     }
     .creator-test-grid,
     .creator-explore-grid {
-        width: 100%;
-        gap: 14px;
+        width: min(1050px, 100%);
+        gap: 20px;
     }
     .creator-test-card {
-        padding: 27px 23px;
-        border-radius: 22px;
+        padding: 35px 30px;
+        border-radius: 25px;
     }
     .creator-quote-section {
-        padding: 70px 20px;
+        padding: 95px 25px;
     }
     .creator-quote-section blockquote {
-        font-size: 29px;
+        font-size: clamp(28px, 4vw, 47px);
     }
     .creator-feed-list {
-        gap: 10px;
+        gap: 12px;
     }
     .creator-feed-item {
         grid-template-columns:
-            45px 1fr;
-        gap: 14px;
-        padding: 20px;
-        border-radius: 19px;
-    }
-    .creator-feed-number {
-        width: 42px;
-        height: 42px;
-        font-size: 10px;
-    }
-    .creator-feed-item h3 {
-        font-size: 18px;
-    }
-    .creator-feed-item p {
-        font-size: 13px;
-    }
-    .creator-follow-section {
-        padding: 55px 14px;
-    }
-    .creator-follow-card {
-        padding: 48px 22px;
-        border-radius: 25px;
-    }
-    .creator-follow-card h2 {
-        font-size: 41px;
-    }
-    .creator-follow-card p {
-        font-size: 15px;
-    }
-    .creator-follow-button {
-        width: 100%;
-        font-size: 11px;
-    }
-    .creator-first20-section {
-        padding: 55px 14px;
-    }
-    .creator-first20-card {
-        padding: 35px 22px;
-        border-radius: 23px;
-    }
-    .creator-first20-card h2 {
-        font-size: 32px;
-    }
-    .creator-explore-card {
-        min-height: auto;
-        padding: 27px 23px;
-        border-radius: 23px;
-    }
-    .creator-nominate-section {
-        padding: 20px 14px 60px;
-    }
-    .creator-nominate-content {
-        padding: 25px 22px;
-        grid-template-columns: 1fr;
-        gap: 16px;
+            60px 1fr;
+        gap: 22px;
+        padding: 25px;
         border-radius: 22px;
     }
-    .creator-nominate-icon {
+    .creator-feed-number {
         width: 50px;
         height: 50px;
-    }
-    .creator-nominate-content h2 {
-        font-size: 22px;
-    }
-    .creator-nominate-button {
-        width: 100%;
-    }
-    footer {
-        padding: 45px 18px 22px;
-    }
-    footer h3 {
-        font-size: 22px;
-    }
-    footer > p {
-        font-size: 13px;
-    }
-    .footer-links {
-        gap: 12px 16px;
-    }
-    .footer-links a {
         font-size: 12px;
     }
+    .creator-feed-item h3 {
+        font-size: 20px;
+    }
+    .creator-feed-item p {
+        font-size: 15px;
+    }
+    .creator-follow-section {
+        padding: 80px 20px;
+    }
+    .creator-follow-card {
+        padding: 65px 40px;
+        border-radius: 32px;
+    }
+    .creator-follow-card h2 {
+        font-size: clamp(38px, 5vw, 58px);
+    }
+    .creator-follow-card p {
+        font-size: 17px;
+    }
+    .creator-follow-button {
+        width: auto;
+        font-size: 13px;
+    }
+    .creator-first20-section {
+        padding: 75px 20px;
+    }
+    .creator-first20-card {
+        padding: 45px 40px;
+        border-radius: 28px;
+    }
+    .creator-first20-card h2 {
+        font-size: 38px;
+    }
+    .creator-explore-card {
+        padding: 32px 28px 30px;
+        border-radius: 27px;
+    }
+    .creator-nominate-section {
+        padding: 30px 20px 80px;
+    }
+    .creator-nominate-content {
+        padding: 30px 35px;
+        grid-template-columns:
+            auto 1fr auto;
+        gap: 25px;
+        border-radius: 25px;
+    }
+    .creator-nominate-icon {
+        width: 60px;
+        height: 60px;
+    }
+    .creator-nominate-content h2 {
+        font-size: 24px;
+    }
+    .creator-nominate-button {
+        width: auto;
+    }
+    footer {
+        padding: 55px 25px 25px;
+    }
+    footer h3 {
+        font-size: 25px;
+    }
+    footer > p {
+        font-size: 14px;
+    }
+    .footer-links {
+        gap: 8px 22px;
+    }
+    .footer-links a {
+        font-size: 13px;
+    }
     .footer-bottom {
-        flex-direction: column;
-        gap: 6px;
+        flex-direction: row;
+        gap: 8px 30px;
     }
     .footer-bottom p {
-        font-size: 10px;
+        font-size: 11px;
+    }
+}
+/* =========================================================
+   DESKTOP
+========================================================= */
+@media (min-width: 901px) {
+    .creator-spotlight-hero {
+        padding: 70px;
+        grid-template-columns:
+            1fr 0.9fr;
+        gap: 55px;
+        min-height: 590px;
+    }
+    .creator-photo-stamp {
+        right: -28px;
+    }
+    .creator-test-grid,
+    .creator-explore-grid {
+        grid-template-columns:
+            repeat(3, 1fr);
+    }
+    .creator-test-card {
+        min-height: 290px;
+    }
+    .creator-explore-card {
+        min-height: 285px;
     }
 }
 /* =========================================================
@@ -1204,31 +1230,155 @@ footer > p {
     </p>
     <!-- ⭐ CHANGE DESCRIPTION -->
     <p class="creator-hero-description">
-        Motherhood, kid chaos and the kind of humor that makes
-        you laugh because unfortunately... you've absolutely
-        been there.
+        Parenting humor, honest mom-life moments and the
+        kind of family stories that make you laugh because
+        you've absolutely been there.
     </p>
     <div class="creator-hero-pills">
+        <span>
+            ✨ Worth Following
+        </span>
         <span>
             😂 Mom Humor
         </span>
         <span>
-            ❤️ Real Mom Life
-        </span>
-        <span>
-            ✨ Worth Following
+            ❤️ Humor &amp; Heart
         </span>
     </div>
 </div>
 <div class="creator-hero-photo-wrap">
     <div class="creator-photo-circle"></div>
-    <!-- ⭐ CHANGE PHOTO -->
+    <!-- =================================================
+         ⭐ CHANGE PHOTO
+         INLINE SVG FALLBACK IS BUILT DIRECTLY INTO TEMPLATE
+    ================================================= -->
     <img
         src="assets/not-thenanny.jpg"
         alt="Ana Balich of Not the Nanny — Mom Creator Worth Following"
         class="creator-hero-photo"
-        onerror="this.onerror=null; this.src='assets/generic.jpeg';"
+        onerror="
+            this.style.display='none';
+            this.nextElementSibling.style.display='block';
+        "
     >
+    <div
+        class="creator-photo-fallback"
+        aria-hidden="true"
+    >
+        <svg
+            viewBox="0 0 500 560"
+            xmlns="http://www.w3.org/2000/svg"
+            role="img"
+            aria-label="MomYouNeedThis creator image placeholder"
+        >
+            <defs>
+                <linearGradient
+                    id="creatorFallbackBackground"
+                    x1="0"
+                    y1="0"
+                    x2="1"
+                    y2="1"
+                >
+                    <stop
+                        offset="0%"
+                        stop-color="#fff1f5"
+                    />
+                    <stop
+                        offset="100%"
+                        stop-color="#fff8ee"
+                    />
+                </linearGradient>
+            </defs>
+            <rect
+                width="500"
+                height="560"
+                fill="url(#creatorFallbackBackground)"
+            />
+            <circle
+                cx="250"
+                cy="210"
+                r="105"
+                fill="#f1b3c5"
+            />
+            <circle
+                cx="210"
+                cy="195"
+                r="10"
+                fill="#202c3c"
+            />
+            <circle
+                cx="290"
+                cy="195"
+                r="10"
+                fill="#202c3c"
+            />
+            <path
+                d="M210 245 Q250 275 290 245"
+                fill="none"
+                stroke="#202c3c"
+                stroke-width="8"
+                stroke-linecap="round"
+            />
+            <path
+                d="M145 150 Q150 70 250 70 Q350 70 355 150"
+                fill="#d05a82"
+            />
+            <path
+                d="M135 180 Q105 205 120 270"
+                fill="none"
+                stroke="#d05a82"
+                stroke-width="35"
+                stroke-linecap="round"
+            />
+            <path
+                d="M365 180 Q395 205 380 270"
+                fill="none"
+                stroke="#d05a82"
+                stroke-width="35"
+                stroke-linecap="round"
+            />
+            <path
+                d="M105 555 Q115 365 250 365 Q385 365 395 555"
+                fill="#d05a82"
+            />
+            <circle
+                cx="105"
+                cy="100"
+                r="18"
+                fill="#ffffff"
+                opacity="0.8"
+            />
+            <circle
+                cx="410"
+                cy="120"
+                r="12"
+                fill="#ffffff"
+                opacity="0.8"
+            />
+            <text
+                x="250"
+                y="475"
+                text-anchor="middle"
+                font-family="Nunito, Arial, sans-serif"
+                font-size="24"
+                font-weight="900"
+                fill="#ffffff"
+            >
+                MOMYOUNEEDTHIS
+            </text>
+            <text
+                x="250"
+                y="510"
+                text-anchor="middle"
+                font-family="Nunito, Arial, sans-serif"
+                font-size="16"
+                font-weight="800"
+                fill="#ffffff"
+            >
+                CREATOR SPOTLIGHT
+            </text>
+        </svg>
+    </div>
     <div class="creator-photo-stamp">
         WE THINK<br>
         YOU'LL<br>
@@ -1261,7 +1411,6 @@ footer > p {
         </strong>
     </p>
     <div class="creator-intro-copy">
-        <!-- ⭐ PERSONALIZE THIS SECTION -->
         <p>
             There is a lot of mom content out there.
             We're not interested in adding more noise.
@@ -1272,11 +1421,11 @@ footer > p {
             <em>"Okay, I needed this."</em>
         </p>
         <p>
-            Ana Balich, the creator behind
-            <strong>Not the Nanny</strong>, is one of those
-            creators. Her content finds the humor in the
-            everyday chaos of parenting — the moments that
-            make you laugh because you know you've lived them too.
+            Ana Balich is one of those creators.
+            Through Not the Nanny, she brings humor and
+            honesty to parenting, motherhood and family life
+            — especially the funny, complicated and deeply
+            relatable moments that come with raising a family.
         </p>
     </div>
 </div>
@@ -1305,33 +1454,30 @@ footer > p {
         <div class="creator-test-icon">
             😂
         </div>
-        <!-- ⭐ PERSONALIZE -->
         <h3>
-            She finds the funny.
+            She makes mom life funny.
         </h3>
         <p>
-            Ana has a knack for turning the tiny, ridiculous
-            moments of parenting into humor that feels instantly
-            familiar — the kind of content that makes you stop
-            because you have absolutely been there.
+            Parenting can be ridiculous, exhausting and
+            completely unpredictable. Ana has a knack for
+            finding the humor in those everyday family
+            moments — the ones moms recognize immediately.
         </p>
     </article>
     <article
         class="creator-test-card creator-test-card-cream"
     >
         <div class="creator-test-icon">
-            ❤️
+            💗
         </div>
-        <!-- ⭐ PERSONALIZE -->
         <h3>
             She keeps it real.
         </h3>
         <p>
-            Not the Nanny leans into the everyday reality of
-            life with kids — imperfect, unpredictable and often
-            hilarious. It feels less like a polished parenting
-            lesson and more like a friend sending you something
-            because she knows you'll get it.
+            Not the Nanny mixes humor with honest
+            conversations about parenting, family life and
+            the realities of raising kids without pretending
+            motherhood is perfectly polished.
         </p>
     </article>
     <article
@@ -1340,15 +1486,14 @@ footer > p {
         <div class="creator-test-icon">
             🌷
         </div>
-        <!-- ⭐ PERSONALIZE -->
         <h3>
             We'd send her to a friend.
         </h3>
         <p>
             And honestly, that's our favourite test.
-            If another mom asked us who she should follow for
-            a laugh, a little solidarity and the reminder that
-            parenting is absurd sometimes, we'd tell her about Ana.
+            If another mom asked us where to find relatable
+            parenting humor with some heart mixed in,
+            we'd tell her about Ana.
         </p>
     </article>
 </div>
@@ -1360,10 +1505,9 @@ footer > p {
 <div class="creator-quote-decoration">
     ✦
 </div>
-<!-- ⭐ OPTIONAL: CHANGE THIS QUOTE FOR EACH CREATOR -->
 <blockquote>
-    “The kind of account that makes you laugh at the exact
-    parenting moment you were just trying to survive.”
+    “The kind of account you discover and immediately
+    wonder how you hadn't found her sooner.”
 </blockquote>
 <span>
     MomYouNeedThis 🌷
@@ -1382,23 +1526,23 @@ footer > p {
         <span>Find.</span>
     </h2>
     <p>
-        A little preview of why we think Ana Balich
+        A little preview of why we think Not the Nanny
         belongs on your radar.
     </p>
 </div>
 <div class="creator-feed-list">
-    <!-- ⭐ CHANGE THESE 4 ITEMS FOR EACH CREATOR -->
     <div class="creator-feed-item">
         <span class="creator-feed-number">
             01
         </span>
         <div>
             <h3>
-                Kids Saying the Most Unhinged Things
+                Parenting Humor
             </h3>
             <p>
-                The funny, unexpected things kids say and do
-                that somehow become the best stories later.
+                Funny observations and relatable moments
+                from the everyday chaos of raising kids
+                and trying to keep it all together.
             </p>
         </div>
     </div>
@@ -1408,11 +1552,13 @@ footer > p {
         </span>
         <div>
             <h3>
-                Relatable Mom Humor
+                Kids Say the Darndest Things
             </h3>
             <p>
-                The everyday parenting moments that make you
-                laugh because they're painfully, wonderfully familiar.
+                The wonderfully unpredictable things kids
+                say and do — the moments that make you
+                laugh because you've heard something
+                suspiciously similar at home.
             </p>
         </div>
     </div>
@@ -1422,12 +1568,12 @@ footer > p {
         </span>
         <div>
             <h3>
-                The Parenting Moments You Can't Make Up
+                Marriage &amp; Mom Life
             </h3>
             <p>
-                Those completely unpredictable kid-and-mom
-                moments that sound made up until you've lived
-                them yourself.
+                Honest and funny glimpses into family life,
+                relationships and all the little moments
+                that happen while you're raising kids.
             </p>
         </div>
     </div>
@@ -1440,9 +1586,10 @@ footer > p {
                 Humor &amp; Heart
             </h3>
             <p>
-                A mix of laughs and the kind of motherhood
-                solidarity that reminds you you're definitely
-                not the only one figuring it out as you go.
+                Parenting content that can make you laugh,
+                make you nod and occasionally remind you
+                that someone else is figuring this whole
+                motherhood thing out too.
             </p>
         </div>
     </div>
@@ -1459,24 +1606,22 @@ footer > p {
     <span class="creator-section-label">
         NOW YOU KNOW HER
     </span>
-    <!-- ⭐ CHANGE CREATOR NAME -->
     <h2>
         Go Meet
         <span>Not the Nanny.</span>
     </h2>
     <p>
-        If relatable mom humor, kid chaos and a little
-        "I cannot believe this is my life" energy sound like
-        your kind of thing, we think she's worth a follow.
+        If relatable parenting humor, honest family
+        moments and a little chaos sound like your kind
+        of thing, we think she's worth a follow.
     </p>
-    <!-- ⭐ CHANGE INSTAGRAM URL + HANDLE -->
     <a
         href="https://www.instagram.com/not_thenanny/"
         target="_blank"
         rel="noopener noreferrer"
         class="creator-follow-button"
     >
-        FOLLOW @NOT_THENNANNY →
+        FOLLOW @NOT_THENANNY →
     </a>
 </div>
 </section>
@@ -1525,9 +1670,6 @@ footer > p {
     </p>
 </div>
 <div class="creator-explore-grid">
-    <!-- =================================================
-         FREE RESOURCES
-    ================================================= -->
     <a
         href="free-mom-resources.html"
         class="creator-explore-card creator-explore-card-pink"
@@ -1549,9 +1691,6 @@ footer > p {
             Explore the Free Library →
         </span>
     </a>
-    <!-- =================================================
-         MOM TOOLS
-    ================================================= -->
     <a
         href="baby-tracker.html"
         class="creator-explore-card creator-explore-card-blue"
@@ -1574,9 +1713,6 @@ footer > p {
             Explore the Tools →
         </span>
     </a>
-    <!-- =================================================
-         MOM LAB
-    ================================================= -->
     <a
         href="mom-lab.html"
         class="creator-explore-card creator-explore-card-cream"
@@ -1601,7 +1737,7 @@ footer > p {
 </div>
 </section>
 <!-- =========================================================
-     NOMINATE ANOTHER CREATOR
+     NOMINATE
 ========================================================= -->
 <section class="creator-nominate-section">
 <div class="creator-nominate-content">
@@ -1632,7 +1768,6 @@ footer > p {
 </main>
 <!-- =========================================================
      FOOTER
-     EXACT SAME NAVIGATION AS INDEX.HTML
 ========================================================= -->
 <footer>
 <div class="footer-logo">
