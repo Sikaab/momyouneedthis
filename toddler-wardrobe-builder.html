@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>How Many Clothes Does My Toddler Need? | Toddler Wardrobe Builder</title>
+
+    <meta
+        name="description"
+        content="Find out how many clothes your toddler actually needs. Build a personalized toddler wardrobe based on laundry frequency, outfit changes, daycare, potty training and everyday life."
+    >
+
+    <meta
+        name="keywords"
+        content="how many clothes does a toddler need, toddler wardrobe checklist, toddler clothing checklist, how many outfits does a toddler need, toddler capsule wardrobe, daycare clothing checklist, toddler wardrobe builder"
+    >
+
+    <link rel="canonical" href="https://momyouneedthis.com/toddler-wardrobe-builder.html">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="toddler-wardrobe-builder.css">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Toddler Wardrobe Builder",
+        "url": "https://momyouneedthis.com/toddler-wardrobe-builder.html",
+        "applicationCategory": "LifestyleApplication",
+        "operatingSystem": "Web",
+        "description": "A personalized toddler wardrobe calculator and builder that estimates how many clothes a toddler needs based on laundry frequency, outfit changes, daycare, potty training and daily routine.",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "How many clothes does a toddler need?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Most toddlers can get by with a practical wardrobe of roughly 5 to 10 everyday tops, 5 to 8 bottoms, 5 to 7 pajamas, and enough underwear and socks to cover the family's laundry routine. The ideal number depends on how often laundry is done, how often the child changes clothes, daycare, potty training and personal preferences."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How many outfits does a toddler need?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "A useful starting point is enough everyday outfits to cover several days between laundry loads, plus a few extra outfits for spills, accidents and unexpected changes. Toddlers in daycare or potty training often benefit from additional backup clothing."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How many pajamas does a toddler need?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "About 5 to 7 pairs of pajamas is a practical starting point for many toddlers. Children who have frequent nighttime accidents, sweat heavily or go longer between laundry days may need more."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How many clothes should I send to daycare?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Keep at least 2 complete backup outfits at daycare, and consider 3 or more during potty training or messy stages. Check your daycare's own requirements because policies vary."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How many pairs of toddler underwear do I need?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "A practical starting point is around 10 to 14 pairs of underwear during potty training, especially when laundry is not done every day. Some families need fewer while others prefer a larger buffer."
+                }
+            }
+        ]
+    }
+    </script>
+</head>
+
+<body>
+
+<main class="wardrobe-page">
+
+    <section class="wardrobe-hero">
+        <div class="hero-eyebrow">FREE TODDLER WARDROBE BUILDER</div>
+
+        <h1>
+            How Many Clothes Does My Toddler
+            <span>Actually Need?</span>
+        </h1>
+
+        <p class="hero-description">
+            Stop guessing. Build a practical toddler wardrobe based on your
+            child's age, laundry routine, outfit changes, daycare, potty
+            training and how much variety you actually want.
+        </p>
+
+        <div class="hero-benefits">
+            <div>
+                <span>✓</span>
+                Personalized quantities
+            </div>
+
+            <div>
+                <span>✓</span>
+                Daycare + potty training
+            </div>
+
+            <div>
+                <span>✓</span>
+                Mix-and-match wardrobe
+            </div>
+
+            <div>
+                <span>✓</span>
+                Free to use
+            </div>
+        </div>
+    </section>
+
+
+    <section class="wardrobe-tool" id="wardrobeTool">
+
+        <div class="progress-container">
+            <div class="progress-label">
+                <span id="progressText">Step 1 of 3</span>
+                <span id="progressPercent">33%</span>
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+
+        <!-- STEP 1 -->
+
+        <div class="tool-step active" id="step1">
+
+            <div class="step-heading">
+                <span class="step-number">1</span>
+
+                <div>
+                    <h2>Tell us about your toddler</h2>
+                    <p>
+                        There is no perfect number of clothes.
+                        Your routine matters more than a generic checklist.
+                    </p>
+                </div>
+            </div>
+
+
+            <div class="question-grid">
+
+                <div class="question-card">
+                    <label for="childAge">How old is your child?</label>
+
+                    <select id="childAge">
+                        <option value="1">1 year old</option>
+                        <option value="2" selected>2 years old</option>
+                        <option value="3">3 years old</option>
+                        <option value="4">4 years old</option>
+                        <option value="5">5 years old</option>
+                    </select>
+                </div>
+
+
+                <div class="question-card">
+                    <label for="laundryFrequency">
+                        How often do you usually do laundry?
+                    </label>
+
+                    <select id="laundryFrequency">
+                        <option value="2">Every 1–2 days</option>
+                        <option value="3" selected>Every 3 days</option>
+                        <option value="5">Every 4–5 days</option>
+                        <option value="7">About once a week</option>
+                    </select>
+                </div>
+
+
+                <div class="question-card">
+                    <label for="outfitChanges">
+                        How many outfit changes does your toddler usually need per day?
+                    </label>
+
+                    <select id="outfitChanges">
+                        <option value="1">Usually 1</option>
+                        <option value="1.5" selected>1–2</option>
+                        <option value="2">Usually 2</option>
+                        <option value="3">3+</option>
+                    </select>
+
+                    <small>
+                        Think spills, food, mud, sweat and mysterious toddler substances.
+                    </small>
+                </div>
+
+
+                <div class="question-card">
+                    <label for="daycare">
+                        Does your child attend daycare or preschool?
+                    </label>
+
+                    <div class="choice-buttons">
+                        <button
+                            type="button"
+                            class="choice-button selected"
+                            data-group="daycare"
+                            data-value="yes"
+                        >
+                            Yes
+                        </button>
+
+                        <button
+                            type="button"
+                            class="choice-button"
+                            data-group="daycare"
+                            data-value="no"
+                        >
+                            No
+                        </button>
+                    </div>
+                </div>
+
+
+                <div class="question-card">
+                    <label for="pottyTraining">
+                        Is your child potty training?
+                    </label>
+
+                    <div class="choice-buttons">
+                        <button
+                            type="button"
+                            class="choice-button"
+                            data-group="potty"
+                            data-value="yes"
+                        >
+                            Yes
+                        </button>
+
+                        <button
+                            type="button"
+                            class="choice-button selected"
+                            data-group="potty"
+                            data-value="no"
+                        >
+                            Not right now
+                        </button>
+                    </div>
+                </div>
+
+
+                <div class="question-card">
+                    <label for="wardrobeStyle">
+                        How do you want the wardrobe to feel?
+                    </label>
+
+                    <select id="wardrobeStyle">
+                        <option value="minimal">Minimal — fewer pieces</option>
+                        <option value="practical" selected>
+                            Practical — enough without overdoing it
+                        </option>
+                        <option value="variety">
+                            Lots of variety — I like options
+                        </option>
+                    </select>
+                </div>
+
+            </div>
+
+
+            <div class="step-actions">
+                <button class="primary-button" id="calculateButton">
+                    Build My Wardrobe
+                    <span>→</span>
+                </button>
+            </div>
+
+        </div>
+
+
+        <!-- STEP 2 -->
+
+        <div class="tool-step" id="step2">
+
+            <div class="step-heading">
+                <span class="step-number">2</span>
+
+                <div>
+                    <h2>Your toddler wardrobe</h2>
+                    <p>
+                        Here's a practical target based on the routine you entered.
+                    </p>
+                </div>
+            </div>
+
+
+            <div class="result-intro">
+                <div class="result-number" id="totalPieces">0</div>
+
+                <div>
+                    <strong>recommended everyday pieces</strong>
+                    <p id="resultSummary">
+                        Your wardrobe is being calculated...
+                    </p>
+                </div>
+            </div>
+
+
+            <div class="results-grid" id="resultsGrid"></div>
+
+
+            <div class="special-needs-grid">
+
+                <div class="special-card" id="daycareResult">
+                    <div class="special-icon">🎒</div>
+
+                    <div>
+                        <h3>Daycare backup</h3>
+                        <p id="daycareText"></p>
+                    </div>
+                </div>
+
+
+                <div class="special-card" id="pottyResult">
+                    <div class="special-icon">🚽</div>
+
+                    <div>
+                        <h3>Potty training</h3>
+                        <p id="pottyText"></p>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="reality-note">
+                <div class="note-icon">💡</div>
+
+                <div>
+                    <strong>The important part</strong>
+
+                    <p>
+                        These numbers are a starting point, not a rule.
+                        If your toddler wears the same 4 outfits over and over,
+                        you probably don't need 14. If laundry day keeps getting
+                        pushed back, you may need a little more buffer.
+                    </p>
+                </div>
+            </div>
+
+
+            <div class="step-actions result-actions">
+
+                <button class="secondary-button" id="backToQuestions">
+                    ← Change answers
+                </button>
+
+                <button class="primary-button" id="buildWardrobeButton">
+                    Build My Outfit Mix
+                    <span>→</span>
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- STEP 3 -->
+
+        <div class="tool-step" id="step3">
+
+            <div class="step-heading">
+                <span class="step-number">3</span>
+
+                <div>
+                    <h2>Build your toddler's wardrobe</h2>
+                    <p>
+                        Turn the numbers into a simple mix-and-match system.
+                    </p>
+                </div>
+            </div>
+
+
+            <div class="wardrobe-philosophy">
+
+                <div class="philosophy-item">
+                    <span>01</span>
+                    <strong>Everyday basics</strong>
+                    <p>
+                        The pieces that do the heavy lifting.
+                    </p>
+                </div>
+
+                <div class="philosophy-item">
+                    <span>02</span>
+                    <strong>Easy combinations</strong>
+                    <p>
+                        Most tops should work with most bottoms.
+                    </p>
+                </div>
+
+                <div class="philosophy-item">
+                    <span>03</span>
+                    <strong>Backup pieces</strong>
+                    <p>
+                        Because toddlers are toddlers.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="outfit-section">
+
+                <div class="section-title">
+                    <h3>Easy outfit formulas</h3>
+
+                    <span id="outfitCount">
+                        Mix & match
+                    </span>
+                </div>
+
+
+                <div class="outfit-grid" id="outfitGrid"></div>
+
+            </div>
+
+
+            <div class="shopping-section">
+
+                <div class="section-title">
+                    <div>
+                        <h3>What to shop for</h3>
+                        <p>
+                            Fill the gaps instead of buying random cute clothes.
+                        </p>
+                    </div>
+                </div>
+
+
+                <div class="shopping-list" id="shoppingList"></div>
+
+            </div>
+
+
+            <div class="share-box">
+
+                <div>
+                    <strong>Want to save this?</strong>
+
+                    <p>
+                        Copy your personalized wardrobe checklist so you can
+                        keep it in your notes or send it to someone else.
+                    </p>
+                </div>
+
+                <button class="secondary-button" id="copyChecklist">
+                    Copy Checklist
+                </button>
+
+            </div>
+
+
+            <div class="step-actions result-actions">
+
+                <button class="secondary-button" id="backToResults">
+                    ← Back to quantities
+                </button>
+
+                <button class="primary-button" id="printWardrobe">
+                    Print My Wardrobe
+                    <span>↗</span>
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- SEO CONTENT -->
+
+    <section class="seo-content">
+
+        <div class="content-width">
+
+            <div class="content-intro">
+                <span class="eyebrow">THE TODDLER CLOTHING QUESTION</span>
+
+                <h2>
+                    So, how many clothes does a toddler actually need?
+                </h2>
+
+                <p>
+                    There isn't one magic number that works for every family.
+                    A toddler who changes clothes once a day and has laundry
+                    every two days needs a very different wardrobe from a
+                    toddler who attends daycare, gets messy twice a day and
+                    only does laundry once a week.
+                </p>
+
+                <p>
+                    That's why this toddler wardrobe builder starts with your
+                    actual routine instead of giving you a giant generic
+                    shopping list.
+                </p>
+            </div>
+
+
+            <div class="content-cards">
+
+                <article>
+                    <h3>👕 Everyday tops</h3>
+
+                    <p>
+                        Tops tend to take the most abuse from food, drinks,
+                        paint, dirt and outdoor play. Having enough to cover
+                        your laundry cycle plus a few backup pieces is usually
+                        more useful than having a huge collection.
+                    </p>
+                </article>
+
+
+                <article>
+                    <h3>👖 Pants & bottoms</h3>
+
+                    <p>
+                        Bottoms generally don't need to be changed as often as
+                        tops unless your toddler is particularly messy or
+                        potty training. A mix of comfortable everyday bottoms
+                        makes getting dressed much easier.
+                    </p>
+                </article>
+
+
+                <article>
+                    <h3>🌙 Pajamas</h3>
+
+                    <p>
+                        Around five to seven pairs of pajamas is a useful
+                        starting point for many families. Add more if your
+                        toddler has frequent nighttime accidents or you prefer
+                        doing laundry less often.
+                    </p>
+                </article>
+
+
+                <article>
+                    <h3>🧦 Socks & underwear</h3>
+
+                    <p>
+                        These are easy to underestimate because they are small.
+                        During potty training especially, having a larger
+                        underwear buffer can save you from emergency laundry.
+                    </p>
+                </article>
+
+
+                <article>
+                    <h3>🎒 Daycare clothes</h3>
+
+                    <p>
+                        Daycare often means messier days and the need for
+                        backup clothing. Keeping at least two complete outfits
+                        in the daycare bag or cubby is a practical starting
+                        point, subject to your daycare's own requirements.
+                    </p>
+                </article>
+
+
+                <article>
+                    <h3>🧥 Layers</h3>
+
+                    <p>
+                        Sweaters, hoodies, jackets and other layers depend much
+                        more on your climate and season than on your toddler's
+                        age. Think in terms of what your child actually wears
+                        rather than buying every possible type of layer.
+                    </p>
+                </article>
+
+            </div>
+
+
+            <div class="faq-section">
+
+                <h2>Toddler wardrobe questions</h2>
+
+
+                <details>
+                    <summary>
+                        How many outfits does a toddler need?
+                    </summary>
+
+                    <p>
+                        A practical starting point is enough everyday outfits
+                        to cover several days between laundry loads, plus a
+                        few extras for spills, accidents and unexpected outfit
+                        changes. Daycare and potty training can increase the
+                        amount you need.
+                    </p>
+                </details>
+
+
+                <details>
+                    <summary>
+                        How many pajamas does a toddler need?
+                    </summary>
+
+                    <p>
+                        Five to seven pairs of pajamas is a useful starting
+                        point for many toddlers. Families who do laundry less
+                        frequently or deal with frequent nighttime accidents
+                        may prefer more.
+                    </p>
+                </details>
+
+
+                <details>
+                    <summary>
+                        How many clothes should I keep at daycare?
+                    </summary>
+
+                    <p>
+                        Two complete backup outfits is a practical baseline.
+                        During potty training or particularly messy stages,
+                        three or more backup outfits may be useful. Always
+                        follow your daycare's specific requirements.
+                    </p>
+                </details>
+
+
+                <details>
+                    <summary>
+                        How many pairs of toddler underwear do I need?
+                    </summary>
+
+                    <p>
+                        Ten to fourteen pairs is a practical starting range
+                        during potty training. The right amount depends on
+                        accident frequency and how often you do laundry.
+                    </p>
+                </details>
+
+
+                <details>
+                    <summary>
+                        Does a toddler need a capsule wardrobe?
+                    </summary>
+
+                    <p>
+                        Not necessarily. A capsule wardrobe simply means
+                        keeping a smaller collection of pieces that work well
+                        together. Some families love this approach because it
+                        makes getting dressed easier, while others prefer more
+                        variety.
+                    </p>
+                </details>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <footer class="wardrobe-footer">
+        <p>
+            © MomYouNeedThis · Practical tools for real family life.
+        </p>
+    </footer>
+
+</main>
+
+
+<script src="toddler-wardrobe-builder.js"></script>
+
+</body>
+</html>
