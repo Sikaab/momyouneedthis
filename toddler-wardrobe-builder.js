@@ -1,900 +1,579 @@
-/* =========================================================
-   MOMYOU NEED THIS — TODDLER WARDROBE BUILDER
-   ========================================================= */
+(function () {
+    "use strict";
 
-"use strict";
+    var currentStep = 1;
 
+    var step1 = document.getElementById("wardrobe-step-1");
+    var step2 = document.getElementById("wardrobe-step-2");
+    var step3 = document.getElementById("wardrobe-step-3");
 
-/* =========================================================
-   STATE
-   ========================================================= */
+    var progressSteps = document.querySelectorAll(
+        ".wardrobe-progress-step"
+    );
 
-interfaceState();
+    var step1Next = document.getElementById("step-1-next");
+    var step2Back = document.getElementById("step-2-back");
+    var step2Next = document.getElementById("step-2-next");
+    var step3Back = document.getElementById("step-3-back");
+    var startOver = document.getElementById("start-over");
 
-function interfaceState(): void {
-    // This function intentionally exists to keep initialization explicit.
-}
+    var resultsContainer = document.getElementById(
+        "wardrobe-results"
+    );
 
-interface WardrobeAnswers {
-    age: number;
-    laundryDays: number;
-    outfitChanges: number;
-    daycare: boolean;
-    pottyTraining: boolean;
-    style: "minimal" | "practical" | "variety";
-}
+    var summaryContainer = document.getElementById(
+        "wardrobe-summary"
+    );
 
-interface WardrobeItem {
-    name: string;
-    icon: string;
-    quantity: number;
-    description: string;
-}
+    var specialNote = document.getElementById(
+        "wardrobe-special-note"
+    );
 
-interface WardrobeResult {
-    items: WardrobeItem[];
-    total: number;
-    daycareBackup: number;
-    underwear: number;
-}
+    var outfitsContainer = document.getElementById(
+        "wardrobe-outfits"
+    );
 
-interface Outfit {
-    label: string;
-    pieces: string[];
-}
+    var shoppingList = document.getElementById(
+        "wardrobe-shopping-list"
+    );
 
+    var copyChecklistButton = document.getElementById(
+        "copy-checklist"
+    );
 
-/* =========================================================
-   ELEMENTS
-   ========================================================= */
-
-const step1 = document.getElementById("step1");
-const step2 = document.getElementById("step2");
-const step3 = document.getElementById("step3");
-
-const progressFill = document.getElementById("progressFill");
-const progressText = document.getElementById("progressText");
-const progressPercent = document.getElementById("progressPercent");
-
-const calculateButton = document.getElementById("calculateButton");
-const buildWardrobeButton = document.getElementById("buildWardrobeButton");
-
-const backToQuestions = document.getElementById("backToQuestions");
-const backToResults = document.getElementById("backToResults");
-
-const resultsGrid = document.getElementById("resultsGrid");
-const totalPieces = document.getElementById("totalPieces");
-const resultSummary = document.getElementById("resultSummary");
-
-const daycareResult = document.getElementById("daycareResult");
-const daycareText = document.getElementById("daycareText");
-
-const pottyResult = document.getElementById("pottyResult");
-const pottyText = document.getElementById("pottyText");
-
-const outfitGrid = document.getElementById("outfitGrid");
-const shoppingList = document.getElementById("shoppingList");
-
-const copyChecklist = document.getElementById("copyChecklist");
-const printWardrobe = document.getElementById("printWardrobe");
+    var printButton = document.getElementById(
+        "print-wardrobe"
+    );
 
 
-/* =========================================================
-   FORM STATE
-   ========================================================= */
+    function getRadioValue(name, fallback) {
+        var selected = document.querySelector(
+            'input[name="' + name + '"]:checked'
+        );
 
-let selectedDaycare: boolean = true;
-let selectedPottyTraining: boolean = false;
-
-let currentAnswers: WardrobeAnswers | null = null;
-let currentResult: WardrobeResult | null = null;
-
-
-/* =========================================================
-   CHOICE BUTTONS
-   ========================================================= */
-
-const choiceButtons = document.querySelectorAll<HTMLButtonElement>(
-    ".choice-button"
-);
-
-choiceButtons.forEach((button: HTMLButtonElement): void => {
-    button.addEventListener("click", (): void => {
-
-        const group: string | null = button.dataset.group ?? null;
-        const value: string | null = button.dataset.value ?? null;
-
-        if (group === "daycare") {
-            selectedDaycare = value === "yes";
+        if (!selected) {
+            return fallback;
         }
 
-        if (group === "potty") {
-            selectedPottyTraining = value === "yes";
-        }
+        return selected.value;
+    }
 
-        document
-            .querySelectorAll<HTMLButtonElement>(
-                `.choice-button[data-group="${group}"]`
+
+    function getAnswers() {
+        return {
+            age: document.getElementById("child-age").value,
+
+            laundry: getRadioValue(
+                "laundry",
+                "twice"
+            ),
+
+            changes: Number(
+                getRadioValue(
+                    "changes",
+                    "1"
+                )
+            ),
+
+            daycare: getRadioValue(
+                "daycare",
+                "no"
+            ),
+
+            potty: getRadioValue(
+                "potty",
+                "no"
+            ),
+
+            style: getRadioValue(
+                "style",
+                "practical"
             )
-            .forEach((groupButton: HTMLButtonElement): void => {
-                groupButton.classList.remove("selected");
-            });
-
-        button.classList.add("selected");
-    });
-});
-
-
-/* =========================================================
-   HELPERS
-   ========================================================= */
-
-function getSelectValue(id: string): string {
-    const element = document.getElementById(id);
-
-    if (!(element instanceof HTMLSelectElement)) {
-        return "";
+        };
     }
 
-    return element.value;
-}
 
+    function showStep(stepNumber) {
+        currentStep = stepNumber;
 
-function clamp(
-    value: number,
-    minimum: number,
-    maximum: number
-): number {
-    return Math.min(Math.max(value, minimum), maximum);
-}
+        step1.classList.remove("active");
+        step2.classList.remove("active");
+        step3.classList.remove("active");
 
-
-function roundToWhole(value: number): number {
-    return Math.max(1, Math.ceil(value));
-}
-
-
-function getAgeAdjustment(age: number): number {
-    if (age === 1) {
-        return 0;
-    }
-
-    if (age === 2) {
-        return 0;
-    }
-
-    if (age === 3) {
-        return 0.5;
-    }
-
-    if (age === 4) {
-        return 0.5;
-    }
-
-    return 1;
-}
-
-
-/* =========================================================
-   CALCULATOR
-   ========================================================= */
-
-function calculateWardrobe(
-    answers: WardrobeAnswers
-): WardrobeResult {
-
-    const laundryBuffer: number = answers.laundryDays / 3;
-
-    const changeFactor: number = answers.outfitChanges / 1.5;
-
-    let styleMultiplier: number = 1;
-
-    if (answers.style === "minimal") {
-        styleMultiplier = 0.82;
-    }
-
-    if (answers.style === "variety") {
-        styleMultiplier = 1.18;
-    }
-
-    const ageAdjustment: number = getAgeAdjustment(answers.age);
-
-    const topBase: number =
-        6 *
-        laundryBuffer *
-        changeFactor *
-        styleMultiplier;
-
-    const bottomBase: number =
-        5 *
-        laundryBuffer *
-        Math.max(0.9, changeFactor * 0.82) *
-        styleMultiplier;
-
-    const pajamasBase: number =
-        6 *
-        laundryBuffer *
-        styleMultiplier;
-
-    const socksBase: number =
-        8 *
-        laundryBuffer *
-        Math.max(1, answers.outfitChanges / 1.5);
-
-    let tops: number = roundToWhole(
-        clamp(topBase + ageAdjustment, 4, 16)
-    );
-
-    let bottoms: number = roundToWhole(
-        clamp(bottomBase + ageAdjustment, 4, 12)
-    );
-
-    let pajamas: number = roundToWhole(
-        clamp(pajamasBase, 4, 12)
-    );
-
-    let socks: number = roundToWhole(
-        clamp(socksBase, 6, 18)
-    );
-
-    let underwear: number = roundToWhole(
-        clamp(
-            8 *
-                laundryBuffer *
-                (answers.pottyTraining ? 1.65 : 1),
-            answers.pottyTraining ? 10 : 6,
-            answers.pottyTraining ? 24 : 18
-        )
-    );
-
-    const layers: number = roundToWhole(
-        clamp(
-            3 *
-                (answers.style === "variety" ? 1.3 : 1),
-            2,
-            5
-        )
-    );
-
-    const dressesOrOnePieces: number = roundToWhole(
-        clamp(
-            2 *
-                styleMultiplier,
-            1,
-            5
-        )
-    );
-
-    const total: number =
-        tops +
-        bottoms +
-        pajamas +
-        socks +
-        underwear +
-        layers +
-        dressesOrOnePieces;
-
-    const daycareBackup: number = answers.daycare
-        ? answers.pottyTraining
-            ? 4
-            : 2
-        : 0;
-
-    const items: WardrobeItem[] = [
-        {
-            name: "Everyday tops",
-            icon: "👕",
-            quantity: tops,
-            description:
-                "T-shirts, long-sleeve tops and everyday shirts."
-        },
-        {
-            name: "Bottoms",
-            icon: "👖",
-            quantity: bottoms,
-            description:
-                "Pants, leggings, shorts or other everyday bottoms."
-        },
-        {
-            name: "Pajamas",
-            icon: "🌙",
-            quantity: pajamas,
-            description:
-                "Complete sleep sets or pajama separates."
-        },
-        {
-            name: "Underwear",
-            icon: "🩲",
-            quantity: underwear,
-            description:
-                answers.pottyTraining
-                    ? "Extra buffer for potty-training accidents."
-                    : "Enough to comfortably cover your laundry cycle."
-        },
-        {
-            name: "Socks",
-            icon: "🧦",
-            quantity: socks,
-            description:
-                "Everyday socks plus a few inevitable missing ones."
-        },
-        {
-            name: "Layers",
-            icon: "🧥",
-            quantity: layers,
-            description:
-                "Sweaters, hoodies or light layers."
-        },
-        {
-            name: "Dressy / one-piece outfits",
-            icon: "✨",
-            quantity: dressesOrOnePieces,
-            description:
-                "Optional variety for outings, events or one-piece outfits."
+        if (stepNumber === 1) {
+            step1.classList.add("active");
         }
-    ];
 
-    return {
-        items,
-        total,
-        daycareBackup,
-        underwear
-    };
-}
-
-
-/* =========================================================
-   RENDER RESULTS
-   ========================================================= */
-
-function renderResults(
-    answers: WardrobeAnswers,
-    result: WardrobeResult
-): void {
-
-    if (!resultsGrid || !totalPieces || !resultSummary) {
-        return;
-    }
-
-    totalPieces.textContent = String(result.total);
-
-    const laundryDescription: string =
-        answers.laundryDays <= 2
-            ? "Since you do laundry frequently, you can keep the wardrobe fairly lean."
-            : answers.laundryDays <= 3
-                ? "Your quantities include a comfortable buffer for a few days between laundry loads."
-                : "Your wardrobe includes extra buffer because laundry happens less frequently.";
-
-    resultSummary.textContent = laundryDescription;
-
-    resultsGrid.innerHTML = result.items
-        .map((item: WardrobeItem): string => {
-            return `
-                <article class="result-card">
-                    <div class="result-icon">${item.icon}</div>
-                    <h3>${item.name}</h3>
-                    <div class="quantity">${item.quantity}</div>
-                    <p>${item.description}</p>
-                </article>
-            `;
-        })
-        .join("");
-
-    if (answers.daycare) {
-        daycareResult?.classList.remove("hidden");
-
-        if (daycareText) {
-            daycareText.textContent =
-                `Keep ${result.daycareBackup} complete backup outfits at daycare. ` +
-                (
-                    answers.pottyTraining
-                        ? "Potty training makes the extra buffer especially useful."
-                        : "Swap them out as your child grows or uses them."
-                );
+        if (stepNumber === 2) {
+            step2.classList.add("active");
         }
-    } else {
-        daycareResult?.classList.add("hidden");
-    }
 
-    if (answers.pottyTraining) {
-        pottyResult?.classList.remove("hidden");
-
-        if (pottyText) {
-            pottyText.textContent =
-                `The calculator gives you ${result.underwear} pairs of underwear ` +
-                "so accidents don't immediately trigger an emergency laundry cycle.";
+        if (stepNumber === 3) {
+            step3.classList.add("active");
         }
-    } else {
-        pottyResult?.classList.add("hidden");
-    }
-}
 
+        progressSteps.forEach(function (step) {
+            var number = Number(
+                step.getAttribute("data-progress")
+            );
 
-/* =========================================================
-   BUILD OUTFITS
-   ========================================================= */
-
-function createOutfits(
-    answers: WardrobeAnswers
-): Outfit[] {
-
-    const outfits: Outfit[] = [
-        {
-            label: "Everyday",
-            pieces: [
-                "Basic top",
-                "Comfortable bottoms",
-                "Socks"
-            ]
-        },
-        {
-            label: "Messy-day backup",
-            pieces: [
-                "Backup top",
-                "Easy-wash bottoms",
-                "Socks"
-            ]
-        },
-        {
-            label: "Cool weather",
-            pieces: [
-                "Long-sleeve top",
-                "Bottoms",
-                "Sweater / hoodie"
-            ]
-        },
-        {
-            label: "Easy outing",
-            pieces: [
-                "Favorite top",
-                "Comfortable bottoms",
-                "Light layer"
-            ]
-        },
-        {
-            label: "Play day",
-            pieces: [
-                "Play top",
-                "Durable bottoms",
-                "Socks"
-            ]
-        },
-        {
-            label: "Simple dress-up",
-            pieces: [
-                "Dressy / one-piece outfit",
-                "Light layer",
-                "Socks"
-            ]
-        }
-    ];
-
-    if (answers.pottyTraining) {
-        outfits.push({
-            label: "Potty-training friendly",
-            pieces: [
-                "Easy-off top",
-                "Elastic-waist bottoms",
-                "Fresh underwear"
-            ]
+            step.classList.toggle(
+                "active",
+                number <= stepNumber
+            );
         });
-    }
 
-    if (answers.daycare) {
-        outfits.push({
-            label: "Daycare backup",
-            pieces: [
-                "Complete spare outfit",
-                "Fresh socks",
-                "Fresh underwear"
-            ]
-        });
-    }
-
-    return outfits;
-}
-
-
-function renderOutfits(
-    answers: WardrobeAnswers
-): void {
-
-    if (!outfitGrid) {
-        return;
-    }
-
-    const outfits: Outfit[] = createOutfits(answers);
-
-    outfitGrid.innerHTML = outfits
-        .map((outfit: Outfit): string => {
-            return `
-                <article class="outfit-card">
-                    <div class="outfit-label">${outfit.label}</div>
-
-                    <div class="outfit-pieces">
-                        ${outfit.pieces
-                            .map((piece: string): string => {
-                                return `
-                                    <span class="outfit-piece">
-                                        ${piece}
-                                    </span>
-                                `;
-                            })
-                            .join("")}
-                    </div>
-                </article>
-            `;
-        })
-        .join("");
-}
-
-
-/* =========================================================
-   AMAZON SHOPPING LINKS
-   ========================================================= */
-
-function amazonSearchUrl(
-    query: string
-): string {
-
-    return (
-        "https://www.amazon.com/s?k=" +
-        encodeURIComponent(query)
-    );
-}
-
-
-function createShoppingList(
-    result: WardrobeResult,
-    answers: WardrobeAnswers
-): void {
-
-    if (!shoppingList) {
-        return;
-    }
-
-    const shoppingItems: {
-        icon: string;
-        name: string;
-        quantity: number;
-        description: string;
-        search: string;
-    }[] = [
-        {
-            icon: "👕",
-            name: "Everyday toddler tops",
-            quantity: result.items[0].quantity,
-            description: "Build your basic top rotation.",
-            search: "toddler basic t shirts"
-        },
-        {
-            icon: "👖",
-            name: "Toddler bottoms",
-            quantity: result.items[1].quantity,
-            description: "Choose comfortable mix-and-match bottoms.",
-            search: "toddler pants leggings"
-        },
-        {
-            icon: "🌙",
-            name: "Toddler pajamas",
-            quantity: result.items[2].quantity,
-            description: "Enough sleepwear for your laundry routine.",
-            search: "toddler pajamas"
-        },
-        {
-            icon: "🧦",
-            name: "Toddler socks",
-            quantity: result.items[4].quantity,
-            description: "Stock up before the sock drawer mysteriously empties.",
-            search: "toddler socks"
-        },
-        {
-            icon: "🧥",
-            name: "Toddler layers",
-            quantity: result.items[5].quantity,
-            description: "Sweaters, hoodies and everyday layers.",
-            search: "toddler hoodies sweaters"
-        }
-    ];
-
-    if (answers.pottyTraining) {
-        shoppingItems.push({
-            icon: "🩲",
-            name: "Toddler underwear",
-            quantity: result.underwear,
-            description: "Extra pairs make potty training easier to manage.",
-            search: "toddler underwear"
-        });
-    }
-
-    if (answers.daycare) {
-        shoppingItems.push({
-            icon: "🎒",
-            name: "Daycare backup outfits",
-            quantity: result.daycareBackup,
-            description: "Complete spare outfits for the daycare cubby.",
-            search: "toddler daycare outfits"
-        });
-    }
-
-    shoppingList.innerHTML = shoppingItems
-        .map(
-            (
-                item: {
-                    icon: string;
-                    name: string;
-                    quantity: number;
-                    description: string;
-                    search: string;
-                }
-            ): string => {
-                return `
-                    <div class="shopping-item">
-                        <div class="shopping-item-left">
-                            <div class="shopping-item-icon">
-                                ${item.icon}
-                            </div>
-
-                            <div>
-                                <strong>
-                                    ${item.name} · ${item.quantity}
-                                </strong>
-
-                                <span>
-                                    ${item.description}
-                                </span>
-                            </div>
-                        </div>
-
-                        <a
-                            href="${amazonSearchUrl(item.search)}"
-                            target="_blank"
-                            rel="noopener"
-                        >
-                            Shop
-                        </a>
-                    </div>
-                `;
-            }
-        )
-        .join("");
-}
-
-
-/* =========================================================
-   STEP NAVIGATION
-   ========================================================= */
-
-function showStep(step: number): void {
-
-    step1?.classList.remove("active");
-    step2?.classList.remove("active");
-    step3?.classList.remove("active");
-
-    if (step === 1) {
-        step1?.classList.add("active");
-    }
-
-    if (step === 2) {
-        step2?.classList.add("active");
-    }
-
-    if (step === 3) {
-        step3?.classList.add("active");
-    }
-
-    const percentage: number = Math.round(
-        (step / 3) * 100
-    );
-
-    if (progressFill) {
-        progressFill.style.width = `${percentage}%`;
-    }
-
-    if (progressText) {
-        progressText.textContent = `Step ${step} of 3`;
-    }
-
-    if (progressPercent) {
-        progressPercent.textContent = `${percentage}%`;
-    }
-
-    const tool: HTMLElement | null =
-        document.getElementById("wardrobeTool");
-
-    if (tool) {
         window.scrollTo({
-            top: tool.offsetTop - 20,
+            top: 0,
             behavior: "smooth"
         });
     }
-}
 
 
-/* =========================================================
-   CALCULATE BUTTON
-   ========================================================= */
-
-calculateButton?.addEventListener(
-    "click",
-    (): void => {
-
-        const age: number = Number(
-            getSelectValue("childAge")
-        );
-
-        const laundryDays: number = Number(
-            getSelectValue("laundryFrequency")
-        );
-
-        const outfitChanges: number = Number(
-            getSelectValue("outfitChanges")
-        );
-
-        const styleValue: string =
-            getSelectValue("wardrobeStyle");
-
-        const style:
-            | "minimal"
-            | "practical"
-            | "variety" =
-            styleValue === "minimal"
-                ? "minimal"
-                : styleValue === "variety"
-                    ? "variety"
-                    : "practical";
-
-        currentAnswers = {
-            age,
-            laundryDays,
-            outfitChanges,
-            daycare: selectedDaycare,
-            pottyTraining: selectedPottyTraining,
-            style
+    function calculateWardrobe(answers) {
+        var laundryMultiplier = {
+            daily: 0.75,
+            twice: 1,
+            weekly: 1.35,
+            less: 1.65
         };
 
-        currentResult =
-            calculateWardrobe(currentAnswers);
+        var styleMultiplier = {
+            minimal: 0.8,
+            practical: 1,
+            variety: 1.25
+        };
 
-        renderResults(
-            currentAnswers,
-            currentResult
-        );
+        var multiplier =
+            laundryMultiplier[answers.laundry] *
+            styleMultiplier[answers.style];
 
-        showStep(2);
-    }
-);
+        var baseOutfits = 6;
 
-
-/* =========================================================
-   BUILD BUTTON
-   ========================================================= */
-
-buildWardrobeButton?.addEventListener(
-    "click",
-    (): void => {
-
-        if (!currentAnswers || !currentResult) {
-            return;
+        if (answers.changes === 2) {
+            baseOutfits += 3;
         }
 
-        renderOutfits(currentAnswers);
-
-        createShoppingList(
-            currentResult,
-            currentAnswers
-        );
-
-        showStep(3);
-    }
-);
-
-
-/* =========================================================
-   BACK BUTTONS
-   ========================================================= */
-
-backToQuestions?.addEventListener(
-    "click",
-    (): void => {
-        showStep(1);
-    }
-);
-
-
-backToResults?.addEventListener(
-    "click",
-    (): void => {
-        showStep(2);
-    }
-);
-
-
-/* =========================================================
-   COPY CHECKLIST
-   ========================================================= */
-
-copyChecklist?.addEventListener(
-    "click",
-    async (): Promise<void> => {
-
-        if (!currentAnswers || !currentResult) {
-            return;
+        if (answers.changes >= 3) {
+            baseOutfits += 5;
         }
 
-        const lines: string[] = [
-            "TODDLER WARDROBE CHECKLIST",
-            "",
-            `Age: ${currentAnswers.age}`,
-            `Laundry: every ${currentAnswers.laundryDays} days`,
-            `Outfit changes/day: ${currentAnswers.outfitChanges}`,
-            `Daycare: ${currentAnswers.daycare ? "Yes" : "No"}`,
-            `Potty training: ${
-                currentAnswers.pottyTraining
-                    ? "Yes"
-                    : "No"
-            }`,
-            "",
-            "WARDROBE",
-            ""
+        var tops = Math.ceil(
+            baseOutfits * multiplier
+        );
+
+        var bottoms = Math.ceil(
+            (baseOutfits - 1) * multiplier
+        );
+
+        var pajamas = Math.max(
+            3,
+            Math.ceil(
+                4 * multiplier
+            )
+        );
+
+        var underwear = Math.max(
+            5,
+            Math.ceil(
+                7 * multiplier
+            )
+        );
+
+        var socks = Math.max(
+            6,
+            Math.ceil(
+                7 * multiplier
+            )
+        );
+
+        var layers = Math.max(
+            2,
+            Math.ceil(
+                3 * styleMultiplier[answers.style]
+            )
+        );
+
+        var dressy = Math.max(
+            1,
+            Math.ceil(
+                2 * styleMultiplier[answers.style]
+            )
+        );
+
+        var daycareBackups = 0;
+
+        if (answers.daycare === "yes") {
+            daycareBackups = answers.potty === "yes"
+                ? 4
+                : 2;
+        }
+
+        if (answers.potty === "yes") {
+            underwear += 3;
+            bottoms += 2;
+        }
+
+        return {
+            tops: tops,
+            bottoms: bottoms,
+            pajamas: pajamas,
+            underwear: underwear,
+            socks: socks,
+            layers: layers,
+            dressy: dressy,
+            daycareBackups: daycareBackups
+        };
+    }
+
+
+    function formatAge(age) {
+        var ages = {
+            "12-18": "12–18 months",
+            "18-24": "18–24 months",
+            "2": "2 years",
+            "3": "3 years",
+            "4": "4 years"
+        };
+
+        return ages[age] || "toddler";
+    }
+
+
+    function formatLaundry(laundry) {
+        var labels = {
+            daily: "almost-daily laundry",
+            twice: "laundry about twice a week",
+            weekly: "weekly laundry",
+            less: "less-than-weekly laundry"
+        };
+
+        return labels[laundry] || "your laundry routine";
+    }
+
+
+    function renderResults(answers, wardrobe) {
+        summaryContainer.innerHTML =
+            "For a <strong>" +
+            formatAge(answers.age) +
+            "</strong> with " +
+            formatLaundry(answers.laundry) +
+            ", " +
+            answers.changes +
+            " outfit change" +
+            (answers.changes === 1 ? "" : "s") +
+            " per day, and a " +
+            answers.style +
+            " wardrobe style, here's a practical starting point.";
+
+        var items = [
+            {
+                title: "Everyday tops",
+                quantity: wardrobe.tops,
+                note: "T-shirts, long sleeves, everyday shirts."
+            },
+            {
+                title: "Everyday bottoms",
+                quantity: wardrobe.bottoms,
+                note: "Pants, leggings, joggers, shorts or similar."
+            },
+            {
+                title: "Pajamas",
+                quantity: wardrobe.pajamas,
+                note: "Enough to work with your laundry rhythm."
+            },
+            {
+                title: "Underwear",
+                quantity: wardrobe.underwear,
+                note: answers.potty === "yes"
+                    ? "Extra included for potty-training accidents."
+                    : "A practical everyday rotation."
+            },
+            {
+                title: "Pairs of socks",
+                quantity: wardrobe.socks,
+                note: "Adjust upward if socks mysteriously disappear."
+            },
+            {
+                title: "Layers",
+                quantity: wardrobe.layers,
+                note: "Sweaters, cardigans, hoodies or light jackets."
+            },
+            {
+                title: "Dressy / special outfits",
+                quantity: wardrobe.dressy,
+                note: "For events, photos, holidays or nicer outings."
+            }
         ];
 
-        currentResult.items.forEach(
-            (item: WardrobeItem): void => {
-                lines.push(
-                    `☐ ${item.name}: ${item.quantity}`
-                );
-            }
-        );
+        if (wardrobe.daycareBackups > 0) {
+            items.push({
+                title: "Daycare backup outfits",
+                quantity: wardrobe.daycareBackups,
+                note: "Complete backup outfits to leave at daycare."
+            });
+        }
 
-        if (currentAnswers.daycare) {
-            lines.push(
-                "",
-                `☐ Daycare backup outfits: ${currentResult.daycareBackup}`
+        resultsContainer.innerHTML = "";
+
+        items.forEach(function (item) {
+            var card = document.createElement("div");
+
+            card.className = "wardrobe-result-item";
+
+            card.innerHTML =
+                "<h3>" +
+                item.title +
+                "</h3>" +
+                '<span class="wardrobe-result-quantity">' +
+                item.quantity +
+                "</span>" +
+                '<span class="wardrobe-result-note">' +
+                item.note +
+                "</span>";
+
+            resultsContainer.appendChild(card);
+        });
+
+
+        var noteTitle = "A note about your result";
+        var noteText =
+            "Think of these numbers as a useful target, not a rule. " +
+            "If you regularly have clean clothes left over, you probably " +
+            "don't need more. If you're constantly doing emergency laundry, " +
+            "your real wardrobe needs may be higher.";
+
+        if (answers.daycare === "yes") {
+            noteText +=
+                " Because your toddler attends daycare, the calculator " +
+                "also includes a dedicated backup supply.";
+        }
+
+        if (answers.potty === "yes") {
+            noteText +=
+                " Because you're potty training, the calculation gives " +
+                "you additional underwear and bottoms.";
+        }
+
+        specialNote.innerHTML =
+            "<strong>" +
+            noteTitle +
+            "</strong>" +
+            "<p>" +
+            noteText +
+            "</p>";
+
+
+        outfitsContainer.innerHTML = "";
+
+        var outfitFormulas = [
+            {
+                name: "Everyday",
+                formula: "top + bottom + socks + everyday shoes"
+            },
+            {
+                name: "Messy play",
+                formula: "older top + comfortable bottom + easy-to-wash layer"
+            },
+            {
+                name: "Cool weather",
+                formula: "base top + bottom + warm layer"
+            },
+            {
+                name: "Nicer outing",
+                formula: "special outfit + comfortable shoes + optional layer"
+            }
+        ];
+
+        outfitFormulas.forEach(function (outfit) {
+            var element = document.createElement("div");
+
+            element.className = "wardrobe-outfit";
+
+            element.innerHTML =
+                "<strong>" +
+                outfit.name +
+                ":</strong> " +
+                outfit.formula +
+                ".";
+
+            outfitsContainer.appendChild(element);
+        });
+
+
+        shoppingList.innerHTML = "";
+
+        var shoppingItems = [
+            wardrobe.tops + " everyday tops",
+            wardrobe.bottoms + " everyday bottoms",
+            wardrobe.pajamas + " pairs of pajamas",
+            wardrobe.underwear + " pairs of underwear",
+            wardrobe.socks + " pairs of socks",
+            wardrobe.layers + " layers"
+        ];
+
+        if (wardrobe.dressy > 0) {
+            shoppingItems.push(
+                wardrobe.dressy +
+                " dressy / special outfit" +
+                (wardrobe.dressy === 1 ? "" : "s")
             );
         }
 
-        lines.push(
-            "",
-            "Built with MomYouNeedThis"
+        if (wardrobe.daycareBackups > 0) {
+            shoppingItems.push(
+                wardrobe.daycareBackups +
+                " complete daycare backup outfit" +
+                (wardrobe.daycareBackups === 1 ? "" : "s")
+            );
+        }
+
+        shoppingItems.forEach(function (item) {
+            var li = document.createElement("li");
+
+            li.textContent = "☐ " + item;
+
+            shoppingList.appendChild(li);
+        });
+    }
+
+
+    function buildChecklistText() {
+        var items = Array.from(
+            shoppingList.querySelectorAll("li")
         );
 
-        const text: string = lines.join("\n");
+        return [
+            "MY TODDLER WARDROBE CHECKLIST",
+            "",
+            ...items.map(function (item) {
+                return item.textContent;
+            }),
+            "",
+            "Created with MomYouNeedThis.com"
+        ].join("\n");
+    }
+
+
+    step1Next.addEventListener(
+        "click",
+        function () {
+            showStep(2);
+        }
+    );
+
+
+    step2Back.addEventListener(
+        "click",
+        function () {
+            showStep(1);
+        }
+    );
+
+
+    step2Next.addEventListener(
+        "click",
+        function () {
+            var answers = getAnswers();
+
+            var wardrobe = calculateWardrobe(
+                answers
+            );
+
+            renderResults(
+                answers,
+                wardrobe
+            );
+
+            showStep(3);
+        }
+    );
+
+
+    step3Back.addEventListener(
+        "click",
+        function () {
+            showStep(2);
+        }
+    );
+
+
+    startOver.addEventListener(
+        "click",
+        function () {
+            showStep(1);
+        }
+    );
+
+
+    copyChecklistButton.addEventListener(
+        "click",
+        function () {
+            var text = buildChecklistText();
+
+            if (
+                navigator.clipboard &&
+                navigator.clipboard.writeText
+            ) {
+                navigator.clipboard.writeText(text)
+                    .then(function () {
+                        copyChecklistButton.textContent =
+                            "✓ Copied!";
+                    })
+                    .catch(function () {
+                        fallbackCopy(text);
+                    });
+            } else {
+                fallbackCopy(text);
+            }
+
+            setTimeout(function () {
+                copyChecklistButton.textContent =
+                    "Copy checklist";
+            }, 2000);
+        }
+    );
+
+
+    function fallbackCopy(text) {
+        var textarea =
+            document.createElement("textarea");
+
+        textarea.value = text;
+
+        textarea.style.position = "fixed";
+        textarea.style.opacity = "0";
+
+        document.body.appendChild(
+            textarea
+        );
+
+        textarea.select();
 
         try {
-            await navigator.clipboard.writeText(text);
+            document.execCommand("copy");
 
-            copyChecklist.textContent = "Copied! ✓";
-
-            window.setTimeout(
-                (): void => {
-                    copyChecklist.textContent =
-                        "Copy Checklist";
-                },
-                1800
-            );
-        } catch {
-            copyChecklist.textContent =
+            copyChecklistButton.textContent =
+                "✓ Copied!";
+        } catch (error) {
+            copyChecklistButton.textContent =
                 "Select & copy manually";
         }
+
+        document.body.removeChild(
+            textarea
+        );
     }
-);
 
 
-/* =========================================================
-   PRINT
-   ========================================================= */
-
-printWardrobe?.addEventListener(
-    "click",
-    (): void => {
-        window.print();
-    }
-);
+    printButton.addEventListener(
+        "click",
+        function () {
+            window.print();
+        }
+    );
 
 
-/* =========================================================
-   INITIAL STATE
-   ========================================================= */
+    showStep(1);
 
-showStep(1);
+})();
