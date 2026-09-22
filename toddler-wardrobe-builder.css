@@ -1,0 +1,892 @@
+/* =========================================================
+   MOMYOU NEED THIS — TODDLER WARDROBE BUILDER
+   ========================================================= */
+
+:root {
+    --wardrobe-pink: #e89aaa;
+    --wardrobe-pink-dark: #cf6f87;
+    --wardrobe-pink-light: #fff0f3;
+    --wardrobe-cream: #fffaf8;
+    --wardrobe-text: #332d2f;
+    --wardrobe-muted: #756c6e;
+    --wardrobe-border: #eadfe0;
+    --wardrobe-white: #ffffff;
+    --wardrobe-green: #78947d;
+    --wardrobe-shadow: 0 12px 35px rgba(71, 44, 48, 0.08);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    background: var(--wardrobe-cream);
+    color: var(--wardrobe-text);
+    font-family: "Nunito", sans-serif;
+}
+
+button,
+select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+.wardrobe-page {
+    min-height: 100vh;
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.wardrobe-hero {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 70px 24px 50px;
+    text-align: center;
+}
+
+.hero-eyebrow {
+    display: inline-block;
+    margin-bottom: 18px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: var(--wardrobe-pink-light);
+    color: var(--wardrobe-pink-dark);
+    font-size: 0.78rem;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+}
+
+.wardrobe-hero h1 {
+    max-width: 850px;
+    margin: 0 auto;
+    font-size: clamp(2.4rem, 6vw, 4.8rem);
+    line-height: 1.02;
+    letter-spacing: -0.045em;
+    font-weight: 900;
+}
+
+.wardrobe-hero h1 span {
+    display: block;
+    color: var(--wardrobe-pink-dark);
+}
+
+.hero-description {
+    max-width: 720px;
+    margin: 25px auto 0;
+    color: var(--wardrobe-muted);
+    font-size: 1.15rem;
+    line-height: 1.7;
+}
+
+.hero-benefits {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px 22px;
+    margin-top: 28px;
+    color: var(--wardrobe-muted);
+    font-size: 0.94rem;
+    font-weight: 700;
+}
+
+.hero-benefits span {
+    color: var(--wardrobe-green);
+    margin-right: 5px;
+}
+
+
+/* =========================================================
+   TOOL
+   ========================================================= */
+
+.wardrobe-tool {
+    width: calc(100% - 32px);
+    max-width: 1000px;
+    margin: 0 auto 70px;
+    background: var(--wardrobe-white);
+    border: 1px solid var(--wardrobe-border);
+    border-radius: 28px;
+    box-shadow: var(--wardrobe-shadow);
+    overflow: hidden;
+}
+
+.progress-container {
+    padding: 20px 30px 0;
+}
+
+.progress-label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    color: var(--wardrobe-muted);
+    font-size: 0.8rem;
+    font-weight: 800;
+}
+
+.progress-bar {
+    height: 7px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: var(--wardrobe-pink-light);
+}
+
+.progress-fill {
+    width: 33.333%;
+    height: 100%;
+    border-radius: inherit;
+    background: var(--wardrobe-pink);
+    transition: width 0.35s ease;
+}
+
+.tool-step {
+    display: none;
+    padding: 40px;
+}
+
+.tool-step.active {
+    display: block;
+}
+
+.step-heading {
+    display: flex;
+    gap: 17px;
+    align-items: flex-start;
+    margin-bottom: 34px;
+}
+
+.step-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 44px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--wardrobe-pink);
+    color: white;
+    font-size: 1rem;
+    font-weight: 900;
+}
+
+.step-heading h2 {
+    margin: 0 0 5px;
+    font-size: 1.7rem;
+    font-weight: 900;
+}
+
+.step-heading p {
+    max-width: 650px;
+    margin: 0;
+    color: var(--wardrobe-muted);
+    line-height: 1.55;
+}
+
+
+/* =========================================================
+   QUESTIONS
+   ========================================================= */
+
+.question-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.question-card {
+    padding: 22px;
+    border: 1px solid var(--wardrobe-border);
+    border-radius: 18px;
+    background: #fffdfc;
+}
+
+.question-card label {
+    display: block;
+    margin-bottom: 12px;
+    font-size: 1rem;
+    font-weight: 900;
+}
+
+.question-card select {
+    width: 100%;
+    min-height: 48px;
+    padding: 10px 14px;
+    border: 1px solid #dcd0d2;
+    border-radius: 12px;
+    background: white;
+    color: var(--wardrobe-text);
+    outline: none;
+}
+
+.question-card select:focus {
+    border-color: var(--wardrobe-pink);
+    box-shadow: 0 0 0 3px var(--wardrobe-pink-light);
+}
+
+.question-card small {
+    display: block;
+    margin-top: 9px;
+    color: var(--wardrobe-muted);
+    font-size: 0.8rem;
+    line-height: 1.45;
+}
+
+.choice-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.choice-button {
+    flex: 1;
+    min-height: 46px;
+    border: 1px solid var(--wardrobe-border);
+    border-radius: 12px;
+    background: white;
+    color: var(--wardrobe-text);
+    font-weight: 800;
+}
+
+.choice-button:hover {
+    border-color: var(--wardrobe-pink);
+}
+
+.choice-button.selected {
+    border-color: var(--wardrobe-pink);
+    background: var(--wardrobe-pink-light);
+    color: var(--wardrobe-pink-dark);
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.step-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 30px;
+}
+
+.primary-button,
+.secondary-button {
+    min-height: 50px;
+    padding: 12px 21px;
+    border-radius: 13px;
+    font-weight: 900;
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        background 0.15s ease;
+}
+
+.primary-button {
+    border: 0;
+    background: var(--wardrobe-pink);
+    color: white;
+    box-shadow: 0 7px 18px rgba(232, 154, 170, 0.25);
+}
+
+.primary-button:hover {
+    transform: translateY(-1px);
+    background: var(--wardrobe-pink-dark);
+}
+
+.primary-button span {
+    margin-left: 7px;
+}
+
+.secondary-button {
+    border: 1px solid var(--wardrobe-border);
+    background: white;
+    color: var(--wardrobe-text);
+}
+
+.secondary-button:hover {
+    border-color: var(--wardrobe-pink);
+}
+
+
+/* =========================================================
+   RESULTS
+   ========================================================= */
+
+.result-intro {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 25px;
+    padding: 22px;
+    border-radius: 18px;
+    background: var(--wardrobe-pink-light);
+}
+
+.result-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 82px;
+    width: 82px;
+    height: 82px;
+    border-radius: 20px;
+    background: white;
+    color: var(--wardrobe-pink-dark);
+    font-size: 2rem;
+    font-weight: 900;
+}
+
+.result-intro strong {
+    display: block;
+    font-size: 1.1rem;
+}
+
+.result-intro p {
+    margin: 4px 0 0;
+    color: var(--wardrobe-muted);
+    line-height: 1.45;
+}
+
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.result-card {
+    position: relative;
+    padding: 20px;
+    border: 1px solid var(--wardrobe-border);
+    border-radius: 17px;
+    background: white;
+}
+
+.result-card .result-icon {
+    font-size: 1.65rem;
+    margin-bottom: 8px;
+}
+
+.result-card h3 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 900;
+}
+
+.result-card .quantity {
+    margin: 5px 0 3px;
+    font-size: 1.55rem;
+    font-weight: 900;
+    color: var(--wardrobe-pink-dark);
+}
+
+.result-card p {
+    margin: 0;
+    color: var(--wardrobe-muted);
+    font-size: 0.82rem;
+    line-height: 1.45;
+}
+
+.special-needs-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 18px;
+}
+
+.special-card {
+    display: flex;
+    gap: 13px;
+    padding: 19px;
+    border-radius: 17px;
+    background: #f7f4ee;
+}
+
+.special-card.hidden {
+    display: none;
+}
+
+.special-icon {
+    font-size: 1.5rem;
+}
+
+.special-card h3 {
+    margin: 0 0 4px;
+    font-size: 0.98rem;
+}
+
+.special-card p {
+    margin: 0;
+    color: var(--wardrobe-muted);
+    font-size: 0.86rem;
+    line-height: 1.5;
+}
+
+.reality-note {
+    display: flex;
+    gap: 13px;
+    margin-top: 20px;
+    padding: 19px;
+    border-left: 4px solid var(--wardrobe-pink);
+    background: #fffaf2;
+}
+
+.note-icon {
+    font-size: 1.35rem;
+}
+
+.reality-note strong {
+    font-size: 0.98rem;
+}
+
+.reality-note p {
+    margin: 4px 0 0;
+    color: var(--wardrobe-muted);
+    font-size: 0.88rem;
+    line-height: 1.55;
+}
+
+
+/* =========================================================
+   WARDROBE BUILDER
+   ========================================================= */
+
+.wardrobe-philosophy {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 13px;
+    margin-bottom: 35px;
+}
+
+.philosophy-item {
+    padding: 19px;
+    border: 1px solid var(--wardrobe-border);
+    border-radius: 17px;
+}
+
+.philosophy-item span {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--wardrobe-pink-dark);
+    font-size: 0.76rem;
+    font-weight: 900;
+}
+
+.philosophy-item strong {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 0.95rem;
+}
+
+.philosophy-item p {
+    margin: 0;
+    color: var(--wardrobe-muted);
+    font-size: 0.83rem;
+    line-height: 1.45;
+}
+
+.outfit-section,
+.shopping-section {
+    margin-top: 30px;
+}
+
+.section-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 15px;
+    margin-bottom: 16px;
+}
+
+.section-title h3 {
+    margin: 0;
+    font-size: 1.35rem;
+    font-weight: 900;
+}
+
+.section-title p {
+    margin: 4px 0 0;
+    color: var(--wardrobe-muted);
+    font-size: 0.87rem;
+}
+
+.section-title > span {
+    color: var(--wardrobe-muted);
+    font-size: 0.8rem;
+    font-weight: 800;
+}
+
+.outfit-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 13px;
+}
+
+.outfit-card {
+    padding: 19px;
+    border: 1px solid var(--wardrobe-border);
+    border-radius: 17px;
+    background: #fffdfc;
+}
+
+.outfit-card .outfit-label {
+    margin-bottom: 10px;
+    color: var(--wardrobe-pink-dark);
+    font-size: 0.76rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.outfit-pieces {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.outfit-piece {
+    padding: 7px 10px;
+    border-radius: 999px;
+    background: var(--wardrobe-pink-light);
+    font-size: 0.82rem;
+    font-weight: 800;
+}
+
+.shopping-list {
+    display: grid;
+    gap: 10px;
+}
+
+.shopping-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 16px 18px;
+    border: 1px solid var(--wardrobe-border);
+    border-radius: 15px;
+}
+
+.shopping-item-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.shopping-item-icon {
+    font-size: 1.3rem;
+}
+
+.shopping-item strong {
+    display: block;
+    font-size: 0.92rem;
+}
+
+.shopping-item span {
+    color: var(--wardrobe-muted);
+    font-size: 0.78rem;
+}
+
+.shopping-item a {
+    flex-shrink: 0;
+    padding: 9px 13px;
+    border-radius: 10px;
+    background: var(--wardrobe-pink-light);
+    color: var(--wardrobe-pink-dark);
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 900;
+}
+
+.share-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-top: 30px;
+    padding: 21px;
+    border-radius: 17px;
+    background: #f7f4ee;
+}
+
+.share-box strong {
+    font-size: 1rem;
+}
+
+.share-box p {
+    max-width: 600px;
+    margin: 4px 0 0;
+    color: var(--wardrobe-muted);
+    font-size: 0.84rem;
+    line-height: 1.45;
+}
+
+
+/* =========================================================
+   SEO CONTENT
+   ========================================================= */
+
+.seo-content {
+    padding: 20px 24px 70px;
+}
+
+.content-width {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.content-intro {
+    max-width: 780px;
+    margin: 0 auto 40px;
+    text-align: center;
+}
+
+.eyebrow {
+    color: var(--wardrobe-pink-dark);
+    font-size: 0.76rem;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+}
+
+.content-intro h2 {
+    margin: 10px 0 16px;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    line-height: 1.1;
+    font-weight: 900;
+}
+
+.content-intro p {
+    margin: 10px auto;
+    color: var(--wardrobe-muted);
+    line-height: 1.7;
+}
+
+.content-cards {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.content-cards article {
+    padding: 24px;
+    border: 1px solid var(--wardrobe-border);
+    border-radius: 18px;
+    background: white;
+}
+
+.content-cards h3 {
+    margin: 0 0 9px;
+    font-size: 1.05rem;
+}
+
+.content-cards p {
+    margin: 0;
+    color: var(--wardrobe-muted);
+    font-size: 0.9rem;
+    line-height: 1.65;
+}
+
+.faq-section {
+    max-width: 800px;
+    margin: 65px auto 0;
+}
+
+.faq-section h2 {
+    margin-bottom: 20px;
+    font-size: 2rem;
+    font-weight: 900;
+}
+
+.faq-section details {
+    border-bottom: 1px solid var(--wardrobe-border);
+}
+
+.faq-section summary {
+    padding: 20px 0;
+    cursor: pointer;
+    list-style: none;
+    font-weight: 900;
+}
+
+.faq-section summary::-webkit-details-marker {
+    display: none;
+}
+
+.faq-section summary::after {
+    float: right;
+    content: "+";
+    color: var(--wardrobe-pink-dark);
+    font-size: 1.3rem;
+}
+
+.faq-section details[open] summary::after {
+    content: "−";
+}
+
+.faq-section details p {
+    margin: -5px 0 20px;
+    color: var(--wardrobe-muted);
+    line-height: 1.65;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.wardrobe-footer {
+    padding: 25px 20px 40px;
+    text-align: center;
+    color: var(--wardrobe-muted);
+    font-size: 0.8rem;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 760px) {
+
+    .wardrobe-hero {
+        padding: 48px 18px 35px;
+    }
+
+    .wardrobe-hero h1 {
+        font-size: 2.55rem;
+    }
+
+    .hero-description {
+        font-size: 1rem;
+    }
+
+    .hero-benefits {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        text-align: left;
+        font-size: 0.82rem;
+    }
+
+    .wardrobe-tool {
+        width: calc(100% - 20px);
+        border-radius: 21px;
+    }
+
+    .progress-container {
+        padding: 17px 18px 0;
+    }
+
+    .tool-step {
+        padding: 28px 18px;
+    }
+
+    .step-heading {
+        gap: 12px;
+        margin-bottom: 25px;
+    }
+
+    .step-number {
+        flex-basis: 38px;
+        width: 38px;
+        height: 38px;
+    }
+
+    .step-heading h2 {
+        font-size: 1.35rem;
+    }
+
+    .question-grid,
+    .results-grid,
+    .special-needs-grid,
+    .wardrobe-philosophy,
+    .content-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .result-intro {
+        align-items: flex-start;
+    }
+
+    .result-number {
+        flex-basis: 65px;
+        width: 65px;
+        height: 65px;
+        font-size: 1.55rem;
+    }
+
+    .outfit-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .share-box {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .step-actions {
+        flex-direction: column-reverse;
+    }
+
+    .primary-button,
+    .secondary-button {
+        width: 100%;
+    }
+
+    .shopping-item {
+        align-items: flex-start;
+    }
+
+    .shopping-item a {
+        align-self: center;
+    }
+
+    .section-title {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+
+
+@media print {
+
+    body {
+        background: white;
+    }
+
+    .wardrobe-hero,
+    .progress-container,
+    .step-actions,
+    .seo-content,
+    .wardrobe-footer,
+    .share-box {
+        display: none !important;
+    }
+
+    .wardrobe-tool {
+        width: 100%;
+        max-width: none;
+        margin: 0;
+        border: 0;
+        box-shadow: none;
+    }
+
+    .tool-step {
+        display: none !important;
+    }
+
+    #step3 {
+        display: block !important;
+    }
+
+    .shopping-item a {
+        display: none;
+    }
+}
