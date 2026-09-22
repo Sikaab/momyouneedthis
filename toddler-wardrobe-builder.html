@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
 
@@ -8,22 +9,14 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>How Many Clothes Does My Toddler Need? | Toddler Wardrobe Builder</title>
+    <title>How Many Clothes Does My Toddler Actually Need? | MomYouNeedThis</title>
 
     <meta
         name="description"
-        content="Find out exactly how many clothes your toddler needs based on laundry frequency, daycare, outfit changes, potty training, and your family's routine."
+        content="Find out how many clothes your toddler actually needs. Build a personalized toddler wardrobe based on laundry frequency, daycare, outfit changes, potty training, pajamas and your child's routine."
     >
 
-    <link
-        rel="canonical"
-        href="https://momyouneedthis.com/toddler-wardrobe-builder.html"
-    >
-
-    <link
-        rel="preconnect"
-        href="https://fonts.googleapis.com"
-    >
+    <link rel="preconnect" href="https://fonts.googleapis.com">
 
     <link
         rel="preconnect"
@@ -32,7 +25,7 @@
     >
 
     <link
-        href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap"
         rel="stylesheet"
     >
 
@@ -42,1273 +35,2272 @@
     >
 
     <style>
+
         /* =========================================================
            TODDLER WARDROBE BUILDER
-           Page-specific styles — keeps the existing site styling
-           ========================================================= */
+        ========================================================= */
 
-        .wardrobe-tool {
-            max-width: 900px;
-            margin: 40px auto 0;
+        .wardrobe-page {
+            padding: 20px 0 20px;
         }
 
-        .wardrobe-progress {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 30px;
+
+        /* =========================================================
+           HERO
+        ========================================================= */
+
+        .wardrobe-hero {
+            position: relative;
+            max-width: 820px;
+            margin: 0 auto;
+            padding: 34px 20px 25px;
+            text-align: center;
+            overflow: hidden;
         }
 
-        .wardrobe-progress-step {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #a99fa2;
-            font-size: 0.9rem;
-            font-weight: 700;
-        }
-
-        .wardrobe-progress-number {
-            width: 32px;
-            height: 32px;
+        .wardrobe-hero::before {
+            content: "";
+            position: absolute;
+            width: 360px;
+            height: 360px;
             border-radius: 50%;
-            display: flex;
+            background: radial-gradient(
+                circle,
+                rgba(232,154,170,.13) 0%,
+                rgba(232,154,170,0) 70%
+            );
+            top: -220px;
+            left: 50%;
+            transform: translateX(-50%);
+            pointer-events: none;
+        }
+
+        .wardrobe-kicker {
+            position: relative;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            background: #f1e9eb;
-            color: #8d8185;
+            gap: 7px;
+            padding: 8px 15px;
+            margin-bottom: 14px;
+            background: #fff0f5;
+            color: #d05a7d;
+            border: 1px solid #f2dce3;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: .7px;
+            text-transform: uppercase;
+        }
+
+        .wardrobe-hero h1 {
+            position: relative;
+            max-width: 760px;
+            margin: 0 auto;
+            color: #332b2b;
+            font-size: clamp(38px, 6vw, 54px);
+            line-height: 1.04;
+            letter-spacing: -1.5px;
             font-weight: 900;
         }
 
-        .wardrobe-progress-step.active {
-            color: #cf6f87;
+        .wardrobe-hero h1 span {
+            display: block;
+            color: #e89aaa;
         }
 
-        .wardrobe-progress-step.active .wardrobe-progress-number {
+        .wardrobe-hero h1::after {
+            content: "";
+            display: block;
+            width: 48px;
+            height: 3px;
+            margin: 18px auto 0;
             background: #e89aaa;
-            color: #ffffff;
+            border-radius: 999px;
         }
 
-        .wardrobe-progress-line {
-            width: 45px;
-            height: 2px;
-            background: #eadfe2;
+        .wardrobe-hero p {
+            max-width: 650px;
+            margin: 19px auto 0;
+            color: #6d6566;
+            font-size: 17px;
+            line-height: 1.6;
         }
 
-        .wardrobe-card {
+
+        /* =========================================================
+           TOOL SHELL
+        ========================================================= */
+
+        .wardrobe-tool {
+            max-width: 950px;
+            margin: 25px auto 0;
             background: #ffffff;
-            border-radius: 22px;
-            padding: 34px;
-            box-shadow: 0 8px 30px rgba(70, 45, 50, 0.08);
+            border: 1px solid #eee3e3;
+            border-radius: 32px;
+            box-shadow:
+                0 18px 45px rgba(80,55,65,.08),
+                0 3px 12px rgba(80,55,65,.035);
+            overflow: hidden;
+        }
+
+
+        /* =========================================================
+           TOOL HEADER
+        ========================================================= */
+
+        .wardrobe-tool-header {
+            position: relative;
+            padding: 20px 28px;
+            background: linear-gradient(
+                135deg,
+                #fff7fa 0%,
+                #ffffff 60%,
+                #f7fbff 100%
+            );
+            border-bottom: 1px solid #f0e5e8;
+        }
+
+        .wardrobe-progress-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .wardrobe-progress-label {
+            color: #c95770;
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: .8px;
+            text-transform: uppercase;
+        }
+
+        .wardrobe-progress-count {
+            color: #999;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .wardrobe-progress-track {
+            width: 100%;
+            height: 7px;
+            background: #f4e9ec;
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .wardrobe-progress-bar {
+            width: 20%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                #e89aaa,
+                #d97f95
+            );
+            border-radius: 999px;
+            transition: width .3s ease;
+        }
+
+
+        /* =========================================================
+           QUESTION AREA
+        ========================================================= */
+
+        .wardrobe-question-area {
+            padding: 42px 42px 38px;
         }
 
         .wardrobe-step {
             display: none;
+            animation: wardrobeFade .3s ease;
         }
 
         .wardrobe-step.active {
             display: block;
         }
 
-        .wardrobe-step-header {
-            margin-bottom: 28px;
-            text-align: center;
+        @keyframes wardrobeFade {
+            from {
+                opacity: 0;
+                transform: translateY(7px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .wardrobe-step-header h2 {
-            margin: 0 0 8px;
-            color: #332b2b;
-            font-size: 1.8rem;
+        .wardrobe-step-eyebrow {
+            display: inline-block;
+            margin-bottom: 8px;
+            color: #bd9450;
+            font-size: 10px;
             font-weight: 900;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
-        .wardrobe-step-header p {
-            margin: 0 auto;
+        .wardrobe-step h2 {
+            margin: 0 0 9px;
+            color: #332b2b;
+            font-size: clamp(26px, 4vw, 34px);
+            line-height: 1.15;
+            font-weight: 900;
+            letter-spacing: -.6px;
+        }
+
+        .wardrobe-step-description {
             max-width: 650px;
-            color: #766c70;
+            margin: 0 0 27px;
+            color: #777;
+            font-size: 15px;
             line-height: 1.6;
         }
 
-        .wardrobe-question {
-            margin-bottom: 28px;
-        }
 
-        .wardrobe-question > label,
-        .wardrobe-question-title {
-            display: block;
-            margin-bottom: 12px;
-            color: #332b2b;
-            font-weight: 900;
-            font-size: 1.05rem;
-        }
-
-        .wardrobe-question-help {
-            margin: -4px 0 12px;
-            color: #8b7f83;
-            font-size: 0.9rem;
-        }
+        /* =========================================================
+           OPTION GRID
+        ========================================================= */
 
         .wardrobe-options {
             display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 12px;
         }
 
         .wardrobe-option {
             position: relative;
-        }
-
-        .wardrobe-option input {
-            position: absolute;
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .wardrobe-option label {
-            display: block;
-            padding: 16px;
-            border: 2px solid #eee5e7;
-            border-radius: 14px;
-            background: #fffafb;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            width: 100%;
+            min-height: 82px;
+            padding: 16px 18px;
+            background: #ffffff;
+            color: #332b2b;
+            border: 1px solid #ece7e7;
+            border-radius: 20px;
+            text-align: left;
             cursor: pointer;
-            transition: 0.2s ease;
+            transition:
+                transform .2s ease,
+                border-color .2s ease,
+                box-shadow .2s ease,
+                background .2s ease;
         }
 
-        .wardrobe-option label:hover {
-            border-color: #e89aaa;
-            transform: translateY(-1px);
+        .wardrobe-option:hover {
+            transform: translateY(-2px);
+            border-color: #e7a1af;
+            box-shadow: 0 9px 22px rgba(80,55,65,.07);
         }
 
-        .wardrobe-option input:checked + label {
+        .wardrobe-option.selected {
+            background: #fff5f8;
             border-color: #e89aaa;
-            background: #fff0f3;
-            box-shadow: 0 0 0 2px rgba(232, 154, 170, 0.12);
+            box-shadow:
+                0 8px 22px rgba(232,154,170,.13),
+                inset 0 0 0 1px rgba(232,154,170,.12);
+        }
+
+        .wardrobe-option-icon {
+            flex: 0 0 45px;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8f8fb;
+            border-radius: 14px;
+            font-size: 22px;
+        }
+
+        .wardrobe-option.selected .wardrobe-option-icon {
+            background: #ffffff;
+        }
+
+        .wardrobe-option-copy {
+            min-width: 0;
         }
 
         .wardrobe-option-title {
             display: block;
-            margin-bottom: 4px;
+            margin-bottom: 3px;
             color: #332b2b;
+            font-size: 15px;
+            line-height: 1.25;
             font-weight: 900;
         }
 
         .wardrobe-option-description {
             display: block;
-            color: #807478;
-            font-size: 0.88rem;
+            color: #888;
+            font-size: 11px;
             line-height: 1.4;
+            font-weight: 600;
         }
 
-        .wardrobe-select {
-            width: 100%;
-            min-height: 52px;
-            padding: 12px 15px;
-            border: 2px solid #eee5e7;
-            border-radius: 14px;
-            background: #fffafb;
-            color: #332b2b;
-            font-family: inherit;
-            font-size: 1rem;
-            font-weight: 700;
-            outline: none;
+        .wardrobe-check {
+            flex: 0 0 22px;
+            width: 22px;
+            height: 22px;
+            margin-left: auto;
+            border: 2px solid #ddd;
+            border-radius: 50%;
+            background: #ffffff;
+            position: relative;
         }
 
-        .wardrobe-select:focus {
+        .wardrobe-option.selected .wardrobe-check {
             border-color: #e89aaa;
+            background: #e89aaa;
         }
+
+        .wardrobe-option.selected .wardrobe-check::after {
+            content: "";
+            position: absolute;
+            width: 7px;
+            height: 4px;
+            border-left: 2px solid #fff;
+            border-bottom: 2px solid #fff;
+            transform: rotate(-45deg);
+            left: 6px;
+            top: 6px;
+        }
+
+
+        /* =========================================================
+           NAVIGATION
+        ========================================================= */
 
         .wardrobe-navigation {
             display: flex;
+            align-items: center;
             justify-content: space-between;
-            gap: 14px;
-            margin-top: 34px;
-            padding-top: 24px;
+            gap: 15px;
+            margin-top: 32px;
+            padding-top: 22px;
             border-top: 1px solid #f0e7e9;
         }
 
-        .wardrobe-button {
-            min-height: 50px;
-            padding: 13px 24px;
-            border: 0;
+        .wardrobe-back {
+            padding: 12px 17px;
+            background: transparent;
+            color: #777;
+            border: 1px solid #e8e3e3;
             border-radius: 999px;
-            font-family: inherit;
-            font-size: 1rem;
+            font-size: 13px;
             font-weight: 900;
-            cursor: pointer;
-            transition: 0.2s ease;
+            box-shadow: none;
         }
 
-        .wardrobe-button:hover {
+        .wardrobe-back:hover {
+            background: #faf7f8;
+            color: #332b2b;
+            box-shadow: none;
             transform: translateY(-1px);
         }
 
-        .wardrobe-button-primary {
+        .wardrobe-next {
+            min-width: 145px;
+            padding: 13px 22px;
             background: #e89aaa;
-            color: #ffffff;
-            box-shadow: 0 5px 15px rgba(207, 111, 135, 0.2);
+            color: #fff;
+            border-radius: 999px;
+            font-size: 14px;
+            font-weight: 900;
         }
 
-        .wardrobe-button-secondary {
-            background: #f5edef;
-            color: #665b60;
+        .wardrobe-next:hover {
+            background: #d98296;
         }
 
-        .wardrobe-button-full {
-            width: 100%;
+        .wardrobe-back[hidden] {
+            visibility: hidden;
+            display: block;
         }
 
-        .wardrobe-results-intro {
-            padding: 20px;
-            margin-bottom: 22px;
-            border-radius: 16px;
-            background: #fff3f5;
+
+        /* =========================================================
+           RESULTS
+        ========================================================= */
+
+        .wardrobe-results {
+            display: none;
+            padding: 0 30px 35px;
+            animation: wardrobeFade .35s ease;
+        }
+
+        .wardrobe-results.active {
+            display: block;
+        }
+
+        .wardrobe-result-hero {
+            position: relative;
+            margin: 0 -30px 25px;
+            padding: 34px 30px 31px;
+            background:
+                linear-gradient(
+                    135deg,
+                    #fff0f5 0%,
+                    #ffffff 56%,
+                    #eef6ff 100%
+                );
+            border-bottom: 1px solid #f0e3e7;
             text-align: center;
+            overflow: hidden;
         }
 
-        .wardrobe-results-intro strong {
-            color: #cf6f87;
+        .wardrobe-result-hero::before {
+            content: "";
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            right: -65px;
+            top: -90px;
+            background: rgba(232,154,170,.12);
         }
 
-        .wardrobe-results-grid {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 14px;
+        .wardrobe-result-hero::after {
+            content: "";
+            position: absolute;
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            left: -65px;
+            bottom: -80px;
+            background: rgba(29,79,145,.06);
         }
 
-        .wardrobe-result-item {
-            padding: 20px;
-            border: 1px solid #eee5e7;
-            border-radius: 16px;
-            background: #fffafb;
-        }
-
-        .wardrobe-result-item h3 {
-            margin: 0 0 4px;
-            color: #332b2b;
-            font-size: 1rem;
-            font-weight: 900;
-        }
-
-        .wardrobe-result-quantity {
-            display: block;
-            margin-bottom: 5px;
-            color: #cf6f87;
-            font-size: 1.65rem;
-            font-weight: 900;
-        }
-
-        .wardrobe-result-note {
-            color: #807478;
-            font-size: 0.88rem;
-            line-height: 1.45;
-        }
-
-        .wardrobe-callout {
-            margin-top: 22px;
-            padding: 20px;
-            border-left: 4px solid #e89aaa;
-            border-radius: 0 14px 14px 0;
-            background: #fff7f8;
-        }
-
-        .wardrobe-callout strong {
-            display: block;
-            margin-bottom: 5px;
-            color: #332b2b;
-        }
-
-        .wardrobe-callout p {
-            margin: 0;
-            color: #756b70;
-            line-height: 1.5;
-        }
-
-        .wardrobe-section-title {
-            margin: 30px 0 15px;
-            color: #332b2b;
-            font-size: 1.35rem;
-            font-weight: 900;
-        }
-
-        .wardrobe-outfits {
-            display: grid;
-            gap: 12px;
-        }
-
-        .wardrobe-outfit {
-            padding: 17px 18px;
-            border-radius: 14px;
-            background: #fff7f8;
-        }
-
-        .wardrobe-outfit strong {
-            color: #cf6f87;
-        }
-
-        .wardrobe-shopping-list {
-            padding: 20px;
-            border-radius: 16px;
-            background: #faf6f7;
-        }
-
-        .wardrobe-shopping-list ul {
-            margin: 0;
-            padding-left: 22px;
-        }
-
-        .wardrobe-shopping-list li {
+        .wardrobe-result-kicker {
+            position: relative;
+            z-index: 1;
+            display: inline-block;
             margin-bottom: 8px;
-            color: #554b4f;
-            line-height: 1.5;
+            color: #c95770;
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
-        .wardrobe-action-row {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin-top: 22px;
-        }
-
-        .wardrobe-cta {
-            margin-top: 38px;
-            padding: 28px;
-            border-radius: 20px;
-            background: #fff0f3;
-            text-align: center;
-        }
-
-        .wardrobe-cta h2 {
-            margin: 0 0 8px;
+        .wardrobe-result-hero h2 {
+            position: relative;
+            z-index: 1;
+            margin: 0;
             color: #332b2b;
-            font-size: 1.45rem;
+            font-size: clamp(27px, 4vw, 38px);
+            line-height: 1.1;
             font-weight: 900;
         }
 
-        .wardrobe-cta p {
-            max-width: 600px;
-            margin: 0 auto 18px;
-            color: #766c70;
-            line-height: 1.6;
+        .wardrobe-result-hero p {
+            position: relative;
+            z-index: 1;
+            max-width: 610px;
+            margin: 11px auto 0;
+            color: #71696b;
+            font-size: 14px;
+            line-height: 1.55;
         }
 
-        .wardrobe-cta-links {
+
+        /* =========================================================
+           ROUTINE SUMMARY
+        ========================================================= */
+
+        .wardrobe-routine {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
+            gap: 7px;
+            margin: 0 auto 25px;
+        }
+
+        .wardrobe-routine span {
+            display: inline-flex;
+            align-items: center;
+            padding: 7px 11px;
+            background: #fff7fa;
+            border: 1px solid #f1dce3;
+            border-radius: 999px;
+            color: #765f65;
+            font-size: 10px;
+            font-weight: 900;
+        }
+
+
+        /* =========================================================
+           RESULT GRID
+        ========================================================= */
+
+        .wardrobe-result-section-title {
+            max-width: 850px;
+            margin: 28px auto 13px;
+        }
+
+        .wardrobe-result-section-title span {
+            display: block;
+            margin-bottom: 3px;
+            color: #bd9450;
+            font-size: 9px;
+            font-weight: 900;
+            letter-spacing: .9px;
+            text-transform: uppercase;
+        }
+
+        .wardrobe-result-section-title h3 {
+            margin: 0;
+            color: #332b2b;
+            font-size: 22px;
+            line-height: 1.2;
+            font-weight: 900;
+        }
+
+        .wardrobe-result-grid {
+            max-width: 850px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
             gap: 10px;
         }
 
-        .wardrobe-cta-links a {
-            display: inline-block;
-            padding: 11px 19px;
-            border-radius: 999px;
+        .wardrobe-result-card {
+            min-height: 130px;
+            padding: 17px;
             background: #ffffff;
-            color: #cf6f87;
-            font-weight: 900;
-            text-decoration: none;
+            border: 1px solid #eeeeee;
+            border-radius: 20px;
+            box-shadow: 0 7px 18px rgba(0,0,0,.045);
         }
 
-        .wardrobe-cta-links a:hover {
-            background: #e89aaa;
-            color: #ffffff;
+        .wardrobe-result-card-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin-bottom: 13px;
         }
+
+        .wardrobe-result-icon {
+            width: 39px;
+            height: 39px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fff0f4;
+            border-radius: 12px;
+            font-size: 20px;
+        }
+
+        .wardrobe-result-quantity {
+            color: #d05a7d;
+            font-size: 23px;
+            line-height: 1;
+            font-weight: 900;
+        }
+
+        .wardrobe-result-card h4 {
+            margin: 0 0 4px;
+            color: #333;
+            font-size: 14px;
+            line-height: 1.2;
+            font-weight: 900;
+        }
+
+        .wardrobe-result-card p {
+            margin: 0;
+            color: #888;
+            font-size: 10px;
+            line-height: 1.45;
+        }
+
+
+        /* =========================================================
+           BIG TOTAL
+        ========================================================= */
+
+        .wardrobe-total-card {
+            max-width: 850px;
+            margin: 14px auto 0;
+            padding: 21px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            background:
+                linear-gradient(
+                    135deg,
+                    #1d4f91,
+                    #2863a9
+                );
+            border-radius: 21px;
+            color: #fff;
+            box-shadow: 0 10px 25px rgba(29,79,145,.15);
+        }
+
+        .wardrobe-total-copy {
+            min-width: 0;
+        }
+
+        .wardrobe-total-label {
+            display: block;
+            margin-bottom: 4px;
+            color: rgba(255,255,255,.72);
+            font-size: 9px;
+            font-weight: 900;
+            letter-spacing: .9px;
+            text-transform: uppercase;
+        }
+
+        .wardrobe-total-copy h3 {
+            margin: 0;
+            font-size: 20px;
+            line-height: 1.2;
+            font-weight: 900;
+        }
+
+        .wardrobe-total-copy p {
+            margin: 5px 0 0;
+            color: rgba(255,255,255,.78);
+            font-size: 11px;
+            line-height: 1.45;
+        }
+
+        .wardrobe-total-number {
+            flex: 0 0 auto;
+            font-size: 43px;
+            line-height: 1;
+            font-weight: 900;
+        }
+
+
+        /* =========================================================
+           OUTFIT FORMULAS
+        ========================================================= */
+
+        .wardrobe-formulas {
+            max-width: 850px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .wardrobe-formula {
+            min-height: 125px;
+            padding: 17px;
+            border-radius: 19px;
+            border: 1px solid transparent;
+        }
+
+        .wardrobe-formula-pink {
+            background: #fff0f4;
+            border-color: #f7dbe2;
+        }
+
+        .wardrobe-formula-yellow {
+            background: #fff8dc;
+            border-color: #f4e6ae;
+        }
+
+        .wardrobe-formula-blue {
+            background: #edf7ff;
+            border-color: #d9ebf8;
+        }
+
+        .wardrobe-formula-icon {
+            display: block;
+            margin-bottom: 9px;
+            font-size: 23px;
+        }
+
+        .wardrobe-formula strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-size: 13px;
+            font-weight: 900;
+        }
+
+        .wardrobe-formula p {
+            margin: 0;
+            color: #777;
+            font-size: 10px;
+            line-height: 1.5;
+        }
+
+
+        /* =========================================================
+           WHY THIS NUMBER
+        ========================================================= */
+
+        .wardrobe-explanation {
+            max-width: 850px;
+            margin: 14px auto 0;
+            padding: 22px;
+            background: #faf9fc;
+            border: 1px solid #eceaf0;
+            border-radius: 21px;
+        }
+
+        .wardrobe-explanation h3 {
+            margin: 0 0 8px;
+            color: #333;
+            font-size: 17px;
+            font-weight: 900;
+        }
+
+        .wardrobe-explanation p {
+            margin: 0;
+            color: #777;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .wardrobe-explanation ul {
+            margin: 13px 0 0;
+            padding: 0;
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 7px 18px;
+        }
+
+        .wardrobe-explanation li {
+            color: #666;
+            font-size: 11px;
+            line-height: 1.45;
+            font-weight: 700;
+        }
+
+        .wardrobe-explanation li::before {
+            content: "✓";
+            margin-right: 6px;
+            color: #75a77d;
+            font-weight: 900;
+        }
+
+
+        /* =========================================================
+           SHOPPING CHECKLIST
+        ========================================================= */
+
+        .wardrobe-checklist {
+            max-width: 850px;
+            margin: 14px auto 0;
+            padding: 23px;
+            background: #fff8fb;
+            border: 1px solid #f3dfe5;
+            border-radius: 21px;
+        }
+
+        .wardrobe-checklist-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .wardrobe-checklist-header h3 {
+            margin: 0;
+            color: #333;
+            font-size: 18px;
+            font-weight: 900;
+        }
+
+        .wardrobe-checklist-header p {
+            margin: 4px 0 0;
+            color: #888;
+            font-size: 11px;
+        }
+
+        .wardrobe-checklist-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+
+        .wardrobe-check-item {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            padding: 10px 12px;
+            background: #fff;
+            border: 1px solid #f0e5e8;
+            border-radius: 13px;
+        }
+
+        .wardrobe-check-item span:first-child {
+            width: 19px;
+            height: 19px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #e6c8d0;
+            border-radius: 5px;
+            background: #fff8fa;
+            color: #d05a7d;
+            font-size: 10px;
+        }
+
+        .wardrobe-check-item strong {
+            color: #555;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+
+        /* =========================================================
+           RESULT ACTIONS
+        ========================================================= */
+
+        .wardrobe-result-actions {
+            max-width: 850px;
+            margin: 22px auto 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .wardrobe-restart {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 19px;
+            background: #fff;
+            color: #d05a7d;
+            border: 1px solid #efcbd7;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 900;
+            cursor: pointer;
+            transition: .2s ease;
+        }
+
+        .wardrobe-restart:hover {
+            background: #fff0f5;
+            transform: translateY(-2px);
+            box-shadow: none;
+        }
+
+        .wardrobe-resources-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 19px;
+            background: #1d4f91;
+            color: #fff;
+            border-radius: 999px;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 900;
+            transition: .2s ease;
+        }
+
+        .wardrobe-resources-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 16px rgba(29,79,145,.2);
+        }
+
+
+        /* =========================================================
+           SEO CONTENT
+        ========================================================= */
 
         .wardrobe-seo {
             max-width: 850px;
-            margin: 55px auto 0;
+            margin: 40px auto 0;
+            padding: 30px 0 10px;
         }
 
         .wardrobe-seo h2 {
-            margin: 35px 0 12px;
+            margin: 0 0 12px;
             color: #332b2b;
-            font-size: 1.5rem;
+            font-size: 27px;
+            line-height: 1.2;
             font-weight: 900;
         }
 
         .wardrobe-seo h3 {
-            margin: 25px 0 8px;
-            color: #332b2b;
-            font-size: 1.15rem;
+            margin: 28px 0 8px;
+            color: #413738;
+            font-size: 19px;
             font-weight: 900;
         }
 
-        .wardrobe-seo p,
-        .wardrobe-seo li {
-            color: #62585d;
+        .wardrobe-seo p {
+            margin: 0 0 13px;
+            color: #666;
+            font-size: 14px;
             line-height: 1.7;
         }
 
         .wardrobe-seo ul {
-            padding-left: 22px;
+            margin: 0;
+            padding-left: 20px;
+            color: #666;
         }
 
-        .wardrobe-hidden {
-            display: none !important;
+        .wardrobe-seo li {
+            margin-bottom: 7px;
+            font-size: 14px;
+            line-height: 1.55;
         }
 
-        @media (max-width: 700px) {
-            .wardrobe-progress {
-                gap: 5px;
+
+        /* =========================================================
+           FAQ
+        ========================================================= */
+
+        .wardrobe-faq {
+            max-width: 850px;
+            margin: 20px auto 0;
+        }
+
+        .wardrobe-faq details {
+            margin-bottom: 9px;
+            background: #fff;
+            border: 1px solid #eee7e8;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .wardrobe-faq summary {
+            padding: 17px 18px;
+            color: #333;
+            font-size: 14px;
+            font-weight: 900;
+            cursor: pointer;
+            list-style: none;
+        }
+
+        .wardrobe-faq summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .wardrobe-faq summary::after {
+            content: "+";
+            float: right;
+            color: #d05a7d;
+            font-size: 19px;
+            line-height: 1;
+        }
+
+        .wardrobe-faq details[open] summary::after {
+            content: "−";
+        }
+
+        .wardrobe-faq details p {
+            margin: 0;
+            padding: 0 18px 18px;
+            color: #777;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+
+        /* =========================================================
+           MOBILE
+        ========================================================= */
+
+        @media (max-width: 750px) {
+
+            .wardrobe-page {
+                padding-top: 5px;
             }
 
-            .wardrobe-progress-step {
-                font-size: 0.75rem;
+            .wardrobe-hero {
+                padding: 25px 10px 20px;
             }
 
-            .wardrobe-progress-line {
-                width: 18px;
+            .wardrobe-hero h1 {
+                font-size: 38px;
+                letter-spacing: -1.1px;
             }
 
-            .wardrobe-progress-number {
-                width: 28px;
-                height: 28px;
-                font-size: 0.85rem;
+            .wardrobe-hero p {
+                font-size: 16px;
+                line-height: 1.55;
             }
 
-            .wardrobe-card {
-                padding: 22px 16px;
-                border-radius: 18px;
+            .wardrobe-tool {
+                border-radius: 26px;
             }
 
-            .wardrobe-step-header h2 {
-                font-size: 1.45rem;
+            .wardrobe-tool-header {
+                padding: 17px 18px;
             }
 
-            .wardrobe-options,
-            .wardrobe-results-grid,
-            .wardrobe-action-row {
+            .wardrobe-question-area {
+                padding: 29px 18px 25px;
+            }
+
+            .wardrobe-step h2 {
+                font-size: 27px;
+            }
+
+            .wardrobe-step-description {
+                font-size: 14px;
+                margin-bottom: 21px;
+            }
+
+            .wardrobe-options {
                 grid-template-columns: 1fr;
+                gap: 9px;
+            }
+
+            .wardrobe-option {
+                min-height: 74px;
+                padding: 13px 14px;
+                border-radius: 17px;
+            }
+
+            .wardrobe-option-icon {
+                flex-basis: 41px;
+                width: 41px;
+                height: 41px;
+                font-size: 20px;
+            }
+
+            .wardrobe-option-title {
+                font-size: 14px;
+            }
+
+            .wardrobe-option-description {
+                font-size: 10px;
             }
 
             .wardrobe-navigation {
-                flex-direction: column-reverse;
+                margin-top: 23px;
+                padding-top: 18px;
             }
 
-            .wardrobe-navigation .wardrobe-button {
+            .wardrobe-next {
+                min-width: 125px;
+            }
+
+            .wardrobe-results {
+                padding: 0 17px 28px;
+            }
+
+            .wardrobe-result-hero {
+                margin: 0 -17px 20px;
+                padding: 29px 17px 27px;
+            }
+
+            .wardrobe-result-hero h2 {
+                font-size: 29px;
+            }
+
+            .wardrobe-result-hero p {
+                font-size: 13px;
+            }
+
+            .wardrobe-result-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+
+            .wardrobe-result-card {
+                min-height: 122px;
+                padding: 14px;
+            }
+
+            .wardrobe-result-quantity {
+                font-size: 21px;
+            }
+
+            .wardrobe-result-card h4 {
+                font-size: 13px;
+            }
+
+            .wardrobe-result-card p {
+                font-size: 9px;
+            }
+
+            .wardrobe-total-card {
+                padding: 18px;
+                gap: 12px;
+            }
+
+            .wardrobe-total-copy h3 {
+                font-size: 17px;
+            }
+
+            .wardrobe-total-copy p {
+                font-size: 10px;
+            }
+
+            .wardrobe-total-number {
+                font-size: 36px;
+            }
+
+            .wardrobe-formulas {
+                grid-template-columns: 1fr;
+            }
+
+            .wardrobe-formula {
+                min-height: auto;
+            }
+
+            .wardrobe-explanation {
+                padding: 18px;
+            }
+
+            .wardrobe-explanation ul {
+                grid-template-columns: 1fr;
+            }
+
+            .wardrobe-checklist {
+                padding: 18px;
+            }
+
+            .wardrobe-checklist-list {
+                grid-template-columns: 1fr;
+            }
+
+            .wardrobe-checklist-header {
+                display: block;
+            }
+
+            .wardrobe-result-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .wardrobe-restart,
+            .wardrobe-resources-link {
                 width: 100%;
             }
 
-            .wardrobe-cta {
-                padding: 24px 18px;
+            .wardrobe-seo {
+                padding-left: 3px;
+                padding-right: 3px;
             }
+
         }
 
-        @media print {
-            body * {
-                visibility: hidden;
+
+        @media (max-width: 430px) {
+
+            .wardrobe-hero h1 {
+                font-size: 35px;
             }
 
-            #wardrobe-results,
-            #wardrobe-results * {
-                visibility: visible;
+            .wardrobe-result-grid {
+                grid-template-columns: 1fr 1fr;
             }
 
-            #wardrobe-results {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
+            .wardrobe-result-card {
+                min-height: 126px;
             }
 
-            .wardrobe-action-row,
-            .wardrobe-cta {
-                display: none !important;
-            }
         }
+
     </style>
 
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "WebApplication",
-        "name": "Toddler Wardrobe Builder",
-        "url": "https://momyouneedthis.com/toddler-wardrobe-builder.html",
-        "applicationCategory": "LifestyleApplication",
-        "operatingSystem": "Web",
-        "description": "A free personalized toddler wardrobe calculator based on laundry frequency, outfit changes, daycare, potty training and wardrobe preferences."
-    }
-    </script>
-
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-            {
-                "@type": "Question",
-                "name": "How many clothes does a toddler need?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Many toddlers can get by with a relatively small wardrobe, but the right number depends on laundry frequency, outfit changes, daycare, potty training and how much variety your family prefers."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "How many outfits should a toddler have?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "A practical toddler wardrobe often includes several everyday outfits plus pajamas, underwear, socks, layers and a few dressier options. The exact amount depends on your child's routine."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "How many clothes does a toddler need for daycare?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Daycare usually requires extra backup clothing because spills, food, water, mud and potty accidents can create additional outfit changes."
-                }
-            }
-        ]
-    }
-    </script>
 </head>
+
 
 <body>
 
 <div class="page">
 
-    <main class="resource-page">
+    <main class="wardrobe-page">
 
-        <header class="resource-header">
-            <a href="index.html" aria-label="MomYouNeedThis home">
-                <img
-                    src="assets/logo.svg"
-                    alt="MomYouNeedThis"
-                    class="resource-logo"
+
+        <!-- =====================================================
+             HERO
+        ====================================================== -->
+
+        <section class="wardrobe-hero">
+
+            <div class="wardrobe-kicker">
+                👕 Toddler Wardrobe Builder
+            </div>
+
+            <h1>
+                How Many Clothes Does My Toddler
+                <span>Actually Need?</span>
+            </h1>
+
+            <p>
+                Build a personalized toddler wardrobe based on
+                laundry, daycare, outfit changes, potty training,
+                pajamas and your child's actual routine.
+            </p>
+
+        </section>
+
+
+        <!-- =====================================================
+             TOOL
+        ====================================================== -->
+
+        <section
+            class="wardrobe-tool"
+            id="wardrobe-tool"
+        >
+
+
+            <!-- TOOL HEADER -->
+
+            <div class="wardrobe-tool-header">
+
+                <div class="wardrobe-progress-top">
+
+                    <span
+                        class="wardrobe-progress-label"
+                        id="progress-label"
+                    >
+                        Your toddler
+                    </span>
+
+                    <span
+                        class="wardrobe-progress-count"
+                        id="progress-count"
+                    >
+                        1 of 5
+                    </span>
+
+                </div>
+
+                <div class="wardrobe-progress-track">
+
+                    <div
+                        class="wardrobe-progress-bar"
+                        id="progress-bar"
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+            <!-- QUESTIONS -->
+
+            <div
+                class="wardrobe-question-area"
+                id="question-area"
+            >
+
+
+                <!-- STEP 1 -->
+
+                <div
+                    class="wardrobe-step active"
+                    data-step="1"
                 >
-            </a>
-        </header>
 
-        <div class="resource-content">
+                    <span class="wardrobe-step-eyebrow">
+                        STEP 01 · AGE
+                    </span>
 
-            <div class="free-badge">
-                100% FREE TOOL
-            </div>
+                    <h2>
+                        How old is your toddler?
+                    </h2>
 
-            <div class="intro">
-                <h1>How Many Clothes Does My Toddler Actually Need?</h1>
+                    <p class="wardrobe-step-description">
+                        Clothing needs change quickly through the
+                        toddler years, so we'll use age to set a
+                        sensible starting point.
+                    </p>
 
-                <p>
-                    Build a personalized toddler wardrobe based on
-                    <strong>your laundry routine, outfit changes, daycare,
-                    potty training and lifestyle.</strong>
-                </p>
 
-                <p>
-                    No giant generic checklist. Tell us how your household
-                    actually works and we'll calculate a practical wardrobe.
-                </p>
-            </div>
+                    <div class="wardrobe-options">
 
-            <section class="wardrobe-tool" aria-label="Toddler wardrobe calculator">
+                        <button
+                            type="button"
+                            class="wardrobe-option"
+                            data-question="age"
+                            data-value="12-18"
+                        >
+                            <span class="wardrobe-option-icon">👶</span>
 
-                <div class="wardrobe-progress" aria-label="Calculator progress">
-
-                    <div
-                        class="wardrobe-progress-step active"
-                        data-progress="1"
-                    >
-                        <span class="wardrobe-progress-number">1</span>
-                        <span>About your toddler</span>
-                    </div>
-
-                    <span class="wardrobe-progress-line"></span>
-
-                    <div
-                        class="wardrobe-progress-step"
-                        data-progress="2"
-                    >
-                        <span class="wardrobe-progress-number">2</span>
-                        <span>Your wardrobe</span>
-                    </div>
-
-                    <span class="wardrobe-progress-line"></span>
-
-                    <div
-                        class="wardrobe-progress-step"
-                        data-progress="3"
-                    >
-                        <span class="wardrobe-progress-number">3</span>
-                        <span>Your plan</span>
-                    </div>
-
-                </div>
-
-                <div class="wardrobe-card">
-
-                    <!-- STEP 1 -->
-
-                    <section
-                        class="wardrobe-step active"
-                        id="wardrobe-step-1"
-                    >
-
-                        <div class="wardrobe-step-header">
-                            <h2>Let's build your toddler's wardrobe</h2>
-                            <p>
-                                There isn't one perfect number of toddler
-                                clothes. These questions help us calculate
-                                what makes sense for your actual routine.
-                            </p>
-                        </div>
-
-                        <div class="wardrobe-question">
-
-                            <label for="child-age">
-                                How old is your toddler?
-                            </label>
-
-                            <select
-                                id="child-age"
-                                class="wardrobe-select"
-                            >
-                                <option value="12-18">
+                            <span class="wardrobe-option-copy">
+                                <span class="wardrobe-option-title">
                                     12–18 months
-                                </option>
+                                </span>
 
-                                <option value="18-24">
+                                <span class="wardrobe-option-description">
+                                    Just entering the toddler wardrobe stage
+                                </span>
+                            </span>
+
+                            <span class="wardrobe-check"></span>
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="wardrobe-option"
+                            data-question="age"
+                            data-value="18-24"
+                        >
+                            <span class="wardrobe-option-icon">🧸</span>
+
+                            <span class="wardrobe-option-copy">
+                                <span class="wardrobe-option-title">
                                     18–24 months
-                                </option>
+                                </span>
 
-                                <option value="2">
+                                <span class="wardrobe-option-description">
+                                    Fast-moving, messy and growing
+                                </span>
+                            </span>
+
+                            <span class="wardrobe-check"></span>
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="wardrobe-option"
+                            data-question="age"
+                            data-value="2"
+                        >
+                            <span class="wardrobe-option-icon">🎨</span>
+
+                            <span class="wardrobe-option-copy">
+                                <span class="wardrobe-option-title">
                                     2 years
-                                </option>
+                                </span>
 
-                                <option value="3">
+                                <span class="wardrobe-option-description">
+                                    Active toddler territory
+                                </span>
+                            </span>
+
+                            <span class="wardrobe-check"></span>
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="wardrobe-option"
+                            data-question="age"
+                            data-value="3"
+                        >
+                            <span class="wardrobe-option-icon">🛝</span>
+
+                            <span class="wardrobe-option-copy">
+                                <span class="wardrobe-option-title">
                                     3 years
-                                </option>
+                                </span>
 
-                                <option value="4">
+                                <span class="wardrobe-option-description">
+                                    More independence and bigger adventures
+                                </span>
+                            </span>
+
+                            <span class="wardrobe-check"></span>
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="wardrobe-option"
+                            data-question="age"
+                            data-value="4"
+                        >
+                            <span class="wardrobe-option-icon">🌈</span>
+
+                            <span class="wardrobe-option-copy">
+                                <span class="wardrobe-option-title">
                                     4 years
-                                </option>
-                            </select>
+                                </span>
 
-                        </div>
-
-                        <div class="wardrobe-question">
-
-                            <span class="wardrobe-question-title">
-                                How often do you usually do laundry?
+                                <span class="wardrobe-option-description">
+                                    Preschool-ready wardrobe needs
+                                </span>
                             </span>
 
-                            <p class="wardrobe-question-help">
-                                Be realistic — we're calculating around your
-                                real life, not an imaginary Pinterest life.
-                            </p>
+                            <span class="wardrobe-check"></span>
+                        </button>
 
-                            <div class="wardrobe-options">
-
-                                <div class="wardrobe-option">
-                                    <input
-                                        type="radio"
-                                        name="laundry"
-                                        id="laundry-daily"
-                                        value="daily"
-                                    >
-                                    <label for="laundry-daily">
-                                        <span class="wardrobe-option-title">
-                                            Almost every day
-                                        </span>
-                                        <span class="wardrobe-option-description">
-                                            Clothes rarely sit in the hamper.
-                                        </span>
-                                    </label>
-                                </div>
-
-                                <div class="wardrobe-option">
-                                    <input
-                                        type="radio"
-                                        name="laundry"
-                                        id="laundry-2"
-                                        value="twice"
-                                        checked
-                                    >
-                                    <label for="laundry-2">
-                                        <span class="wardrobe-option-title">
-                                            About twice a week
-                                        </span>
-                                        <span class="wardrobe-option-description">
-                                            A pretty typical family rhythm.
-                                        </span>
-                                    </label>
-                                </div>
-
-                                <div class="wardrobe-option">
-                                    <input
-                                        type="radio"
-                                        name="laundry"
-                                        id="laundry-weekly"
-                                        value="weekly"
-                                    >
-                                    <label for="laundry-weekly">
-                                        <span class="wardrobe-option-title">
-                                            About once a week
-                                        </span>
-                                        <span class="wardrobe-option-description">
-                                            We like enough clothes to last.
-                                        </span>
-                                    </label>
-                                </div>
-
-                                <div class="wardrobe-option">
-                                    <input
-                                        type="radio"
-                                        name="laundry"
-                                        id="laundry-less"
-                                        value="less"
-                                    >
-                                    <label for="laundry-less">
-                                        <span class="wardrobe-option-title">
-                                            Less than weekly
-                                        </span>
-                                        <span class="wardrobe-option-description">
-                                            We need a larger rotation.
-                                        </span>
-                                    </label>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="wardrobe-question">
-
-                            <span class="wardrobe-question-title">
-                                How many outfit changes does your toddler
-                                typically need per day?
-                            </span>
-
-                            <div class="wardrobe-options">
-
-                                <div class="wardrobe-option">
-                                    <input
-                                        type="radio"
-                                        name="changes"
-                                        id="changes-one"
-                                        value="1"
-                                        checked
-                                    >
-                                    <label for="changes-one">
-                                        <span class="wardrobe-option-title">
-                                            Usually 1
-                                        </span>
-                                        <span class="wardrobe-option-description">
-                                            One main outfit per day.
-                                        </span>
-                                    </label>
-                                </div>
-
-                                <div class="wardrobe-option">
-                                    <input
-                                        type="radio"
-                                        name="changes"
-                                        id="changes-two"
-                                        value="2"
-                                    >
-                                    <label for="changes-two">
-                                        <span class="wardrobe-option-title">
-                                            Usually 2
-                                        </span>
-                                        <span class="wardrobe-option-description">
-                                            Messes, meals or frequent changes.
-                                        </span>
-                                    </label>
-                                </div>
-
-                                <div class="wardrobe-option">
-                                    <input
-                                        type="radio"
-                                        name="changes"
-                                        id="changes-three"
-                                        value="3"
-                                    >
-                                    <label for="changes-three">
-                                        <span class="wardrobe-option-title">
-                                            3+
-                                        </span>
-                                        <span class="wardrobe-option-description">
-                                            My toddler is a professional mess-maker.
-                                        </span>
-                                    </label>
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                        <div class="wardrobe-navigation">
-
-                            <span></span>
-
-                            <button
-                                type="button"
-                                class="wardrobe-button wardrobe-button-primary"
-                                id="step-1-next"
-                            >
-                                Next: Daycare & potty training →
-                            </button>
-
-                        </div>
-
-                    </section>
-
-
-                    <!-- STEP 2 -->
-
-                    <section
-                        class="wardrobe-step"
-                        id="wardrobe-step-2"
-                    >
-
-                        <div class="wardrobe-step-header">
-                            <h2>Now let's account for real-life chaos</h2>
-                            <p>
-                                These details can dramatically change how many
-                                backups you'll actually use.
-                            </p>
-                        </div>
-
-                        <div class="wardrobe-question">
-
-                            <span class="wardrobe-question-title">
-                                Does your toddler attend daycare?
-                            </span>
-
-                            <div class="wardrobe-options">
-
-                                <div class="wardrobe-option">
-                                    <input
-                                        type="radio"
-                                        name="daycare"
-                                        id="daycare-yes"
-                                        value="yes"
-                                    >
-                                    <label for="daycare-yes">
-                                        <span class="wardrobe-option-title">
-                                            Yes
-                                        </span>
-                                        <span class="wardrobe-option-description">
-                                            Add daycare backup clothing.
-                                        </span>
-                                    </label>
-                                </div>
-
-                                <div class="wardrobe-option">
-                                    <input
-                                        type="radio"
-                                        name="daycare"
-                                        id="daycare-no"
-                                        value="no"
-                                        checked
-                                    >
-                                    <label for="daycare-no">
-                                        <span class="wardrobe-option-title">
-                                            No
-                                        </span>
-                                        <span class="wardrobe-option-description">
-                                            No daycare backup needed.
-                                        </span>
-                                    </label>
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                        <div class="wardrobe-question">
-
-                            <span class="wardrobe-question-title">
-                                Are you currently potty training?
-                            </span>
-
-                            <div class="wardrobe-options">
-
-                                <div class="wardrobe-option">
-                                    <input
-                                        type="radio"
-                                        name="potty"
-                                        id="potty-yes"
-                                        value="yes"
-                                    >
-                                    <label for="potty-yes">
-                                        <span class="wardrobe-option-title">
-                                            Yes
-                                        </span>
-                                        <span class="wardrobe-option-description">
-                                            More underwear and easy-change bottoms.
-                                        </span>
-                                    </label>
-                                </div>
-
-                                <div class="wardrobe-option">
-                                    <input
-                                        type="radio"
-                                        name="potty"
-                                        id="potty-no"
-                                        value="no"
-                                        checked
-                                    >
-                                    <label for="potty-no">
-                                        <span class="wardrobe-option-title">
-                                            No
-                                        </span>
-                                        <span class="wardrobe-option-description">
-                                            Regular toddler wardrobe.
-                                        </span>
-                                    </label>
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                        <div class="wardrobe-question">
-
-                            <span class="wardrobe-question-title">
-                                What sounds most like your wardrobe style?
-                            </span>
-
-                            <div class="wardrobe-options">
-
-                                <div class="wardrobe-option">
-                                    <input
-                                        type="radio"
-                                        name="style"
-                                        id="style-minimal"
-                                        value="minimal"
-                                    >
-                                    <label for="style-minimal">
-                                        <span class="wardrobe-option-title">
-                                            Minimal
-                                        </span>
-                                        <span class="wardrobe-option-description">
-                                            Fewer pieces, lots of repeating.
-                                        </span>
-                                    </label>
-                                </div>
-
-                                <div class="wardrobe-option">
-                                    <input
-                                        type="radio"
-                                        name="style"
-                                        id="style-practical"
-                                        value="practical"
-                                        checked
-                                    >
-                                    <label for="style-practical">
-                                        <span class="wardrobe-option-title">
-                                            Practical
-                                        </span>
-                                        <span class="wardrobe-option-description">
-                                            Enough choices without overbuying.
-                                        </span>
-                                    </label>
-                                </div>
-
-                                <div class="wardrobe-option">
-                                    <input
-                                        type="radio"
-                                        name="style"
-                                        id="style-variety"
-                                        value="variety"
-                                    >
-                                    <label for="style-variety">
-                                        <span class="wardrobe-option-title">
-                                            Lots of variety
-                                        </span>
-                                        <span class="wardrobe-option-description">
-                                            I like having plenty of options.
-                                        </span>
-                                    </label>
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                        <div class="wardrobe-navigation">
-
-                            <button
-                                type="button"
-                                class="wardrobe-button wardrobe-button-secondary"
-                                id="step-2-back"
-                            >
-                                ← Back
-                            </button>
-
-                            <button
-                                type="button"
-                                class="wardrobe-button wardrobe-button-primary"
-                                id="step-2-next"
-                            >
-                                Calculate my wardrobe →
-                            </button>
-
-                        </div>
-
-                    </section>
-
-
-                    <!-- STEP 3 -->
-
-                    <section
-                        class="wardrobe-step"
-                        id="wardrobe-step-3"
-                    >
-
-                        <div class="wardrobe-step-header">
-                            <h2>Your personalized toddler wardrobe</h2>
-                            <p>
-                                This is a practical starting point — not a
-                                rulebook. Adjust it based on what your toddler
-                                actually wears.
-                            </p>
-                        </div>
-
-                        <div
-                            class="wardrobe-results-intro"
-                            id="wardrobe-summary"
-                        ></div>
-
-                        <div
-                            class="wardrobe-results-grid"
-                            id="wardrobe-results"
-                        ></div>
-
-                        <div
-                            class="wardrobe-callout"
-                            id="wardrobe-special-note"
-                        ></div>
-
-                        <h3 class="wardrobe-section-title">
-                            Easy outfit formulas
-                        </h3>
-
-                        <div
-                            class="wardrobe-outfits"
-                            id="wardrobe-outfits"
-                        ></div>
-
-                        <h3 class="wardrobe-section-title">
-                            Your shopping checklist
-                        </h3>
-
-                        <div class="wardrobe-shopping-list">
-                            <ul id="wardrobe-shopping-list"></ul>
-                        </div>
-
-                        <div class="wardrobe-action-row">
-
-                            <button
-                                type="button"
-                                class="wardrobe-button wardrobe-button-secondary"
-                                id="copy-checklist"
-                            >
-                                Copy checklist
-                            </button>
-
-                            <button
-                                type="button"
-                                class="wardrobe-button wardrobe-button-primary"
-                                id="print-wardrobe"
-                            >
-                                Print / Save PDF
-                            </button>
-
-                        </div>
-
-                        <div class="wardrobe-navigation">
-
-                            <button
-                                type="button"
-                                class="wardrobe-button wardrobe-button-secondary"
-                                id="step-3-back"
-                            >
-                                ← Change answers
-                            </button>
-
-                            <button
-                                type="button"
-                                class="wardrobe-button wardrobe-button-primary"
-                                id="start-over"
-                            >
-                                Start over
-                            </button>
-
-                        </div>
-
-                    </section>
+                    </div>
 
                 </div>
 
-            </section>
+
+                <!-- STEP 2 -->
+
+                <div
+                    class="wardrobe-step"
+                    data-step="2"
+                >
+
+                    <span class="wardrobe-step-eyebrow">
+                        STEP 02 · LAUNDRY
+                    </span>
+
+                    <h2>
+                        How often do you realistically do laundry?
+                    </h2>
+
+                    <p class="wardrobe-step-description">
+                        This has a huge effect on how many clothes
+                        you need in rotation. Choose what actually
+                        happens in your house — not the aspirational
+                        answer.
+                    </p>
 
 
-            <section class="wardrobe-cta">
+                    <div class="wardrobe-options">
 
-                <h2>Looking for more free mom resources?</h2>
+                        <button
+                            type="button"
+                            class="wardrobe-option"
+                            data-question="laundry"
+                            data-value="daily"
+                        >
+                            <span class="wardrobe-option-icon">🧺</span>
 
-                <p>
-                    MomYouNeedThis is packed with free printables, tools and
-                    practical resources designed to make everyday parenting
-                    a little easier.
-                </p>
+                            <span class="wardrobe-option-copy">
+                                <span class="wardrobe-option-title">
+                                    Almost every day
+                                </span>
 
-                <div class="wardrobe-cta-links">
+                                <span class="wardrobe-option-description">
+                                    Laundry is basically part of the daily routine
+                                </span>
+                            </span>
 
-                    <a href="index.html">
-                        Home
-                    </a>
+                            <span class="wardrobe-check"></span>
+                        </button>
 
-                    <a href="free-resources.html">
-                        Free Resources
-                    </a>
+
+                        <button
+                            type="button"
+                            class="wardrobe-option"
+                            data-question="laundry"
+                            data-value="2-3"
+                        >
+                            <span class="wardrobe-option-icon">👚</span>
+
+                            <span class="wardrobe-option-copy">
+                                <span class="wardrobe-option-title">
+                                    2–3 times a week
+                                </span>
+
+                                <span class="wardrobe-option-description">
+                                    Regular laundry, but not every day
+                                </span>
+                            </span>
+
+                            <span class="wardrobe-check"></span>
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="wardrobe-option"
+                            data-question="laundry"
+                            data-value="weekly"
+                        >
+                            <span class="wardrobe-option-icon">🧦</span>
+
+                            <span class="wardrobe-option-copy">
+                                <span class="wardrobe-option-title">
+                                    About once a week
+                                </span>
+
+                                <span class="wardrobe-option-description">
+                                    We like enough clothes to make it through the week
+                                </span>
+                            </span>
+
+                            <span class="wardrobe-check"></span>
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="wardrobe-option"
+                            data-question="laundry"
+                            data-value="less"
+                        >
+                            <span class="wardrobe-option-icon">📦</span>
+
+                            <span class="wardrobe-option-copy">
+                                <span class="wardrobe-option-title">
+                                    Less often than weekly
+                                </span>
+
+                                <span class="wardrobe-option-description">
+                                    I need a larger clothing buffer
+                                </span>
+                            </span>
+
+                            <span class="wardrobe-check"></span>
+                        </button>
+
+                    </div>
 
                 </div>
 
-            </section>
+
+                <!-- STEP 3 -->
+
+                <div
+                    class="wardrobe-step"
+                    data-step="3"
+                >
+
+                    <span class="wardrobe-step-eyebrow">
+                        STEP 03 · REAL LIFE
+                    </span>
+
+                    <h2>
+                        How often does your toddler change clothes?
+                    </h2>
+
+                    <p class="wardrobe-step-description">
+                        Some toddlers can wear one outfit all day.
+                        Others somehow need three before lunch.
+                        Tell us what your toddler is actually like.
+                    </p>
 
 
-            <section class="wardrobe-seo">
+                    <div class="wardrobe-options">
 
-                <h2>How many clothes does a toddler actually need?</h2>
+                        <button
+                            type="button"
+                            class="wardrobe-option"
+                            data-question="changes"
+                            data-value="1"
+                        >
+                            <span class="wardrobe-option-icon">✨</span>
 
-                <p>
-                    The answer depends much more on your family's routine than
-                    on your toddler's age. A family that does laundry every
-                    day can comfortably own fewer clothes than a family that
-                    washes once a week. Daycare, potty training and frequent
-                    outfit changes can also make a significant difference.
-                </p>
+                            <span class="wardrobe-option-copy">
+                                <span class="wardrobe-option-title">
+                                    Usually once a day
+                                </span>
 
-                <p>
-                    Instead of giving every family the same giant toddler
-                    clothing checklist, this calculator adjusts the wardrobe
-                    around those variables.
-                </p>
+                                <span class="wardrobe-option-description">
+                                    One main outfit is normally enough
+                                </span>
+                            </span>
 
-                <h2>What should be in a toddler wardrobe?</h2>
+                            <span class="wardrobe-check"></span>
+                        </button>
 
-                <p>
-                    A practical toddler wardrobe usually includes everyday
-                    tops and bottoms, pajamas, underwear, socks, layers and a
-                    small number of special or dressier outfits.
-                </p>
 
-                <p>
-                    The goal isn't to own a certain number because a checklist
-                    says so. The goal is to have enough clean clothing to get
-                    through your normal laundry cycle while keeping a few
-                    backups for the inevitable toddler mess.
-                </p>
+                        <button
+                            type="button"
+                            class="wardrobe-option"
+                            data-question="changes"
+                            data-value="2"
+                        >
+                            <span class="wardrobe-option-icon">🍝</span>
 
-                <h2>Toddler clothes for daycare</h2>
+                            <span class="wardrobe-option-copy">
+                                <span class="wardrobe-option-title">
+                                    Often twice a day
+                                </span>
 
-                <p>
-                    Daycare can change the equation because toddlers may need
-                    spare clothes for food spills, water, outdoor play, mud,
-                    diaper leaks and potty accidents.
-                </p>
+                                <span class="wardrobe-option-description">
+                                    Meals, play and messes happen
+                                </span>
+                            </span>
 
-                <p>
-                    If your child attends daycare, keeping a small dedicated
-                    backup supply can prevent the need to constantly pull
-                    clothing from the main wardrobe.
-                </p>
+                            <span class="wardrobe-check"></span>
+                        </button>
 
-                <h2>Toddler clothes for potty training</h2>
 
-                <p>
-                    Potty training often means temporarily increasing the
-                    number of underwear and easy-to-change bottoms you keep
-                    available. This doesn't necessarily mean buying an entirely
-                    new wardrobe.
-                </p>
+                        <button
+                            type="button"
+                            class="wardrobe-option"
+                            data-question="changes"
+                            data-value="3"
+                        >
+                            <span class="wardrobe-option-icon">🌪️</span>
 
-                <p>
-                    Once potty training becomes more predictable, you can
-                    reduce the backup supply again.
-                </p>
+                            <span class="wardrobe-option-copy">
+                                <span class="wardrobe-option-title">
+                                    Three or more times
+                                </span>
 
-                <h2>FAQ</h2>
+                                <span class="wardrobe-option-description">
+                                    Outfit changes are basically a lifestyle
+                                </span>
+                            </span>
 
-                <h3>How many outfits should a 2-year-old have?</h3>
+                            <span class="wardrobe-check"></span>
+                        </button>
 
-                <p>
-                    There isn't one universal number. A practical wardrobe
-                    depends on laundry frequency, outfit changes and whether
-                    your child attends daycare. Use the calculator above to
-                    create a starting number for your household.
-                </p>
+                    </div>
 
-                <h3>How many pajamas does a toddler need?</h3>
+                </div>
 
-                <p>
-                    A toddler who goes through pajamas quickly may need more
-                    pairs than a child who wears the same pajamas for several
-                    nights. Your laundry frequency is therefore one of the
-                    biggest factors.
-                </p>
 
-                <h3>How many clothes should I keep at daycare?</h3>
+                <!-- STEP 4 -->
 
-                <p>
-                    A few complete backup outfits can be useful, especially
-                    during messy stages, potty training and outdoor seasons.
-                    The exact number depends on your daycare's requirements and
-                    how frequently your child needs changes.
-                </p>
+                <div
+                    class="wardrobe-step"
+                    data-step="4"
+                >
 
-            </section>
+                    <span class="wardrobe-step-eyebrow">
+                        STEP 04 · DAYCARE
+                    </span>
 
-        </div>
+                    <h2>
+                        Does your toddler need clothes at daycare?
+                    </h2>
 
-        <footer class="footer">
+                    <p class="wardrobe-step-description">
+                        Daycare can quietly double the number of
+                        “actually useful” clothes you need because
+                        spare outfits have to exist somewhere other
+                        than the dresser.
+                    </p>
 
-            <div class="footer-content">
 
-                <a href="index.html">
-                    <img
-                        src="assets/logo.svg"
-                        alt="MomYouNeedThis"
-                        class="footer-logo"
+                    <div class="wardrobe-options">
+
+                        <button
+                            type="button"
+                            class="wardrobe-option"
+                            data-question="daycare"
+                            data-value="yes"
+                        >
+                            <span class="wardrobe-option-icon">🎒</span>
+
+                            <span class="wardrobe-option-copy">
+                                <span class="wardrobe-option-title">
+                                    Yes, daycare
+                                </span>
+
+                                <span class="wardrobe-option-description">
+                                    Spare clothing needs to stay there
+                                </span>
+                            </span>
+
+                            <span class="wardrobe-check"></span>
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="wardrobe-option"
+                            data-question="daycare"
+                            data-value="no"
+                        >
+                            <span class="wardrobe-option-icon">🏡</span>
+
+                            <span class="wardrobe-option-copy">
+                                <span class="wardrobe-option-title">
+                                    No daycare
+                                </span>
+
+                                <span class="wardrobe-option-description">
+                                    Everything can stay in the home rotation
+                                </span>
+                            </span>
+
+                            <span class="wardrobe-check"></span>
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- STEP 5 -->
+
+                <div
+                    class="wardrobe-step"
+                    data-step="5"
+                >
+
+                    <span class="wardrobe-step-eyebrow">
+                        STEP 05 · POTTY TRAINING
+                    </span>
+
+                    <h2>
+                        Are you dealing with potty-training accidents?
+                    </h2>
+
+                    <p class="wardrobe-step-description">
+                        If yes, your toddler needs a bigger backup
+                        supply — especially underwear, bottoms and
+                        easy-to-change outfits.
+                    </p>
+
+
+                    <div class="wardrobe-options">
+
+                        <button
+                            type="button"
+                            class="wardrobe-option"
+                            data-question="potty"
+                            data-value="yes"
+                        >
+                            <span class="wardrobe-option-icon">🚽</span>
+
+                            <span class="wardrobe-option-copy">
+                                <span class="wardrobe-option-title">
+                                    Yes / starting soon
+                                </span>
+
+                                <span class="wardrobe-option-description">
+                                    I want extra backup clothes available
+                                </span>
+                            </span>
+
+                            <span class="wardrobe-check"></span>
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="wardrobe-option"
+                            data-question="potty"
+                            data-value="no"
+                        >
+                            <span class="wardrobe-option-icon">👖</span>
+
+                            <span class="wardrobe-option-copy">
+                                <span class="wardrobe-option-title">
+                                    No
+                                </span>
+
+                                <span class="wardrobe-option-description">
+                                    Regular toddler clothing rotation
+                                </span>
+                            </span>
+
+                            <span class="wardrobe-check"></span>
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- NAVIGATION -->
+
+                <div class="wardrobe-navigation">
+
+                    <button
+                        type="button"
+                        class="wardrobe-back"
+                        id="wardrobe-back"
+                        hidden
                     >
-                </a>
+                        ← Back
+                    </button>
 
-                <p>
-                    Helping moms find products and resources that make
-                    everyday life easier.
-                </p>
-
-                <div class="footer-links">
-
-                    <a href="index.html">
-                        Home
-                    </a>
-
-                    <a href="free-resources.html">
-                        Free Resources
-                    </a>
-
-                    <a href="privacy.html">
-                        Privacy
-                    </a>
+                    <button
+                        type="button"
+                        class="wardrobe-next"
+                        id="wardrobe-next"
+                        disabled
+                    >
+                        Next →
+                    </button>
 
                 </div>
-
-                <p class="footer-copyright">
-                    © 2026 MomYouNeedThis. All rights reserved.
-                </p>
 
             </div>
 
-        </footer>
+
+            <!-- =================================================
+                 RESULTS
+            ================================================== -->
+
+            <div
+                class="wardrobe-results"
+                id="wardrobe-results"
+            >
+
+                <div class="wardrobe-result-hero">
+
+                    <span class="wardrobe-result-kicker">
+                        YOUR PERSONALIZED PLAN
+                    </span>
+
+                    <h2>
+                        Your toddler's wardrobe sweet spot
+                    </h2>
+
+                    <p id="result-intro">
+                        Here's a practical wardrobe built around
+                        your family's actual routine.
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="wardrobe-routine"
+                    id="routine-summary"
+                ></div>
+
+
+                <div class="wardrobe-result-section-title">
+
+                    <span>
+                        THE CORE ROTATION
+                    </span>
+
+                    <h3>
+                        What to actually keep in rotation
+                    </h3>
+
+                </div>
+
+
+                <div
+                    class="wardrobe-result-grid"
+                    id="result-grid"
+                ></div>
+
+
+                <div class="wardrobe-total-card">
+
+                    <div class="wardrobe-total-copy">
+
+                        <span class="wardrobe-total-label">
+                            Practical wardrobe total
+                        </span>
+
+                        <h3>
+                            Core pieces to have available
+                        </h3>
+
+                        <p>
+                            This is a planning number, not a rule.
+                            You can comfortably own fewer or more
+                            depending on your lifestyle.
+                        </p>
+
+                    </div>
+
+                    <div
+                        class="wardrobe-total-number"
+                        id="total-number"
+                    >
+                        0
+                    </div>
+
+                </div>
+
+
+                <div class="wardrobe-result-section-title">
+
+                    <span>
+                        MAKE THE CLOSET WORK HARDER
+                    </span>
+
+                    <h3>
+                        Your simple outfit formulas
+                    </h3>
+
+                </div>
+
+
+                <div class="wardrobe-formulas">
+
+                    <div class="wardrobe-formula wardrobe-formula-pink">
+
+                        <span class="wardrobe-formula-icon">
+                            👕
+                        </span>
+
+                        <strong>
+                            Everyday
+                        </strong>
+
+                        <p>
+                            One easy top + one comfortable bottom
+                            is the default uniform for most days.
+                        </p>
+
+                    </div>
+
+
+                    <div class="wardrobe-formula wardrobe-formula-yellow">
+
+                        <span class="wardrobe-formula-icon">
+                            🧥
+                        </span>
+
+                        <strong>
+                            Layered
+                        </strong>
+
+                        <p>
+                            Keep a few layers that work across
+                            several outfits instead of duplicating
+                            every outfit.
+                        </p>
+
+                    </div>
+
+
+                    <div class="wardrobe-formula wardrobe-formula-blue">
+
+                        <span class="wardrobe-formula-icon">
+                            🌙
+                        </span>
+
+                        <strong>
+                            Sleep
+                        </strong>
+
+                        <p>
+                            Pajamas live in their own rotation so
+                            everyday clothes aren't doing double duty.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="wardrobe-result-section-title">
+
+                    <span>
+                        WHY YOUR NUMBER LOOKS LIKE THIS
+                    </span>
+
+                    <h3>
+                        Your wardrobe is based on your routine
+                    </h3>
+
+                </div>
+
+
+                <div class="wardrobe-explanation">
+
+                    <h3>
+                        We built in breathing room — not a giant closet.
+                    </h3>
+
+                    <p>
+                        The calculator starts with a realistic laundry
+                        window, then adjusts the wardrobe for the things
+                        that create extra clothing demand in toddler life.
+                    </p>
+
+                    <ul id="explanation-list"></ul>
+
+                </div>
+
+
+                <div class="wardrobe-checklist">
+
+                    <div class="wardrobe-checklist-header">
+
+                        <div>
+
+                            <h3>
+                                Your shopping checklist
+                            </h3>
+
+                            <p>
+                                Use this as your “do I actually need this?” list.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="wardrobe-checklist-list"
+                        id="checklist"
+                    ></div>
+
+                </div>
+
+
+                <div class="wardrobe-result-actions">
+
+                    <button
+                        type="button"
+                        class="wardrobe-restart"
+                        id="wardrobe-restart"
+                    >
+                        ↻ Rebuild my wardrobe
+                    </button>
+
+                    <a
+                        href="amazon-favorites.html#toddler"
+                        class="wardrobe-resources-link"
+                    >
+                        Shop Toddler Favorites →
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             SEO CONTENT
+        ====================================================== -->
+
+        <section class="wardrobe-seo">
+
+            <h2>
+                How many clothes does a toddler actually need?
+            </h2>
+
+            <p>
+                There isn't one perfect number of toddler clothes for
+                every family. A toddler who has laundry done every day
+                can get by with a much smaller wardrobe than a family
+                that does laundry once a week.
+            </p>
+
+            <p>
+                The bigger question is how many clothes your toddler
+                needs <strong>for your routine</strong>. Daycare,
+                potty training, frequent outfit changes, messy meals
+                and laundry frequency can all change the answer.
+            </p>
+
+
+            <h3>
+                What should be in a toddler wardrobe?
+            </h3>
+
+            <p>
+                A useful toddler wardrobe usually has a core group of
+                everyday clothes plus dedicated sleepwear and enough
+                backup clothing to handle normal toddler chaos.
+            </p>
+
+            <ul>
+
+                <li>
+                    Everyday tops for regular outfit rotation
+                </li>
+
+                <li>
+                    Comfortable bottoms that can be mixed and matched
+                </li>
+
+                <li>
+                    Pajamas separate from the daytime rotation
+                </li>
+
+                <li>
+                    Underwear and socks appropriate for your child's routine
+                </li>
+
+                <li>
+                    A few layers that work across multiple outfits
+                </li>
+
+                <li>
+                    Backup outfits when daycare or potty training requires them
+                </li>
+
+            </ul>
+
+
+            <h3>
+                Does daycare mean I need more toddler clothes?
+            </h3>
+
+            <p>
+                Usually, yes — but the important distinction is between
+                clothes you own and clothes that are currently available
+                in your home rotation. If daycare requires spare outfits,
+                those pieces effectively need to be accounted for even
+                when they are sitting in a daycare cubby instead of your
+                child's dresser.
+            </p>
+
+
+            <h3>
+                How does potty training change a toddler wardrobe?
+            </h3>
+
+            <p>
+                Potty training can temporarily increase the number of
+                bottoms, underwear and complete backup outfits that are
+                useful. You don't necessarily need a permanently larger
+                wardrobe; you may simply need a larger rotation during
+                the accident-heavy stage.
+            </p>
+
+
+            <div class="wardrobe-faq">
+
+                <details>
+
+                    <summary>
+                        How many outfits does a 2-year-old need?
+                    </summary>
+
+                    <p>
+                        It depends mainly on laundry frequency and how
+                        often your child changes clothes. A toddler who
+                        usually wears one outfit per day needs a different
+                        wardrobe from a toddler who regularly needs two
+                        or three outfits.
+                    </p>
+
+                </details>
+
+
+                <details>
+
+                    <summary>
+                        How many pajamas does a toddler need?
+                    </summary>
+
+                    <p>
+                        A practical pajama rotation depends on how often
+                        you wash them and how many nights you want covered
+                        between laundry loads. Children who frequently
+                        spill, sweat or have nighttime accidents may need
+                        additional backup pairs.
+                    </p>
+
+                </details>
+
+
+                <details>
+
+                    <summary>
+                        Should I buy lots of toddler clothes in the next size?
+                    </summary>
+
+                    <p>
+                        It can be tempting, especially during sales, but
+                        toddlers can move through sizes unpredictably.
+                        A smaller, useful rotation in the current size is
+                        often easier to manage than accumulating a large
+                        future-size wardrobe.
+                    </p>
+
+                </details>
+
+
+                <details>
+
+                    <summary>
+                        Is a toddler capsule wardrobe realistic?
+                    </summary>
+
+                    <p>
+                        Yes. A capsule-style toddler wardrobe works best
+                        when most tops and bottoms coordinate with several
+                        other pieces. The goal isn't to own as little as
+                        possible; it's to make the clothes you own easier
+                        to use together.
+                    </p>
+
+                </details>
+
+            </div>
+
+        </section>
+
 
     </main>
 
+
+    <!-- =========================================================
+         FOOTER
+    ========================================================== -->
+
+    <footer>
+
+        <div class="footer-logo">
+
+            <img
+                src="assets/logo.svg"
+                alt="MomYouNeedThis"
+            >
+
+        </div>
+
+        <h3>
+            MomYouNeedThis
+        </h3>
+
+        <p>
+            Mom finds, smart tools, free resources, real answers
+            and a little chaos from the Mom Universe.
+        </p>
+
+        <div class="footer-links">
+
+            <a href="amazon-favorites.html">
+                Amazon Favorites
+            </a>
+
+            <a href="mom-lab.html">
+                Mom Lab
+            </a>
+
+            <a href="free-mom-resources.html">
+                Free Resources
+            </a>
+
+            <a href="about.html">
+                About
+            </a>
+
+            <a href="privacy-policy.html">
+                Privacy
+            </a>
+
+            <a href="terms-of-use.html">
+                Terms
+            </a>
+
+            <a href="affiliate-disclosure.html">
+                Affiliate Disclosure
+            </a>
+
+            <a href="disclaimer.html">
+                Disclaimer
+            </a>
+
+            <a href="contact.html">
+                Contact
+            </a>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <p>
+                © 2026 MomYouNeedThis. All rights reserved.
+            </p>
+
+            <p>
+                As an Amazon Associate, I earn from qualifying purchases.
+            </p>
+
+        </div>
+
+    </footer>
+
 </div>
+
 
 <script src="toddler-wardrobe-builder.js"></script>
 
 </body>
+
 </html>
