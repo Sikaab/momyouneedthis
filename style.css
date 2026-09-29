@@ -4683,6 +4683,392 @@ html{
 
 }
 
+
+/* =========================================================
+   MOM LAB — HOMEPAGE DESKTOP
+   ========================================================= */
+
+.mom-lab-home-section {
+    position: relative;
+
+    margin: 45px 0;
+    padding: 42px 30px 38px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff8fb 0%,
+            #ffffff 50%,
+            #fff7fa 100%
+        );
+
+    border: 1px solid #f2dfe6;
+    border-radius: 35px;
+
+    text-align: center;
+
+    box-shadow:
+        0 15px 35px rgba(0, 0, 0, 0.055);
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   CURTAIN
+   Keep decorative curtain behind the content.
+   It must NOT visually cover the test cards.
+   ========================================================= */
+
+.mom-lab-home-section::before,
+.mom-lab-home-section::after {
+    z-index: 0;
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.mom-lab-home-section > .mom-lab-home-header {
+    position: relative;
+    z-index: 5;
+}
+
+.mom-lab-home-header {
+    max-width: 700px;
+    margin: 0 auto 30px;
+    text-align: center;
+}
+
+.mom-lab-home-badge {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 13px;
+    padding: 8px 17px;
+
+    background: #fff0f5;
+
+    color: #d6537c;
+
+    border: 1px solid #f3d8e1;
+    border-radius: 999px;
+
+    font-size: 12px;
+    font-weight: 900;
+
+    letter-spacing: 0.7px;
+
+    box-shadow:
+        0 6px 16px rgba(232, 154, 170, 0.10);
+}
+
+.mom-lab-home-header h2 {
+    margin: 0;
+
+    color: #332b2b;
+
+    font-size: clamp(30px, 3.5vw, 42px);
+    font-weight: 900;
+
+    line-height: 1.12;
+
+    letter-spacing: -0.8px;
+}
+
+.mom-lab-home-header h2 span {
+    color: #e89aaa;
+}
+
+.mom-lab-home-header p {
+    max-width: 620px;
+
+    margin: 13px auto 0;
+
+    color: #777;
+
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   CONTENT
+   ========================================================= */
+
+.mom-lab-home-section > .mom-lab-home-content {
+    position: relative;
+    z-index: 5;
+
+    width: 100%;
+    max-width: 1000px;
+
+    margin: 0 auto;
+}
+
+
+/* =========================================================
+   TEST GRID
+   ========================================================= */
+
+.mom-lab-tests {
+    position: relative;
+    z-index: 10;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 14px;
+
+    width: 100%;
+
+    margin: 0 auto 26px;
+
+    padding: 0;
+}
+
+
+/* =========================================================
+   TEST CARD
+   ========================================================= */
+
+.mom-lab-test {
+    position: relative;
+    z-index: 11;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: flex-start;
+
+    min-width: 0;
+
+    padding: 23px 16px 21px;
+
+    background: #ffffff;
+
+    border: 1px solid #f1dfe6;
+    border-radius: 21px;
+
+    text-align: center;
+
+    box-shadow:
+        0 8px 22px rgba(70, 45, 55, 0.055);
+
+    transition:
+        transform 0.22s ease,
+        box-shadow 0.22s ease,
+        border-color 0.22s ease;
+}
+
+.mom-lab-test:hover {
+    transform: translateY(-4px);
+
+    border-color: #e9c3d0;
+
+    box-shadow:
+        0 14px 28px rgba(70, 45, 55, 0.09);
+}
+
+
+/* =========================================================
+   TEST ICON
+   ========================================================= */
+
+.mom-lab-test-icon {
+    position: relative;
+    z-index: 12;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 58px;
+    height: 58px;
+
+    margin: 0 auto 13px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #fff1f6,
+            #fff8fa
+        );
+
+    border: 1px solid #f5dfe7;
+
+    border-radius: 18px;
+
+    font-size: 27px;
+
+    box-shadow:
+        0 7px 17px rgba(232, 154, 170, 0.10);
+}
+
+
+/* =========================================================
+   TEST COPY
+   ========================================================= */
+
+.mom-lab-test-copy {
+    position: relative;
+    z-index: 12;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    min-width: 0;
+}
+
+.mom-lab-test-copy strong {
+    display: block;
+
+    color: #332b2b;
+
+    font-size: 15px;
+    font-weight: 900;
+
+    line-height: 1.25;
+}
+
+.mom-lab-test-copy small {
+    display: block;
+
+    max-width: 180px;
+
+    margin-top: 7px;
+
+    color: #888;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    line-height: 1.45;
+}
+
+
+/* =========================================================
+   CTA
+   ========================================================= */
+
+.mom-lab-home-button {
+    position: relative;
+    z-index: 10;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 13px 25px;
+
+    background: #e89aaa;
+
+    color: #ffffff;
+
+    border-radius: 999px;
+
+    font-size: 14px;
+    font-weight: 900;
+
+    text-decoration: none;
+
+    box-shadow:
+        0 9px 22px rgba(232, 154, 170, 0.22);
+
+    transition:
+        transform 0.22s ease,
+        box-shadow 0.22s ease,
+        background 0.22s ease;
+}
+
+.mom-lab-home-button:hover {
+    background: #d98296;
+
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 13px 28px rgba(232, 154, 170, 0.30);
+}
+
+
+/* =========================================================
+   LARGE DESKTOP
+   ========================================================= */
+
+@media (min-width: 1100px) {
+
+    .mom-lab-home-content {
+        max-width: 1000px;
+    }
+
+    .mom-lab-tests {
+        gap: 16px;
+    }
+
+    .mom-lab-test {
+        padding-left: 18px;
+        padding-right: 18px;
+    }
+
+}
+
+
+/* =========================================================
+   MEDIUM DESKTOP / TABLET LANDSCAPE
+   ========================================================= */
+
+@media (min-width: 761px) and (max-width: 1000px) {
+
+    .mom-lab-home-section {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+
+    .mom-lab-home-content {
+        max-width: 900px;
+    }
+
+    .mom-lab-tests {
+        gap: 10px;
+    }
+
+    .mom-lab-test {
+        padding: 20px 12px 18px;
+    }
+
+    .mom-lab-test-icon {
+        width: 52px;
+        height: 52px;
+
+        font-size: 24px;
+    }
+
+    .mom-lab-test-copy strong {
+        font-size: 14px;
+    }
+
+    .mom-lab-test-copy small {
+        max-width: 155px;
+
+        font-size: 10px;
+    }
+
+}
+
+
 /* =====================
    MOBILE
 ===================== */
