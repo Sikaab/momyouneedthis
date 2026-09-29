@@ -4687,7 +4687,7 @@ html{
    MOBILE
 ===================== */
 
-@media(max-width:750px){
+@media(max-width:750px) {
 
    @media(max-width:750px){
 
@@ -5683,5 +5683,7 @@ html{
     .mom-lab-verdict p {
         font-size: 0.94rem;
     }
+
 }
 
+}
