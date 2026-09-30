@@ -16,6 +16,99 @@
         content="Find out how many clothes your toddler actually needs. Build a personalized toddler wardrobe based on laundry frequency, daycare, outfit changes, potty training, pajamas and your child's routine."
     >
 
+    <link
+        rel="canonical"
+        href="https://momyouneedthis.com/toddler-wardrobe-builder.html"
+    >
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="MomYouNeedThis">
+    <meta
+        property="og:title"
+        content="How Many Clothes Does My Toddler Actually Need? | MomYouNeedThis"
+    >
+    <meta
+        property="og:description"
+        content="Build a personalized toddler wardrobe based on laundry, daycare, outfit changes and potty training. Free quiz — get your family's number in 5 questions."
+    >
+    <meta
+        property="og:url"
+        content="https://momyouneedthis.com/toddler-wardrobe-builder.html"
+    >
+    <meta
+        property="og:image"
+        content="https://momyouneedthis.com/assets/logo.svg"
+    >
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta
+        name="twitter:title"
+        content="How Many Clothes Does My Toddler Actually Need? | MomYouNeedThis"
+    >
+    <meta
+        name="twitter:description"
+        content="Free 5-question quiz builds a personalized toddler wardrobe around your laundry routine, daycare and real life."
+    >
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebApplication",
+                "name": "Toddler Wardrobe Builder",
+                "url": "https://momyouneedthis.com/toddler-wardrobe-builder.html",
+                "applicationCategory": "LifestyleApplication",
+                "operatingSystem": "Any",
+                "browserRequirements": "Requires JavaScript.",
+                "offers": {
+                    "@type": "Offer",
+                    "price": "0",
+                    "priceCurrency": "USD"
+                },
+                "description": "Free toddler wardrobe builder: answer 5 questions about laundry, daycare, outfit changes and potty training to get a personalized wardrobe plan and shopping checklist."
+            },
+            {
+                "@type": "FAQPage",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "How many outfits does a 2-year-old need?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "It depends mainly on laundry frequency and how often your child changes clothes. A toddler who usually wears one outfit per day needs a different wardrobe from a toddler who regularly needs two or three outfits."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "How many pajamas does a toddler need?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "A practical pajama rotation depends on how often you wash them and how many nights you want covered between laundry loads. Children who frequently spill, sweat or have nighttime accidents may need additional backup pairs."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Should I buy lots of toddler clothes in the next size?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "It can be tempting, especially during sales, but toddlers can move through sizes unpredictably. A smaller, useful rotation in the current size is often easier to manage than accumulating a large future-size wardrobe."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Is a toddler capsule wardrobe realistic?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Yes. A capsule-style toddler wardrobe works best when most tops and bottoms coordinate with several other pieces. The goal isn't to own as little as possible; it's to make the clothes you own easier to use together."
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
 
     <link
@@ -74,7 +167,7 @@
             transform: translateX(-50%);
             pointer-events: none;
         }
-        
+
         /* =========================================================
    PAGE LOGO
 ========================================================= */
@@ -942,8 +1035,7 @@
         }
 
 
-        
-    
+
 
 /* =========================================================
    SEO + FAQ CONTENT
@@ -1487,6 +1579,149 @@
 
     </style>
 
+    <style>
+
+        /* =========================================================
+           ADDED SEO SECTIONS — prefixed to avoid collisions
+        ========================================================= */
+
+        .wb-seo-section {
+            max-width: 900px;
+            margin: 55px auto 0;
+            padding: 45px 42px 50px;
+            background: #ffffff;
+            border: 1px solid #eee5e7;
+            border-radius: 35px;
+            box-shadow: 0 12px 35px rgba(80, 55, 55, 0.06);
+            font-family: 'Nunito', system-ui, sans-serif;
+            text-align: left;
+        }
+
+        .wb-seo-section h2 {
+            max-width: 760px;
+            margin: 0 auto 12px;
+            color: #332b2b;
+            font-size: clamp(26px, 3.5vw, 34px);
+            line-height: 1.15;
+            letter-spacing: -.6px;
+            font-weight: 900;
+            text-align: center;
+        }
+
+        .wb-seo-section .wb-lead {
+            max-width: 700px;
+            margin: 0 auto 22px;
+            color: #666;
+            font-size: 15px;
+            line-height: 1.7;
+            text-align: center;
+        }
+
+        .wb-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            line-height: 1.45;
+        }
+
+        .wb-table th,
+        .wb-table td {
+            text-align: left;
+            padding: 12px 14px;
+            border-bottom: 1px solid #f0e5e8;
+        }
+
+        .wb-table thead th {
+            background: #fff5f8;
+            color: #c95770;
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: .6px;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .wb-table thead th:first-child {
+            border-radius: 12px 0 0 0;
+        }
+
+        .wb-table thead th:last-child {
+            border-radius: 0 12px 0 0;
+        }
+
+        .wb-table tbody td:first-child {
+            font-weight: 800;
+            color: #332b2b;
+            white-space: nowrap;
+        }
+
+        .wb-table caption {
+            caption-side: bottom;
+            padding-top: 12px;
+            font-size: 12px;
+            color: #999;
+            text-align: left;
+            line-height: 1.5;
+        }
+
+        .wb-links {
+            list-style: none;
+            margin: 26px 0 0;
+            padding: 0;
+            display: grid;
+            gap: 10px;
+        }
+
+        .wb-links li {
+            padding: 14px 16px;
+            background: #fffaf8;
+            border: 1px solid #f1e5e7;
+            border-radius: 14px;
+        }
+
+        .wb-links a {
+            font-weight: 800;
+            color: #332b2b;
+            text-decoration: none;
+        }
+
+        .wb-links a:hover {
+            color: #d05a7d;
+        }
+
+        .wb-links span {
+            display: block;
+            margin-top: 3px;
+            color: #777;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 750px) {
+
+            .wb-seo-section {
+                margin-top: 40px;
+                padding: 35px 18px 38px;
+                border-radius: 28px;
+            }
+
+            .wb-table {
+                font-size: 12px;
+            }
+
+            .wb-table th,
+            .wb-table td {
+                padding: 9px 8px;
+            }
+
+            .wb-table thead th {
+                white-space: normal;
+            }
+
+        }
+
+    </style>
+
 </head>
 
 
@@ -1501,7 +1736,7 @@
              HERO
         ====================================================== -->
 
-     
+
 <section class="wardrobe-hero">
 
     <div class="wardrobe-page-logo">
@@ -1514,7 +1749,7 @@
     <div class="wardrobe-kicker">
         👕 Toddler Wardrobe Builder
     </div>
-    
+
             <h1>
                 How Many Clothes Does My Toddler
                 <span>Actually Need?</span>
@@ -2351,229 +2586,3 @@
         There isn't one perfect number of toddler clothes for
         every family. A toddler who has laundry done every day
         can get by with a much smaller wardrobe than a family
-        that does laundry once a week.
-    </p>
-
-    <p>
-        The bigger question is how many clothes your toddler
-        needs <strong>for your routine</strong>. Daycare,
-        potty training, frequent outfit changes, messy meals
-        and laundry frequency can all change the answer.
-    </p>
-
-
-    <h3>
-        What should be in a toddler wardrobe?
-    </h3>
-
-    <p>
-        A useful toddler wardrobe usually has a core group of
-        everyday clothes plus dedicated sleepwear and enough
-        backup clothing to handle normal toddler chaos.
-    </p>
-
-    <ul>
-
-        <li>
-            Everyday tops for regular outfit rotation
-        </li>
-
-        <li>
-            Comfortable bottoms that can be mixed and matched
-        </li>
-
-        <li>
-            Pajamas separate from the daytime rotation
-        </li>
-
-        <li>
-            Underwear and socks appropriate for your child's routine
-        </li>
-
-        <li>
-            A few layers that work across multiple outfits
-        </li>
-
-        <li>
-            Backup outfits when daycare or potty training requires them
-        </li>
-
-    </ul>
-
-
-    <h3>
-        Does daycare mean I need more toddler clothes?
-    </h3>
-
-    <p>
-        Usually, yes — but the important distinction is between
-        clothes you own and clothes that are currently available
-        in your home rotation. If daycare requires spare outfits,
-        those pieces effectively need to be accounted for even
-        when they are sitting in a daycare cubby instead of your
-        child's dresser.
-    </p>
-
-
-    <h3>
-        How does potty training change a toddler wardrobe?
-    </h3>
-
-    <p>
-        Potty training can temporarily increase the number of
-        bottoms, underwear and complete backup outfits that are
-        useful. You don't necessarily need a permanently larger
-        wardrobe; you may simply need a larger rotation during
-        the accident-heavy stage.
-    </p>
-
-
-    <div class="wardrobe-faq-list">
-
-        <details class="wardrobe-faq-item">
-
-            <summary class="wardrobe-faq-question">
-                How many outfits does a 2-year-old need?
-            </summary>
-
-            <div class="wardrobe-faq-answer">
-                <p>
-                    It depends mainly on laundry frequency and how
-                    often your child changes clothes. A toddler who
-                    usually wears one outfit per day needs a different
-                    wardrobe from a toddler who regularly needs two
-                    or three outfits.
-                </p>
-            </div>
-
-        </details>
-
-
-        <details class="wardrobe-faq-item">
-
-            <summary class="wardrobe-faq-question">
-                How many pajamas does a toddler need?
-            </summary>
-
-            <div class="wardrobe-faq-answer">
-                <p>
-                    A practical pajama rotation depends on how often
-                    you wash them and how many nights you want covered
-                    between laundry loads. Children who frequently
-                    spill, sweat or have nighttime accidents may need
-                    additional backup pairs.
-                </p>
-            </div>
-
-        </details>
-
-
-        <details class="wardrobe-faq-item">
-
-            <summary class="wardrobe-faq-question">
-                Should I buy lots of toddler clothes in the next size?
-            </summary>
-
-            <div class="wardrobe-faq-answer">
-                <p>
-                    It can be tempting, especially during sales, but
-                    toddlers can move through sizes unpredictably.
-                    A smaller, useful rotation in the current size is
-                    often easier to manage than accumulating a large
-                    future-size wardrobe.
-                </p>
-            </div>
-
-        </details>
-
-
-        <details class="wardrobe-faq-item">
-
-            <summary class="wardrobe-faq-question">
-                Is a toddler capsule wardrobe realistic?
-            </summary>
-
-            <div class="wardrobe-faq-answer">
-                <p>
-                    Yes. A capsule-style toddler wardrobe works best
-                    when most tops and bottoms coordinate with several
-                    other pieces. The goal isn't to own as little as
-                    possible; it's to make the clothes you own easier
-                    to use together.
-                </p>
-            </div>
-
-        </details>
-
-    </div>
-
-</section>
-
-    </main>
-
-
-    <!-- =========================================================
-         FOOTER
-    ========================================================== -->
-
-    <footer>
-    <div class="footer-logo">
-        <img
-            src="assets/logo.svg"
-            alt="MomYouNeedThis"
-        >
-    </div>
-<h3>
-    MomYouNeedThis
-</h3>
-<p>
-    Mom finds, smart tools, free resources, real answers
-    and a little chaos from the Mom Universe.
-</p>
-<div class="footer-links">
-    <a href="amazon-favorites.html">
-        Mom Battles
-    </a>
-    <a href="mom-lab.html">
-        Mom Lab
-    </a>
-    <a href="free-mom-resources.html">
-        Free Resources
-    </a>
-    <a href="about.html">
-        About
-    </a>
-    <a href="privacy-policy.html">
-        Privacy Policy
-    </a>
-    <a href="terms.html">
-        Terms of Use
-    </a>
-    <a href="affiliate-disclosure.html">
-        Affiliate Disclosure
-    </a>
-    <a href="disclaimer.html">
-        Disclaimer
-    </a>
-    <a href="contact.html">
-        Contact
-    </a>
-</div>
-<div class="footer-bottom">
-    <p>
-        © 2026 MomYouNeedThis. All rights reserved.
-    </p>
-    <p>
-        As an Amazon Associate, I earn from qualifying purchases.
-    </p>
-</div>
-</footer>
-
-</div>
-
-
-<script src="toddler-wardrobe-builder.js"></script>
-
-</body>
-
-</html>
