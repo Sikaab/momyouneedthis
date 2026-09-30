@@ -7,6 +7,160 @@
 Free Baby Sleep Tracker & Wake Window Calculator | MomYouNeedThis
 </title>
 <meta name="description" content="Track your baby's naps, calculate wake windows, and find the perfect sleep sweet spots with this free baby sleep tracker.">
+
+<link
+    rel="canonical"
+    href="https://momyouneedthis.com/sleep-schedule-generator.html"
+>
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MomYouNeedThis">
+<meta
+    property="og:title"
+    content="Free Baby Sleep Tracker & Wake Window Calculator | MomYouNeedThis"
+>
+<meta
+    property="og:description"
+    content="Track naps, calculate wake windows, and find your baby's next sleep sweet spot. Free, no account needed — saved on your device."
+>
+<meta
+    property="og:url"
+    content="https://momyouneedthis.com/sleep-schedule-generator.html"
+>
+<meta
+    property="og:image"
+    content="https://momyouneedthis.com/assets/logo.svg"
+>
+
+<meta name="twitter:card" content="summary_large_image">
+<meta
+    name="twitter:title"
+    content="Free Baby Sleep Tracker & Wake Window Calculator | MomYouNeedThis"
+>
+<meta
+    name="twitter:description"
+    content="Track naps, calculate wake windows, and find your baby's next sleep sweet spot. Free, no account needed."
+>
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": "WebApplication",
+            "name": "Free Baby Sleep Tracker & Wake Window Calculator",
+            "url": "https://momyouneedthis.com/sleep-schedule-generator.html",
+            "applicationCategory": "LifestyleApplication",
+            "operatingSystem": "Any",
+            "browserRequirements": "Requires JavaScript.",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "description": "Free baby sleep tracker and wake window calculator: track naps, calculate wake windows and find your baby's next sleep sweet spot. No account needed — your data is saved on your device."
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "What is a wake window and why does it matter?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "A wake window is the amount of time your baby can comfortably stay awake between sleep periods — for example, about 2–2.5 hours at 6 months. Tracking wake windows helps you spot when your baby is ready for their next nap or bedtime, instead of guessing."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Can this sleep tracker create a schedule for my baby?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "It gives you a personalized starting point based on your baby's age, morning wake time and naps. Every baby is different, so treat it as a flexible guide and follow your baby's sleep cues."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "How many naps should my baby have each day?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "It changes with age: newborns often take 4–6 naps, babies around 6 months usually take 3, around 12 months usually 2, and by 18 months most are down to 1–2. See the wake-window table on this page for typical ranges."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Why should I track naps instead of following a strict schedule?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Because sleep needs shift from day to day — and as your baby grows. Tracking shows you the pattern, so you can make one small timing tweak instead of overhauling the whole routine."
+                    }
+                }
+            ]
+        }
+    ]
+}
+</script>
+
+<style>
+    /* SEO content sections — prefixed classes avoid collisions
+       with the existing tracker styles. */
+    .seo-section {
+        max-width: 42rem;
+        margin: 3rem auto;
+        padding: 0 1.25rem;
+        font-family: 'Nunito', system-ui, sans-serif;
+    }
+    .seo-section h2 {
+        margin: 0 0 .75rem;
+        font-size: 1.5rem;
+        font-weight: 900;
+        line-height: 1.25;
+    }
+    .seo-section .seo-lead {
+        margin: 0 0 1.25rem;
+        line-height: 1.6;
+    }
+    .seo-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1rem;
+        font-size: .95rem;
+        line-height: 1.45;
+    }
+    .seo-table th,
+    .seo-table td {
+        text-align: left;
+        padding: .6rem .75rem;
+        border-bottom: 1px solid rgba(0, 0, 0, .08);
+    }
+    .seo-table th {
+        font-weight: 900;
+    }
+    .seo-table caption {
+        text-align: left;
+        font-size: .85rem;
+        opacity: .75;
+        padding-bottom: .5rem;
+        caption-side: top;
+    }
+    .seo-links {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: grid;
+        gap: 1rem;
+    }
+    .seo-links a {
+        font-weight: 700;
+    }
+    .seo-links span {
+        display: block;
+        margin-top: .15rem;
+        opacity: .85;
+        line-height: 1.5;
+    }
+</style>
+
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="sleep-schedule-generator.css">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
@@ -14,7 +168,7 @@ Free Baby Sleep Tracker & Wake Window Calculator | MomYouNeedThis
 <body>
 <div class="page">
 <section class="resource-page">
-<img 
+<img
 src="assets/logo.svg"
 class="logo"
 alt="MomYouNeedThis Logo">
@@ -123,7 +277,7 @@ Morning Wake Time
 </label>
 
 
-<input 
+<input
 type="time"
 id="wakeTime"
 value="07:00">
@@ -163,7 +317,7 @@ Your baby's recommended wake window will appear here.
 
 <h3 id="todayNaps">
 Add Today's Naps
-</h2>
+</h3>
 
 
 
@@ -174,7 +328,7 @@ Add Today's Naps
 
 
 
-<button 
+<button
 id="addNap"
 class="secondary-button">
 
@@ -184,7 +338,7 @@ class="secondary-button">
 
 
 
-<button 
+<button
 id="saveDay"
 class="download-button">
 
@@ -195,7 +349,6 @@ class="download-button">
 
 
 </div>
-
 
 
 
@@ -271,7 +424,7 @@ Daily Timeline
 </h3>
 
 
-<div 
+<div
 id="sleepTimeline"
 class="sleep-timeline">
 
@@ -427,6 +580,90 @@ Come back anytime without an account.
 
 
 
+<!-- =====================================================
+     SEO — WAKE WINDOW REFERENCE TABLE
+===================================================== -->
+
+<section
+    class="seo-section"
+    aria-label="Wake windows by age"
+>
+
+    <h2>
+        Wake windows by age
+    </h2>
+
+    <p class="seo-lead">
+        The numbers behind the calculator. Use these typical ranges as a
+        starting point, then follow your baby's cues — every baby is different.
+    </p>
+
+    <table class="seo-table">
+        <caption>Typical wake windows and naps per day by age</caption>
+        <thead>
+            <tr>
+                <th scope="col">Baby's age</th>
+                <th scope="col">Typical wake window</th>
+                <th scope="col">Naps per day</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Newborn (0–6 weeks)</td>
+                <td>45–60 minutes</td>
+                <td>4–6</td>
+            </tr>
+            <tr>
+                <td>2 months</td>
+                <td>1–1.5 hours</td>
+                <td>4–5</td>
+            </tr>
+            <tr>
+                <td>4 months</td>
+                <td>1.5–2 hours</td>
+                <td>3–4</td>
+            </tr>
+            <tr>
+                <td>6 months</td>
+                <td>2–2.5 hours</td>
+                <td>3</td>
+            </tr>
+            <tr>
+                <td>8 months</td>
+                <td>2.5–3.5 hours</td>
+                <td>2–3</td>
+            </tr>
+            <tr>
+                <td>10 months</td>
+                <td>3–4 hours</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>12 months</td>
+                <td>3–4 hours</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>18 months</td>
+                <td>4–5.5 hours</td>
+                <td>1–2</td>
+            </tr>
+            <tr>
+                <td>2 years</td>
+                <td>5–6 hours</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>3 years</td>
+                <td>6+ hours</td>
+                <td>0–1</td>
+            </tr>
+        </tbody>
+    </table>
+
+</section>
+
+
 
 
 
@@ -444,7 +681,7 @@ What is a wake window and why does it matter?
 </h3>
 
 <p>
-A wake window is the amount of time your baby can comfortably stay awake between sleep periods. Tracking wake windows can help you recognize when your baby may be ready for their next nap or bedtime.
+A wake window is the amount of time your baby can comfortably stay awake between sleep periods — for example, about 2–2.5 hours at 6 months. Tracking wake windows helps you spot when your baby is ready for their next nap or bedtime, instead of guessing.
 </p>
 
 </div>
@@ -459,7 +696,7 @@ Can this sleep tracker create a schedule for my baby?
 </h3>
 
 <p>
-This tool provides a personalized starting point based on your baby's age and naps. Every baby is different, so use it as a guide and adjust based on your baby's sleep cues.
+It gives you a personalized starting point based on your baby's age, morning wake time and naps. Every baby is different, so treat it as a flexible guide and follow your baby's sleep cues.
 </p>
 
 </div>
@@ -474,7 +711,7 @@ How many naps should my baby have each day?
 </h3>
 
 <p>
-Nap needs change as babies grow. Younger babies often need more frequent sleep periods, while older babies usually transition toward fewer, longer naps.
+It changes with age: newborns often take 4–6 naps, babies around 6 months usually take 3, around 12 months usually 2, and by 18 months most are down to 1–2. See the wake-window table above for typical ranges.
 </p>
 
 </div>
@@ -489,12 +726,80 @@ Why should I track naps instead of following a strict schedule?
 </h3>
 
 <p>
-Babies' sleep needs can change from day to day. Tracking naps helps you understand your baby's patterns and make small adjustments when needed.
+Because sleep needs shift from day to day — and as your baby grows. Tracking shows you the pattern, so you can make one small timing tweak instead of overhauling the whole routine.
 </p>
 
 </div>
 
 
+
+</section>
+
+
+
+
+
+<!-- =====================================================
+     SEO — MORE FREE TOOLS
+===================================================== -->
+
+<section
+    class="seo-section"
+    aria-label="More free tools"
+>
+
+    <h2>
+        More free tools for tired moms
+    </h2>
+
+    <ul class="seo-links">
+
+        <li>
+            <a href="baby-tracker.html">
+                <strong>Free baby tracker</strong>
+            </a>
+            <span>
+                Log feeds, diapers and naps hands-free by voice — no typing, no account.
+            </span>
+        </li>
+
+        <li>
+            <a href="blog-baby-sleep-schedule-working-against-you.html">
+                <strong>Is your baby's sleep schedule working against you?</strong>
+            </a>
+            <span>
+                How to read the whole day — not just bedtime — when nights fall apart.
+            </span>
+        </li>
+
+        <li>
+            <a href="toddler-wardrobe-builder.html">
+                <strong>Toddler wardrobe builder</strong>
+            </a>
+            <span>
+                Build a practical wardrobe around laundry, daycare and real life.
+            </span>
+        </li>
+
+        <li>
+            <a href="potty-chart-generator.html">
+                <strong>Potty chart generator</strong>
+            </a>
+            <span>
+                Create a personalized reward chart your toddler will love.
+            </span>
+        </li>
+
+        <li>
+            <a href="free-mom-resources.html">
+                <strong>Free mom library</strong>
+            </a>
+            <span>
+                Printable activities, learning pages and coloring sheets.
+            </span>
+        </li>
+
+    </ul>
 
 </section>
 
