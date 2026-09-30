@@ -7,14 +7,17 @@
         name="viewport"
         content="width=device-width, initial-scale=1.0"
     >
-    <title>
-        Mom Battles | MomYouNeedThis
-    </title>
+    <title>Mom Battles: Mom-Voted Products | MomYouNeedThis</title>
 
-    <meta
-        name="description"
-        content="Which mom-approved product wins? Compare products, see what moms prefer, and vote for your pick."
-    >
+    <meta name="description" content="Which mom-approved product wins? Compare real products, see what moms prefer, and vote for your pick in Mom Battles.">
+    <link rel="canonical" href="https://momyouneedthis.com/amazon-favorites.html">
+    <meta property="og:title" content="Mom Battles: Mom-Voted Products | MomYouNeedThis">
+    <meta property="og:description" content="Which mom-approved product wins? Compare real products, see what moms prefer, and vote for your pick in Mom Battles.">
+    <meta property="og:url" content="https://momyouneedthis.com/amazon-favorites.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="MomYouNeedThis">
+    <meta property="og:image" content="https://momyouneedthis.com/assets/logo.svg">
+    <meta name="twitter:card" content="summary">
 
     <link
         rel="stylesheet"
@@ -31,6 +34,254 @@
         rel="stylesheet"
     >
 
+<!-- SEO content sections brand styles -->
+<style>
+        /* SEO content sections — designed to match the MomYouNeedThis brand. */
+        .seo-section {
+            max-width: 900px;
+            margin: 55px auto 0;
+            padding: 45px 42px 50px;
+            background: #ffffff;
+            border: 1px solid #eee5e7;
+            border-radius: 35px;
+            box-shadow: 0 12px 35px rgba(80, 55, 55, 0.06);
+            font-family: 'Nunito', system-ui, sans-serif;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+        .seo-section::before {
+            content: "";
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            top: -145px;
+            right: -90px;
+            background: #ffe5ec;
+            border-radius: 50%;
+            opacity: .65;
+            pointer-events: none;
+        }
+        .seo-section::after {
+            content: "";
+            position: absolute;
+            width: 190px;
+            height: 190px;
+            bottom: -120px;
+            left: -80px;
+            background: #fff1c9;
+            border-radius: 50%;
+            opacity: .55;
+            pointer-events: none;
+        }
+        .seo-section > * {
+            position: relative;
+            z-index: 1;
+        }
+        .seo-section .section-kicker {
+            display: block;
+            margin-bottom: 10px;
+            color: #c95770;
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+        .seo-section h2 {
+            max-width: 700px;
+            margin: 0 auto 14px;
+            color: #332b2b;
+            font-size: clamp(26px, 3.6vw, 34px);
+            line-height: 1.15;
+            letter-spacing: -.6px;
+            font-weight: 900;
+            text-align: center;
+        }
+        .seo-section h2::after {
+            content: "";
+            display: block;
+            width: 45px;
+            height: 3px;
+            margin: 16px auto 0;
+            background: #e89aaa;
+            border-radius: 999px;
+        }
+        .seo-lead {
+            max-width: 680px;
+            margin: 0 auto 26px;
+            color: #6d6566;
+            font-size: 16px;
+            line-height: 1.7;
+            text-align: center;
+        }
+        .seo-links {
+            list-style: none;
+            margin: 10px auto 0;
+            padding: 0;
+            max-width: 720px;
+            display: grid;
+            gap: 10px;
+        }
+        .seo-links li {
+            padding: 16px 18px;
+            background: #fffaf8;
+            border: 1px solid #f1e5e7;
+            border-radius: 16px;
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
+        .seo-links li:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(80, 55, 65, .07);
+        }
+        .seo-links a {
+            color: #332b2b;
+            font-size: 15px;
+            font-weight: 900;
+            text-decoration: none;
+        }
+        .seo-links a:hover {
+            color: #d05a7d;
+        }
+        .seo-links span {
+            display: block;
+            margin-top: 4px;
+            color: #777;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .seo-steps {
+            list-style: none;
+            margin: 0 auto;
+            padding: 0;
+            max-width: 720px;
+            display: grid;
+            gap: 12px;
+            counter-reset: seo-step;
+        }
+        .seo-steps li {
+            counter-increment: seo-step;
+            position: relative;
+            padding: 18px 20px 18px 70px;
+            background: #fffaf8;
+            border: 1px solid #f1e5e7;
+            border-radius: 18px;
+            color: #5f5758;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+        .seo-steps li::before {
+            content: counter(seo-step);
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #e89aaa;
+            border-radius: 50%;
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 900;
+        }
+        .seo-steps li strong {
+            color: #332b2b;
+        }
+
+        .seo-checklist {
+            list-style: none;
+            margin: 0 auto;
+            padding: 0;
+            max-width: 720px;
+            display: grid;
+            gap: 10px;
+        }
+        .seo-checklist li {
+            position: relative;
+            padding: 14px 16px 14px 48px;
+            background: #fffaf8;
+            border: 1px solid #f1e5e7;
+            border-radius: 14px;
+            color: #5f5758;
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 1.5;
+        }
+        .seo-checklist li::before {
+            content: "\2713";
+            position: absolute;
+            left: 16px;
+            top: 14px;
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fff0f4;
+            border-radius: 50%;
+            color: #d05a7d;
+            font-size: 12px;
+            font-weight: 900;
+        }
+
+        .seo-faq {
+            max-width: 720px;
+            margin: 0 auto;
+            display: grid;
+            gap: 12px;
+        }
+        .seo-faq-item {
+            padding: 20px 22px;
+            background: #fffaf8;
+            border: 1px solid #f0dfe3;
+            border-radius: 18px;
+        }
+        .seo-faq-item h3 {
+            margin: 0 0 8px;
+            color: #332b2b;
+            font-size: 16px;
+            line-height: 1.4;
+            font-weight: 900;
+        }
+        .seo-faq-item p {
+            margin: 0;
+            color: #686061;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 750px) {
+            .seo-section {
+                margin-top: 40px;
+                padding: 35px 20px 38px;
+                border-radius: 28px;
+            }
+            .seo-steps li {
+                padding: 16px 16px 16px 62px;
+                font-size: 14px;
+            }
+            .seo-steps li::before {
+                left: 16px;
+            }
+            .seo-faq-item {
+                padding: 18px;
+            }
+            .seo-table {
+                font-size: 12px;
+            }
+            .seo-table th,
+            .seo-table td {
+                padding: 9px 8px;
+            }
+            .seo-table thead th {
+                white-space: normal;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -83,6 +334,10 @@
             Two mom-lab approved products.
             <br>
             One choice.
+        </p>
+
+        <p class="mom-voted-intro">
+            Mom Battles is a fun product-voting game from MomYouNeedThis: two mom-tested products go head-to-head in categories like baby, toddler, sleep, potty, feeding and under $25. See how other moms voted, cast your own vote, and discover which products real moms actually prefer.
         </p>
 
     </section>
@@ -140,7 +395,143 @@
 
     </nav>
 
-    <!-- =====================================================
+    <style>
+/* Mom Favorites affiliate cards */
+.myf-affil{max-width:960px;margin:44px auto;padding:34px 26px;background:#fdf3f5;border:1px solid #f3dfe4;border-radius:26px;text-align:center}
+.myf-affil h2{color:#332b2b;font-size:clamp(22px,3vw,30px);font-weight:900;margin:0 0 10px;line-height:1.2}
+.myf-lead{color:#6d6566;font-size:15.5px;line-height:1.65;max-width:640px;margin:0 auto 22px}
+.myf-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:0 0 20px}
+.myf-card{background:#fffaf8;border:1px solid #f1e5e7;border-radius:18px;padding:18px 14px;text-decoration:none!important;color:inherit;display:block;transition:transform .2s,box-shadow .2s}
+a.myf-card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(80,55,65,.09)}
+.myf-card img{width:100%;height:140px;object-fit:cover;border-radius:12px;margin-bottom:10px}
+.myf-emoji{font-size:42px;display:block;margin-bottom:8px}
+.myf-card h3{margin:6px 0;font-size:16.5px;color:#332b2b;font-weight:900}
+.myf-card strong{font-size:15.5px;color:#332b2b}
+.myf-card p,.myf-card span.myf-blurb{display:block;color:#777;font-size:13.5px;line-height:1.55;margin:6px 0 12px}
+.myf-btn{display:inline-block;background:#d05a7d;color:#fff!important;font-weight:800;padding:11px 26px;border-radius:999px;text-decoration:none!important;font-size:14.5px;margin-top:4px}
+.myf-btn:hover{background:#c14e6f}
+.myf-note{font-size:12.5px;color:#999;max-width:640px;margin:14px auto 0;line-height:1.6}
+.myf-note a{color:#c95770}
+.myf-group{margin:30px 0 8px}
+.myf-group>h3{color:#332b2b;font-size:20px;font-weight:900;margin:0 0 4px}
+.myf-group>p{color:#777;font-size:14px;margin:0 0 16px}
+.myf-photo-soon{background:#fbe9ee;border:2px dashed #e89aaa;border-radius:12px;min-height:140px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#c95770;font-weight:800;font-size:14px;gap:6px;padding:18px}
+.myf-photo-soon small{font-weight:400;color:#a08}
+@media(max-width:600px){.myf-affil{padding:26px 16px}}
+</style>
+<!-- =====================================================
+     MOM FAVORITES: shoppable product picks (affiliate slots).
+     JESSIKA: paste each product's affiliate link into its href="#".
+     ====================================================== -->
+<section class="myf-affil" aria-label="Mom favorite products" style="max-width:1020px">
+  <h2>🛒 Mom Favorites</h2>
+  <p class="myf-lead">The products moms actually buy again and again — picked for real life with little ones, not a showroom.</p>
+  <p class="myf-note" style="margin-bottom:6px">💗 Heads up: buttons below are affiliate links. As an Amazon Associate, MomYouNeedThis earns from qualifying purchases at no extra cost to you. <a href="affiliate-disclosure.html">Read our disclosure</a>.</p>
+<div class="myf-group" id="fav-sleep">
+    <h3>😴 Sleep favorites</h3>
+    <p>For better nights and easier bedtimes.</p>
+    <div class="myf-grid">
+<div class="myf-card">
+      <img src="assets/white-noise-machine.jpeg" alt="Yogasleep Dohm White Noise Machine">
+      <h3>Yogasleep Dohm White Noise Machine</h3>
+      <p>The classic white noise machine so many moms swear by for the nursery.</p>
+      <!-- JESSIKA: paste your affiliate link where you see href="#" below (keep rel="sponsored") -->
+      <a class="myf-btn" href="#" rel="sponsored nofollow">🛒 Check price →</a>
+    </div>
+<div class="myf-card">
+      <span class="myf-emoji">🌙</span>
+      <h3>Hatch Rest+ Sound Machine & Night Light</h3>
+      <p>White noise, night light, and time-to-rise in one — grows with your baby.</p>
+      <!-- JESSIKA: paste your affiliate link where you see href="#" below (keep rel="sponsored") -->
+      <a class="myf-btn" href="#" rel="sponsored nofollow">🛒 Check price →</a>
+    </div>
+<div class="myf-card">
+      <span class="myf-emoji">🪟</span>
+      <h3>Portable Blackout Curtains</h3>
+      <p>A dark room is the cheapest sleep upgrade there is. Great for travel too.</p>
+      <!-- JESSIKA: paste your affiliate link where you see href="#" below (keep rel="sponsored") -->
+      <a class="myf-btn" href="#" rel="sponsored nofollow">🛒 Check price →</a>
+    </div>
+    </div>
+  </div>
+<div class="myf-group" id="fav-wardrobe">
+    <h3>👕 Wardrobe favorites</h3>
+    <p>The workhorse pieces that survive toddlers.</p>
+    <div class="myf-grid">
+<div class="myf-card">
+      <span class="myf-emoji">👖</span>
+      <h3>Toddler Leggings 5-Pack</h3>
+      <p>The backbone of every toddler wardrobe — soft, stretchy, playground-proof.</p>
+      <!-- JESSIKA: paste your affiliate link where you see href="#" below (keep rel="sponsored") -->
+      <a class="myf-btn" href="#" rel="sponsored nofollow">🛒 Check price →</a>
+    </div>
+<div class="myf-card">
+      <span class="myf-emoji">🧦</span>
+      <h3>Toddler Crew Socks 6-Pack</h3>
+      <p>Because single socks disappear into another dimension.</p>
+      <!-- JESSIKA: paste your affiliate link where you see href="#" below (keep rel="sponsored") -->
+      <a class="myf-btn" href="#" rel="sponsored nofollow">🛒 Check price →</a>
+    </div>
+<div class="myf-card">
+      <span class="myf-emoji">🌙</span>
+      <h3>Zip-Up Footed Pajamas 3-Pack</h3>
+      <p>Two-way zippers make midnight diaper changes so much faster.</p>
+      <!-- JESSIKA: paste your affiliate link where you see href="#" below (keep rel="sponsored") -->
+      <a class="myf-btn" href="#" rel="sponsored nofollow">🛒 Check price →</a>
+    </div>
+    </div>
+  </div>
+<div class="myf-group" id="fav-potty">
+    <h3>🚽 Potty training must-haves</h3>
+    <p>Everything for the big-kid transition.</p>
+    <div class="myf-grid">
+<div class="myf-card">
+      <img src="assets/babybjorn-potty-toilet.jpeg" alt="BabyBjörn Smart Potty">
+      <h3>BabyBjörn Smart Potty</h3>
+      <p>Small, sturdy, and easy for little legs to reach on their own.</p>
+      <!-- JESSIKA: paste your affiliate link where you see href="#" below (keep rel="sponsored") -->
+      <a class="myf-btn" href="#" rel="sponsored nofollow">🛒 Check price →</a>
+    </div>
+<div class="myf-card">
+      <span class="myf-emoji">⭐</span>
+      <h3>Potty Training Reward Stickers</h3>
+      <p>Pairs perfectly with your free printable reward chart.</p>
+      <!-- JESSIKA: paste your affiliate link where you see href="#" below (keep rel="sponsored") -->
+      <a class="myf-btn" href="#" rel="sponsored nofollow">🛒 Check price →</a>
+    </div>
+<div class="myf-card">
+      <span class="myf-emoji">🪜</span>
+      <h3>Toddler Step Stool</h3>
+      <p>For graduation day to the big toilet.</p>
+      <!-- JESSIKA: paste your affiliate link where you see href="#" below (keep rel="sponsored") -->
+      <a class="myf-btn" href="#" rel="sponsored nofollow">🛒 Check price →</a>
+    </div>
+    </div>
+  </div>
+<div class="myf-group" id="fav-everyday">
+    <h3>🤱 Everyday essentials</h3>
+    <p>The things you will use every single day.</p>
+    <div class="myf-grid">
+<div class="myf-card">
+      <span class="myf-emoji">🤱</span>
+      <h3>Nursing Pillow</h3>
+      <p>Saves your arms and back during long feeding sessions.</p>
+      <!-- JESSIKA: paste your affiliate link where you see href="#" below (keep rel="sponsored") -->
+      <a class="myf-btn" href="#" rel="sponsored nofollow">🛒 Check price →</a>
+    </div>
+<div class="myf-card">
+      <span class="myf-emoji">💡</span>
+      <h3>Dimmable Nursery Night Light</h3>
+      <p>Check on baby without fully waking anyone up.</p>
+      <!-- JESSIKA: paste your affiliate link where you see href="#" below (keep rel="sponsored") -->
+      <a class="myf-btn" href="#" rel="sponsored nofollow">🛒 Check price →</a>
+    </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =====================================================
          BABY
     ====================================================== -->
 
@@ -326,11 +717,8 @@
                             MOM PICK
                         </span>
 
-                        <img
-                            src="assets/product2.jpg"
-                            alt="Baby product contender"
-                            data-image-2
-                        >
+                        <!-- JESSIKA: replace this placeholder with your product photo <img> -->
+<div class="myf-photo-soon">📷<span>Product photo coming soon</span></div>
 
                     </div>
 
@@ -524,11 +912,8 @@
                             MOM PICK
                         </span>
 
-                        <img
-                            src="assets/product2.jpg"
-                            alt="Toddler favorite"
-                            data-image-1
-                        >
+                        <!-- JESSIKA: replace this placeholder with your product photo <img> -->
+<div class="myf-photo-soon">📷<span>Product photo coming soon</span></div>
 
                     </div>
 
@@ -619,11 +1004,8 @@
                             MOM PICK
                         </span>
 
-                        <img
-                            src="assets/product2.jpg"
-                            alt="Toddler product contender"
-                            data-image-2
-                        >
+                        <!-- JESSIKA: replace this placeholder with your product photo <img> -->
+<div class="myf-photo-soon">📷<span>Product photo coming soon</span></div>
 
                     </div>
 
@@ -894,11 +1276,8 @@
                             MOM FAVORITE
                         </span>
 
-                        <img
-                            src="assets/product2.jpg"
-                            alt="Sleep product contender"
-                            data-image-2
-                        >
+                        <!-- JESSIKA: replace this placeholder with your product photo <img> -->
+<div class="myf-photo-soon">📷<span>Product photo coming soon</span></div>
 
                     </div>
 
@@ -1169,11 +1548,8 @@
                             MOM PICK
                         </span>
 
-                        <img
-                            src="assets/product2.jpg"
-                            alt="Potty training contender"
-                            data-image-2
-                        >
+                        <!-- JESSIKA: replace this placeholder with your product photo <img> -->
+<div class="myf-photo-soon">📷<span>Product photo coming soon</span></div>
 
                     </div>
 
@@ -1348,11 +1724,8 @@ MOM SCORE</span>
                             NEW BATTLE
                         </span>
 
-                        <img
-                            src="assets/product2.jpg"
-                            alt="Feeding product"
-                            data-image-1
-                        >
+                        <!-- JESSIKA: replace this placeholder with your product photo <img> -->
+<div class="myf-photo-soon">📷<span>Product photo coming soon</span></div>
 
                     </div>
 
@@ -1443,11 +1816,8 @@ MOM SCORE</span>
                             NEW BATTLE
                         </span>
 
-                        <img
-                            src="assets/product2.jpg"
-                            alt="Feeding contender"
-                            data-image-2
-                        >
+                        <!-- JESSIKA: replace this placeholder with your product photo <img> -->
+<div class="myf-photo-soon">📷<span>Product photo coming soon</span></div>
 
                     </div>
 
@@ -1621,11 +1991,8 @@ MOM SCORE</span>
                             UNDER $25
                         </span>
 
-                        <img
-                            src="assets/product2.jpg"
-                            alt="Mom find under $25"
-                            data-image-1
-                        >
+                        <!-- JESSIKA: replace this placeholder with your product photo <img> -->
+<div class="myf-photo-soon">📷<span>Product photo coming soon</span></div>
 
                     </div>
 
@@ -1716,11 +2083,8 @@ MOM SCORE</span>
                             UNDER $25
                         </span>
 
-                        <img
-                            src="assets/product2.jpg"
-                            alt="Budget product contender"
-                            data-image-2
-                        >
+                        <!-- JESSIKA: replace this placeholder with your product photo <img> -->
+<div class="myf-photo-soon">📷<span>Product photo coming soon</span></div>
 
                     </div>
 
@@ -1862,6 +2226,102 @@ MOM SCORE</span>
     </section>
 
     <!-- =====================================================
+     EXPLORE MORE
+====================================================== -->
+<section class="seo-section">
+    <span class="section-kicker">⚔️ Keep exploring</span>
+    <h2>🔗 Explore More</h2>
+    <ul class="seo-links">
+        <li>
+            <a href="mom-lab.html">Mom Lab</a>
+            <span>Where products earn their spot through real-life chaos tests.</span>
+        </li>
+        <li>
+            <a href="product-guides.html">Product Guides</a>
+            <span>Mom-tested product guides and honest picks.</span>
+        </li>
+        <li>
+            <a href="blog-baby-products-every-day.html">Baby Products You Actually Use Every Day</a>
+            <span>The baby products moms reach for every single day.</span>
+        </li>
+        <li>
+            <a href="blog-toddler-must-haves.html">What Do You Actually Need for a Toddler?</a>
+            <span>Toddler essentials, minus the guesswork.</span>
+        </li>
+        <li>
+            <a href="submit-holy-grail.html">Share Your Mom Holy Grail</a>
+            <span>Recommend a product for a future Mom Battle.</span>
+        </li>
+    </ul>
+</section>
+
+<!-- =====================================================
+     FAQ
+====================================================== -->
+<section class="seo-section">
+    <span class="section-kicker">❓ Good to know</span>
+    <h2>Frequently Asked Questions</h2>
+    <div class="seo-faq">
+        <div class="seo-faq-item">
+            <h3>What is Mom Battles?</h3>
+            <p>Mom Battles is a fun product showdown from MomYouNeedThis. Two products go head-to-head in a category, and moms vote for the one they'd pick. The results show which product moms actually prefer — just votes, no sponsored rankings.</p>
+        </div>
+        <div class="seo-faq-item">
+            <h3>How do I vote in a battle?</h3>
+            <p>Pick a category like Baby, Toddler, Sleep, Potty, Feeding, or Under $25, then vote for your pick in each matchup. No account is needed — your browser remembers your vote.</p>
+        </div>
+        <div class="seo-faq-item">
+            <h3>Where do the products come from?</h3>
+            <p>The products featured in Mom Battles are mom-tested picks from the Mom Lab — items that survived real-life tests like the drop test, the toddler test, and the 3AM test.</p>
+        </div>
+        <div class="seo-faq-item">
+            <h3>Can I suggest a product for a future battle?</h3>
+            <p>Yes. Use the Recommend a Product button near the bottom of the page to share a product you swear by — it could end up facing off in a future Mom Battle.</p>
+        </div>
+    </div>
+</section>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is Mom Battles?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Mom Battles is a fun product showdown from MomYouNeedThis. Two products go head-to-head in a category, and moms vote for the one they'd pick. The results show which product moms actually prefer — just votes, no sponsored rankings."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I vote in a battle?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Pick a category like Baby, Toddler, Sleep, Potty, Feeding, or Under $25, then vote for your pick in each matchup. No account is needed — your browser remembers your vote."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Where do the products come from?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The products featured in Mom Battles are mom-tested picks from the Mom Lab — items that survived real-life tests like the drop test, the toddler test, and the 3AM test."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I suggest a product for a future battle?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Use the Recommend a Product button near the bottom of the page to share a product you swear by — it could end up facing off in a future Mom Battle."
+      }
+    }
+  ]
+}
+</script>
+<!-- =====================================================
          FOOTER
     ====================================================== -->
 
