@@ -1705,13 +1705,31 @@
                 border-radius: 28px;
             }
 
-            /* Mobile: table becomes stacked cards — no horizontal scroll */
+            /* Mobile: table becomes stacked cards — no horizontal scroll.
+               Flex column + order keeps the caption footnote below
+               the cards (caption-side stops working on block tables). */
+            .wb-table {
+                display: flex;
+                flex-direction: column;
+            }
+
             .wb-table thead {
                 display: none;
             }
 
-            .wb-table,
-            .wb-table tbody,
+            .wb-table tbody {
+                display: block;
+                order: 1;
+                width: 100%;
+            }
+
+            .wb-table caption {
+                display: block;
+                order: 2;
+                width: 100%;
+                padding-top: 14px;
+            }
+
             .wb-table tr,
             .wb-table td {
                 display: block;
@@ -1764,10 +1782,6 @@
                 letter-spacing: .6px;
                 text-transform: uppercase;
                 text-align: left;
-            }
-
-            .wb-table caption {
-                padding-top: 14px;
             }
 
         }
