@@ -1705,17 +1705,69 @@
                 border-radius: 28px;
             }
 
-            .wb-table {
-                font-size: 12px;
+            /* Mobile: table becomes stacked cards — no horizontal scroll */
+            .wb-table thead {
+                display: none;
             }
 
-            .wb-table th,
+            .wb-table,
+            .wb-table tbody,
+            .wb-table tr,
             .wb-table td {
-                padding: 9px 8px;
+                display: block;
+                width: 100%;
             }
 
-            .wb-table thead th {
+            .wb-table tbody tr {
+                margin-bottom: 12px;
+                padding: 4px 18px 8px;
+                background: #fffaf8;
+                border: 1px solid #f1e5e7;
+                border-radius: 16px;
+            }
+
+            .wb-table tbody tr:last-child {
+                margin-bottom: 0;
+            }
+
+            .wb-table tbody td {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 12px;
+                padding: 9px 0;
+                border-bottom: 1px solid #f5e9ec;
+                font-size: 14px;
+                text-align: right;
+            }
+
+            .wb-table tbody td:last-child {
+                border-bottom: none;
+            }
+
+            .wb-table tbody td:first-child {
+                display: block;
+                padding: 10px 0;
+                border-bottom: 1px solid #f0dfe3;
+                color: #332b2b;
+                font-size: 16px;
+                font-weight: 900;
+                text-align: left;
                 white-space: normal;
+            }
+
+            .wb-table tbody td[data-label]::before {
+                content: attr(data-label);
+                color: #a09a9b;
+                font-size: 10px;
+                font-weight: 900;
+                letter-spacing: .6px;
+                text-transform: uppercase;
+                text-align: left;
+            }
+
+            .wb-table caption {
+                padding-top: 14px;
             }
 
         }
@@ -2784,31 +2836,31 @@
                 <tbody>
                     <tr>
                         <td>Every day</td>
-                        <td>4–5</td>
-                        <td>3–4</td>
-                        <td>2–3</td>
-                        <td>5–7</td>
+                        <td data-label="Tops">4–5</td>
+                        <td data-label="Bottoms">3–4</td>
+                        <td data-label="Pajamas">2–3</td>
+                        <td data-label="Underwear &amp; socks">5–7</td>
                     </tr>
                     <tr>
                         <td>2–3 times a week</td>
-                        <td>7–8</td>
-                        <td>5–6</td>
-                        <td>3–4</td>
-                        <td>7–10</td>
+                        <td data-label="Tops">7–8</td>
+                        <td data-label="Bottoms">5–6</td>
+                        <td data-label="Pajamas">3–4</td>
+                        <td data-label="Underwear &amp; socks">7–10</td>
                     </tr>
                     <tr>
                         <td>About once a week</td>
-                        <td>10–12</td>
-                        <td>7–8</td>
-                        <td>4–5</td>
-                        <td>10–14</td>
+                        <td data-label="Tops">10–12</td>
+                        <td data-label="Bottoms">7–8</td>
+                        <td data-label="Pajamas">4–5</td>
+                        <td data-label="Underwear &amp; socks">10–14</td>
                     </tr>
                     <tr>
                         <td>Less than weekly</td>
-                        <td>12–14</td>
-                        <td>8–10</td>
-                        <td>5–6</td>
-                        <td>14+</td>
+                        <td data-label="Tops">12–14</td>
+                        <td data-label="Bottoms">8–10</td>
+                        <td data-label="Pajamas">5–6</td>
+                        <td data-label="Underwear &amp; socks">14+</td>
                     </tr>
                 </tbody>
             </table>
