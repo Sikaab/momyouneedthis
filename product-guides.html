@@ -6,16 +6,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Product Guides | MomYouNeedThis</title>
+<title>Product Guides: What's Worth Buying | MomYouNeedThis</title>
 
-<meta
-name="description"
-content="Browse practical product guides from MomYouNeedThis covering baby essentials, toddler products, mom must-haves, what is actually worth buying and what you can skip."
->
+<meta name="description" content="Which baby and toddler products are actually worth buying? Practical product guides on everyday essentials, toddler must-haves and what to skip.">
+
+<meta property="og:title" content="Product Guides: What's Worth Buying | MomYouNeedThis">
+<meta property="og:description" content="Which baby and toddler products are actually worth buying? Practical product guides on everyday essentials, toddler must-haves and what to skip.">
+<meta property="og:url" content="https://momyouneedthis.com/product-guides.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MomYouNeedThis">
+<meta property="og:image" content="https://momyouneedthis.com/assets/logo.svg">
+<meta name="twitter:card" content="summary">
 
 <meta name="robots" content="index, follow">
 
-<link rel="canonical" href="product-guides.html">
+<link rel="canonical" href="https://momyouneedthis.com/product-guides.html">
 
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="blog.css">
@@ -25,6 +30,254 @@ content="Browse practical product guides from MomYouNeedThis covering baby essen
 href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap"
 rel="stylesheet"
 >
+
+<style>
+        /* SEO content sections — designed to match the MomYouNeedThis brand. */
+        .seo-section {
+            max-width: 900px;
+            margin: 55px auto 0;
+            padding: 45px 42px 50px;
+            background: #ffffff;
+            border: 1px solid #eee5e7;
+            border-radius: 35px;
+            box-shadow: 0 12px 35px rgba(80, 55, 55, 0.06);
+            font-family: 'Nunito', system-ui, sans-serif;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+        .seo-section::before {
+            content: "";
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            top: -145px;
+            right: -90px;
+            background: #ffe5ec;
+            border-radius: 50%;
+            opacity: .65;
+            pointer-events: none;
+        }
+        .seo-section::after {
+            content: "";
+            position: absolute;
+            width: 190px;
+            height: 190px;
+            bottom: -120px;
+            left: -80px;
+            background: #fff1c9;
+            border-radius: 50%;
+            opacity: .55;
+            pointer-events: none;
+        }
+        .seo-section > * {
+            position: relative;
+            z-index: 1;
+        }
+        .seo-section .section-kicker {
+            display: block;
+            margin-bottom: 10px;
+            color: #c95770;
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+        .seo-section h2 {
+            max-width: 700px;
+            margin: 0 auto 14px;
+            color: #332b2b;
+            font-size: clamp(26px, 3.6vw, 34px);
+            line-height: 1.15;
+            letter-spacing: -.6px;
+            font-weight: 900;
+            text-align: center;
+        }
+        .seo-section h2::after {
+            content: "";
+            display: block;
+            width: 45px;
+            height: 3px;
+            margin: 16px auto 0;
+            background: #e89aaa;
+            border-radius: 999px;
+        }
+        .seo-lead {
+            max-width: 680px;
+            margin: 0 auto 26px;
+            color: #6d6566;
+            font-size: 16px;
+            line-height: 1.7;
+            text-align: center;
+        }
+        .seo-links {
+            list-style: none;
+            margin: 10px auto 0;
+            padding: 0;
+            max-width: 720px;
+            display: grid;
+            gap: 10px;
+        }
+        .seo-links li {
+            padding: 16px 18px;
+            background: #fffaf8;
+            border: 1px solid #f1e5e7;
+            border-radius: 16px;
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
+        .seo-links li:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(80, 55, 65, .07);
+        }
+        .seo-links a {
+            color: #332b2b;
+            font-size: 15px;
+            font-weight: 900;
+            text-decoration: none;
+        }
+        .seo-links a:hover {
+            color: #d05a7d;
+        }
+        .seo-links span {
+            display: block;
+            margin-top: 4px;
+            color: #777;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .seo-steps {
+            list-style: none;
+            margin: 0 auto;
+            padding: 0;
+            max-width: 720px;
+            display: grid;
+            gap: 12px;
+            counter-reset: seo-step;
+        }
+        .seo-steps li {
+            counter-increment: seo-step;
+            position: relative;
+            padding: 18px 20px 18px 70px;
+            background: #fffaf8;
+            border: 1px solid #f1e5e7;
+            border-radius: 18px;
+            color: #5f5758;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+        .seo-steps li::before {
+            content: counter(seo-step);
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #e89aaa;
+            border-radius: 50%;
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 900;
+        }
+        .seo-steps li strong {
+            color: #332b2b;
+        }
+
+        .seo-checklist {
+            list-style: none;
+            margin: 0 auto;
+            padding: 0;
+            max-width: 720px;
+            display: grid;
+            gap: 10px;
+        }
+        .seo-checklist li {
+            position: relative;
+            padding: 14px 16px 14px 48px;
+            background: #fffaf8;
+            border: 1px solid #f1e5e7;
+            border-radius: 14px;
+            color: #5f5758;
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 1.5;
+        }
+        .seo-checklist li::before {
+            content: "\2713";
+            position: absolute;
+            left: 16px;
+            top: 14px;
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fff0f4;
+            border-radius: 50%;
+            color: #d05a7d;
+            font-size: 12px;
+            font-weight: 900;
+        }
+
+        .seo-faq {
+            max-width: 720px;
+            margin: 0 auto;
+            display: grid;
+            gap: 12px;
+        }
+        .seo-faq-item {
+            padding: 20px 22px;
+            background: #fffaf8;
+            border: 1px solid #f0dfe3;
+            border-radius: 18px;
+        }
+        .seo-faq-item h3 {
+            margin: 0 0 8px;
+            color: #332b2b;
+            font-size: 16px;
+            line-height: 1.4;
+            font-weight: 900;
+        }
+        .seo-faq-item p {
+            margin: 0;
+            color: #686061;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 750px) {
+            .seo-section {
+                margin-top: 40px;
+                padding: 35px 20px 38px;
+                border-radius: 28px;
+            }
+            .seo-steps li {
+                padding: 16px 16px 16px 62px;
+                font-size: 14px;
+            }
+            .seo-steps li::before {
+                left: 16px;
+            }
+            .seo-faq-item {
+                padding: 18px;
+            }
+            .seo-table {
+                font-size: 12px;
+            }
+            .seo-table th,
+            .seo-table td {
+                padding: 9px 8px;
+            }
+            .seo-table thead th {
+                white-space: normal;
+            }
+        }
+    </style>
 
 </head>
 
@@ -69,9 +322,7 @@ Practical Product Guides
 </h1>
 
 <p class="article-intro">
-From baby and toddler essentials to mom must-haves, find practical
-product guides designed to help you figure out what you actually need,
-what is worth spending money on and what you can probably skip.
+Welcome to the Product Guide Library at MomYouNeedThis. These guides help you figure out what's actually worth buying: baby products you use every day, toddler must-haves, and what's fine to skip. Every recommendation focuses on real family life — solving actual problems, not adding clutter. Our Amazon finds are affiliate links, clearly disclosed.
 </p>
 
 <div class="article-meta">
@@ -229,7 +480,7 @@ the products that can genuinely make everyday baby life easier.
 <div class="related-grid">
 
 <a
-href="blog-newborn-essentials.html"
+href="blog-baby-products-every-day.html"
 class="related-card"
 >
 
@@ -238,11 +489,11 @@ class="related-card"
 </div>
 
 <span>
-NEWBORN
+EVERYDAY PRODUCTS
 </span>
 
 <h3>
-What Do You Actually Need For A Newborn?
+Baby Products You Actually Use Every Day
 </h3>
 
 <strong>
@@ -326,7 +577,7 @@ more clutter.
 <div class="related-grid">
 
 <a
-href="blog-toddler-essentials.html"
+href="blog-toddler-must-haves.html"
 class="related-card"
 >
 
@@ -350,7 +601,7 @@ Read The Guide →
 
 
 <a
-href="potty-training-readiness.html"
+href="blog-potty-training-readiness.html"
 class="related-card"
 >
 
@@ -374,7 +625,7 @@ Read The Guide →
 
 
 <a
-href="free-potty-chart.html"
+href="potty-chart-generator.html"
 class="related-card"
 >
 
@@ -520,7 +771,7 @@ you'll use it regularly.
 <div class="related-grid">
 
 <a
-href="blog-newborn-essentials.html"
+href="blog-baby-products-every-day.html"
 class="related-card"
 >
 
@@ -529,11 +780,11 @@ class="related-card"
 </div>
 
 <span>
-ESSENTIALS
+EVERYDAY PRODUCTS
 </span>
 
 <h3>
-Start With The Basics You Actually Need
+Baby Products You Actually Use Every Day
 </h3>
 
 <strong>
@@ -544,7 +795,7 @@ Read The Guide →
 
 
 <a
-href="blog-toddler-essentials.html"
+href="blog-toddler-must-haves.html"
 class="related-card"
 >
 
@@ -557,7 +808,7 @@ SMART SHOPPING
 </span>
 
 <h3>
-What You Can Skip When Shopping For A Toddler
+What Do You Actually Need For A Toddler?
 </h3>
 
 <strong>
@@ -774,6 +1025,44 @@ Explore The Blog →
 
 
 <!-- =========================
+     FAQ
+========================= -->
+
+<section class="seo-section">
+
+<h2>
+❓ Frequently Asked Questions
+</h2>
+
+<div class="seo-faq">
+
+<div class="seo-faq-item">
+<h3>What baby products do I actually need?</h3>
+<p>Our baby essentials guide covers the basics that are genuinely useful and the extras you can skip.</p>
+</div>
+<div class="seo-faq-item">
+<h3>Which baby products get used every day?</h3>
+<p>Our guide to baby products you actually use every day highlights the practical items that earn their keep, rather than the ones that gather dust.</p>
+</div>
+<div class="seo-faq-item">
+<h3>What are the must-have products for a toddler?</h3>
+<p>Our toddler must-haves guide focuses on genuinely useful items for the toddler stage and what you can comfortably skip.</p>
+</div>
+<div class="seo-faq-item">
+<h3>How do I decide whether a product is worth buying?</h3>
+<p>Ask the same three questions we use on this page: does it solve a problem you actually have, will you use it regularly, and could something you already own do the job?</p>
+</div>
+<div class="seo-faq-item">
+<h3>Are the Amazon links on this site affiliate links?</h3>
+<p>Yes. As noted in the footer, MomYouNeedThis is an Amazon Associate and earns from qualifying purchases. You can read the full details in the affiliate disclosure.</p>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================
      FOOTER
 ========================= -->
 
@@ -835,6 +1124,55 @@ Explore The Blog →
 </section>
 
 </div>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What baby products do I actually need?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Our baby essentials guide covers the basics that are genuinely useful and the extras you can skip."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which baby products get used every day?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Our guide to baby products you actually use every day highlights the practical items that earn their keep, rather than the ones that gather dust."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What are the must-have products for a toddler?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Our toddler must-haves guide focuses on genuinely useful items for the toddler stage and what you can comfortably skip."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I decide whether a product is worth buying?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ask the same three questions we use on this page: does it solve a problem you actually have, will you use it regularly, and could something you already own do the job?"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are the Amazon links on this site affiliate links?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. As noted in the footer, MomYouNeedThis is an Amazon Associate and earns from qualifying purchases. You can read the full details in the affiliate disclosure."
+      }
+    }
+  ]
+}
+</script>
 
 </body>
 
