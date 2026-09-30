@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" role="img" aria-label="Shapes coloring page: circle, square, triangle, star and heart">
+  <rect width="600" height="800" fill="#ffffff"/>
+  <g fill="#ffffff" stroke="#000000" stroke-width="10" stroke-linejoin="round">
+    <!-- Row 1: circle + square -->
+    <circle cx="150" cy="140" r="90"/>
+    <rect x="365" y="55" width="170" height="170" rx="18"/>
+    <!-- Row 2: triangle + star -->
+    <path d="M150 300 L65 470 L235 470 Z"/>
+    <path d="M450 330 l26 54 60 9 -43 42 10 60 -53 -28 -53 28 10 -60 -43 -42 60 -9z"/>
+    <!-- Row 3: heart centered -->
+    <path d="M300 700 C300 700 185 628 185 556 C185 512 220 490 252 508 C274 521 288 540 300 562 C312 540 326 521 348 508 C380 490 415 512 415 556 C415 628 300 700 300 700 Z"/>
+  </g>
+  <!-- faces -->
+  <g fill="#000">
+    <circle cx="126" cy="126" r="9"/><circle cx="174" cy="126" r="9"/>
+    <circle cx="426" cy="126" r="9"/><circle cx="474" cy="126" r="9"/>
+    <circle cx="132" cy="408" r="9"/><circle cx="168" cy="408" r="9"/>
+    <circle cx="432" cy="408" r="9"/><circle cx="468" cy="408" r="9"/>
+    <circle cx="272" cy="580" r="9"/><circle cx="328" cy="580" r="9"/>
+  </g>
+  <g fill="none" stroke="#000" stroke-width="8" stroke-linecap="round">
+    <path d="M131 160 Q150 176 169 160"/>
+    <path d="M431 160 Q450 176 469 160"/>
+    <path d="M134 438 Q150 452 166 438"/>
+    <path d="M435 438 Q450 452 465 438"/>
+    <path d="M277 610 Q300 626 323 610"/>
+  </g>
+</svg>
