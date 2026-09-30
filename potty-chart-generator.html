@@ -112,82 +112,252 @@ Free Personalized Potty Training Chart | Printable Reward Kit | MomYouNeedThis
 </script>
 
 <style>
-    /* SEO content sections — prefixed classes avoid collisions
-       with the existing generator styles. */
-    .seo-section {
-        max-width: 42rem;
-        margin: 3rem auto;
-        padding: 0 1.25rem;
-        font-family: 'Nunito', system-ui, sans-serif;
-    }
-    .seo-section h2 {
-        margin: 0 0 .75rem;
-        font-size: 1.5rem;
-        font-weight: 900;
-        line-height: 1.25;
-    }
-    .seo-section .seo-lead {
-        margin: 0 0 1.25rem;
-        line-height: 1.6;
-    }
-    .seo-steps {
-        margin: 0;
-        padding-left: 1.25rem;
-        display: grid;
-        gap: .9rem;
-        line-height: 1.55;
-    }
-    .seo-steps li::marker {
-        font-weight: 900;
-    }
-    .seo-checklist {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        display: grid;
-        gap: .7rem;
-        line-height: 1.55;
-    }
-    .seo-checklist li {
-        padding-left: 1.75rem;
-        position: relative;
-    }
-    .seo-checklist li::before {
-        content: "✓";
-        position: absolute;
-        left: 0;
-        font-weight: 900;
-    }
-    .seo-faq h3 {
-        margin: 1.25rem 0 .35rem;
-        font-size: 1.05rem;
-        font-weight: 900;
-        line-height: 1.35;
-    }
-    .seo-faq h3:first-of-type {
-        margin-top: 0;
-    }
-    .seo-faq p {
-        margin: 0;
-        line-height: 1.6;
-    }
-    .seo-links {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        display: grid;
-        gap: 1rem;
-    }
-    .seo-links a {
-        font-weight: 700;
-    }
-    .seo-links span {
-        display: block;
-        margin-top: .15rem;
-        opacity: .85;
-        line-height: 1.5;
-    }
-</style>
+        /* SEO content sections — designed to match the MomYouNeedThis brand. */
+        .seo-section {
+            max-width: 900px;
+            margin: 55px auto 0;
+            padding: 45px 42px 50px;
+            background: #ffffff;
+            border: 1px solid #eee5e7;
+            border-radius: 35px;
+            box-shadow: 0 12px 35px rgba(80, 55, 55, 0.06);
+            font-family: 'Nunito', system-ui, sans-serif;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+        .seo-section::before {
+            content: "";
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            top: -145px;
+            right: -90px;
+            background: #ffe5ec;
+            border-radius: 50%;
+            opacity: .65;
+            pointer-events: none;
+        }
+        .seo-section::after {
+            content: "";
+            position: absolute;
+            width: 190px;
+            height: 190px;
+            bottom: -120px;
+            left: -80px;
+            background: #fff1c9;
+            border-radius: 50%;
+            opacity: .55;
+            pointer-events: none;
+        }
+        .seo-section > * {
+            position: relative;
+            z-index: 1;
+        }
+        .seo-section .section-kicker {
+            display: block;
+            margin-bottom: 10px;
+            color: #c95770;
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+        .seo-section h2 {
+            max-width: 700px;
+            margin: 0 auto 14px;
+            color: #332b2b;
+            font-size: clamp(26px, 3.6vw, 34px);
+            line-height: 1.15;
+            letter-spacing: -.6px;
+            font-weight: 900;
+            text-align: center;
+        }
+        .seo-section h2::after {
+            content: "";
+            display: block;
+            width: 45px;
+            height: 3px;
+            margin: 16px auto 0;
+            background: #e89aaa;
+            border-radius: 999px;
+        }
+        .seo-lead {
+            max-width: 680px;
+            margin: 0 auto 26px;
+            color: #6d6566;
+            font-size: 16px;
+            line-height: 1.7;
+            text-align: center;
+        }
+        .seo-links {
+            list-style: none;
+            margin: 10px auto 0;
+            padding: 0;
+            max-width: 720px;
+            display: grid;
+            gap: 10px;
+        }
+        .seo-links li {
+            padding: 16px 18px;
+            background: #fffaf8;
+            border: 1px solid #f1e5e7;
+            border-radius: 16px;
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
+        .seo-links li:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(80, 55, 65, .07);
+        }
+        .seo-links a {
+            color: #332b2b;
+            font-size: 15px;
+            font-weight: 900;
+            text-decoration: none;
+        }
+        .seo-links a:hover {
+            color: #d05a7d;
+        }
+        .seo-links span {
+            display: block;
+            margin-top: 4px;
+            color: #777;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .seo-steps {
+            list-style: none;
+            margin: 0 auto;
+            padding: 0;
+            max-width: 720px;
+            display: grid;
+            gap: 12px;
+            counter-reset: seo-step;
+        }
+        .seo-steps li {
+            counter-increment: seo-step;
+            position: relative;
+            padding: 18px 20px 18px 70px;
+            background: #fffaf8;
+            border: 1px solid #f1e5e7;
+            border-radius: 18px;
+            color: #5f5758;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+        .seo-steps li::before {
+            content: counter(seo-step);
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #e89aaa;
+            border-radius: 50%;
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 900;
+        }
+        .seo-steps li strong {
+            color: #332b2b;
+        }
+
+        .seo-checklist {
+            list-style: none;
+            margin: 0 auto;
+            padding: 0;
+            max-width: 720px;
+            display: grid;
+            gap: 10px;
+        }
+        .seo-checklist li {
+            position: relative;
+            padding: 14px 16px 14px 48px;
+            background: #fffaf8;
+            border: 1px solid #f1e5e7;
+            border-radius: 14px;
+            color: #5f5758;
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 1.5;
+        }
+        .seo-checklist li::before {
+            content: "\2713";
+            position: absolute;
+            left: 16px;
+            top: 14px;
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fff0f4;
+            border-radius: 50%;
+            color: #d05a7d;
+            font-size: 12px;
+            font-weight: 900;
+        }
+
+        .seo-faq {
+            max-width: 720px;
+            margin: 0 auto;
+            display: grid;
+            gap: 12px;
+        }
+        .seo-faq-item {
+            padding: 20px 22px;
+            background: #fffaf8;
+            border: 1px solid #f0dfe3;
+            border-radius: 18px;
+        }
+        .seo-faq-item h3 {
+            margin: 0 0 8px;
+            color: #332b2b;
+            font-size: 16px;
+            line-height: 1.4;
+            font-weight: 900;
+        }
+        .seo-faq-item p {
+            margin: 0;
+            color: #686061;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 750px) {
+            .seo-section {
+                margin-top: 40px;
+                padding: 35px 20px 38px;
+                border-radius: 28px;
+            }
+            .seo-steps li {
+                padding: 16px 16px 16px 62px;
+                font-size: 14px;
+            }
+            .seo-steps li::before {
+                left: 16px;
+            }
+            .seo-faq-item {
+                padding: 18px;
+            }
+            .seo-table {
+                font-size: 12px;
+            }
+            .seo-table th,
+            .seo-table td {
+                padding: 9px 8px;
+            }
+            .seo-table thead th {
+                white-space: normal;
+            }
+        }
+    </style>
 
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="potty-chart-generator.css">
@@ -596,43 +766,43 @@ Why Kids Love Their Personalized Chart
 
     <div class="seo-faq">
 
-        <h3>When should I start potty training?</h3>
+        <div class="seo-faq-item"><h3>When should I start potty training?</h3>
         <p>
             Most children show signs of readiness between 18 months and
             3 years, with the average around 2 to 2.5 years. Watch for
             readiness signs — like staying dry for 2+ hours and showing
             interest in the bathroom — rather than starting by the calendar.
-        </p>
+        </p></div>
 
-        <h3>Do reward charts actually work for potty training?</h3>
+        <div class="seo-faq-item"><h3>Do reward charts actually work for potty training?</h3>
         <p>
             For many toddlers, yes. A visual chart makes progress feel real,
             and small rewards keep motivation high through the tricky middle
             days. Personalizing the chart with your child's name and favorite
             theme makes it even more exciting for them.
-        </p>
+        </p></div>
 
-        <h3>How long does potty training usually take?</h3>
+        <div class="seo-faq-item"><h3>How long does potty training usually take?</h3>
         <p>
             It varies widely — anywhere from a few days to a few months.
             Most children get the hang of daytime training within 3 to
             6 months once they are truly ready. Starting before readiness
             signs appear usually makes it take longer, not shorter.
-        </p>
+        </p></div>
 
-        <h3>What comes in the free potty training kit?</h3>
+        <div class="seo-faq-item"><h3>What comes in the free potty training kit?</h3>
         <p>
             Your personalized kit includes a printable reward chart with your
             child's name and chosen theme, a completion certificate to
             celebrate the milestone, and printable reward coupons to keep
             motivation going.
-        </p>
+        </p></div>
 
-        <h3>Is the potty training kit really free?</h3>
+        <div class="seo-faq-item"><h3>Is the potty training kit really free?</h3>
         <p>
             Yes. Personalize your chart, enter your email, and your download
             starts immediately. Print it at home and start using it today.
-        </p>
+        </p></div>
 
     </div>
 
