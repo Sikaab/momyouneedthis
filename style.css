@@ -6073,3 +6073,23 @@ html{
 }
 
 }
+/* Print/Download button pair: spacing + visual distinction (mobile fix 2026-10-01) */
+.download-button{
+    margin:6px 10px 6px 0;
+}
+.download-button.print-btn{
+    background:#fff;
+    color:#d46a7e;
+    border:2px solid #e89aaa;
+    box-sizing:border-box;
+}
+.download-button.print-btn:hover{
+    background:#fdf2f4;
+    transform:translateY(-3px);
+}
+@media (max-width:600px){
+    .download-button{
+        margin:6px 8px 6px 0;
+        padding:14px 22px;
+    }
+}

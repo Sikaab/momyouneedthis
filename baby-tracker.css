@@ -406,6 +406,45 @@
 }
 
 
+/* Disabled / unsupported state: dimmed, proactive hint. */
+
+.voice-main-button:disabled,
+.voice-main-button.voice-unsupported {
+    opacity: .45;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow:
+        0 8px 18px rgba(201, 111, 134, .12);
+}
+
+.voice-main-button:disabled:hover,
+.voice-main-button.voice-unsupported:hover {
+    transform: none;
+}
+
+
+/* Voice confirmation dialog content. */
+
+.voice-confirm-heard {
+    font-size: 19px;
+    font-weight: 800;
+    color: #332b2b;
+    line-height: 1.5;
+    margin: 12px 0 6px;
+}
+
+.voice-confirm-desc {
+    font-size: 14.5px;
+    color: #6d6566;
+    line-height: 1.55;
+    margin: 0 0 18px;
+}
+
+#voiceConfirmDiscard {
+    margin-top: 10px;
+}
+
+
 /* =========================================================
    VOICE STATUS
 ========================================================= */

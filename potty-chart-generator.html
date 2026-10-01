@@ -413,6 +413,7 @@ Child's Name
 <input
 id="childName"
 type="text"
+maxlength="24"
 placeholder="Example: Emma">
 
 <label>
@@ -604,6 +605,13 @@ Enter your email to download your personalized potty chart.
 id="emailInput"
 type="email"
 placeholder="Your email address">
+
+<p
+id="emailError"
+class="potty-error"
+role="alert"
+hidden>
+</p>
 
 <button
 id="downloadButton"

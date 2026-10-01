@@ -4,68 +4,75 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sphere Activities - Free Printable | MomYouNeedThis</title>
-<link rel="stylesheet" href="printable.css">
+<link rel="stylesheet" href="../printable.css">
 <style>
-
-  .explorer-top { display:flex; gap:22px; align-items:stretch; }
-  .shape-stage { flex:1; background:#fff; border:2.5px solid #f8bbd0; border-radius:20px; padding:18px; text-align:center; }
-  .shape-stage svg { width:220px; height:220px; }
-  .trace-word { font-size:26px; font-weight:900; color:#1565c0; letter-spacing:5px; margin-top:10px; }
-  .trace-word .dot { border-bottom:4px dotted #42a5f5; }
-  .side-col { width:250px; display:flex; flex-direction:column; gap:12px; }
-  .fact-badge { background:#fff; border:2.5px solid #42a5f5; border-radius:16px; padding:14px; text-align:center; }
-  .fact-badge .fb-num { font-size:30px; }
-  .fact-badge .fb-label { font-size:13px; font-weight:800; color:#7a4a5e; }
-  .fun-fact { background:#fff8e1; border:2px dashed #ffd54f; border-radius:14px; padding:12px 14px; font-size:14px; font-weight:700; color:#7a5c00; }
-  .circle-title { text-align:center; font-size:20px; font-weight:900; color:#4a2c3a; }
-  .obj-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
-  .obj-card { background:#fff; border:2.5px solid #f3d9e2; border-radius:18px; padding:14px 10px 10px; text-align:center; position:relative; }
-  .obj-emoji { font-size:44px; display:block; }
-  .obj-label { font-size:13px; font-weight:800; color:#6d3b52; display:block; margin-top:4px; }
-  .obj-check { position:absolute; top:8px; right:10px; font-size:22px; color:#42a5f5; }
-  .draw-box { background:#fff; border:2.5px dashed #42a5f5; border-radius:20px; height:150px; display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:800; color:#b08a9a; }
-
+  @page { size: letter; margin: 0.5in; }
+  .printable-page { max-width: 7.5in; margin: 0 auto; }
+  .act-row { display:flex; gap:14px; justify-content:center; align-items:center; flex-wrap:wrap; margin:14px 0; }
+  .trace-card { background:#fff; border:3px solid #f8bbd0; border-radius:22px; padding:18px; text-align:center; flex:1; min-width:180px; }
+  .trace-num { font-size:120px; font-weight:900; color:#fff; -webkit-text-stroke:3px #d6336c; line-height:1; font-family:'Nunito',sans-serif; }
+  .find-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; background:#fff; border:3px solid #f8bbd0; border-radius:22px; padding:18px; }
+  .find-grid.g3 { grid-template-columns:repeat(3,1fr); }
+  .find-cell { background:#fffdf9; border:2px solid #f3d9e2; border-radius:16px; padding:10px; display:flex; align-items:center; justify-content:center; min-height:110px; }
+  .find-cell svg { width:84px; height:84px; }
+  .big-shape-row { display:flex; gap:18px; justify-content:center; margin:16px 0; flex-wrap:wrap; }
+  .count-blank { display:inline-block; min-width:70px; border-bottom:4px dotted #d6336c; }
+  .ex-row { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin:12px 0; }
+  .ex-card { background:#fff; border:2px solid #f3d9e2; border-radius:16px; padding:10px 18px; text-align:center; min-width:110px; }
+  .ex-emoji { font-size:36px; display:block; }
+  .ex-label { font-size:14px; font-weight:800; color:#6d3b52; }
+  .sec-title { text-align:center; font-size:21px; font-weight:900; color:#4a2c3a; margin:18px 0 8px; }
+  .parent-tip { background:#fff8e1; border:2px dashed #ffd54f; border-radius:16px; padding:12px 18px; font-size:15px; font-weight:700; color:#7a5c00; margin:14px 0; }
+  .pattern-row { display:flex; gap:8px; justify-content:center; align-items:center; margin:10px 0; flex-wrap:wrap; }
+  .pattern-row svg { width:64px; height:64px; }
+  .pattern-q { font-size:44px; font-weight:900; color:#d6336c; }
+  .match-row { display:flex; gap:10px; align-items:center; justify-content:center; margin:10px 0; }
+  .match-label { font-size:19px; font-weight:900; color:#4a2c3a; background:#fff; border:2.5px solid #f8bbd0; border-radius:14px; padding:8px 18px; min-width:170px; text-align:center; }
+  .vs-badge { font-size:26px; font-weight:900; color:#fff; background:#d6336c; border-radius:50%; width:52px; height:52px; display:flex; align-items:center; justify-content:center; }
+  .brand-footer { text-align:center; margin-top:22px; padding-top:14px; border-top:2px solid #f8bbd0; }
+  .brand-footer .bf-name { font-size:17px; font-weight:900; color:#d6336c; letter-spacing:1px; }
+  .brand-footer .bf-tag { font-size:12.5px; font-weight:700; color:#a08a96; }
 </style>
 </head>
 <body>
 <div class="printable-page">
   <div class="printable-header">
-    <div class="printable-kicker">&#x1F9E0; 3D Shape Explorer</div>
-    <div class="printable-title">All About Spheres</div>
-    <div class="printable-subtitle">Meet the sphere &mdash; a shape you can hold!</div>
+    <div class="printable-kicker">⚽ Sphere Activities</div>
+    <div class="printable-title">All About Spheres!</div>
+    <div class="printable-subtitle">The 3D ball shape.</div>
   </div>
   <div class="printable-divider"></div>
   <div class="printable-content">
-
-    <div class="activity-instructions">
-      &#x1F9E0; <strong>3D explorer!</strong> This is a <strong>sphere</strong> &mdash; a shape you can hold! Circle the things shaped like a sphere, then draw your own!
+    <div class="activity-instructions">⚽ <strong>Color the spheres!</strong> A sphere is round all the way around — no flat sides, no corners. That is why balls roll so well!</div>
+    <div class="parent-tip">👩‍👧 <strong>Parent tip:</strong> Roll a real ball while doing this sheet. Ask “why does it roll so smoothly?” — the answer (round all over, no corners) IS the definition of a sphere.</div>
+<div class="sec-title">🎨 Color the spheres!</div>
+    <div class="big-shape-row">
+      <div class="trace-card"><svg viewBox="0 0 100 100" style="width:150px;height:150px"><circle cx="50" cy="50" r="36" fill="#ef5350" stroke="#d6336c" stroke-width="4"/><ellipse cx="37" cy="36" rx="12" ry="7" fill="#ffffff" opacity="0.75" transform="rotate(-25 37 36)"/></svg><div class="ex-label">Soccer ball</div></div>
+      <div class="trace-card"><svg viewBox="0 0 100 100" style="width:150px;height:150px"><circle cx="50" cy="50" r="36" fill="#66bb6a" stroke="#d6336c" stroke-width="4"/><ellipse cx="37" cy="36" rx="12" ry="7" fill="#ffffff" opacity="0.75" transform="rotate(-25 37 36)"/></svg><div class="ex-label">Tennis ball</div></div>
+      <div class="trace-card"><svg viewBox="0 0 100 100" style="width:150px;height:150px"><circle cx="50" cy="50" r="36" fill="#ffca28" stroke="#d6336c" stroke-width="4"/><ellipse cx="37" cy="36" rx="12" ry="7" fill="#ffffff" opacity="0.75" transform="rotate(-25 37 36)"/></svg><div class="ex-label">Basketball</div></div>
     </div>
-    <div class="explorer-top">
-      <div class="shape-stage">
-        <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="36" fill="#42a5f5"/><ellipse cx="38" cy="36" rx="12" ry="8" fill="#ffffff" opacity="0.45" transform="rotate(-25 38 36)"/></svg>
-        <div class="trace-word"><span class="dot">S</span><span class="dot">P</span><span class="dot">H</span><span class="dot">E</span><span class="dot">R</span><span class="dot">E</span></div>
-      </div>
-      <div class="side-col">
-        <div class="fact-badge"><div class="fb-num">⚽</div><div class="fb-label">Sphere &mdash; a 3D shape!</div></div>
-        <div class="fun-fact">&#x1F4A1; A sphere is round all over — like a ball! It can roll in every direction!</div>
-        <div class="fun-fact" style="background:#fef6f9;border-color:#f8bbd0;color:#6d3b52;">&#x270B; 3D shapes are <strong>solid</strong> &mdash; you can pick them up and turn them around!</div>
-      </div>
+    <div class="sec-title">🔍 Find &amp; circle all the <span style="color:#d6336c;">spheres</span>!</div>
+    <div class="find-grid">
+<div class="find-cell"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="36" fill="#ef5350" stroke="#d6336c" stroke-width="4"/><ellipse cx="37" cy="36" rx="12" ry="7" fill="#ffffff" opacity="0.75" transform="rotate(-25 37 36)"/></svg></div>
+<div class="find-cell"><svg viewBox="0 0 100 100"><polygon points="18,40 50,28 50,72 18,84" fill="#ec407a" stroke="#d6336c" stroke-width="4" stroke-linejoin="round"/><polygon points="50,28 82,40 82,84 50,72" fill="#ec407a" stroke="#d6336c" stroke-width="4" stroke-linejoin="round"/><polygon points="18,40 50,52 82,40 50,28" fill="#ec407a" stroke="#d6336c" stroke-width="4" stroke-linejoin="round"/></svg></div>
+<div class="find-cell"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="36" fill="#ab47bc" stroke="#d6336c" stroke-width="4"/><ellipse cx="37" cy="36" rx="12" ry="7" fill="#ffffff" opacity="0.75" transform="rotate(-25 37 36)"/></svg></div>
+<div class="find-cell"><svg viewBox="0 0 100 100"><polygon points="50,8 78,72 22,72" fill="#5c6bc0" stroke="#d6336c" stroke-width="4" stroke-linejoin="round"/><ellipse cx="50" cy="72" rx="28" ry="9" fill="#5c6bc0" stroke="#d6336c" stroke-width="4"/></svg></div>
+<div class="find-cell"><svg viewBox="0 0 100 100"><rect x="28" y="26" width="44" height="48" fill="#29b6f6" stroke="#d6336c" stroke-width="4"/><ellipse cx="50" cy="26" rx="22" ry="8" fill="#29b6f6" stroke="#d6336c" stroke-width="4"/><ellipse cx="50" cy="74" rx="22" ry="8" fill="#29b6f6" stroke="#d6336c" stroke-width="4"/></svg></div>
+<div class="find-cell"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="36" fill="#26a69a" stroke="#d6336c" stroke-width="4"/><ellipse cx="37" cy="36" rx="12" ry="7" fill="#ffffff" opacity="0.75" transform="rotate(-25 37 36)"/></svg></div>
+<div class="find-cell"><svg viewBox="0 0 100 100"><polygon points="50,6 84,78 16,78" fill="#66bb6a" stroke="#d6336c" stroke-width="4" stroke-linejoin="round"/><polygon points="16,78 84,78 70,90 30,90" fill="#66bb6a" stroke="#d6336c" stroke-width="4" stroke-linejoin="round"/></svg></div>
+<div class="find-cell"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="36" fill="#ffca28" stroke="#d6336c" stroke-width="4"/><ellipse cx="37" cy="36" rx="12" ry="7" fill="#ffffff" opacity="0.75" transform="rotate(-25 37 36)"/></svg></div>
     </div>
-    <div class="circle-title">&#x2B55; Circle everything shaped like a <span style="color:#1565c0;">sphere</span>!</div>
-    <div class="obj-grid">
-<div class="obj-card"><span class="obj-emoji">📦</span><span class="obj-label">Box</span><div class="obj-check">&#x25CB;</div></div>
-<div class="obj-card"><span class="obj-emoji">🎲</span><span class="obj-label">Dice</span><div class="obj-check">&#x25CB;</div></div>
-<div class="obj-card"><span class="obj-emoji">🍊</span><span class="obj-label">Orange</span><div class="obj-check">&#x25CB;</div></div>
-<div class="obj-card"><span class="obj-emoji">🌍</span><span class="obj-label">Globe</span><div class="obj-check">&#x25CB;</div></div>
-<div class="obj-card"><span class="obj-emoji">⚽</span><span class="obj-label">Soccer ball</span><div class="obj-check">&#x25CB;</div></div>
-<div class="obj-card"><span class="obj-emoji">🫧</span><span class="obj-label">Bubble</span><div class="obj-check">&#x25CB;</div></div>
+    <div class="sec-title">🌍 Spheres in real life</div>
+    <div class="ex-row">
+      <div class="ex-card"><span class="ex-emoji">⚽</span><span class="ex-label">Ball</span></div>
+      <div class="ex-card"><span class="ex-emoji">🍊</span><span class="ex-label">Orange</span></div>
+      <div class="ex-card"><span class="ex-emoji">🫧</span><span class="ex-label">Bubble</span></div>
+      <div class="ex-card"><span class="ex-emoji">🌍</span><span class="ex-label">Earth</span></div>
     </div>
-    <div class="draw-box">&#x1F58D;&#xFE0F; Draw your own sphere here!</div>
-
   </div>
-  <div class="printable-footer">
-    <div class="printable-brand">MomYouNeedThis</div>
-    <div class="printable-tagline">Free printables for happy little learners 💗</div>
+  <div class="brand-footer">
+    <div class="bf-name">momyouneedthis</div>
+    <div class="bf-tag">Free printables for happy little learners 💗</div>
   </div>
 </div>
 </body>
