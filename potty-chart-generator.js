@@ -225,113 +225,6 @@ coupons:"assets/animals-potty-training-reward-coupons.jpeg"
 =========================== */
 
 
-function createWeek(){
-
-
-const week =
-document.createElement("div");
-
-
-week.className =
-"potty-week";
-
-
-
-week.innerHTML = `
-
-<h4 class="week-title">
-Week 1
-</h4>
-
-
-<table class="potty-chart-table">
-
-
-<tr>
-
-<th class="empty-cell"></th>
-
-<th>Day 1</th>
-<th>Day 2</th>
-<th>Day 3</th>
-<th>Day 4</th>
-<th>Day 5</th>
-<th>Day 6</th>
-<th>Day 7</th>
-
-</tr>
-
-
-
-
-<tr>
-
-<td class="activity-label">
-🚽 Pee
-</td>
-
-<td><div class="reward-circle"></div></td>
-<td><div class="reward-circle"></div></td>
-<td><div class="reward-circle"></div></td>
-<td><div class="reward-circle"></div></td>
-<td><div class="reward-circle"></div></td>
-<td><div class="reward-circle"></div></td>
-<td><div class="reward-circle"></div></td>
-
-</tr>
-
-
-
-
-<tr>
-
-<td class="activity-label">
-💩 Poop
-</td>
-
-<td><div class="reward-circle"></div></td>
-<td><div class="reward-circle"></div></td>
-<td><div class="reward-circle"></div></td>
-<td><div class="reward-circle"></div></td>
-<td><div class="reward-circle"></div></td>
-<td><div class="reward-circle"></div></td>
-<td><div class="reward-circle"></div></td>
-
-</tr>
-
-
-
-
-
-<tr>
-
-<td class="activity-label">
-⭐ Tried
-</td>
-
-<td><div class="reward-circle"></div></td>
-<td><div class="reward-circle"></div></td>
-<td><div class="reward-circle"></div></td>
-<td><div class="reward-circle"></div></td>
-<td><div class="reward-circle"></div></td>
-<td><div class="reward-circle"></div></td>
-<td><div class="reward-circle"></div></td>
-
-</tr>
-
-
-</table>
-
-`;
-
-
-return week;
-
-}
-
-
-
-
 function createChartDays(){
 
 
@@ -444,7 +337,7 @@ chartData.theme =
 chartTheme.value;
 
 chartData.week =
-Number(weekNumberInput.value) || 1;
+Math.max(1, Math.floor(Number(weekNumberInput.value) || 1));
 
 
 chartData.color =
@@ -501,6 +394,41 @@ chartData.days
    ACTIONS
 =========================== */
 
+
+const SAVE_LEAD_TIMEOUT_MS = 8000;
+
+
+function isValidEmail(email){
+
+return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email || "");
+
+}
+
+
+function showEmailError(message){
+
+let el=document.getElementById("emailError");
+
+if(!el)
+return;
+
+if(!message){
+
+el.hidden=true;
+
+el.textContent="";
+
+return;
+
+}
+
+el.hidden=false;
+
+el.textContent=message;
+
+}
+
+
 async function saveLead(){
 
     console.log("saveLead started");
@@ -512,23 +440,46 @@ async function saveLead(){
 
     if(!email){
         console.log("No email");
-        return;
+        return false;
     }
+
+    if(!isValidEmail(email)){
+        console.log("Invalid email");
+        showEmailError("Please enter a valid email address.");
+        return false;
+    }
+
+    showEmailError(null);
 
 
     try {
 
-        const docRef = await addDoc(
-            collection(db, "leads"),
-            {
-                email: email || "unknown email",
-                childName: chartData.name || "unknown child name",
-                theme: chartData.theme || "unknown theme",
-                createdAt: serverTimestamp()
-            }
-        );
+        const docRef = await Promise.race([
+
+            addDoc(
+                collection(db, "leads"),
+                {
+                    email: email,
+                    childName: chartData.name || "unknown child name",
+                    theme: chartData.theme || "unknown theme",
+                    createdAt: serverTimestamp()
+                }
+            ),
+
+            new Promise((_, reject)=>{
+
+                setTimeout(
+                    ()=>reject(new Error("saveLead timeout")),
+                    SAVE_LEAD_TIMEOUT_MS
+                );
+
+            })
+
+        ]);
 
         console.log("Lead saved with ID:", docRef.id);
+
+        return true;
 
     } catch(error){
 
@@ -536,6 +487,8 @@ async function saveLead(){
             "Firebase save error:",
             error
         );
+
+        return false;
 
     }
 
@@ -574,9 +527,49 @@ document
         selectedColor =
         button.dataset.color;
 
+        document
+        .querySelectorAll(".color-choice")
+        .forEach(b=>{
+
+            let active = b===button;
+
+            b.classList.toggle(
+                "selected",
+                active
+            );
+
+            b.setAttribute(
+                "aria-pressed",
+                active ? "true" : "false"
+            );
+
+        });
+
         updatePreview();
 
     });
+
+});
+
+
+// Mark the default color as selected on load.
+
+document
+.querySelectorAll(".color-choice")
+.forEach(b=>{
+
+    let active =
+        b.dataset.color===selectedColor;
+
+    b.classList.toggle(
+        "selected",
+        active
+    );
+
+    b.setAttribute(
+        "aria-pressed",
+        active ? "true" : "false"
+    );
 
 });
 
@@ -608,6 +601,38 @@ closeModal.addEventListener(
 
 });
 
+
+// Close when clicking outside the modal content.
+
+emailModal.addEventListener(
+"click",
+(event)=>{
+
+if(event.target===emailModal){
+
+    emailModal.style.display="none";
+
+}
+
+});
+
+
+// Enter in the email field submits.
+
+document.getElementById("emailInput").addEventListener(
+"keydown",
+(event)=>{
+
+if(event.key==="Enter"){
+
+event.preventDefault();
+
+downloadButton.click();
+
+}
+
+});
+
 /* ===========================
    PDF DOWNLOAD
 =========================== */
@@ -615,6 +640,9 @@ closeModal.addEventListener(
 downloadButton.addEventListener(
 "click",
 async()=>{
+
+let originalText =
+downloadButton.textContent;
 
 try{
 
@@ -625,16 +653,34 @@ document.getElementById("emailInput").value.trim();
 
 if(!email){
 
-alert("Please enter your email first.");
+showEmailError("Please enter your email first.");
 
 return;
 
 }
 
+if(!isValidEmail(email)){
+
+showEmailError("Please enter a valid email address.");
+
+return;
+
+}
+
+showEmailError(null);
+
 downloadButton.disabled = true;
 downloadButton.textContent = "Downloading...";
 
-await saveLead();
+const saved = await saveLead();
+
+if(!saved){
+
+showEmailError(
+"We couldn't save your email just now, but your download will still start."
+);
+
+}
 
 
 
@@ -743,7 +789,7 @@ chartHeight
 
 
 /* =========================
-PAGE 3 COUPONS
+PAGE 2 COUPONS
 ========================= */
 
 
@@ -820,7 +866,7 @@ align:"center"
 
 
 /* =========================
-PAGE 4 POTTY TRAINING GUIDE
+PAGE 3 POTTY TRAINING GUIDE
 ========================= */
 
 
@@ -1077,7 +1123,7 @@ pdf.setFontSize(11);
 
 
 /* =========================
-PAGE 2 CERTIFICATE
+PAGE 4 CERTIFICATE
 ========================= */
 
 
@@ -1227,8 +1273,8 @@ console.error(
 error
 );
 
-alert(
-"PDF creation failed. Check console."
+showEmailError(
+"PDF creation failed. Please check your connection and try again."
 );
 
 }
@@ -1236,7 +1282,7 @@ alert(
 finally{
 
 downloadButton.disabled = false;
-downloadButton.textContent = "Download My Chart";
+downloadButton.textContent = originalText || "Download My Chart";
 
 }
 
