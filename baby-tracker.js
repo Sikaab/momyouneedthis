@@ -1185,6 +1185,8 @@
                 processVoiceText(
                     finalText
                 );
+
+                resetVoiceStatus();
             }
 
         } catch (error) {
@@ -1232,6 +1234,22 @@
 
         } else if (
             errorType ===
+            "audio-capture"
+        ) {
+
+            message =
+                "No microphone found. Check that this device has a working microphone.";
+
+        } else if (
+            errorType ===
+            "service-not-allowed"
+        ) {
+
+            message =
+                "Voice recognition isn't allowed in this browser right now. Try Chrome or use Quick Tap.";
+
+        } else if (
+            errorType ===
             "network"
         ) {
 
@@ -1247,8 +1265,12 @@
              * Aborted recognition isn't necessarily an error
              * from the user's perspective.
              */
+            resetVoiceStatus();
+
             return;
         }
+
+        resetVoiceStatus();
 
         showVoicePermissionMessage(
             message
@@ -1260,6 +1282,28 @@
         isListening = false;
 
         updateVoiceUI();
+
+        resetVoiceStatus();
+    }
+
+    /*
+     * Restore the voice status area to its resting state.
+     * Called on recognition end, on every error, and after
+     * a result is processed — the "Listening…" label must
+     * never get stuck.
+     */
+
+    function resetVoiceStatus() {
+
+        safeText(
+            $("voiceStatusTitle"),
+            "Tap & tell me"
+        );
+
+        safeText(
+            $("voiceStatusText"),
+            "\u201CBaby had a wet diaper\u201D"
+        );
     }
 
     function updateVoiceUI() {
@@ -1280,6 +1324,19 @@
                 isListening
             );
 
+            /*
+             * Proactive hint when voice isn't supported:
+             * disable and dim the mic button.
+             */
+
+            button.disabled =
+                !speechSupported;
+
+            button.classList.toggle(
+                "voice-unsupported",
+                !speechSupported
+            );
+
             button.setAttribute(
                 "aria-pressed",
                 isListening
@@ -1289,9 +1346,11 @@
 
             button.setAttribute(
                 "aria-label",
-                isListening
-                    ? "Stop voice logging"
-                    : "Start voice logging"
+                !speechSupported
+                    ? "Voice logging not supported in this browser"
+                    : isListening
+                        ? "Stop voice logging"
+                        : "Start voice logging"
             );
         }
 
@@ -1428,6 +1487,238 @@
             return;
         }
 
+        /*
+         * Honor the "Show what the tracker heard before saving"
+         * setting: show a confirm/discard dialog instead of
+         * saving immediately.
+         */
+
+        if (state.voiceConfirmation) {
+
+            showVoiceConfirmDialog(
+                originalText,
+                lower
+            );
+
+            return;
+        }
+
+        executeVoiceText(
+            originalText,
+            lower
+        );
+    }
+
+    function escapeHtml(value) {
+
+        return String(value || "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;");
+    }
+
+    /*
+     * One-line description of what a voice command will do,
+     * shown in the confirmation dialog.
+     */
+
+    function describeVoiceIntent(
+        originalText,
+        lower
+    ) {
+
+        if (containsFeedIntent(lower)) {
+
+            const title =
+                determineFeedTitle(lower);
+
+            const amount =
+                extractAmount(
+                    originalText
+                );
+
+            return (
+                "Will save: " +
+                title +
+                (
+                    amount
+                        ? " \u2022 " +
+                          amount.display
+                        : ""
+                )
+            );
+        }
+
+        if (containsDiaperIntent(lower)) {
+
+            return (
+                "Will save: " +
+                getDiaperTitle(
+                    determineDiaperType(
+                        lower
+                    )
+                )
+            );
+        }
+
+        if (containsSleepIntent(lower)) {
+
+            return "Will save a sleep log (may start or stop the nap timer).";
+        }
+
+        return "Will save as a note.";
+    }
+
+    function showVoiceConfirmDialog(
+        originalText,
+        lower
+    ) {
+
+        const description =
+            describeVoiceIntent(
+                originalText,
+                lower
+            );
+
+        openActionModal(`
+            <div class="settings-header">
+                <span class="tracker-badge">\uD83C\uDF99\uFE0F VOICE</span>
+                <h2>I heard:</h2>
+                <p class="voice-confirm-heard">\u201C${escapeHtml(originalText)}\u201D</p>
+                <p class="voice-confirm-desc">${escapeHtml(description)}</p>
+            </div>
+
+            <button
+                type="button"
+                id="voiceConfirmSave"
+                class="form-submit"
+            >
+                \u2713 Save log
+            </button>
+
+            <button
+                type="button"
+                id="voiceConfirmDiscard"
+                class="settings-secondary-button"
+            >
+                \u2715 Discard
+            </button>
+        `);
+
+        const saveButton =
+            $("voiceConfirmSave");
+
+        if (saveButton) {
+
+            saveButton.addEventListener(
+                "click",
+                function () {
+
+                    closeActionModal();
+
+                    executeVoiceText(
+                        originalText,
+                        lower
+                    );
+                }
+            );
+        }
+
+        const discardButton =
+            $("voiceConfirmDiscard");
+
+        if (discardButton) {
+
+            discardButton.addEventListener(
+                "click",
+                function () {
+
+                    closeActionModal();
+
+                    showToast(
+                        "Voice log discarded",
+                        "\uD83C\uDF99\uFE0F"
+                    );
+                }
+            );
+        }
+    }
+
+    /*
+     * Actually carry out a voice command: parse the intent
+     * and create the log / drive the nap timer.
+     */
+
+    function executeVoiceText(
+        originalText,
+        lower
+    ) {
+
+        /* -----------------------------------------------
+           FEEDING (checked before diaper so combined
+           phrases like "fed baby and changed diaper"
+           log the feed)
+        ------------------------------------------------ */
+
+        if (containsFeedIntent(lower)) {
+
+            const amount =
+                extractAmount(
+                    originalText
+                );
+
+            const duration =
+                extractDuration(
+                    originalText
+                );
+
+            const title =
+                determineFeedTitle(
+                    lower
+                );
+
+            let details =
+                originalText;
+
+            /*
+             * Include the parsed amount when the spoken
+             * sentence doesn't already state the number.
+             * (Duration is always in the sentence already,
+             * since that's how it was parsed — it is
+             * stored on the log's duration field instead.)
+             */
+
+            if (
+                amount &&
+                !originalText.includes(
+                    String(amount.value)
+                )
+            ) {
+
+                details +=
+                    " \u2022 " +
+                    amount.display;
+            }
+
+            const feedLog = {
+                type: "feed",
+                title: title,
+                details: details,
+                timestamp:
+                    new Date().toISOString()
+            };
+
+            if (duration !== null) {
+                feedLog.duration =
+                    duration;
+            }
+
+            addLog(feedLog);
+
+            return;
+        }
+
         /* -----------------------------------------------
            DIAPER
         ------------------------------------------------ */
@@ -1446,57 +1737,6 @@
                     ),
                 details:
                     originalText,
-                timestamp:
-                    new Date().toISOString()
-            });
-
-            return;
-        }
-
-        /* -----------------------------------------------
-           FEEDING
-        ------------------------------------------------ */
-
-        if (containsFeedIntent(lower)) {
-
-            const amount =
-                extractAmount(
-                    originalText
-                );
-
-            const duration =
-                extractDuration(
-                    originalText
-                );
-
-            let title =
-                determineFeedTitle(
-                    lower
-                );
-
-            let details =
-                originalText;
-
-            /*
-             * Do not append an amount/duration if the
-             * spoken sentence already contains it.
-             *
-             * The original sentence remains the most
-             * useful note for the parent.
-             */
-
-            if (
-                !amount &&
-                !duration
-            ) {
-                details =
-                    originalText;
-            }
-
-            addLog({
-                type: "feed",
-                title: title,
-                details: details,
                 timestamp:
                     new Date().toISOString()
             });
@@ -1564,7 +1804,16 @@
             return "dirty";
         }
 
-        return "wet";
+        if (isWet) {
+            return "wet";
+        }
+
+        /*
+         * No wet/dirty keyword: leave it unspecified
+         * rather than guessing "wet".
+         */
+
+        return "";
     }
 
     function getDiaperTitle(type) {
@@ -1577,7 +1826,11 @@
             return "Wet + dirty diaper";
         }
 
-        return "Wet diaper";
+        if (type === "wet") {
+            return "Wet diaper";
+        }
+
+        return "Diaper";
     }
 
     /* =====================================================
@@ -1641,7 +1894,9 @@
             /\basleep\b/.test(text) ||
             /\bnap\b/.test(text) ||
             /\bnapped\b/.test(text) ||
-            /\bnapping\b/.test(text)
+            /\bnapping\b/.test(text) ||
+            /\bwoke\b/.test(text) ||
+            /\bwoken\b/.test(text)
         );
     }
 
@@ -1733,7 +1988,9 @@
             /\bstart (a )?nap\b/.test(lower) ||
             /\bstarting (a )?nap\b/.test(lower) ||
             /\bstart (a )?sleep\b/.test(lower) ||
-            /\bstarting (a )?sleep\b/.test(lower);
+            /\bstarting (a )?sleep\b/.test(lower) ||
+            /\bnap started\b/.test(lower) ||
+            /\bsleep started\b/.test(lower);
 
         if (explicitStart) {
 
@@ -1800,6 +2057,11 @@
        AMOUNT PARSER
     ===================================================== */
 
+    /*
+     * Parses an amount like "120 ml" or "4 ounces".
+     * Returns { value, unit, display } or null.
+     */
+
     function extractAmount(text) {
 
         if (!text) {
@@ -1808,24 +2070,42 @@
 
         const match =
             String(text).match(
-                /(\d+(?:[.,]\d+)?)\s*(?:ml|milliliters?|millilitres?)\b/i
+                /(\d+(?:[.,]\d+)?)\s*(ml|milliliters?|millilitres?|ounces?|oz)\b/i
             );
 
         if (!match) {
             return null;
         }
 
-        const amount =
+        const value =
             parseFloat(
                 match[1]
                     .replace(",", ".")
             );
 
-        if (!Number.isFinite(amount)) {
+        if (!Number.isFinite(value)) {
             return null;
         }
 
-        return Math.round(amount);
+        const unitRaw =
+            match[2].toLowerCase();
+
+        const isOz =
+            unitRaw === "oz" ||
+            unitRaw.indexOf("ounc") === 0;
+
+        const unit =
+            isOz ? "oz" : "ml";
+
+        const rounded =
+            Math.round(value * 10) / 10;
+
+        return {
+            value: rounded,
+            unit: unit,
+            display:
+                rounded + " " + unit
+        };
     }
 
     /* =====================================================
@@ -2294,18 +2574,23 @@
                 )
             );
 
+        const durationText =
+            duration < 1
+                ? "<1 minute"
+                : duration +
+                  " minute" +
+                  (
+                      duration === 1
+                          ? ""
+                          : "s"
+                  );
+
         addLog(
             {
                 type: "sleep",
                 title: "Nap",
                 details:
-                    duration +
-                    " minute" +
-                    (
-                        duration === 1
-                            ? ""
-                            : "s"
-                    ),
+                    durationText,
                 duration: duration,
                 start:
                     state.activeSleep.start,
