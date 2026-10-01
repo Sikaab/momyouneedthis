@@ -180,6 +180,51 @@ transform:scale(1.15);
 }
 
 
+.color-choice.selected {
+
+outline:3px solid #d05a7d;
+
+outline-offset:3px;
+
+transform:scale(1.1);
+
+}
+
+
+.color-choice:focus-visible {
+
+outline:3px solid #d05a7d;
+
+outline-offset:3px;
+
+}
+
+
+.potty-error {
+
+margin:10px 0 0;
+
+padding:10px 14px;
+
+background:#fff1f2;
+
+border:1px solid #f5c2cd;
+
+border-radius:12px;
+
+color:#9f1239;
+
+font-size:13.5px;
+
+font-weight:700;
+
+line-height:1.5;
+
+text-align:center;
+
+}
+
+
 
 .pink {
 
@@ -1028,6 +1073,14 @@ font-size:45px;
 #chartTitle {
 
 font-size:22px;
+
+max-width:100%;
+
+overflow:hidden;
+
+text-overflow:ellipsis;
+
+white-space:nowrap;
 
 }
 
