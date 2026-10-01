@@ -576,7 +576,7 @@
         </div>
         <div class="seo-faq-item">
             <h3>Does MomYouNeedThis earn from the products it features?</h3>
-            <p>Not yet — the product links on this page are plain Amazon links. When MomYouNeedThis joins the Amazon Associates program, affiliate links will be marked clearly and this answer updated.</p>
+            <p>Yes — product links on this page are Amazon affiliate links. If you buy through them, MomYouNeedThis may earn a small commission at no extra cost to you.</p>
         </div>
     </div>
 </section>
@@ -623,7 +623,7 @@
       "name": "Does MomYouNeedThis earn from the products it features?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Not yet — the product links on this page are plain Amazon links. When MomYouNeedThis joins the Amazon Associates program, affiliate links will be marked clearly and this answer updated."
+        "text": "Yes — product links on this page are Amazon affiliate links. If you buy through them, MomYouNeedThis may earn a small commission at no extra cost to you."
       }
     }
   ]
@@ -830,12 +830,10 @@
                         ${escapeHTML(product.description)}
                     </p>
 
-                    <!-- JESSIKA: these are plain Amazon links for now (not affiliate links yet).
-                         When you add your affiliate URLs, change rel below to "nofollow sponsored". -->
                     <a
                         href="${escapeHTML(product.url)}"
                         class="${buttonClass}"
-                        rel="nofollow noopener"
+                        rel="sponsored nofollow noopener"
                         target="_blank"
                     >
                         ${escapeHTML(product.buttonText)}
