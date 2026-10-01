@@ -984,8 +984,11 @@ function updateProductCard(
             link.target =
                 "_blank";
 
+            /* JESSIKA: plain Amazon links for now (not affiliate links yet).
+               When you add your affiliate URLs, change the rel below to
+               "noopener noreferrer nofollow sponsored". */
             link.rel =
-                "noopener noreferrer nofollow sponsored";
+                "noopener noreferrer nofollow";
         } else {
             link.removeAttribute(
                 "target"
