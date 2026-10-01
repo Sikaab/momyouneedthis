@@ -1,0 +1,144 @@
+/* MomYouNeedThis Printable Framework */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+@page {
+  size: letter;
+  margin: 0;
+}
+
+body {
+  font-family: 'Nunito', 'Comic Sans MS', sans-serif;
+  background: #f5f0eb;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  min-height: 100vh;
+}
+
+.printable-page {
+  width: 816px;
+  min-height: 1056px;
+  background: #fffdf9;
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+  position: relative;
+}
+
+/* Header */
+.printable-header {
+  background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 40%, #f48fb1 100%);
+  padding: 28px 40px 22px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.printable-header::before {
+  content: '';
+  position: absolute;
+  top: -30px; right: -30px;
+  width: 140px; height: 140px;
+  background: rgba(255,255,255,0.25);
+  border-radius: 50%;
+}
+.printable-header::after {
+  content: '';
+  position: absolute;
+  bottom: -40px; left: -20px;
+  width: 100px; height: 100px;
+  background: rgba(255,255,255,0.18);
+  border-radius: 50%;
+}
+.printable-kicker {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #ad1457;
+  margin-bottom: 6px;
+}
+.printable-title {
+  font-size: 38px;
+  font-weight: 900;
+  color: #4a2c3a;
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
+.printable-subtitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: #7a4a5e;
+}
+
+/* Scalloped divider */
+.printable-divider {
+  height: 14px;
+  background: radial-gradient(circle at 10px -4px, transparent 14px, #fffdf9 15px);
+  background-size: 28px 14px;
+  background-color: #f48fb1;
+  margin-top: -1px;
+}
+
+/* Content */
+.printable-content {
+  flex: 1;
+  padding: 30px 40px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.activity-instructions {
+  background: #fef6f9;
+  border: 2px dashed #f48fb1;
+  border-radius: 16px;
+  padding: 14px 20px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #6d3b52;
+  text-align: center;
+}
+
+.trace-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 10px;
+}
+
+/* Footer */
+.printable-footer {
+  padding: 16px 40px 20px;
+  text-align: center;
+  border-top: 3px solid #fce4ec;
+  margin-top: auto;
+}
+.printable-brand {
+  font-size: 18px;
+  font-weight: 900;
+  color: #d81b60;
+  letter-spacing: 1px;
+}
+.printable-tagline {
+  font-size: 11px;
+  font-weight: 600;
+  color: #b08a9a;
+  margin-top: 2px;
+}
+
+/* Print */
+@media print {
+  body { background: none; padding: 0; display: block; }
+  .printable-page {
+    width: 100%;
+    min-height: auto;
+    box-shadow: none;
+    border-radius: 0;
+  }
+  .no-print { display: none !important; }
+}
