@@ -55,7 +55,7 @@ body{
 
     text-align: center;
 
-    padding: 18px 20px 38px;
+    padding: 18px 20px 70px;
 
     overflow: hidden;
 }
@@ -591,7 +591,7 @@ button:hover {
 @media (max-width: 760px) {
 
     .hero {
-        padding: 14px 18px 32px;
+        padding: 14px 18px 60px;
     }
 
     .hero::before {
