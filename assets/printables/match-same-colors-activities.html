@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Match the Same Colors - Free Printable | MomYouNeedThis</title>
+<link rel="stylesheet" href="printable.css">
+<style>
+  .match-area {
+    display: flex; justify-content: space-between; align-items: stretch;
+    flex: 1; padding: 10px 0;
+    background: linear-gradient(to right, transparent calc(50% - 1.5px), #f8bbd0 calc(50% - 1.5px), #f8bbd0 calc(50% + 1.5px), transparent calc(50% + 1.5px));
+  }
+  .match-col {
+    display: flex; flex-direction: column; justify-content: space-around;
+    gap: 12px; width: 265px;
+  }
+  .dot-item {
+    background: #fff; border: 2.5px solid #f8bbd0; border-radius: 18px;
+    padding: 8px 16px; display: flex; align-items: center; gap: 14px; height: 82px;
+  }
+  .dot-item:nth-child(odd) { transform: rotate(-0.7deg); }
+  .dot-item:nth-child(even) { transform: rotate(0.7deg); }
+  .big-dot { width: 54px; height: 54px; border-radius: 50%; flex-shrink: 0; border: 2px solid rgba(0,0,0,0.08); }
+  .dot-name { font-size: 22px; font-weight: 900; color: #4a2c3a; }
+  .shape-item {
+    background: #fff; border: 2.5px solid #f8bbd0; border-radius: 18px;
+    padding: 8px 16px; display: flex; align-items: center; gap: 14px; height: 82px;
+  }
+  .shape-item:nth-child(odd) { transform: rotate(0.8deg); }
+  .shape-item:nth-child(even) { transform: rotate(-0.8deg); }
+  .shape-svg { width: 54px; height: 54px; flex-shrink: 0; }
+  .shape-name { font-size: 17px; font-weight: 800; color: #4a2c3a; }
+  .match-middle { flex: 1; display: flex; align-items: center; justify-content: center; }
+  .match-middle span { font-size: 34px; }
+</style>
+</head>
+<body>
+<div class="printable-page">
+  <div class="printable-header">
+    <div class="printable-kicker">🌈 Color Matching</div>
+    <div class="printable-title">Match the Same Colors</div>
+    <div class="printable-subtitle">Find the shape wearing each color!</div>
+  </div>
+  <div class="printable-divider"></div>
+
+  <div class="printable-content">
+    <div class="activity-instructions">
+      🖍️ <strong>Grown-up reads:</strong> Draw a line from each <strong>color dot</strong> to the shape wearing the <strong>SAME color!</strong>
+    </div>
+
+    <div class="match-area">
+      <div class="match-col">
+        <div class="dot-item"><div class="big-dot" style="background:#ef5350"></div><span class="dot-name">Red</span></div>
+        <div class="dot-item"><div class="big-dot" style="background:#42a5f5"></div><span class="dot-name">Blue</span></div>
+        <div class="dot-item"><div class="big-dot" style="background:#ffca28"></div><span class="dot-name">Yellow</span></div>
+        <div class="dot-item"><div class="big-dot" style="background:#66bb6a"></div><span class="dot-name">Green</span></div>
+        <div class="dot-item"><div class="big-dot" style="background:#ab47bc"></div><span class="dot-name">Purple</span></div>
+        <div class="dot-item"><div class="big-dot" style="background:#ff9800"></div><span class="dot-name">Orange</span></div>
+      </div>
+      <div class="match-middle"><span>✏️</span></div>
+      <div class="match-col">
+        <div class="shape-item">
+          <svg class="shape-svg" viewBox="0 0 48 48"><polygon points="24,5 45,43 3,43" fill="#66bb6a" stroke="rgba(0,0,0,0.12)" stroke-width="2"/></svg>
+          <span class="shape-name">green triangle</span>
+        </div>
+        <div class="shape-item">
+          <svg class="shape-svg" viewBox="0 0 48 48"><path d="M24 4 L29.5 17 L43.5 17 L32 25.5 L36 39 L24 31 L12 39 L16 25.5 L4.5 17 L18.5 17 Z" fill="#ff9800" stroke="rgba(0,0,0,0.12)" stroke-width="2" stroke-linejoin="round"/></svg>
+          <span class="shape-name">orange star</span>
+        </div>
+        <div class="shape-item">
+          <svg class="shape-svg" viewBox="0 0 48 48"><path d="M24 43 C11 30 4.5 22.5 4.5 15.5 C4.5 9 9.5 4.5 14.5 4.5 C19 4.5 22.5 8 24 11.5 C25.5 8 29 4.5 33.5 4.5 C38.5 4.5 43.5 9 43.5 15.5 C43.5 22.5 37 30 24 43 Z" fill="#ef5350" stroke="rgba(0,0,0,0.12)" stroke-width="2"/></svg>
+          <span class="shape-name">red heart</span>
+        </div>
+        <div class="shape-item">
+          <svg class="shape-svg" viewBox="0 0 48 48"><circle cx="24" cy="24" r="19" fill="#ab47bc" stroke="rgba(0,0,0,0.12)" stroke-width="2"/></svg>
+          <span class="shape-name">purple circle</span>
+        </div>
+        <div class="shape-item">
+          <svg class="shape-svg" viewBox="0 0 48 48"><rect x="7" y="7" width="34" height="34" rx="9" fill="#42a5f5" stroke="rgba(0,0,0,0.12)" stroke-width="2"/></svg>
+          <span class="shape-name">blue square</span>
+        </div>
+        <div class="shape-item">
+          <svg class="shape-svg" viewBox="0 0 48 48"><polygon points="24,4 44,24 24,44 4,24" fill="#ffca28" stroke="rgba(0,0,0,0.12)" stroke-width="2" stroke-linejoin="round"/></svg>
+          <span class="shape-name">yellow diamond</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="activity-instructions" style="background:#fff8e1;border-color:#ffd54f;color:#7a5c00;">
+      🌟 Color superstar! <strong>Answers:</strong> Red→red heart, Blue→blue square, Yellow→yellow diamond, Green→green triangle, Purple→purple circle, Orange→orange star!
+    </div>
+  </div>
+
+  <div class="printable-footer">
+    <div class="printable-brand">momyouneedthis</div>
+    <div class="printable-tagline">Free printables for happy little learners 💗</div>
+  </div>
+</div>
+</body>
+</html>
