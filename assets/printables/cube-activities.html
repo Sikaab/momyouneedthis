@@ -7,65 +7,81 @@
 <link rel="stylesheet" href="printable.css">
 <style>
 
-  .explorer-top { display:flex; gap:22px; align-items:stretch; }
-  .shape-stage { flex:1; background:#fff; border:2.5px solid #f8bbd0; border-radius:20px; padding:18px; text-align:center; }
-  .shape-stage svg { width:220px; height:220px; }
-  .trace-word { font-size:26px; font-weight:900; color:#c62828; letter-spacing:5px; margin-top:10px; }
-  .trace-word .dot { border-bottom:4px dotted #ef5350; }
-  .side-col { width:250px; display:flex; flex-direction:column; gap:12px; }
-  .fact-badge { background:#fff; border:2.5px solid #ef5350; border-radius:16px; padding:14px; text-align:center; }
-  .fact-badge .fb-num { font-size:30px; }
-  .fact-badge .fb-label { font-size:13px; font-weight:800; color:#7a4a5e; }
-  .fun-fact { background:#fff8e1; border:2px dashed #ffd54f; border-radius:14px; padding:12px 14px; font-size:14px; font-weight:700; color:#7a5c00; }
-  .circle-title { text-align:center; font-size:20px; font-weight:900; color:#4a2c3a; }
-  .obj-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
-  .obj-card { background:#fff; border:2.5px solid #f3d9e2; border-radius:18px; padding:14px 10px 10px; text-align:center; position:relative; }
-  .obj-emoji { font-size:44px; display:block; }
-  .obj-label { font-size:13px; font-weight:800; color:#6d3b52; display:block; margin-top:4px; }
-  .obj-check { position:absolute; top:8px; right:10px; font-size:22px; color:#ef5350; }
-  .draw-box { background:#fff; border:2.5px dashed #ef5350; border-radius:20px; height:150px; display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:800; color:#b08a9a; }
+  .cube-top { display:flex; gap:22px; align-items:stretch; }
+  .trace-box { flex:1; background:#fff; border:2.5px solid #f8bbd0; border-radius:20px; padding:18px; text-align:center; }
+  .trace-title { font-size:15px; font-weight:900; color:#ad1457; letter-spacing:2px; margin-bottom:8px; }
+  .cube-art { width:230px; height:230px; margin:0 auto; }
+  .fact-col { width:260px; display:flex; flex-direction:column; gap:12px; }
+  .fact-badge { background:#fff; border:2.5px solid #1565c0; border-radius:16px; padding:12px 14px; text-align:center; }
+  .fact-badge .fb-num { font-weight:900; color:#1565c0; }
+  .fact-badge .fb-label { font-size:13.5px; font-weight:800; color:#7a4a5e; margin-top:2px; }
+  .wblank { display:inline-block; width:44px; border-bottom:3px dotted #1565c0; }
+  .fun-fact { background:#fff8e1; border:2px dashed #ffd54f; border-radius:14px; padding:10px 14px; font-size:13.5px; font-weight:700; color:#7a5c00; }
+  .net-title { text-align:center; font-size:16px; font-weight:900; color:#ad1457; letter-spacing:1px; }
+  .net-box { display:flex; gap:20px; align-items:center; background:#fff; border:2.5px solid #f8bbd0; border-radius:20px; padding:18px 24px; }
+  .net-art { width:200px; height:280px; flex-shrink:0; }
+  .net-steps { display:flex; flex-direction:column; gap:14px; }
+  .nstep { font-size:16.5px; font-weight:800; color:#4a2c3a; display:flex; align-items:center; gap:12px; }
+  .nnum { width:36px; height:36px; border-radius:50%; background:#ec407a; color:#fff; font-weight:900; font-size:18px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .ex-title { text-align:center; font-size:15px; font-weight:900; color:#ad1457; letter-spacing:2px; }
+  .ex-row { display:flex; gap:12px; justify-content:center; }
+  .ex-card { background:#fff; border:2.5px solid #f3d9e2; border-radius:50%; width:108px; height:108px; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+  .ex-emoji { font-size:38px; }
+  .ex-label { font-size:12px; font-weight:800; color:#6d3b52; }
+  .trick-line { text-align:center; font-size:15px; font-weight:700; color:#6d3b52; background:#fef6f9; border:2px dashed #f48fb1; border-radius:14px; padding:10px 16px; }
 
 </style>
 </head>
 <body>
 <div class="printable-page">
   <div class="printable-header">
-    <div class="printable-kicker">&#x1F9E0; 3D Shape Explorer</div>
+    <div class="printable-kicker">&#x1F9CA; 3D Shape Explorer</div>
     <div class="printable-title">All About Cubes</div>
-    <div class="printable-subtitle">Meet the cube &mdash; a shape you can hold!</div>
+    <div class="printable-subtitle">Trace, count, build & find the cube!</div>
   </div>
   <div class="printable-divider"></div>
   <div class="printable-content">
-
-    <div class="activity-instructions">
-      &#x1F9E0; <strong>3D explorer!</strong> This is a <strong>cube</strong> &mdash; a shape you can hold! Circle the things shaped like a cube, then draw your own!
-    </div>
-    <div class="explorer-top">
-      <div class="shape-stage">
-        <svg viewBox="0 0 100 100"><polygon points="28,42 58,42 58,72 28,72" fill="#ef5350"/><polygon points="28,42 38,30 68,30 58,42" fill="#ef5350" opacity="0.72"/><polygon points="58,42 68,30 68,60 58,72" fill="#c62828"/><polygon points="28,42 58,42 58,72 28,72" fill="none" stroke="#c62828" stroke-width="2.5"/><polygon points="28,42 38,30 68,30 58,42" fill="none" stroke="#c62828" stroke-width="2.5"/><polygon points="58,42 68,30 68,60 58,72" fill="none" stroke="#c62828" stroke-width="2.5"/></svg>
-        <div class="trace-word"><span class="dot">C</span><span class="dot">U</span><span class="dot">B</span><span class="dot">E</span></div>
-      </div>
-      <div class="side-col">
-        <div class="fact-badge"><div class="fb-num">🎲</div><div class="fb-label">Cube &mdash; a 3D shape!</div></div>
-        <div class="fun-fact">&#x1F4A1; A cube has 6 flat square faces — count them!</div>
-        <div class="fun-fact" style="background:#fef6f9;border-color:#f8bbd0;color:#6d3b52;">&#x270B; 3D shapes are <strong>solid</strong> &mdash; you can pick them up and turn them around!</div>
-      </div>
-    </div>
-    <div class="circle-title">&#x2B55; Circle everything shaped like a <span style="color:#c62828;">cube</span>!</div>
-    <div class="obj-grid">
-<div class="obj-card"><span class="obj-emoji">🍦</span><span class="obj-label">Cone</span><div class="obj-check">&#x25CB;</div></div>
-<div class="obj-card"><span class="obj-emoji">🎲</span><span class="obj-label">Dice</span><div class="obj-check">&#x25CB;</div></div>
-<div class="obj-card"><span class="obj-emoji">⚽</span><span class="obj-label">Ball</span><div class="obj-check">&#x25CB;</div></div>
-<div class="obj-card"><span class="obj-emoji">🧊</span><span class="obj-label">Ice cube</span><div class="obj-check">&#x25CB;</div></div>
-<div class="obj-card"><span class="obj-emoji">🎁</span><span class="obj-label">Gift box</span><div class="obj-check">&#x25CB;</div></div>
-<div class="obj-card"><span class="obj-emoji">📦</span><span class="obj-label">Box</span><div class="obj-check">&#x25CB;</div></div>
-    </div>
-    <div class="draw-box">&#x1F58D;&#xFE0F; Draw your own cube here!</div>
-
+    <div class="activity-instructions">&#x270F;&#xFE0F; <strong>Trace</strong> the big cube and its net. Then <strong>count</strong> the faces, edges &amp; corners — and <strong>cut &amp; fold</strong> the net to build your own cube!</div>
+<div class="cube-top">
+  <div class="trace-box">
+    <div class="trace-title">TRACE THE CUBE</div>
+    <div class="cube-art"><svg viewBox="0 0 100 100" style="width:100%;height:100%"><polygon points="30,38 62,38 62,70 30,70" fill="#e3f2fd" stroke="#1565c0" stroke-width="4" stroke-dasharray="12 8" stroke-linejoin="round"/>
+<polygon points="30,38 42,24 74,24 62,38" fill="#bbdefb" stroke="#1565c0" stroke-width="4" stroke-dasharray="12 8" stroke-linejoin="round"/>
+<polygon points="62,38 74,24 74,56 62,70" fill="#90caf9" stroke="#1565c0" stroke-width="4" stroke-dasharray="12 8" stroke-linejoin="round"/></svg></div>
+  </div>
+  <div class="fact-col">
+    <div class="fact-badge"><div class="fb-num" style="font-size:40px;">6</div><div class="fb-label">Faces — write it: <span class="wblank">&nbsp;</span></div></div>
+    <div class="fact-badge"><div class="fb-num" style="font-size:40px;">12</div><div class="fb-label">Edges — write it: <span class="wblank">&nbsp;</span></div></div>
+    <div class="fact-badge"><div class="fb-num" style="font-size:40px;">8</div><div class="fb-label">Corners — write it: <span class="wblank">&nbsp;</span></div></div>
+    <div class="fun-fact">&#x1F4A1; A cube is a 3D square — every face is a square, and all 6 faces are the same size!</div>
+  </div>
+</div>
+<div class="net-title">&#x2702; CUT &amp; FOLD — BUILD YOUR OWN CUBE!</div>
+<div class="net-box">
+  <div class="net-art"><svg viewBox="0 0 100 140" style="width:100%;height:100%"><g fill="#e3f2fd" stroke="#1565c0" stroke-width="3">
+<rect x="34" y="8" width="32" height="32" stroke-dasharray="8 6"/>
+<rect x="2" y="40" width="32" height="32" stroke-dasharray="8 6"/><rect x="34" y="40" width="32" height="32" stroke-dasharray="8 6"/><rect x="66" y="40" width="32" height="32" stroke-dasharray="8 6"/>
+<rect x="34" y="72" width="32" height="32" stroke-dasharray="8 6"/><rect x="34" y="104" width="32" height="32" stroke-dasharray="8 6" transform="translate(0,-8)"/>
+</g></svg></div>
+  <div class="net-steps">
+    <div class="nstep"><span class="nnum">1</span> Cut around the whole shape</div>
+    <div class="nstep"><span class="nnum">2</span> Fold on every solid line</div>
+    <div class="nstep"><span class="nnum">3</span> Tape the edges — you made a cube! &#x1F389;</div>
+  </div>
+</div>
+<div class="ex-title">CIRCLE THE CUBES IN REAL LIFE</div>
+<div class="ex-row">
+  <div class="ex-card"><span class="ex-emoji">&#x1F3B2;</span><span class="ex-label">Dice</span></div>
+  <div class="ex-card"><span class="ex-emoji">&#x1F9CA;</span><span class="ex-label">Ice cube</span></div>
+  <div class="ex-card"><span class="ex-emoji">&#x1F4E6;</span><span class="ex-label">Box</span></div>
+  <div class="ex-card"><span class="ex-emoji">&#x1F34A;</span><span class="ex-label">Orange</span></div>
+  <div class="ex-card"><span class="ex-emoji">&#x1F3C0;</span><span class="ex-label">Ball</span></div>
+</div>
+<div class="trick-line">&#x1F914; Which ones are <strong>NOT</strong> cubes? (Hint: the orange and the ball are round!)</div>
   </div>
   <div class="printable-footer">
     <div class="printable-brand">MomYouNeedThis</div>
-    <div class="printable-tagline">Free printables for happy little learners 💗</div>
+    <div class="printable-tagline">Free printables for happy little learners &#x1F496;</div>
   </div>
 </div>
 </body>
