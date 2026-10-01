@@ -645,6 +645,11 @@ border:2px solid #1d4f91;
 margin-top:auto;
 }
 
+/* Safeguard: ensure buttons stay at card bottom regardless of text length */
+.contender-content .product-shop-link:first-of-type{
+margin-top:auto;
+}
+
 .product-shop-link:hover{
 background:#173f73;
 border-color:#173f73;
@@ -679,6 +684,17 @@ opacity:1;
 
 .vote-button.loading{
 opacity:.65;
+}
+
+/* =====================================================
+VS CONTAINER — centers badge vertically on the bolt
+===================================================== */
+
+.versus{
+position:relative;
+display:flex;
+align-items:center;
+justify-content:center;
 }
 
 /* =====================================================
