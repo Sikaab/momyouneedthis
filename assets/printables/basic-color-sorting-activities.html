@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Basic Color Sorting - Free Printable | MomYouNeedThis</title>
+<link rel="stylesheet" href="printable.css">
+<style>
+  .bins-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+  .bin {
+    border-radius: 18px; min-height: 168px; display: flex; flex-direction: column;
+    align-items: center; padding: 12px 10px; gap: 6px; border: 3px solid;
+  }
+  .bin-red { background: #ffebee; border-color: #ef5350; }
+  .bin-blue { background: #e3f2fd; border-color: #42a5f5; }
+  .bin-yellow { background: #fffde7; border-color: #ffca28; }
+  .bin h3 { font-size: 17px; font-weight: 900; color: #4a2c3a; margin: 0; }
+  .bin-dot { width: 46px; height: 46px; border-radius: 50%; border: 2px solid rgba(0,0,0,0.08); }
+  .bin-space {
+    flex: 1; width: 100%; border: 2px dashed currentColor; border-radius: 12px;
+    min-height: 44px; opacity: 0.55;
+  }
+  .cut-area {
+    border: 2.5px dashed #b0bec5; border-radius: 18px; padding: 14px;
+    background: #fafafa;
+  }
+  .cut-area h3 {
+    font-size: 16px; font-weight: 900; color: #78909c; text-align: center;
+    margin: 0 0 10px;
+  }
+  .cut-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+  }
+  .cut-piece {
+    background: #fff; border: 2px dashed #90a4ae; border-radius: 14px;
+    padding: 10px 4px; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; min-height: 98px; gap: 4px;
+  }
+  .cut-piece:nth-child(odd) { transform: rotate(-1deg); }
+  .cut-piece:nth-child(even) { transform: rotate(1deg); }
+  .shape-circle { width: 40px; height: 40px; border-radius: 50%; }
+  .shape-square { width: 40px; height: 40px; border-radius: 6px; }
+  .shape-triangle { width: 46px; height: 40px; clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+  .cut-piece .label { font-size: 12px; font-weight: 800; color: #546e7a; }
+  .scissors-note { text-align: center; font-size: 13px; font-weight: 700; color: #90a4ae; margin-top: 8px; }
+</style>
+</head>
+<body>
+<div class="printable-page">
+  <div class="printable-header">
+    <div class="printable-kicker">🎨 Starter Level</div>
+    <div class="printable-title">Basic Color Sorting</div>
+    <div class="printable-subtitle">Sort the colored shapes into matching bins!</div>
+  </div>
+  <div class="printable-divider"></div>
+
+  <div class="printable-content">
+    <div class="activity-instructions">
+      ✂️ <strong>Grown-up:</strong> cut out the shape cards. 🖍️ <strong>Little one:</strong> drop each shape into the bin that matches its COLOR! Starter level — shapes only, no tricky objects yet.
+    </div>
+
+    <div class="bins-row">
+      <div class="bin bin-red" style="color:#ef5350">
+        <h3>Red</h3><div class="bin-dot" style="background:#ef5350"></div><div class="bin-space"></div>
+      </div>
+      <div class="bin bin-blue" style="color:#42a5f5">
+        <h3>Blue</h3><div class="bin-dot" style="background:#42a5f5"></div><div class="bin-space"></div>
+      </div>
+      <div class="bin bin-yellow" style="color:#d4a017">
+        <h3>Yellow</h3><div class="bin-dot" style="background:#ffca28"></div><div class="bin-space"></div>
+      </div>
+    </div>
+
+    <div class="cut-area">
+      <h3>✂️ Cut these out (dashed lines)</h3>
+      <div class="cut-grid">
+        <div class="cut-piece"><span class="shape-circle" style="background:#ef5350"></span><span class="label">red circle</span></div>
+        <div class="cut-piece"><span class="shape-square" style="background:#42a5f5"></span><span class="label">blue square</span></div>
+        <div class="cut-piece"><span class="shape-triangle" style="background:#ffca28"></span><span class="label">yellow triangle</span></div>
+        <div class="cut-piece"><span class="shape-square" style="background:#ef5350"></span><span class="label">red square</span></div>
+        <div class="cut-piece"><span class="shape-triangle" style="background:#42a5f5"></span><span class="label">blue triangle</span></div>
+        <div class="cut-piece"><span class="shape-circle" style="background:#ffca28"></span><span class="label">yellow circle</span></div>
+        <div class="cut-piece"><span class="shape-triangle" style="background:#ef5350"></span><span class="label">red triangle</span></div>
+        <div class="cut-piece"><span class="shape-circle" style="background:#42a5f5"></span><span class="label">blue circle</span></div>
+        <div class="cut-piece"><span class="shape-square" style="background:#ffca28"></span><span class="label">yellow square</span></div>
+      </div>
+      <div class="scissors-note">✂️ Grown-ups: cut along the dashed lines. Say each color name out loud as your child sorts!</div>
+    </div>
+
+    <div class="activity-instructions" style="background:#fff8e1;border-color:#ffd54f;color:#7a5c00;">
+      🌟 Shapes sorted! When this feels easy, move on to the Primary Color Sorting sheet with real objects.
+    </div>
+  </div>
+
+  <div class="printable-footer">
+    <div class="printable-brand">momyouneedthis</div>
+    <div class="printable-tagline">Free printables for happy little learners 💗</div>
+  </div>
+</div>
+</body>
+</html>
