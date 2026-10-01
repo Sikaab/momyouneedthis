@@ -55,7 +55,7 @@ body{
 
     text-align: center;
 
-    padding: 18px 20px 70px;
+    padding: 18px 20px 100px;
 
     overflow: hidden;
 }
@@ -591,7 +591,7 @@ button:hover {
 @media (max-width: 760px) {
 
     .hero {
-        padding: 14px 18px 60px;
+        padding: 14px 18px 80px;
     }
 
     .hero::before {
@@ -2446,6 +2446,7 @@ box-shadow:0 10px 25px rgba(0,0,0,.08);
 
 .free-library-button,
 .hero-button {
+    margin-bottom: 30px;
     display:inline-flex;
     align-items:center;
     justify-content:center;
