@@ -1216,11 +1216,12 @@ PRODUCT BUTTON
 
 .product-buy-button {
     width: 100%;
+    max-width: 230px;
     min-height: 52px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 4px;
+    margin-top: auto;
     border-radius: 999px;
     background: #e89a3a;
     border: 2px solid #e89a3a;
