@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-FE48KK6THQ"></script>
+<!-- Google tag (gtag.js) - deferred until page load for performance -->
 <script>
+window.addEventListener('load', function() {
+  var s = document.createElement('script');
+  s.async = true;
+  s.src = 'https://www.googletagmanager.com/gtag/js?id=G-FE48KK6THQ';
+  document.head.appendChild(s);
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'G-FE48KK6THQ');
+});
 </script>
 <meta charset="UTF-8">
 <meta
@@ -43,7 +48,7 @@
 >
 <meta
     property="og:image"
-    content="https://momyouneedthis.com/assets/jules-andree.png"
+    content="https://momyouneedthis.com/assets/jules-andree.jpg"
 >
 <meta
     property="og:image:alt"
@@ -67,13 +72,15 @@
 >
 <meta
     name="twitter:image"
-    content="https://momyouneedthis.com/assets/jules-andree.png"
+    content="https://momyouneedthis.com/assets/jules-andree.jpg"
 >
 <link
     rel="icon"
     href="assets/logo.svg"
     type="image/svg+xml"
 >
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link
     href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap"
     rel="stylesheet"
@@ -92,7 +99,7 @@
         "sameAs": [
             "https://www.instagram.com/jules.andree/"
         ],
-        "image": "https://momyouneedthis.com/assets/jules-andree.png",
+        "image": "https://momyouneedthis.com/assets/jules-andree.jpg",
         "description": "Jules Andree is a Colorado mom creator sharing honest, slightly unhinged motherhood, parenting humor and real-life family moments."
     },
     "isPartOf": {
@@ -1278,7 +1285,7 @@ footer > p {
 <div class="creator-hero-photo-wrap">
 <div class="creator-photo-circle"></div>
 <img
-    src="assets/jules-andree.png"
+    src="assets/jules-andree.jpg"
     alt="Jules Andree"
     class="creator-hero-photo"
     onerror="

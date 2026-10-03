@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-FE48KK6THQ"></script>
+<!-- Google tag (gtag.js) - deferred until page load for performance -->
 <script>
+window.addEventListener('load', function() {
+  var s = document.createElement('script');
+  s.async = true;
+  s.src = 'https://www.googletagmanager.com/gtag/js?id=G-FE48KK6THQ';
+  document.head.appendChild(s);
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'G-FE48KK6THQ');
+});
 </script>
 <!-- =========================================================
      SEO
@@ -55,7 +60,7 @@
 >
 <meta
     property="og:image"
-    content="https://momyouneedthis.com/assets/justineandlainey.png"
+    content="https://momyouneedthis.com/assets/justineandlainey.jpg"
 >
 <meta
     property="og:image:alt"
@@ -82,7 +87,7 @@
 >
 <meta
     name="twitter:image"
-    content="https://momyouneedthis.com/assets/justineandlainey.png"
+    content="https://momyouneedthis.com/assets/justineandlainey.jpg"
 >
 <!-- =========================================================
      FAVICON
@@ -95,6 +100,8 @@
 <!-- =========================================================
      FONT
 ========================================================= -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link
     href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap"
     rel="stylesheet"
@@ -116,7 +123,7 @@
         "sameAs": [
             "https://www.instagram.com/justineandlainey/"
         ],
-        "image": "https://momyouneedthis.com/assets/justineandlainey.png",
+        "image": "https://momyouneedthis.com/assets/justineandlainey.jpg",
         "description": "A soft motherhood creator sharing relatable mom life, toddler moments and community-focused motherhood content."
     },
     "isPartOf": {
@@ -1308,7 +1315,7 @@ footer > p {
 <div class="creator-photo-circle"></div>
 
 <img
-    src="assets/justineandlainey.png"
+    src="assets/justineandlainey.jpg"
     alt="Justine from Justine and Lainey — Mom Creator Worth Following"
     class="creator-hero-photo"
     onerror="

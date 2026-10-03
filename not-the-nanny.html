@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-FE48KK6THQ"></script>
+<!-- Google tag (gtag.js) - deferred until page load for performance -->
 <script>
+window.addEventListener('load', function() {
+  var s = document.createElement('script');
+  s.async = true;
+  s.src = 'https://www.googletagmanager.com/gtag/js?id=G-FE48KK6THQ';
+  document.head.appendChild(s);
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'G-FE48KK6THQ');
+});
 </script>
 
 <meta charset="UTF-8">
@@ -53,7 +58,7 @@
 
 <meta
     property="og:image"
-    content="https://momyouneedthis.com/assets/mom-not-the-nanny.png"
+    content="https://momyouneedthis.com/assets/mom-not-the-nanny.jpg"
 >
 
 <meta
@@ -83,7 +88,7 @@
 
 <meta
     name="twitter:image"
-    content="https://momyouneedthis.com/assets/mom-not-the-nanny.png"
+    content="https://momyouneedthis.com/assets/mom-not-the-nanny.jpg"
 >
 
 <link
@@ -92,6 +97,8 @@
     type="image/svg+xml"
 >
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link
     href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap"
     rel="stylesheet"
@@ -112,7 +119,7 @@
             "https://www.instagram.com/not_thenanny/",
             "https://notthenannyblog.com/"
         ],
-        "image": "https://momyouneedthis.com/assets/mom-not-the-nanny.png",
+        "image": "https://momyouneedthis.com/assets/mom-not-the-nanny.jpg",
         "description": "Ana Balich is the creator behind Not the Nanny, sharing humor, parenting perspective and real-life observations from raising three kids."
     },
     "isPartOf": {
@@ -1503,7 +1510,7 @@ footer > p {
 <div class="creator-photo-circle"></div>
 
 <img
-    src="assets/mom-not-the-nanny.png"
+    src="assets/mom-not-the-nanny.jpg"
     alt="Ana Balich of Not the Nanny"
     class="creator-hero-photo"
     onerror="
