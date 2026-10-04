@@ -3,25 +3,25 @@ MOMYOU NEED THIS — MOM'S LAB
 ========================================================= */
 :root {
     --lab-pink: #e89aaa;
-    --lab-pink-dark: #cf6f87;
+    --lab-pink-dark: #a83a52;
     --lab-pink-light: #fff0f4;
     --lab-pink-soft: #fff8fa;
     --lab-cream: #fffaf5;
     --lab-cream-dark: #f4ebe4;
-    --lab-red: #b95662;
+    --lab-red: #8e2f3a;
     --lab-red-light: #fff1f2;
     --lab-purple: #88739d;
     --lab-purple-light: #f4f0f8;
     --lab-blue: #617fa8;
     --lab-blue-light: #f1f5fb;
-    --lab-green: #5e9676;
+    --lab-green: #3a6b4a;
     --lab-green-light: #edf7f1;
     --lab-gold: #bd9450;
     --lab-gold-light: #fff8e8;
     --lab-white: #ffffff;
     --lab-text: #413738;
-    --lab-muted: #817779;
-    --lab-light-text: #aaa0a2;
+    --lab-muted: #6b6163;
+    --lab-light-text: #6e6466;
     --lab-border: #eee3e3;
 
     --lab-radius-sm: 12px;
@@ -889,8 +889,8 @@ FEATURED PRODUCT
     justify-content: center;
     margin-top: 4px;
     border-radius: 999px;
-    background: #e89a3a;
-    border: 2px solid #e89a3a;
+    background: #8a5600;
+    border: 2px solid #8a5600;
     color: #fff !important;
     font-size: 13px;
     font-weight: 900;
@@ -1223,8 +1223,8 @@ PRODUCT BUTTON
     justify-content: center;
     margin-top: auto;
     border-radius: 999px;
-    background: #e89a3a;
-    border: 2px solid #e89a3a;
+    background: #8a5600;
+    border: 2px solid #8a5600;
     color: #fff !important;
     font-size: 13px;
     font-weight: 900;
@@ -1247,8 +1247,8 @@ PRODUCT BUTTON
 }
 
 .product-buy-button.failed-button {
-    background: #c96f79;
-    border-color: #c96f79;
+    background: #a83a48;
+    border-color: #a83a48;
     box-shadow:
         0 8px 20px rgba(185, 86, 98, 0.20);
 }
