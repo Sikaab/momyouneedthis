@@ -20,8 +20,8 @@ MOMYOU NEED THIS — MOM'S LAB
     --lab-gold-light: #fff8e8;
     --lab-white: #ffffff;
     --lab-text: #413738;
-    --lab-muted: #817779;
-    --lab-light-text: #aaa0a2;
+    --lab-muted: #6b6163;
+    --lab-light-text: #6e6466;
     --lab-border: #eee3e3;
 
     --lab-radius-sm: 12px;
@@ -889,8 +889,8 @@ FEATURED PRODUCT
     justify-content: center;
     margin-top: 4px;
     border-radius: 999px;
-    background: #e89a3a;
-    border: 2px solid #e89a3a;
+    background: #a86a00;
+    border: 2px solid #a86a00;
     color: #fff !important;
     font-size: 13px;
     font-weight: 900;
@@ -1223,8 +1223,8 @@ PRODUCT BUTTON
     justify-content: center;
     margin-top: auto;
     border-radius: 999px;
-    background: #e89a3a;
-    border: 2px solid #e89a3a;
+    background: #a86a00;
+    border: 2px solid #a86a00;
     color: #fff !important;
     font-size: 13px;
     font-weight: 900;
