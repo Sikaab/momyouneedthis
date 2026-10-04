@@ -39,7 +39,7 @@ justify-content:center;
 padding:8px 14px;
 border-radius:999px;
 background:#fff0f5;
-color:#d6537c;
+color:#b03a5e;
 font-size:12px;
 font-weight:900;
 letter-spacing:.4px;
@@ -63,7 +63,7 @@ padding:8px 15px;
 margin-bottom:15px;
 border-radius:999px;
 background:#fff0f5;
-color:#d6537c;
+color:#b03a5e;
 font-size:12px;
 font-weight:900;
 letter-spacing:.7px;
@@ -79,13 +79,13 @@ color:#332b2b;
 
 .voting-hero h1 span{
 display:block;
-color:#e89aaa;
+color:#b03a5e;
 }
 
 .mom-voted-intro{
 margin:16px auto 0;
 max-width:500px;
-color:#777;
+color:#5f5f5f;
 font-size:17px;
 line-height:1.5;
 font-weight:600;
@@ -118,7 +118,7 @@ justify-content:center;
 padding:9px 14px;
 border-radius:999px;
 text-decoration:none;
-color:#777;
+color:#5f5f5f;
 background:#fffaf8;
 font-size:13px;
 font-weight:900;
@@ -131,7 +131,7 @@ background:#eef5ff;
 }
 
 .category-link.active{
-background:#e89aaa;
+background:#b03a5e;
 color:#fff;
 }
 
@@ -152,7 +152,7 @@ margin-bottom:18px;
 .battle-eyebrow{
 display:inline-block;
 margin-bottom:8px;
-color:#d6537c;
+color:#b03a5e;
 font-size:12px;
 font-weight:900;
 letter-spacing:.8px;
@@ -168,7 +168,7 @@ font-weight:900;
 
 .battle-heading p{
 margin:8px 0 0;
-color:#777;
+color:#5f5f5f;
 font-size:15px;
 font-weight:600;
 }
@@ -201,7 +201,7 @@ text-align:center;
 }
 
 .battle-card-header span{
-color:#999;
+color:#6b6264;
 font-size:10px;
 font-weight:900;
 letter-spacing:.7px;
@@ -211,7 +211,7 @@ letter-spacing:.7px;
 padding:5px 9px;
 border-radius:999px;
 background:#fff0f5;
-color:#d6537c;
+color:#b03a5e;
 font-size:10px;
 font-weight:900;
 letter-spacing:.6px;
@@ -350,7 +350,7 @@ box-shadow:
 }
 
 .contender.selected{
-border-color:#e89aaa;
+border-color:#b03a5e;
 box-shadow:
 0 0 0 3px rgba(232,154,170,.16),
 0 12px 30px rgba(232,154,170,.12);
@@ -375,7 +375,7 @@ right:-2px;
 bottom:-2px;
 left:-2px;
 box-sizing:border-box;
-border:3px solid #e89aaa;
+border:3px solid #b03a5e;
 border-radius:inherit;
 pointer-events:none;
 z-index:20;
@@ -539,7 +539,7 @@ min-height:0;
 .product-label{
 display:block;
 margin-bottom:6px;
-color:#999;
+color:#6b6264;
 font-size:9px;
 font-weight:900;
 letter-spacing:.8px;
@@ -555,14 +555,14 @@ font-weight:900;
 
 .product-brand{
 margin:5px 0 0;
-color:#d6537c;
+color:#b03a5e;
 font-size:12px;
 font-weight:800;
 }
 
 .battle-description{
 margin:10px auto 14px;
-color:#777;
+color:#5f5f5f;
 font-size:12px;
 line-height:1.45;
 max-width:260px;
@@ -591,7 +591,7 @@ flex-shrink:0;
 }
 
 .product-rating span{
-color:#777;
+color:#5f5f5f;
 font-size:10px;
 font-weight:900;
 letter-spacing:.3px;
@@ -604,7 +604,7 @@ font-weight:900;
 }
 
 .product-rating small{
-color:#999;
+color:#6b6264;
 font-size:10px;
 font-weight:800;
 }
@@ -659,14 +659,14 @@ box-shadow:0 8px 18px rgba(29,79,145,.2);
 
 .vote-button{
 margin-top:8px;
-background:#e89aaa;
+background:#b03a5e;
 color:#fff;
-border:2px solid #e89aaa;
+border:2px solid #b03a5e;
 }
 
 .vote-button:hover:not(:disabled){
-background:#d6537c;
-border-color:#d6537c;
+background:#b03a5e;
+border-color:#b03a5e;
 transform:translateY(-2px);
 box-shadow:0 8px 18px rgba(232,154,170,.25);
 }
@@ -677,8 +677,8 @@ opacity:.72;
 }
 
 .vote-button.selected{
-background:#d6537c;
-border-color:#d6537c;
+background:#b03a5e;
+border-color:#b03a5e;
 opacity:1;
 }
 
@@ -762,8 +762,8 @@ align-items:center;
 justify-content:center;
 border-radius:50%;
 background:#fffdfb;
-border:4px solid #e89aaa;
-color:#d6537c;
+border:4px solid #b03a5e;
+color:#b03a5e;
 font-size:19px;
 font-weight:900;
 letter-spacing:-.5px;
@@ -815,7 +815,7 @@ font-weight:900;
 
 .battle-result > p{
 margin:5px 0 0;
-color:#777;
+color:#5f5f5f;
 font-size:13px;
 font-weight:600;
 }
@@ -840,7 +840,7 @@ border-radius:13px;
 
 .result-percentages span{
 display:block;
-color:#999;
+color:#6b6264;
 font-size:9px;
 font-weight:900;
 letter-spacing:.5px;
@@ -856,7 +856,7 @@ font-weight:900;
 
 .your-position{
 margin-top:12px !important;
-color:#d6537c !important;
+color:#b03a5e !important;
 font-weight:900 !important;
 }
 
@@ -869,7 +869,7 @@ margin-top:16px;
 padding-top:13px;
 border-top:1px solid #eee3e7;
 text-align:center;
-color:#999;
+color:#6b6264;
 font-size:11px;
 font-weight:800;
 }
@@ -911,7 +911,7 @@ font-weight:900;
 .holy-grail-final p{
 max-width:500px;
 margin:0 auto 18px;
-color:#777;
+color:#5f5f5f;
 font-size:14px;
 line-height:1.5;
 }
@@ -962,7 +962,7 @@ font-weight:900;
 .mom-voted-page footer > p{
 max-width:450px;
 margin:7px auto 0;
-color:#777;
+color:#5f5f5f;
 font-size:12px;
 line-height:1.5;
 }
@@ -975,7 +975,7 @@ border-top:1px solid #eee3e7;
 
 .footer-bottom p{
 margin:4px 0;
-color:#999;
+color:#6b6264;
 font-size:10px;
 line-height:1.4;
 }
