@@ -46,7 +46,7 @@
     display: block;
     margin-bottom: 3px;
 
-    color: #c97b8e;
+    color: #a04a5e;
     font-size: 9px;
     font-weight: 900;
     letter-spacing: 1.6px;
@@ -193,7 +193,7 @@
     padding: 7px 13px;
 
     background: #fff0f4;
-    color: #c7798d;
+    color: #a04a5e;
 
     border-radius: 999px;
 
@@ -305,7 +305,7 @@
 
     margin-bottom: 8px;
 
-    color: #c9798c;
+    color: #9c4a5c;
 
     font-size: 9px;
     font-weight: 900;
@@ -672,7 +672,7 @@
 .section-kicker {
     display: block;
 
-    color: #bf788a;
+    color: #9c4a5c;
 
     font-size: 9px;
     font-weight: 900;
@@ -702,7 +702,7 @@
 }
 
 .summary-count span {
-    color: #999092;
+    color: #6b6264;
 
     font-size: 9px;
     font-weight: 800;
@@ -746,7 +746,7 @@
 }
 
 .summary-stat small {
-    color: #999092;
+    color: #6b6264;
 
     font-size: 9px;
     font-weight: 700;
@@ -1073,7 +1073,7 @@
 
     margin: auto;
 
-    color: #968c8e;
+    color: #6b6264;
 
     font-size: 12px;
     line-height: 1.55;
@@ -1167,7 +1167,7 @@
 .tracker-privacy p {
     margin: 4px 0 12px;
 
-    color: #929092;
+    color: #6b6264;
 
     font-size: 10px;
     line-height: 1.5;
@@ -1377,7 +1377,7 @@
 
     margin-top: 7px;
 
-    color: #999092;
+    color: #6b6264;
 
     font-size: 10px;
     line-height: 1.45;
