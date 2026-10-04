@@ -422,7 +422,7 @@ enter your email to download.
 Personalize Your Chart
 </h2>
 
-<label>
+<label for="childName">
 Child's Name
 </label>
 
@@ -460,7 +460,7 @@ Choose Theme
 
 </select>
 
-<label>
+<label for="chartTheme">
 Chart Color
 </label>
 
@@ -469,30 +469,34 @@ Chart Color
 <button
 type="button"
 class="color-choice pink"
-data-color="pink">
+data-color="pink"
+aria-label="Pink theme">
 </button>
 
 <button
 type="button"
 class="color-choice purple"
-data-color="purple">
+data-color="purple"
+aria-label="Purple theme">
 </button>
 
 <button
 type="button"
 class="color-choice blue"
-data-color="blue">
+data-color="blue"
+aria-label="Blue theme">
 </button>
 
 <button
 type="button"
 class="color-choice green"
-data-color="green">
+data-color="green"
+aria-label="Green theme">
 </button>
 
 </div>
 
-<label>
+<label for="weekNumber">
 Week Number
 </label>
 
@@ -620,7 +624,7 @@ Enter your email to download your personalized potty chart.
 <input
 id="emailInput"
 type="email"
-placeholder="Your email address">
+placeholder="Your email address" aria-label="Email address">
 
 <p
 id="emailError"
