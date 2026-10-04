@@ -647,7 +647,7 @@ button:hover {
 @media (max-width: 480px) {
 
     .hero {
-        padding: 8px 15px 45px;
+        padding: 8px 15px 60px;
     }
 
     .hero::before {
