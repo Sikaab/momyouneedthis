@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-FE48KK6THQ"></script>
+<!-- Google tag (gtag.js) - deferred until page load for performance -->
 <script>
+window.addEventListener('load', function() {
+  var s = document.createElement('script');
+  s.async = true;
+  s.src = 'https://www.googletagmanager.com/gtag/js?id=G-FE48KK6THQ';
+  document.head.appendChild(s);
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'G-FE48KK6THQ');
+});
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,9 +21,11 @@
 <meta property="og:title" content="Free Rectangle Tracing Pages | Printable for Toddlers">
 <meta property="og:description" content="Free printable rectangle tracing pages for toddlers and preschoolers. Download and print at home — no signup needed.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://momyouneedthis.com/rectangle-tracing-pages.html">
+<meta property="og:url" content="https://momyouneedthis.com/rectangle-tracing-pages">
 <meta property="og:image" content="https://momyouneedthis.com/assets/logo.svg">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
 <script type="application/ld+json">
 {
@@ -55,8 +62,9 @@
 </head>
 <body>
 <div class="page">
+<main>
 <section class="resource-page">
-<img src="assets/logo.svg" class="logo" alt="MomYouNeedThis Logo">
+<img width="300" height="300" src="assets/logo.svg" class="logo" alt="MomYouNeedThis Logo">
 <span class="free-badge">
 🟪 FREE RECTANGLE TRACING
 </span>
@@ -117,43 +125,25 @@ Rectangles add a new challenge after squares: varying line length. Controlling l
 <p>
 Discover more free shape activities, printables, and learning ideas created for busy parents.
 </p>
-<a href="shape-tracing-pages.html" class="download-button">
+<a href="shape-tracing-pages" class="download-button">
 🎁 Back to Shape Tracing Pages
 </a>
 <div class="footer-links" style="margin-top:18px;">
-    <a href="square-tracing-pages.html">
+    <a href="square-tracing-pages">
         Square Tracing Pages
     </a>
-    <a href="triangle-tracing-pages.html">
+    <a href="triangle-tracing-pages">
         Triangle Tracing Pages
     </a>
-    <a href="oval-tracing-pages.html">
+    <a href="oval-tracing-pages">
         Oval Tracing Pages
     </a>
 </div>
 </section>
-
-<section class="seo-section">
-<span class="section-kicker">FAQ</span>
-<h2>❓ Free Rectangle Tracing Pages FAQs</h2>
-<div class="seo-faq">
-<div class="seo-faq-item">
-<h3>What age are these rectangle tracing pages for?</h3>
-<p>Best for preschoolers ages 3 to 5. Try square tracing first, then graduate to rectangles for the added line-length challenge.</p>
-</div>
-<div class="seo-faq-item">
-<h3>Are these rectangle tracing pages really free?</h3>
-<p>Yes — every printable on MomYouNeedThis is 100% free to download and print. No signup, no payment, just tap the download button.</p>
-</div>
-<div class="seo-faq-item">
-<h3>How are rectangles different from squares when tracing?</h3>
-<p>The motion is the same — four straight sides — but children must make two sides longer. That length control is the new skill, and it's excellent fine motor practice.</p>
-</div>
-</div>
-</section>
+</main>
 <footer>
     <div class="footer-logo">
-        <img
+        <img width="300" height="300"
             src="assets/logo.svg"
             alt="MomYouNeedThis"
         >
@@ -166,31 +156,31 @@ Discover more free shape activities, printables, and learning ideas created for 
     and a little chaos from the Mom Universe.
 </p>
 <div class="footer-links">
-    <a href="mom-favorites.html">
+    <a href="mom-favorites">
         Mom Battles
     </a>
-    <a href="mom-lab.html">
+    <a href="mom-lab">
         Mom Lab
     </a>
-    <a href="free-mom-resources.html">
+    <a href="free-mom-resources">
         Free Resources
     </a>
-    <a href="about.html">
+    <a href="about">
         About
     </a>
-    <a href="privacy-policy.html">
+    <a href="privacy-policy">
         Privacy Policy
     </a>
-    <a href="terms.html">
+    <a href="terms">
         Terms of Use
     </a>
-    <a href="affiliate-disclosure.html">
+    <a href="affiliate-disclosure">
         Affiliate Disclosure
     </a>
-    <a href="disclaimer.html">
+    <a href="disclaimer">
         Disclaimer
     </a>
-    <a href="contact.html">
+    <a href="contact">
         Contact
     </a>
 </div>
