@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-FE48KK6THQ"></script>
+<!-- Google tag (gtag.js) - deferred until page load for performance -->
 <script>
+window.addEventListener('load', function() {
+  var s = document.createElement('script');
+  s.async = true;
+  s.src = 'https://www.googletagmanager.com/gtag/js?id=G-FE48KK6THQ';
+  document.head.appendChild(s);
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'G-FE48KK6THQ');
+});
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,9 +21,11 @@
 <meta property="og:title" content="Free Number 1 Tracing | Printable for Toddlers">
 <meta property="og:description" content="Free printable number 1 tracing worksheet for toddlers and preschoolers. Download and print at home — no signup needed.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://momyouneedthis.com/number-1-tracing.html">
+<meta property="og:url" content="https://momyouneedthis.com/number-1-tracing">
 <meta property="og:image" content="https://momyouneedthis.com/assets/logo.svg">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
 <script type="application/ld+json">
 {
@@ -55,8 +62,9 @@
 </head>
 <body>
 <div class="page">
+<main>
 <section class="resource-page">
-<img src="assets/logo.svg" class="logo" alt="MomYouNeedThis Logo">
+<img width="300" height="300" src="assets/logo.svg" class="logo" alt="MomYouNeedThis Logo">
 <span class="free-badge">
 🟪 FREE NUMBER 1 TRACING
 </span>
@@ -117,32 +125,14 @@ The number 1 is the foundation of all counting. When children understand that 1 
 <p>
 Discover more free number tracing pages, printables, and learning ideas created for busy parents.
 </p>
-<a href="number-tracing-pages.html" class="download-button">
+<a href="number-tracing-pages" class="download-button">
 &#x1F381; Back to Number Tracing Pages
 </a>
 </section>
-
-<section class="seo-section">
-<span class="section-kicker">FAQ</span>
-<h2>❓ Free Number 1 Tracing FAQs</h2>
-<div class="seo-faq">
-<div class="seo-faq-item">
-<h3>How do you write the number 1?</h3>
-<p>Start at the top and draw one straight line down. That is it — the number 1 is the simplest number to write, which is why it is perfect for little beginners!</p>
-</div>
-<div class="seo-faq-item">
-<h3>Are these number 1 tracing pages really free?</h3>
-<p>Yes — every printable on MomYouNeedThis is 100% free to download and print. No signup, no payment, just tap the download button.</p>
-</div>
-<div class="seo-faq-item">
-<h3>How do I use this worksheet with my child?</h3>
-<p>Download and print the number 1 tracing sheet, then trace the big 1s together in short, playful sessions. Count real objects — one apple, one toy car — so your child connects the symbol 1 with the idea of a single thing.</p>
-</div>
-</div>
-</section>
+</main>
 <footer>
     <div class="footer-logo">
-        <img
+        <img width="300" height="300"
             src="assets/logo.svg"
             alt="MomYouNeedThis"
         >
@@ -155,31 +145,31 @@ Discover more free number tracing pages, printables, and learning ideas created 
     and a little chaos from the Mom Universe.
 </p>
 <div class="footer-links">
-    <a href="mom-favorites.html">
+    <a href="mom-favorites">
         Mom Battles
     </a>
-    <a href="mom-lab.html">
+    <a href="mom-lab">
         Mom Lab
     </a>
-    <a href="free-mom-resources.html">
+    <a href="free-mom-resources">
         Free Resources
     </a>
-    <a href="about.html">
+    <a href="about">
         About
     </a>
-    <a href="privacy-policy.html">
+    <a href="privacy-policy">
         Privacy Policy
     </a>
-    <a href="terms.html">
+    <a href="terms">
         Terms of Use
     </a>
-    <a href="affiliate-disclosure.html">
+    <a href="affiliate-disclosure">
         Affiliate Disclosure
     </a>
-    <a href="disclaimer.html">
+    <a href="disclaimer">
         Disclaimer
     </a>
-    <a href="contact.html">
+    <a href="contact">
         Contact
     </a>
 </div>

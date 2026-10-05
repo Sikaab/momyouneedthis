@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-FE48KK6THQ"></script>
+<!-- Google tag (gtag.js) - deferred until page load for performance -->
 <script>
+window.addEventListener('load', function() {
+  var s = document.createElement('script');
+  s.async = true;
+  s.src = 'https://www.googletagmanager.com/gtag/js?id=G-FE48KK6THQ';
+  document.head.appendChild(s);
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'G-FE48KK6THQ');
+});
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,9 +21,11 @@
 <meta property="og:title" content="Free Mixed 2D Shapes Activities | Printable for Toddlers">
 <meta property="og:description" content="Free printable mixed 2D shapes activities for toddlers and preschoolers. Download and print at home — no signup needed.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://momyouneedthis.com/mixed-2d-shapes-activities.html">
+<meta property="og:url" content="https://momyouneedthis.com/mixed-2d-shapes-activities">
 <meta property="og:image" content="https://momyouneedthis.com/assets/logo.svg">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
 <script type="application/ld+json">
 {
@@ -55,8 +62,9 @@
 </head>
 <body>
 <div class="page">
+<main>
 <section class="resource-page">
-<img src="assets/logo.svg" class="logo" alt="MomYouNeedThis Logo">
+<img width="300" height="300" src="assets/logo.svg" class="logo" alt="MomYouNeedThis Logo">
 <span class="free-badge">
 🟪 FREE MIXED 2D SHAPES ACTIVITIES
 </span>
@@ -117,32 +125,14 @@ Mixing shapes together is harder than practicing one shape at a time — and tha
 <p>
 Discover more free 2D shape activities, printables, and learning ideas created for busy parents.
 </p>
-<a href="2d-shapes-activities.html" class="download-button">
+<a href="2d-shapes-activities" class="download-button">
 &#x1F381; Back to 2D Shape Activities
 </a>
 </section>
-
-<section class="seo-section">
-<span class="section-kicker">FAQ</span>
-<h2>❓ Free Mixed 2D Shapes Activities FAQs</h2>
-<div class="seo-faq">
-<div class="seo-faq-item">
-<h3>What are 2D shapes?</h3>
-<p>2D shapes are flat shapes like circles, squares, triangles, rectangles, ovals, stars, hearts, and diamonds. They have length and width but no thickness — you can draw them on paper!</p>
-</div>
-<div class="seo-faq-item">
-<h3>Are these mixed shape activities really free?</h3>
-<p>Yes — every printable on MomYouNeedThis is 100% free to download and print. No signup, no payment, just tap the download button.</p>
-</div>
-<div class="seo-faq-item">
-<h3>How do I use these activities with my child?</h3>
-<p>Download and print the mixed shapes sheet, then sort and match the shapes together. Ask your child to name each shape as they sort it — naming out loud locks in the learning!</p>
-</div>
-</div>
-</section>
+</main>
 <footer>
     <div class="footer-logo">
-        <img
+        <img width="300" height="300"
             src="assets/logo.svg"
             alt="MomYouNeedThis"
         >
@@ -155,31 +145,31 @@ Discover more free 2D shape activities, printables, and learning ideas created f
     and a little chaos from the Mom Universe.
 </p>
 <div class="footer-links">
-    <a href="mom-favorites.html">
+    <a href="mom-favorites">
         Mom Battles
     </a>
-    <a href="mom-lab.html">
+    <a href="mom-lab">
         Mom Lab
     </a>
-    <a href="free-mom-resources.html">
+    <a href="free-mom-resources">
         Free Resources
     </a>
-    <a href="about.html">
+    <a href="about">
         About
     </a>
-    <a href="privacy-policy.html">
+    <a href="privacy-policy">
         Privacy Policy
     </a>
-    <a href="terms.html">
+    <a href="terms">
         Terms of Use
     </a>
-    <a href="affiliate-disclosure.html">
+    <a href="affiliate-disclosure">
         Affiliate Disclosure
     </a>
-    <a href="disclaimer.html">
+    <a href="disclaimer">
         Disclaimer
     </a>
-    <a href="contact.html">
+    <a href="contact">
         Contact
     </a>
 </div>

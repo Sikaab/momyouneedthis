@@ -2,32 +2,39 @@
 <html lang="en">
     
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-FE48KK6THQ"></script>
+<!-- Google tag (gtag.js) - deferred until page load for performance -->
 <script>
+window.addEventListener('load', function() {
+  var s = document.createElement('script');
+  s.async = true;
+  s.src = 'https://www.googletagmanager.com/gtag/js?id=G-FE48KK6THQ';
+  document.head.appendChild(s);
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'G-FE48KK6THQ');
+});
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Free Mom Tools, Printables & Tips | MomYouNeedThis</title>
 <meta name="description" content="Free mom tools, printables and real parenting answers: voice baby tracker, sleep schedules, potty charts, coloring pages and honest product guides. No signup.">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://momyouneedthis.com/index.html">
+<link rel="canonical" href="https://momyouneedthis.com/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Free Mom Tools, Printables & Tips | MomYouNeedThis">
 <meta property="og:description" content="Free mom tools, printables and real parenting answers: voice baby tracker, sleep schedules, potty charts, coloring pages and honest product guides. No signup.">
-<meta property="og:url" content="https://momyouneedthis.com/index.html">
+<meta property="og:url" content="https://momyouneedthis.com/">
 <meta property="og:site_name" content="MomYouNeedThis">
 <meta property="og:image" content="https://momyouneedthis.com/assets/logo.svg">
 <meta property="og:image:alt" content="MomYouNeedThis">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Free Mom Tools, Printables & Tips | MomYouNeedThis">
 <meta name="twitter:description" content="Free mom tools, printables and real parenting answers: voice baby tracker, sleep schedules, potty charts, coloring pages and honest product guides. No signup.">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.min.css">
 <link rel="stylesheet" href="mom-creators.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link
     href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap"
     rel="stylesheet"
@@ -35,12 +42,13 @@
 </head>
 <body>
 <div class="page">
+<main>
 <!-- =========================================================
      HERO
 ========================================================= -->
 <section class="hero">
     <div class="hero-text">
-        <img
+        <img width="300" height="300"
             src="assets/logo.svg"
             class="logo"
             alt="MomYouNeedThis"
@@ -60,7 +68,7 @@
             everyday mom life a little easier.
         </p>
         <a
-            href="potty-chart-generator.html"
+            href="potty-chart-generator"
             class="hero-button"
         >
             🎁 GET A FREE POTTY KIT
@@ -75,8 +83,10 @@
 <section class="seasonal-banner">
     <div class="seasonal-banner-inner">
         <div class="seasonal-banner-art">
-            <img
+            <img width="1600" height="686"
                 src="assets/bundles/halloween/banner.jpg"
+                srcset="assets/bundles/halloween/banner-mobile.jpg 800w, assets/bundles/halloween/banner.jpg 1600w"
+                sizes="(max-width: 800px) 100vw, 1600px"
                 alt="Halloween printable bundle preview"
             >
         </div>
@@ -94,7 +104,7 @@
                 Perfect for October fun at home or in the classroom.
             </p>
             <a
-                href="halloween-bundle.html"
+                href="halloween-bundle"
                 class="seasonal-banner-button"
             >
                 👻 Get The Free Bundle
@@ -187,17 +197,17 @@
 .seasonal-banner-button{
     display:inline-block;
     padding:16px 38px;
-    background:#ff8f00;
+    background:#b16300;
     color:#fff!important;
     font-size:18px;
     font-weight:900;
     border-radius:999px;
     text-decoration:none!important;
-    box-shadow:0 8px 25px rgba(255,143,0,.4);
+    box-shadow:0 8px 25px rgba(177,99,0,.4);
     transition:.25s ease;
 }
 .seasonal-banner-button:hover{
-    background:#f57c00;
+    background:#b95e00;
     transform:translateY(-2px);
     box-shadow:0 12px 30px rgba(255,143,0,.5);
 }
@@ -294,7 +304,7 @@
         </div>
 
     <a
-        href="mom-lab.html"
+        href="mom-lab"
         class="mom-lab-home-button"
     >
         🧪 SEE THE MOM LAB →
@@ -326,7 +336,7 @@
      FEATURED BABY BATTLE
 ===================================================== -->
 <a
-    href="mom-favorites.html#baby"
+    href="mom-favorites#baby"
     class="amazon-featured-battle"
 >
     <div class="amazon-featured-icon">
@@ -353,7 +363,7 @@
 ===================================================== -->
 <div class="amazon-battle-categories">
     <a
-        href="mom-favorites.html#toddler"
+        href="mom-favorites#toddler"
         class="amazon-battle-chip"
     >
         <span>🧸</span>
@@ -367,7 +377,7 @@
         </div>
     </a>
     <a
-        href="mom-favorites.html#sleep"
+        href="mom-favorites#sleep"
         class="amazon-battle-chip"
     >
         <span>😴</span>
@@ -381,7 +391,7 @@
         </div>
     </a>
     <a
-        href="mom-favorites.html#potty"
+        href="mom-favorites#potty"
         class="amazon-battle-chip"
     >
         <span>🚽</span>
@@ -395,7 +405,7 @@
         </div>
     </a>
     <a
-        href="mom-favorites.html#feeding"
+        href="mom-favorites#feeding"
         class="amazon-battle-chip"
     >
         <span>🍽️</span>
@@ -409,7 +419,7 @@
         </div>
     </a>
     <a
-        href="mom-favorites.html#under25"
+        href="mom-favorites#under25"
         class="amazon-battle-chip"
     >
         <span>💰</span>
@@ -428,7 +438,7 @@
 ===================================================== -->
 <a
     class="amazon-button"
-    href="mom-favorites.html"
+    href="mom-favorites"
 >
     ⚔️ SEE ALL MOM BATTLES
 </a>
@@ -456,7 +466,7 @@
         </p>
         <a
             class="holy-grail-button"
-            href="submit-holy-grail.html"
+            href="submit-holy-grail"
         >
             💌 Recommend Your Holy Grail
         </a>
@@ -482,7 +492,7 @@
 </div>
 <div class="free-library-content">
     <a
-        href="free-mom-resources.html"
+        href="free-mom-resources"
         class="library-featured"
     >
         <div class="library-featured-icon">
@@ -511,7 +521,7 @@
     </a>
     <div class="library-picks">
         <a
-            href="free-mom-resources.html"
+            href="free-mom-resources"
             class="library-pick library-pick-pink"
         >
             <div class="library-pick-icon">
@@ -533,7 +543,7 @@
             </b>
         </a>
         <a
-            href="free-mom-resources.html"
+            href="free-mom-resources"
             class="library-pick library-pick-yellow"
         >
             <div class="library-pick-icon">
@@ -555,7 +565,7 @@
             </b>
         </a>
         <a
-            href="free-mom-resources.html"
+            href="free-mom-resources"
             class="library-pick library-pick-blue"
         >
             <div class="library-pick-icon">
@@ -577,7 +587,7 @@
             </b>
         </a>
         <a
-            href="free-mom-resources.html"
+            href="free-mom-resources"
             class="library-pick library-pick-green"
         >
             <div class="library-pick-icon">
@@ -610,7 +620,7 @@
         </span>
     </div>
     <a
-        href="free-mom-resources.html"
+        href="free-mom-resources"
         class="free-library-button"
     >
         📚 VISIT THE FREE LIBRARY →
@@ -636,7 +646,7 @@
 </div>
 <div class="smart-tools-grid">
     <a
-        href="baby-tracker.html"
+        href="baby-tracker"
         class="smart-tool-featured"
     >
         <div class="smart-tool-featured-top">
@@ -662,7 +672,7 @@
         </div>
     </a>
     <a
-        href="sleep-schedule-generator.html"
+        href="sleep-schedule-generator"
         class="smart-tool-card"
     >
         <div class="smart-tool-card-top">
@@ -687,7 +697,7 @@
         </div>
     </a>
         <a
-        href="toddler-wardrobe-builder.html"
+        href="toddler-wardrobe-builder"
         class="smart-tool-card"
     >
         <div class="smart-tool-card-top">
@@ -711,7 +721,7 @@
         </div>
     </a>
     <a
-        href="potty-chart-generator.html"
+        href="potty-chart-generator"
         class="smart-tool-card"
     >
         <div class="smart-tool-card-top">
@@ -736,7 +746,7 @@
         </div>
     </a>
     <a
-        href="free-mom-resources.html"
+        href="free-mom-resources"
         class="smart-tool-card"
     >
         <div class="smart-tool-card-top">
@@ -792,7 +802,7 @@
 </div>
 <div class="mom-answers-feature">
     <a
-        href="blog-toddler-hitting.html"
+        href="blog-toddler-hitting"
         class="mom-answer-main"
     >
         <div class="mom-answer-main-image">
@@ -817,7 +827,7 @@
     </a>
     <div class="mom-answers-side">
         <a
-            href="blog-baby-sleep-schedule-working-against-you.html"
+            href="blog-baby-sleep-schedule-working-against-you"
             class="mom-answer-mini"
         >
             <span class="mom-answer-mini-icon">
@@ -836,7 +846,7 @@
             </div>
         </a>
         <a
-            href="blog-toddler-must-haves.html"
+            href="blog-toddler-must-haves"
             class="mom-answer-mini"
         >
             <span class="mom-answer-mini-icon">
@@ -855,7 +865,7 @@
             </div>
         </a>
         <a
-            href="blog-toddler-learning-activities.html"
+            href="blog-toddler-learning-activities"
             class="mom-answer-mini"
         >
             <span class="mom-answer-mini-icon">
@@ -874,7 +884,7 @@
             </div>
         </a>
         <a
-            href="mom-quizzes.html"
+            href="mom-quizzes"
             class="mom-answer-mini"
         >
             <span class="mom-answer-mini-icon">
@@ -899,7 +909,7 @@
         ✨ New mom tips added regularly
     </span>
     <a
-        href="blog.html"
+        href="blog"
         class="mom-answers-button"
     >
         EXPLORE ALL MOM TIPS →
@@ -921,8 +931,8 @@
 
     <article class="mom-creators-home-feature">
         <div class="mom-creators-home-photo">
-            <img
-                src="assets/momlife-with-lizzy.png"
+            <img width="563" height="800"
+                src="assets/momlife-with-lizzy.jpg"
                 alt="MomLife With Lizzy"
                 loading="lazy"
             >
@@ -950,10 +960,10 @@
                 the kind of posts that make you feel a little less alone.
             </p>
             <a
-                href="momlife-with-lizzy.html"
+                href="momlife-with-lizzy"
                 class="mom-creators-home-link"
             >
-                Meet Her →
+                Meet Lizzy →
             </a>
         </div>
     </article>
@@ -961,8 +971,8 @@
     <div class="mom-creators-home-mini-grid">
         <article class="mom-creators-home-mini">
             <div class="mom-creators-home-mini-photo">
-                <img
-                    src="assets/carly-dewitt.png"
+                <img width="800" height="788"
+                    src="assets/carly-dewitt.jpg"
                     alt="Carly DeWitt"
                     loading="lazy"
                 >
@@ -978,16 +988,16 @@
                     Relatable motherhood content and real-life
                     moments from a mom creator worth knowing.
                 </p>
-                <a href="carly-dewitt.html">
-                    Meet Her →
+                <a href="carly-dewitt">
+                    Meet Carly →
                 </a>
             </div>
         </article>
 
         <article class="mom-creators-home-mini">
             <div class="mom-creators-home-mini-photo">
-                <img
-                    src="assets/sydney-hub bard.png"
+                <img width="756" height="800"
+                    src="assets/sydney-hub bard.jpg"
                     alt="Sydney Hubbard"
                     loading="lazy"
                 >
@@ -1003,15 +1013,15 @@
                     Honest mom-life content, relatable moments
                     and encouragement for the motherhood season.
                 </p>
-                <a href="sydney-hubbard.html">
-                    Meet Her →
+                <a href="sydney-hubbard">
+                    Meet Sydney →
                 </a>
             </div>
         </article>
     </div>
 
     <a
-        href="mom-creators.html"
+        href="mom-creators"
         class="mom-creators-home-button"
     >
         🌷 DISCOVER MORE MOM CREATORS
@@ -1068,9 +1078,10 @@
 <!-- =========================================================
      FOOTER
 ========================================================= -->
+</main>
 <footer>
     <div class="footer-logo">
-        <img
+        <img width="300" height="300"
             src="assets/logo.svg"
             alt="MomYouNeedThis"
         >
@@ -1083,31 +1094,31 @@
     and a little chaos from the Mom Universe.
 </p>
 <div class="footer-links">
-    <a href="mom-favorites.html">
+    <a href="mom-favorites">
         Mom Battles
     </a>
-    <a href="mom-lab.html">
+    <a href="mom-lab">
         Mom Lab
     </a>
-    <a href="free-mom-resources.html">
+    <a href="free-mom-resources">
         Free Resources
     </a>
-    <a href="about.html">
+    <a href="about">
         About
     </a>
-    <a href="privacy-policy.html">
+    <a href="privacy-policy">
         Privacy Policy
     </a>
-    <a href="terms.html">
+    <a href="terms">
         Terms of Use
     </a>
-    <a href="affiliate-disclosure.html">
+    <a href="affiliate-disclosure">
         Affiliate Disclosure
     </a>
-    <a href="disclaimer.html">
+    <a href="disclaimer">
         Disclaimer
     </a>
-    <a href="contact.html">
+    <a href="contact">
         Contact
     </a>
 </div>
@@ -1120,5 +1131,53 @@
 </footer>
 </div>
 <script src="script.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is MomYouNeedThis?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "MomYouNeedThis is a free hub for moms with smart tools like a voice baby tracker, sleep schedule generator, potty training kit and toddler wardrobe builder \u2014 plus printable activities, coloring pages, honest product comparisons and practical parenting guides."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is everything on MomYouNeedThis really free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. The tools, printables and guides are free to use with no payment, no download and no account required."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need to download an app or create an account?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. The tools run right in your browser, and the baby tracker keeps your data on your own device."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What free tools can I use as a mom?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The voice baby tracker for feeds, diapers and sleep, the sleep schedule generator, the toddler wardrobe builder quiz, and the personalized potty training chart kit."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What kind of printables are available?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Alphabet coloring pages, learning activities, tracing pages and more \u2014 with new free printables added regularly."
+      }
+    }
+  ]
+}
+</script>
 </body>
 </html>
