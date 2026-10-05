@@ -651,9 +651,9 @@ window.addEventListener('load', function() {
             alt="MomYouNeedThis"
         >
     </div>
-<h3>
+<p class="footer-brand">
     MomYouNeedThis
-</h3>
+</p>
 <p>
     Mom finds, smart tools, free resources, real answers
     and a little chaos from the Mom Universe.
@@ -844,6 +844,7 @@ window.addEventListener('load', function() {
                         class="${buttonClass}"
                         rel="sponsored nofollow noopener"
                         target="_blank"
+                        aria-label="${escapeHTML(product.buttonText)}: ${escapeHTML(product.name)}"
                     >
                         ${escapeHTML(product.buttonText)}
                     </a>
