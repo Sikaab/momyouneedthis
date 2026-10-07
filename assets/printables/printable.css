@@ -37,6 +37,12 @@ body {
   position: relative;
   overflow: hidden;
 }
+
+/* Halloween header variant: lavender instead of pink */
+.printable-header.halloween {
+  background: linear-gradient(135deg, #f3eefb 0%, #e9e1f3 40%, #d9cbe9 100%);
+}
+
 .printable-header::before {
   content: '';
   position: absolute;
