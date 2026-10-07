@@ -95,6 +95,50 @@ window.addEventListener('load', function() {
     .bundle-thumb .thumb-emoji{font-size:52px;}
     .bundle-card-body h3{font-size:15px;}
 }
+
+/* Halloween affiliate product cards (Mom Lab style, Halloween colors) */
+.hw-product-grid{
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+    gap:20px;margin:24px 0 10px;
+}
+.hw-product-card{
+    background:#fff;border:1px solid #e8d9e0;border-radius:22px;overflow:hidden;
+    box-shadow:0 7px 22px rgba(45,27,46,.07);
+    display:flex;flex-direction:column;
+    transition:transform .2s ease,box-shadow .2s ease;
+}
+.hw-product-card:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(230,115,0,.14);}
+.hw-product-image{
+    height:210px;display:flex;align-items:center;justify-content:center;padding:20px;
+    background:linear-gradient(135deg,#2D1B2E 0%,#4a2c4d 60%,#5e3a5e 100%);
+    position:relative;
+}
+.hw-product-image img{
+    width:170px;height:170px;object-fit:contain;border-radius:18px;background:#fff;padding:10px;
+    box-shadow:0 10px 24px rgba(0,0,0,.25);
+}
+.hw-product-badge{
+    position:absolute;top:12px;left:12px;
+    background:#e67300;color:#fff;font-size:11px;font-weight:900;letter-spacing:1px;
+    padding:6px 12px;border-radius:999px;text-transform:uppercase;
+}
+.hw-product-body{padding:20px;display:flex;flex-direction:column;flex:1;text-align:center;}
+.hw-product-category{
+    color:#e67300;font-size:11px;font-weight:900;letter-spacing:2px;margin-bottom:8px;text-transform:uppercase;
+}
+.hw-product-body h3{margin:0 0 8px;font-size:17px;font-weight:900;color:#2D1B2E;}
+.hw-product-body p{margin:0 0 16px;font-size:14px;line-height:1.55;color:#6d6d6d;flex:1;}
+.hw-buy-button{
+    display:inline-flex;align-items:center;justify-content:center;
+    background:#e67300;color:#fff;font-weight:900;font-size:15px;
+    padding:13px 24px;border-radius:999px;text-decoration:none;
+    transition:background .2s ease,transform .2s ease;
+}
+.hw-buy-button:hover{background:#c96400;color:#fff;transform:translateY(-2px);}
+@media(max-width:600px){
+    .hw-product-grid{grid-template-columns:1fr;gap:14px;}
+    .hw-product-image{height:180px;}
+}
 </style>
 </head>
 <body>
@@ -142,7 +186,7 @@ window.addEventListener('load', function() {
 </div>
 </div>
 <div class="bundle-card">
-<div class="bundle-thumb"><span class="thumb-emoji">✏️</span></div>
+<div class="bundle-thumb"><img src="assets/bundles/halloween/thumbs/halloween-pumpkin-tracing.jpg" alt="Pumpkin Tracing Practice preview" loading="lazy"></div>
 <div class="bundle-card-body">
 <h3>Pumpkin Tracing Practice</h3>
 <p>Trace wavy, loopy and zigzag dotted lines from pumpkin to pumpkin.</p>
@@ -150,7 +194,7 @@ window.addEventListener('load', function() {
 </div>
 </div>
 <div class="bundle-card">
-<div class="bundle-thumb"><span class="thumb-emoji">🔢</span></div>
+<div class="bundle-thumb"><img src="assets/bundles/halloween/thumbs/halloween-ghost-counting.jpg" alt="Ghost Counting 1–10 preview" loading="lazy"></div>
 <div class="bundle-card-body">
 <h3>Ghost Counting 1–10</h3>
 <p>Count the friendly ghosts in each row and write the number.</p>
@@ -158,7 +202,7 @@ window.addEventListener('load', function() {
 </div>
 </div>
 <div class="bundle-card">
-<div class="bundle-thumb"><span class="thumb-emoji">🍬</span></div>
+<div class="bundle-thumb"><img src="assets/bundles/halloween/thumbs/halloween-candy-sorting.jpg" alt="Candy Color Sort preview" loading="lazy"></div>
 <div class="bundle-card-body">
 <h3>Candy Color Sort</h3>
 <p>Sort 9 mixed-up candies into the red, orange and purple jars.</p>
@@ -166,7 +210,7 @@ window.addEventListener('load', function() {
 </div>
 </div>
 <div class="bundle-card">
-<div class="bundle-thumb"><span class="thumb-emoji">🎃</span></div>
+<div class="bundle-thumb"><img src="assets/bundles/halloween/thumbs/halloween-pumpkin-matching.jpg" alt="Match the Pumpkin Faces preview" loading="lazy"></div>
 <div class="bundle-card-body">
 <h3>Match the Pumpkin Faces</h3>
 <p>Look closely — every jack-o'-lantern has an identical twin!</p>
@@ -174,7 +218,7 @@ window.addEventListener('load', function() {
 </div>
 </div>
 <div class="bundle-card">
-<div class="bundle-thumb"><span class="thumb-emoji">🦇</span></div>
+<div class="bundle-thumb"><img src="assets/bundles/halloween/thumbs/halloween-bat-maze.jpg" alt="Bat Maze preview" loading="lazy"></div>
 <div class="bundle-card-body">
 <h3>Bat Maze</h3>
 <p>Help the little lost bat wind through the maze to the pumpkin.</p>
@@ -182,7 +226,7 @@ window.addEventListener('load', function() {
 </div>
 </div>
 <div class="bundle-card">
-<div class="bundle-thumb"><span class="thumb-emoji">🎩</span></div>
+<div class="bundle-thumb"><img src="assets/bundles/halloween/thumbs/halloween-costume-patterns.jpg" alt="Costume Pattern Party preview" loading="lazy"></div>
 <div class="bundle-card-body">
 <h3>Costume Pattern Party</h3>
 <p>Finish the AB patterns with hats, pumpkins, ghosts and bats.</p>
@@ -190,7 +234,7 @@ window.addEventListener('load', function() {
 </div>
 </div>
 <div class="bundle-card">
-<div class="bundle-thumb"><span class="thumb-emoji">🖍️</span></div>
+<div class="bundle-thumb"><img src="assets/bundles/halloween/thumbs/halloween-bat-color-by-number.jpg" alt="Bat Color by Number preview" loading="lazy"></div>
 <div class="bundle-card-body">
 <h3>Bat Color by Number</h3>
 <p>Color each numbered square and watch a spooky bat appear!</p>
@@ -198,7 +242,7 @@ window.addEventListener('load', function() {
 </div>
 </div>
 <div class="bundle-card">
-<div class="bundle-thumb"><span class="thumb-emoji">🐛</span></div>
+<div class="bundle-thumb"><img src="assets/bundles/halloween/thumbs/halloween-gummy-worm-patterns.jpg" alt="Gummy Worm Pattern Colors preview" loading="lazy"></div>
 <div class="bundle-card-body">
 <h3>Gummy Worm Pattern Colors</h3>
 <p>Finish the color patterns — what color comes next in the gummy worm line?</p>
@@ -206,7 +250,7 @@ window.addEventListener('load', function() {
 </div>
 </div>
 <div class="bundle-card">
-<div class="bundle-thumb"><span class="thumb-emoji">🍭</span></div>
+<div class="bundle-thumb"><img src="assets/bundles/halloween/thumbs/halloween-trick-or-treat-match.jpg" alt="Trick-or-Treat Match preview" loading="lazy"></div>
 <div class="bundle-card-body">
 <h3>Trick-or-Treat Match</h3>
 <p>Match spooky pictures — candy, ghost, bat, witch, moon — to their words.</p>
@@ -214,7 +258,7 @@ window.addEventListener('load', function() {
 </div>
 </div>
 <div class="bundle-card">
-<div class="bundle-thumb"><span class="thumb-emoji">🧹</span></div>
+<div class="bundle-thumb"><img src="assets/bundles/halloween/thumbs/halloween-brooms-webs-game.jpg" alt="Halloween Brooms & Webs preview" loading="lazy"></div>
 <div class="bundle-card-body">
 <h3>Halloween Brooms &amp; Webs</h3>
 <p>A 4-page board game — climb the brooms, slide down the webs, dodge tricks and treats!</p>
@@ -222,7 +266,7 @@ window.addEventListener('load', function() {
 </div>
 </div>
 <div class="bundle-card">
-<div class="bundle-thumb"><span class="thumb-emoji">🃏</span></div>
+<div class="bundle-thumb"><img src="assets/bundles/halloween/thumbs/halloween-memory-game.jpg" alt="Halloween Memory Game preview" loading="lazy"></div>
 <div class="bundle-card-body">
 <h3>Halloween Memory Game</h3>
 <p>24 cards, 12 spooky pairs — print, cut, and test your memory!</p>
@@ -235,7 +279,7 @@ window.addEventListener('load', function() {
 <p class="bundle-note" style="margin-top:0;">High-contrast black &amp; white Halloween cards for newborns — hold 8–12 inches from baby's face.</p>
 <div class="bundle-grid">
 <div class="bundle-card">
-<div class="bundle-thumb"><span class="thumb-emoji">👶</span></div>
+<div class="bundle-thumb"><img src="assets/bundles/halloween/thumbs/halloween-contrast-cards.jpg" alt="Halloween Contrast Cards for Babies preview" loading="lazy"></div>
 <div class="bundle-card-body">
 <h3>Halloween Contrast Cards for Babies</h3>
 <p>6 bold black-and-white Halloween images — pumpkin, ghost, bat, moon, spider and witch hat. One big card per page.</p>
@@ -257,31 +301,43 @@ window.addEventListener('load', function() {
 <li>Trim the excess, leaving a small sealed border around the edges — done! No machine needed.</li>
 </ol>
 </div>
-<div class="bundle-grid" style="margin-top:18px;">
-<div class="bundle-card">
-<div class="bundle-thumb"><span class="thumb-emoji">🖍️</span></div>
-<div class="bundle-card-body">
+<div class="hw-product-grid">
+<article class="hw-product-card">
+<div class="hw-product-image">
+<span class="hw-product-badge">🎃 Halloween Pick</span>
+<img src="assets/supplies/crayola-markers.jpg" alt="Crayola Broad Line Washable Markers" loading="lazy">
+</div>
+<div class="hw-product-body">
+<span class="hw-product-category">Coloring Supplies</span>
 <h3>Crayola Broad Line Markers (12 Count)</h3>
 <p>Ultra-clean washable markers — color washes off skin, clothes and walls. Perfect for the Halloween coloring pages.</p>
-<a class="download-button" href="https://www.amazon.com/dp/B003HGGPLW?tag=momyouneedt09-20" target="_blank" rel="sponsored nofollow noopener" aria-label="View Crayola Washable Markers on Amazon">View on Amazon →</a>
+<a class="hw-buy-button" href="https://www.amazon.com/dp/B003HGGPLW?tag=momyouneedt09-20" target="_blank" rel="sponsored nofollow noopener" aria-label="View Crayola Washable Markers on Amazon">View on Amazon →</a>
 </div>
+</article>
+<article class="hw-product-card">
+<div class="hw-product-image">
+<span class="hw-product-badge">🎃 Halloween Pick</span>
+<img src="assets/supplies/foam-dice.jpg" alt="Learning Resources Soft Foam Dot Dice" loading="lazy">
 </div>
-<div class="bundle-card">
-<div class="bundle-thumb"><span class="thumb-emoji">🎲</span></div>
-<div class="bundle-card-body">
+<div class="hw-product-body">
+<span class="hw-product-category">Game Night</span>
 <h3>Learning Resources Soft Foam Dot Dice</h3>
 <p>Big soft foam dice, easy for little hands to roll. Great for the Brooms &amp; Webs board game.</p>
-<a class="download-button" href="https://www.amazon.com/dp/B000FGG9IG?tag=momyouneedt09-20" target="_blank" rel="sponsored nofollow noopener" aria-label="View Soft Foam Dice on Amazon">View on Amazon →</a>
+<a class="hw-buy-button" href="https://www.amazon.com/dp/B000FGG9IG?tag=momyouneedt09-20" target="_blank" rel="sponsored nofollow noopener" aria-label="View Soft Foam Dice on Amazon">View on Amazon →</a>
 </div>
+</article>
+<article class="hw-product-card">
+<div class="hw-product-image">
+<span class="hw-product-badge">🎃 Halloween Pick</span>
+<img src="assets/supplies/laminating-sheets.jpg" alt="Self Adhesive Laminating Sheets" loading="lazy">
 </div>
-<div class="bundle-card">
-<div class="bundle-thumb"><span class="thumb-emoji">✨</span></div>
-<div class="bundle-card-body">
+<div class="hw-product-body">
+<span class="hw-product-category">Make It Last</span>
 <h3>Self Adhesive Laminating Sheets (40 PCS)</h3>
 <p>No machine needed — peel, stick and the games are protected. Perfect for laminating the board game and memory cards at home.</p>
-<a class="download-button" href="https://www.amazon.com/dp/B0C2HSHMT2?tag=momyouneedt09-20" target="_blank" rel="sponsored nofollow noopener" aria-label="View Self Laminating Sheets on Amazon">View on Amazon →</a>
+<a class="hw-buy-button" href="https://www.amazon.com/dp/B0C2HSHMT2?tag=momyouneedt09-20" target="_blank" rel="sponsored nofollow noopener" aria-label="View Self Laminating Sheets on Amazon">View on Amazon →</a>
 </div>
-</div>
+</article>
 </div>
 </section>
 <section class="seo-section">
