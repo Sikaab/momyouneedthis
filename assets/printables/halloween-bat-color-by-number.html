@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,19 +25,26 @@
     flex-direction: column;
     align-items: center;
     gap: 16px;
+    width: 100%;
+    box-sizing: border-box;
   }
+
   .pixel-grid {
     display: grid;
-    grid-template-columns: repeat(17, 34px);
-    grid-auto-rows: 34px;
+    grid-template-columns: repeat(17, minmax(0, 1fr));
+    grid-auto-rows: auto;
     gap: 0;
+    width: 100%;
+    max-width: 780px;
     border: none;
     border-radius: 0;
     overflow: visible;
   }
+
   .px {
-    width: 34px;
-    height: 34px;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    min-width: 0;
     box-sizing: border-box;
     border: 1px solid #e8d5dd;
     background: #fff;
@@ -44,20 +52,24 @@
     align-items: center;
     justify-content: center;
   }
+
   .px span {
-    font-size: 18px;
+    font-size: clamp(11px, 2.2vw, 20px);
     font-weight: 900;
     color: #7a4a5e;
   }
+
   .px.empty {
     visibility: hidden;
   }
+
   .legend {
     display: flex;
     gap: 14px;
     flex-wrap: wrap;
     justify-content: center;
   }
+
   .legend-item {
     display: flex;
     align-items: center;
@@ -70,8 +82,10 @@
     font-weight: 900;
     color: #4a2c3a;
   }
+
   .legend-num {
-    width: 34px; height: 34px;
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
     background: #ec407a;
     color: #fff;
@@ -79,6 +93,32 @@
     align-items: center;
     justify-content: center;
     font-size: 18px;
+  }
+
+  @media print {
+    @page {
+      size: letter portrait;
+      margin: 0.3in;
+    }
+
+    body {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .pixel-wrap {
+      padding: 12px;
+      gap: 10px;
+      box-shadow: none;
+    }
+
+    .pixel-grid {
+      max-width: 100%;
+    }
+
+    .px span {
+      font-size: 16px;
+    }
   }
 </style>
 </head>
@@ -92,6 +132,7 @@
   <div class="printable-divider"></div>
   <div class="printable-content">
     <div class="activity-instructions">🖍️ Match each <strong>number</strong> to a color below, then color every square. Watch the bat appear!</div>
+
     <div class="pixel-wrap">
       <div class="legend">
         <div class="legend-item"><span class="legend-num">1</span> ⬛ Black</div>
@@ -100,6 +141,7 @@
       </div>
       <div class="pixel-grid" id="bat-grid"></div>
     </div>
+
     <div class="activity-instructions" style="background:#fff8e1;border-color:#ffd54f;color:#7a5c00;">🌟 Bat-tastic! Your bat is ready for Halloween night!</div>
     <div class="parent-key">👩‍👧 Parent key: 1 = body (black), 2 = wings (purple), 3 = eyes (white). The finished picture is a bat with spread wings.</div>
   </div>
@@ -108,26 +150,45 @@
     <div class="printable-tagline">Free printables for happy little learners 💗</div>
   </div>
 </div>
+
 <script>
+  /*
+    Each row defines only the LEFT HALF, including the center cell.
+    The right half is generated as a mirror to guarantee symmetry.
+    0 = empty, 1 = black, 2 = purple, 3 = white.
+  */
   const batRows = [
-    { 6: 1, 7: 1, 9: 1, 10: 1 },
-    { 5: 2, 6: 1, 7: 1, 8: 1, 9: 1, 10: 1, 11: 2 },
-    { 3: 2, 4: 2, 5: 2, 6: 1, 7: 1, 8: 1, 9: 1, 10: 1, 11: 2, 12: 2, 13: 2 },
-    { 2: 2, 3: 2, 4: 2, 5: 2, 6: 1, 7: 3, 8: 1, 9: 1, 10: 3, 11: 1, 12: 2, 13: 2, 14: 2 },
-    { 1: 2, 2: 2, 3: 2, 4: 2, 5: 2, 6: 1, 7: 1, 8: 1, 9: 1, 10: 1, 11: 2, 12: 2, 13: 2, 14: 2, 15: 2 },
-    { 2: 2, 3: 2, 4: 2, 5: 2, 6: 1, 7: 1, 8: 1, 9: 1, 10: 1, 11: 2, 12: 2, 13: 2, 14: 2 },
-    { 4: 2, 5: 2, 6: 1, 7: 1, 8: 1, 9: 1, 10: 1, 11: 2, 12: 2 },
-    { 7: 1, 8: 1, 9: 1 }
+    [0, 0, 0, 0, 0, 0, 1, 1, 1],
+    [0, 0, 0, 0, 0, 2, 1, 1, 1],
+    [0, 0, 0, 2, 2, 2, 1, 1, 1],
+    [0, 0, 2, 2, 2, 2, 1, 3, 1],
+    [0, 2, 2, 2, 2, 2, 1, 1, 1],
+    [2, 2, 2, 2, 2, 2, 1, 1, 1],
+    [0, 2, 2, 2, 2, 2, 1, 1, 1],
+    [0, 0, 2, 2, 2, 1, 1, 1, 1],
+    [0, 0, 0, 2, 2, 1, 1, 1, 1],
+    [0, 0, 0, 0, 0, 0, 0, 1, 1]
   ];
+
   const grid = document.getElementById("bat-grid");
-  batRows.forEach((row, rowIndex) => {
-    Object.entries(row).forEach(([column, number]) => {
+
+  batRows.forEach((leftHalf, rowIndex) => {
+    const fullRow = [
+      ...leftHalf,
+      ...leftHalf.slice(0, -1).reverse()
+    ];
+
+    fullRow.forEach((number, columnIndex) => {
+      if (number === 0) return;
+
       const cell = document.createElement("div");
       cell.className = "px";
-      cell.style.gridColumn = Number(column) + 1;
+      cell.style.gridColumn = columnIndex + 1;
       cell.style.gridRow = rowIndex + 1;
+
       const label = document.createElement("span");
       label.textContent = number;
+
       cell.appendChild(label);
       grid.appendChild(cell);
     });
