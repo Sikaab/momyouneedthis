@@ -1,141 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-FE48KK6THQ"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-FE48KK6THQ');
-</script>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Halloween Bat Maze - Free Printable | MomYouNeedThis</title>
-<link rel="stylesheet" href="printable.css">
-<style>
-  .maze-wrap {
-    background: #fff;
-    border: 3px solid #f8bbd0;
-    border-radius: 18px;
-    padding: 22px;
-    box-shadow: 0 2px 6px rgba(236,64,122,0.10);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-  }
-  .maze-endpoint {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    font-size: 24px;
-    color: #7a6872;
-    font-weight: 700;
-  }
-  .maze-endpoint span {
-    font-size: 38px;
-    line-height: 1.2;
-  }
-  .maze-svg {
-    display: block;
-    width: 100%;
-    max-width: 600px;
-    height: auto;
-  }
-  .maze-walls {
-    fill: none;
-    stroke: #8b6b7c;
-    stroke-width: 12;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-  @media print {
-    .maze-wrap {
-      box-shadow: none;
-      break-inside: avoid;
-    }
-    .maze-svg {
-      max-width: 100%;
-    }
-    body {
-      -webkit-print-color-adjust: exact;
-      print-color-adjust: exact;
-    }
-  }
-</style>
-</head>
-<body>
-<div class="printable-page">
-  <div class="printable-header halloween">
-    <div class="printable-kicker">🦇 Halloween Maze</div>
-    <div class="printable-title">Help the Bat Find the Pumpkin!</div>
-    <div class="printable-subtitle">The little bat is lost. Can you guide it to the pumpkin?</div>
+<div class="maze-wrap">
+  <div class="maze-endpoint">
+    <span aria-hidden="true">🦇</span>
   </div>
-  <div class="printable-divider"></div>
-  <div class="printable-content">
-    <div class="activity-instructions">
-      🦇 Draw a line from the <strong>bat</strong> through the maze to the
-      <strong>pumpkin</strong>. Don't bump into the walls!
-    </div>
-    <div class="maze-wrap">
-      <div class="maze-endpoint">
-        <span aria-hidden="true">🦇</span>
-      </div>
-      <svg
-        class="maze-svg"
-        viewBox="0 0 600 600"
-        xmlns="http://www.w3.org/2000/svg"
-        role="img"
-        aria-label="A square Halloween maze with an entrance at the top beside the bat and an exit at the bottom beside the pumpkin."
-      >
-        <rect
-          x="12"
-          y="12"
-          width="576"
-          height="576"
-          rx="4"
-          fill="#fff"
-          stroke="#f3dfe8"
-          stroke-width="5"
-        />
-        <g class="maze-walls">
-          <!-- Outer border with entrance at the top -->
-          <path d="M12 12 H205" />
-          <path d="M395 12 H588 V588 H465" />
-          <path d="M12 12 V588 H465" />
-          <!-- Upper section -->
-          <path d="M250 12 V95 H170" />
-          <path d="M330 95 H420 V180 H95" />
-          <path d="M95 12 V260" />
-          <path d="M250 180 V260" />
-          <path d="M505 95 V390" />
-          <!-- Middle section -->
-          <path d="M180 260 V345" />
-          <path d="M12 345 H335 V270 H505" />
-          <path d="M335 345 V430" />
-          <!-- Lower section -->
-          <path d="M95 430 H180 V515 H340 V430 H425" />
-          <path d="M425 430 V588" />
-          <path d="M12 515 H95" />
-        </g>
-      </svg>
-      <div class="maze-endpoint">
-        <span aria-hidden="true">🎃</span>
-      </div>
-    </div>
-    <div class="activity-instructions" style="background:#fff8e1;border-color:#ffd54f;color:#7a5c00;">
-      🌟 Maze master! The bat made it to the pumpkin!
-    </div>
-    <div class="parent-key">
-      👩‍👧 Parent key: Help the bat navigate the winding paths and reach the pumpkin at the other end.
-    </div>
-  </div>
-  <div class="printable-footer">
-    <div class="printable-brand">MomYouNeedThis</div>
-    <div class="printable-tagline">Free printables for happy little learners 💗</div>
-  </div>
+  <svg
+    class="maze-svg"
+    viewBox="0 0 680 600"
+    xmlns="http://www.w3.org/2000/svg"
+    role="img"
+    aria-label="Halloween maze with the bat at the top entrance and pumpkin beside the exit on the right."
+  >
+    <rect
+      x="12"
+      y="12"
+      width="576"
+      height="576"
+      rx="4"
+      fill="#fff"
+      stroke="#f3dfe8"
+      stroke-width="5"
+    />
+    <g class="maze-walls">
+      <!-- Outer border: entrance at top, exit on the right -->
+      <path d="M12 12 H205" />
+      <path d="M395 12 H588 V300" />
+      <path d="M588 360 V588 H12 V12" />
+      <!-- Upper section -->
+      <path d="M250 12 V95 H170" />
+      <path d="M330 95 H420 V180 H95" />
+      <path d="M95 12 V260" />
+      <path d="M250 180 V260" />
+      <path d="M505 95 V240" />
+      <!-- Middle section -->
+      <path d="M180 260 V345" />
+      <path d="M12 345 H335 V270 H505" />
+      <path d="M335 345 V430" />
+      <!-- Lower section -->
+      <path d="M95 430 H180 V515 H340 V430 H425" />
+      <path d="M425 430 V515" />
+      <path d="M12 515 H95" />
+    </g>
+    <!-- Pumpkin beside the exit -->
+    <text
+      x="645"
+      y="343"
+      font-size="42"
+      text-anchor="middle"
+      dominant-baseline="middle"
+    >🎃</text>
+  </svg>
 </div>
-</body>
-</html>
