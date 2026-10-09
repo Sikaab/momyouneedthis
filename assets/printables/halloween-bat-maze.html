@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,28 +22,56 @@
     padding: 22px;
     box-shadow: 0 2px 6px rgba(236,64,122,0.10);
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
   }
-  .maze-grid {
-    display: grid;
-    grid-template-columns: repeat(9, 58px);
-    grid-template-rows: repeat(9, 58px);
-    gap: 0;
-    border: 4px solid #4a2c3a;
-    border-radius: 12px;
-    overflow: hidden;
-  }
-  .mcell {
-    background: #fffdf9;
-    border: 1px solid #f3dfe4;
+
+  .maze-endpoint {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 40px;
+    gap: 10px;
+    font-size: 24px;
+    color: #7a6872;
+    font-weight: 700;
   }
-  .mcell.wall { background: #4a2c3a; border-color: #4a2c3a; }
-  .mcell.start { background: #fce4ec; }
-  .mcell.end { background: #fff3e0; }
+
+  .maze-endpoint span {
+    font-size: 38px;
+    line-height: 1.2;
+  }
+
+  .maze-svg {
+    display: block;
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+  }
+
+  .maze-walls {
+    fill: none;
+    stroke: #8b6b7c;
+    stroke-width: 12;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  @media print {
+    .maze-wrap {
+      box-shadow: none;
+      break-inside: avoid;
+    }
+
+    .maze-svg {
+      max-width: 100%;
+    }
+
+    body {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+  }
 </style>
 </head>
 <body>
@@ -52,99 +81,77 @@
     <div class="printable-title">Help the Bat Find the Pumpkin!</div>
     <div class="printable-subtitle">The little bat is lost. Can you guide it to the pumpkin?</div>
   </div>
+
   <div class="printable-divider"></div>
+
   <div class="printable-content">
-    <div class="activity-instructions">🦇 Draw a line from the <strong>bat</strong> through the maze to the <strong>pumpkin</strong>. Don't bump into the walls!</div>
+    <div class="activity-instructions">
+      🦇 Draw a line from the <strong>bat</strong> through the maze to the
+      <strong>pumpkin</strong>. Don't bump into the walls!
+    </div>
 
     <div class="maze-wrap">
-      <div class="maze-grid">
-      <div class="mcell wall"></div>
-      <div class="mcell wall"></div>
-      <div class="mcell wall"></div>
-      <div class="mcell wall"></div>
-      <div class="mcell wall"></div>
-      <div class="mcell wall"></div>
-      <div class="mcell wall"></div>
-      <div class="mcell wall"></div>
-      <div class="mcell wall"></div>
-      <div class="mcell wall"></div>
-      <div class="mcell start">🦇</div>
-      <div class="mcell"></div>
-      <div class="mcell"></div>
-      <div class="mcell"></div>
-      <div class="mcell"></div>
-      <div class="mcell"></div>
-      <div class="mcell"></div>
-      <div class="mcell wall"></div>
-      <div class="mcell wall"></div>
-      <div class="mcell wall"></div>
-      <div class="mcell wall"></div>
-      <div class="mcell wall"></div>
-      <div class="mcell wall"></div>
-      <div class="mcell wall"></div>
-      <div class="mcell wall"></div>
-      <div class="mcell"></div>
-      <div class="mcell wall"></div>
-      <div class="mcell wall"></div>
-      <div class="mcell"></div>
-      <div class="mcell"></div>
-      <div class="mcell"></div>
-      <div class="mcell"></div>
-      <div class="mcell"></div>
-      <div class="mcell"></div>
-      <div class="mcell"></div>
-      <div class="mcell wall"></div>
-      <div class="mcell wall"></div>
-      <div class="mcell"></div>
-      <div class="mcell wall"></div>
-      <div class="mcell wall"></div>
-      <div class="mcell wall"></div>
-      <div class="mcell wall"></div>
-      <div class="mcell wall"></div>
-      <div class="mcell wall"></div>
-      <div class="mcell wall"></div>
-      <div class="mcell wall"></div>
-      <div class="mcell"></div>
-      <div class="mcell"></div>
-      <div class="mcell"></div>
-      <div class="mcell"></div>
-      <div class="mcell"></div>
-      <div class="mcell"></div>
-      <div class="mcell"></div>
-      <div class="mcell wall"></div>
-      <div class="mcell wall"></div>
-      <div class="mcell wall"></div>
-      <div class="mcell wall"></div>
-      <div class="mcell wall"></div>
-      <div class="mcell wall"></div>
-      <div class="mcell wall"></div>
-      <div class="mcell wall"></div>
-      <div class="mcell"></div>
-      <div class="mcell wall"></div>
-      <div class="mcell wall"></div>
-      <div class="mcell end">🎃</div>
-      <div class="mcell"></div>
-      <div class="mcell"></div>
-      <div class="mcell"></div>
-      <div class="mcell"></div>
-      <div class="mcell"></div>
-      <div class="mcell"></div>
-      <div class="mcell wall"></div>
-      <div class="mcell wall"></div>
-      <div class="mcell wall"></div>
-      <div class="mcell wall"></div>
-      <div class="mcell wall"></div>
-      <div class="mcell wall"></div>
-      <div class="mcell wall"></div>
-      <div class="mcell wall"></div>
-      <div class="mcell wall"></div>
-      <div class="mcell wall"></div>
+      <div class="maze-endpoint">
+        <span aria-hidden="true">🦇</span>
+      </div>
+
+      <svg
+        class="maze-svg"
+        viewBox="0 0 600 600"
+        xmlns="http://www.w3.org/2000/svg"
+        role="img"
+        aria-label="A square Halloween maze with a bat entrance at the top and a pumpkin exit at the bottom."
+      >
+        <rect
+          x="12"
+          y="12"
+          width="576"
+          height="576"
+          rx="4"
+          fill="#fff"
+          stroke="#f3dfe8"
+          stroke-width="5"
+        />
+
+        <g class="maze-walls">
+          <!-- Outer border, with entrance at the top and exit at the bottom -->
+          <path d="M12 12 H205" />
+          <path d="M205 12 H588 V588 H465" />
+          <path d="M12 12 V588 H465" />
+
+          <!-- Upper section -->
+          <path d="M250 12 V95 H170" />
+          <path d="M330 95 H420 V180 H95" />
+          <path d="M95 12 V260" />
+          <path d="M250 180 V260" />
+          <path d="M505 95 V390" />
+
+          <!-- Middle section -->
+          <path d="M180 260 V345" />
+          <path d="M12 345 H335 V270 H505" />
+          <path d="M335 345 V430" />
+
+          <!-- Lower section -->
+          <path d="M95 430 H180 V515 H340 V430 H425" />
+          <path d="M425 430 V588" />
+          <path d="M12 515 H95" />
+        </g>
+      </svg>
+
+      <div class="maze-endpoint">
+        <span aria-hidden="true">🎃</span>
       </div>
     </div>
 
-    <div class="activity-instructions" style="background:#fff8e1;border-color:#ffd54f;color:#7a5c00;">🌟 Maze master! The bat made it to the pumpkin!</div>
-    <div class="parent-key">👩‍👧 Parent key: the path winds right along the top, snakes down the right side, across the middle, and down the left to the pumpkin.</div>
+    <div class="activity-instructions" style="background:#fff8e1;border-color:#ffd54f;color:#7a5c00;">
+      🌟 Maze master! The bat made it to the pumpkin!
+    </div>
+
+    <div class="parent-key">
+      👩‍👧 Parent key: Help the bat navigate the winding paths and reach the pumpkin at the other end.
+    </div>
   </div>
+
   <div class="printable-footer">
     <div class="printable-brand">MomYouNeedThis</div>
     <div class="printable-tagline">Free printables for happy little learners 💗</div>
