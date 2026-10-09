@@ -51,13 +51,62 @@
     stroke-linecap: round;
     stroke-linejoin: round;
   }
+  @page {
+    size: letter portrait;
+    margin: 0.3in;
+  }
   @media print {
+    html,
+    body {
+      margin: 0 !important;
+      padding: 0 !important;
+      width: 100% !important;
+      height: auto !important;
+    }
+    .printable-page {
+      width: 100% !important;
+      max-width: 100% !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      box-sizing: border-box !important;
+    }
+    .printable-header,
+    .printable-divider,
+    .printable-content,
+    .maze-wrap,
+    .activity-instructions,
+    .parent-key,
+    .printable-footer {
+      break-inside: avoid !important;
+      page-break-inside: avoid !important;
+    }
+    .printable-content {
+      padding-top: 6px !important;
+      padding-bottom: 0 !important;
+    }
     .maze-wrap {
-      box-shadow: none;
-      break-inside: avoid;
+      padding: 8px !important;
+      gap: 4px !important;
+      box-shadow: none !important;
+      border-width: 2px !important;
     }
     .maze-svg {
-      max-width: 100%;
+      display: block !important;
+      width: auto !important;
+      height: auto !important;
+      max-width: 100% !important;
+      max-height: 4.35in !important;
+    }
+    .maze-endpoint span {
+      font-size: 27px !important;
+    }
+    .activity-instructions {
+      margin-top: 5px !important;
+      margin-bottom: 5px !important;
+      padding: 7px !important;
+    }
+    .printable-footer {
+      margin-top: 6px !important;
     }
     body {
       -webkit-print-color-adjust: exact;
@@ -71,7 +120,9 @@
   <div class="printable-header halloween">
     <div class="printable-kicker">🦇 Halloween Maze</div>
     <div class="printable-title">Help the Bat Find the Pumpkin!</div>
-    <div class="printable-subtitle">The little bat is lost. Can you guide it to the pumpkin?</div>
+    <div class="printable-subtitle">
+      The little bat is lost. Can you guide it to the pumpkin?
+    </div>
   </div>
   <div class="printable-divider"></div>
   <div class="printable-content">
@@ -101,11 +152,12 @@
           stroke-width="5"
         />
         <g class="maze-walls">
-          <!-- Outer border: entrance at the top -->
+          <!-- Outer border with entrance at the top -->
           <path d="M12 12 H205" />
           <path d="M395 12 H588 V588" />
           <path d="M12 12 V588 H240" />
-          <!-- Exit gap centered above the pumpkin: x=240 to x=360 -->
+          <!-- Exit opening centered above the pumpkin:
+               the bottom border stops at x=240 and resumes at x=360 -->
           <!-- Upper section -->
           <path d="M250 12 V95 H170" />
           <path d="M330 95 H420 V180 H95" />
@@ -126,7 +178,10 @@
         <span aria-hidden="true">🎃</span>
       </div>
     </div>
-    <div class="activity-instructions" style="background:#fff8e1;border-color:#ffd54f;color:#7a5c00;">
+    <div
+      class="activity-instructions"
+      style="background:#fff8e1;border-color:#ffd54f;color:#7a5c00;"
+    >
       🌟 Maze master! The bat made it to the pumpkin!
     </div>
     <div class="parent-key">
@@ -135,7 +190,9 @@
   </div>
   <div class="printable-footer">
     <div class="printable-brand">MomYouNeedThis</div>
-    <div class="printable-tagline">Free printables for happy little learners 💗</div>
+    <div class="printable-tagline">
+      Free printables for happy little learners 💗
+    </div>
   </div>
 </div>
 </body>
