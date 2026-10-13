@@ -1,0 +1,37 @@
+{
+  "products": [
+    {
+      "id": "crayola-washable-markers-12ct",
+      "name": "Crayola Broad Line Washable Markers (12 Count)",
+      "description": "The #4 best-selling kids' marker set on Amazon — 20,000+ bought last month. Ultra-clean washable formula comes off skin, clothes, and walls. Broad tips are perfect for little hands coloring in big areas.",
+      "url": "https://www.amazon.com/dp/B003HGGPLW?tag=momyouneedt09-20",
+      "image": "assets/products/crayola-washable-markers-12ct.jpg",
+      "category": "DRAWING",
+      "buttonText": "VIEW ON AMAZON →",
+      "featured": true,
+      "hidden": false
+    },
+    {
+      "id": "crayola-crayons-64ct",
+      "name": "Crayola Crayons (64 Count)",
+      "description": "The classic 64-color box with a built-in sharpener. Double-wrapped for durability — they survive enthusiastic little hands. 64 colors means no fighting over who gets the red.",
+      "url": "https://www.amazon.com/dp/B013RDWWJI?tag=momyouneedt09-20",
+      "image": "assets/products/crayola-crayons-64ct.jpg",
+      "category": "DRAWING",
+      "buttonText": "VIEW ON AMAZON →",
+      "featured": false,
+      "hidden": false
+    },
+    {
+      "id": "brite-crown-sketch-pad-9x12",
+      "name": "Brite Crown Sketch Pad 9x12 (2-Pack, 200 Sheets)",
+      "description": "Two spiral-bound 9x12 pads with 100 sheets each of thick 64lb paper. Perforated pages tear out cleanly, and the paper holds up to crayons, markers, and colored pencils without bleeding through.",
+      "url": "https://www.amazon.com/dp/B07SN3N221?tag=momyouneedt09-20",
+      "image": "assets/products/brite-crown-sketch-pad.jpg",
+      "category": "DRAWING",
+      "buttonText": "VIEW ON AMAZON →",
+      "featured": false,
+      "hidden": false
+    }
+  ]
+}
