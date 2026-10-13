@@ -70,6 +70,18 @@ window.addEventListener('load', function() {
 .age-table th{background:#D05A82;color:#fff;padding:12px 14px;text-align:left;font-size:15px}
 .age-table td{border:1px solid #f3d9e0;padding:12px 14px;font-size:15px;color:#5f5758;background:#fff}
 .age-table tr:nth-child(even) td{background:#fff7f9}
+
+.supplies-affiliate{max-width:900px;margin:36px auto;padding:28px 32px;background:#fff;border:2px solid #f3d9e0;border-radius:20px;font-family:'Nunito',system-ui,sans-serif}
+.supplies-affiliate h2{margin:0 0 12px;color:#c03d5b;font-size:20px;font-weight:900;text-align:center}
+.supplies-affiliate>p{color:#5f5758;font-size:15px;line-height:1.6;text-align:center;margin:0 0 20px}
+.affiliate-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:16px}
+.affiliate-card{display:block;background:#FFF6EC;border:2px solid #f3d9e0;border-radius:16px;padding:18px;text-decoration:none;transition:transform .15s,box-shadow .15s}
+.affiliate-card:hover{transform:translateY(-3px);box-shadow:0 6px 18px rgba(208,90,130,.15)}
+.affiliate-card-name{color:#2D1B2E;font-weight:900;font-size:15px;margin-bottom:8px}
+.affiliate-card-desc{color:#5f5758;font-size:13px;line-height:1.5;margin-bottom:12px}
+.affiliate-card-btn{display:inline-block;background:#D05A82;color:#fff;font-weight:800;font-size:13px;padding:10px 18px;border-radius:999px}
+.affiliate-disclosure{font-size:12px;color:#999;text-align:center;margin:0}
+
 </style>
 
 <script type="application/ld+json">
@@ -322,6 +334,40 @@ Draw your bunny next to three triangle carrots with green tops, then add a sun a
 <h2>Make It Yours</h2>
 <p>Give your bunny long eyelashes for a fancy look, or buck teeth for a silly one. Draw it holding a carrot, sitting in grass with flowers, or wearing a bow tie. An Easter version with decorated eggs around it is an obvious seasonal win. Kids can also try a jackrabbit with extra-long ears and big back feet.</p>
 </section>
+
+
+<section class="supplies-affiliate">
+<h2>🛒 Our Favorite Drawing Supplies</h2>
+<p>These are the supplies we reach for in our own home — washable (because kids), quality paper, and enough colors to avoid fights.</p>
+<div class="affiliate-grid" id="drawingSuppliesGrid">
+<!-- Products loaded from drawing-supplies.json -->
+</div>
+<p class="affiliate-disclosure">As an Amazon Associate, MomYouNeedThis earns from qualifying purchases — at no extra cost to you.</p>
+</section>
+
+<script>
+(function() {
+  fetch('drawing-supplies.json')
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      var grid = document.getElementById('drawingSuppliesGrid');
+      if (!grid || !data.products) return;
+      data.products.filter(function(p) { return !p.hidden; }).forEach(function(p) {
+        var card = document.createElement('a');
+        card.href = p.url;
+        card.target = '_blank';
+        card.rel = 'sponsored noopener';
+        card.className = 'affiliate-card';
+        card.innerHTML =
+          '<div class="affiliate-card-name">' + p.name + '</div>' +
+          '<div class="affiliate-card-desc">' + p.description + '</div>' +
+          '<span class="affiliate-card-btn">' + (p.buttonText || 'VIEW ON AMAZON →') + '</span>';
+        grid.appendChild(card);
+      });
+    })
+    .catch(function() {});
+})();
+</script>
 
 <section class="generator-bottom-cta">
 <h2>
