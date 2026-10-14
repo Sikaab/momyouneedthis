@@ -56,6 +56,15 @@ window.addEventListener('load', function() {
 .hub-intro-card p{color:#5f5758;font-size:16px;line-height:1.7;margin:0 0 14px}
 .hub-intro-card p:last-child{margin-bottom:0}
 
+
+.hub-section .theme-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;max-width:720px;margin:20px auto 0}
+.theme-card{display:block;background:#fffaf8;border:2px solid #f3d9e0;border-radius:16px;padding:20px;text-align:center;text-decoration:none;transition:transform .2s ease,box-shadow .2s ease}
+.theme-card:hover,.theme-card:focus{transform:translateY(-3px);box-shadow:0 10px 22px rgba(208,90,130,.18);outline:2px solid #e89aaa;outline-offset:2px}
+.theme-card .theme-emoji{display:block;font-size:36px;margin-bottom:8px}
+.theme-card .theme-title{display:block;color:#c03d5b;font-size:17px;font-weight:900}
+.theme-card .theme-desc{display:block;color:#6d6566;font-size:13px;line-height:1.5;margin-top:6px}
+.theme-card .theme-cta{display:inline-block;margin-top:12px;padding:8px 18px;background:#D05A82;color:#fff !important;border-radius:999px;font-size:14px;font-weight:900}
+@media(max-width:600px){.hub-section .theme-cards{grid-template-columns:1fr}}
 </style>
 
 <script type="application/ld+json">
@@ -243,6 +252,27 @@ Drawing Ideas for Kids
 </a>
 
 </div>
+
+
+
+<section class="generator-bottom-cta" style="text-align:left;max-width:900px;margin:40px auto;">
+<h2 style="text-align:center;">🎨 Browse Drawing Tutorials by Theme</h2>
+<p style="text-align:center;color:#6d6566;font-size:15px;line-height:1.6;max-width:640px;margin:0 auto 20px;">Not sure where to start? Pick a theme — Christmas or cool — and browse just those tutorials.</p>
+<div class="theme-cards" style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px;max-width:720px;margin:0 auto;">
+<a href="christmas-drawings" class="theme-card" aria-label="Christmas drawings — 6 step-by-step Christmas tutorials" style="display:block;background:#fffaf8;border:2px solid #f3d9e0;border-radius:16px;padding:20px;text-align:center;text-decoration:none;">
+<span style="display:block;font-size:36px;margin-bottom:8px;">🎄</span>
+<span style="display:block;color:#c03d5b;font-size:17px;font-weight:900;">Christmas Drawings</span>
+<span style="display:block;color:#6d6566;font-size:13px;line-height:1.5;margin-top:6px;">6 tutorials — tree, Santa, reindeer, snowman, ornament, gingerbread</span>
+<span style="display:inline-block;margin-top:12px;padding:8px 18px;background:#D05A82;color:#fff;border-radius:999px;font-size:14px;font-weight:900;">Draw Christmas →</span>
+</a>
+<a href="cool-drawings" class="theme-card" aria-label="Cool drawings — 12 step-by-step cool tutorials" style="display:block;background:#fffaf8;border:2px solid #f3d9e0;border-radius:16px;padding:20px;text-align:center;text-decoration:none;">
+<span style="display:block;font-size:36px;margin-bottom:8px;">😎</span>
+<span style="display:block;color:#c03d5b;font-size:17px;font-weight:900;">Cool Drawings</span>
+<span style="display:block;color:#6d6566;font-size:13px;line-height:1.5;margin-top:6px;">12 tutorials — shark, dinosaur, unicorn, skull, snake, wolf &amp; more</span>
+<span style="display:inline-block;margin-top:12px;padding:8px 18px;background:#D05A82;color:#fff;border-radius:999px;font-size:14px;font-weight:900;">Draw Cool Stuff →</span>
+</a>
+</div>
+</section>
 
 
 <section class="generator-bottom-cta" style="text-align:left;max-width:900px;margin:40px auto;">
