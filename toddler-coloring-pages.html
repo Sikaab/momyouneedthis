@@ -300,6 +300,10 @@ window.addEventListener('load', function() {
 .gallery-item img{width:100%;height:140px;object-fit:cover;display:block}
 .gallery-item .gallery-label{display:block;padding:10px 8px;text-align:center;color:#c03d5b;font-size:14px;font-weight:900;line-height:1.3}
 @media(max-width:700px){.gallery-grid{grid-template-columns:repeat(2,1fr)}.gallery-item img{height:120px}}
+
+.gallery-item-text{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:140px;background:#FFF6EC}
+.gallery-item-text .gallery-emoji{font-size:48px;line-height:1;margin-bottom:8px}
+@media(max-width:700px){.gallery-item-text{min-height:120px}.gallery-item-text .gallery-emoji{font-size:36px}}
 </style>
 
 <script type="application/ld+json">
@@ -446,14 +450,71 @@ Looking for free toddler coloring pages? Browse the gallery below — tap any pi
 <h2>🖍️ Toddler Coloring Pages</h2>
 <p class="gallery-sub">Tap any picture to open its theme page and download the free printable.</p>
 <div class="gallery-grid">
-<a href="animal-coloring-pages" class="gallery-item" aria-label="Animal coloring pages — big friendly animals with bold outlines"><img src="assets/coloring/animal-1.png" alt="Animal coloring page preview" loading="lazy"><span class="gallery-label">🐾 Animals</span></a>
-<a href="farm-coloring-pages" class="gallery-item" aria-label="Farm animal coloring pages — cows, pigs, chickens and more"><img src="assets/coloring/farm-1.png" alt="Farm animal coloring page preview" loading="lazy"><span class="gallery-label">🐄 Farm</span></a>
-<a href="dinosaur-coloring-pages" class="gallery-item" aria-label="Dinosaur coloring pages — chunky dinos with big spaces"><img src="assets/coloring/dinosaur-1.png" alt="Dinosaur coloring page preview" loading="lazy"><span class="gallery-label">🦕 Dinosaurs</span></a>
-<a href="food-coloring-pages" class="gallery-item" aria-label="Food coloring pages — fruits, snacks and treats"><img src="assets/coloring/food-1.png" alt="Food coloring page preview" loading="lazy"><span class="gallery-label">🍎 Food</span></a>
-<a href="halloween-coloring-pages" class="gallery-item" aria-label="Halloween coloring pages — friendly pumpkins, ghosts and witches"><img src="assets/coloring/halloween-1.png" alt="Halloween coloring page preview" loading="lazy"><span class="gallery-label">🎃 Halloween</span></a>
-<a href="christmas-coloring-pages" class="gallery-item" aria-label="Christmas coloring pages — trees, Santa, reindeer and snowmen"><img src="assets/coloring/christmas-1.png" alt="Christmas coloring page preview" loading="lazy"><span class="gallery-label">🎄 Christmas</span></a>
-<a href="ocean-coloring-pages" class="gallery-item" aria-label="Ocean coloring pages — fish, shells and sea creatures"><img src="assets/coloring/ocean-1.png" alt="Ocean coloring page preview" loading="lazy"><span class="gallery-label">🐠 Ocean</span></a>
-<a href="unicorn-coloring-pages" class="gallery-item" aria-label="Unicorn coloring pages — magical unicorns with big outlines"><img src="assets/coloring/unicorn-1.png" alt="Unicorn coloring page preview" loading="lazy"><span class="gallery-label">🦄 Unicorns</span></a>
+<a href="alphabet-coloring-pages" class="gallery-item gallery-item-text" aria-label="Alphabet coloring pages"><span class="gallery-emoji">🔤</span><span class="gallery-label">Alphabet</span></a>
+<a href="animal-coloring-pages" class="gallery-item" aria-label="Animals coloring pages"><img src="assets/coloring/animal-1.png" alt="Animals coloring page preview" loading="lazy"><span class="gallery-label">🐾 Animals</span></a>
+<a href="back-to-school-coloring-pages" class="gallery-item" aria-label="Back to School coloring pages"><img src="assets/coloring/back-to-school-1.png" alt="Back to School coloring page preview" loading="lazy"><span class="gallery-label">🎒 Back to School</span></a>
+<a href="beginning-sounds-coloring-pages" class="gallery-item gallery-item-text" aria-label="Beginning Sounds coloring pages"><span class="gallery-emoji">🔊</span><span class="gallery-label">Beginning Sounds</span></a>
+<a href="bug-insect-coloring-pages" class="gallery-item" aria-label="Bugs & Insects coloring pages"><img src="assets/coloring/bug-insect-1.png" alt="Bugs & Insects coloring page preview" loading="lazy"><span class="gallery-label">🐛 Bugs & Insects</span></a>
+<a href="christmas-coloring-pages" class="gallery-item" aria-label="Christmas coloring pages"><img src="assets/coloring/christmas-1.png" alt="Christmas coloring page preview" loading="lazy"><span class="gallery-label">🎄 Christmas</span></a>
+<a href="circle-coloring-pages" class="gallery-item gallery-item-text" aria-label="Circle coloring pages"><span class="gallery-emoji">⭕</span><span class="gallery-label">Circle</span></a>
+<a href="color-recognition-coloring-pages" class="gallery-item gallery-item-text" aria-label="Color Recognition coloring pages"><span class="gallery-emoji">🎨</span><span class="gallery-label">Color Recognition</span></a>
+<a href="days-of-week-coloring-pages" class="gallery-item gallery-item-text" aria-label="Days of the Week coloring pages"><span class="gallery-emoji">📅</span><span class="gallery-label">Days of the Week</span></a>
+<a href="dinosaur-coloring-pages" class="gallery-item" aria-label="Dinosaurs coloring pages"><img src="assets/coloring/dinosaur-1.png" alt="Dinosaurs coloring page preview" loading="lazy"><span class="gallery-label">🦕 Dinosaurs</span></a>
+<a href="easter-coloring-pages" class="gallery-item" aria-label="Easter coloring pages"><img src="assets/coloring/easter-1.png" alt="Easter coloring page preview" loading="lazy"><span class="gallery-label">🐣 Easter</span></a>
+<a href="educational-coloring-pages" class="gallery-item gallery-item-text" aria-label="Educational coloring pages"><span class="gallery-emoji">📚</span><span class="gallery-label">Educational</span></a>
+<a href="eid-coloring-pages" class="gallery-item" aria-label="Eid coloring pages"><img src="assets/coloring/eid-1.png" alt="Eid coloring page preview" loading="lazy"><span class="gallery-label">🌙 Eid</span></a>
+<a href="emotions-feelings-coloring-pages" class="gallery-item gallery-item-text" aria-label="Emotions & Feelings coloring pages"><span class="gallery-emoji">😊</span><span class="gallery-label">Emotions & Feelings</span></a>
+<a href="fairy-coloring-pages" class="gallery-item" aria-label="Fairies coloring pages"><img src="assets/coloring/fairy-1.png" alt="Fairies coloring page preview" loading="lazy"><span class="gallery-label">🧚 Fairies</span></a>
+<a href="fall-coloring-pages" class="gallery-item" aria-label="Fall coloring pages"><img src="assets/coloring/fall-1.png" alt="Fall coloring page preview" loading="lazy"><span class="gallery-label">🍂 Fall</span></a>
+<a href="farm-coloring-pages" class="gallery-item" aria-label="Farm coloring pages"><img src="assets/coloring/farm-1.png" alt="Farm coloring page preview" loading="lazy"><span class="gallery-label">🐄 Farm</span></a>
+<a href="feelings-coloring-pages" class="gallery-item" aria-label="Feelings coloring pages"><img src="assets/coloring/feelings-1.png" alt="Feelings coloring page preview" loading="lazy"><span class="gallery-label">💛 Feelings</span></a>
+<a href="five-senses-coloring-pages" class="gallery-item" aria-label="Five Senses coloring pages"><img src="assets/coloring/five-senses-1.png" alt="Five Senses coloring page preview" loading="lazy"><span class="gallery-label">👀 Five Senses</span></a>
+<a href="food-coloring-pages" class="gallery-item" aria-label="Food coloring pages"><img src="assets/coloring/food-1.png" alt="Food coloring page preview" loading="lazy"><span class="gallery-label">🍎 Food</span></a>
+<a href="fourth-of-july-coloring-pages" class="gallery-item gallery-item-text" aria-label="Fourth of July coloring pages"><span class="gallery-emoji">🎆</span><span class="gallery-label">Fourth of July</span></a>
+<a href="free-coloring-pages" class="gallery-item gallery-item-text" aria-label="All Coloring Pages coloring pages"><span class="gallery-emoji">🎨</span><span class="gallery-label">All Coloring Pages</span></a>
+<a href="halloween-coloring-pages" class="gallery-item" aria-label="Halloween coloring pages"><img src="assets/coloring/halloween-1.png" alt="Halloween coloring page preview" loading="lazy"><span class="gallery-label">🎃 Halloween</span></a>
+<a href="heart-coloring-pages" class="gallery-item gallery-item-text" aria-label="Hearts coloring pages"><span class="gallery-emoji">❤️</span><span class="gallery-label">Hearts</span></a>
+<a href="july-4th-coloring-pages" class="gallery-item" aria-label="July 4th coloring pages"><img src="assets/coloring/july-4th-1.png" alt="July 4th coloring page preview" loading="lazy"><span class="gallery-label">🇺🇸 July 4th</span></a>
+<a href="letter-a-beginning-sound-coloring" class="gallery-item gallery-item-text" aria-label="Letter A Sound coloring pages"><span class="gallery-emoji">🅰️</span><span class="gallery-label">Letter A Sound</span></a>
+<a href="letter-a-coloring-pages" class="gallery-item gallery-item-text" aria-label="Letter A coloring pages"><span class="gallery-emoji">🔠</span><span class="gallery-label">Letter A</span></a>
+<a href="letter-b-coloring-pages" class="gallery-item gallery-item-text" aria-label="Letter B coloring pages"><span class="gallery-emoji">🔠</span><span class="gallery-label">Letter B</span></a>
+<a href="letter-b-sound-coloring" class="gallery-item gallery-item-text" aria-label="Letter B Sound coloring pages"><span class="gallery-emoji">🅱️</span><span class="gallery-label">Letter B Sound</span></a>
+<a href="letter-c-coloring-pages" class="gallery-item gallery-item-text" aria-label="Letter C coloring pages"><span class="gallery-emoji">🔠</span><span class="gallery-label">Letter C</span></a>
+<a href="letter-c-sound-coloring" class="gallery-item gallery-item-text" aria-label="Letter C Sound coloring pages"><span class="gallery-emoji">🅲</span><span class="gallery-label">Letter C Sound</span></a>
+<a href="letter-d-coloring-pages" class="gallery-item gallery-item-text" aria-label="Letter D coloring pages"><span class="gallery-emoji">🔠</span><span class="gallery-label">Letter D</span></a>
+<a href="letter-d-sound-coloring" class="gallery-item gallery-item-text" aria-label="Letter D Sound coloring pages"><span class="gallery-emoji">🅳</span><span class="gallery-label">Letter D Sound</span></a>
+<a href="letter-e-coloring-pages" class="gallery-item gallery-item-text" aria-label="Letter E coloring pages"><span class="gallery-emoji">🔠</span><span class="gallery-label">Letter E</span></a>
+<a href="letter-e-sound-coloring" class="gallery-item gallery-item-text" aria-label="Letter E Sound coloring pages"><span class="gallery-emoji">🅴</span><span class="gallery-label">Letter E Sound</span></a>
+<a href="letter-f-coloring-pages" class="gallery-item gallery-item-text" aria-label="Letter F coloring pages"><span class="gallery-emoji">🔠</span><span class="gallery-label">Letter F</span></a>
+<a href="letter-f-sound-coloring" class="gallery-item gallery-item-text" aria-label="Letter F Sound coloring pages"><span class="gallery-emoji">🅵</span><span class="gallery-label">Letter F Sound</span></a>
+<a href="math-coloring-pages" class="gallery-item gallery-item-text" aria-label="Math coloring pages"><span class="gallery-emoji">🔢</span><span class="gallery-label">Math</span></a>
+<a href="mermaid-coloring-pages" class="gallery-item" aria-label="Mermaids coloring pages"><img src="assets/coloring/mermaid-1.png" alt="Mermaids coloring page preview" loading="lazy"><span class="gallery-label">🧜 Mermaids</span></a>
+<a href="mixed-shapes-coloring-pages" class="gallery-item gallery-item-text" aria-label="Mixed Shapes coloring pages"><span class="gallery-emoji">🔶</span><span class="gallery-label">Mixed Shapes</span></a>
+<a href="money-coloring-pages" class="gallery-item gallery-item-text" aria-label="Money coloring pages"><span class="gallery-emoji">💰</span><span class="gallery-label">Money</span></a>
+<a href="months-of-year-coloring-pages" class="gallery-item gallery-item-text" aria-label="Months of the Year coloring pages"><span class="gallery-emoji">🗓️</span><span class="gallery-label">Months of the Year</span></a>
+<a href="number-coloring-pages" class="gallery-item gallery-item-text" aria-label="Numbers coloring pages"><span class="gallery-emoji">1️⃣</span><span class="gallery-label">Numbers</span></a>
+<a href="ocean-coloring-pages" class="gallery-item" aria-label="Ocean coloring pages"><img src="assets/coloring/ocean-1.png" alt="Ocean coloring page preview" loading="lazy"><span class="gallery-label">🐠 Ocean</span></a>
+<a href="oval-coloring-pages" class="gallery-item gallery-item-text" aria-label="Oval coloring pages"><span class="gallery-emoji">🥚</span><span class="gallery-label">Oval</span></a>
+<a href="pirate-coloring-pages" class="gallery-item" aria-label="Pirates coloring pages"><img src="assets/coloring/pirate-1.png" alt="Pirates coloring page preview" loading="lazy"><span class="gallery-label">🏴‍☠️ Pirates</span></a>
+<a href="prehistoric-animal-coloring-pages" class="gallery-item" aria-label="Prehistoric Animals coloring pages"><img src="assets/coloring/prehistoric-animal-1.png" alt="Prehistoric Animals coloring page preview" loading="lazy"><span class="gallery-label">🦖 Prehistoric Animals</span></a>
+<a href="princess-coloring-pages" class="gallery-item" aria-label="Princesses coloring pages"><img src="assets/coloring/princess-1.png" alt="Princesses coloring page preview" loading="lazy"><span class="gallery-label">👸 Princesses</span></a>
+<a href="rectangle-coloring-pages" class="gallery-item gallery-item-text" aria-label="Rectangle coloring pages"><span class="gallery-emoji">▭</span><span class="gallery-label">Rectangle</span></a>
+<a href="shape-coloring-pages" class="gallery-item gallery-item-text" aria-label="Shapes coloring pages"><span class="gallery-emoji">🔷</span><span class="gallery-label">Shapes</span></a>
+<a href="sight-word-coloring-pages" class="gallery-item gallery-item-text" aria-label="Sight Words coloring pages"><span class="gallery-emoji">👀</span><span class="gallery-label">Sight Words</span></a>
+<a href="sound-coloring" class="gallery-item" aria-label="Sounds coloring pages"><img src="assets/coloring/sound-1.png" alt="Sounds coloring page preview" loading="lazy"><span class="gallery-label">🔊 Sounds</span></a>
+<a href="space-coloring-pages" class="gallery-item" aria-label="Space coloring pages"><img src="assets/coloring/space-1.png" alt="Space coloring page preview" loading="lazy"><span class="gallery-label">🚀 Space</span></a>
+<a href="spring-coloring-pages" class="gallery-item" aria-label="Spring coloring pages"><img src="assets/coloring/spring-1.png" alt="Spring coloring page preview" loading="lazy"><span class="gallery-label">🌸 Spring</span></a>
+<a href="square-coloring-pages" class="gallery-item gallery-item-text" aria-label="Square coloring pages"><span class="gallery-emoji">⬜</span><span class="gallery-label">Square</span></a>
+<a href="star-coloring-pages" class="gallery-item gallery-item-text" aria-label="Stars coloring pages"><span class="gallery-emoji">⭐</span><span class="gallery-label">Stars</span></a>
+<a href="summer-coloring-pages" class="gallery-item" aria-label="Summer coloring pages"><img src="assets/coloring/summer-1.png" alt="Summer coloring page preview" loading="lazy"><span class="gallery-label">☀️ Summer</span></a>
+<a href="superhero-coloring-pages" class="gallery-item" aria-label="Superheroes coloring pages"><img src="assets/coloring/superhero-1.png" alt="Superheroes coloring page preview" loading="lazy"><span class="gallery-label">🦸 Superheroes</span></a>
+<a href="telling-time-coloring-pages" class="gallery-item gallery-item-text" aria-label="Telling Time coloring pages"><span class="gallery-emoji">🕐</span><span class="gallery-label">Telling Time</span></a>
+<a href="thanksgiving-coloring-pages" class="gallery-item gallery-item-text" aria-label="Thanksgiving coloring pages"><span class="gallery-emoji">🦃</span><span class="gallery-label">Thanksgiving</span></a>
+<a href="transportation-coloring-pages" class="gallery-item" aria-label="Transportation coloring pages"><img src="assets/coloring/transportation-1.png" alt="Transportation coloring page preview" loading="lazy"><span class="gallery-label">🚌 Transportation</span></a>
+<a href="triangle-coloring-pages" class="gallery-item gallery-item-text" aria-label="Triangle coloring pages"><span class="gallery-emoji">🔺</span><span class="gallery-label">Triangle</span></a>
+<a href="unicorn-coloring-pages" class="gallery-item" aria-label="Unicorns coloring pages"><img src="assets/coloring/unicorn-1.png" alt="Unicorns coloring page preview" loading="lazy"><span class="gallery-label">🦄 Unicorns</span></a>
+<a href="valentines-day-coloring-pages" class="gallery-item" aria-label="Valentine's Day coloring pages"><img src="assets/coloring/valentines-day-1.png" alt="Valentine's Day coloring page preview" loading="lazy"><span class="gallery-label">💘 Valentine's Day</span></a>
+<a href="vehicle-coloring-pages" class="gallery-item" aria-label="Vehicles coloring pages"><img src="assets/coloring/vehicle-1.png" alt="Vehicles coloring page preview" loading="lazy"><span class="gallery-label">🚗 Vehicles</span></a>
 </div>
 </section>
 
@@ -518,34 +579,19 @@ Looking for free toddler coloring pages? Browse the gallery below — tap any pi
 
 <h2>🔗 More Free Printables You’ll Love</h2>
 
-<p class="seo-lead">Looking for more? Our free coloring library has dozens of themes — animals, dinosaurs, holidays, shapes, and more. Here are the best ones for toddlers:</p>
+<p class="seo-lead">More free activities for little hands — drawing, matching, and quiet-time crafts beyond coloring:</p>
 <ul class="seo-links">
 <li>
-<a href="free-coloring-pages" class="card-link" aria-label="🎨 All Free Coloring Pages — Browse every coloring theme — animals, holidays, shapes, letters, and more."><span class="card-title">🎨 All Free Coloring Pages</span><span class="card-desc">Browse every coloring theme — animals, holidays, shapes, letters, and more.</span><span class="card-cta">Browse All Coloring Pages →</span></a>
+<a href="drawing-tutorials" class="card-link" aria-label="Drawing tutorials for kids — step-by-step drawings with free printables"><span class="card-title">✏️ Drawing Tutorials for Kids</span><span class="card-desc">30 step-by-step tutorials — animals, Christmas, and more, each with a free printable.</span><span class="card-cta">Start Drawing →</span></a>
 </li>
 <li>
-<a href="animal-coloring-pages" class="card-link" aria-label="🐾 Animal Coloring Pages — Big, friendly animals with bold outlines toddlers love."><span class="card-title">🐾 Animal Coloring Pages</span><span class="card-desc">Big, friendly animals with bold outlines toddlers love.</span><span class="card-cta">Color Animals →</span></a>
+<a href="paint-by-numbers" class="card-link" aria-label="Paint by numbers for kids — color-by-number printables with one shared color key"><span class="card-title">🎨 Paint by Numbers for Kids</span><span class="card-desc">8 free color-by-number sheets — match the number, fill the color, reveal the picture.</span><span class="card-cta">Color by Number →</span></a>
 </li>
 <li>
-<a href="farm-coloring-pages" class="card-link" aria-label="🐄 Farm Animal Coloring Pages — Cows, pigs, chickens, and more — simple shapes for little hands."><span class="card-title">🐄 Farm Animal Coloring Pages</span><span class="card-desc">Cows, pigs, chickens, and more — simple shapes for little hands.</span><span class="card-cta">Color Farm Animals →</span></a>
+<a href="free-mom-resources" class="card-link" aria-label="Free mom resources — all free printables, tools, and activities"><span class="card-title">🎁 All Free Resources</span><span class="card-desc">Browse every free printable, tool, and activity on the site.</span><span class="card-cta">Browse All →</span></a>
 </li>
 <li>
-<a href="dinosaur-coloring-pages" class="card-link" aria-label="🦕 Dinosaur Coloring Pages — Chunky dinos with big spaces to fill with color."><span class="card-title">🦕 Dinosaur Coloring Pages</span><span class="card-desc">Chunky dinos with big spaces to fill with color.</span><span class="card-cta">Color Dinosaurs →</span></a>
-</li>
-<li>
-<a href="food-coloring-pages" class="card-link" aria-label="🍎 Food Coloring Pages — Fruits, snacks, and treats — great for naming foods while coloring."><span class="card-title">🍎 Food Coloring Pages</span><span class="card-desc">Fruits, snacks, and treats — great for naming foods while coloring.</span><span class="card-cta">Color Foods →</span></a>
-</li>
-<li>
-<a href="shape-coloring-pages" class="card-link" aria-label="🔷 Shape Coloring Pages — Circle, square, triangle, and star — first shapes with big outlines."><span class="card-title">🔷 Shape Coloring Pages</span><span class="card-desc">Circle, square, triangle, and star — first shapes with big outlines.</span><span class="card-cta">Color Shapes →</span></a>
-</li>
-<li>
-<a href="alphabet-coloring-pages" class="card-link" aria-label="🔤 Alphabet Coloring Pages — One letter per page — color the letter and the picture that starts with it."><span class="card-title">🔤 Alphabet Coloring Pages</span><span class="card-desc">One letter per page — color the letter and the picture that starts with it.</span><span class="card-cta">Color the Alphabet →</span></a>
-</li>
-<li>
-<a href="christmas-coloring-pages" class="card-link" aria-label="🎄 Christmas Coloring Pages — Trees, Santa, reindeer, and snowmen for holiday coloring."><span class="card-title">🎄 Christmas Coloring Pages</span><span class="card-desc">Trees, Santa, reindeer, and snowmen for holiday coloring.</span><span class="card-cta">Color Christmas Pages →</span></a>
-</li>
-<li>
-<a href="halloween-coloring-pages" class="card-link" aria-label="🎃 Halloween Coloring Pages — Friendly pumpkins, ghosts, and witches — not scary, just fun."><span class="card-title">🎃 Halloween Coloring Pages</span><span class="card-desc">Friendly pumpkins, ghosts, and witches — not scary, just fun.</span><span class="card-cta">Color Halloween Pages →</span></a>
+<a href="animal-matching-activities" class="card-link" aria-label="Animal matching activities — match animals to their pictures"><span class="card-title">🐾 Animal Matching Activities</span><span class="card-desc">Match animals to their pictures — a first matching game for toddlers.</span><span class="card-cta">Play Matching →</span></a>
 </li>
 </ul>
 
