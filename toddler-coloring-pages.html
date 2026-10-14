@@ -270,6 +270,15 @@ window.addEventListener('load', function() {
                 white-space: normal;
             }
         }
+
+/* No dots on any list — clean card/chip styling instead */
+.seo-links,.seo-links li{list-style:none !important}
+.seo-links li::marker{display:none !important}
+.seo-links li{list-style-type:none !important}
+.flow-section ul{list-style:none !important;padding-left:0 !important}
+.flow-section ul li{list-style:none !important;position:relative;padding-left:28px}
+.flow-section ul li::before{content:"✓";position:absolute;left:0;top:0;color:#D05A82;font-weight:900;font-size:16px}
+.flow-section ul li::marker{display:none !important}
 </style>
 
 <script type="application/ld+json">
@@ -330,7 +339,8 @@ window.addEventListener('load', function() {
 </script>
 
 <style>
-.printable-preview img{height:auto !important;object-fit:contain;max-height:900px}
+.printable-preview{max-width:420px !important}
+.printable-preview img{height:auto !important;width:auto !important;max-width:100% !important;max-height:550px !important;object-fit:contain;display:block;margin:0 auto}
 .quick-answer{max-width:900px;margin:30px auto 0;padding:28px 32px;background:#fff7f9;border:2px solid #f3d9e0;border-radius:20px;font-family:'Nunito',system-ui,sans-serif}
 .quick-answer h2{margin:0 0 12px;color:#c03d5b;font-size:18px;font-weight:900;text-align:left}
 .quick-answer p{margin:0;color:#5f5758;font-size:16px;line-height:1.7}
@@ -339,20 +349,12 @@ window.addEventListener('load', function() {
 .fact-box ul{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px 20px}
 .fact-box li{color:#5f5758;font-size:15px}
 .fact-box li strong{color:#2D1B2E}
-.content-card{max-width:900px;margin:36px auto;padding:28px 32px;background:linear-gradient(135deg,#FFF6EC 0%,#fff7f9 100%);border:3px solid #E89AAA;border-radius:24px;font-family:'Nunito',system-ui,sans-serif;box-shadow:0 4px 16px rgba(208,90,130,.12)}
-.content-card h2{margin:0 0 14px;color:#c03d5b;font-size:22px;font-weight:900}
-.content-card p{color:#5f5758;font-size:16px;line-height:1.75;margin:0 0 16px}
-.content-card p:last-child{margin-bottom:0}
-.content-card ul{color:#5f5758;font-size:16px;line-height:1.75;margin:0 0 16px;padding-left:24px}
-.content-card li{margin-bottom:10px}
-.content-card strong{color:#2D1B2E}
-.content-card-alt{max-width:900px;margin:36px auto;padding:28px 32px;background:#fff;border:3px dashed #E89AAA;border-radius:24px;font-family:'Nunito',system-ui,sans-serif;box-shadow:0 4px 16px rgba(208,90,130,.12)}
-.content-card-alt h2{margin:0 0 14px;color:#c03d5b;font-size:22px;font-weight:900}
-.content-card-alt p{color:#5f5758;font-size:16px;line-height:1.75;margin:0 0 16px}
-.content-card-alt p:last-child{margin-bottom:0}
-.content-card-alt ul{color:#5f5758;font-size:16px;line-height:1.75;margin:0 0 16px;padding-left:24px}
-.content-card-alt li{margin-bottom:10px}
-.content-card-alt strong{color:#2D1B2E}
+.flow-section{max-width:900px;margin:40px auto;padding:0 16px;font-family:'Nunito',system-ui,sans-serif;text-align:left}
+.flow-section h2{margin:0 0 16px;color:#332b2b;font-size:24px;font-weight:900;line-height:1.2}
+.flow-section p{color:#5f5758;font-size:17px;line-height:1.8;margin:0 0 18px}
+.flow-section ul{color:#5f5758;font-size:17px;line-height:1.8;margin:0 0 18px;padding-left:0}
+.flow-section li{margin-bottom:10px}
+.flow-section strong{color:#2D1B2E}
 .coloring-more{margin:14px 0 0;color:#a0556b;font-size:15px;font-weight:800}
 .print-btn{background:#fff!important;color:#c33761!important;border:2px solid #e89aaa!important;margin-left:10px}
 .print-btn:hover{background:#fdf3f5!important;transform:translateY(-3px)}
@@ -419,55 +421,6 @@ Looking for free toddler coloring pages? Download our free original Toddler colo
 </ul>
 </section>
 
-<section class="content-card">
-<h2>🧠 Why Coloring Is Great for Toddlers</h2>
-<p>Coloring is one of the first activities where a toddler practices holding something on purpose. Gripping a crayon, pressing it to paper, and watching a mark appear teaches cause and effect — and builds the hand muscles kids need later for writing, buttoning coats, and using scissors.</p>
-<p>It also builds color words. When you say "You're using the blue crayon!" or "Can you find the red one?" you're turning a quiet activity into language practice. Toddlers learn color names fastest when the words come with something they can see and hold.</p>
-<p>And coloring is calm focus practice. A toddler who sits with a page for even five minutes is learning to stick with one activity — a skill that grows with every session. There's no right or wrong result, so there's no frustration either. The page always ends up finished, and the child always feels proud.</p>
-</section>
-
-<section class="content-card-alt">
-<h2>🎨 What Makes a Good Toddler Coloring Page</h2>
-<p>Not every coloring page works for a toddler. Pages made for older kids have thin lines, tiny details, and cramped spaces that frustrate little hands. A good toddler coloring page follows three rules:</p>
-<ul>
-<li><strong>Bold, thick outlines</strong> — easy to see, easy to stay near, and forgiving when the crayon wanders.</li>
-<li><strong>Big, simple shapes</strong> — one clear subject (an animal, a flower, a vehicle) with lots of open space to fill.</li>
-<li><strong>Not too much on the page</strong> — one picture beats a busy scene. Toddlers finish one picture and feel done; a crowded page feels endless.</li>
-</ul>
-<p>The free printable on this page follows all three. It's one simple, friendly picture with thick lines and big spaces — designed so a 2-year-old's scribbles still look like a finished picture. And when they're ready for more, check out these <a href="animal-coloring-pages">animal coloring pages</a>, <a href="farm-coloring-pages">farm animal coloring pages</a>, and <a href="dinosaur-coloring-pages">dinosaur coloring pages</a> — same bold outlines, different subjects to explore.</p>
-</section>
-
-<section class="content-card">
-<h2>✏️ Coloring Tips for Parents</h2>
-<ul>
-<li><strong>Let them scribble.</strong> Staying in the lines comes later. At this age, the goal is grip, color, and joy — not neatness.</li>
-<li><strong>Name the colors out loud.</strong> "You picked green!" is the easiest color lesson there is.</li>
-<li><strong>Use chunky crayons.</strong> Fat crayons are easier for little hands to grip than skinny ones, and they break less.</li>
-<li><strong>Tape the page down.</strong> A strip of tape at each corner keeps the paper from sliding around while they color.</li>
-<li><strong>Display the finished page.</strong> Stick it on the fridge or a wall at their height. Seeing their work displayed is the biggest motivator to color again.</li>
-<li><strong>Color alongside them.</strong> Toddlers copy what they see. Coloring your own page next to them teaches more than any instruction.</li>
-</ul>
-<p>Seasonal pages keep it fresh — check out these <a href="halloween-coloring-pages">Halloween coloring pages</a> in October and these <a href="christmas-coloring-pages">Christmas coloring pages</a> in December. And for learning while coloring, check out these <a href="shape-coloring-pages">shape coloring pages</a> and <a href="alphabet-coloring-pages">alphabet coloring pages</a>.</p>
-</section>
-
-<section class="seo-section">
-
-<span class="section-kicker">Step by step</span>
-
-<h2>🖍️ How To Use This Page</h2>
-
-<ol class="seo-steps">
-<li><strong>Preview the page</strong> below and check it fits your child — big shapes, bold outlines, lots of room to color.</li>
-<li><strong>Tap Download</strong> below to save the free printable, or tap Print to open it directly.</li>
-<li><strong>Print on letter-size paper</strong> — print a few different designs for variety.</li>
-<li><strong>Color together</strong> with crayons or markers and display the favorites.</li>
-</ol>
-
-</section>
-
-
-
-
 <section class="featured-resources">
 
 
@@ -493,6 +446,57 @@ Looking for free toddler coloring pages? Download our free original Toddler colo
 
 
 </section>
+
+<section class="flow-section">
+<h2>🧠 Why Coloring Is Great for Toddlers</h2>
+<p>Coloring is one of the first activities where a toddler practices holding something on purpose. Gripping a crayon, pressing it to paper, and watching a mark appear teaches cause and effect — and builds the hand muscles kids need later for writing, buttoning coats, and using scissors.</p>
+<p>It also builds color words. When you say "You're using the blue crayon!" or "Can you find the red one?" you're turning a quiet activity into language practice. Toddlers learn color names fastest when the words come with something they can see and hold.</p>
+<p>And coloring is calm focus practice. A toddler who sits with a page for even five minutes is learning to stick with one activity — a skill that grows with every session. There's no right or wrong result, so there's no frustration either. The page always ends up finished, and the child always feels proud.</p>
+</section>
+
+<section class="flow-section">
+<h2>🎨 What Makes a Good Toddler Coloring Page</h2>
+<p>Not every coloring page works for a toddler. Pages made for older kids have thin lines, tiny details, and cramped spaces that frustrate little hands. A good toddler coloring page follows three rules:</p>
+<ul>
+<li><strong>Bold, thick outlines</strong> — easy to see, easy to stay near, and forgiving when the crayon wanders.</li>
+<li><strong>Big, simple shapes</strong> — one clear subject (an animal, a flower, a vehicle) with lots of open space to fill.</li>
+<li><strong>Not too much on the page</strong> — one picture beats a busy scene. Toddlers finish one picture and feel done; a crowded page feels endless.</li>
+</ul>
+<p>The free printable on this page follows all three. It's one simple, friendly picture with thick lines and big spaces — designed so a 2-year-old's scribbles still look like a finished picture.</p>
+</section>
+
+<section class="flow-section">
+<h2>✏️ Coloring Tips for Parents</h2>
+<ul>
+<li><strong>Let them scribble.</strong> Staying in the lines comes later. At this age, the goal is grip, color, and joy — not neatness.</li>
+<li><strong>Name the colors out loud.</strong> "You picked green!" is the easiest color lesson there is.</li>
+<li><strong>Use chunky crayons.</strong> Fat crayons are easier for little hands to grip than skinny ones, and they break less.</li>
+<li><strong>Tape the page down.</strong> A strip of tape at each corner keeps the paper from sliding around while they color.</li>
+<li><strong>Display the finished page.</strong> Stick it on the fridge or a wall at their height. Seeing their work displayed is the biggest motivator to color again.</li>
+<li><strong>Color alongside them.</strong> Toddlers copy what they see. Coloring your own page next to them teaches more than any instruction.</li>
+</ul>
+
+</section>
+
+<section class="seo-section">
+
+<span class="section-kicker">Step by step</span>
+
+<h2>🖍️ How To Use This Page</h2>
+
+<ol class="seo-steps">
+<li><strong>Preview the page</strong> below and check it fits your child — big shapes, bold outlines, lots of room to color.</li>
+<li><strong>Tap Download</strong> below to save the free printable, or tap Print to open it directly.</li>
+<li><strong>Print on letter-size paper</strong> — print a few different designs for variety.</li>
+<li><strong>Color together</strong> with crayons or markers and display the favorites.</li>
+</ol>
+
+</section>
+
+
+
+
+
 
 
 
