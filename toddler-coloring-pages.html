@@ -279,6 +279,13 @@ window.addEventListener('load', function() {
 .flow-section ul li{list-style:none !important;position:relative;padding-left:28px}
 .flow-section ul li::before{content:"✓";position:absolute;left:0;top:0;color:#D05A82;font-weight:900;font-size:16px}
 .flow-section ul li::marker{display:none !important}
+
+/* Whole-card clickable links — entire card is one link, accessible label */
+.seo-links a.card-link{display:block;padding:16px 18px;background:#fffaf8;border:1px solid #f1e5e7;border-radius:16px;color:#332b2b;text-decoration:none;transition:transform .2s ease,box-shadow .2s ease}
+.seo-links a.card-link:hover,.seo-links a.card-link:focus{transform:translateY(-2px);box-shadow:0 8px 20px rgba(80,55,65,.07);color:#c33761;outline:2px solid #e89aaa;outline-offset:2px}
+.seo-links a.card-link .card-title{display:block;font-size:15px;font-weight:900}
+.seo-links a.card-link .card-desc{display:block;margin-top:4px;color:#6d6d6d;font-size:13px;line-height:1.5;font-weight:400}
+.seo-links li{padding:0 !important;background:none !important;border:none !important}
 </style>
 
 <script type="application/ld+json">
@@ -511,40 +518,31 @@ Looking for free toddler coloring pages? Download our free original Toddler colo
 <p class="seo-lead">Looking for more? Our free coloring library has dozens of themes — animals, dinosaurs, holidays, shapes, and more. Here are the best ones for toddlers:</p>
 <ul class="seo-links">
 <li>
-<a href="free-coloring-pages">🎨 All Free Coloring Pages</a>
-<span>Browse every coloring theme — animals, holidays, shapes, letters, and more.</span>
+<a href="free-coloring-pages" class="card-link" aria-label="🎨 All Free Coloring Pages — Browse every coloring theme — animals, holidays, shapes, letters, and more."><span class="card-title">🎨 All Free Coloring Pages</span><span class="card-desc">Browse every coloring theme — animals, holidays, shapes, letters, and more.</span></a>
 </li>
 <li>
-<a href="animal-coloring-pages">🐾 Animal Coloring Pages</a>
-<span>Big, friendly animals with bold outlines toddlers love.</span>
+<a href="animal-coloring-pages" class="card-link" aria-label="🐾 Animal Coloring Pages — Big, friendly animals with bold outlines toddlers love."><span class="card-title">🐾 Animal Coloring Pages</span><span class="card-desc">Big, friendly animals with bold outlines toddlers love.</span></a>
 </li>
 <li>
-<a href="farm-coloring-pages">🐄 Farm Animal Coloring Pages</a>
-<span>Cows, pigs, chickens, and more — simple shapes for little hands.</span>
+<a href="farm-coloring-pages" class="card-link" aria-label="🐄 Farm Animal Coloring Pages — Cows, pigs, chickens, and more — simple shapes for little hands."><span class="card-title">🐄 Farm Animal Coloring Pages</span><span class="card-desc">Cows, pigs, chickens, and more — simple shapes for little hands.</span></a>
 </li>
 <li>
-<a href="dinosaur-coloring-pages">🦕 Dinosaur Coloring Pages</a>
-<span>Chunky dinos with big spaces to fill with color.</span>
+<a href="dinosaur-coloring-pages" class="card-link" aria-label="🦕 Dinosaur Coloring Pages — Chunky dinos with big spaces to fill with color."><span class="card-title">🦕 Dinosaur Coloring Pages</span><span class="card-desc">Chunky dinos with big spaces to fill with color.</span></a>
 </li>
 <li>
-<a href="food-coloring-pages">🍎 Food Coloring Pages</a>
-<span>Fruits, snacks, and treats — great for naming foods while coloring.</span>
+<a href="food-coloring-pages" class="card-link" aria-label="🍎 Food Coloring Pages — Fruits, snacks, and treats — great for naming foods while coloring."><span class="card-title">🍎 Food Coloring Pages</span><span class="card-desc">Fruits, snacks, and treats — great for naming foods while coloring.</span></a>
 </li>
 <li>
-<a href="shape-coloring-pages">🔷 Shape Coloring Pages</a>
-<span>Circle, square, triangle, and star — first shapes with big outlines.</span>
+<a href="shape-coloring-pages" class="card-link" aria-label="🔷 Shape Coloring Pages — Circle, square, triangle, and star — first shapes with big outlines."><span class="card-title">🔷 Shape Coloring Pages</span><span class="card-desc">Circle, square, triangle, and star — first shapes with big outlines.</span></a>
 </li>
 <li>
-<a href="alphabet-coloring-pages">🔤 Alphabet Coloring Pages</a>
-<span>One letter per page — color the letter and the picture that starts with it.</span>
+<a href="alphabet-coloring-pages" class="card-link" aria-label="🔤 Alphabet Coloring Pages — One letter per page — color the letter and the picture that starts with it."><span class="card-title">🔤 Alphabet Coloring Pages</span><span class="card-desc">One letter per page — color the letter and the picture that starts with it.</span></a>
 </li>
 <li>
-<a href="christmas-coloring-pages">🎄 Christmas Coloring Pages</a>
-<span>Trees, Santa, reindeer, and snowmen for holiday coloring.</span>
+<a href="christmas-coloring-pages" class="card-link" aria-label="🎄 Christmas Coloring Pages — Trees, Santa, reindeer, and snowmen for holiday coloring."><span class="card-title">🎄 Christmas Coloring Pages</span><span class="card-desc">Trees, Santa, reindeer, and snowmen for holiday coloring.</span></a>
 </li>
 <li>
-<a href="halloween-coloring-pages">🎃 Halloween Coloring Pages</a>
-<span>Friendly pumpkins, ghosts, and witches — not scary, just fun.</span>
+<a href="halloween-coloring-pages" class="card-link" aria-label="🎃 Halloween Coloring Pages — Friendly pumpkins, ghosts, and witches — not scary, just fun."><span class="card-title">🎃 Halloween Coloring Pages</span><span class="card-desc">Friendly pumpkins, ghosts, and witches — not scary, just fun.</span></a>
 </li>
 </ul>
 
