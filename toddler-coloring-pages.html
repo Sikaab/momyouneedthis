@@ -270,6 +270,15 @@ window.addEventListener('load', function() {
                 white-space: normal;
             }
         }
+
+/* No dots on any list — clean card/chip styling instead */
+.seo-links,.seo-links li{list-style:none !important}
+.seo-links li::marker{display:none !important}
+.seo-links li{list-style-type:none !important}
+.content-card ul,.content-card-alt ul{list-style:none !important;padding-left:0 !important}
+.content-card ul li,.content-card-alt ul li{list-style:none !important;position:relative;padding-left:28px}
+.content-card ul li::before,.content-card-alt ul li::before{content:"✓";position:absolute;left:0;top:0;color:#D05A82;font-weight:900;font-size:16px}
+.content-card ul li::marker,.content-card-alt ul li::marker{display:none !important}
 </style>
 
 <script type="application/ld+json">
@@ -330,7 +339,8 @@ window.addEventListener('load', function() {
 </script>
 
 <style>
-.printable-preview img{height:auto !important;object-fit:contain;max-height:900px}
+.printable-preview{max-width:420px !important}
+.printable-preview img{height:auto !important;width:auto !important;max-width:100% !important;max-height:550px !important;object-fit:contain;display:block;margin:0 auto}
 .quick-answer{max-width:900px;margin:30px auto 0;padding:28px 32px;background:#fff7f9;border:2px solid #f3d9e0;border-radius:20px;font-family:'Nunito',system-ui,sans-serif}
 .quick-answer h2{margin:0 0 12px;color:#c03d5b;font-size:18px;font-weight:900;text-align:left}
 .quick-answer p{margin:0;color:#5f5758;font-size:16px;line-height:1.7}
@@ -434,7 +444,7 @@ Looking for free toddler coloring pages? Download our free original Toddler colo
 <li><strong>Big, simple shapes</strong> — one clear subject (an animal, a flower, a vehicle) with lots of open space to fill.</li>
 <li><strong>Not too much on the page</strong> — one picture beats a busy scene. Toddlers finish one picture and feel done; a crowded page feels endless.</li>
 </ul>
-<p>The free printable on this page follows all three. It's one simple, friendly picture with thick lines and big spaces — designed so a 2-year-old's scribbles still look like a finished picture. And when they're ready for more, check out these <a href="animal-coloring-pages">animal coloring pages</a>, <a href="farm-coloring-pages">farm animal coloring pages</a>, and <a href="dinosaur-coloring-pages">dinosaur coloring pages</a> — same bold outlines, different subjects to explore.</p>
+<p>The free printable on this page follows all three. It's one simple, friendly picture with thick lines and big spaces — designed so a 2-year-old's scribbles still look like a finished picture.</p>
 </section>
 
 <section class="content-card">
