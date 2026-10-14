@@ -300,6 +300,10 @@ window.addEventListener('load', function() {
 .gallery-item img{width:100%;height:140px;object-fit:cover;display:block}
 .gallery-item .gallery-label{display:block;padding:10px 8px;text-align:center;color:#c03d5b;font-size:14px;font-weight:900;line-height:1.3}
 @media(max-width:700px){.gallery-grid{grid-template-columns:repeat(2,1fr)}.gallery-item img{height:120px}}
+
+.gallery-item-text{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:140px;background:#FFF6EC}
+.gallery-item-text .gallery-emoji{font-size:48px;line-height:1;margin-bottom:8px}
+@media(max-width:700px){.gallery-item-text{min-height:120px}.gallery-item-text .gallery-emoji{font-size:36px}}
 </style>
 
 <script type="application/ld+json">
@@ -455,6 +459,9 @@ Looking for free toddler coloring pages? Browse the gallery below — tap any pi
 <a href="ocean-coloring-pages" class="gallery-item" aria-label="Ocean coloring pages — fish, shells and sea creatures"><img src="assets/coloring/ocean-1.png" alt="Ocean coloring page preview" loading="lazy"><span class="gallery-label">🐠 Ocean</span></a>
 <a href="unicorn-coloring-pages" class="gallery-item" aria-label="Unicorn coloring pages — magical unicorns with big outlines"><img src="assets/coloring/unicorn-1.png" alt="Unicorn coloring page preview" loading="lazy"><span class="gallery-label">🦄 Unicorns</span></a>
 </div>
+<div style="text-align:center;margin-top:24px">
+<a href="free-coloring-pages" class="download-button" aria-label="Browse all coloring page themes — every coloring theme on the site">🎨 Browse All Coloring Themes →</a>
+</div>
 </section>
 
 <section class="flow-section">
@@ -518,34 +525,19 @@ Looking for free toddler coloring pages? Browse the gallery below — tap any pi
 
 <h2>🔗 More Free Printables You’ll Love</h2>
 
-<p class="seo-lead">Looking for more? Our free coloring library has dozens of themes — animals, dinosaurs, holidays, shapes, and more. Here are the best ones for toddlers:</p>
+<p class="seo-lead">More free activities for little hands — drawing, matching, and quiet-time crafts beyond coloring:</p>
 <ul class="seo-links">
 <li>
-<a href="free-coloring-pages" class="card-link" aria-label="🎨 All Free Coloring Pages — Browse every coloring theme — animals, holidays, shapes, letters, and more."><span class="card-title">🎨 All Free Coloring Pages</span><span class="card-desc">Browse every coloring theme — animals, holidays, shapes, letters, and more.</span><span class="card-cta">Browse All Coloring Pages →</span></a>
+<a href="drawing-tutorials" class="card-link" aria-label="Drawing tutorials for kids — step-by-step drawings with free printables"><span class="card-title">✏️ Drawing Tutorials for Kids</span><span class="card-desc">30 step-by-step tutorials — animals, Christmas, and more, each with a free printable.</span><span class="card-cta">Start Drawing →</span></a>
 </li>
 <li>
-<a href="animal-coloring-pages" class="card-link" aria-label="🐾 Animal Coloring Pages — Big, friendly animals with bold outlines toddlers love."><span class="card-title">🐾 Animal Coloring Pages</span><span class="card-desc">Big, friendly animals with bold outlines toddlers love.</span><span class="card-cta">Color Animals →</span></a>
+<a href="paint-by-numbers" class="card-link" aria-label="Paint by numbers for kids — color-by-number printables with one shared color key"><span class="card-title">🎨 Paint by Numbers for Kids</span><span class="card-desc">8 free color-by-number sheets — match the number, fill the color, reveal the picture.</span><span class="card-cta">Color by Number →</span></a>
 </li>
 <li>
-<a href="farm-coloring-pages" class="card-link" aria-label="🐄 Farm Animal Coloring Pages — Cows, pigs, chickens, and more — simple shapes for little hands."><span class="card-title">🐄 Farm Animal Coloring Pages</span><span class="card-desc">Cows, pigs, chickens, and more — simple shapes for little hands.</span><span class="card-cta">Color Farm Animals →</span></a>
+<a href="free-mom-resources" class="card-link" aria-label="Free mom resources — all free printables, tools, and activities"><span class="card-title">🎁 All Free Resources</span><span class="card-desc">Browse every free printable, tool, and activity on the site.</span><span class="card-cta">Browse All →</span></a>
 </li>
 <li>
-<a href="dinosaur-coloring-pages" class="card-link" aria-label="🦕 Dinosaur Coloring Pages — Chunky dinos with big spaces to fill with color."><span class="card-title">🦕 Dinosaur Coloring Pages</span><span class="card-desc">Chunky dinos with big spaces to fill with color.</span><span class="card-cta">Color Dinosaurs →</span></a>
-</li>
-<li>
-<a href="food-coloring-pages" class="card-link" aria-label="🍎 Food Coloring Pages — Fruits, snacks, and treats — great for naming foods while coloring."><span class="card-title">🍎 Food Coloring Pages</span><span class="card-desc">Fruits, snacks, and treats — great for naming foods while coloring.</span><span class="card-cta">Color Foods →</span></a>
-</li>
-<li>
-<a href="shape-coloring-pages" class="card-link" aria-label="🔷 Shape Coloring Pages — Circle, square, triangle, and star — first shapes with big outlines."><span class="card-title">🔷 Shape Coloring Pages</span><span class="card-desc">Circle, square, triangle, and star — first shapes with big outlines.</span><span class="card-cta">Color Shapes →</span></a>
-</li>
-<li>
-<a href="alphabet-coloring-pages" class="card-link" aria-label="🔤 Alphabet Coloring Pages — One letter per page — color the letter and the picture that starts with it."><span class="card-title">🔤 Alphabet Coloring Pages</span><span class="card-desc">One letter per page — color the letter and the picture that starts with it.</span><span class="card-cta">Color the Alphabet →</span></a>
-</li>
-<li>
-<a href="christmas-coloring-pages" class="card-link" aria-label="🎄 Christmas Coloring Pages — Trees, Santa, reindeer, and snowmen for holiday coloring."><span class="card-title">🎄 Christmas Coloring Pages</span><span class="card-desc">Trees, Santa, reindeer, and snowmen for holiday coloring.</span><span class="card-cta">Color Christmas Pages →</span></a>
-</li>
-<li>
-<a href="halloween-coloring-pages" class="card-link" aria-label="🎃 Halloween Coloring Pages — Friendly pumpkins, ghosts, and witches — not scary, just fun."><span class="card-title">🎃 Halloween Coloring Pages</span><span class="card-desc">Friendly pumpkins, ghosts, and witches — not scary, just fun.</span><span class="card-cta">Color Halloween Pages →</span></a>
+<a href="animal-matching-activities" class="card-link" aria-label="Animal matching activities — match animals to their pictures"><span class="card-title">🐾 Animal Matching Activities</span><span class="card-desc">Match animals to their pictures — a first matching game for toddlers.</span><span class="card-cta">Play Matching →</span></a>
 </li>
 </ul>
 
