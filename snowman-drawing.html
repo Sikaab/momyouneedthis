@@ -82,6 +82,20 @@ window.addEventListener('load', function() {
 .affiliate-card-btn{display:inline-block;background:#D05A82;color:#fff;font-weight:800;font-size:13px;padding:10px 18px;border-radius:999px}
 .affiliate-disclosure{font-size:12px;color:#999;text-align:center;margin:0}
 
+
+/* Tips card — fun playful callout for parent tips */
+.tips-card{max-width:900px;margin:36px auto;padding:28px 32px;background:linear-gradient(135deg,#FFF6EC 0%,#fff7f9 100%);border:3px dashed #E89AAA;border-radius:24px;font-family:'Nunito',system-ui,sans-serif;box-shadow:0 4px 16px rgba(208,90,130,.12)}
+.tips-card h2{margin:0 0 14px;color:#c03d5b;font-size:22px;font-weight:900}
+.tips-card p{color:#5f5758;font-size:16px;line-height:1.75;margin:0 0 14px}
+.tips-card p:last-child{margin-bottom:0}
+.tips-card strong{color:#2D1B2E}
+
+/* Always-visible scroll cue for tables — shows on all devices, not just on touch */
+.scroll-cue{display:flex;align-items:center;justify-content:center;gap:8px;max-width:900px;margin:8px auto 4px;padding:8px 16px;background:#FFF6EC;border:2px solid #f3d9e0;border-radius:999px;font-family:'Nunito',system-ui,sans-serif;font-size:14px;font-weight:800;color:#c03d5b}
+.table-scroll{overflow-x:scroll !important;-webkit-overflow-scrolling:touch;scrollbar-width:auto;scrollbar-color:#D05A82 #f3d9e0}
+.table-scroll::-webkit-scrollbar{height:14px !important;-webkit-appearance:none}
+.table-scroll::-webkit-scrollbar-track{background:#f3d9e0;border-radius:8px;border:1px solid #E89AAA}
+.table-scroll::-webkit-scrollbar-thumb{background:#D05A82;border-radius:8px;border:2px solid #f3d9e0;min-width:60px}
 </style>
 
 <script type="application/ld+json">
@@ -204,7 +218,7 @@ window.addEventListener('load', function() {
 <section class="resource-page">
 <img width="300" height="300" src="assets/logo.svg" class="logo" alt="MomYouNeedThis Logo">
 <span class="free-badge">
-🐱 FREE SNOWMAN DRAWING
+⛄ FREE SNOWMAN DRAWING
 </span>
 <h1>
 Snowman Drawing for Kids
@@ -221,7 +235,7 @@ How to Draw a Snowman in 6 Easy Steps
 <h2>At a Glance</h2>
 <ul>
 <li><strong>Subject:</strong> How to draw a snowman</li>
-<li><strong>Ages:</strong> 4+</li>
+<li><strong>Ages:</strong> 3+</li>
 <li><strong>Steps:</strong> 6 steps</li>
 <li><strong>Time:</strong> ~20 min</li>
 <li><strong>Difficulty:</strong> Easy</li>
@@ -282,6 +296,7 @@ One step per box — draw each new part in a different color so kids can see exa
 <p>
 Every age can join in — just adjust the job.
 </p>
+<div class="scroll-cue">↔ Scroll sideways to see the full chart ↔</div>
 <div class="table-wrap"><div class="table-scroll">
 <table class="age-table" style="margin:0 auto;">
 <tr><th>Age</th><th>What they can do</th><th>Tip</th></tr>
@@ -364,7 +379,7 @@ Draw three snowmen side by side — a big one, a medium one, and a tiny one. Giv
 </script>
 
 
-<section class="hub-section">
+<section class="tips-card">
 <h2>💡 Snowman Drawing Tips for Parents</h2>
 <p>The three stacked circles are the foundation — the bottom one biggest, the top one smallest. If your child draws them all the same size, it still reads as a snowman, but the graduated sizes look better. The carrot nose is the detail kids care about most: orange, pointing sideways, right in the middle of the face. Let them color it bright orange — it's the snowman's signature.</p>
 <p>Two things that help with every snowman drawing attempt: <strong>let them pick the colors</strong> (a blue snowman is still a snowman), and <strong>don't fix their drawing</strong>. If they ask for help, draw on a separate piece of paper, not on theirs. Kids who feel ownership of their drawing come back for the next one; kids who feel corrected stop trying. The goal is a snowman they're proud of, not a perfect one.</p>

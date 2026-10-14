@@ -82,6 +82,13 @@ window.addEventListener('load', function() {
 .affiliate-card-btn{display:inline-block;background:#D05A82;color:#fff;font-weight:800;font-size:13px;padding:10px 18px;border-radius:999px}
 .affiliate-disclosure{font-size:12px;color:#999;text-align:center;margin:0}
 
+
+/* Always-visible scroll cue for tables — shows on all devices, not just on touch */
+.scroll-cue{display:flex;align-items:center;justify-content:center;gap:8px;max-width:900px;margin:8px auto 4px;padding:8px 16px;background:#FFF6EC;border:2px solid #f3d9e0;border-radius:999px;font-family:'Nunito',system-ui,sans-serif;font-size:14px;font-weight:800;color:#c03d5b}
+.table-scroll{overflow-x:scroll !important;-webkit-overflow-scrolling:touch;scrollbar-width:auto;scrollbar-color:#D05A82 #f3d9e0}
+.table-scroll::-webkit-scrollbar{height:14px !important;-webkit-appearance:none}
+.table-scroll::-webkit-scrollbar-track{background:#f3d9e0;border-radius:8px;border:1px solid #E89AAA}
+.table-scroll::-webkit-scrollbar-thumb{background:#D05A82;border-radius:8px;border:2px solid #f3d9e0;min-width:60px}
 </style>
 
 <script type="application/ld+json">
@@ -227,7 +234,7 @@ How to Draw a Bee
 <h2>At a Glance</h2>
 <ul>
 <li><strong>Subject:</strong> How to draw a bee</li>
-<li><strong>Ages:</strong> 4+</li>
+<li><strong>Ages:</strong> 3+</li>
 <li><strong>Steps:</strong> 6 steps</li>
 <li><strong>Time:</strong> ~10 min</li>
 <li><strong>Difficulty:</strong> Easy</li>
@@ -288,6 +295,7 @@ One step per box — draw each new part in a different color so kids can see exa
 <p>
 Every age can join in — just adjust the job.
 </p>
+<div class="scroll-cue">↔ Scroll sideways to see the full chart ↔</div>
 <div class="table-wrap"><div class="table-scroll">
 <table class="age-table" style="margin:0 auto;">
 <tr><th>Age</th><th>What they can do</th><th>Tip</th></tr>

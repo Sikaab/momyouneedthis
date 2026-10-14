@@ -59,6 +59,41 @@ window.addEventListener('load', function() {
 .faq-item h3{margin:0;color:#2D1B2E;font-size:16px;font-weight:900}
 .faq-item p{margin:0;color:#5f5758;font-size:15px;line-height:1.7}
 .color-dot{display:inline-block;width:14px;height:14px;border-radius:50%;margin-right:8px;vertical-align:-2px;border:1px solid rgba(0,0,0,.15)}
+
+/* Always-visible scroll cue for tables — shows on all devices, not just on touch */
+.scroll-cue{display:flex;align-items:center;justify-content:center;gap:8px;max-width:900px;margin:8px auto 4px;padding:8px 16px;background:#FFF6EC;border:2px solid #f3d9e0;border-radius:999px;font-family:'Nunito',system-ui,sans-serif;font-size:14px;font-weight:800;color:#c03d5b}
+.table-scroll{overflow-x:scroll !important;-webkit-overflow-scrolling:touch;scrollbar-width:auto;scrollbar-color:#D05A82 #f3d9e0}
+.table-scroll::-webkit-scrollbar{height:14px !important;-webkit-appearance:none}
+.table-scroll::-webkit-scrollbar-track{background:#f3d9e0;border-radius:8px;border:1px solid #E89AAA}
+.table-scroll::-webkit-scrollbar-thumb{background:#D05A82;border-radius:8px;border:2px solid #f3d9e0;min-width:60px}
+
+/* Per-sheet CBN cards — consistent fun styling */
+.key-card{max-width:900px;margin:36px auto;padding:28px 32px;background:#fff;border:3px solid #E89AAA;border-radius:24px;font-family:'Nunito',system-ui,sans-serif;box-shadow:0 4px 16px rgba(208,90,130,.12)}
+.key-card h2{margin:0 0 14px;color:#c03d5b;font-size:22px;font-weight:900}
+.key-card p{color:#5f5758;font-size:16px;line-height:1.75;margin:0 0 16px}
+.key-card p:last-child{margin-bottom:0}
+.key-card strong{color:#2D1B2E}
+.howto-card{max-width:900px;margin:36px auto;padding:28px 32px;background:#fff;border:3px dashed #E89AAA;border-radius:24px;font-family:'Nunito',system-ui,sans-serif;box-shadow:0 4px 16px rgba(208,90,130,.12)}
+.howto-card h2{margin:0 0 14px;color:#c03d5b;font-size:22px;font-weight:900}
+.howto-card p{color:#5f5758;font-size:16px;line-height:1.75;margin:0 0 16px}
+.howto-card ol{color:#5f5758;font-size:16px;line-height:1.75;margin:0 0 16px;padding-left:24px}
+.howto-card li{margin-bottom:10px}
+.howto-card strong{color:#2D1B2E}
+.why-card{max-width:900px;margin:36px auto;padding:28px 32px;background:linear-gradient(135deg,#FFF6EC 0%,#fff 100%);border:3px solid #D05A82;border-radius:24px;font-family:'Nunito',system-ui,sans-serif;box-shadow:0 4px 16px rgba(208,90,130,.15)}
+.why-card h2{margin:0 0 14px;color:#c03d5b;font-size:22px;font-weight:900}
+.why-card p{color:#5f5758;font-size:16px;line-height:1.75;margin:0 0 16px}
+.why-card p:last-child{margin-bottom:0}
+.why-card strong{color:#2D1B2E}
+.intro-card{max-width:900px;margin:36px auto;padding:32px;background:linear-gradient(135deg,#FFF6EC 0%,#fff7f9 100%);border:3px solid #E89AAA;border-radius:24px;font-family:'Nunito',system-ui,sans-serif;box-shadow:0 4px 16px rgba(208,90,130,.12)}
+.intro-card h2{margin:0 0 14px;color:#c03d5b;font-size:24px;font-weight:900}
+.intro-card p{color:#5f5758;font-size:16px;line-height:1.75;margin:0 0 16px}
+.intro-card p:last-child{margin-bottom:0}
+.intro-card strong{color:#2D1B2E}
+.tips-card{max-width:900px;margin:36px auto;padding:28px 32px;background:linear-gradient(135deg,#FFF6EC 0%,#fff7f9 100%);border:3px dashed #E89AAA;border-radius:24px;font-family:'Nunito',system-ui,sans-serif;box-shadow:0 4px 16px rgba(208,90,130,.12)}
+.tips-card h2{margin:0 0 14px;color:#c03d5b;font-size:22px;font-weight:900}
+.tips-card p{color:#5f5758;font-size:16px;line-height:1.75;margin:0 0 14px}
+.tips-card p:last-child{margin-bottom:0}
+.tips-card strong{color:#2D1B2E}
 </style>
 <script type="application/ld+json">
 {
@@ -131,9 +166,10 @@ Free Color-by-Number Printable, Ages 3+
 <a href="assets/printables/ornament-cbn.pdf" class="download-button" download>⬇️ Download Free PDF</a>
 </div>
 
-<section class="hub-section">
+<section class="key-card">
 <h2>🎨 Color Key for This Sheet</h2>
 <p>This sheet uses 3 colors from the shared key. The numbers mean the same thing on every sheet — 1 is always red, 2 is always green, and so on.</p>
+<div class="scroll-cue">↔ Scroll sideways to see the full chart ↔</div>
 <div class="table-wrap"><div class="table-scroll">
 <table class="key-table">
 <tr><th>Number</th><th>Color</th><th>What it colors</th></tr>
@@ -145,7 +181,7 @@ Free Color-by-Number Printable, Ages 3+
 <p>This sheet uses only 3 colors — no green, no orange. The hanging string stays unnumbered.</p>
 </section>
 
-<section class="hub-section">
+<section class="howto-card">
 <h2>🖍️ How to Color This Sheet</h2>
 <ol>
 <li><strong>Set out the crayons.</strong> Only the 3 colors this sheet uses — fewer choices, faster start.</li>
@@ -156,14 +192,14 @@ Free Color-by-Number Printable, Ages 3+
 </section>
 
 
-<section class="hub-section">
+<section class="why-card">
 <h2>🧠 What Kids Learn From This Christmas Ornament Sheet</h2>
 <p>This christmas ornament paint by numbers sheet is more than coloring. Every section asks the child to do three things: <strong>find the number</strong>, <strong>match it to the color key</strong>, and <strong>fill the section</strong>. That find-match-fill loop is the same skill behind early reading (matching letters to sounds) and early math (matching quantities to numerals). Kids practice it dozens of times per sheet without ever feeling like they're doing homework.</p>
 <p>The big sections are deliberate. A 3-year-old's hand control is still developing — small areas mean constant frustration and going over the lines. These sections are large enough that wobbly coloring still stays mostly inside, which means the finished sheet looks like a christmas ornament instead of a scribble. That success is what makes kids want to do another one.</p>
 <p>Saying the numbers and colors out loud while coloring adds a language layer. "That's a 2 — green!" reinforces both number names and color words in context, which sticks better than flashcards because the child is doing something with the information immediately.</p>
 </section>
 
-<section class="hub-section">
+<section class="intro-card">
 <h2>🎨 Make It Your Own</h2>
 <p>The color key is a starting point, not a rule. Once kids have colored the christmas ornament the "right" way, let them do a wild version: a purple christmas ornament, a rainbow christmas ornament, a christmas ornament with polka dots. Free-choice coloring after structured coloring builds creativity — the key teaches the skill, the free version lets them play with it.</p>
 <p>For a longer activity, print two copies: one to color by number, one to color freehand. Comparing the two side by side shows kids how the same picture can look completely different, and it doubles the craft time without needing new supplies.</p>
@@ -191,7 +227,7 @@ Try another sheet — same color key, new picture.
 </section>
 
 
-<section class="hub-section">
+<section class="tips-card">
 <h2>👨‍👩‍👧 A Quiet Activity That Actually Works</h2>
 <p>This christmas ornament paint by numbers sheet is one of those rare activities that holds a preschooler's attention without a screen. The matching game — find the number, pick the color, fill the section — gives just enough structure to keep them going and just enough choice (which section next?) to keep them engaged. Most kids finish a sheet in about 15 minutes, which is the sweet spot: long enough to feel like a real project, short enough to finish before dinner.</p>
 <p>For parents, it's a genuinely low-effort setup. Print the sheet, hand over the crayons, done. No paint to mix, no water cups to spill, no cleanup beyond putting the crayons back. It works at the kitchen table, in a waiting room, on a plane, or at grandma's house — anywhere you can lay a piece of paper flat.</p>
