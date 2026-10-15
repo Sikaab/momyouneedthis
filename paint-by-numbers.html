@@ -58,7 +58,7 @@ window.addEventListener('load', function() {
 .hub-section p{color:#5f5758;font-size:16px;line-height:1.75;margin:0 0 16px}
 .hub-section ul,.hub-section ol{color:#5f5758;font-size:16px;line-height:1.75;margin:0 0 16px;padding-left:24px}
 .hub-section li{margin-bottom:8px}
-.key-table{border-collapse:collapse;width:100%;min-width:420px;font-family:'Nunito',system-ui,sans-serif}
+.key-table{border-collapse:collapse;width:100%;min-width:560px;font-family:'Nunito',system-ui,sans-serif}
 .key-table th,.key-table td{border:2px solid #f3d9e0;padding:12px 14px;text-align:left;font-size:15px}
 .key-table th{background:#FFF6EC;color:#2D1B2E;font-weight:900}
 .key-table td{color:#5f5758}
@@ -92,9 +92,9 @@ window.addEventListener('load', function() {
 /* Always-visible scroll cue for tables — shows on all devices, not just on touch */
 .scroll-cue{display:flex;align-items:center;justify-content:center;gap:8px;max-width:900px;margin:8px auto 4px;padding:8px 16px;background:#FFF6EC;border:2px solid #f3d9e0;border-radius:999px;font-family:'Nunito',system-ui,sans-serif;font-size:14px;font-weight:800;color:#c03d5b}
 .table-scroll{overflow-x:scroll;-webkit-overflow-scrolling:touch;scrollbar-width:auto;scrollbar-color:#D05A82 #f3d9e0}
-.table-scroll::-webkit-scrollbar{height:14px;-webkit-appearance:none}
+.table-scroll::-webkit-scrollbar{height:18px;-webkit-appearance:none}
 .table-scroll::-webkit-scrollbar-track{background:#f3d9e0;border-radius:8px;border:1px solid #E89AAA}
-.table-scroll::-webkit-scrollbar-thumb{background:#D05A82;border-radius:8px;border:2px solid #f3d9e0;min-width:60px}
+.table-scroll::-webkit-scrollbar-thumb{background:#D05A82;border-radius:8px;border:2px solid #f3d9e0;min-width:80px}
 
 /* Why card — brain/learning section with distinct look */
 .why-card{max-width:900px;margin:36px auto;padding:28px 32px;background:linear-gradient(135deg,#FFF6EC 0%,#fff 100%);border:3px solid #D05A82;border-radius:24px;font-family:'Nunito',system-ui,sans-serif;box-shadow:0 4px 16px rgba(208,90,130,.15)}
@@ -102,6 +102,15 @@ window.addEventListener('load', function() {
 .why-card p{color:#5f5758;font-size:16px;line-height:1.75;margin:0 0 16px}
 .why-card p:last-child{margin-bottom:0}
 .why-card strong{color:#2D1B2E}
+
+/* Flow section — highlighted heading, no box */
+.flow-section{max-width:900px;margin:36px auto;padding:0 16px;font-family:'Nunito',system-ui,sans-serif}
+.flow-section h2{display:inline-block;background:#FFE066;padding:3px 12px;border-radius:3px;font-size:24px;font-weight:900;color:#332b2b;margin:0 0 16px;line-height:1.2}
+.flow-section .subtitle{margin:0 0 18px;color:#D05A82;font-size:16px;font-weight:700;font-style:italic}
+.flow-section p{color:#5f5758;font-size:16px;line-height:1.75;margin:0 0 16px}
+.flow-section p:last-child{margin-bottom:0}
+.flow-section strong{color:#2D1B2E}
+
 </style>
 
 <script type="application/ld+json">
@@ -184,7 +193,7 @@ What Are the Easiest Paint by Numbers Printables for Kids?
 </ul>
 </div>
 
-<section class="intro-card">
+<section class="flow-section">
 <h2>🎨 Why Paint by Numbers Works for Little Kids</h2>
 <p class="subtitle">A matching game disguised as a craft — no drawing required, just number + color + scribble.</p>
 <p>Paint by numbers for kids works because it removes the hardest part of coloring — deciding what to draw — and replaces it with the part preschoolers love: a matching game. Each sheet on this page is a simple picture split into big numbered sections. The child finds the number, checks the color key, picks up that crayon, and fills the section. Number, color, scribble, done. The picture reveals itself one section at a time, which is why even a 3-year-old's finished sheet genuinely looks like a snowman or a flower instead of a brown blob.</p>
@@ -196,7 +205,6 @@ What Are the Easiest Paint by Numbers Printables for Kids?
 <section class="hub-section">
 <h2>🎨 The Color Key (Same on Every Sheet)</h2>
 <p>One key for all 8 sheets — kids memorize it once and never re-check a different legend. Match the number in each section to the color below.</p>
-<div class="scroll-cue">↔ Scroll sideways to see the full chart ↔</div>
 <div class="table-wrap"><div class="table-scroll">
 <table class="key-table">
 <tr><th>Number</th><th>Color</th><th>What it colors</th></tr>
@@ -266,7 +274,7 @@ What Are the Easiest Paint by Numbers Printables for Kids?
 </a>
 </div>
 
-<section class="why-card">
+<section class="flow-section">
 <h2>🧠 Why Paint by Numbers Works for Ages 3+</h2>
 <p>Free coloring asks a young child to do three hard things at once: imagine a picture, plan how to make it, and control the crayon. Paint by numbers for kids removes the first two and keeps the fun third. The picture is already there; the child's job is purely to match and fill. That matching is exactly the skill preschoolers are building anyway — numbers 1 to 5, five color names, and the idea that symbols (numbers) stand for things (colors).</p>
 <p>The shared color key matters more than it looks. If every sheet used a different legend, a 3-year-old would have to re-learn the rules on every picture. With 1 always red and 4 always blue, the first sheet teaches the game and sheets two through eight are pure play. It also means siblings can share one set of 5 crayons across different sheets without negotiating.</p>
