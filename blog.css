@@ -281,6 +281,12 @@
     scroll-margin-top: 30px;
 }
 
+.article-section {
+    width: 100%;
+    margin: 0 0 85px;
+    scroll-margin-top: 30px;
+}
+
 .blog-category-header {
     max-width: 720px;
 
@@ -799,6 +805,10 @@
     /* CATEGORIES */
 
     .blog-category {
+        margin-bottom: 65px;
+    }
+
+    .article-section {
         margin-bottom: 65px;
     }
 
