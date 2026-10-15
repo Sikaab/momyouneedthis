@@ -8,8 +8,8 @@
 .supplies p+p,.learning p+p,.variations p+p{margin-top:10px}
 .supplies,.learning,.variations{padding:25px 20px;border-radius:22px}
 
-.related-grid{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
-.related-grid a{display:inline-block;padding:10px 18px;background:#fffaf8;border:1px solid #f0dfe3;border-radius:999px;color:#c03d5b;font-size:15px;font-weight:700;text-decoration:none;transition:background .2s ease,color .2s ease}
+.related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:16px;justify-content:center}
+.related-grid a{display:flex;align-items:center;justify-content:center;text-align:center;padding:12px 18px;background:#fffaf8;border:1px solid #f0dfe3;border-radius:999px;color:#c03d5b;font-size:15px;font-weight:700;text-decoration:none;transition:background .2s ease,color .2s ease}
 .related-grid a:hover,.related-grid a:focus{background:#D05A82;color:#fff;border-color:#D05A82;outline:none}
 
 .flow-section a{color:#D05A82;font-weight:700;text-decoration:underline;text-underline-offset:3px}
