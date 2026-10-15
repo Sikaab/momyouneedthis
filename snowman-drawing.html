@@ -96,6 +96,20 @@ window.addEventListener('load', function() {
 .table-scroll::-webkit-scrollbar{height:18px !important;-webkit-appearance:none}
 .table-scroll::-webkit-scrollbar-track{background:#f3d9e0;border-radius:8px;border:1px solid #E89AAA}
 .table-scroll::-webkit-scrollbar-thumb{background:#D05A82;border-radius:8px;border:2px solid #f3d9e0;min-width:80px}
+
+.seo-section{max-width:900px;margin:55px auto 0;padding:45px 42px 50px;background:#ffffff;border:1px solid #eee5e7;border-radius:35px;box-shadow:0 12px 35px rgba(80,55,55,.06);font-family:'Nunito',system-ui,sans-serif;text-align:left;position:relative;overflow:hidden}
+.seo-section::before{content:"";position:absolute;width:250px;height:250px;top:-145px;right:-90px;background:#ffe5ec;border-radius:50%;opacity:.65;pointer-events:none}
+.seo-section::after{content:"";position:absolute;width:190px;height:190px;bottom:-120px;left:-80px;background:#fff1c9;border-radius:50%;opacity:.55;pointer-events:none}
+.seo-section>*{position:relative;z-index:1}
+.seo-section .section-kicker{display:block;margin-bottom:10px;color:#c03d5b;font-size:11px;font-weight:900;letter-spacing:1px;text-transform:uppercase;text-align:center}
+.seo-section h2{max-width:700px;margin:0 auto 14px;color:#332b2b;font-size:clamp(26px,3.6vw,34px);line-height:1.15;letter-spacing:-.6px;font-weight:900;text-align:center}
+.seo-section h2::after{content:"";display:block;width:45px;height:3px;margin:16px auto 0;background:#e89aaa;border-radius:999px}
+.seo-faq{max-width:720px;margin:0 auto;display:grid;gap:12px}
+.seo-faq-item{padding:20px 22px;background:#fffaf8;border:1px solid #f0dfe3;border-radius:18px}
+.seo-faq-item h3{margin:0 0 8px;color:#332b2b;font-size:16px;line-height:1.4;font-weight:900}
+.seo-faq-item p{margin:0;color:#686061;font-size:14px;line-height:1.7}
+@media(max-width:750px){.seo-section{margin-top:40px;padding:35px 20px 38px;border-radius:28px}.seo-faq-item{padding:18px}}
+
 </style>
 
 <script type="application/ld+json">
@@ -384,40 +398,53 @@ Draw three snowmen side by side — a big one, a medium one, and a tiny one. Giv
 <p>Two things that help with every snowman drawing attempt: <strong>let them pick the colors</strong> (a blue snowman is still a snowman), and <strong>don't fix their drawing</strong>. If they ask for help, draw on a separate piece of paper, not on theirs. Kids who feel ownership of their drawing come back for the next one; kids who feel corrected stop trying. The goal is a snowman they're proud of, not a perfect one.</p>
 </section>
 
-<section class="generator-bottom-cta">
+<section class="seo-section">
+<span class="section-kicker">FAQ</span>
 <h2>
 ❓ Snowman Drawing FAQs
 </h2>
+<div class="seo-faq">
+<div class="seo-faq-item">
 <h3>
 What is the easiest way for a kid to draw a snowman?
 </h3>
 <p>
 Stack three circles from big to small, then add a dot-eye face with a triangle carrot nose. Top it with a hat, wrap on a scarf, add stick arms and buttons. Circles do all the work.
 </p>
+</div>
+<div class="seo-faq-item">
 <h3>
 What age can kids start learning to draw a snowman?
 </h3>
 <p>
 Most kids can follow the stacked-circle method around age 3 with a grown-up helping, and draw one on their own by ages 4 to 5. Younger children can trace the circles on the printable.
 </p>
+</div>
+<div class="seo-faq-item">
 <h3>
 What supplies do we need to draw a snowman?
 </h3>
 <p>
 Just paper and crayons or markers. The free printable PDF lays out all six steps one per box so kids can draw right alongside each step. Orange, red, and black are the key colors.
 </p>
+</div>
+<div class="seo-faq-item">
 <h3>
 Is the snowman drawing printable really free?
 </h3>
 <p>
 Yes — every printable on MomYouNeedThis is 100% free to download and print. No signup, no payment, just tap the download button.
 </p>
+</div>
+<div class="seo-faq-item">
 <h3>
 How do I print the snowman drawing tutorial?
 </h3>
 <p>
 Open the PDF and print at 100% scale (not 'fit to page') so the drawing boxes stay big enough for little hands. The printable is designed to stay large — never shrunk to force a fit.
 </p>
+</div>
+</div>
 </section>
 
 <section class="generator-bottom-cta">

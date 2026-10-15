@@ -53,11 +53,6 @@ window.addEventListener('load', function() {
 .table-scroll::-webkit-scrollbar{height:18px;-webkit-appearance:none}
 .table-scroll::-webkit-scrollbar-track{background:#f3d9e0;border-radius:8px}
 .table-scroll::-webkit-scrollbar-thumb{background:#D05A82;border-radius:8px}
-.faq-block{max-width:900px;margin:36px auto;padding:0 16px;font-family:'Nunito',system-ui,sans-serif}
-.faq-block h2{color:#c03d5b;font-size:22px;font-weight:900;margin:0 0 14px}
-.faq-item{background:#fff;border:2px solid #f3d9e0;border-radius:16px;padding:18px 22px;margin-bottom:12px}
-.faq-item h3{margin:0;color:#2D1B2E;font-size:16px;font-weight:900}
-.faq-item p{margin:0;color:#5f5758;font-size:15px;line-height:1.7}
 .color-dot{display:inline-block;width:14px;height:14px;border-radius:50%;margin-right:8px;vertical-align:-2px;border:1px solid rgba(0,0,0,.15)}
 
 /* Always-visible scroll cue for tables — shows on all devices, not just on touch */
@@ -94,6 +89,20 @@ window.addEventListener('load', function() {
 .tips-card p{color:#5f5758;font-size:16px;line-height:1.75;margin:0 0 14px}
 .tips-card p:last-child{margin-bottom:0}
 .tips-card strong{color:#2D1B2E}
+
+.seo-section{max-width:900px;margin:55px auto 0;padding:45px 42px 50px;background:#ffffff;border:1px solid #eee5e7;border-radius:35px;box-shadow:0 12px 35px rgba(80,55,55,.06);font-family:'Nunito',system-ui,sans-serif;text-align:left;position:relative;overflow:hidden}
+.seo-section::before{content:"";position:absolute;width:250px;height:250px;top:-145px;right:-90px;background:#ffe5ec;border-radius:50%;opacity:.65;pointer-events:none}
+.seo-section::after{content:"";position:absolute;width:190px;height:190px;bottom:-120px;left:-80px;background:#fff1c9;border-radius:50%;opacity:.55;pointer-events:none}
+.seo-section>*{position:relative;z-index:1}
+.seo-section .section-kicker{display:block;margin-bottom:10px;color:#c03d5b;font-size:11px;font-weight:900;letter-spacing:1px;text-transform:uppercase;text-align:center}
+.seo-section h2{max-width:700px;margin:0 auto 14px;color:#332b2b;font-size:clamp(26px,3.6vw,34px);line-height:1.15;letter-spacing:-.6px;font-weight:900;text-align:center}
+.seo-section h2::after{content:"";display:block;width:45px;height:3px;margin:16px auto 0;background:#e89aaa;border-radius:999px}
+.seo-faq{max-width:720px;margin:0 auto;display:grid;gap:12px}
+.seo-faq-item{padding:20px 22px;background:#fffaf8;border:1px solid #f0dfe3;border-radius:18px}
+.seo-faq-item h3{margin:0 0 8px;color:#332b2b;font-size:16px;line-height:1.4;font-weight:900}
+.seo-faq-item p{margin:0;color:#686061;font-size:14px;line-height:1.7}
+@media(max-width:750px){.seo-section{margin-top:40px;padding:35px 20px 38px;border-radius:28px}.seo-faq-item{padding:18px}}
+
 </style>
 <script type="application/ld+json">
 {
@@ -234,19 +243,22 @@ Try another sheet — same color key, new picture.
 <p>If your child finishes fast and wants more, the other sheets on this site use the exact same color key. They already know 1 is red and 4 is blue, so the next sheet starts instantly. That's the advantage of a shared key: every sheet after the first is pure play, no re-learning.</p>
 </section>
 
-<section class="faq-block">
+<section class="seo-section">
+<span class="section-kicker">FAQ</span>
 <h2>❓ Reindeer Paint by Numbers FAQs</h2>
-<div class="faq-item">
+<div class="seo-faq">
+<div class="seo-faq-item">
 <h3>How does the reindeer paint by numbers sheet work?</h3>
 <p>Each section of the reindeer picture has a number. Match the number to the color key (1 = Red, 2 = Green, 4 = Blue, 5 = Orange), pick up that crayon, and color the section. The picture fills itself in — no drawing needed.</p>
 </div>
-<div class="faq-item">
+<div class="seo-faq-item">
 <h3>What age can kids do this reindeer paint by numbers sheet?</h3>
 <p>Ages 3 and up. This sheet uses 4 colors and extra-large numbered sections, so preschoolers can color inside the lines without frustration.</p>
 </div>
-<div class="faq-item">
+<div class="seo-faq-item">
 <h3>Is this reindeer paint by numbers printable free?</h3>
 <p>Yes — completely free, no signup or email required. Download the PDF, print it, and hand your child the crayons.</p>
+</div>
 </div>
 </section>
 
