@@ -63,7 +63,7 @@ window.addEventListener('load', function() {
 .table-wrap{max-width:900px;margin:24px auto}
 .table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
 .table-scroll{scrollbar-width:thin;scrollbar-color:#D05A82 #f3d9e0}
-.table-scroll::-webkit-scrollbar{height:10px;-webkit-appearance:none}
+.table-scroll::-webkit-scrollbar{height:18px;-webkit-appearance:none}
 .table-scroll::-webkit-scrollbar-track{background:#f3d9e0;border-radius:5px}
 .table-scroll::-webkit-scrollbar-thumb{background:#D05A82;border-radius:5px}
 
@@ -86,9 +86,17 @@ window.addEventListener('load', function() {
 /* Always-visible scroll cue for tables — shows on all devices, not just on touch */
 .scroll-cue{display:flex;align-items:center;justify-content:center;gap:8px;max-width:900px;margin:8px auto 4px;padding:8px 16px;background:#FFF6EC;border:2px solid #f3d9e0;border-radius:999px;font-family:'Nunito',system-ui,sans-serif;font-size:14px;font-weight:800;color:#c03d5b}
 .table-scroll{overflow-x:scroll !important;-webkit-overflow-scrolling:touch;scrollbar-width:auto;scrollbar-color:#D05A82 #f3d9e0}
-.table-scroll::-webkit-scrollbar{height:14px !important;-webkit-appearance:none}
+.table-scroll::-webkit-scrollbar{height:18px !important;-webkit-appearance:none}
 .table-scroll::-webkit-scrollbar-track{background:#f3d9e0;border-radius:8px;border:1px solid #E89AAA}
-.table-scroll::-webkit-scrollbar-thumb{background:#D05A82;border-radius:8px;border:2px solid #f3d9e0;min-width:60px}
+.table-scroll::-webkit-scrollbar-thumb{background:#D05A82;border-radius:8px;border:2px solid #f3d9e0;min-width:80px}
+
+/* Flow section — highlighted heading, no box */
+.flow-section{max-width:900px;margin:36px auto;padding:0 16px;font-family:'Nunito',system-ui,sans-serif}
+.flow-section h2{display:inline-block;background:#FFE066;padding:3px 12px;border-radius:3px;font-size:24px;font-weight:900;color:#332b2b;margin:0 0 16px;line-height:1.2}
+.flow-section p{color:#5f5758;font-size:16px;line-height:1.75;margin:0 0 16px}
+.flow-section p:last-child{margin-bottom:0}
+.flow-section strong{color:#2D1B2E}
+
 </style>
 
 <script type="application/ld+json">
@@ -305,7 +313,6 @@ One step per box — draw each new part in a different color so kids can see exa
 <p>
 Every age can join in — just adjust the job.
 </p>
-<div class="scroll-cue">↔ Scroll sideways to see the full chart ↔</div>
 <div class="table-wrap"><div class="table-scroll">
 <table class="age-table" style="margin:0 auto;">
 <tr><th>Age</th><th>What they can do</th><th>Tip</th></tr>
