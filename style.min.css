@@ -7,3 +7,12 @@
 .supplies p,.learning p,.variations p{color:#686061;font-size:15px;line-height:1.7;margin:0}
 .supplies p+p,.learning p+p,.variations p+p{margin-top:10px}
 .supplies,.learning,.variations{padding:25px 20px;border-radius:22px}
+
+.related-grid{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.related-grid a{display:inline-block;padding:10px 18px;background:#fffaf8;border:1px solid #f0dfe3;border-radius:999px;color:#c03d5b;font-size:15px;font-weight:700;text-decoration:none;transition:background .2s ease,color .2s ease}
+.related-grid a:hover,.related-grid a:focus{background:#D05A82;color:#fff;border-color:#D05A82;outline:none}
+
+.flow-section a{color:#D05A82;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.flow-section a:hover{color:#c03d5b}
+.seo-section p a:not(.card-link),.seo-section li a:not(.card-link){color:#D05A82;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.seo-section p a:not(.card-link):hover,.seo-section li a:not(.card-link):hover{color:#c03d5b}
