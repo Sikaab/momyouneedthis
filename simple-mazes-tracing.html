@@ -42,6 +42,23 @@ window.addEventListener('load', function() {
 .flow-section .section-kicker{text-align:left}
 .flow-section .seo-lead{text-align:left;margin-left:0;margin-right:0}
 
+
+.seo-section{max-width:900px;margin:55px auto 0;padding:45px 42px 50px;background:#ffffff;border:1px solid #eee5e7;border-radius:35px;box-shadow:0 12px 35px rgba(80,55,55,.06);font-family:'Nunito',system-ui,sans-serif;text-align:left;position:relative;overflow:hidden}
+.seo-section::before{content:"";position:absolute;width:250px;height:250px;top:-145px;right:-90px;background:#ffe5ec;border-radius:50%;opacity:.65;pointer-events:none}
+.seo-section::after{content:"";position:absolute;width:190px;height:190px;bottom:-120px;left:-80px;background:#fff1c9;border-radius:50%;opacity:.55;pointer-events:none}
+.seo-section>*{position:relative;z-index:1}
+.seo-section .section-kicker{display:block;margin-bottom:10px;color:#c03d5b;font-size:11px;font-weight:900;letter-spacing:1px;text-transform:uppercase;text-align:center}
+.seo-section h2{max-width:700px;margin:0 auto 14px;color:#332b2b;font-size:clamp(26px,3.6vw,34px);line-height:1.15;letter-spacing:-.6px;font-weight:900;text-align:center}
+.seo-section h2::after{content:"";display:block;width:45px;height:3px;margin:16px auto 0;background:#e89aaa;border-radius:999px}
+
+
+.seo-links{list-style:none;margin:10px auto 0;padding:0;max-width:720px;display:grid;gap:10px}
+.seo-links li{padding:16px 18px;background:#fffaf8;border:1px solid #f1e5e7;border-radius:16px;transition:transform .2s ease,box-shadow .2s ease}
+.seo-links li:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(80,55,65,.07)}
+.seo-links a{color:#332b2b;font-size:15px;font-weight:900;text-decoration:none}
+.seo-links a:hover{color:#c33761}
+.seo-links span{display:block;margin-top:4px;color:#6d6d6d;font-size:13px;line-height:1.5}
+
 </style>
 
 <script type="application/ld+json">
@@ -180,36 +197,40 @@ What age is an easy mazes printable for?
 An easy mazes printable is designed for ages 3 to 5. Toddlers can trace with a finger first, while older preschoolers can use a crayon and solve mazes on their own.
 </p>
 </section>
-<section class="generator-bottom-cta">
+<section class="seo-section">
 <h2>
 📚 Keep Exploring
 </h2>
-<p>
-More free path tracing worksheets and maze printables made for little hands and busy parents.
-</p>
-<a href="curve-path-tracing-pages" class="download-button">
-🎁 Back to Path Tracing
-</a>
-<div class="related-grid">
-<a href="circle-path-tracing">
-⭕ Circle Paths
-</a>
-<a href="loop-path-tracing">
-🌀 Loop Paths
-</a>
-<a href="wave-path-tracing">
-🌊 Wave Paths
-</a>
-<a href="road-path-tracing">
-🚗 Road Paths
-</a>
-<a href="animal-path-tracing">
-🐻 Animal Paths
-</a>
-<a href="mixed-path-tracing">
-✏️ Mixed Paths
-</a>
-</div>
+<ul class="seo-links">
+<li>
+<a href="curve-path-tracing-pages">🎁 Back to Path Tracing</a>
+<span>Free printable curve path tracing pages for toddlers.</span>
+</li>
+<li>
+<a href="circle-path-tracing">⭕ Circle Paths</a>
+<span>Free printable circle path tracing worksheet for toddlers.</span>
+</li>
+<li>
+<a href="loop-path-tracing">🌀 Loop Paths</a>
+<span>Free printable loop path tracing worksheet for toddlers.</span>
+</li>
+<li>
+<a href="wave-path-tracing">🌊 Wave Paths</a>
+<span>Free printable wave path tracing worksheet for toddlers.</span>
+</li>
+<li>
+<a href="road-path-tracing">🚗 Road Paths</a>
+<span>Free printable road path tracing worksheet for toddlers.</span>
+</li>
+<li>
+<a href="animal-path-tracing">🐻 Animal Paths</a>
+<span>Free printable animal path tracing worksheet for toddlers.</span>
+</li>
+<li>
+<a href="mixed-path-tracing">✏️ Mixed Paths</a>
+<span>Free printable mixed path tracing worksheet for toddlers.</span>
+</li>
+</ul>
 </section>
 
 </main>
