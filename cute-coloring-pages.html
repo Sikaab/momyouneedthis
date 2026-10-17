@@ -1,6 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+<!-- Google tag (gtag.js) - deferred until page load for performance -->
+<script>
+window.addEventListener('load', function() {
+  var s = document.createElement('script');
+  s.async = true;
+  s.src = 'https://www.googletagmanager.com/gtag/js?id=G-FE48KK6THQ';
+  document.head.appendChild(s);
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-FE48KK6THQ');
+});
+</script>
+
 <meta charset="UTF-8">
 <link rel="canonical" href="https://momyouneedthis.com/cute-coloring-pages">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,52 +26,271 @@
 <meta property="og:url" content="https://momyouneedthis.com/cute-coloring-pages">
 <meta property="og:image" content="https://momyouneedthis.com/assets/coloring/unicorn-1.png">
 <title>Cute Coloring Pages — Free Printables for Kids | MomYouNeedThis</title>
+
 <link rel="stylesheet" href="/style.min.css">
 <link rel="stylesheet" href="/resources.css">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
-<style>
-/* Layout fix: shared CSS has body{display:flex} (row) and no .page wrapper on this page.
-   Force vertical stacking + style header/footer/hero locally. */
-body{flex-direction:column;}
-.site-header{max-width:1100px;width:100%;margin:0 auto;padding:18px 16px 10px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;box-sizing:border-box;}
-.site-header .logo{color:#D05A82;font-size:24px;font-weight:900;text-decoration:none;font-family:'Nunito',system-ui,sans-serif;}
-.site-header nav{font-family:'Nunito',system-ui,sans-serif;font-size:15px;color:#2D1B2E;}
-.site-header nav a{color:#2D1B2E;text-decoration:none;font-weight:700;}
-.site-header nav a:hover{color:#D05A82;}
-.site-footer{max-width:1100px;width:100%;margin:32px auto 0;padding:20px 16px 28px;text-align:center;background:transparent;color:#6d6566;font-size:14px;font-family:'Nunito',system-ui,sans-serif;box-sizing:border-box;}
-.site-footer p{margin:0;}
-.hero{flex-direction:column;align-items:center;text-align:center;}
 
+<style>
+/* MomYouNeedThis SEO design system */
+
+        /* SEO content sections — designed to match the MomYouNeedThis brand. */
+        .seo-section {
+            max-width: 900px;
+            margin: 55px auto 0;
+            padding: 45px 42px 50px;
+            background: #ffffff;
+            border: 1px solid #eee5e7;
+            border-radius: 35px;
+            box-shadow: 0 12px 35px rgba(80, 55, 55, 0.06);
+            font-family: 'Nunito', system-ui, sans-serif;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .seo-section::before {
+            content: "";
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            top: -145px;
+            right: -90px;
+            background: #ffe5ec;
+            border-radius: 50%;
+            opacity: .65;
+            pointer-events: none;
+        }
+
+        .seo-section::after {
+            content: "";
+            position: absolute;
+            width: 190px;
+            height: 190px;
+            bottom: -120px;
+            left: -80px;
+            background: #fff1c9;
+            border-radius: 50%;
+            opacity: .55;
+            pointer-events: none;
+        }
+
+        .seo-section > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .seo-section .section-kicker {
+            display: block;
+            margin-bottom: 10px;
+            color:#c03d5b;
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .seo-section h2 {
+            max-width: 700px;
+            margin: 0 auto 14px;
+            color: #332b2b;
+            font-size: clamp(26px, 3.6vw, 34px);
+            line-height: 1.15;
+            letter-spacing: -.6px;
+            font-weight: 900;
+            text-align: center;
+        }
+
+        .seo-section h2::after {
+            content: "";
+            display: block;
+            width: 45px;
+            height: 3px;
+            margin: 16px auto 0;
+            background: #e89aaa;
+            border-radius: 999px;
+        }
+
+        
+        .seo-links {
+            list-style: none;
+            margin: 10px auto 0;
+            padding: 0;
+            max-width: 720px;
+            display: grid;
+            gap: 10px;
+        }
+
+        .seo-links li {
+            padding: 16px 18px;
+            background: #fffaf8;
+            border: 1px solid #f1e5e7;
+            border-radius: 16px;
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
+
+        .seo-links li:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(80, 55, 65, .07);
+        }
+
+        .seo-links a {
+            color: #332b2b;
+            font-size: 15px;
+            font-weight: 900;
+            text-decoration: none;
+        }
+
+        .seo-links a:hover {
+            color:#c33761;
+        }
+
+        .seo-links span {
+            display: block;
+            margin-top: 4px;
+            color:#6d6d6d;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+
+        .seo-steps {
+            list-style: none;
+            margin: 0 auto;
+            padding: 0;
+            max-width: 720px;
+            display: grid;
+            gap: 12px;
+            counter-reset: seo-step;
+        }
+
+        .seo-steps li {
+            counter-increment: seo-step;
+            position: relative;
+            padding: 18px 20px 18px 70px;
+            background: #fffaf8;
+            border: 1px solid #f1e5e7;
+            border-radius: 18px;
+            color: #5f5758;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .seo-steps li::before {
+            content: counter(seo-step);
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #e89aaa;
+            border-radius: 50%;
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 900;
+        }
+
+        .seo-steps li strong {
+            color: #332b2b;
+        }
+
+
+        .seo-faq {
+            max-width: 720px;
+            margin: 0 auto;
+            display: grid;
+            gap: 12px;
+        }
+
+        .seo-faq-item {
+            padding: 20px 22px;
+            background: #fffaf8;
+            border: 1px solid #f0dfe3;
+            border-radius: 18px;
+        }
+
+        .seo-faq-item h3 {
+            margin: 0 0 8px;
+            color: #332b2b;
+            font-size: 16px;
+            line-height: 1.4;
+            font-weight: 900;
+        }
+
+        .seo-faq-item p {
+            margin: 0;
+            color: #686061;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+@media (max-width: 750px) {
+            .seo-section {
+                margin-top: 40px;
+                padding: 35px 20px 38px;
+                border-radius: 28px;
+            }
+            .seo-steps li {
+                padding: 16px 16px 16px 62px;
+                font-size: 14px;
+            }
+            .seo-steps li::before {
+                left: 16px;
+            }
+            .seo-faq-item {
+                padding: 18px;
+            }
+            .seo-table {
+                font-size: 12px;
+            }
+            .seo-table th,
+            .seo-table td {
+                padding: 9px 8px;
+            }
+            .seo-table thead th {
+                white-space: normal;
+            }
+        }
+
+/* No dots on any list — clean card/chip styling instead */
+.seo-links,.seo-links li{list-style:none !important}
+.seo-links li::marker{display:none !important}
+.seo-links li{list-style-type:none !important}
+.flow-section ul{list-style:none !important;padding-left:0 !important}
+.flow-section ul li{list-style:none !important;position:relative;padding-left:28px}
+.flow-section ul li::marker{display:none !important}
+
+/* Whole-card clickable links — entire card is one link, accessible label */
+
+
+/* Mini gallery — grid of theme previews */
 .mini-gallery{max-width:900px;margin:24px auto;padding:0 16px;font-family:'Nunito',system-ui,sans-serif}
 .mini-gallery h2{margin:0 0 8px;color:#332b2b;font-size:22px;font-weight:900}
 .mini-gallery .gallery-sub{margin:0 0 20px;color:#6d6566;font-size:15px;line-height:1.6}
-.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
 .gallery-item{display:block;background:#fff;border:2px solid #f3d9e0;border-radius:16px;overflow:hidden;text-decoration:none;transition:transform .2s ease,box-shadow .2s ease}
 .gallery-item:hover,.gallery-item:focus{transform:translateY(-3px);box-shadow:0 10px 22px rgba(208,90,130,.18);outline:2px solid #e89aaa;outline-offset:2px}
-.gallery-item img{width:100%;height:180px;object-fit:contain;background:#fff;display:block}
+.gallery-item img{width:100%;height:140px;object-fit:contain;background:#fff;display:block}
 .gallery-item .gallery-label{display:block;padding:10px 8px;text-align:center;color:#c03d5b;font-size:14px;font-weight:900;line-height:1.3}
-@media(max-width:700px){.gallery-grid{grid-template-columns:repeat(2,1fr)}.gallery-item img{height:150px}}
-.seo-section{max-width:900px;margin:55px auto 0;padding:45px 42px 50px;background:#ffffff;border:1px solid #eee5e7;border-radius:35px;box-shadow:0 12px 35px rgba(80,55,55,.06);font-family:'Nunito',system-ui,sans-serif;text-align:left;position:relative;overflow:hidden}
-.seo-section::before{content:"";position:absolute;width:250px;height:250px;top:-145px;right:-90px;background:#ffe5ec;border-radius:50%;opacity:.65;pointer-events:none}
-.seo-section::after{content:"";position:absolute;width:190px;height:190px;bottom:-120px;left:-80px;background:#fff1c9;border-radius:50%;opacity:.55;pointer-events:none}
-.seo-section>*{position:relative;z-index:1}
-.seo-section .section-kicker{display:block;margin-bottom:10px;color:#c03d5b;font-size:11px;font-weight:900;letter-spacing:1px;text-transform:uppercase;text-align:center}
-.seo-section h2{max-width:700px;margin:0 auto 14px;color:#332b2b;font-size:clamp(26px,3.6vw,34px);line-height:1.15;letter-spacing:-.6px;font-weight:900;text-align:center}
-.seo-section h2::after{content:"";display:block;width:45px;height:3px;margin:16px auto 0;background:#e89aaa;border-radius:999px}
-.seo-links{list-style:none;margin:10px auto 0;padding:0;max-width:720px;display:grid;gap:10px}
-.seo-links li{padding:16px 18px;background:#fffaf8;border:1px solid #f1e5e7;border-radius:16px;transition:transform .2s ease,box-shadow .2s ease}
-.seo-links li:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(80,55,65,.07)}
-.seo-links a{color:#332b2b;font-size:15px;font-weight:900;text-decoration:none}
-.seo-links a:hover{color:#c33761}
-.seo-links span{display:block;margin-top:4px;color:#6d6d6d;font-size:13px;line-height:1.5}
-.seo-faq{max-width:720px;margin:0 auto;display:grid;gap:12px}
-.seo-faq-item{padding:20px 22px;background:#fffaf8;border:1px solid #f0dfe3;border-radius:18px}
-.seo-faq-item h3{margin:0 0 8px;color:#332b2b;font-size:16px;line-height:1.4;font-weight:900}
-.seo-faq-item p{margin:0;color:#686061;font-size:14px;line-height:1.7}
-@media(max-width:750px){.seo-section{margin-top:40px;padding:35px 20px 38px;border-radius:28px}.seo-faq-item{padding:18px}}
+@media(max-width:700px){.gallery-grid{grid-template-columns:repeat(2,1fr)}.gallery-item img{height:120px}}
+
+.gallery-item-text{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:140px;background:#FFF6EC}
+.gallery-item-text .gallery-emoji{font-size:48px;line-height:1;margin-bottom:8px}
+@media(max-width:700px){.gallery-item-text{min-height:120px}.gallery-item-text .gallery-emoji{font-size:36px}}
+
+/* Highlighter-marker headings */
+.flow-section h2{display:inline-block;background:#FFE066;padding:3px 12px;border-radius:3px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+
 </style>
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -98,19 +332,52 @@ body{flex-direction:column;}
   ]
 }
 </script>
+
+<style>
+.printable-preview{max-width:420px !important}
+.printable-preview img{height:auto !important;width:auto !important;max-width:100% !important;max-height:550px !important;object-fit:contain;display:block;margin:0 auto}
+.flow-section h2{margin:0 0 16px;color:#332b2b;font-size:24px;font-weight:900;line-height:1.2}
+.flow-section li{margin-bottom:10px}
+.coloring-more{margin:14px 0 0;color:#a0556b;font-size:15px;font-weight:800}
+.print-btn{background:#fff!important;color:#c33761!important;border:2px solid #e89aaa!important;margin-left:10px}
+.print-btn:hover{background:#fdf3f5!important;transform:translateY(-3px)}
+@media(max-width:600px){.print-btn{margin-left:0;margin-top:10px}}
+</style>
 </head>
+
+
 <body>
 
-<header class="site-header">
-<a href="/" class="logo">MomYouNeedThis</a>
-<nav><a href="free-coloring-pages">Coloring Pages</a> · <a href="drawing-tutorials">Drawing Tutorials</a> · <a href="free-printables">Free Printables</a></nav>
+
+<div class="page free-page">
+<main>
+
+
+<header>
+
+<a href="/">
+<img width="300" height="300" src="assets/logo.svg" class="logo" alt="MomYouNeedThis Logo">
+</a>
+
 </header>
 
-<main>
-<section class="hero">
-<h1>🌸 Cute Coloring Pages</h1>
-<p class="hero-sub">Free printables — unicorn, animals, fairy, mermaid, princess, cat. Bold outlines, big spaces, ages 2–6.</p>
-</section>
+
+<section class="resource-page">
+
+
+<span class="free-badge">
+🌸 CUTE COLORING FREE RESOURCE
+</span>
+
+
+<h1>
+🌸 Cute Coloring Pages
+</h1>
+
+
+<p class="intro">
+
+Free printables — unicorn, animals, fairy, mermaid, princess, cat. Bold outlines, big spaces, ages 2–6.</p>
 
 <section class="quick-answer">
 <h2>Quick Answer</h2>
@@ -232,10 +499,68 @@ body{flex-direction:column;}
 </div>
 </div>
 </section>
-</main>
 
-<footer class="site-footer">
-<p>© MomYouNeedThis — Free printables, apps &amp; tools for moms.</p>
+
+</section>
+
+
+</main>
+<footer>
+    <div class="footer-logo">
+        <img width="300" height="300"
+            src="assets/logo.svg"
+            alt="MomYouNeedThis"
+        >
+    </div>
+<h3>
+    MomYouNeedThis
+</h3>
+<p>
+    Mom finds, smart tools, free resources, real answers
+    and a little chaos from the Mom Universe.
+</p>
+<div class="footer-links">
+    <a href="mom-favorites">
+        Mom Battles
+    </a>
+    <a href="mom-lab">
+        Mom Lab
+    </a>
+    <a href="free-mom-resources">
+        Free Resources
+    </a>
+    <a href="about">
+        About
+    </a>
+    <a href="privacy-policy">
+        Privacy Policy
+    </a>
+    <a href="terms">
+        Terms of Use
+    </a>
+    <a href="affiliate-disclosure">
+        Affiliate Disclosure
+    </a>
+    <a href="disclaimer">
+        Disclaimer
+    </a>
+    <a href="contact">
+        Contact
+    </a>
+</div>
+<div class="footer-bottom">
+    <p>
+        © 2026 MomYouNeedThis. All rights reserved.
+    </p>
+    <!-- Affiliate disclosure: restore the Amazon Associates earnings line here once approved for the program. -->
+</div>
 </footer>
+
+
+</div>
+
+
 </body>
+
+
 </html>
