@@ -119,6 +119,31 @@
     .px span {
       font-size: 16px;
     }
+
+    /* Reflow fix: tighten vertical spacing outside the grid (grid and
+       artwork unchanged) so the complete parent key and footer fit
+       on page 1 instead of spilling the last line to page 2. */
+    .printable-header {
+      padding: 20px 40px 14px;
+    }
+
+    .printable-content {
+      padding: 18px 40px 12px;
+      gap: 12px;
+    }
+
+    .activity-instructions {
+      padding: 10px 20px;
+    }
+
+    .parent-key {
+      font-size: 14px;
+      line-height: 1.35;
+    }
+
+    .printable-footer {
+      padding: 10px 40px 12px;
+    }
   }
 </style>
 </head>
@@ -158,7 +183,7 @@
     0 = empty, 1 = black, 2 = purple, 3 = white.
   */
   const batRows = [
-    [0, 0, 0, 0, 0, 0, 1, 1, 1],
+    [0, 0, 0, 0, 0, 0, 1, 0, 0],
     [0, 0, 0, 0, 0, 2, 1, 1, 1],
     [0, 0, 0, 2, 2, 2, 1, 1, 1],
     [0, 0, 2, 2, 2, 2, 1, 3, 1],
