@@ -21,18 +21,23 @@
     background: #fff;
     border: 3px solid #f8bbd0;
     border-radius: 18px;
-    padding: 10px 18px;
+    padding: 12px 18px;
     box-shadow: 0 2px 6px rgba(236,64,122,0.10);
   }
-  .trace-row .end-emoji { font-size: 72px; line-height: 1; flex-shrink: 0; }
-  .trace-row svg { flex: 1; height: 110px; }
+  .trace-row .end-emoji { font-size: 86px; line-height: 1; flex-shrink: 0; }
+  .trace-row svg { flex: 1; height: 115px; }
   .trace-label {
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 800;
     color: #ad1457;
     text-align: center;
-    margin-bottom: -8px;
+    margin-bottom: -2px;
   }
+  .printable-content { gap: 8px; padding: 20px 40px 10px; }
+  .printable-header { padding: 20px 40px 14px; }
+  .printable-footer { padding: 8px 40px 8px; }
+  .activity-instructions { padding: 10px 20px; }
+  .parent-key { font-size: 13px; line-height: 1.35; }
 </style>
 </head>
 <body>
@@ -57,20 +62,20 @@
 
     <div class="trace-label">Loopy line — round and round!</div>
     <div class="trace-row">
-      <span class="end-emoji">👻</span>
+      <span class="end-emoji">🎃</span>
       <svg viewBox="0 0 700 110" preserveAspectRatio="none">
-        <path d="M10,55 C60,55 60,10 110,10 C160,10 160,55 210,55 C260,55 260,100 310,100 C360,100 360,55 410,55 C460,55 460,10 510,10 C560,10 560,55 610,55 C650,55 660,55 690,55" stroke="#c9a0b4" stroke-width="6" stroke-dasharray="0.5 16" stroke-linecap="round" fill="none"/>
+        <path d="M10,88 L120,88 C 102,64 118,12 148,12 C 178,12 194,64 120,88 L320,88 C 302,64 318,12 348,12 C 378,12 394,64 320,88 L520,88 C 502,64 518,12 548,12 C 578,12 594,64 520,88 L690,88" stroke="#c9a0b4" stroke-width="6" stroke-dasharray="0.5 16" stroke-linecap="round" fill="none"/>
       </svg>
-      <span class="end-emoji">🍬</span>
+      <span class="end-emoji">🎃</span>
     </div>
 
     <div class="trace-label">Zigzag line — zip zap zoom!</div>
     <div class="trace-row">
-      <span class="end-emoji">🦇</span>
+      <span class="end-emoji">🎃</span>
       <svg viewBox="0 0 700 110" preserveAspectRatio="none">
         <path d="M10,90 L80,20 L150,90 L220,20 L290,90 L360,20 L430,90 L500,20 L570,90 L640,20 L690,60" stroke="#c9a0b4" stroke-width="6" stroke-dasharray="0.5 16" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
       </svg>
-      <span class="end-emoji">🌙</span>
+      <span class="end-emoji">🎃</span>
     </div>
 
     <div class="trace-label">Big curves — like a pumpkin's round belly!</div>
@@ -92,3 +97,4 @@
 </div>
 </body>
 </html>
+
