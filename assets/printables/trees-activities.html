@@ -38,7 +38,58 @@ body { font-family: 'Nunito', 'Comic Sans MS', 'Chalkboard SE', sans-serif; back
 .dot { width: 15px; height: 15px; border-radius: 50%; background: #f48fb1; border: 2px solid #f48fb1; box-shadow: inset 0 0 0 3px #fff; }
 @media print { body { background: #fff; padding: 0; } .printable-page { border-radius: 0; } }
 </style>
-</head>
+<style id="t3-refit">
+/* t3-overflow-refits-b — print refit: layout only (print sizing/spacing) so this one-page activity fits a single US Letter page with its footer. No content, wording, items or artwork changed. */
+@media print{
+.printable-page{width:100% !important;min-height:auto !important;padding:26px 44px 16px !important}
+.printable-title{font-size:38px !important;margin:4px 0 2px !important}
+.printable-kicker{font-size:17px !important}
+.printable-subtitle{font-size:19px !important}
+.printable-divider{margin:10px 0 12px !important}
+.activity-instructions{padding:10px 18px !important;font-size:18px !important;margin-bottom:12px !important;line-height:1.35 !important}
+.parent-key{margin-top:10px !important}
+.printable-footer{margin-top:12px !important;padding-top:8px !important}
+.printable-brand{font-size:22px !important}
+.printable-tagline{font-size:14px !important}
+.match-row{margin-bottom:8px !important}
+}
+@media print{
+.match-card{padding:6px 8px 7px !important}
+.match-card .big{font-size:40px !important;line-height:1.1 !important}
+.step-card{padding:14px 12px 12px !important}
+.step-card .big{font-size:60px !important}
+.num-circle{width:54px !important;height:54px !important;margin-top:8px !important}
+.tree-card svg{width:92px !important;height:108px !important}
+.tree-card{padding:4px 8px 6px !important}
+.season-card{padding:8px !important}
+.season-card .big{font-size:44px !important;line-height:1.1 !important}
+.flower-svg{width:280px !important}
+.flower-wrap{padding:12px 18px !important}
+.word-card{padding:10px !important;font-size:22px !important}
+.activity-instructions{margin-top:10px !important}
+.choice-card{padding:10px 8px !important}
+}
+@media print{
+.tree-card svg{width:84px !important;height:92px !important}
+.tree-card{padding:3px 8px 4px !important}
+.season-card{padding:6px 8px !important;font-size:23px !important}
+.season-card .big{font-size:38px !important;line-height:1.08 !important}
+.match-row{margin-bottom:6px !important}
+}
+@media print{
+.printable-page{padding:18px 40px 12px !important}
+.printable-title{font-size:34px !important}
+.printable-kicker{font-size:15px !important}
+.printable-subtitle{font-size:17px !important}
+.printable-divider{margin:8px 0 10px !important}
+.activity-instructions{padding:8px 14px !important;font-size:16.5px !important}
+.parent-key{font-size:13.5px !important;margin-top:8px !important}
+.printable-brand{font-size:20px !important}
+.printable-tagline{font-size:13px !important}
+.printable-footer{margin-top:10px !important}
+}
+@media print{ .printable-page{zoom:.94 !important} }
+</style></head>
 <body>
 <div class="printable-page">
   <div class="printable-header">
