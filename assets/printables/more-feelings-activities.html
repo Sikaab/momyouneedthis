@@ -20,9 +20,9 @@
   }
   .match-col {
     display: flex; flex-direction: column; justify-content: space-around;
-    gap: 10px; width: 280px;
+    gap: 10px; width: 230px;
   }
-  .match-item {
+  .match-item { position: relative;
     background: #fff; border: 2.5px solid #f8bbd0; border-radius: 16px;
     padding: 6px 18px; display: flex; align-items: center; gap: 16px; min-height: 80px;
   }
@@ -30,11 +30,8 @@
   .match-emoji { font-size: 50px; line-height: 1; flex-shrink: 0; }
   .match-word { font-size: 24px; font-weight: 900; color: #4a2c3a; }
   .match-hint { font-size: 13px; font-weight: 700; color: #b08a9a; }
-  .match-divider {
-    width: 3px; margin: 10px 8px; align-self: stretch;
-    background: repeating-linear-gradient(to bottom, #f48fb1 0 8px, transparent 8px 16px);
-    border-radius: 2px;
-  }
+  .match-col:first-of-type .match-item::after { content:''; position:absolute; right:-10px; top:50%; transform:translateY(-50%); width:18px; height:18px; background:#ec407a; border-radius:50%; border:3px solid #fff; box-shadow:0 0 0 2px #f8bbd0; z-index:2; }
+  .match-col:last-of-type .match-item::before { content:''; position:absolute; left:-10px; top:50%; transform:translateY(-50%); width:18px; height:18px; background:#fff; border:4px solid #ec407a; border-radius:50%; z-index:2; }
 </style>
 </head>
 <body>
@@ -60,7 +57,6 @@
         <div class="match-item"><span class="match-emoji">😲</span><span class="match-hint">This face is…?</span></div>
         <div class="match-item"><span class="match-emoji">🥰</span><span class="match-hint">This face is…?</span></div>
       </div>
-      <div class="match-divider"></div>
       <div class="match-col">
         <div class="match-item word"><span class="match-word">Loved</span></div>
         <div class="match-item word"><span class="match-word">Scared</span></div>
