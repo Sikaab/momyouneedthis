@@ -16,12 +16,12 @@
 <style>
   @page { size: letter; margin: 0.5in; }
   .printable-page { max-width: 7.5in; margin: 0 auto; }
-  .act-row { display:flex; gap:14px; justify-content:center; align-items:center; flex-wrap:wrap; margin:14px 0; }
+  .act-row { display:flex; gap:14px; justify-content:center; align-items:center; flex-wrap:wrap; margin:6px 0; }
   .trace-card { background:#fff; border:3px solid #f8bbd0; border-radius:22px; padding:18px; text-align:center; flex:1; min-width:180px; }
   .trace-num { font-size:120px; font-weight:900; color:#fff; -webkit-text-stroke:3px #d6336c; line-height:1; font-family:'Nunito',sans-serif; }
-  .find-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; background:#fff; border:3px solid #f8bbd0; border-radius:22px; padding:18px; }
+  .find-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; background:#fff; border:3px solid #f8bbd0; border-radius:22px; padding:10px; }
   .find-grid.g3 { grid-template-columns:repeat(3,1fr); }
-  .find-cell { background:#fffdf9; border:2px solid #f3d9e2; border-radius:16px; padding:10px; display:flex; align-items:center; justify-content:center; min-height:110px; }
+  .find-cell { background:#fffdf9; border:2px solid #f3d9e2; border-radius:16px; padding:6px; display:flex; align-items:center; justify-content:center; min-height:76px; }
   .find-cell svg { width:84px; height:84px; }
   .big-shape-row { display:flex; gap:18px; justify-content:center; margin:16px 0; flex-wrap:wrap; }
   .count-blank { display:inline-block; min-width:70px; border-bottom:4px dotted #d6336c; }
@@ -29,19 +29,19 @@
   .ex-card { background:#fff; border:2px solid #f3d9e2; border-radius:16px; padding:10px 18px; text-align:center; min-width:110px; }
   .ex-emoji { font-size:36px; display:block; }
   .ex-label { font-size:14px; font-weight:800; color:#6d3b52; }
-  .sec-title { text-align:center; font-size:21px; font-weight:900; color:#4a2c3a; margin:18px 0 8px; }
-  .parent-tip { background:#fff8e1; border:2px dashed #ffd54f; border-radius:16px; padding:12px 18px; font-size:15px; font-weight:700; color:#7a5c00; margin:14px 0; }
+  .sec-title { text-align:center; font-size:20px; font-weight:900; color:#4a2c3a; margin:9px 0 5px; }
+  .parent-tip { background:#fff8e1; border:2px dashed #ffd54f; border-radius:16px; padding:8px 14px; font-size:14px; font-weight:700; color:#7a5c00; margin:8px 0; }
   .pattern-row { display:flex; gap:8px; justify-content:center; align-items:center; margin:10px 0; flex-wrap:wrap; }
   .pattern-row svg { width:64px; height:64px; }
   .pattern-q { font-size:44px; font-weight:900; color:#d6336c; }
-  .match-row { display:flex; gap:10px; align-items:center; justify-content:center; margin:10px 0; }
+  .match-row { display:flex; gap:10px; align-items:center; justify-content:center; margin:5px 0; }
   .match-label { font-size:19px; font-weight:900; color:#4a2c3a; background:#fff; border:2.5px solid #f8bbd0; border-radius:14px; padding:8px 18px; min-width:170px; text-align:center; }
   .vs-badge { font-size:26px; font-weight:900; color:#fff; background:#d6336c; border-radius:50%; width:52px; height:52px; display:flex; align-items:center; justify-content:center; }
   .brand-footer { text-align:center; margin-top:22px; padding-top:14px; border-top:2px solid #f8bbd0; }
   .brand-footer .bf-name { font-size:17px; font-weight:900; color:#d6336c; letter-spacing:1px; }
   .brand-footer .bf-tag { font-size:12.5px; font-weight:700; color:#a08a96; }
-</style>
-</head>
+.mdot{width:16px;height:16px;border-radius:50%;background:#d6336c;flex:0 0 auto;}</style>
+<style>@media print{body{padding:0;background:#fff}.printable-page{box-shadow:none;min-height:0!important}}</style></head>
 <body>
 <div class="printable-page">
   <div class="printable-header">
@@ -54,15 +54,8 @@
     <div class="activity-instructions">🔷 <strong>Draw a line matching each flat (2D) shape to its solid (3D) partner!</strong> 2D is flat like paper — 3D is solid like a real object you can hold.</div>
     <div class="parent-tip">👩‍👧 <strong>Parent tip:</strong> Hold a real ball next to a drawn circle while doing this. Feeling “flat like paper” versus “solid like a ball” makes the 2D/3D difference click instantly.</div>
 <div class="sec-title">✏️ Match the flat shape to its solid partner!</div>
-    <div class="match-row"><div class="match-label">○ Circle (flat)</div><div class="vs-badge">?</div><div class="match-label">⚽ Sphere (solid)</div></div>
-    <div class="match-row"><div class="match-label">◼️ Square (flat)</div><div class="vs-badge">?</div><div class="match-label">🎲 Cube (solid)</div></div>
-    <div class="match-row"><div class="match-label">🔺 Triangle (flat)</div><div class="vs-badge">?</div><div class="match-label">🔺 Pyramid (solid)</div></div>
-    <div class="sec-title">🤲 Sort: FLAT like paper or SOLID like a ball?</div>
-    <div class="act-row">
-      <div class="trace-card"><div class="sec-title" style="margin-top:0;">📄 FLAT (2D)</div><svg viewBox="0 0 100 100" style="width:80px;height:80px"><circle cx="50" cy="50" r="38" fill="#ffffff" stroke="#d6336c" stroke-width="4"/></svg><svg viewBox="0 0 100 100" style="width:80px;height:80px"><rect x="18" y="18" width="64" height="64" rx="10" fill="#ffffff" stroke="#d6336c" stroke-width="4"/></svg></div>
-      <div class="trace-card"><div class="sec-title" style="margin-top:0;">⚽ SOLID (3D)</div><svg viewBox="0 0 100 100" style="width:80px;height:80px"><circle cx="50" cy="50" r="36" fill="#ef5350" stroke="#d6336c" stroke-width="4"/><ellipse cx="37" cy="36" rx="12" ry="7" fill="#ffffff" opacity="0.75" transform="rotate(-25 37 36)"/></svg><svg viewBox="0 0 100 100" style="width:80px;height:80px"><polygon points="18,40 50,28 50,72 18,84" fill="#ec407a" stroke="#d6336c" stroke-width="4" stroke-linejoin="round"/><polygon points="50,28 82,40 82,84 50,72" fill="#ec407a" stroke="#d6336c" stroke-width="4" stroke-linejoin="round"/><polygon points="18,40 50,52 82,40 50,28" fill="#ec407a" stroke="#d6336c" stroke-width="4" stroke-linejoin="round"/></svg></div>
-    </div>
-    <div class="parent-tip">🤲 <strong>Touch test:</strong> Give your child a paper circle and a ball. Ask “which one can you pick up and turn all around?” — that is the 3D one!</div>
+    <div class="match-row" style="justify-content:space-between;"><div style="display:flex;align-items:center;gap:10px;"><div class="match-label">○ Circle (flat)</div><span class="mdot"></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="mdot"></span><div class="match-label">🎲 Cube (solid)</div></div></div><div class="match-row" style="justify-content:space-between;"><div style="display:flex;align-items:center;gap:10px;"><div class="match-label">◼️ Square (flat)</div><span class="mdot"></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="mdot"></span><div class="match-label">⚽ Sphere (solid)</div></div></div><div class="match-row" style="justify-content:space-between;"><div style="display:flex;align-items:center;gap:10px;"><div class="match-label">🔺 Triangle (flat)</div><span class="mdot"></span></div><div style="display:flex;align-items:center;gap:10px;"><span class="mdot"></span><div class="match-label">🔺 Pyramid (solid)</div></div></div><div class="sec-title">🤲 Sort: FLAT like paper or SOLID like a ball?</div>
+    <div class="act-row"><div class="trace-card"><div class="sec-title" style="margin-top:0;">📄 FLAT (2D)</div><div style="min-height:76px;border:3px dashed #f8bbd0;border-radius:14px;display:flex;align-items:center;justify-content:center;color:#a58493;font-weight:800;font-size:14px;">glue flat shapes here</div></div><div class="trace-card"><div class="sec-title" style="margin-top:0;">⚽ SOLID (3D)</div><div style="min-height:76px;border:3px dashed #f8bbd0;border-radius:14px;display:flex;align-items:center;justify-content:center;color:#a58493;font-weight:800;font-size:14px;">glue solid shapes here</div></div></div><div class="sec-title">✂️ Cut out these mixed-up shapes and sort them!</div><div class="find-grid g3"><div class="find-cell" style="border-style:dashed;"><svg viewBox="0 0 100 100" style="width:56px;height:56px"><circle cx="50" cy="50" r="36" fill="#ef5350" stroke="#d6336c" stroke-width="4"/><ellipse cx="37" cy="36" rx="12" ry="7" fill="#ffffff" opacity="0.75" transform="rotate(-25 37 36)"/></svg></div><div class="find-cell" style="border-style:dashed;"><svg viewBox="0 0 100 100" style="width:56px;height:56px"><rect x="18" y="18" width="64" height="64" rx="10" fill="#ffffff" stroke="#d6336c" stroke-width="4"/></svg></div><div class="find-cell" style="border-style:dashed;"><svg viewBox="0 0 100 100" style="width:56px;height:56px"><polygon points="18,40 50,28 50,72 18,84" fill="#ec407a" stroke="#d6336c" stroke-width="4" stroke-linejoin="round"/><polygon points="50,28 82,40 82,84 50,72" fill="#ec407a" stroke="#d6336c" stroke-width="4" stroke-linejoin="round"/><polygon points="18,40 50,52 82,40 50,28" fill="#ec407a" stroke="#d6336c" stroke-width="4" stroke-linejoin="round"/></svg></div><div class="find-cell" style="border-style:dashed;"><svg viewBox="0 0 100 100" style="width:56px;height:56px"><circle cx="50" cy="50" r="38" fill="#ffffff" stroke="#d6336c" stroke-width="4"/></svg></div><div class="find-cell" style="border-style:dashed;"><svg viewBox="0 0 100 100" style="width:56px;height:56px"><polygon points="50,6 84,78 16,78" fill="#ffb300" stroke="#d6336c" stroke-width="4" stroke-linejoin="round"/><polygon points="16,78 84,78 70,90 30,90" fill="#ffb300" stroke="#d6336c" stroke-width="4" stroke-linejoin="round"/></svg></div><div class="find-cell" style="border-style:dashed;"><svg viewBox="0 0 100 100" style="width:56px;height:56px"><polygon points="50,14 86,82 14,82" fill="#ffffff" stroke="#d6336c" stroke-width="4" stroke-linejoin="round"/></svg></div></div><div class="parent-tip">🤲 <strong>Touch test:</strong> Give your child a paper circle and a ball. Ask “which one can you pick up and turn all around?” — that is the 3D one!</div>
   </div>
   <div class="brand-footer">
     <div class="bf-name">momyouneedthis</div>
