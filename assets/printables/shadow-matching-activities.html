@@ -16,12 +16,14 @@
 <style>
 
   .match-wrap { display:flex; gap:8px; align-items:stretch; }
-  .match-col { flex:1; display:flex; flex-direction:column; gap:14px; }
-  .match-mid { width:120px; }
-  .m-cell { background:#fff; border:2.5px solid #f8bbd0; border-radius:18px; padding:10px; text-align:center; }
+  .match-col:first-child .m-cell::after { content:''; position:absolute; right:-14px; top:50%; transform:translateY(-50%); width:16px; height:16px; background:#ec407a; border:3px solid #fff; box-shadow:0 0 0 2px #f8bbd0; border-radius:50%; z-index:2; }
+  .match-col:last-child .m-cell::before { content:''; position:absolute; left:-14px; top:50%; transform:translateY(-50%); width:16px; height:16px; background:#ec407a; border:3px solid #fff; box-shadow:0 0 0 2px #f8bbd0; border-radius:50%; z-index:2; }
+  .match-col { flex:1; display:flex; flex-direction:column; gap:10px; }
+  .match-mid { width:240px; }
+  .m-cell { background:#fff; border:2.5px solid #f8bbd0; border-radius:18px; padding:8px; text-align:center; position:relative; }
   .m-cell:nth-child(odd) { transform:rotate(-1deg); }
   .m-cell:nth-child(even) { transform:rotate(1deg); }
-  .m-art { width:96px; height:96px; margin:0 auto; }
+  .m-art { width:74px; height:74px; margin:0 auto; }
   .m-cap { font-size:14px; font-weight:800; color:#6d3b52; margin-top:4px; }
 
   .star-line { text-align:center; font-size:19px; font-weight:800; color:#6d3b52; margin-top:6px; }
@@ -75,7 +77,7 @@
   <div class="match-mid"></div>
   <div class="match-col"><div class="m-cell"><div class="m-art"><svg viewBox="0 0 100 100" style="width:100%;height:100%"><circle cx="50" cy="46" r="25" fill="#5b5b66"/><polygon points="72,42 90,48 72,55" fill="#5b5b66"/><path d="M42 74 L39 92 M58 74 L61 92" stroke="#5b5b66" stroke-width="5" stroke-linecap="round"/></svg></div><div class="m-cap">?</div></div>
 <div class="m-cell"><div class="m-art"><svg viewBox="0 0 100 100" style="width:100%;height:100%"><ellipse cx="36" cy="20" rx="9" ry="21" fill="#5b5b66"/><ellipse cx="64" cy="20" rx="9" ry="21" fill="#5b5b66"/><circle cx="50" cy="62" r="27" fill="#5b5b66"/></svg></div><div class="m-cap">?</div></div>
-<div class="m-cell"><div class="m-art"><svg viewBox="0 0 100 100" style="width:100%;height:100%"><path d="M32 92 Q30 55 36 42 L27 12 L44 26 Q50 24 56 26 L73 12 L64 42 Q70 55 68 92 Z" fill="#5b5b66"/></svg></div><div class="m-cap">?</div></div>
+<div class="m-cell"><div class="m-art"><svg viewBox="0 0 100 100" style="width:100%;height:100%"><polygon points="30,36 22,10 42,24" fill="#5b5b66"/><polygon points="70,36 78,10 58,24" fill="#5b5b66"/><circle cx="50" cy="56" r="30" fill="#5b5b66"/></svg></div><div class="m-cap">?</div></div>
 <div class="m-cell"><div class="m-art"><svg viewBox="0 0 100 100" style="width:100%;height:100%"><ellipse cx="27" cy="34" rx="10" ry="17" fill="#5b5b66"/><ellipse cx="73" cy="34" rx="10" ry="17" fill="#5b5b66"/><circle cx="50" cy="58" r="27" fill="#5b5b66"/></svg></div><div class="m-cap">?</div></div>
 <div class="m-cell"><div class="m-art"><svg viewBox="0 0 100 100" style="width:100%;height:100%"><polygon points="64,50 92,28 92,72" fill="#5b5b66"/><ellipse cx="40" cy="50" rx="27" ry="20" fill="#5b5b66"/></svg></div><div class="m-cap">?</div></div></div>
 </div>
