@@ -33,7 +33,6 @@
     position: relative;
     padding: 10px 0;
   }
-  .match-row + .match-row { border-top: 2px dashed #f3d9e2; }
   .letter-chip {
     width: 92px; height: 92px;
     background: linear-gradient(160deg, #fce4ec, #f8bbd0);
@@ -43,13 +42,10 @@
     box-shadow: 0 3px 0 #e8a0bf;
     z-index: 2;
   }
-  .match-dots {
-    flex: 1;
-    border-bottom: 4px dotted #d7b9c6;
-    margin: 0 18px;
-    height: 1px;
-    align-self: center;
-  }
+  .letter-chip{position:relative}
+  .letter-chip::after{content:'';position:absolute;right:-10px;top:50%;transform:translateY(-50%);width:18px;height:18px;border-radius:50%;background:#d81b60;border:3px solid #fff;box-shadow:0 0 0 2px #d81b60;z-index:3}
+  .pic-chip{position:relative}
+  .pic-chip::before{content:'';position:absolute;left:-10px;top:50%;transform:translateY(-50%);width:18px;height:18px;border-radius:50%;background:#d81b60;border:3px solid #fff;box-shadow:0 0 0 2px #d81b60;z-index:3}
   .pic-chip {
     width: 92px; height: 92px;
     background: #fffdf9;
@@ -84,22 +80,18 @@
     <div class="match-board">
       <div class="match-row">
         <div class="letter-chip">A</div>
-        <div class="match-dots"></div>
         <div class="pic-chip"><span class="emoji">🐱</span><span class="word">cat</span></div>
       </div>
       <div class="match-row">
         <div class="letter-chip">B</div>
-        <div class="match-dots"></div>
         <div class="pic-chip"><span class="emoji">🐶</span><span class="word">dog</span></div>
       </div>
       <div class="match-row">
         <div class="letter-chip">C</div>
-        <div class="match-dots"></div>
         <div class="pic-chip"><span class="emoji">🍎</span><span class="word">apple</span></div>
       </div>
       <div class="match-row">
         <div class="letter-chip">D</div>
-        <div class="match-dots"></div>
         <div class="pic-chip"><span class="emoji">🐝</span><span class="word">bee</span></div>
       </div>
     </div>

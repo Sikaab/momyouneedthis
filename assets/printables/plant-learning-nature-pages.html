@@ -15,13 +15,10 @@
 <link rel="stylesheet" href="/assets/printables/printable.css">
 <style>
 
-  .plant-wrap { display:flex; gap:10px; align-items:center; background:#fff; border:2.5px solid #f8bbd0; border-radius:20px; padding:18px 24px; }
+  .plant-wrap { display:flex; gap:0; align-items:center; justify-content:center; background:#fff; border:2.5px solid #f8bbd0; border-radius:20px; padding:18px 24px; }
   .plant-art { width:300px; height:330px; flex-shrink:0; }
-  .plant-labels { flex:1; display:flex; flex-direction:column; gap:26px; }
-  .pl-row { display:flex; align-items:center; gap:10px; }
-  .pl-dot { width:22px; height:22px; border-radius:50%; flex-shrink:0; border:2px solid rgba(0,0,0,0.15); }
-  .pl-line { flex:1; border-top:4px dotted #ec407a; }
-  .pl-target { width:120px; height:52px; border:3px dashed #c9a2b2; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:24px; font-weight:900; color:#c9a2b2; background:#fffdf9; }
+  .plant-diagram { position:relative; width:688px; height:330px; flex-shrink:0; }
+  .pl-box { position:absolute; width:170px; height:52px; border:3px dashed #c9a2b2; border-radius:12px; background:#fffdf9; }
   .wordbank-title { text-align:center; font-size:14px; font-weight:900; color:#ad1457; letter-spacing:2px; }
   .wordbank { display:flex; gap:14px; justify-content:center; }
   .wb-word { background:#fef6f9; border:3px solid #ec407a; color:#ad1457; font-weight:900; font-size:20px; letter-spacing:2px; border-radius:14px; padding:12px 24px; }
@@ -42,18 +39,27 @@
   <div class="printable-content">
     <div class="activity-instructions">&#x1F33B; Look at the big plant! <strong>Draw a line</strong> from each word in the word bank to the part of the plant it names. Then color the plant!</div>
 <div class="plant-wrap">
-  <div class="plant-art"><svg viewBox="0 0 100 110" style="width:100%;height:100%"><path d="M50 88 L50 46" stroke="#43a047" stroke-width="7" stroke-linecap="round"/>
-<path d="M50 66 Q30 62 24 46 Q42 46 50 58" fill="#66bb6a" stroke="#2e7d32" stroke-width="3" stroke-linejoin="round"/>
-<path d="M50 74 Q70 70 76 54 Q58 54 50 66" fill="#66bb6a" stroke="#2e7d32" stroke-width="3" stroke-linejoin="round"/>
-<g><circle cx="50" cy="22" r="8" fill="#f48fb1"/><circle cx="62" cy="31" r="8" fill="#f48fb1"/><circle cx="57" cy="45" r="8" fill="#f48fb1"/><circle cx="43" cy="45" r="8" fill="#f48fb1"/><circle cx="38" cy="31" r="8" fill="#f48fb1"/><circle cx="50" cy="34" r="8" fill="#ffeb3b" stroke="#f9a825" stroke-width="2.5"/></g>
-<path d="M50 88 Q40 96 32 94 M50 88 Q50 98 44 100 M50 88 Q60 96 68 94" stroke="#8d6e63" stroke-width="4" fill="none" stroke-linecap="round"/>
-<path d="M14 92 Q50 86 86 92" stroke="#8d6e63" stroke-width="5" stroke-linecap="round"/></svg></div>
-  <div class="plant-labels">
-    <div class="pl-row"><div class="pl-dot" style="background:#f48fb1;"></div><div class="pl-line"></div><div class="pl-target">?</div></div>
-    <div class="pl-row"><div class="pl-dot" style="background:#ffeb3b;"></div><div class="pl-line"></div><div class="pl-target">?</div></div>
-    <div class="pl-row"><div class="pl-dot" style="background:#66bb6a;"></div><div class="pl-line"></div><div class="pl-target">?</div></div>
-    <div class="pl-row"><div class="pl-dot" style="background:#8d6e63;"></div><div class="pl-line"></div><div class="pl-target">?</div></div>
-  </div>
+  <div class="plant-diagram">
+  <div class="plant-art" style="position:absolute;left:0;top:0;"><svg viewBox="0 0 100 110" style="width:100%;height:100%"><path d="M50 88 L50 46" stroke="#4a2c3a" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+<path d="M50 66 Q30 62 24 46 Q42 46 50 58" fill="#ffffff" stroke="#4a2c3a" stroke-width="2.5" stroke-linejoin="round"/>
+<path d="M50 74 Q70 70 76 54 Q58 54 50 66" fill="#ffffff" stroke="#4a2c3a" stroke-width="2.5" stroke-linejoin="round"/>
+<g fill="#ffffff" stroke="#4a2c3a" stroke-width="2.5"><circle cx="50" cy="22" r="8"/><circle cx="62" cy="31" r="8"/><circle cx="57" cy="45" r="8"/><circle cx="43" cy="45" r="8"/><circle cx="38" cy="31" r="8"/><circle cx="50" cy="34" r="8"/></g>
+<path d="M50 88 Q40 96 32 94 M50 88 Q50 98 44 100 M50 88 Q60 96 68 94" stroke="#4a2c3a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+<path d="M14 92 Q50 86 86 92" stroke="#4a2c3a" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+<circle cx="50" cy="34" r="4" fill="#d81b60"/>
+<circle cx="70" cy="60" r="4" fill="#d81b60"/>
+<circle cx="50" cy="70" r="4" fill="#d81b60"/>
+<circle cx="50" cy="92" r="4" fill="#d81b60"/></svg></div>
+  <svg viewBox="0 0 688 330" style="position:absolute;left:0;top:0;width:688px;height:330px;">
+<line x1="150" y1="102" x2="518" y2="45" stroke="#ad1457" stroke-width="2.5"/>
+<line x1="210" y1="180" x2="518" y2="125" stroke="#ad1457" stroke-width="2.5"/>
+<line x1="150" y1="210" x2="518" y2="205" stroke="#ad1457" stroke-width="2.5"/>
+<line x1="150" y1="276" x2="518" y2="285" stroke="#ad1457" stroke-width="2.5"/></svg>
+  <div class="pl-box" style="left:518px;top:19px;"></div>
+  <div class="pl-box" style="left:518px;top:99px;"></div>
+  <div class="pl-box" style="left:518px;top:179px;"></div>
+  <div class="pl-box" style="left:518px;top:259px;"></div>
+</div>
 </div>
 <div class="wordbank-title">WORD BANK — draw a line from each word:</div>
 <div class="wordbank">
