@@ -24,6 +24,22 @@
   .scene { display:flex; justify-content:center; padding:4px 0; }
   .activity-scene { width:100%; max-width:560px; height:auto; display:block; }
 </style>
+<style>/* t3-overflow-refit: print-only layout trims so the sheet fits its true page count; no content changed */
+@media print {
+  .printable-header { padding: 18px 40px 12px; }
+  .printable-content { padding: 16px 40px 10px; gap: 11px; }
+  .printable-footer { padding: 8px 40px 10px; }
+  .printable-title { font-size: 33px; line-height: 1.05; }
+  .activity-instructions { padding: 10px 16px; }
+}
+
+@media print {
+  .activity-scene { max-width: 496px; }
+  .key-swatch { width: 40px; height: 40px; }
+  .key-badge { width: 32px; height: 32px; font-size: 17px; }
+  .color-key { gap: 8px; margin: 0; }
+}
+</style>
 </head>
 <body>
 <div class="printable-page">
