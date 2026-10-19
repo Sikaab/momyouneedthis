@@ -14,6 +14,7 @@
 <title>Letter Hunt A-Z - Free Printable | MomYouNeedThis</title>
 <link rel="stylesheet" href="printable.css">
 <style>
+  body { flex-direction:column; align-items:center; gap:24px; }
   .hunt-panel {
     background: #fff;
     border: 2.5px solid #f8bbd0;
@@ -54,7 +55,6 @@
     display: flex; align-items: center; justify-content: center;
     font-size: 30px; font-weight: 900; color: #6d3b52;
   }
-  .hunt-cell.decoy { color: #b9a3ae; }
   .hunt-count {
     text-align: center;
     font-size: 14px; font-weight: 800; color: #a07a8c;
@@ -68,7 +68,7 @@
 </style>
 </head>
 <body>
-<div class="printable-page">
+<div class="printable-page" style="break-after: page; page-break-after: always;">
   <div class="printable-header">
     <div class="printable-kicker">🔎 Letter Recognition</div>
     <div class="printable-title">Letter Hunt</div>
@@ -94,7 +94,10 @@
       </div>
       <div class="hunt-count">I found <span class="blank">&nbsp;</span> B's! &nbsp;👩‍👧 (8)</div>
     </div>
-
+  </div>
+</div>
+<div class="printable-page">
+  <div class="printable-content">
     <!-- Hunt 2 -->
     <div class="hunt-panel">
       <div class="hunt-title-row">
