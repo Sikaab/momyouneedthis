@@ -15,13 +15,14 @@
 <link rel="stylesheet" href="printable.css">
 <style>
   .match-wrap {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 26px;
+    display: flex;
+    justify-content: space-between;
   }
   .match-col {
     display: flex;
     flex-direction: column;
+    flex: 0 0 224px;
+    width: 224px;
     gap: 18px;
   }
   .wx-card, .wear-card {
@@ -43,7 +44,7 @@
   .wx-card::after {
     content: '';
     position: absolute;
-    right: -17px;
+    right: -9px;
     top: 50%;
     transform: translateY(-50%);
     width: 18px;
@@ -56,7 +57,7 @@
   .wear-card::before {
     content: '';
     position: absolute;
-    left: -17px;
+    left: -9px;
     top: 50%;
     transform: translateY(-50%);
     width: 14px;
