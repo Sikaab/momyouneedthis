@@ -21,16 +21,16 @@
   .trace-num { font-size:120px; font-weight:900; color:#fff; -webkit-text-stroke:3px #d6336c; line-height:1; font-family:'Nunito',sans-serif; }
   .find-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; background:#fff; border:3px solid #f8bbd0; border-radius:22px; padding:18px; }
   .find-grid.g3 { grid-template-columns:repeat(3,1fr); }
-  .find-cell { background:#fffdf9; border:2px solid #f3d9e2; border-radius:16px; padding:10px; display:flex; align-items:center; justify-content:center; min-height:110px; }
+  .find-cell { background:#fffdf9; border:2px solid #f3d9e2; border-radius:16px; padding:10px; display:flex; align-items:center; justify-content:center; min-height:72px; }
   .find-cell svg { width:84px; height:84px; }
-  .big-shape-row { display:flex; gap:18px; justify-content:center; margin:16px 0; flex-wrap:wrap; }
+  .big-shape-row { display:flex; gap:18px; justify-content:center; margin:8px 0; flex-wrap:wrap; }
   .count-blank { display:inline-block; min-width:70px; border-bottom:4px dotted #d6336c; }
   .ex-row { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin:12px 0; }
   .ex-card { background:#fff; border:2px solid #f3d9e2; border-radius:16px; padding:10px 18px; text-align:center; min-width:110px; }
   .ex-emoji { font-size:36px; display:block; }
   .ex-label { font-size:14px; font-weight:800; color:#6d3b52; }
-  .sec-title { text-align:center; font-size:21px; font-weight:900; color:#4a2c3a; margin:18px 0 8px; }
-  .parent-tip { background:#fff8e1; border:2px dashed #ffd54f; border-radius:16px; padding:12px 18px; font-size:15px; font-weight:700; color:#7a5c00; margin:14px 0; }
+  .sec-title { text-align:center; font-size:21px; font-weight:900; color:#4a2c3a; margin:10px 0 6px; }
+  .parent-tip { background:#fff8e1; border:2px dashed #ffd54f; border-radius:16px; padding:9px 16px; font-size:14px; font-weight:700; color:#7a5c00; margin:8px 0; }
   .pattern-row { display:flex; gap:8px; justify-content:center; align-items:center; margin:10px 0; flex-wrap:wrap; }
   .pattern-row svg { width:64px; height:64px; }
   .pattern-q { font-size:44px; font-weight:900; color:#d6336c; }
@@ -40,6 +40,26 @@
   .brand-footer { text-align:center; margin-top:22px; padding-top:14px; border-top:2px solid #f8bbd0; }
   .brand-footer .bf-name { font-size:17px; font-weight:900; color:#d6336c; letter-spacing:1px; }
   .brand-footer .bf-tag { font-size:12.5px; font-weight:700; color:#a08a96; }
+
+  .printable-content { padding:16px 40px 10px; gap:9px; }
+  .find-grid { padding:12px; }
+  .find-cell svg { width:62px; height:62px; }
+  .find-cell { padding:6px; }
+  .trace-card { padding:12px; }
+  .ex-card { padding:6px 14px; }
+  .ex-emoji { font-size:30px; }
+
+  .printable-header { padding:20px 40px 14px; }
+  .activity-instructions { padding:10px 16px; }
+  .find-grid { gap:10px; }
+
+  .printable-title { font-size:34px; }
+  .sec-title { font-size:19px; margin:6px 0 4px; }
+  .trace-card { padding:8px; }
+  .ex-emoji { font-size:26px; }
+  .ex-card { padding:4px 12px; }
+  .brand-footer { margin-top:8px; padding-top:8px; }
+  .big-shape-row { margin:4px 0; }
 </style>
 </head>
 <body>
@@ -55,9 +75,9 @@
     <div class="parent-tip">👩‍👧 <strong>Parent tip:</strong> Build a pyramid with blocks while doing this sheet — wide base, smaller layers, one block on top. Building teaches the shape better than any picture.</div>
 <div class="sec-title">🎨 Color the pyramids!</div>
     <div class="big-shape-row">
-      <div class="trace-card"><svg viewBox="0 0 100 100" style="width:150px;height:150px"><polygon points="50,6 84,78 16,78" fill="none" stroke="#000000" stroke-width="4" stroke-linejoin="round"/><polygon points="16,78 84,78 70,90 30,90" fill="none" stroke="#000000" stroke-width="4" stroke-linejoin="round"/></svg><div class="ex-label">Egypt pyramid</div></div>
-      <div class="trace-card"><svg viewBox="0 0 100 100" style="width:150px;height:150px"><polygon points="50,6 84,78 16,78" fill="none" stroke="#000000" stroke-width="4" stroke-linejoin="round"/><polygon points="16,78 84,78 70,90 30,90" fill="none" stroke="#000000" stroke-width="4" stroke-linejoin="round"/></svg><div class="ex-label">Block pyramid</div></div>
-      <div class="trace-card"><svg viewBox="0 0 100 100" style="width:150px;height:150px"><polygon points="50,6 84,78 16,78" fill="none" stroke="#000000" stroke-width="4" stroke-linejoin="round"/><polygon points="16,78 84,78 70,90 30,90" fill="none" stroke="#000000" stroke-width="4" stroke-linejoin="round"/></svg><div class="ex-label">Tent</div></div>
+      <div class="trace-card"><svg viewBox="0 0 100 100" style="width:80px;height:80px"><polygon points="50,6 84,78 16,78" fill="none" stroke="#000000" stroke-width="4" stroke-linejoin="round"/><polygon points="16,78 84,78 70,90 30,90" fill="none" stroke="#000000" stroke-width="4" stroke-linejoin="round"/></svg><div class="ex-label">Egypt pyramid</div></div>
+      <div class="trace-card"><svg viewBox="0 0 100 100" style="width:80px;height:80px"><polygon points="50,6 84,78 16,78" fill="none" stroke="#000000" stroke-width="4" stroke-linejoin="round"/><polygon points="16,78 84,78 70,90 30,90" fill="none" stroke="#000000" stroke-width="4" stroke-linejoin="round"/></svg><div class="ex-label">Block pyramid</div></div>
+      <div class="trace-card"><svg viewBox="0 0 100 100" style="width:80px;height:80px"><polygon points="50,6 84,78 16,78" fill="none" stroke="#000000" stroke-width="4" stroke-linejoin="round"/><polygon points="16,78 84,78 70,90 30,90" fill="none" stroke="#000000" stroke-width="4" stroke-linejoin="round"/></svg><div class="ex-label">Tent</div></div>
     </div>
     <div class="sec-title">🔍 Find &amp; circle all the <span style="color:#d6336c;">pyramids</span>!</div>
     <div class="find-grid">
