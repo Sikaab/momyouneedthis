@@ -943,6 +943,36 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://momyouneedthis.com/half-hour-activities</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://momyouneedthis.com/quarter-hour-activities</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://momyouneedthis.com/hour-minute-hands-activities</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://momyouneedthis.com/read-clock-activities</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://momyouneedthis.com/match-clock-time-activities</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://momyouneedthis.com/telling-time-o-clock</loc>
     <lastmod>2026-10-01</lastmod>
     <changefreq>monthly</changefreq>
