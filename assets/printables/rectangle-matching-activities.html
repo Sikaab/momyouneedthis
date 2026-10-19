@@ -14,19 +14,24 @@
 <title>▭ Rectangle Matching Activity - Free Printable | MomYouNeedThis</title>
 <link rel="stylesheet" href="printable.css">
 <style>
-
-  .match-list { display:flex; flex-direction:column; gap:12px; }
-  .match-row { display:flex; align-items:center; background:#fff;
-    border:2.5px solid #f8bbd0; border-radius:18px; padding:10px 22px; }
-  .match-cell { width:120px; height:120px; display:flex; align-items:center;
-    justify-content:center; flex-shrink:0; }
-  .match-mid { flex:1; min-width:60px; }
-  .match-num { width:40px; height:40px; border-radius:50%; background:#fce4ec;
-    color:#ad1457; font-weight:900; font-size:20px; display:flex; align-items:center;
-    justify-content:center; flex-shrink:0; }
-  .match-bonus { background:#fff8e1; border:2px dashed #ffd54f; border-radius:16px;
-    padding:14px 20px; font-size:15px; font-weight:800; color:#7a5c00; text-align:center; }
-
+  .printable-header { padding: 22px 40px 18px; }
+  .printable-content { padding: 24px 40px 16px; gap: 14px; }
+  .match-wrap { display:grid; grid-template-columns: 230px 230px; justify-content: space-between; gap: 0; }
+  .match-col { display:flex; flex-direction:column; gap:10px; }
+  .shape-card { background:#fff; border:3px solid #f8bbd0; border-radius:18px; padding:8px 14px;
+    display:flex; align-items:center; justify-content:center; position:relative;
+    box-shadow:0 2px 6px rgba(236,64,122,0.10); min-height:88px; }
+  .shape-card .match-num { position:absolute; left:14px; top:50%; transform:translateY(-50%);
+    width:34px; height:34px; border-radius:50%; background:#fce4ec; color:#ad1457;
+    font-weight:900; font-size:18px; display:flex; align-items:center; justify-content:center; }
+  .shape-card::after { content:''; position:absolute; right:-10px; top:50%; transform:translateY(-50%);
+    width:18px; height:18px; background:#ec407a; border-radius:50%; border:3px solid #fff;
+    box-shadow:0 0 0 2px #f8bbd0; z-index:2; }
+  .shape-card.right::after { display:none; }
+  .shape-card.right::before { content:''; position:absolute; left:-10px; top:50%; transform:translateY(-50%);
+    width:18px; height:18px; background:#fff; border:4px solid #ec407a; border-radius:50%; z-index:2; }
+  .parent-key { font-size:13px; font-weight:700; color:#7a4a5e; text-align:center;
+    background:#fef6f9; border:2px dashed #f8bbd0; border-radius:14px; padding:10px 16px; }
 </style>
 </head>
 <body>
@@ -38,12 +43,28 @@
   </div>
   <div class="printable-divider"></div>
   <div class="printable-content">
-    <div class="activity-instructions">✏️ Draw a line from each rectangle on the <b>left</b> to the same rectangle on the <b>right</b>. Same shape — different colors!</div>
+    <div class="activity-instructions">✏️ Draw a line from each rectangle on the <b>left</b> to the rectangle with the <b>same color</b> on the <b>right</b>. Start at the pink dot!</div>
 
-    <div class="match-list">
-      <div class="match-row"><div class="match-num">1</div><div class="match-cell"><svg viewBox="0 0 100 100" style="width:96px;height:96px;transform:rotate(-1deg);"><rect fill="#26a69a" x="10" y="28" width="80" height="44" rx="8"/></svg></div><div class="match-mid"></div><div class="match-cell"><svg viewBox="0 0 100 100" style="width:96px;height:96px;transform:rotate(-3deg);"><rect fill="#ef5350" x="10" y="28" width="80" height="44" rx="8"/></svg></div></div><div class="match-row"><div class="match-num">2</div><div class="match-cell"><svg viewBox="0 0 100 100" style="width:96px;height:96px;transform:rotate(-2deg);"><rect fill="#ff9800" x="10" y="28" width="80" height="44" rx="8"/></svg></div><div class="match-mid"></div><div class="match-cell"><svg viewBox="0 0 100 100" style="width:96px;height:96px;transform:rotate(8deg);"><rect fill="#42a5f5" x="10" y="28" width="80" height="44" rx="8"/></svg></div></div><div class="match-row"><div class="match-num">3</div><div class="match-cell"><svg viewBox="0 0 100 100" style="width:96px;height:96px;transform:rotate(3deg);"><rect fill="#ef5350" x="10" y="28" width="80" height="44" rx="8"/></svg></div><div class="match-mid"></div><div class="match-cell"><svg viewBox="0 0 100 100" style="width:96px;height:96px;transform:rotate(3deg);"><rect fill="#ff9800" x="10" y="28" width="80" height="44" rx="8"/></svg></div></div><div class="match-row"><div class="match-num">4</div><div class="match-cell"><svg viewBox="0 0 100 100" style="width:96px;height:96px;transform:rotate(-2deg);"><rect fill="#ec407a" x="10" y="28" width="80" height="44" rx="8"/></svg></div><div class="match-mid"></div><div class="match-cell"><svg viewBox="0 0 100 100" style="width:96px;height:96px;transform:rotate(-4deg);"><rect fill="#26a69a" x="10" y="28" width="80" height="44" rx="8"/></svg></div></div><div class="match-row"><div class="match-num">5</div><div class="match-cell"><svg viewBox="0 0 100 100" style="width:96px;height:96px;"><rect fill="#42a5f5" x="10" y="28" width="80" height="44" rx="8"/></svg></div><div class="match-mid"></div><div class="match-cell"><svg viewBox="0 0 100 100" style="width:96px;height:96px;transform:rotate(-3deg);"><rect fill="#ffb300" x="10" y="28" width="80" height="44" rx="8"/></svg></div></div><div class="match-row"><div class="match-num">6</div><div class="match-cell"><svg viewBox="0 0 100 100" style="width:96px;height:96px;transform:rotate(-5deg);"><rect fill="#ffb300" x="10" y="28" width="80" height="44" rx="8"/></svg></div><div class="match-mid"></div><div class="match-cell"><svg viewBox="0 0 100 100" style="width:96px;height:96px;transform:rotate(6deg);"><rect fill="#ab47bc" x="10" y="28" width="80" height="44" rx="8"/></svg></div></div>
+    <div class="match-wrap">
+      <div class="match-col">
+        <div class="shape-card"><span class="match-num">1</span><svg viewBox="0 0 100 100" style="width:76px;height:76px;"><rect fill="#26a69a" x="10" y="28" width="80" height="44" rx="8"/></svg></div>
+        <div class="shape-card"><span class="match-num">2</span><svg viewBox="0 0 100 100" style="width:76px;height:76px;"><rect fill="#ff9800" x="10" y="28" width="80" height="44" rx="8"/></svg></div>
+        <div class="shape-card"><span class="match-num">3</span><svg viewBox="0 0 100 100" style="width:76px;height:76px;"><rect fill="#ef5350" x="10" y="28" width="80" height="44" rx="8"/></svg></div>
+        <div class="shape-card"><span class="match-num">4</span><svg viewBox="0 0 100 100" style="width:76px;height:76px;"><rect fill="#ec407a" x="10" y="28" width="80" height="44" rx="8"/></svg></div>
+        <div class="shape-card"><span class="match-num">5</span><svg viewBox="0 0 100 100" style="width:76px;height:76px;"><rect fill="#42a5f5" x="10" y="28" width="80" height="44" rx="8"/></svg></div>
+        <div class="shape-card"><span class="match-num">6</span><svg viewBox="0 0 100 100" style="width:76px;height:76px;"><rect fill="#ffb300" x="10" y="28" width="80" height="44" rx="8"/></svg></div>
+      </div>
+      <div class="match-col">
+        <div class="shape-card right"><svg viewBox="0 0 100 100" style="width:76px;height:76px;"><rect fill="#ffb300" x="10" y="28" width="80" height="44" rx="8"/></svg></div>
+        <div class="shape-card right"><svg viewBox="0 0 100 100" style="width:76px;height:76px;"><rect fill="#26a69a" x="10" y="28" width="80" height="44" rx="8"/></svg></div>
+        <div class="shape-card right"><svg viewBox="0 0 100 100" style="width:76px;height:76px;"><rect fill="#42a5f5" x="10" y="28" width="80" height="44" rx="8"/></svg></div>
+        <div class="shape-card right"><svg viewBox="0 0 100 100" style="width:76px;height:76px;"><rect fill="#ef5350" x="10" y="28" width="80" height="44" rx="8"/></svg></div>
+        <div class="shape-card right"><svg viewBox="0 0 100 100" style="width:76px;height:76px;"><rect fill="#ec407a" x="10" y="28" width="80" height="44" rx="8"/></svg></div>
+        <div class="shape-card right"><svg viewBox="0 0 100 100" style="width:76px;height:76px;"><rect fill="#ff9800" x="10" y="28" width="80" height="44" rx="8"/></svg></div>
+      </div>
     </div>
-    <div class="match-bonus">🌈 Bonus round: color each matching pair the SAME color!</div>
+
+    <div class="parent-key">👩‍👧 Parent key (left top→bottom): Teal → right #2 &nbsp;•&nbsp; Orange → right #6 &nbsp;•&nbsp; Red → right #4 &nbsp;•&nbsp; Pink → right #5 &nbsp;•&nbsp; Blue → right #3 &nbsp;•&nbsp; Yellow → right #1.</div>
   </div>
 
   <div class="printable-footer">
