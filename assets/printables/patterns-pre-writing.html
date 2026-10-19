@@ -41,7 +41,34 @@
   .brand-footer .bf-name { font-size:17px; font-weight:900; color:#d6336c; letter-spacing:1px; }
   .brand-footer .bf-tag { font-size:12.5px; font-weight:700; color:#a08a96; }
 </style>
-</head>
+<style id="t3-refit">
+/* t3-overflow-refits-b — print refit: layout only (print sizing/spacing) so this one-page activity fits a single US Letter page with its footer. No content, wording, items or artwork changed. */
+@media print{
+.printable-header{padding:20px 40px 14px !important}
+.printable-content{padding:20px 40px 10px !important;gap:12px !important}
+.printable-footer{padding:8px 40px 12px !important}
+.printable-divider{height:10px !important}
+}
+@media print{
+.printable-title{font-size:33px !important}
+.printable-kicker{margin-bottom:2px !important;font-size:12px !important}
+.printable-subtitle{font-size:15px !important}
+.activity-instructions{padding:10px 16px !important;font-size:14px !important}
+.printable-brand{font-size:16px !important}
+}
+@page{size:letter;margin:0}
+@media print{
+.trace-card{padding:10px !important}
+.sec-title{margin:10px 0 4px !important;font-size:19px !important}
+.pattern-row{margin:6px 0 !important}
+.big-shape-row{margin:8px 0 !important}
+.parent-tip{margin:8px 0 !important;padding:9px 14px !important}
+.brand-footer{margin-top:10px !important;padding-top:8px !important}
+.act-row{margin:8px 0 !important}
+.ex-row{margin:8px 0 !important}
+.match-row{margin:6px 0 !important}
+}
+</style></head>
 <body>
 <div class="printable-page">
   <div class="printable-header">
