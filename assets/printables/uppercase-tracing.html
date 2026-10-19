@@ -61,6 +61,25 @@
     margin-right: 6px;
   }
 </style>
+<style>/* t3-overflow-refit: print-only layout trims so the sheet fits its true page count; no content changed */
+@media print {
+  .printable-header { padding: 18px 40px 12px; }
+  .printable-content { padding: 16px 40px 10px; gap: 11px; }
+  .printable-footer { padding: 8px 40px 10px; }
+  .printable-title { font-size: 33px; line-height: 1.05; }
+  .activity-instructions { padding: 10px 16px; }
+}
+
+@media print {
+  .printable-page { display: block; }
+  .printable-content { display: block; }
+  .printable-content > * { margin-bottom: 12px; }
+  .az-grid { gap: 8px; flex: none; max-width: 684px; margin-left: auto; margin-right: auto; }
+  .az-cell { break-inside: avoid; }
+  .activity-instructions { break-inside: avoid; }
+  .printable-footer { break-inside: avoid; }
+}
+</style>
 </head>
 <body>
 <div class="printable-page">
