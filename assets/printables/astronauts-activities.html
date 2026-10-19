@@ -15,14 +15,15 @@
 <link rel="stylesheet" href="/assets/printables/printable.css">
 <style>
   .match-wrap {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 26px;
+    display: flex;
+    justify-content: space-between;
     align-items: stretch;
   }
   .match-col {
     display: flex;
     flex-direction: column;
+    flex: 0 0 224px;
+    width: 224px;
     gap: 16px;
   }
   .gear-card, .job-card {
@@ -50,7 +51,7 @@
   .gear-card::after {
     content: '';
     position: absolute;
-    right: -17px;
+    right: -9px;
     top: 50%;
     transform: translateY(-50%);
     width: 18px;
@@ -63,7 +64,7 @@
   .job-card::before {
     content: '';
     position: absolute;
-    left: -17px;
+    left: -9px;
     top: 50%;
     transform: translateY(-50%);
     width: 14px;
