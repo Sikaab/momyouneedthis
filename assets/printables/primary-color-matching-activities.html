@@ -48,6 +48,22 @@
   .match-middle { flex: 1; display: flex; align-items: center; justify-content: center; }
   .match-middle span { font-size: 30px; }
 </style>
+<style>/* t3-overflow-refit: print-only layout trims so the sheet fits its true page count; no content changed */
+@media print {
+  .printable-header { padding: 18px 40px 12px; }
+  .printable-content { padding: 16px 40px 10px; gap: 11px; }
+  .printable-footer { padding: 8px 40px 10px; }
+  .printable-title { font-size: 33px; line-height: 1.05; }
+  .activity-instructions { padding: 10px 16px; }
+}
+
+@media print {
+  .dot-item, .object-item { height: 66px; }
+  .big-dot { width: 42px; height: 42px; }
+  .object-emoji { font-size: 32px; }
+  .splat-trio { padding: 2px 0 0; }
+}
+</style>
 </head>
 <body>
 <div class="printable-page">
