@@ -1,0 +1,5 @@
+<svg width="512" height="512" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+<rect x="0" y="0" width="300" height="300" fill="#D05A82"/>
+<path d="M150 94 C138 62 112 50 92 58 C66 68 55 92 61 119 C71 163 108 199 150 236 C192 199 229 163 239 119 C245 92 234 68 208 58 C188 50 162 62 150 94 Z" fill="#FFFFFF"/>
+<text x="150" y="143" text-anchor="middle" font-family="Nunito" font-size="47" font-weight="900" fill="#D05A82">MOM</text>
+</svg>
