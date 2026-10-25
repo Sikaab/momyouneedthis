@@ -2501,6 +2501,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://momyouneedthis.com/riddles-for-kids</loc>
+    <lastmod>2026-10-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://momyouneedthis.com/road-path-tracing</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -2625,6 +2631,12 @@
   <url>
     <loc>https://momyouneedthis.com/senses-challenge-activities</loc>
     <lastmod>2026-10-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://momyouneedthis.com/sensory-bins</loc>
+    <lastmod>2026-10-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
