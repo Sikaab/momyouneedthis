@@ -990,6 +990,18 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://momyouneedthis.com/easter-scavenger-hunt</loc>
+    <lastmod>2026-10-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://momyouneedthis.com/easter-word-search</loc>
+    <lastmod>2026-10-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://momyouneedthis.com/easy-color-by-number</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -1367,6 +1379,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://momyouneedthis.com/halloween-word-search</loc>
+    <lastmod>2026-10-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://momyouneedthis.com/happy-birthday-coloring-pages</loc>
     <lastmod>2026-10-21</lastmod>
     <changefreq>monthly</changefreq>
@@ -1485,6 +1503,12 @@
     <loc>https://momyouneedthis.com/identify-emotion-activities</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://momyouneedthis.com/indoor-scavenger-hunt</loc>
+    <lastmod>2026-10-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://momyouneedthis.com/insect-color-by-number</loc>
@@ -2096,6 +2120,12 @@
   <url>
     <loc>https://momyouneedthis.com/nature-learning-activity-pages</loc>
     <lastmod>2026-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://momyouneedthis.com/nature-scavenger-hunt</loc>
+    <lastmod>2026-10-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -2994,6 +3024,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://momyouneedthis.com/spring-word-search</loc>
+    <lastmod>2026-10-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://momyouneedthis.com/square-activities</loc>
     <lastmod>2026-10-19</lastmod>
     <changefreq>monthly</changefreq>
@@ -3060,6 +3096,12 @@
   <url>
     <loc>https://momyouneedthis.com/summer-coloring-pages</loc>
     <lastmod>2026-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://momyouneedthis.com/summer-word-search</loc>
+    <lastmod>2026-10-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -3479,6 +3521,12 @@
   <url>
     <loc>https://momyouneedthis.com/winter-crafts</loc>
     <lastmod>2026-10-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://momyouneedthis.com/winter-word-search</loc>
+    <lastmod>2026-10-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
