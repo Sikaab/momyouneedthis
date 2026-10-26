@@ -90,32 +90,33 @@ window.addEventListener('load', function() {
 ========================================================= -->
 <section class="seasonal-banner">
     <div class="seasonal-banner-inner">
+        <canvas class="banner-snow" aria-hidden="true"></canvas>
         <div class="seasonal-banner-art">
             <img width="1600" height="686"
-                src="assets/bundles/halloween/banner.jpg"
-                srcset="assets/bundles/halloween/banner-mobile.jpg 800w, assets/bundles/halloween/banner.jpg 1600w"
+                src="assets/bundles/christmas/banner.jpg"
+                srcset="assets/bundles/christmas/banner-mobile.jpg 800w, assets/bundles/christmas/banner.jpg 1600w"
                 sizes="(max-width: 800px) 100vw, 1600px"
-                alt="Halloween printable bundle preview"
+                alt="Christmas printable bundle preview"
             >
         </div>
         <div class="seasonal-banner-text">
             <span class="seasonal-banner-kicker">
-                🎃 LIMITED TIME · FREE DOWNLOAD
+                🎄 LIMITED TIME · FREE DOWNLOAD
             </span>
             <h2>
-                Halloween Printable Bundle
-                <span>15 Free Pages for Little Ghouls</span>
+                Christmas Printable Bundle
+                <span>12 Free Pages for Holiday Fun</span>
             </h2>
             <p>
-                Coloring pages, counting games, mazes, matching
+                Coloring pages, a maze, counting, matching, tracing
                 and more — all free to download and print.
-                Perfect for October fun at home or in the classroom.
+                Perfect for holiday fun at home or in the classroom.
             </p>
             <a
-                href="halloween-bundle"
+                href="christmas-bundle"
                 class="seasonal-banner-button"
             >
-                👻 Get The Free Bundle
+                🎁 Get The Free Bundle
             </a>
         </div>
     </div>
@@ -144,7 +145,7 @@ window.addEventListener('load', function() {
     mask-image:radial-gradient(ellipse 120% 120% at 50% 50%,#000 82%,transparent 100%);
 }
 .seasonal-banner-inner::before{
-    content:'🎃 👻 🦇 🍬 🌙';
+    content:'🎄 ⛄ 🎁 ❄️ ⭐';
     position:absolute;
     top:12px;
     left:0;
@@ -154,6 +155,14 @@ window.addEventListener('load', function() {
     opacity:.25;
     letter-spacing:18px;
     pointer-events:none;
+}
+.banner-snow{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+    z-index:3;
 }
 .seasonal-banner-art{
     flex:0 0 300px;
@@ -1024,5 +1033,64 @@ window.addEventListener('load', function() {
 </footer>
 </div>
 <script src="script.js"></script>
+<script>
+(function(){
+    var box = document.querySelector('.seasonal-banner-inner');
+    var cv = document.querySelector('.banner-snow');
+    if(!box || !cv) return;
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var ctx = cv.getContext('2d');
+    ctx.fillStyle = '#ffffff';
+    var W = 0, H = 0, flakes = [], running = true;
+    function resize(){
+        W = cv.width = box.clientWidth;
+        H = cv.height = box.clientHeight;
+        flakes = [];
+        var n = Math.min(55, Math.max(24, Math.floor(W / 18)));
+        for(var i = 0; i < n; i++){
+            flakes.push({
+                x: Math.random() * W,
+                y: Math.random() * H,
+                r: 0.8 + Math.random() * 1.9,
+                s: 0.25 + Math.random() * 0.55,
+                p: Math.random() * 6.2832,
+                ps: 0.004 + Math.random() * 0.01,
+                o: 0.35 + Math.random() * 0.45
+            });
+        }
+    }
+    function tick(){
+        if(running){
+            ctx.clearRect(0, 0, W, H);
+            for(var i = 0; i < flakes.length; i++){
+                var f = flakes[i];
+                f.y += f.s;
+                f.p += f.ps;
+                f.x += Math.sin(f.p) * 0.35;
+                if(f.y > H + 3){ f.y = -3; f.x = Math.random() * W; }
+                if(f.x > W + 3) f.x = -3; else if(f.x < -3) f.x = W + 3;
+                ctx.globalAlpha = f.o;
+                ctx.beginPath();
+                ctx.arc(f.x, f.y, f.r, 0, 6.2832);
+                ctx.fill();
+            }
+            ctx.globalAlpha = 1;
+        }
+        requestAnimationFrame(tick);
+    }
+    resize();
+    tick();
+    var rt;
+    window.addEventListener('resize', function(){
+        clearTimeout(rt);
+        rt = setTimeout(resize, 200);
+    });
+    if('IntersectionObserver' in window){
+        new IntersectionObserver(function(entries){
+            running = entries[0].isIntersecting;
+        }).observe(box);
+    }
+})();
+</script>
 </body>
 </html>
