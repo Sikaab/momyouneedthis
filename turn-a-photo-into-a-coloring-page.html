@@ -775,11 +775,92 @@ function convertPro(cv) {
   }
 }
 
-/* ---------- conversion control: lite instantly, pro takes over when ready ---------- */
+/* ---------- conversion control: lite instantly on the main thread; the pro
+   converter runs in a Web Worker so the page never freezes. If the worker
+   cannot run, the original main-thread OpenCV path is the fallback. ---------- */
 var proActive = false;
+var proBackend = 'none'; /* 'worker' | 'main' */
+var proWorker = null;
+var proJobSeq = 0;
+var proJobTimer = null;
+
+function startMainPro() {
+  ensureOpenCV().then(function (cv) {
+    if (cv && ownPhoto) {
+      proBackend = 'main';
+      proActive = true;
+      hint.textContent = HINT_PRO;
+      setTimeout(convert, 30);
+    }
+  });
+}
+function workerFailed(initTimer) {
+  clearTimeout(initTimer);
+  if (proBackend !== 'none') { return; }
+  if (proWorker) { try { proWorker.terminate(); } catch (e) {} proWorker = null; }
+  startMainPro();
+}
+function startWorkerPro() {
+  if (proWorker || proBackend !== 'none') { return; }
+  if (!window.Worker) { startMainPro(); return; }
+  try {
+    proWorker = new Worker('assets/coloring-page-maker/pro-worker.js');
+  } catch (e) {
+    proWorker = null;
+    startMainPro();
+    return;
+  }
+  var initTimer = setTimeout(function () { workerFailed(initTimer); }, 30000);
+  proWorker.onmessage = function (e) {
+    var msg = e.data || {};
+    if (msg.type === 'ready') {
+      clearTimeout(initTimer);
+      proBackend = 'worker';
+      proActive = true;
+      hint.textContent = HINT_PRO;
+      requestProJob(true);
+    } else if (msg.type === 'load-failed') {
+      workerFailed(initTimer);
+    } else if (msg.type === 'result') {
+      if (msg.id !== proJobSeq || !ownPhoto || !srcImg) { return; }
+      if (msg.ok && msg.data) {
+        resultCanvas.width = msg.w;
+        resultCanvas.height = msg.h;
+        resultCanvas.getContext('2d').putImageData(new ImageData(new Uint8ClampedArray(msg.data), msg.w, msg.h), 0, 0);
+        hint.textContent = HINT_PRO;
+        showResult();
+      }
+      /* if the job failed, the lite result already on screen stays */
+    }
+  };
+  proWorker.onerror = function () { workerFailed(initTimer); };
+  proWorker.postMessage({ type: 'init' });
+}
+function requestProJob(immediate) {
+  if (proBackend !== 'worker' || !proWorker || !srcImg || !ownPhoto) { return; }
+  if (proJobTimer) { clearTimeout(proJobTimer); proJobTimer = null; }
+  var run = function () {
+    proJobTimer = null;
+    if (!srcImg || !ownPhoto || proBackend !== 'worker' || !proWorker) { return; }
+    var dim = workingSize();
+    drawSource(dim.w, dim.h);
+    var data = srcCanvas.getContext('2d').getImageData(0, 0, dim.w, dim.h);
+    proJobSeq += 1;
+    var buf = data.data.buffer;
+    proWorker.postMessage({
+      type: 'job', id: proJobSeq, data: buf, w: dim.w, h: dim.h,
+      sFrac: parseInt(strength.value, 10) / 100,
+      dFrac: parseInt(detail.value, 10) / 100
+    }, [buf]);
+  };
+  if (immediate) { run(); } else { proJobTimer = setTimeout(run, 220); }
+}
 function convert() {
   if (!srcImg) { return; }
-  if (proActive && window.cv && window.cv.Mat) {
+  if (proBackend === 'worker') {
+    convertLite();
+    requestProJob(false);
+  } else if (proBackend === 'main' && proActive && window.cv && window.cv.Mat) {
     if (!convertPro(window.cv)) { convertLite(); }
   } else {
     convertLite();
@@ -787,13 +868,8 @@ function convert() {
 }
 function kickPro() {
   if (!ownPhoto) { return; }
-  ensureOpenCV().then(function (cv) {
-    if (cv && ownPhoto) {
-      proActive = true;
-      hint.textContent = HINT_PRO;
-      setTimeout(convert, 30);
-    }
-  });
+  if (proBackend === 'worker') { requestProJob(true); }
+  else if (proBackend === 'none') { startWorkerPro(); }
   ensureTracer();
 }
 
