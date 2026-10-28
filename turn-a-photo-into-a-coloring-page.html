@@ -683,36 +683,77 @@ function boxBlur(src, w, h, radius) {
   passH(dst, tmp); passV(tmp, dst);
   return dst;
 }
+/* Lite conversion, built to never freeze the page: the blur layer is
+   computed at half resolution (it is a smooth dodge layer, so this is
+   visually identical and 4x cheaper), gamma uses a 256-entry table instead
+   of Math.pow per pixel, and the two heavy loops run in row slices across
+   animation frames. A newer conversion cancels an in-flight one. */
+var liteSeq = 0;
 function convertLite() {
+  if (!srcImg) { return; }
+  var mySeq = ++liteSeq;
   var dim = workingSize();
   var w = dim.w, h = dim.h;
   drawSource(w, h);
   var data = srcCanvas.getContext('2d').getImageData(0, 0, w, h).data;
   var n = w * h;
   var gray = new Float32Array(n);
-  var inv = new Float32Array(n);
-  for (var i = 0; i < n; i++) {
-    var g = 0.299 * data[i * 4] + 0.587 * data[i * 4 + 1] + 0.114 * data[i * 4 + 2];
-    gray[i] = g;
-    inv[i] = 255 - g;
-  }
+  var hw = Math.max(2, Math.floor(w / 2)), hh = Math.max(2, Math.floor(h / 2));
+  var invH = new Float32Array(hw * hh);
   var detailV = parseInt(detail.value, 10);
-  var radius = Math.max(2, Math.round(20 - detailV * 0.16));
-  var blurred = boxBlur(inv, w, h, radius);
+  var radius = Math.max(1, Math.round((20 - detailV * 0.16) / 2));
   var gamma = 1.1 + (parseInt(strength.value, 10) / 100) * 1.7;
+  var gammaLUT = new Uint8Array(256);
+  for (var gi = 0; gi < 256; gi++) { gammaLUT[gi] = Math.round(255 * Math.pow(gi / 255, gamma)); }
   resultCanvas.width = w; resultCanvas.height = h;
   var rctx = resultCanvas.getContext('2d');
   var out = rctx.createImageData(w, h);
   var od = out.data;
-  for (var j = 0; j < n; j++) {
-    var b = blurred[j];
-    var v = (b >= 254.5) ? 255 : Math.min(255, gray[j] * 255 / (255 - b));
-    v = 255 * Math.pow(v / 255, gamma);
-    if (v > 242) { v = 255; }
-    od[j * 4] = v; od[j * 4 + 1] = v; od[j * 4 + 2] = v; od[j * 4 + 3] = 255;
+  var ROWS = 140;
+  function rows(fn, done) {
+    var y = 0;
+    (function step() {
+      if (mySeq !== liteSeq) { return; }
+      var end = Math.min(h, y + ROWS);
+      fn(y, end);
+      y = end;
+      if (y < h) { requestAnimationFrame(step); } else { done(); }
+    })();
   }
-  rctx.putImageData(out, 0, 0);
-  showResult();
+  rows(function (y0, y1) {
+    for (var y = y0; y < y1; y++) {
+      var rowOff = y * w;
+      var hy = Math.min(hh - 1, y >> 1), hRow = hy * hw;
+      for (var x = 0; x < w; x++) {
+        var i = rowOff + x, p = i * 4;
+        var g = 0.299 * data[p] + 0.587 * data[p + 1] + 0.114 * data[p + 2];
+        gray[i] = g;
+        if ((x & 1) === 0 && (y & 1) === 0) { invH[hRow + (x >> 1)] = 255 - g; }
+      }
+    }
+  }, function () {
+    if (mySeq !== liteSeq) { return; }
+    var blurredH = boxBlur(invH, hw, hh, radius);
+    rows(function (y0, y1) {
+      for (var y = y0; y < y1; y++) {
+        var rowOff = y * w;
+        var hy = Math.min(hh - 1, y >> 1), hRow = hy * hw;
+        for (var x = 0; x < w; x++) {
+          var i = rowOff + x;
+          var b = blurredH[hRow + (x >> 1)];
+          var v = (b >= 254.5) ? 255 : Math.min(255, gray[i] * 255 / (255 - b));
+          v = gammaLUT[v | 0];
+          if (v > 242) { v = 255; }
+          var p = i * 4;
+          od[p] = v; od[p + 1] = v; od[p + 2] = v; od[p + 3] = 255;
+        }
+      }
+    }, function () {
+      if (mySeq !== liteSeq) { return; }
+      rctx.putImageData(out, 0, 0);
+      showResult();
+    });
+  });
 }
 
 /* ---------- pro converter (OpenCV: bilateral denoise, true-gaussian dodge, Canny outlines, speck cleanup) ---------- */
@@ -798,6 +839,14 @@ function workerFailed(initTimer) {
   clearTimeout(initTimer);
   if (proBackend !== 'none') { return; }
   if (proWorker) { try { proWorker.terminate(); } catch (e) {} proWorker = null; }
+  if (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) {
+    /* On phones, a main-thread OpenCV run freezes the whole page — if the
+       worker cannot run there, stay with the fast converter rather than
+       falling back to a multi-second freeze. */
+    proBackend = 'lite-only';
+    hint.textContent = 'Your coloring page is ready.';
+    return;
+  }
   startMainPro();
 }
 function startWorkerPro() {
