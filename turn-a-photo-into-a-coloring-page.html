@@ -261,7 +261,20 @@ window.addEventListener('load', function() {
 .tool-section h2::after{content:"";display:block;width:45px;height:3px;margin:16px auto 0;background:#e89aaa;border-radius:999px}
 .tool-lead{max-width:680px;margin:0 auto 26px;color:#6d6566;font-size:16px;line-height:1.7;text-align:center}
 .tool-grid{display:grid;grid-template-columns:330px 1fr;gap:22px;align-items:start}
-@media (max-width:820px){.tool-grid{grid-template-columns:1fr}}
+@media (max-width:820px){
+.tool-grid{grid-template-columns:1fr;background:#ffffff;border:1px solid #eee5e7;border-radius:24px;padding:20px;box-shadow:0 12px 35px rgba(80,55,55,.06)}
+.tool-form{display:contents}
+#dropLabel{order:1}
+#dropZone{order:2}
+#exampleBtn{order:3}
+#cropOpenBtn{order:4}
+.tool-preview{order:5}
+.toggle-pill{order:6}
+.slider-row{order:7}
+#toolActions{order:8}
+.free-note{order:9}
+#toolHint{order:10}
+}
 .tool-form{background:#ffffff;border:1px solid #eee5e7;border-radius:24px;padding:24px;box-shadow:0 12px 35px rgba(80,55,55,.06)}
 .tool-label{display:block;font-weight:900;color:#332b2b;font-size:15px;margin-bottom:8px}
 .drop-zone{border:2px dashed #E89AAA;border-radius:16px;background:#fffaf8;padding:22px 16px;text-align:center;cursor:pointer;transition:border-color .2s,background .2s}
@@ -547,6 +560,12 @@ var actionBtns = [document.getElementById('pdfBtn'), document.getElementById('pn
 function setActionsReady(on) { actionBtns.forEach(function (b) { b.disabled = !on; }); }
 var previewLoading = document.getElementById('previewLoading');
 function showLoading(on) { previewLoading.classList.toggle('is-on', !!on); }
+function scrollToPreview() {
+  if (window.innerWidth <= 820) {
+    var pv = document.querySelector('.tool-preview');
+    if (pv) { pv.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  }
+}
 var HINT_EXAMPLE = 'Showing the example cat — choose your own photo and the download buttons turn on.';
 var HINT_PRO = 'Smart converter on — cleaner outlines, specks removed automatically.';
 var srcCanvas = document.createElement('canvas');
@@ -872,6 +891,7 @@ function loadFile(file) {
     requestAnimationFrame(function () {
       convert();
       hint.textContent = 'Your coloring page is ready — the smart converter is warming up for even cleaner lines.';
+      scrollToPreview();
     });
     kickPro();
   };
@@ -941,6 +961,7 @@ document.getElementById('cropApply').addEventListener('click', function () {
       setActionsReady(true);
       convert();
       hint.textContent = proActive ? HINT_PRO : 'Crop applied — your coloring page is updated.';
+      scrollToPreview();
     };
     img.src = URL.createObjectURL(blob);
   }, 'image/png');
