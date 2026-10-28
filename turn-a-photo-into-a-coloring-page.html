@@ -280,9 +280,17 @@ window.addEventListener('load', function() {
 .tool-actions .download-button{display:block;width:100%;box-sizing:border-box;text-align:center;cursor:pointer;border:0;font-family:inherit;font-size:16px;padding:14px 18px;border-radius:999px;background:#D05A82;color:#ffffff;font-weight:900;text-decoration:none}
 .tool-actions .download-button.print-btn{background:#ffffff;color:#D05A82;border:2px solid #D05A82}
 .tool-actions .download-button.png-btn{background:#E89AAA;color:#2D1B2E}
+.tool-actions .download-button{transition:opacity .25s ease,filter .25s ease}
+.tool-actions .download-button:disabled{opacity:.45;cursor:not-allowed;filter:saturate(.55)}
 .tool-hint{font-size:13.5px;font-weight:700;color:#8a7f80;margin:12px 0 0;line-height:1.55}
 .sheet-frame{position:relative;background:#ffffff;border:2px solid #f3d9e0;border-radius:18px;padding:14px;box-shadow:0 12px 35px rgba(80,55,55,.07)}
 .sheet-frame canvas{width:100%;height:auto;display:block;border:1px solid #eee5e7;border-radius:8px;background:#ffffff}
+.preview-loading{position:absolute;inset:14px;display:none;align-items:center;justify-content:center;flex-direction:column;gap:12px;background:rgba(255,246,236,.88);border-radius:8px;z-index:3;text-align:center}
+.preview-loading.is-on{display:flex}
+.preview-loading .spinner{width:44px;height:44px;border-radius:50%;border:5px solid #f3d9e0;border-top-color:#D05A82;animation:pl-spin .9s linear infinite}
+@keyframes pl-spin{to{transform:rotate(360deg)}}
+.preview-loading p{margin:0;font-weight:800;color:#2D1B2E;font-size:15px}
+@media (prefers-reduced-motion:reduce){.preview-loading .spinner{animation-duration:2.4s}}
 .tool-caption{text-align:center;color:#8a7f80;font-size:13.5px;font-weight:700;margin:12px 0 0;line-height:1.5}
 .crop-btn{display:none;width:100%;margin-top:12px;padding:12px 14px;border:2px solid #f1e5e7;border-radius:12px;background:#fffaf8;font-family:inherit;font-weight:800;color:#5f5758;font-size:14.5px;cursor:pointer}
 .crop-btn:hover{border-color:#D05A82;color:#2D1B2E}
@@ -366,12 +374,12 @@ html,body{margin:0!important;padding:0!important;background:#ffffff!important}
 <p class="slider-note">Slide right to keep more of the small lines in the photo, left for a simpler page.</p>
 </div>
 <div class="tool-actions" id="toolActions">
-<button type="button" id="pdfBtn" class="download-button">⬇️ Download Free Coloring Page (PDF)</button>
-<button type="button" id="pngBtn" class="download-button png-btn">⬇️ Download Image (PNG)</button>
-<button type="button" id="printBtn" class="download-button print-btn">🖨️ Print Coloring Page</button>
+<button type="button" id="pdfBtn" class="download-button" disabled>⬇️ Download Free Coloring Page (PDF)</button>
+<button type="button" id="pngBtn" class="download-button png-btn" disabled>⬇️ Download Image (PNG)</button>
+<button type="button" id="printBtn" class="download-button print-btn" disabled>🖨️ Print Coloring Page</button>
 </div>
 <p class="free-note">🎁 Free for personal and classroom use — make as many as you like</p>
-<p class="tool-hint" id="toolHint" role="status">Showing the example cat — choose your own photo to make your page.</p>
+<p class="tool-hint" id="toolHint" role="status">Showing the example cat — choose your own photo and the download buttons turn on.</p>
 </form>
 <div class="tool-preview">
 <div class="crop-panel" id="cropPanel">
@@ -385,6 +393,7 @@ html,body{margin:0!important;padding:0!important;background:#ffffff!important}
 </div>
 <div class="sheet-frame" id="sheetFrame">
 <canvas id="sheetCanvas" width="1100" height="1424" role="img" aria-label="Preview of your coloring page, converted from the photo"></canvas>
+<div class="preview-loading" id="previewLoading" aria-hidden="true"><div class="spinner"></div><p>Making your coloring page…</p></div>
 </div>
 <p class="tool-caption">Live preview — the download and print versions put this on one US Letter page with room to color.</p>
 </div>
@@ -534,7 +543,11 @@ var cropOpenBtn = document.getElementById('cropOpenBtn');
 var cropPanel = document.getElementById('cropPanel');
 var cropImg = document.getElementById('cropImg');
 var smoothToggle = document.getElementById('smoothToggle');
-var HINT_EXAMPLE = 'Showing the example cat — choose your own photo to make your page.';
+var actionBtns = [document.getElementById('pdfBtn'), document.getElementById('pngBtn'), document.getElementById('printBtn')];
+function setActionsReady(on) { actionBtns.forEach(function (b) { b.disabled = !on; }); }
+var previewLoading = document.getElementById('previewLoading');
+function showLoading(on) { previewLoading.classList.toggle('is-on', !!on); }
+var HINT_EXAMPLE = 'Showing the example cat — choose your own photo and the download buttons turn on.';
 var HINT_PRO = 'Smart converter on — cleaner outlines, specks removed automatically.';
 var srcCanvas = document.createElement('canvas');
 var srcImg = null;
@@ -609,6 +622,7 @@ function drawSource(w, h) {
   srcCanvas.getContext('2d').drawImage(srcImg, 0, 0, w, h);
 }
 function showResult() {
+  showLoading(false);
   preview.width = resultCanvas.width;
   preview.height = resultCanvas.height;
   pctx.drawImage(resultCanvas, 0, 0);
@@ -757,8 +771,8 @@ function kickPro() {
   ensureOpenCV().then(function (cv) {
     if (cv && ownPhoto) {
       proActive = true;
-      convert();
       hint.textContent = HINT_PRO;
+      setTimeout(convert, 30);
     }
   });
   ensureTracer();
@@ -825,31 +839,59 @@ function composeSheet() {
 }
 
 /* ---------- loading photos ---------- */
+var lastObjectUrl = null;
+function clearResult() {
+  resultCanvas.width = 2; resultCanvas.height = 2;
+  preview.width = 1100; preview.height = 1424;
+  pctx.fillStyle = '#ffffff';
+  pctx.fillRect(0, 0, preview.width, preview.height);
+}
 function loadFile(file) {
   if (!file || !/^image\//.test(file.type)) {
     hint.textContent = 'That file is not an image — pick a JPG or PNG photo.';
     return;
   }
+  /* A new picture replaces the old one everywhere, right away: the old
+     preview is cleared, the crop panel closes, and the buttons go back
+     to inactive until the new coloring page is ready. */
+  closeCrop();
+  proActive = false;
+  setActionsReady(false);
+  clearResult();
+  showLoading(true);
+  hint.textContent = 'Loading your photo…';
   var url = URL.createObjectURL(file);
   var img = new Image();
   img.onload = function () {
+    if (lastObjectUrl) { URL.revokeObjectURL(lastObjectUrl); }
+    lastObjectUrl = url;
     srcImg = img;
     ownPhoto = true;
     cropOpenBtn.classList.add('is-on');
-    convert();
-    hint.textContent = 'Your coloring page is ready — the smart converter is warming up for even cleaner lines.';
+    setActionsReady(true);
+    requestAnimationFrame(function () {
+      convert();
+      hint.textContent = 'Your coloring page is ready — the smart converter is warming up for even cleaner lines.';
+    });
     kickPro();
   };
-  img.onerror = function () { hint.textContent = 'That photo could not be opened — try a different one.'; };
+  img.onerror = function () {
+    URL.revokeObjectURL(url);
+    showLoading(false);
+    hint.textContent = 'That photo could not be opened — try a different one.';
+    if (srcImg) { convert(); setActionsReady(ownPhoto); }
+  };
   img.src = url;
 }
 function loadExample() {
+  showLoading(true);
   var img = new Image();
   img.onload = function () {
     srcImg = img;
     convert();
     hint.textContent = HINT_EXAMPLE;
   };
+  img.onerror = function () { showLoading(false); };
   img.src = 'assets/coloring-page-maker/example-photo.jpg';
 }
 dropZone.addEventListener('click', function () { fileInput.click(); });
@@ -861,7 +903,9 @@ dropZone.addEventListener('drop', function (e) { var f = e.dataTransfer && e.dat
 document.getElementById('exampleBtn').addEventListener('click', function () {
   ownPhoto = false; proActive = false;
   cropOpenBtn.classList.remove('is-on');
+  setActionsReady(false);
   closeCrop();
+  clearResult();
   loadExample();
 });
 
@@ -894,6 +938,7 @@ document.getElementById('cropApply').addEventListener('click', function () {
     var img = new Image();
     img.onload = function () {
       srcImg = img;
+      setActionsReady(true);
       convert();
       hint.textContent = proActive ? HINT_PRO : 'Crop applied — your coloring page is updated.';
     };
@@ -931,10 +976,29 @@ document.getElementById('printBtn').addEventListener('click', function () {
     setTimeout(function () { window.print(); }, 60);
   });
 });
-if (document.fonts && document.fonts.ready) {
-  document.fonts.ready.then(loadExample);
+/* The example converts only when the tool is near the screen or the browser
+   is idle, so the tool's loading never janks the rest of the page. */
+var exampleStarted = false;
+function startExample() {
+  if (exampleStarted || ownPhoto) { return; }
+  exampleStarted = true;
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(loadExample);
+  } else {
+    loadExample();
+  }
+}
+var toolSection = document.querySelector('.tool-section');
+if ('IntersectionObserver' in window && toolSection) {
+  var io = new IntersectionObserver(function (entries) {
+    if (entries[0].isIntersecting) { io.disconnect(); startExample(); }
+  }, { rootMargin: '600px' });
+  io.observe(toolSection);
+  setTimeout(startExample, 4000);
+} else if ('requestIdleCallback' in window) {
+  requestIdleCallback(startExample, { timeout: 2500 });
 } else {
-  loadExample();
+  setTimeout(startExample, 1200);
 }
 })();
 </script>
