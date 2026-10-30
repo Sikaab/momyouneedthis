@@ -1,1 +1,1202 @@
-PCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9ImVuIj4KCjxoZWFkPgo8IS0tIEdvb2dsZSB0YWcgKGd0YWcuanMpIC0gZGVmZXJyZWQgdW50aWwgcGFnZSBsb2FkIGZvciBwZXJmb3JtYW5jZSAtLT4KPHNjcmlwdD4Kd2luZG93LmFkZEV2ZW50TGlzdGVuZXIoJ2xvYWQnLCBmdW5jdGlvbigpIHsKICB2YXIgcyA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ3NjcmlwdCcpOwogIHMuYXN5bmMgPSB0cnVlOwogIHMuc3JjID0gJ2h0dHBzOi8vd3d3Lmdvb2dsZXRhZ21hbmFnZXIuY29tL2d0YWcvanM/aWQ9Ry1GRTQ4S0s2VEhRJzsKICBkb2N1bWVudC5oZWFkLmFwcGVuZENoaWxkKHMpOwogIHdpbmRvdy5kYXRhTGF5ZXIgPSB3aW5kb3cuZGF0YUxheWVyIHx8IFtdOwogIGZ1bmN0aW9uIGd0YWcoKXtkYXRhTGF5ZXIucHVzaChhcmd1bWVudHMpO30KICBndGFnKCdqcycsIG5ldyBEYXRlKCkpOwogIGd0YWcoJ2NvbmZpZycsICdHLUZFNDhLSzZUSFEnKTsKfSk7Cjwvc2NyaXB0PgoKPG1ldGEgY2hhcnNldD0iVVRGLTgiPgo8bGluayByZWw9ImNhbm9uaWNhbCIgaHJlZj0iaHR0cHM6Ly9tb215b3VuZWVkdGhpcy5jb20vbnVtYmVyLWNvbG9yaW5nLXBhZ2VzIj4KPG1ldGEgbmFtZT0idmlld3BvcnQiIGNvbnRlbnQ9IndpZHRoPWRldmljZS13aWR0aCwgaW5pdGlhbC1zY2FsZT0xLjAiPgoKCjxtZXRhIHByb3BlcnR5PSJvZzp0aXRsZSIgY29udGVudD0iRnJlZSBOdW1iZXIgQ29sb3JpbmcgUGFnZXMgfCBNb21Zb3VOZWVkVGhpcyI+CjxtZXRhIHByb3BlcnR5PSJvZzpkZXNjcmlwdGlvbiIgY29udGVudD0iRnJlZSBwcmludGFibGUgbnVtYmVyIGNvbG9yaW5nIHBhZ2VzIGZvciB0b2RkbGVycyBhbmQgcHJlc2Nob29sZXJzLiBIZWxwIGNoaWxkcmVuIGxlYXJuIG51bWJlcnMsIGNvdW50aW5nLCBhbmQgZWFybHkgbWF0aCBza2lsbHMgd2l0aCBmdW4gY29sb3Jpbmcgd29ya3NoZWV0cy4iPgo8bWV0YSBwcm9wZXJ0eT0ib2c6dHlwZSIgY29udGVudD0id2Vic2l0ZSI+CjxtZXRhIHByb3BlcnR5PSJvZzp1cmwiIGNvbnRlbnQ9Imh0dHBzOi8vbW9teW91bmVlZHRoaXMuY29tL251bWJlci1jb2xvcmluZy1wYWdlcyI+CjxtZXRhIHByb3BlcnR5PSJvZzppbWFnZSIgY29udGVudD0iaHR0cHM6Ly9tb215b3VuZWVkdGhpcy5jb20vYXNzZXRzL251bWJlci1jb2xvcmluZy1wYWdlLW9uZS5qcGVnIj4KCjx0aXRsZT5GcmVlIE51bWJlciBDb2xvcmluZyBQYWdlcyB8IE1vbVlvdU5lZWRUaGlzPC90aXRsZT4KCjxtZXRhIG5hbWU9ImRlc2NyaXB0aW9uIiBjb250ZW50PSJGcmVlIHByaW50YWJsZSBudW1iZXIgY29sb3JpbmcgcGFnZXMgZm9yIHRvZGRsZXJzIGFuZCBwcmVzY2hvb2xlcnMuIEhlbHAgY2hpbGRyZW4gbGVhcm4gbnVtYmVycywgY291bnRpbmcsIGFuZCBlYXJseSBtYXRoIHNraWxscyB3aXRoIGZ1biBjb2xvcmluZyB3b3Jrc2hlZXRzLiI+Cgo8bGluayByZWw9InN0eWxlc2hlZXQiIGhyZWY9Ii9zdHlsZS5taW4uY3NzIj4KCjxsaW5rIHJlbD0icHJlY29ubmVjdCIgaHJlZj0iaHR0cHM6Ly9mb250cy5nb29nbGVhcGlzLmNvbSI+CjxsaW5rIHJlbD0icHJlY29ubmVjdCIgaHJlZj0iaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbSIgY3Jvc3NvcmlnaW4+CjxsaW5rIGhyZWY9Imh0dHBzOi8vZm9udHMuZ29vZ2xlYXBpcy5jb20vY3NzMj9mYW1pbHk9TnVuaXRvOndnaHRANDAwOzcwMDs5MDAmZGlzcGxheT1zd2FwIiByZWw9InN0eWxlc2hlZXQiPgoKPHN0eWxlPgovKiBNb21Zb3VOZWVkVGhpcyBTRU8gZGVzaWduIHN5c3RlbSAqLwoKICAgICAgICAvKiBTRU8gY29udGVudCBzZWN0aW9ucyDigJQgZGVzaWduZWQgdG8gbWF0Y2ggdGhlIE1vbVlvdU5lZWRUaGlzIGJyYW5kLiAqLwogICAgICAgIC5zZW8tc2VjdGlvbiB7CiAgICAgICAgICAgIG1heC13aWR0aDogOTAwcHg7CiAgICAgICAgICAgIG1hcmdpbjogNTVweCBhdXRvIDA7CiAgICAgICAgICAgIHBhZGRpbmc6IDQ1cHggNDJweCA1MHB4OwogICAgICAgICAgICBiYWNrZ3JvdW5kOiAjZmZmZmZmOwogICAgICAgICAgICBib3JkZXI6IDFweCBzb2xpZCAjZWVlNWU3OwogICAgICAgICAgICBib3JkZXItcmFkaXVzOiAzNXB4OwogICAgICAgICAgICBib3gtc2hhZG93OiAwIDEycHggMzVweCByZ2JhKDgwLCA1NSwgNTUsIDAuMDYpOwogICAgICAgICAgICBmb250LWZhbWlseTogJ051bml0bycsIHN5c3RlbS11aSwgc2Fucy1zZXJpZjsKICAgICAgICAgICAgdGV4dC1hbGlnbjogbGVmdDsKICAgICAgICAgICAgcG9zaXRpb246IHJlbGF0aXZlOwogICAgICAgICAgICBvdmVyZmxvdzogaGlkZGVuOwogICAgICAgIH0KCiAgICAgICAgLnNlby1zZWN0aW9uOjpiZWZvcmUgewogICAgICAgICAgICBjb250ZW50OiAiIjsKICAgICAgICAgICAgcG9zaXRpb246IGFic29sdXRlOwogICAgICAgICAgICB3aWR0aDogMjUwcHg7CiAgICAgICAgICAgIGhlaWdodDogMjUwcHg7CiAgICAgICAgICAgIHRvcDogLTE0NXB4OwogICAgICAgICAgICByaWdodDogLTkwcHg7CiAgICAgICAgICAgIGJhY2tncm91bmQ6ICNmZmU1ZWM7CiAgICAgICAgICAgIGJvcmRlci1yYWRpdXM6IDUwJTsKICAgICAgICAgICAgb3BhY2l0eTogLjY1OwogICAgICAgICAgICBwb2ludGVyLWV2ZW50czogbm9uZTsKICAgICAgICB9CgogICAgICAgIC5zZW8tc2VjdGlvbjo6YWZ0ZXIgewogICAgICAgICAgICBjb250ZW50OiAiIjsKICAgICAgICAgICAgcG9zaXRpb246IGFic29sdXRlOwogICAgICAgICAgICB3aWR0aDogMTkwcHg7CiAgICAgICAgICAgIGhlaWdodDogMTkwcHg7CiAgICAgICAgICAgIGJvdHRvbTogLTEyMHB4OwogICAgICAgICAgICBsZWZ0OiAtODBweDsKICAgICAgICAgICAgYmFja2dyb3VuZDogI2ZmZjFjOTsKICAgICAgICAgICAgYm9yZGVyLXJhZGl1czogNTAlOwogICAgICAgICAgICBvcGFjaXR5OiAuNTU7CiAgICAgICAgICAgIHBvaW50ZXItZXZlbnRzOiBub25lOwogICAgICAgIH0KCiAgICAgICAgLnNlby1zZWN0aW9uID4gKiB7CiAgICAgICAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTsKICAgICAgICAgICAgei1pbmRleDogMTsKICAgICAgICB9CgogICAgICAgIC5zZW8tc2VjdGlvbiAuc2VjdGlvbi1raWNrZXIgewogICAgICAgICAgICBkaXNwbGF5OiBibG9jazsKICAgICAgICAgICAgbWFyZ2luLWJvdHRvbTogMTBweDsKICAgICAgICAgICAgY29sb3I6I2MwM2Q1YjsKICAgICAgICAgICAgZm9udC1zaXplOiAxMXB4OwogICAgICAgICAgICBmb250LXdlaWdodDogOTAwOwogICAgICAgICAgICBsZXR0ZXItc3BhY2luZzogMXB4OwogICAgICAgICAgICB0ZXh0LXRyYW5zZm9ybTogdXBwZXJjYXNlOwogICAgICAgICAgICB0ZXh0LWFsaWduOiBjZW50ZXI7CiAgICAgICAgfQoKICAgICAgICAuc2VvLXNlY3Rpb24gaDIgewogICAgICAgICAgICBtYXgtd2lkdGg6IDcwMHB4OwogICAgICAgICAgICBtYXJnaW46IDAgYXV0byAxNHB4OwogICAgICAgICAgICBjb2xvcjogIzMzMmIyYjsKICAgICAgICAgICAgZm9udC1zaXplOiBjbGFtcCgyNnB4LCAzLjZ2dywgMzRweCk7CiAgICAgICAgICAgIGxpbmUtaGVpZ2h0OiAxLjE1OwogICAgICAgICAgICBsZXR0ZXItc3BhY2luZzogLS42cHg7CiAgICAgICAgICAgIGZvbnQtd2VpZ2h0OiA5MDA7CiAgICAgICAgICAgIHRleHQtYWxpZ246IGNlbnRlcjsKICAgICAgICB9CgogICAgICAgIC5zZW8tc2VjdGlvbiBoMjo6YWZ0ZXIgewogICAgICAgICAgICBjb250ZW50OiAiIjsKICAgICAgICAgICAgZGlzcGxheTogYmxvY2s7CiAgICAgICAgICAgIHdpZHRoOiA0NXB4OwogICAgICAgICAgICBoZWlnaHQ6IDNweDsKICAgICAgICAgICAgbWFyZ2luOiAxNnB4IGF1dG8gMDsKICAgICAgICAgICAgYmFja2dyb3VuZDogI2U4OWFhYTsKICAgICAgICAgICAgYm9yZGVyLXJhZGl1czogOTk5cHg7CiAgICAgICAgfQoKICAgICAgICAuc2VvLWxlYWQgewogICAgICAgICAgICBtYXgtd2lkdGg6IDY4MHB4OwogICAgICAgICAgICBtYXJnaW46IDAgYXV0byAyNnB4OwogICAgICAgICAgICBjb2xvcjogIzZkNjU2NjsKICAgICAgICAgICAgZm9udC1zaXplOiAxNnB4OwogICAgICAgICAgICBsaW5lLWhlaWdodDogMS43OwogICAgICAgICAgICB0ZXh0LWFsaWduOiBjZW50ZXI7CiAgICAgICAgfQoKICAgICAgICAuc2VvLWxpbmtzIHsKICAgICAgICAgICAgbGlzdC1zdHlsZTogbm9uZTsKICAgICAgICAgICAgbWFyZ2luOiAxMHB4IGF1dG8gMDsKICAgICAgICAgICAgcGFkZGluZzogMDsKICAgICAgICAgICAgbWF4LXdpZHRoOiA3MjBweDsKICAgICAgICAgICAgZGlzcGxheTogZ3JpZDsKICAgICAgICAgICAgZ2FwOiAxMHB4OwogICAgICAgIH0KCiAgICAgICAgLnNlby1saW5rcyBsaSB7CiAgICAgICAgICAgIHBhZGRpbmc6IDE2cHggMThweDsKICAgICAgICAgICAgYmFja2dyb3VuZDogI2ZmZmFmODsKICAgICAgICAgICAgYm9yZGVyOiAxcHggc29saWQgI2YxZTVlNzsKICAgICAgICAgICAgYm9yZGVyLXJhZGl1czogMTZweDsKICAgICAgICAgICAgdHJhbnNpdGlvbjogdHJhbnNmb3JtIC4ycyBlYXNlLCBib3gtc2hhZG93IC4ycyBlYXNlOwogICAgICAgIH0KCiAgICAgICAgLnNlby1saW5rcyBsaTpob3ZlciB7CiAgICAgICAgICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlWSgtMnB4KTsKICAgICAgICAgICAgYm94LXNoYWRvdzogMCA4cHggMjBweCByZ2JhKDgwLCA1NSwgNjUsIC4wNyk7CiAgICAgICAgfQoKICAgICAgICAuc2VvLWxpbmtzIGEgewogICAgICAgICAgICBjb2xvcjogIzMzMmIyYjsKICAgICAgICAgICAgZm9udC1zaXplOiAxNXB4OwogICAgICAgICAgICBmb250LXdlaWdodDogOTAwOwogICAgICAgICAgICB0ZXh0LWRlY29yYXRpb246IG5vbmU7CiAgICAgICAgfQoKICAgICAgICAuc2VvLWxpbmtzIGE6aG92ZXIgewogICAgICAgICAgICBjb2xvcjojYzMzNzYxOwogICAgICAgIH0KCiAgICAgICAgLnNlby1saW5rcyBzcGFuIHsKICAgICAgICAgICAgZGlzcGxheTogYmxvY2s7CiAgICAgICAgICAgIG1hcmdpbi10b3A6IDRweDsKICAgICAgICAgICAgY29sb3I6IzZkNmQ2ZDsKICAgICAgICAgICAgZm9udC1zaXplOiAxM3B4OwogICAgICAgICAgICBsaW5lLWhlaWdodDogMS41OwogICAgICAgIH0KCgogICAgICAgIC5zZW8tc3RlcHMgewogICAgICAgICAgICBsaXN0LXN0eWxlOiBub25lOwogICAgICAgICAgICBtYXJnaW46IDAgYXV0bzsKICAgICAgICAgICAgcGFkZGluZzogMDsKICAgICAgICAgICAgbWF4LXdpZHRoOiA3MjBweDsKICAgICAgICAgICAgZGlzcGxheTogZ3JpZDsKICAgICAgICAgICAgZ2FwOiAxMnB4OwogICAgICAgICAgICBjb3VudGVyLXJlc2V0OiBzZW8tc3RlcDsKICAgICAgICB9CgogICAgICAgIC5zZW8tc3RlcHMgbGkgewogICAgICAgICAgICBjb3VudGVyLWluY3JlbWVudDogc2VvLXN0ZXA7CiAgICAgICAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTsKICAgICAgICAgICAgcGFkZGluZzogMThweCAyMHB4IDE4cHggNzBweDsKICAgICAgICAgICAgYmFja2dyb3VuZDogI2ZmZmFmODsKICAgICAgICAgICAgYm9yZGVyOiAxcHggc29saWQgI2YxZTVlNzsKICAgICAgICAgICAgYm9yZGVyLXJhZGl1czogMThweDsKICAgICAgICAgICAgY29sb3I6ICM1ZjU3NTg7CiAgICAgICAgICAgIGZvbnQtc2l6ZTogMTVweDsKICAgICAgICAgICAgbGluZS1oZWlnaHQ6IDEuNjsKICAgICAgICB9CgogICAgICAgIC5zZW8tc3RlcHMgbGk6OmJlZm9yZSB7CiAgICAgICAgICAgIGNvbnRlbnQ6IGNvdW50ZXIoc2VvLXN0ZXApOwogICAgICAgICAgICBwb3NpdGlvbjogYWJzb2x1dGU7CiAgICAgICAgICAgIGxlZnQ6IDIwcHg7CiAgICAgICAgICAgIHRvcDogNTAlOwogICAgICAgICAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoLTUwJSk7CiAgICAgICAgICAgIHdpZHRoOiAzNHB4OwogICAgICAgICAgICBoZWlnaHQ6IDM0cHg7CiAgICAgICAgICAgIGRpc3BsYXk6IGZsZXg7CiAgICAgICAgICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7CiAgICAgICAgICAgIGp1c3RpZnktY29udGVudDogY2VudGVyOwogICAgICAgICAgICBiYWNrZ3JvdW5kOiAjZTg5YWFhOwogICAgICAgICAgICBib3JkZXItcmFkaXVzOiA1MCU7CiAgICAgICAgICAgIGNvbG9yOiAjZmZmZmZmOwogICAgICAgICAgICBmb250LXNpemU6IDE1cHg7CiAgICAgICAgICAgIGZvbnQtd2VpZ2h0OiA5MDA7CiAgICAgICAgfQoKICAgICAgICAuc2VvLXN0ZXBzIGxpIHN0cm9uZyB7CiAgICAgICAgICAgIGNvbG9yOiAjMzMyYjJiOwogICAgICAgIH0KCgogICAgICAgIC5zZW8tZmFxIHsKICAgICAgICAgICAgbWF4LXdpZHRoOiA3MjBweDsKICAgICAgICAgICAgbWFyZ2luOiAwIGF1dG87CiAgICAgICAgICAgIGRpc3BsYXk6IGdyaWQ7CiAgICAgICAgICAgIGdhcDogMTJweDsKICAgICAgICB9CgogICAgICAgIC5zZW8tZmFxLWl0ZW0gewogICAgICAgICAgICBwYWRkaW5nOiAyMHB4IDIycHg7CiAgICAgICAgICAgIGJhY2tncm91bmQ6ICNmZmZhZjg7CiAgICAgICAgICAgIGJvcmRlcjogMXB4IHNvbGlkICNmMGRmZTM7CiAgICAgICAgICAgIGJvcmRlci1yYWRpdXM6IDE4cHg7CiAgICAgICAgfQoKICAgICAgICAuc2VvLWZhcS1pdGVtIGgzIHsKICAgICAgICAgICAgbWFyZ2luOiAwIDAgOHB4OwogICAgICAgICAgICBjb2xvcjogIzMzMmIyYjsKICAgICAgICAgICAgZm9udC1zaXplOiAxNnB4OwogICAgICAgICAgICBsaW5lLWhlaWdodDogMS40OwogICAgICAgICAgICBmb250LXdlaWdodDogOTAwOwogICAgICAgIH0KCiAgICAgICAgLnNlby1mYXEtaXRlbSBwIHsKICAgICAgICAgICAgbWFyZ2luOiAwOwogICAgICAgICAgICBjb2xvcjogIzY4NjA2MTsKICAgICAgICAgICAgZm9udC1zaXplOiAxNHB4OwogICAgICAgICAgICBsaW5lLWhlaWdodDogMS43OwogICAgICAgIH0KCkBtZWRpYSAobWF4LXdpZHRoOiA3NTBweCkgewogICAgICAgICAgICAuc2VvLXNlY3Rpb24gewogICAgICAgICAgICAgICAgbWFyZ2luLXRvcDogNDBweDsKICAgICAgICAgICAgICAgIHBhZGRpbmc6IDM1cHggMjBweCAzOHB4OwogICAgICAgICAgICAgICAgYm9yZGVyLXJhZGl1czogMjhweDsKICAgICAgICAgICAgfQogICAgICAgICAgICAuc2VvLXN0ZXBzIGxpIHsKICAgICAgICAgICAgICAgIHBhZGRpbmc6IDE2cHggMTZweCAxNnB4IDYycHg7CiAgICAgICAgICAgICAgICBmb250LXNpemU6IDE0cHg7CiAgICAgICAgICAgIH0KICAgICAgICAgICAgLnNlby1zdGVwcyBsaTo6YmVmb3JlIHsKICAgICAgICAgICAgICAgIGxlZnQ6IDE2cHg7CiAgICAgICAgICAgIH0KICAgICAgICAgICAgLnNlby1mYXEtaXRlbSB7CiAgICAgICAgICAgICAgICBwYWRkaW5nOiAxOHB4OwogICAgICAgICAgICB9CiAgICAgICAgICAgIC5zZW8tdGFibGUgewogICAgICAgICAgICAgICAgZm9udC1zaXplOiAxMnB4OwogICAgICAgICAgICB9CiAgICAgICAgICAgIC5zZW8tdGFibGUgdGgsCiAgICAgICAgICAgIC5zZW8tdGFibGUgdGQgewogICAgICAgICAgICAgICAgcGFkZGluZzogOXB4IDhweDsKICAgICAgICAgICAgfQogICAgICAgICAgICAuc2VvLXRhYmxlIHRoZWFkIHRoIHsKICAgICAgICAgICAgICAgIHdoaXRlLXNwYWNlOiBub3JtYWw7CiAgICAgICAgICAgIH0KICAgICAgICB9Cgo8L3N0eWxlPgoKPHNjcmlwdCB0eXBlPSJhcHBsaWNhdGlvbi9sZCtqc29uIj4KewogICJAY29udGV4dCI6ICJodHRwczovL3NjaGVtYS5vcmciLAogICJAdHlwZSI6ICJGQVFQYWdlIiwKICAibWFpbkVudGl0eSI6IFsKICAgIHsKICAgICAgIkB0eXBlIjogIlF1ZXN0aW9uIiwKICAgICAgIm5hbWUiOiAiSXMgdGhpcyBudW1iZXIgY29sb3JpbmcgcGFnZXMgcHJpbnRhYmxlIHJlYWxseSBmcmVlPyIsCiAgICAgICJhY2NlcHRlZEFuc3dlciI6IHsKICAgICAgICAiQHR5cGUiOiAiQW5zd2VyIiwKICAgICAgICAidGV4dCI6ICJZZXMg4oCUIHRoaXMgbnVtYmVyIGNvbG9yaW5nIHBhZ2VzIHByaW50YWJsZSBpcyAxMDAlIGZyZWUgdG8gZG93bmxvYWQgYW5kIHByaW50IGF0IGhvbWUuIE5vIHNpZ251cCBhbmQgbm8gcGF5bWVudCBuZWVkZWQuIEp1c3QgdGFwIHRoZSBkb3dubG9hZCBidXR0b24gYW5kIHByaW50IGFzIG1hbnkgY29waWVzIGFzIHlvdSBsaWtlLiIKICAgICAgfQogICAgfSwKICAgIHsKICAgICAgIkB0eXBlIjogIlF1ZXN0aW9uIiwKICAgICAgIm5hbWUiOiAiV2hhdCBhZ2VzIGlzIHRoaXMgcHJpbnRhYmxlIGJlc3QgZm9yPyIsCiAgICAgICJhY2NlcHRlZEFuc3dlciI6IHsKICAgICAgICAiQHR5cGUiOiAiQW5zd2VyIiwKICAgICAgICAidGV4dCI6ICJJdCBpcyBtYWRlIGZvciB0b2RkbGVycyBhbmQgcHJlc2Nob29sZXJzLiBMaXR0bGUgb25lcyBjYW4gZW5qb3kgaXQgd2l0aCBhIGdyb3duLXVw4oCZcyBoZWxwLCB3aGlsZSBvbGRlciBwcmVzY2hvb2xlcnMgY2FuIHdvcmsgb24gaXQgbW9yZSBpbmRlcGVuZGVudGx5LiIKICAgICAgfQogICAgfSwKICAgIHsKICAgICAgIkB0eXBlIjogIlF1ZXN0aW9uIiwKICAgICAgIm5hbWUiOiAiV2hhdCBzaG91bGQgd2UgY29sb3Igd2l0aD8iLAogICAgICAiYWNjZXB0ZWRBbnN3ZXIiOiB7CiAgICAgICAgIkB0eXBlIjogIkFuc3dlciIsCiAgICAgICAgInRleHQiOiAiQ3JheW9ucywgd2FzaGFibGUgbWFya2Vycywgb3IgY29sb3JlZCBwZW5jaWxzIGFsbCB3b3JrIGdyZWF0LiBGb3IgeW91bmcgdG9kZGxlcnMsIGNodW5reSBjcmF5b25zIGFyZSB0aGUgZWFzaWVzdCB0byBncmlwLiIKICAgICAgfQogICAgfSwKICAgIHsKICAgICAgIkB0eXBlIjogIlF1ZXN0aW9uIiwKICAgICAgIm5hbWUiOiAiQXJlIGNvbG9yaW5nIGJ5IG51bWJlciB3b3Jrc2hlZXRzIGdvb2QgZm9yIHByZXNjaG9vbGVycz8iLAogICAgICAiYWNjZXB0ZWRBbnN3ZXIiOiB7CiAgICAgICAgIkB0eXBlIjogIkFuc3dlciIsCiAgICAgICAgInRleHQiOiAiWWVzIOKAlCBjb2xvcmluZyBieSBudW1iZXIgd29ya3NoZWV0cyBoZWxwIHByZXNjaG9vbGVycyBwcmFjdGljZSBudW1iZXIgcmVjb2duaXRpb24sIGNvbG9yIG1hdGNoaW5nLCBhbmQgZmluZSBtb3RvciBza2lsbHMuIFN0YXJ0IHdpdGggbnVtYmVycyAxIHRvIDUgYW5kIGtlZXAgc2Vzc2lvbnMgc2hvcnQgYW5kIGZ1bi4iCiAgICAgIH0KICAgIH0KICBdCn0KPC9zY3JpcHQ+Cgo8L2hlYWQ+CgoKPGJvZHk+CgoKPGRpdiBjbGFzcz0icGFnZSI+CjxtYWluPgoKCjxzZWN0aW9uIGNsYXNzPSJyZXNvdXJjZS1wYWdlIj4KCgo8aW1nIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIiBzcmM9ImFzc2V0cy9sb2dvLnN2ZyIgY2xhc3M9ImxvZ28iIGFsdD0iTW9tWW91TmVlZFRoaXMiPgoKCjxzcGFuIGNsYXNzPSJmcmVlLWJhZGdlIj4KCvCflKIgRlJFRSBOVU1CRVIgQ09MT1JJTkcgUEFHRVMKCjwvc3Bhbj4KCgoKCjxoMT4KCk51bWJlciBDb2xvcmluZyBQYWdlcwoKPHNwYW4+CkZ1biBOdW1iZXIgTGVhcm5pbmcgRm9yIFRvZGRsZXJzICYgUHJlc2Nob29sZXJzCjwvc3Bhbj4KCjwvaDE+CgoKCgo8cCBjbGFzcz0iaW50cm8iPgoKVGhpcyBmcmVlIHByaW50YWJsZSBudW1iZXIgY29sb3JpbmcgcGFnZXMgZ2l2ZXMgdG9kZGxlcnMgYW5kIHByZXNjaG9vbGVycyBhIGZ1biwgbm8tcHJlcCB3YXkgdG8gYnVpbGQgY3JlYXRpdml0eSBhbmQgZmluZSBtb3RvciBza2lsbHMuIEp1c3QgZG93bmxvYWQsIHByaW50LCBhbmQgbGV0IHRoZW0gY29sb3IuCgo8L3A+CgoKCgoKPHNlY3Rpb24gY2xhc3M9ImRvd25sb2FkLWdyaWQiPgoKPGRpdiBjbGFzcz0iZG93bmxvYWQtY2FyZCI+CgoKPGltZyB3aWR0aD0iNTk3IiBoZWlnaHQ9IjgwMCIgbG9hZGluZz0ibGF6eSIgc3JjPSJhc3NldHMvbnVtYmVyLWNvbG9yaW5nLXBhZ2Utb25lLmpwZWciIGFsdD0iRnJlZSBwcmludGFibGUgbnVtYmVyIDEgY29sb3JpbmcgcGFnZSBmb3Iga2lkcyI+CgoKPGgzPgoKTnVtYmVyIDEgQ29sb3JpbmcgUGFnZQoKPC9oMz4KCgo8cD4KCkNvdW50IGFuZCBjb2xvciB0aGUgbnVtYmVyIDEhCgo8L3A+CgoKPGEgaHJlZj0iYXNzZXRzL251bWJlci1jb2xvcmluZy1wYWdlLW9uZS5qcGVnIiBkb3dubG9hZD0ibnVtYmVyLWNvbG9yaW5nLXBhZ2Utb25lLmpwZWciIGNsYXNzPSJkb3dubG9hZC1idXR0b24iPgoK4qyH77iPIERvd25sb2FkIE51bWJlciAxCgo8L2E+CgoKPC9kaXY+Cgo8ZGl2IGNsYXNzPSJkb3dubG9hZC1jYXJkIj4KCgo8aW1nIHdpZHRoPSI1OTciIGhlaWdodD0iODAwIiBsb2FkaW5nPSJsYXp5IiBzcmM9ImFzc2V0cy9udW1iZXItY29sb3JpbmctcGFnZS10d28uanBlZyIgYWx0PSJGcmVlIHByaW50YWJsZSBudW1iZXIgMiBjb2xvcmluZyBwYWdlIGZvciBraWRzIj4KCgo8aDM+CgpOdW1iZXIgMiBDb2xvcmluZyBQYWdlCgo8L2gzPgoKCjxwPgoKQ291bnQgYW5kIGNvbG9yIHRoZSBudW1iZXIgMiEKCjwvcD4KCgo8YSBocmVmPSJhc3NldHMvbnVtYmVyLWNvbG9yaW5nLXBhZ2UtdHdvLmpwZWciIGRvd25sb2FkPSJudW1iZXItY29sb3JpbmctcGFnZS10d28uanBlZyIgY2xhc3M9ImRvd25sb2FkLWJ1dHRvbiI+CgrirIfvuI8gRG93bmxvYWQgTnVtYmVyIDIKCjwvYT4KCgo8L2Rpdj4KCjxkaXYgY2xhc3M9ImRvd25sb2FkLWNhcmQiPgoKCjxpbWcgd2lkdGg9IjU5NyIgaGVpZ2h0PSI4MDAiIGxvYWRpbmc9ImxhenkiIHNyYz0iYXNzZXRzL251bWJlci1jb2xvcmluZy1wYWdlLXRocmVlLmpwZWciIGFsdD0iRnJlZSBwcmludGFibGUgbnVtYmVyIDMgY29sb3JpbmcgcGFnZSBmb3Iga2lkcyI+CgoKPGgzPgoKTnVtYmVyIDMgQ29sb3JpbmcgUGFnZQoKPC9oMz4KCgo8cD4KCkNvdW50IGFuZCBjb2xvciB0aGUgbnVtYmVyIDMhCgo8L3A+CgoKPGEgaHJlZj0iYXNzZXRzL251bWJlci1jb2xvcmluZy1wYWdlLXRocmVlLmpwZWciIGRvd25sb2FkPSJudW1iZXItY29sb3JpbmctcGFnZS10aHJlZS5qcGVnIiBjbGFzcz0iZG93bmxvYWQtYnV0dG9uIj4KCuKsh++4jyBEb3dubG9hZCBOdW1iZXIgMwoKPC9hPgoKCjwvZGl2PgoKPGRpdiBjbGFzcz0iZG93bmxvYWQtY2FyZCI+CgoKPGltZyB3aWR0aD0iNTk3IiBoZWlnaHQ9IjgwMCIgbG9hZGluZz0ibGF6eSIgc3JjPSJhc3NldHMvbnVtYmVycy1jb2xvcmluZy1wYWdlLWZvdXIuanBlZyIgYWx0PSJGcmVlIHByaW50YWJsZSBudW1iZXIgNCBjb2xvcmluZyBwYWdlIGZvciBraWRzIj4KCgo8aDM+CgpOdW1iZXIgNCBDb2xvcmluZyBQYWdlCgo8L2gzPgoKCjxwPgoKQ291bnQgYW5kIGNvbG9yIHRoZSBudW1iZXIgNCEKCjwvcD4KCgo8YSBocmVmPSJhc3NldHMvbnVtYmVycy1jb2xvcmluZy1wYWdlLWZvdXIuanBlZyIgZG93bmxvYWQ9Im51bWJlcnMtY29sb3JpbmctcGFnZS1mb3VyLmpwZWciIGNsYXNzPSJkb3dubG9hZC1idXR0b24iPgoK4qyH77iPIERvd25sb2FkIE51bWJlciA0Cgo8L2E+CgoKPC9kaXY+Cgo8ZGl2IGNsYXNzPSJkb3dubG9hZC1jYXJkIj4KCgo8aW1nIHdpZHRoPSI1OTciIGhlaWdodD0iODAwIiBsb2FkaW5nPSJsYXp5IiBzcmM9ImFzc2V0cy9udW1iZXJzLWNvbG9yaW5nLXBhZ2UtZml2ZS5qcGVnIiBhbHQ9IkZyZWUgcHJpbnRhYmxlIG51bWJlciA1IGNvbG9yaW5nIHBhZ2UgZm9yIGtpZHMiPgoKCjxoMz4KCk51bWJlciA1IENvbG9yaW5nIFBhZ2UKCjwvaDM+CgoKPHA+CgpDb3VudCBhbmQgY29sb3IgdGhlIG51bWJlciA1IQoKPC9wPgoKCjxhIGhyZWY9ImFzc2V0cy9udW1iZXJzLWNvbG9yaW5nLXBhZ2UtZml2ZS5qcGVnIiBkb3dubG9hZD0ibnVtYmVycy1jb2xvcmluZy1wYWdlLWZpdmUuanBlZyIgY2xhc3M9ImRvd25sb2FkLWJ1dHRvbiI+CgrirIfvuI8gRG93bmxvYWQgTnVtYmVyIDUKCjwvYT4KCgo8L2Rpdj4KCjxkaXYgY2xhc3M9ImRvd25sb2FkLWNhcmQiPgoKCjxpbWcgd2lkdGg9IjYyNSIgaGVpZ2h0PSI4MDAiIGxvYWRpbmc9ImxhenkiIHNyYz0iYXNzZXRzL251bWJlcnMtY29sb3JpbmctcGFnZS02LmpwZWciIGFsdD0iRnJlZSBwcmludGFibGUgbnVtYmVyIDYgY29sb3JpbmcgcGFnZSBmb3Iga2lkcyI+CgoKPGgzPgoKTnVtYmVyIDYgQ29sb3JpbmcgUGFnZQoKPC9oMz4KCgo8cD4KCkNvdW50IGFuZCBjb2xvciB0aGUgbnVtYmVyIDYhCgo8L3A+CgoKPGEgaHJlZj0iYXNzZXRzL251bWJlcnMtY29sb3JpbmctcGFnZS02LmpwZWciIGRvd25sb2FkPSJudW1iZXJzLWNvbG9yaW5nLXBhZ2UtNi5qcGVnIiBjbGFzcz0iZG93bmxvYWQtYnV0dG9uIj4KCuKsh++4jyBEb3dubG9hZCBOdW1iZXIgNgoKPC9hPgoKCjwvZGl2PgoKPGRpdiBjbGFzcz0iZG93bmxvYWQtY2FyZCI+CgoKPGltZyB3aWR0aD0iNTk3IiBoZWlnaHQ9IjgwMCIgbG9hZGluZz0ibGF6eSIgc3JjPSJhc3NldHMvbnVtYmVycy1jb2xvcmluZy1wYWdlLXNldmVuLmpwZWciIGFsdD0iRnJlZSBwcmludGFibGUgbnVtYmVyIDcgY29sb3JpbmcgcGFnZSBmb3Iga2lkcyI+CgoKPGgzPgoKTnVtYmVyIDcgQ29sb3JpbmcgUGFnZQoKPC9oMz4KCgo8cD4KCkNvdW50IGFuZCBjb2xvciB0aGUgbnVtYmVyIDchCgo8L3A+CgoKPGEgaHJlZj0iYXNzZXRzL251bWJlcnMtY29sb3JpbmctcGFnZS1zZXZlbi5qcGVnIiBkb3dubG9hZD0ibnVtYmVycy1jb2xvcmluZy1wYWdlLXNldmVuLmpwZWciIGNsYXNzPSJkb3dubG9hZC1idXR0b24iPgoK4qyH77iPIERvd25sb2FkIE51bWJlciA3Cgo8L2E+CgoKPC9kaXY+Cgo8ZGl2IGNsYXNzPSJkb3dubG9hZC1jYXJkIj4KCgo8aW1nIHdpZHRoPSI1OTciIGhlaWdodD0iODAwIiBsb2FkaW5nPSJsYXp5IiBzcmM9ImFzc2V0cy9udW1iZXJzLWNvbG9yaW5nLXBhZ2UtaGVpZ2h0LmpwZWciIGFsdD0iRnJlZSBwcmludGFibGUgbnVtYmVyIDggY29sb3JpbmcgcGFnZSBmb3Iga2lkcyI+CgoKPGgzPgoKTnVtYmVyIDggQ29sb3JpbmcgUGFnZQoKPC9oMz4KCgo8cD4KCkNvdW50IGFuZCBjb2xvciB0aGUgbnVtYmVyIDghCgo8L3A+CgoKPGEgaHJlZj0iYXNzZXRzL251bWJlcnMtY29sb3JpbmctcGFnZS1oZWlnaHQuanBlZyIgZG93bmxvYWQ9Im51bWJlcnMtY29sb3JpbmctcGFnZS1oZWlnaHQuanBlZyIgY2xhc3M9ImRvd25sb2FkLWJ1dHRvbiI+CgrirIfvuI8gRG93bmxvYWQgTnVtYmVyIDgKCjwvYT4KCgo8L2Rpdj4KCjxkaXYgY2xhc3M9ImRvd25sb2FkLWNhcmQiPgoKCjxpbWcgd2lkdGg9IjU5NyIgaGVpZ2h0PSI4MDAiIGxvYWRpbmc9ImxhenkiIHNyYz0iYXNzZXRzL251bWJlcnMtY29sb3JpbmctcGFnZS1uaW5lLmpwZWciIGFsdD0iRnJlZSBwcmludGFibGUgbnVtYmVyIDkgY29sb3JpbmcgcGFnZSBmb3Iga2lkcyI+CgoKPGgzPgoKTnVtYmVyIDkgQ29sb3JpbmcgUGFnZQoKPC9oMz4KCgo8cD4KCkNvdW50IGFuZCBjb2xvciB0aGUgbnVtYmVyIDkhCgo8L3A+CgoKPGEgaHJlZj0iYXNzZXRzL251bWJlcnMtY29sb3JpbmctcGFnZS1uaW5lLmpwZWciIGRvd25sb2FkPSJudW1iZXJzLWNvbG9yaW5nLXBhZ2UtbmluZS5qcGVnIiBjbGFzcz0iZG93bmxvYWQtYnV0dG9uIj4KCuKsh++4jyBEb3dubG9hZCBOdW1iZXIgOQoKPC9hPgoKCjwvZGl2PgoKPGRpdiBjbGFzcz0iZG93bmxvYWQtY2FyZCI+CgoKPGltZyB3aWR0aD0iNTk3IiBoZWlnaHQ9IjgwMCIgbG9hZGluZz0ibGF6eSIgc3JjPSJhc3NldHMvbnVtYmVycy1jb2xvcmluZy1wYWdlLXRlbi5qcGVnIiBhbHQ9IkZyZWUgcHJpbnRhYmxlIG51bWJlciAxMCBjb2xvcmluZyBwYWdlIGZvciBraWRzIj4KCgo8aDM+CgpOdW1iZXIgMTAgQ29sb3JpbmcgUGFnZQoKPC9oMz4KCgo8cD4KCkNvdW50IGFuZCBjb2xvciB0aGUgbnVtYmVyIDEwIQoKPC9wPgoKCjxhIGhyZWY9ImFzc2V0cy9udW1iZXJzLWNvbG9yaW5nLXBhZ2UtdGVuLmpwZWciIGRvd25sb2FkPSJudW1iZXJzLWNvbG9yaW5nLXBhZ2UtdGVuLmpwZWciIGNsYXNzPSJkb3dubG9hZC1idXR0b24iPgoK4qyH77iPIERvd25sb2FkIE51bWJlciAxMAoKPC9hPgoKCjwvZGl2PgoKPGRpdiBjbGFzcz0iZG93bmxvYWQtY2FyZCI+CgoKPGltZyB3aWR0aD0iNTk3IiBoZWlnaHQ9IjgwMCIgbG9hZGluZz0ibGF6eSIgc3JjPSJhc3NldHMvbnVtYmVyLXRyYWNpbmctY29sb3Jpbmctb25lLmpwZWciIGFsdD0iRnJlZSBwcmludGFibGUgbnVtYmVyIDEgdHJhY2luZyBwYWdlIGZvciBraWRzIj4KCgo8aDM+CgpOdW1iZXIgMSBUcmFjaW5nIFBhZ2UKCjwvaDM+CgoKPHA+CgpUcmFjZSB0aGUgbnVtYmVyIDEsIHRoZW4gY29sb3IgdGhlIHBpY3R1cmUhCgo8L3A+CgoKPGEgaHJlZj0iYXNzZXRzL251bWJlci10cmFjaW5nLWNvbG9yaW5nLW9uZS5qcGVnIiBkb3dubG9hZD0ibnVtYmVyLXRyYWNpbmctY29sb3Jpbmctb25lLmpwZWciIGNsYXNzPSJkb3dubG9hZC1idXR0b24iPgoK4qyH77iPIERvd25sb2FkIE51bWJlciAxIFRyYWNpbmcKCjwvYT4KCgo8L2Rpdj4KCjxkaXYgY2xhc3M9ImRvd25sb2FkLWNhcmQiPgoKCjxpbWcgd2lkdGg9IjU5NyIgaGVpZ2h0PSI4MDAiIGxvYWRpbmc9ImxhenkiIHNyYz0iYXNzZXRzL251bWJlci10cmFjaW5nLWNvbG9yaW5nLXR3by5qcGVnIiBhbHQ9IkZyZWUgcHJpbnRhYmxlIG51bWJlciAyIHRyYWNpbmcgcGFnZSBmb3Iga2lkcyI+CgoKPGgzPgoKTnVtYmVyIDIgVHJhY2luZyBQYWdlCgo8L2gzPgoKCjxwPgoKVHJhY2UgdGhlIG51bWJlciAyLCB0aGVuIGNvbG9yIHRoZSBwaWN0dXJlIQoKPC9wPgoKCjxhIGhyZWY9ImFzc2V0cy9udW1iZXItdHJhY2luZy1jb2xvcmluZy10d28uanBlZyIgZG93bmxvYWQ9Im51bWJlci10cmFjaW5nLWNvbG9yaW5nLXR3by5qcGVnIiBjbGFzcz0iZG93bmxvYWQtYnV0dG9uIj4KCuKsh++4jyBEb3dubG9hZCBOdW1iZXIgMiBUcmFjaW5nCgo8L2E+CgoKPC9kaXY+Cgo8ZGl2IGNsYXNzPSJkb3dubG9hZC1jYXJkIj4KCgo8aW1nIHdpZHRoPSI1OTciIGhlaWdodD0iODAwIiBsb2FkaW5nPSJsYXp5IiBzcmM9ImFzc2V0cy9udW1iZXItdHJhY2luZy1jb2xvcmluZy10aHJlZS5qcGVnIiBhbHQ9IkZyZWUgcHJpbnRhYmxlIG51bWJlciAzIHRyYWNpbmcgcGFnZSBmb3Iga2lkcyI+CgoKPGgzPgoKTnVtYmVyIDMgVHJhY2luZyBQYWdlCgo8L2gzPgoKCjxwPgoKVHJhY2UgdGhlIG51bWJlciAzLCB0aGVuIGNvbG9yIHRoZSBwaWN0dXJlIQoKPC9wPgoKCjxhIGhyZWY9ImFzc2V0cy9udW1iZXItdHJhY2luZy1jb2xvcmluZy10aHJlZS5qcGVnIiBkb3dubG9hZD0ibnVtYmVyLXRyYWNpbmctY29sb3JpbmctdGhyZWUuanBlZyIgY2xhc3M9ImRvd25sb2FkLWJ1dHRvbiI+CgrirIfvuI8gRG93bmxvYWQgTnVtYmVyIDMgVHJhY2luZwoKPC9hPgoKCjwvZGl2PgoKPGRpdiBjbGFzcz0iZG93bmxvYWQtY2FyZCI+CgoKPGltZyB3aWR0aD0iNTk3IiBoZWlnaHQ9IjgwMCIgbG9hZGluZz0ibGF6eSIgc3JjPSJhc3NldHMvbnVtYmVyLXRyYWNpbmctY29sb3JpbmctZm91ci5qcGVnIiBhbHQ9IkZyZWUgcHJpbnRhYmxlIG51bWJlciA0IHRyYWNpbmcgcGFnZSBmb3Iga2lkcyI+CgoKPGgzPgoKTnVtYmVyIDQgVHJhY2luZyBQYWdlCgo8L2gzPgoKCjxwPgoKVHJhY2UgdGhlIG51bWJlciA0LCB0aGVuIGNvbG9yIHRoZSBwaWN0dXJlIQoKPC9wPgoKCjxhIGhyZWY9ImFzc2V0cy9udW1iZXItdHJhY2luZy1jb2xvcmluZy1mb3VyLmpwZWciIGRvd25sb2FkPSJudW1iZXItdHJhY2luZy1jb2xvcmluZy1mb3VyLmpwZWciIGNsYXNzPSJkb3dubG9hZC1idXR0b24iPgoK4qyH77iPIERvd25sb2FkIE51bWJlciA0IFRyYWNpbmcKCjwvYT4KCgo8L2Rpdj4KCjxkaXYgY2xhc3M9ImRvd25sb2FkLWNhcmQiPgoKCjxpbWcgd2lkdGg9IjU5NyIgaGVpZ2h0PSI4MDAiIGxvYWRpbmc9ImxhenkiIHNyYz0iYXNzZXRzL251bWJlci10cmFjaW5nLWNvbG9yaW5nLWZpdmUuanBlZyIgYWx0PSJGcmVlIHByaW50YWJsZSBudW1iZXIgNSB0cmFjaW5nIHBhZ2UgZm9yIGtpZHMiPgoKCjxoMz4KCk51bWJlciA1IFRyYWNpbmcgUGFnZQoKPC9oMz4KCgo8cD4KClRyYWNlIHRoZSBudW1iZXIgNSwgdGhlbiBjb2xvciB0aGUgcGljdHVyZSEKCjwvcD4KCgo8YSBocmVmPSJhc3NldHMvbnVtYmVyLXRyYWNpbmctY29sb3JpbmctZml2ZS5qcGVnIiBkb3dubG9hZD0ibnVtYmVyLXRyYWNpbmctY29sb3JpbmctZml2ZS5qcGVnIiBjbGFzcz0iZG93bmxvYWQtYnV0dG9uIj4KCuKsh++4jyBEb3dubG9hZCBOdW1iZXIgNSBUcmFjaW5nCgo8L2E+CgoKPC9kaXY+Cgo8ZGl2IGNsYXNzPSJkb3dubG9hZC1jYXJkIj4KCgo8aW1nIHdpZHRoPSI1OTciIGhlaWdodD0iODAwIiBsb2FkaW5nPSJsYXp5IiBzcmM9ImFzc2V0cy9udW1iZXItdHJhY2luZy1jb2xvcmluZy1zaXguanBlZyIgYWx0PSJGcmVlIHByaW50YWJsZSBudW1iZXIgNiB0cmFjaW5nIHBhZ2UgZm9yIGtpZHMiPgoKCjxoMz4KCk51bWJlciA2IFRyYWNpbmcgUGFnZQoKPC9oMz4KCgo8cD4KClRyYWNlIHRoZSBudW1iZXIgNiwgdGhlbiBjb2xvciB0aGUgcGljdHVyZSEKCjwvcD4KCgo8YSBocmVmPSJhc3NldHMvbnVtYmVyLXRyYWNpbmctY29sb3Jpbmctc2l4LmpwZWciIGRvd25sb2FkPSJudW1iZXItdHJhY2luZy1jb2xvcmluZy1zaXguanBlZyIgY2xhc3M9ImRvd25sb2FkLWJ1dHRvbiI+CgrirIfvuI8gRG93bmxvYWQgTnVtYmVyIDYgVHJhY2luZwoKPC9hPgoKCjwvZGl2PgoKPGRpdiBjbGFzcz0iZG93bmxvYWQtY2FyZCI+CgoKPGltZyB3aWR0aD0iNTk3IiBoZWlnaHQ9IjgwMCIgbG9hZGluZz0ibGF6eSIgc3JjPSJhc3NldHMvbnVtYmVyLXRyYWNpbmctY29sb3Jpbmctc2V2ZW4uanBlZyIgYWx0PSJGcmVlIHByaW50YWJsZSBudW1iZXIgNyB0cmFjaW5nIHBhZ2UgZm9yIGtpZHMiPgoKCjxoMz4KCk51bWJlciA3IFRyYWNpbmcgUGFnZQoKPC9oMz4KCgo8cD4KClRyYWNlIHRoZSBudW1iZXIgNywgdGhlbiBjb2xvciB0aGUgcGljdHVyZSEKCjwvcD4KCgo8YSBocmVmPSJhc3NldHMvbnVtYmVyLXRyYWNpbmctY29sb3Jpbmctc2V2ZW4uanBlZyIgZG93bmxvYWQ9Im51bWJlci10cmFjaW5nLWNvbG9yaW5nLXNldmVuLmpwZWciIGNsYXNzPSJkb3dubG9hZC1idXR0b24iPgoK4qyH77iPIERvd25sb2FkIE51bWJlciA3IFRyYWNpbmcKCjwvYT4KCgo8L2Rpdj4KCjxkaXYgY2xhc3M9ImRvd25sb2FkLWNhcmQiPgoKCjxpbWcgd2lkdGg9IjU5NyIgaGVpZ2h0PSI4MDAiIGxvYWRpbmc9ImxhenkiIHNyYz0iYXNzZXRzL251bWJlci10cmFjaW5nLWNvbG9yaW5nLWhlaWdodC5qcGVnIiBhbHQ9IkZyZWUgcHJpbnRhYmxlIG51bWJlciA4IHRyYWNpbmcgcGFnZSBmb3Iga2lkcyI+CgoKPGgzPgoKTnVtYmVyIDggVHJhY2luZyBQYWdlCgo8L2gzPgoKCjxwPgoKVHJhY2UgdGhlIG51bWJlciA4LCB0aGVuIGNvbG9yIHRoZSBwaWN0dXJlIQoKPC9wPgoKCjxhIGhyZWY9ImFzc2V0cy9udW1iZXItdHJhY2luZy1jb2xvcmluZy1oZWlnaHQuanBlZyIgZG93bmxvYWQ9Im51bWJlci10cmFjaW5nLWNvbG9yaW5nLWhlaWdodC5qcGVnIiBjbGFzcz0iZG93bmxvYWQtYnV0dG9uIj4KCuKsh++4jyBEb3dubG9hZCBOdW1iZXIgOCBUcmFjaW5nCgo8L2E+CgoKPC9kaXY+Cgo8ZGl2IGNsYXNzPSJkb3dubG9hZC1jYXJkIj4KCgo8aW1nIHdpZHRoPSI1OTciIGhlaWdodD0iODAwIiBsb2FkaW5nPSJsYXp5IiBzcmM9ImFzc2V0cy9udW1iZXItdHJhY2luZy1jb2xvcmluZy1uaW5lLmpwZWciIGFsdD0iRnJlZSBwcmludGFibGUgbnVtYmVyIDkgdHJhY2luZyBwYWdlIGZvciBraWRzIj4KCgo8aDM+CgpOdW1iZXIgOSBUcmFjaW5nIFBhZ2UKCjwvaDM+CgoKPHA+CgpUcmFjZSB0aGUgbnVtYmVyIDksIHRoZW4gY29sb3IgdGhlIHBpY3R1cmUhCgo8L3A+CgoKPGEgaHJlZj0iYXNzZXRzL251bWJlci10cmFjaW5nLWNvbG9yaW5nLW5pbmUuanBlZyIgZG93bmxvYWQ9Im51bWJlci10cmFjaW5nLWNvbG9yaW5nLW5pbmUuanBlZyIgY2xhc3M9ImRvd25sb2FkLWJ1dHRvbiI+CgrirIfvuI8gRG93bmxvYWQgTnVtYmVyIDkgVHJhY2luZwoKPC9hPgoKCjwvZGl2PgoKPGRpdiBjbGFzcz0iZG93bmxvYWQtY2FyZCI+CgoKPGltZyB3aWR0aD0iNTk3IiBoZWlnaHQ9IjgwMCIgbG9hZGluZz0ibGF6eSIgc3JjPSJhc3NldHMvbnVtYmVyLXRyYWNpbmctY29sb3JpbmctdGVuLmpwZWciIGFsdD0iRnJlZSBwcmludGFibGUgbnVtYmVyIDEwIHRyYWNpbmcgcGFnZSBmb3Iga2lkcyI+CgoKPGgzPgoKTnVtYmVyIDEwIFRyYWNpbmcgUGFnZQoKPC9oMz4KCgo8cD4KClRyYWNlIHRoZSBudW1iZXIgMTAsIHRoZW4gY29sb3IgdGhlIHBpY3R1cmUhCgo8L3A+CgoKPGEgaHJlZj0iYXNzZXRzL251bWJlci10cmFjaW5nLWNvbG9yaW5nLXRlbi5qcGVnIiBkb3dubG9hZD0ibnVtYmVyLXRyYWNpbmctY29sb3JpbmctdGVuLmpwZWciIGNsYXNzPSJkb3dubG9hZC1idXR0b24iPgoK4qyH77iPIERvd25sb2FkIE51bWJlciAxMCBUcmFjaW5nCgo8L2E+CgoKPC9kaXY+Cgo8L3NlY3Rpb24+Cgo8c2VjdGlvbiBjbGFzcz0iZmxvdy1zZWN0aW9uIj4KCjxzcGFuIGNsYXNzPSJzZWN0aW9uLWtpY2tlciI+U3RlcCBieSBzdGVwPC9zcGFuPgoKPGgyPvCflKIgSG93IFRvIFVzZSBUaGlzIFByaW50YWJsZTwvaDI+Cgo8b2wgY2xhc3M9InNlby1zdGVwcyI+CjxsaT48c3Ryb25nPkRvd25sb2FkIGFuZCBwcmludDwvc3Ryb25nPiB0aGUgY29sb3JpbmcgcGFnZSBvbiBsZXR0ZXItc2l6ZSBwYXBlciDigJQgcHJpbnQgYSBmZXcgZXh0cmFzIHNvIHRoZXJlIGlzIG5vIGZpZ2h0aW5nIG92ZXIgZmF2b3JpdGVzLjwvbGk+CjxsaT48c3Ryb25nPlNldCBvdXQgY3JheW9ucywgbWFya2Vycywgb3IgY29sb3JlZCBwZW5jaWxzPC9zdHJvbmc+IGFuZCBsZXQgeW91ciBjaGlsZCBjaG9vc2UgdGhlaXIgY29sb3JzLjwvbGk+CjxsaT48c3Ryb25nPkNvbG9yIHRvZ2V0aGVyIG9yIHNpZGUgYnkgc2lkZTwvc3Ryb25nPiwgY2hhdHRpbmcgYWJvdXQgdGhlIHBpY3R1cmVzIGFzIHRoZXkgY29tZSB0byBsaWZlLjwvbGk+CjxsaT48c3Ryb25nPlNob3cgb2ZmIHRoZSBtYXN0ZXJwaWVjZTwvc3Ryb25nPiBvbiB0aGUgZnJpZGdlIG9yIGluIGEgbGVhcm5pbmcgYmluZGVyIHRvIGNlbGVicmF0ZSB0aGUgZWZmb3J0LjwvbGk+Cjwvb2w+Cgo8L3NlY3Rpb24+CgoKCgoKCgoKPHNlY3Rpb24gY2xhc3M9InRpcHMiPgoKCjxoMj4KCldoeSBOdW1iZXIgQ29sb3JpbmcgUGFnZXMgSGVscCBLaWRzIExlYXJuCgo8L2gyPgoKCjxwPgoKTnVtYmVyIGNvbG9yaW5nIGFjdGl2aXRpZXMgY29tYmluZSBjcmVhdGl2aXR5IHdpdGggZWFybHkgbWF0aCBwcmFjdGljZS4gQ2hpbGRyZW4gY2FuIGJ1aWxkIG51bWJlciByZWNvZ25pdGlvbiwgY291bnRpbmcgY29uZmlkZW5jZSwgcGVuY2lsIGNvbnRyb2wsIGFuZCBmb2N1cyB3aGlsZSBlbmpveWluZyBhIGZ1biBoYW5kcy1vbiBhY3Rpdml0eS4KCjwvcD4KCgo8L3NlY3Rpb24+CgoKCgoKCgoKPHNlY3Rpb24gY2xhc3M9ImdlbmVyYXRvci1ib3R0b20tY3RhIj4KCgo8aDI+Cgrwn5SiIE1vcmUgRWFybHkgTWF0aCBBY3Rpdml0aWVzCgo8L2gyPgoKCjxwPgoKS2VlcCBsZWFybmluZyB3aXRoIGNvdW50aW5nIHdvcmtzaGVldHMsIG51bWJlciB0cmFjaW5nIHBhZ2VzLCBwYXR0ZXJucywgc2hhcGVzLCBhbmQgb3RoZXIgcHJlc2Nob29sIG1hdGggYWN0aXZpdGllcy4KCjwvcD4KCgoKPGEgaHJlZj0iZnJlZS1tb20tcmVzb3VyY2VzIiBjbGFzcz0iZG93bmxvYWQtYnV0dG9uIj4KCvCfjoEgVmlldyBGcmVlIExlYXJuaW5nIEFjdGl2aXRpZXMKCjwvYT4KCgoKPC9zZWN0aW9uPgoKCgoKCgoKCjxzZWN0aW9uIGNsYXNzPSJ0aXBzIj4KCgo8aDI+CgpNb3JlIEZyZWUgS2lkcyBSZXNvdXJjZXMKCjwvaDI+CgoKPHA+CgpFeHBsb3JlIGFscGhhYmV0IGFjdGl2aXRpZXMsIGNvbG9yaW5nIHBhZ2VzLCBwcmVzY2hvb2wgd29ya3NoZWV0cywgcG90dHkgdHJhaW5pbmcgcmVzb3VyY2VzLCBhbmQgZnVuIGxlYXJuaW5nIGlkZWFzIGZvciB0b2RkbGVycy4KCjwvcD4KCgoKPGEgaHJlZj0iZnJlZS1tb20tcmVzb3VyY2VzIiBjbGFzcz0iZG93bmxvYWQtYnV0dG9uIj4KCvCfk5ogRXhwbG9yZSBBbGwgUmVzb3VyY2VzCgo8L2E+CgoKCjwvc2VjdGlvbj4KCgoKCgoKCgoKPHNlY3Rpb24gY2xhc3M9ImZsb3ctc2VjdGlvbiI+CjxzcGFuIGNsYXNzPSJzZWN0aW9uLWtpY2tlciI+TGVhcm5pbmcgZnVuPC9zcGFuPgo8aDI+8J+UoiBMZWFybmluZyBXaXRoIGNvbG9yaW5nIGJ5IG51bWJlciB3b3Jrc2hlZXRzPC9oMj4KPHA+VGhpcyBwYWdlJ3MgY29sb3VyLWJ5LW51bWJlciBzaGVldHMgY29tZSBpbiB0d28gc2l6ZXMuIFN0YXJ0IHdpdGggdGhlIDEgdG8gNSBzaGVldDogaXRzIGtleSB1c2VzIGZpdmUgY29sb3VycyDigJQgMSBpcyByZWQsIDIgeWVsbG93LCAzIGdyZWVuLCA0IGJyb3duLCBhbmQgNSBsaWdodCBibHVlIOKAlCBhbmQgY29sb3VyaW5nIGV2ZXJ5IG51bWJlcmVkIHNlY3Rpb24gcmV2ZWFscyBvbmUgYmlnIGFwcGxlLjwvcD4KPHA+TW92ZSB1cCB0byB0aGUgMSB0byAxMCBzaGVldCBvbmNlIHlvdXIgY2hpbGQgY2FuIG5hbWUgMSB0byA1IHdpdGhvdXQgaGVscC4gVGhlIGtleSBkb3VibGVzIHRvIHRlbiBjb2xvdXJzLCBhbmQgdGhlIGZpbmlzaGVkIHBpY3R1cmUgaXMgYSBraXRlLiBXb3JrIHRoZSBzYW1lIHdheSBvbiBib3RoIHNoZWV0czogcmVhZCB0aGUga2V5IHRvZ2V0aGVyIGZpcnN0LCBzZXQgb3V0IG9ubHkgdGhlIGNyYXlvbnMgdGhlIGtleSBuYW1lcywgdGhlbiBodW50IGZvciBvbmUgbnVtYmVyIGF0IGEgdGltZSBhbmQgY29sb3VyIGV2ZXJ5IHNlY3Rpb24gY2FycnlpbmcgaXQgYmVmb3JlIG1vdmluZyBvbiB0byB0aGUgbmV4dCBudW1iZXIuPC9wPgoKPHA+U2VlIDxhIGhyZWY9ImFzc2V0cy9wcmludGFibGVzL2NvbG9yLWJ5LW51bWJlci0xLTEwLnBkZiI+bnVtYmVyIHdvcmtzaGVldDwvYT4gZm9yIG1vcmUuPC9wPgo8L3NlY3Rpb24+Cgo8c2VjdGlvbiBjbGFzcz0ic2VvLXNlY3Rpb24iPgoKPHNwYW4gY2xhc3M9InNlY3Rpb24ta2lja2VyIj5GQVE8L3NwYW4+Cgo8aDI+4p2TIE51bWJlciBDb2xvcmluZyBQYWdlcyBGQVE8L2gyPgoKPGRpdiBjbGFzcz0ic2VvLWZhcSI+CjxkaXYgY2xhc3M9InNlby1mYXEtaXRlbSI+CjxoMz5JcyB0aGlzIG51bWJlciBjb2xvcmluZyBwYWdlcyBwcmludGFibGUgcmVhbGx5IGZyZWU/PC9oMz4KPHA+WWVzIOKAlCB0aGlzIG51bWJlciBjb2xvcmluZyBwYWdlcyBwcmludGFibGUgaXMgMTAwJSBmcmVlIHRvIGRvd25sb2FkIGFuZCBwcmludCBhdCBob21lLiBObyBzaWdudXAgYW5kIG5vIHBheW1lbnQgbmVlZGVkLiBKdXN0IHRhcCB0aGUgZG93bmxvYWQgYnV0dG9uIGFuZCBwcmludCBhcyBtYW55IGNvcGllcyBhcyB5b3UgbGlrZS48L3A+CjwvZGl2Pgo8ZGl2IGNsYXNzPSJzZW8tZmFxLWl0ZW0iPgo8aDM+V2hhdCBhZ2VzIGlzIHRoaXMgcHJpbnRhYmxlIGJlc3QgZm9yPzwvaDM+CjxwPkl0IGlzIG1hZGUgZm9yIHRvZGRsZXJzIGFuZCBwcmVzY2hvb2xlcnMuIExpdHRsZSBvbmVzIGNhbiBlbmpveSBpdCB3aXRoIGEgZ3Jvd24tdXDigJlzIGhlbHAsIHdoaWxlIG9sZGVyIHByZXNjaG9vbGVycyBjYW4gd29yayBvbiBpdCBtb3JlIGluZGVwZW5kZW50bHkuPC9wPgo8L2Rpdj4KPGRpdiBjbGFzcz0ic2VvLWZhcS1pdGVtIj4KPGgzPldoYXQgc2hvdWxkIHdlIGNvbG9yIHdpdGg/PC9oMz4KPHA+Q3JheW9ucywgd2FzaGFibGUgbWFya2Vycywgb3IgY29sb3JlZCBwZW5jaWxzIGFsbCB3b3JrIGdyZWF0LiBGb3IgeW91bmcgdG9kZGxlcnMsIGNodW5reSBjcmF5b25zIGFyZSB0aGUgZWFzaWVzdCB0byBncmlwLjwvcD4KPC9kaXY+CjxkaXYgY2xhc3M9InNlby1mYXEtaXRlbSI+CjxoMz5BcmUgY29sb3JpbmcgYnkgbnVtYmVyIHdvcmtzaGVldHMgZ29vZCBmb3IgcHJlc2Nob29sZXJzPzwvaDM+CjxwPlllcyDigJQgY29sb3JpbmcgYnkgbnVtYmVyIHdvcmtzaGVldHMgaGVscCBwcmVzY2hvb2xlcnMgcHJhY3RpY2UgbnVtYmVyIHJlY29nbml0aW9uLCBjb2xvciBtYXRjaGluZywgYW5kIGZpbmUgbW90b3Igc2tpbGxzLiBTdGFydCB3aXRoIG51bWJlcnMgMSB0byA1IGFuZCBrZWVwIHNlc3Npb25zIHNob3J0IGFuZCBmdW4uPC9wPgo8L2Rpdj4KPC9kaXY+Cgo8L3NlY3Rpb24+Cgo8c2VjdGlvbiBjbGFzcz0ic2VvLXNlY3Rpb24iPgoKPHNwYW4gY2xhc3M9InNlY3Rpb24ta2lja2VyIj5LZWVwIGV4cGxvcmluZzwvc3Bhbj4KCjxoMj7wn5SXIE1vcmUgRnJlZSBQcmludGFibGVzIFlvdeKAmWxsIExvdmU8L2gyPgoKPHVsIGNsYXNzPSJzZW8tbGlua3MiPgo8bGk+CjxhIGhyZWY9ImFscGhhYmV0LWNvbG9yaW5nLXBhZ2VzIj5GcmVlIEFscGhhYmV0IENvbG9yaW5nIFBhZ2VzPC9hPgo8c3Bhbj5GcmVlIHByaW50YWJsZSBhbHBoYWJldCBjb2xvcmluZyBwYWdlcyBmb3IgbGl0dGxlIGxlYXJuZXJzLjwvc3Bhbj4KPC9saT4KPGxpPgo8YSBocmVmPSJsZXR0ZXItYi1jb2xvcmluZy1wYWdlcyI+RnJlZSBMZXR0ZXIgQiBDb2xvcmluZyBQYWdlczwvYT4KPHNwYW4+RnJlZSBwcmludGFibGUgbGV0dGVyIGIgY29sb3JpbmcgcGFnZXMgZm9yIGxpdHRsZSBsZWFybmVycy48L3NwYW4+CjwvbGk+CjxsaT4KPGEgaHJlZj0ibGV0dGVyLWMtY29sb3JpbmctcGFnZXMiPkZyZWUgTGV0dGVyIEMgQ29sb3JpbmcgUGFnZXM8L2E+CjxzcGFuPkZyZWUgcHJpbnRhYmxlIGxldHRlciBjIGNvbG9yaW5nIHBhZ2VzIGZvciBsaXR0bGUgbGVhcm5lcnMuPC9zcGFuPgo8L2xpPgo8bGk+CjxhIGhyZWY9Im1hdGgtY29sb3JpbmctcGFnZXMiPkZyZWUgTWF0aCBDb2xvcmluZyBQYWdlczwvYT4KPHNwYW4+RnJlZSBwcmludGFibGUgbWF0aCBjb2xvcmluZyBwYWdlcyBmb3IgbGl0dGxlIGxlYXJuZXJzLjwvc3Bhbj4KPC9saT4KPC91bD4KCjwvc2VjdGlvbj4KCjwvc2VjdGlvbj4KCgoKCgoKCgo8L21haW4+Cjxmb290ZXI+CiAgICA8ZGl2IGNsYXNzPSJmb290ZXItbG9nbyI+CiAgICAgICAgPGltZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIKICAgICAgICAgICAgc3JjPSJhc3NldHMvbG9nby5zdmciCiAgICAgICAgICAgIGFsdD0iTW9tWW91TmVlZFRoaXMiCiAgICAgICAgPgogICAgPC9kaXY+CjxoMz4KICAgIE1vbVlvdU5lZWRUaGlzCjwvaDM+CjxwPgogICAgTW9tIGZpbmRzLCBzbWFydCB0b29scywgZnJlZSByZXNvdXJjZXMsIHJlYWwgYW5zd2VycwogICAgYW5kIGEgbGl0dGxlIGNoYW9zIGZyb20gdGhlIE1vbSBVbml2ZXJzZS4KPC9wPgo8ZGl2IGNsYXNzPSJmb290ZXItbGlua3MiPgogICAgPGEgaHJlZj0ibW9tLWZhdm9yaXRlcyI+CiAgICAgICAgTW9tIEJhdHRsZXMKICAgIDwvYT4KICAgIDxhIGhyZWY9Im1vbS1sYWIiPgogICAgICAgIE1vbSBMYWIKICAgIDwvYT4KICAgIDxhIGhyZWY9ImZyZWUtbW9tLXJlc291cmNlcyI+CiAgICAgICAgRnJlZSBSZXNvdXJjZXMKICAgIDwvYT4KICAgIDxhIGhyZWY9ImFib3V0Ij4KICAgICAgICBBYm91dAogICAgPC9hPgogICAgPGEgaHJlZj0icHJpdmFjeS1wb2xpY3kiPgogICAgICAgIFByaXZhY3kgUG9saWN5CiAgICA8L2E+CiAgICA8YSBocmVmPSJ0ZXJtcyI+CiAgICAgICAgVGVybXMgb2YgVXNlCiAgICA8L2E+CiAgICA8YSBocmVmPSJhZmZpbGlhdGUtZGlzY2xvc3VyZSI+CiAgICAgICAgQWZmaWxpYXRlIERpc2Nsb3N1cmUKICAgIDwvYT4KICAgIDxhIGhyZWY9ImRpc2NsYWltZXIiPgogICAgICAgIERpc2NsYWltZXIKICAgIDwvYT4KICAgIDxhIGhyZWY9ImNvbnRhY3QiPgogICAgICAgIENvbnRhY3QKICAgIDwvYT4KPC9kaXY+CjxkaXYgY2xhc3M9ImZvb3Rlci1ib3R0b20iPgogICAgPHA+CiAgICAgICAgwqkgMjAyNiBNb21Zb3VOZWVkVGhpcy4gQWxsIHJpZ2h0cyByZXNlcnZlZC4KICAgIDwvcD4KICAgIDwhLS0gQWZmaWxpYXRlIGRpc2Nsb3N1cmU6IHJlc3RvcmUgdGhlIEFtYXpvbiBBc3NvY2lhdGVzIGVhcm5pbmdzIGxpbmUgaGVyZSBvbmNlIGFwcHJvdmVkIGZvciB0aGUgcHJvZ3JhbS4gLS0+CjwvZGl2Pgo8L2Zvb3Rlcj4KCgoKCgo8L2Rpdj4KCgo8L2JvZHk+CgoKPC9odG1sPg==
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<!-- Google tag (gtag.js) - deferred until page load for performance -->
+<script>
+window.addEventListener('load', function() {
+  var s = document.createElement('script');
+  s.async = true;
+  s.src = 'https://www.googletagmanager.com/gtag/js?id=G-FE48KK6THQ';
+  document.head.appendChild(s);
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-FE48KK6THQ');
+});
+</script>
+
+<meta charset="UTF-8">
+<link rel="canonical" href="https://momyouneedthis.com/number-coloring-pages">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<meta property="og:title" content="Free Number Coloring Pages | MomYouNeedThis">
+<meta property="og:description" content="Free printable number coloring pages for toddlers and preschoolers. Help children learn numbers, counting, and early math skills with fun coloring worksheets.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://momyouneedthis.com/number-coloring-pages">
+<meta property="og:image" content="https://momyouneedthis.com/assets/number-coloring-page-one.jpeg">
+
+<title>Free Number Coloring Pages | MomYouNeedThis</title>
+
+<meta name="description" content="Free printable number coloring pages for toddlers and preschoolers. Help children learn numbers, counting, and early math skills with fun coloring worksheets.">
+
+<link rel="stylesheet" href="/style.min.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+
+<style>
+/* MomYouNeedThis SEO design system */
+
+        /* SEO content sections — designed to match the MomYouNeedThis brand. */
+        .seo-section {
+            max-width: 900px;
+            margin: 55px auto 0;
+            padding: 45px 42px 50px;
+            background: #ffffff;
+            border: 1px solid #eee5e7;
+            border-radius: 35px;
+            box-shadow: 0 12px 35px rgba(80, 55, 55, 0.06);
+            font-family: 'Nunito', system-ui, sans-serif;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .seo-section::before {
+            content: "";
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            top: -145px;
+            right: -90px;
+            background: #ffe5ec;
+            border-radius: 50%;
+            opacity: .65;
+            pointer-events: none;
+        }
+
+        .seo-section::after {
+            content: "";
+            position: absolute;
+            width: 190px;
+            height: 190px;
+            bottom: -120px;
+            left: -80px;
+            background: #fff1c9;
+            border-radius: 50%;
+            opacity: .55;
+            pointer-events: none;
+        }
+
+        .seo-section > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .seo-section .section-kicker {
+            display: block;
+            margin-bottom: 10px;
+            color:#c03d5b;
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .seo-section h2 {
+            max-width: 700px;
+            margin: 0 auto 14px;
+            color: #332b2b;
+            font-size: clamp(26px, 3.6vw, 34px);
+            line-height: 1.15;
+            letter-spacing: -.6px;
+            font-weight: 900;
+            text-align: center;
+        }
+
+        .seo-section h2::after {
+            content: "";
+            display: block;
+            width: 45px;
+            height: 3px;
+            margin: 16px auto 0;
+            background: #e89aaa;
+            border-radius: 999px;
+        }
+
+        .seo-lead {
+            max-width: 680px;
+            margin: 0 auto 26px;
+            color: #6d6566;
+            font-size: 16px;
+            line-height: 1.7;
+            text-align: center;
+        }
+
+        .seo-links {
+            list-style: none;
+            margin: 10px auto 0;
+            padding: 0;
+            max-width: 720px;
+            display: grid;
+            gap: 10px;
+        }
+
+        .seo-links li {
+            padding: 16px 18px;
+            background: #fffaf8;
+            border: 1px solid #f1e5e7;
+            border-radius: 16px;
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
+
+        .seo-links li:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(80, 55, 65, .07);
+        }
+
+        .seo-links a {
+            color: #332b2b;
+            font-size: 15px;
+            font-weight: 900;
+            text-decoration: none;
+        }
+
+        .seo-links a:hover {
+            color:#c33761;
+        }
+
+        .seo-links span {
+            display: block;
+            margin-top: 4px;
+            color:#6d6d6d;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+
+        .seo-steps {
+            list-style: none;
+            margin: 0 auto;
+            padding: 0;
+            max-width: 720px;
+            display: grid;
+            gap: 12px;
+            counter-reset: seo-step;
+        }
+
+        .seo-steps li {
+            counter-increment: seo-step;
+            position: relative;
+            padding: 18px 20px 18px 70px;
+            background: #fffaf8;
+            border: 1px solid #f1e5e7;
+            border-radius: 18px;
+            color: #5f5758;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .seo-steps li::before {
+            content: counter(seo-step);
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #e89aaa;
+            border-radius: 50%;
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 900;
+        }
+
+        .seo-steps li strong {
+            color: #332b2b;
+        }
+
+
+        .seo-faq {
+            max-width: 720px;
+            margin: 0 auto;
+            display: grid;
+            gap: 12px;
+        }
+
+        .seo-faq-item {
+            padding: 20px 22px;
+            background: #fffaf8;
+            border: 1px solid #f0dfe3;
+            border-radius: 18px;
+        }
+
+        .seo-faq-item h3 {
+            margin: 0 0 8px;
+            color: #332b2b;
+            font-size: 16px;
+            line-height: 1.4;
+            font-weight: 900;
+        }
+
+        .seo-faq-item p {
+            margin: 0;
+            color: #686061;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+@media (max-width: 750px) {
+            .seo-section {
+                margin-top: 40px;
+                padding: 35px 20px 38px;
+                border-radius: 28px;
+            }
+            .seo-steps li {
+                padding: 16px 16px 16px 62px;
+                font-size: 14px;
+            }
+            .seo-steps li::before {
+                left: 16px;
+            }
+            .seo-faq-item {
+                padding: 18px;
+            }
+            .seo-table {
+                font-size: 12px;
+            }
+            .seo-table th,
+            .seo-table td {
+                padding: 9px 8px;
+            }
+            .seo-table thead th {
+                white-space: normal;
+            }
+        }
+
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is this number coloring pages printable really free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes — this number coloring pages printable is 100% free to download and print at home. No signup and no payment needed. Just tap the download button and print as many copies as you like."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What ages is this printable best for?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It is made for toddlers and preschoolers. Little ones can enjoy it with a grown-up’s help, while older preschoolers can work on it more independently."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What should we color with?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Crayons, washable markers, or colored pencils all work great. For young toddlers, chunky crayons are the easiest to grip."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are coloring by number worksheets good for preschoolers?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes — coloring by number worksheets help preschoolers practice number recognition, color matching, and fine motor skills. Start with numbers 1 to 5 and keep sessions short and fun."
+      }
+    }
+  ]
+}
+</script>
+
+</head>
+
+
+<body>
+
+
+<div class="page">
+<main>
+
+
+<section class="resource-page">
+
+
+<img width="300" height="300" src="assets/logo.svg" class="logo" alt="MomYouNeedThis">
+
+
+<span class="free-badge">
+
+🔢 FREE NUMBER COLORING PAGES
+
+</span>
+
+
+
+
+<h1>
+
+Number Coloring Pages
+
+<span>
+Fun Number Learning For Toddlers & Preschoolers
+</span>
+
+</h1>
+
+
+
+
+<p class="intro">
+
+This free printable number coloring pages gives toddlers and preschoolers a fun, no-prep way to build creativity and fine motor skills. Just download, print, and let them color.
+
+</p>
+
+
+
+
+
+<section class="download-grid">
+
+<div class="download-card">
+
+
+<img width="597" height="800" loading="lazy" src="assets/number-coloring-page-one.jpeg" alt="Free printable number 1 coloring page for kids">
+
+
+<h3>
+
+Number 1 Coloring Page
+
+</h3>
+
+
+<p>
+
+Count and color the number 1!
+
+</p>
+
+
+<a href="assets/number-coloring-page-one.jpeg" download="number-coloring-page-one.jpeg" class="download-button">
+
+⬇️ Download Number 1
+
+</a>
+
+
+</div>
+
+<div class="download-card">
+
+
+<img width="597" height="800" loading="lazy" src="assets/number-coloring-page-two.jpeg" alt="Free printable number 2 coloring page for kids">
+
+
+<h3>
+
+Number 2 Coloring Page
+
+</h3>
+
+
+<p>
+
+Count and color the number 2!
+
+</p>
+
+
+<a href="assets/number-coloring-page-two.jpeg" download="number-coloring-page-two.jpeg" class="download-button">
+
+⬇️ Download Number 2
+
+</a>
+
+
+</div>
+
+<div class="download-card">
+
+
+<img width="597" height="800" loading="lazy" src="assets/number-coloring-page-three.jpeg" alt="Free printable number 3 coloring page for kids">
+
+
+<h3>
+
+Number 3 Coloring Page
+
+</h3>
+
+
+<p>
+
+Count and color the number 3!
+
+</p>
+
+
+<a href="assets/number-coloring-page-three.jpeg" download="number-coloring-page-three.jpeg" class="download-button">
+
+⬇️ Download Number 3
+
+</a>
+
+
+</div>
+
+<div class="download-card">
+
+
+<img width="597" height="800" loading="lazy" src="assets/numbers-coloring-page-four.jpeg" alt="Free printable number 4 coloring page for kids">
+
+
+<h3>
+
+Number 4 Coloring Page
+
+</h3>
+
+
+<p>
+
+Count and color the number 4!
+
+</p>
+
+
+<a href="assets/numbers-coloring-page-four.jpeg" download="numbers-coloring-page-four.jpeg" class="download-button">
+
+⬇️ Download Number 4
+
+</a>
+
+
+</div>
+
+<div class="download-card">
+
+
+<img width="597" height="800" loading="lazy" src="assets/numbers-coloring-page-five.jpeg" alt="Free printable number 5 coloring page for kids">
+
+
+<h3>
+
+Number 5 Coloring Page
+
+</h3>
+
+
+<p>
+
+Count and color the number 5!
+
+</p>
+
+
+<a href="assets/numbers-coloring-page-five.jpeg" download="numbers-coloring-page-five.jpeg" class="download-button">
+
+⬇️ Download Number 5
+
+</a>
+
+
+</div>
+
+<div class="download-card">
+
+
+<img width="625" height="800" loading="lazy" src="assets/numbers-coloring-page-6.jpeg" alt="Free printable number 6 coloring page for kids">
+
+
+<h3>
+
+Number 6 Coloring Page
+
+</h3>
+
+
+<p>
+
+Count and color the number 6!
+
+</p>
+
+
+<a href="assets/numbers-coloring-page-6.jpeg" download="numbers-coloring-page-6.jpeg" class="download-button">
+
+⬇️ Download Number 6
+
+</a>
+
+
+</div>
+
+<div class="download-card">
+
+
+<img width="597" height="800" loading="lazy" src="assets/numbers-coloring-page-seven.jpeg" alt="Free printable number 7 coloring page for kids">
+
+
+<h3>
+
+Number 7 Coloring Page
+
+</h3>
+
+
+<p>
+
+Count and color the number 7!
+
+</p>
+
+
+<a href="assets/numbers-coloring-page-seven.jpeg" download="numbers-coloring-page-seven.jpeg" class="download-button">
+
+⬇️ Download Number 7
+
+</a>
+
+
+</div>
+
+<div class="download-card">
+
+
+<img width="597" height="800" loading="lazy" src="assets/numbers-coloring-page-height.jpeg" alt="Free printable number 8 coloring page for kids">
+
+
+<h3>
+
+Number 8 Coloring Page
+
+</h3>
+
+
+<p>
+
+Count and color the number 8!
+
+</p>
+
+
+<a href="assets/numbers-coloring-page-height.jpeg" download="numbers-coloring-page-height.jpeg" class="download-button">
+
+⬇️ Download Number 8
+
+</a>
+
+
+</div>
+
+<div class="download-card">
+
+
+<img width="597" height="800" loading="lazy" src="assets/numbers-coloring-page-nine.jpeg" alt="Free printable number 9 coloring page for kids">
+
+
+<h3>
+
+Number 9 Coloring Page
+
+</h3>
+
+
+<p>
+
+Count and color the number 9!
+
+</p>
+
+
+<a href="assets/numbers-coloring-page-nine.jpeg" download="numbers-coloring-page-nine.jpeg" class="download-button">
+
+⬇️ Download Number 9
+
+</a>
+
+
+</div>
+
+<div class="download-card">
+
+
+<img width="597" height="800" loading="lazy" src="assets/numbers-coloring-page-ten.jpeg" alt="Free printable number 10 coloring page for kids">
+
+
+<h3>
+
+Number 10 Coloring Page
+
+</h3>
+
+
+<p>
+
+Count and color the number 10!
+
+</p>
+
+
+<a href="assets/numbers-coloring-page-ten.jpeg" download="numbers-coloring-page-ten.jpeg" class="download-button">
+
+⬇️ Download Number 10
+
+</a>
+
+
+</div>
+
+<div class="download-card">
+
+
+<img width="597" height="800" loading="lazy" src="assets/number-tracing-coloring-one.jpeg" alt="Free printable number 1 tracing page for kids">
+
+
+<h3>
+
+Number 1 Tracing Page
+
+</h3>
+
+
+<p>
+
+Trace the number 1, then color the picture!
+
+</p>
+
+
+<a href="assets/number-tracing-coloring-one.jpeg" download="number-tracing-coloring-one.jpeg" class="download-button">
+
+⬇️ Download Number 1 Tracing
+
+</a>
+
+
+</div>
+
+<div class="download-card">
+
+
+<img width="597" height="800" loading="lazy" src="assets/number-tracing-coloring-two.jpeg" alt="Free printable number 2 tracing page for kids">
+
+
+<h3>
+
+Number 2 Tracing Page
+
+</h3>
+
+
+<p>
+
+Trace the number 2, then color the picture!
+
+</p>
+
+
+<a href="assets/number-tracing-coloring-two.jpeg" download="number-tracing-coloring-two.jpeg" class="download-button">
+
+⬇️ Download Number 2 Tracing
+
+</a>
+
+
+</div>
+
+<div class="download-card">
+
+
+<img width="597" height="800" loading="lazy" src="assets/number-tracing-coloring-three.jpeg" alt="Free printable number 3 tracing page for kids">
+
+
+<h3>
+
+Number 3 Tracing Page
+
+</h3>
+
+
+<p>
+
+Trace the number 3, then color the picture!
+
+</p>
+
+
+<a href="assets/number-tracing-coloring-three.jpeg" download="number-tracing-coloring-three.jpeg" class="download-button">
+
+⬇️ Download Number 3 Tracing
+
+</a>
+
+
+</div>
+
+<div class="download-card">
+
+
+<img width="597" height="800" loading="lazy" src="assets/number-tracing-coloring-four.jpeg" alt="Free printable number 4 tracing page for kids">
+
+
+<h3>
+
+Number 4 Tracing Page
+
+</h3>
+
+
+<p>
+
+Trace the number 4, then color the picture!
+
+</p>
+
+
+<a href="assets/number-tracing-coloring-four.jpeg" download="number-tracing-coloring-four.jpeg" class="download-button">
+
+⬇️ Download Number 4 Tracing
+
+</a>
+
+
+</div>
+
+<div class="download-card">
+
+
+<img width="597" height="800" loading="lazy" src="assets/number-tracing-coloring-five.jpeg" alt="Free printable number 5 tracing page for kids">
+
+
+<h3>
+
+Number 5 Tracing Page
+
+</h3>
+
+
+<p>
+
+Trace the number 5, then color the picture!
+
+</p>
+
+
+<a href="assets/number-tracing-coloring-five.jpeg" download="number-tracing-coloring-five.jpeg" class="download-button">
+
+⬇️ Download Number 5 Tracing
+
+</a>
+
+
+</div>
+
+<div class="download-card">
+
+
+<img width="597" height="800" loading="lazy" src="assets/number-tracing-coloring-six.jpeg" alt="Free printable number 6 tracing page for kids">
+
+
+<h3>
+
+Number 6 Tracing Page
+
+</h3>
+
+
+<p>
+
+Trace the number 6, then color the picture!
+
+</p>
+
+
+<a href="assets/number-tracing-coloring-six.jpeg" download="number-tracing-coloring-six.jpeg" class="download-button">
+
+⬇️ Download Number 6 Tracing
+
+</a>
+
+
+</div>
+
+<div class="download-card">
+
+
+<img width="597" height="800" loading="lazy" src="assets/number-tracing-coloring-seven.jpeg" alt="Free printable number 7 tracing page for kids">
+
+
+<h3>
+
+Number 7 Tracing Page
+
+</h3>
+
+
+<p>
+
+Trace the number 7, then color the picture!
+
+</p>
+
+
+<a href="assets/number-tracing-coloring-seven.jpeg" download="number-tracing-coloring-seven.jpeg" class="download-button">
+
+⬇️ Download Number 7 Tracing
+
+</a>
+
+
+</div>
+
+<div class="download-card">
+
+
+<img width="597" height="800" loading="lazy" src="assets/number-tracing-coloring-height.jpeg" alt="Free printable number 8 tracing page for kids">
+
+
+<h3>
+
+Number 8 Tracing Page
+
+</h3>
+
+
+<p>
+
+Trace the number 8, then color the picture!
+
+</p>
+
+
+<a href="assets/number-tracing-coloring-height.jpeg" download="number-tracing-coloring-height.jpeg" class="download-button">
+
+⬇️ Download Number 8 Tracing
+
+</a>
+
+
+</div>
+
+<div class="download-card">
+
+
+<img width="597" height="800" loading="lazy" src="assets/number-tracing-coloring-nine.jpeg" alt="Free printable number 9 tracing page for kids">
+
+
+<h3>
+
+Number 9 Tracing Page
+
+</h3>
+
+
+<p>
+
+Trace the number 9, then color the picture!
+
+</p>
+
+
+<a href="assets/number-tracing-coloring-nine.jpeg" download="number-tracing-coloring-nine.jpeg" class="download-button">
+
+⬇️ Download Number 9 Tracing
+
+</a>
+
+
+</div>
+
+<div class="download-card">
+
+
+<img width="597" height="800" loading="lazy" src="assets/number-tracing-coloring-ten.jpeg" alt="Free printable number 10 tracing page for kids">
+
+
+<h3>
+
+Number 10 Tracing Page
+
+</h3>
+
+
+<p>
+
+Trace the number 10, then color the picture!
+
+</p>
+
+
+<a href="assets/number-tracing-coloring-ten.jpeg" download="number-tracing-coloring-ten.jpeg" class="download-button">
+
+⬇️ Download Number 10 Tracing
+
+</a>
+
+
+</div>
+
+</section>
+
+<section class="flow-section">
+
+<span class="section-kicker">Step by step</span>
+
+<h2>🔢 How To Use This Printable</h2>
+
+<ol class="seo-steps">
+<li><strong>Download and print</strong> the coloring page on letter-size paper — print a few extras so there is no fighting over favorites.</li>
+<li><strong>Set out crayons, markers, or colored pencils</strong> and let your child choose their colors.</li>
+<li><strong>Color together or side by side</strong>, chatting about the pictures as they come to life.</li>
+<li><strong>Show off the masterpiece</strong> on the fridge or in a learning binder to celebrate the effort.</li>
+</ol>
+
+</section>
+
+
+
+
+
+
+
+
+<section class="tips">
+
+
+<h2>
+
+Why Number Coloring Pages Help Kids Learn
+
+</h2>
+
+
+<p>
+
+Number coloring activities combine creativity with early math practice. Children can build number recognition, counting confidence, pencil control, and focus while enjoying a fun hands-on activity.
+
+</p>
+
+
+</section>
+
+
+
+
+
+
+
+
+<section class="generator-bottom-cta">
+
+
+<h2>
+
+🔢 More Early Math Activities
+
+</h2>
+
+
+<p>
+
+Keep learning with counting worksheets, number tracing pages, patterns, shapes, and other preschool math activities.
+
+</p>
+
+
+
+<a href="free-mom-resources" class="download-button">
+
+🎁 View Free Learning Activities
+
+</a>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+<section class="tips">
+
+
+<h2>
+
+More Free Kids Resources
+
+</h2>
+
+
+<p>
+
+Explore alphabet activities, coloring pages, preschool worksheets, potty training resources, and fun learning ideas for toddlers.
+
+</p>
+
+
+
+<a href="free-mom-resources" class="download-button">
+
+📚 Explore All Resources
+
+</a>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<section class="flow-section">
+<span class="section-kicker">Learning fun</span>
+<h2>🔢 Learning With coloring by number worksheets</h2>
+<p>This page's colour-by-number sheets come in two sizes. Start with the 1 to 5 sheet: its key uses five colours — 1 is red, 2 yellow, 3 green, 4 brown, and 5 light blue — and colouring every numbered section reveals one big apple.</p>
+<p>Move up to the 1 to 10 sheet once your child can name 1 to 5 without help. The key doubles to ten colours, and the finished picture is a kite. Work the same way on both sheets: read the key together first, set out only the crayons the key names, then hunt for one number at a time and colour every section carrying it before moving on to the next number.</p>
+
+<p>See <a href="assets/printables/color-by-number-1-10.pdf">number worksheet</a> for more.</p>
+</section>
+
+<section class="seo-section">
+
+<span class="section-kicker">FAQ</span>
+
+<h2>❓ Number Coloring Pages FAQ</h2>
+
+<div class="seo-faq">
+<div class="seo-faq-item">
+<h3>Is this number coloring pages printable really free?</h3>
+<p>Yes — this number coloring pages printable is 100% free to download and print at home. No signup and no payment needed. Just tap the download button and print as many copies as you like.</p>
+</div>
+<div class="seo-faq-item">
+<h3>What ages is this printable best for?</h3>
+<p>It is made for toddlers and preschoolers. Little ones can enjoy it with a grown-up’s help, while older preschoolers can work on it more independently.</p>
+</div>
+<div class="seo-faq-item">
+<h3>What should we color with?</h3>
+<p>Crayons, washable markers, or colored pencils all work great. For young toddlers, chunky crayons are the easiest to grip.</p>
+</div>
+<div class="seo-faq-item">
+<h3>Are coloring by number worksheets good for preschoolers?</h3>
+<p>Yes — coloring by number worksheets help preschoolers practice number recognition, color matching, and fine motor skills. Start with numbers 1 to 5 and keep sessions short and fun.</p>
+</div>
+</div>
+
+</section>
+
+<section class="seo-section">
+
+<span class="section-kicker">Keep exploring</span>
+
+<h2>🔗 More Free Printables You’ll Love</h2>
+
+<ul class="seo-links">
+<li>
+<a href="alphabet-coloring-pages">Free Alphabet Coloring Pages</a>
+<span>Free printable alphabet coloring pages for little learners.</span>
+</li>
+<li>
+<a href="letter-b-coloring-pages">Free Letter B Coloring Pages</a>
+<span>Free printable letter b coloring pages for little learners.</span>
+</li>
+<li>
+<a href="letter-c-coloring-pages">Free Letter C Coloring Pages</a>
+<span>Free printable letter c coloring pages for little learners.</span>
+</li>
+<li>
+<a href="math-coloring-pages">Free Math Coloring Pages</a>
+<span>Free printable math coloring pages for little learners.</span>
+</li>
+</ul>
+
+</section>
+
+</section>
+
+
+
+
+
+
+
+
+</main>
+<footer>
+    <div class="footer-logo">
+        <img width="300" height="300"
+            src="assets/logo.svg"
+            alt="MomYouNeedThis"
+        >
+    </div>
+<h3>
+    MomYouNeedThis
+</h3>
+<p>
+    Mom finds, smart tools, free resources, real answers
+    and a little chaos from the Mom Universe.
+</p>
+<div class="footer-links">
+    <a href="mom-favorites">
+        Mom Battles
+    </a>
+    <a href="mom-lab">
+        Mom Lab
+    </a>
+    <a href="free-mom-resources">
+        Free Resources
+    </a>
+    <a href="about">
+        About
+    </a>
+    <a href="privacy-policy">
+        Privacy Policy
+    </a>
+    <a href="terms">
+        Terms of Use
+    </a>
+    <a href="affiliate-disclosure">
+        Affiliate Disclosure
+    </a>
+    <a href="disclaimer">
+        Disclaimer
+    </a>
+    <a href="contact">
+        Contact
+    </a>
+</div>
+<div class="footer-bottom">
+    <p>
+        © 2026 MomYouNeedThis. All rights reserved.
+    </p>
+    <!-- Affiliate disclosure: restore the Amazon Associates earnings line here once approved for the program. -->
+</div>
+</footer>
+
+
+
+
+
+</div>
+
+
+</body>
+
+
+</html>
