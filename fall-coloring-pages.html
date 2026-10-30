@@ -1,1 +1,525 @@
-PCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9ImVuIj4KCjxoZWFkPgo8IS0tIEdvb2dsZSB0YWcgKGd0YWcuanMpIC0gZGVmZXJyZWQgdW50aWwgcGFnZSBsb2FkIGZvciBwZXJmb3JtYW5jZSAtLT4KPHNjcmlwdD4Kd2luZG93LmFkZEV2ZW50TGlzdGVuZXIoJ2xvYWQnLCBmdW5jdGlvbigpIHsKICB2YXIgcyA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ3NjcmlwdCcpOwogIHMuYXN5bmMgPSB0cnVlOwogIHMuc3JjID0gJ2h0dHBzOi8vd3d3Lmdvb2dsZXRhZ21hbmFnZXIuY29tL2d0YWcvanM/aWQ9Ry1GRTQ4S0s2VEhRJzsKICBkb2N1bWVudC5oZWFkLmFwcGVuZENoaWxkKHMpOwogIHdpbmRvdy5kYXRhTGF5ZXIgPSB3aW5kb3cuZGF0YUxheWVyIHx8IFtdOwogIGZ1bmN0aW9uIGd0YWcoKXtkYXRhTGF5ZXIucHVzaChhcmd1bWVudHMpO30KICBndGFnKCdqcycsIG5ldyBEYXRlKCkpOwogIGd0YWcoJ2NvbmZpZycsICdHLUZFNDhLSzZUSFEnKTsKfSk7Cjwvc2NyaXB0PgoKPG1ldGEgY2hhcnNldD0iVVRGLTgiPgo8bGluayByZWw9ImNhbm9uaWNhbCIgaHJlZj0iaHR0cHM6Ly9tb215b3VuZWVkdGhpcy5jb20vZmFsbC1jb2xvcmluZy1wYWdlcyI+CjxtZXRhIG5hbWU9InZpZXdwb3J0IiBjb250ZW50PSJ3aWR0aD1kZXZpY2Utd2lkdGgsIGluaXRpYWwtc2NhbGU9MS4wIj4KCjx0aXRsZT5GcmVlIEZhbGwgQ29sb3JpbmcgUGFnZXMgfCBQcmludGFibGUgZm9yIFRvZGRsZXJzPC90aXRsZT4KCjxtZXRhIG5hbWU9ImRlc2NyaXB0aW9uIiBjb250ZW50PSJGcmVlIHByaW50YWJsZSBGYWxsIENvbG9yaW5nIFBhZ2VzIGZvciB0b2RkbGVycyBhbmQgcHJlc2Nob29sZXJzLiBEb3dubG9hZCBhbmQgcHJpbnQgYXQgaG9tZSDigJQgbm8gc2lnbnVwIG5lZWRlZC4iPgo8bWV0YSBwcm9wZXJ0eT0ib2c6dGl0bGUiIGNvbnRlbnQ9IkZyZWUgRmFsbCBDb2xvcmluZyBQYWdlcyB8IFByaW50YWJsZSBmb3IgVG9kZGxlcnMiPgo8bWV0YSBwcm9wZXJ0eT0ib2c6ZGVzY3JpcHRpb24iIGNvbnRlbnQ9IkZyZWUgcHJpbnRhYmxlIEZhbGwgQ29sb3JpbmcgUGFnZXMgZm9yIHRvZGRsZXJzIGFuZCBwcmVzY2hvb2xlcnMuIERvd25sb2FkIGFuZCBwcmludCBhdCBob21lIOKAlCBubyBzaWdudXAgbmVlZGVkLiI+CjxtZXRhIHByb3BlcnR5PSJvZzp0eXBlIiBjb250ZW50PSJ3ZWJzaXRlIj4KPG1ldGEgcHJvcGVydHk9Im9nOnVybCIgY29udGVudD0iaHR0cHM6Ly9tb215b3VuZWVkdGhpcy5jb20vZmFsbC1jb2xvcmluZy1wYWdlcyI+CjxtZXRhIHByb3BlcnR5PSJvZzppbWFnZSIgY29udGVudD0iaHR0cHM6Ly9tb215b3VuZWVkdGhpcy5jb20vYXNzZXRzL2NvbG9yaW5nL2ZhbGwtMS5wbmciPgoKPGxpbmsgcmVsPSJzdHlsZXNoZWV0IiBocmVmPSIvc3R5bGUubWluLmNzcyI+CjxsaW5rIHJlbD0ic3R5bGVzaGVldCIgaHJlZj0iL3Jlc291cmNlcy5jc3MiPgoKPGxpbmsgcmVsPSJwcmVjb25uZWN0IiBocmVmPSJodHRwczovL2ZvbnRzLmdvb2dsZWFwaXMuY29tIj4KPGxpbmsgcmVsPSJwcmVjb25uZWN0IiBocmVmPSJodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tIiBjcm9zc29yaWdpbj4KPGxpbmsgaHJlZj0iaHR0cHM6Ly9mb250cy5nb29nbGVhcGlzLmNvbS9jc3MyP2ZhbWlseT1OdW5pdG86d2dodEA0MDA7NzAwOzkwMCZkaXNwbGF5PXN3YXAiIHJlbD0ic3R5bGVzaGVldCI+Cgo8c3R5bGU+Ci5zZW8tc2VjdGlvbiB7CiAgICBtYXgtd2lkdGg6IDkwMHB4OwogICAgbWFyZ2luOiA1NXB4IGF1dG8gMDsKICAgIHBhZGRpbmc6IDQ1cHggNDJweCA1MHB4OwogICAgYmFja2dyb3VuZDogI2ZmZmZmZjsKICAgIGJvcmRlcjogMXB4IHNvbGlkICNlZWU1ZTc7CiAgICBib3JkZXItcmFkaXVzOiAzNXB4OwogICAgYm94LXNoYWRvdzogMCAxMnB4IDM1cHggcmdiYSg4MCwgNTUsIDU1LCAwLjA2KTsKICAgIGZvbnQtZmFtaWx5OiAnTnVuaXRvJywgc3lzdGVtLXVpLCBzYW5zLXNlcmlmOwogICAgdGV4dC1hbGlnbjogbGVmdDsKICAgIHBvc2l0aW9uOiByZWxhdGl2ZTsKICAgIG92ZXJmbG93OiBoaWRkZW47Cn0KLnNlby1zZWN0aW9uOjpiZWZvcmUgewogICAgY29udGVudDogIiI7CiAgICBwb3NpdGlvbjogYWJzb2x1dGU7CiAgICB3aWR0aDogMjUwcHg7CiAgICBoZWlnaHQ6IDI1MHB4OwogICAgdG9wOiAtMTQ1cHg7CiAgICByaWdodDogLTkwcHg7CiAgICBiYWNrZ3JvdW5kOiAjZmZlNWVjOwogICAgYm9yZGVyLXJhZGl1czogNTAlOwogICAgb3BhY2l0eTogLjY1OwogICAgcG9pbnRlci1ldmVudHM6IG5vbmU7Cn0KLnNlby1zZWN0aW9uOjphZnRlciB7CiAgICBjb250ZW50OiAiIjsKICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTsKICAgIHdpZHRoOiAxOTBweDsKICAgIGhlaWdodDogMTkwcHg7CiAgICBib3R0b206IC0xMjBweDsKICAgIGxlZnQ6IC04MHB4OwogICAgYmFja2dyb3VuZDogI2ZmZjFjOTsKICAgIGJvcmRlci1yYWRpdXM6IDUwJTsKICAgIG9wYWNpdHk6IC41NTsKICAgIHBvaW50ZXItZXZlbnRzOiBub25lOwp9Ci5zZW8tc2VjdGlvbiA+ICogeyBwb3NpdGlvbjogcmVsYXRpdmU7IHotaW5kZXg6IDE7IH0KLnNlby1zZWN0aW9uIC5zZWN0aW9uLWtpY2tlciB7CiAgICBkaXNwbGF5OiBibG9jazsKICAgIG1hcmdpbi1ib3R0b206IDEwcHg7CiAgICBjb2xvcjojYzAzZDViOwogICAgZm9udC1zaXplOiAxMXB4OwogICAgZm9udC13ZWlnaHQ6IDkwMDsKICAgIGxldHRlci1zcGFjaW5nOiAxcHg7CiAgICB0ZXh0LXRyYW5zZm9ybTogdXBwZXJjYXNlOwogICAgdGV4dC1hbGlnbjogY2VudGVyOwp9Ci5zZW8tc2VjdGlvbiBoMiB7CiAgICBtYXgtd2lkdGg6IDcwMHB4OwogICAgbWFyZ2luOiAwIGF1dG8gMTRweDsKICAgIGNvbG9yOiAjMzMyYjJiOwogICAgZm9udC1zaXplOiBjbGFtcCgyNnB4LCAzLjZ2dywgMzRweCk7CiAgICBsaW5lLWhlaWdodDogMS4xNTsKICAgIGxldHRlci1zcGFjaW5nOiAtLjZweDsKICAgIGZvbnQtd2VpZ2h0OiA5MDA7CiAgICB0ZXh0LWFsaWduOiBjZW50ZXI7Cn0KLnNlby1zZWN0aW9uIGgyOjphZnRlciB7CiAgICBjb250ZW50OiAiIjsKICAgIGRpc3BsYXk6IGJsb2NrOwogICAgd2lkdGg6IDQ1cHg7CiAgICBoZWlnaHQ6IDNweDsKICAgIG1hcmdpbjogMTZweCBhdXRvIDA7CiAgICBiYWNrZ3JvdW5kOiAjZTg5YWFhOwogICAgYm9yZGVyLXJhZGl1czogOTk5cHg7Cn0KLnNlby1sZWFkIHsKICAgIG1heC13aWR0aDogNjgwcHg7CiAgICBtYXJnaW46IDAgYXV0byAyNnB4OwogICAgY29sb3I6ICM2ZDY1NjY7CiAgICBmb250LXNpemU6IDE2cHg7CiAgICBsaW5lLWhlaWdodDogMS43OwogICAgdGV4dC1hbGlnbjogY2VudGVyOwp9Ci5zZW8tbGlua3MgeyBsaXN0LXN0eWxlOiBub25lOyBtYXJnaW46IDEwcHggYXV0byAwOyBwYWRkaW5nOiAwOyBtYXgtd2lkdGg6IDcyMHB4OyBkaXNwbGF5OiBncmlkOyBnYXA6IDEwcHg7IH0KLnNlby1saW5rcyBsaSB7IHBhZGRpbmc6IDE2cHggMThweDsgYmFja2dyb3VuZDogI2ZmZmFmODsgYm9yZGVyOiAxcHggc29saWQgI2YxZTVlNzsgYm9yZGVyLXJhZGl1czogMTZweDsgdHJhbnNpdGlvbjogdHJhbnNmb3JtIC4ycyBlYXNlLCBib3gtc2hhZG93IC4ycyBlYXNlOyB9Ci5zZW8tbGlua3MgbGk6aG92ZXIgeyB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoLTJweCk7IGJveC1zaGFkb3c6IDAgOHB4IDIwcHggcmdiYSg4MCwgNTUsIDY1LCAuMDcpOyB9Ci5zZW8tbGlua3MgYSB7IGNvbG9yOiAjMzMyYjJiOyBmb250LXNpemU6IDE1cHg7IGZvbnQtd2VpZ2h0OiA5MDA7IHRleHQtZGVjb3JhdGlvbjogbm9uZTsgfQouc2VvLWxpbmtzIGE6aG92ZXIgeyBjb2xvcjojYzMzNzYxOyB9Ci5zZW8tbGlua3Mgc3BhbiB7IGRpc3BsYXk6IGJsb2NrOyBtYXJnaW4tdG9wOiA0cHg7IGNvbG9yOiM2ZDZkNmQ7IGZvbnQtc2l6ZTogMTNweDsgbGluZS1oZWlnaHQ6IDEuNTsgfQouc2VvLXN0ZXBzIHsgbGlzdC1zdHlsZTogbm9uZTsgbWFyZ2luOiAwIGF1dG87IHBhZGRpbmc6IDA7IG1heC13aWR0aDogNzIwcHg7IGRpc3BsYXk6IGdyaWQ7IGdhcDogMTJweDsgY291bnRlci1yZXNldDogc2VvLXN0ZXA7IH0KLnNlby1zdGVwcyBsaSB7IGNvdW50ZXItaW5jcmVtZW50OiBzZW8tc3RlcDsgcG9zaXRpb246IHJlbGF0aXZlOyBwYWRkaW5nOiAxOHB4IDIwcHggMThweCA3MHB4OyBiYWNrZ3JvdW5kOiAjZmZmYWY4OyBib3JkZXI6IDFweCBzb2xpZCAjZjFlNWU3OyBib3JkZXItcmFkaXVzOiAxOHB4OyBjb2xvcjogIzVmNTc1ODsgZm9udC1zaXplOiAxNXB4OyBsaW5lLWhlaWdodDogMS42OyB9Ci5zZW8tc3RlcHMgbGk6OmJlZm9yZSB7IGNvbnRlbnQ6IGNvdW50ZXIoc2VvLXN0ZXApOyBwb3NpdGlvbjogYWJzb2x1dGU7IGxlZnQ6IDIwcHg7IHRvcDogNTAlOyB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoLTUwJSk7IHdpZHRoOiAzNHB4OyBoZWlnaHQ6IDM0cHg7IGRpc3BsYXk6IGZsZXg7IGFsaWduLWl0ZW1zOiBjZW50ZXI7IGp1c3RpZnktY29udGVudDogY2VudGVyOyBiYWNrZ3JvdW5kOiAjZTg5YWFhOyBib3JkZXItcmFkaXVzOiA1MCU7IGNvbG9yOiAjZmZmZmZmOyBmb250LXNpemU6IDE1cHg7IGZvbnQtd2VpZ2h0OiA5MDA7IH0KLnNlby1zdGVwcyBsaSBzdHJvbmcgeyBjb2xvcjogIzMzMmIyYjsgfQouc2VvLWZhcSB7IG1heC13aWR0aDogNzIwcHg7IG1hcmdpbjogMCBhdXRvOyBkaXNwbGF5OiBncmlkOyBnYXA6IDEycHg7IH0KLnNlby1mYXEtaXRlbSB7IHBhZGRpbmc6IDIwcHggMjJweDsgYmFja2dyb3VuZDogI2ZmZmFmODsgYm9yZGVyOiAxcHggc29saWQgI2YwZGZlMzsgYm9yZGVyLXJhZGl1czogMThweDsgfQouc2VvLWZhcS1pdGVtIGgzIHsgbWFyZ2luOiAwIDAgOHB4OyBjb2xvcjogIzMzMmIyYjsgZm9udC1zaXplOiAxNnB4OyBsaW5lLWhlaWdodDogMS40OyBmb250LXdlaWdodDogOTAwOyB9Ci5zZW8tZmFxLWl0ZW0gcCB7IG1hcmdpbjogMDsgY29sb3I6ICM2ODYwNjE7IGZvbnQtc2l6ZTogMTRweDsgbGluZS1oZWlnaHQ6IDEuNzsgfQpAbWVkaWEgKG1heC13aWR0aDogNzUwcHgpIHsKICAgIC5zZW8tc2VjdGlvbiB7IG1hcmdpbi10b3A6IDQwcHg7IHBhZGRpbmc6IDM1cHggMjBweCAzOHB4OyBib3JkZXItcmFkaXVzOiAyOHB4OyB9CiAgICAuc2VvLXN0ZXBzIGxpIHsgcGFkZGluZzogMTZweCAxNnB4IDE2cHggNjJweDsgZm9udC1zaXplOiAxNHB4OyB9CiAgICAuc2VvLXN0ZXBzIGxpOjpiZWZvcmUgeyBsZWZ0OiAxNnB4OyB9CiAgICAuc2VvLWZhcS1pdGVtIHsgcGFkZGluZzogMThweDsgfQp9Cgo8L3N0eWxlPgoKCjxzY3JpcHQgdHlwZT0iYXBwbGljYXRpb24vbGQranNvbiI+CnsKICAiQGNvbnRleHQiOiAiaHR0cHM6Ly9zY2hlbWEub3JnIiwKICAiQHR5cGUiOiAiRkFRUGFnZSIsCiAgIm1haW5FbnRpdHkiOiBbCiAgICB7CiAgICAgICJAdHlwZSI6ICJRdWVzdGlvbiIsCiAgICAgICJuYW1lIjogIldoYXQgYWN0aXZpdGllcyBhcmUgaW5jbHVkZWQgaW4gRmFsbCBDb2xvcmluZyBQYWdlcz8iLAogICAgICAiYWNjZXB0ZWRBbnN3ZXIiOiB7CiAgICAgICAgIkB0eXBlIjogIkFuc3dlciIsCiAgICAgICAgInRleHQiOiAiVGhpcyBodWIgY29sbGVjdHMgb3VyIGZyZWUgZmFsbCBjb2xvcmluZyBwYWdlcyBwcmludGFibGVzIGluIG9uZSBwbGFjZS4gUGljayBhbnkgYWN0aXZpdHkgYmVsb3cgdG8gb3BlbiBpdHMgcGFnZSwgZG93bmxvYWQgdGhlIHByaW50YWJsZSwgYW5kIHN0YXJ0IGxlYXJuaW5nLiIKICAgICAgfQogICAgfSwKICAgIHsKICAgICAgIkB0eXBlIjogIlF1ZXN0aW9uIiwKICAgICAgIm5hbWUiOiAiQXJlIHRoZXNlIGFjdGl2aXRpZXMgcmVhbGx5IGZyZWU/IiwKICAgICAgImFjY2VwdGVkQW5zd2VyIjogewogICAgICAgICJAdHlwZSI6ICJBbnN3ZXIiLAogICAgICAgICJ0ZXh0IjogIlllcyDigJQgZXZlcnkgcHJpbnRhYmxlIG9uIE1vbVlvdU5lZWRUaGlzIGlzIDEwMCUgZnJlZSB0byBkb3dubG9hZCBhbmQgcHJpbnQuIE5vIHNpZ251cCwgbm8gcGF5bWVudCwganVzdCB0YXAgdGhlIGRvd25sb2FkIGJ1dHRvbi4iCiAgICAgIH0KICAgIH0sCiAgICB7CiAgICAgICJAdHlwZSI6ICJRdWVzdGlvbiIsCiAgICAgICJuYW1lIjogIkhvdyBkbyBJIHVzZSB0aGVzZSBhY3Rpdml0aWVzIHdpdGggbXkgY2hpbGQ/IiwKICAgICAgImFjY2VwdGVkQW5zd2VyIjogewogICAgICAgICJAdHlwZSI6ICJBbnN3ZXIiLAogICAgICAgICJ0ZXh0IjogIkNob29zZSBhbiBhY3Rpdml0eSwgZG93bmxvYWQgYW5kIHByaW50IGl0LCBhbmQgd29yayB0aHJvdWdoIGl0IHRvZ2V0aGVyIGluIHNob3J0LCBwbGF5ZnVsIHNlc3Npb25zLiBGb2xsb3cgeW91ciBjaGlsZCdzIGxlYWQgYW5kIGtlZXAgaXQgZnVuLiIKICAgICAgfQogICAgfSwKICAgIHsKICAgICAgIkB0eXBlIjogIlF1ZXN0aW9uIiwKICAgICAgIm5hbWUiOiAiQXJlIHRoZXNlIGZhbGwgY29sb3VyaW5nIHBhZ2VzIGZyZWUgdG8gZG93bmxvYWQ/IiwKICAgICAgImFjY2VwdGVkQW5zd2VyIjogewogICAgICAgICJAdHlwZSI6ICJBbnN3ZXIiLAogICAgICAgICJ0ZXh0IjogIlllcyDigJQgdGhlc2UgZmFsbCBjb2xvdXJpbmcgcGFnZXMgYXJlIGNvbXBsZXRlbHkgZnJlZSB0byBkb3dubG9hZCBhbmQgcHJpbnQuIE5vIHNpZ251cCwgbm8gcGF5bWVudCwganVzdCBwcmludCBhbmQgY29sb3VyLiIKICAgICAgfQogICAgfSwKICAgIHsKICAgICAgIkB0eXBlIjogIlF1ZXN0aW9uIiwKICAgICAgIm5hbWUiOiAiSG93IGRvIEkgcHJpbnQgdGhlc2UgZmFsbCBjb2xvdXJpbmcgcGFnZXMgcHJpbnRhYmxlIHNoZWV0cz8iLAogICAgICAiYWNjZXB0ZWRBbnN3ZXIiOiB7CiAgICAgICAgIkB0eXBlIjogIkFuc3dlciIsCiAgICAgICAgInRleHQiOiAiVGFwIHRoZSBkb3dubG9hZCBidXR0b24gb24gYW55IGZhbGwgY29sb3VyaW5nIHBhZ2VzIHByaW50YWJsZSBzaGVldCwgdGhlbiBwcmludCBhdCBob21lIG9uIHJlZ3VsYXIgcGFwZXIuIE5vIHNpZ251cCBuZWVkZWQuIgogICAgICB9CiAgICB9LAogICAgewogICAgICAiQHR5cGUiOiAiUXVlc3Rpb24iLAogICAgICAibmFtZSI6ICJXaGF0IGZhbGwgYWN0aXZpdGllcyBjYW4ga2lkcyBkbyBhdCBob21lPyIsCiAgICAgICJhY2NlcHRlZEFuc3dlciI6IHsKICAgICAgICAiQHR5cGUiOiAiQW5zd2VyIiwKICAgICAgICAidGV4dCI6ICJDb2xvcmluZyBpcyBvbmUgb2YgdGhlIGVhc2llc3QgZmFsbCBhY3Rpdml0aWVzIGZvciBraWRzIGF0IGhvbWUgXHUyMDE0IHByaW50IHRoZSBwdW1wa2luIHBhdGNoLCBzY2FyZWNyb3csIGFuZCBoYXJ2ZXN0IGJhc2tldCBzaGVldHMgb24gdGhpcyBwYWdlLCBzZXQgb3V0IGNyYXlvbnMsIGFuZCBsZXQga2lkcyBjb2xvciB3aGlsZSB5b3UgdGFsayBhYm91dCB0aGUgc2Vhc29uLiIKICAgICAgfQogICAgfSwKICAgIHsKICAgICAgIkB0eXBlIjogIlF1ZXN0aW9uIiwKICAgICAgIm5hbWUiOiAiV2hlcmUgY2FuIEkgZmluZCBmYWxsIGFjdGl2aXRpZXMgdG8gcHJpbnQgYXQgaG9tZT8iLAogICAgICAiYWNjZXB0ZWRBbnN3ZXIiOiB7CiAgICAgICAgIkB0eXBlIjogIkFuc3dlciIsCiAgICAgICAgInRleHQiOiAiUmlnaHQgb24gdGhpcyBwYWdlIFx1MjAxNCB0aGUgcHVtcGtpbiBwYXRjaCwgc2NhcmVjcm93LCBhbmQgaGFydmVzdCBiYXNrZXQgY29sb3JpbmcgcGFnZXMgYXJlIGZ1biBmYWxsIGFjdGl2aXRpZXMgeW91IGNhbiBkb3dubG9hZCBhbmQgcHJpbnQgZnJlZSwgd2l0aCBubyBzaWdudXAgbmVlZGVkLiIKICAgICAgfQogICAgfQogIF0KfQo8L3NjcmlwdD4KPHN0eWxlPgouY29sb3JpbmctbW9yZXttYXJnaW46MTRweCAwIDA7Y29sb3I6I2EwNTU2Yjtmb250LXNpemU6MTVweDtmb250LXdlaWdodDo4MDB9Ci5wcmludC1idG57YmFja2dyb3VuZDojZmZmIWltcG9ydGFudDtjb2xvcjojYzMzNzYxIWltcG9ydGFudDtib3JkZXI6MnB4IHNvbGlkICNlODlhYWEhaW1wb3J0YW50O21hcmdpbi1sZWZ0OjEwcHh9Ci5wcmludC1idG46aG92ZXJ7YmFja2dyb3VuZDojZmRmM2Y1IWltcG9ydGFudDt0cmFuc2Zvcm06dHJhbnNsYXRlWSgtM3B4KX0KQG1lZGlhKG1heC13aWR0aDo2MDBweCl7LnByaW50LWJ0bnttYXJnaW4tbGVmdDowO21hcmdpbi10b3A6MTBweH19Cjwvc3R5bGU+CjwvaGVhZD4KCgo8Ym9keT4KCgo8ZGl2IGNsYXNzPSJwYWdlIGZyZWUtcGFnZSI+CjxtYWluPgoKCgo8aGVhZGVyPgoKPGEgaHJlZj0iLyI+CjxpbWcgd2lkdGg9IjMwMCIgaGVpZ2h0PSIzMDAiIHNyYz0iYXNzZXRzL2xvZ28uc3ZnIiBjbGFzcz0ibG9nbyIgYWx0PSJNb21Zb3VOZWVkVGhpcyBMb2dvIj4KPC9hPgoKPC9oZWFkZXI+CgoKCgo8c2VjdGlvbiBjbGFzcz0icmVzb3VyY2UtcGFnZSI+CgoKCjxzcGFuIGNsYXNzPSJmcmVlLWJhZGdlIj4K8J+NgiBGQUxMIENPTE9SSU5HIEZSRUUgUkVTT1VSQ0UKPC9zcGFuPgoKCgoKPGgxPgpGcmVlIEZhbGwgQ29sb3JpbmcgUGFnZXMKPC9oMT4KCgoKCjxwIGNsYXNzPSJpbnRybyI+CkNlbGVicmF0ZSB0aGUgYmVhdXR5IG9mIGF1dHVtbiB3aXRoIGZyZWUgcHJpbnRhYmxlIGZhbGwgY29sb3JpbmcgcGFnZXMgZm9yIGtpZHMuIERpc2NvdmVyIHB1bXBraW5zLCBsZWF2ZXMsIGFwcGxlcywgYWNvcm5zLCBjb3p5IGZhbGwgYWN0aXZpdGllcywgaGFydmVzdCB0aGVtZXMsIGFuZCBhdXR1bW4gYW5pbWFscyBwZXJmZWN0IGZvciB0b2RkbGVycywgcHJlc2Nob29sZXJzLCBhbmQgY2hpbGRyZW4gb2YgYWxsIGFnZXMuCjwvcD4KCgoKCjxzZWN0aW9uIGNsYXNzPSJmZWF0dXJlZC1yZXNvdXJjZXMiPgoKCgo8aDI+CvCfjYIgRmFsbCBDb2xvcmluZyBQYWdlcwo8L2gyPgoKCjxkaXYgY2xhc3M9InByaW50YWJsZS1wcmV2aWV3Ij4KPGltZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjE2MDAiIHNyYz0iYXNzZXRzL2NvbG9yaW5nL2ZhbGwtMS5wbmciIGFsdD0iRnJlZSBwcmludGFibGUgRmFsbCBjb2xvcmluZyBwYWdlIGZvciBraWRzIiBsb2FkaW5nPSJsYXp5Ij4KPC9kaXY+CjxzZWN0aW9uIGNsYXNzPSJnZW5lcmF0b3ItYm90dG9tLWN0YSI+CjxoMj7wn46oIERvd25sb2FkIFlvdXIgRnJlZSBGYWxsIENvbG9yaW5nIFBhZ2U8L2gyPgo8cD5BIGN1dGUsIG9yaWdpbmFsIGZhbGwgY29sb3JpbmcgcGFnZSBtYWRlIGZvciBsaXR0bGUgaGFuZHMg4oCUIGJvbGQgb3V0bGluZXMsIGJpZyBzcGFjZXMsIHplcm8gc2lnbnVwLjwvcD4KPGEgaHJlZj0iYXNzZXRzL2NvbG9yaW5nL2ZhbGwtMS5wbmciIGRvd25sb2FkPSJmYWxsLWNvbG9yaW5nLXBhZ2UucG5nIiBjbGFzcz0iZG93bmxvYWQtYnV0dG9uIj7irIfvuI8gRG93bmxvYWQgRnJlZSBDb2xvcmluZyBQYWdlPC9hPgo8YSBocmVmPSJhc3NldHMvY29sb3JpbmcvZmFsbC0xLnBuZyIgdGFyZ2V0PSJfYmxhbmsiIHJlbD0ibm9vcGVuZXIiIGNsYXNzPSJkb3dubG9hZC1idXR0b24gcHJpbnQtYnRuIj7wn5ao77iPIFByaW50PC9hPgo8cCBjbGFzcz0iZnJlZS1ub3RlIj7wn46BIEZyZWUgcHJpbnRhYmxlIGZvciB0b2RkbGVycyAmYW1wOyBwcmVzY2hvb2xlcnM8L3A+Cjwvc2VjdGlvbj4KCgoKCjwvc2VjdGlvbj4KCjxzZWN0aW9uIGNsYXNzPSJmZWF0dXJlZC1yZXNvdXJjZXMiPgoKCgo8aDI+CvCfjYIgUHVtcGtpbiBQYXRjaCBDb2xvcmluZyBQYWdlCjwvaDI+CgoKPGRpdiBjbGFzcz0icHJpbnRhYmxlLXByZXZpZXciPgo8aW1nIHdpZHRoPSI4NTAiIGhlaWdodD0iMTEwMCIgc3JjPSJhc3NldHMvY29sb3JpbmcvZmFsbC0yLnBuZyIgYWx0PSJQdW1wa2luIHBhdGNoIGNvbG9yaW5nIHBhZ2U6IHRocmVlIHB1bXBraW5zIG9mIGRpZmZlcmVudCBzaXplcyB3aXRoIGN1cmx5IHZpbmVzIGFuZCBiaWcgbGVhdmVzLCBhbmQgYSB3aGVlbGJhcnJvdyBmdWxsIG9mIHB1bXBraW5zIiBsb2FkaW5nPSJsYXp5Ij4KPC9kaXY+CjxzZWN0aW9uIGNsYXNzPSJnZW5lcmF0b3ItYm90dG9tLWN0YSI+CjxoMj7wn46oIERvd25sb2FkIHRoZSBQdW1wa2luIFBhdGNoIENvbG9yaW5nIFBhZ2U8L2gyPgo8cD5UaHJlZSBwdW1wa2lucyBvZiBkaWZmZXJlbnQgc2l6ZXMgd2l0aCBjdXJseSB2aW5lcyBhbmQgYmlnIGxlYXZlcywgcGx1cyBhIHdoZWVsYmFycm93IGZ1bGwgb2YgcHVtcGtpbnMg4oCUIGJvbGQgb3V0bGluZXMsIGJpZyBzcGFjZXMsIHplcm8gc2lnbnVwLjwvcD4KPGEgaHJlZj0iYXNzZXRzL2NvbG9yaW5nL2ZhbGwtMi5wbmciIGRvd25sb2FkPSJwdW1wa2luLXBhdGNoLWNvbG9yaW5nLXBhZ2UucG5nIiBjbGFzcz0iZG93bmxvYWQtYnV0dG9uIj7irIfvuI8gRG93bmxvYWQgUHVtcGtpbiBQYXRjaCBQYWdlPC9hPgo8YSBocmVmPSJhc3NldHMvY29sb3JpbmcvZmFsbC0yLnBuZyIgdGFyZ2V0PSJfYmxhbmsiIHJlbD0ibm9vcGVuZXIiIGNsYXNzPSJkb3dubG9hZC1idXR0b24gcHJpbnQtYnRuIj7wn5ao77iPIFByaW50IFB1bXBraW4gUGF0Y2ggUGFnZTwvYT4KPHAgY2xhc3M9ImZyZWUtbm90ZSI+8J+OgSBGcmVlIHByaW50YWJsZSBmb3IgdG9kZGxlcnMgJmFtcDsgcHJlc2Nob29sZXJzPC9wPgo8L3NlY3Rpb24+CgoKCgo8L3NlY3Rpb24+Cgo8c2VjdGlvbiBjbGFzcz0iZmVhdHVyZWQtcmVzb3VyY2VzIj4KCgoKPGgyPgrwn42CIFNjYXJlY3JvdyBDb2xvcmluZyBQYWdlCjwvaDI+CgoKPGRpdiBjbGFzcz0icHJpbnRhYmxlLXByZXZpZXciPgo8aW1nIHdpZHRoPSI4NTAiIGhlaWdodD0iMTEwMCIgc3JjPSJhc3NldHMvY29sb3JpbmcvZmFsbC0zLnBuZyIgYWx0PSJTY2FyZWNyb3cgY29sb3JpbmcgcGFnZTogYSBzY2FyZWNyb3cgd2VhcmluZyBhIGZsb3BweSBoYXQgYW5kIGEgcGF0Y2hlZCBqYWNrZXQgd2l0aCBhcm1zIHNwcmVhZCB3aWRlLCB0d28gY3Jvd3Mgb24gaXRzIGFybXMsIHB1bXBraW5zIGFuZCBjb3JuIHN0YWxrcyBhdCBpdHMgZmVldCIgbG9hZGluZz0ibGF6eSI+CjwvZGl2Pgo8c2VjdGlvbiBjbGFzcz0iZ2VuZXJhdG9yLWJvdHRvbS1jdGEiPgo8aDI+8J+OqCBEb3dubG9hZCB0aGUgU2NhcmVjcm93IENvbG9yaW5nIFBhZ2U8L2gyPgo8cD5BIHNjYXJlY3JvdyBpbiBhIGZsb3BweSBoYXQgYW5kIHBhdGNoZWQgamFja2V0IHdpdGggYXJtcyBzcHJlYWQgd2lkZSwgdHdvIGNyb3dzIG9uIGl0cyBhcm1zLCBwdW1wa2lucyBhbmQgY29ybiBzdGFsa3MgYXQgaXRzIGZlZXQg4oCUIGJvbGQgb3V0bGluZXMsIGJpZyBzcGFjZXMsIHplcm8gc2lnbnVwLjwvcD4KPGEgaHJlZj0iYXNzZXRzL2NvbG9yaW5nL2ZhbGwtMy5wbmciIGRvd25sb2FkPSJzY2FyZWNyb3ctY29sb3JpbmctcGFnZS5wbmciIGNsYXNzPSJkb3dubG9hZC1idXR0b24iPuKsh++4jyBEb3dubG9hZCBTY2FyZWNyb3cgUGFnZTwvYT4KPGEgaHJlZj0iYXNzZXRzL2NvbG9yaW5nL2ZhbGwtMy5wbmciIHRhcmdldD0iX2JsYW5rIiByZWw9Im5vb3BlbmVyIiBjbGFzcz0iZG93bmxvYWQtYnV0dG9uIHByaW50LWJ0biI+8J+WqO+4jyBQcmludCBTY2FyZWNyb3cgUGFnZTwvYT4KPHAgY2xhc3M9ImZyZWUtbm90ZSI+8J+OgSBGcmVlIHByaW50YWJsZSBmb3IgdG9kZGxlcnMgJmFtcDsgcHJlc2Nob29sZXJzPC9wPgo8L3NlY3Rpb24+CgoKCgo8L3NlY3Rpb24+Cgo8c2VjdGlvbiBjbGFzcz0iZmVhdHVyZWQtcmVzb3VyY2VzIj4KCgoKPGgyPgrwn42CIEhhcnZlc3QgQmFza2V0IENvbG9yaW5nIFBhZ2UKPC9oMj4KCgo8ZGl2IGNsYXNzPSJwcmludGFibGUtcHJldmlldyI+CjxpbWcgd2lkdGg9Ijg1MCIgaGVpZ2h0PSIxMTAwIiBzcmM9ImFzc2V0cy9jb2xvcmluZy9mYWxsLTQucG5nIiBhbHQ9IkhhcnZlc3QgYmFza2V0IGNvbG9yaW5nIHBhZ2U6IGEgYmFza2V0IG92ZXJmbG93aW5nIHdpdGggYXBwbGVzLCBjb3JuLCBhbmQgd2hlYXQgc3RhbGtzIHdpdGggZmFsbGluZyBhdXR1bW4gbGVhdmVzIGFuZCBhIHNxdWlycmVsIGhvbGRpbmcgYW4gYWNvcm4iIGxvYWRpbmc9ImxhenkiPgo8L2Rpdj4KPHNlY3Rpb24gY2xhc3M9ImdlbmVyYXRvci1ib3R0b20tY3RhIj4KPGgyPvCfjqggRG93bmxvYWQgdGhlIEhhcnZlc3QgQmFza2V0IENvbG9yaW5nIFBhZ2U8L2gyPgo8cD5BIGhhcnZlc3QgYmFza2V0IG92ZXJmbG93aW5nIHdpdGggYXBwbGVzLCBjb3JuLCBhbmQgd2hlYXQsIGZhbGxpbmcgYXV0dW1uIGxlYXZlcywgYW5kIGEgc3F1aXJyZWwgaG9sZGluZyBhbiBhY29ybiDigJQgYm9sZCBvdXRsaW5lcywgYmlnIHNwYWNlcywgemVybyBzaWdudXAuPC9wPgo8YSBocmVmPSJhc3NldHMvY29sb3JpbmcvZmFsbC00LnBuZyIgZG93bmxvYWQ9ImhhcnZlc3QtYmFza2V0LWNvbG9yaW5nLXBhZ2UucG5nIiBjbGFzcz0iZG93bmxvYWQtYnV0dG9uIj7irIfvuI8gRG93bmxvYWQgSGFydmVzdCBCYXNrZXQgUGFnZTwvYT4KPGEgaHJlZj0iYXNzZXRzL2NvbG9yaW5nL2ZhbGwtNC5wbmciIHRhcmdldD0iX2JsYW5rIiByZWw9Im5vb3BlbmVyIiBjbGFzcz0iZG93bmxvYWQtYnV0dG9uIHByaW50LWJ0biI+8J+WqO+4jyBQcmludCBIYXJ2ZXN0IEJhc2tldCBQYWdlPC9hPgo8cCBjbGFzcz0iZnJlZS1ub3RlIj7wn46BIEZyZWUgcHJpbnRhYmxlIGZvciB0b2RkbGVycyAmYW1wOyBwcmVzY2hvb2xlcnM8L3A+Cjwvc2VjdGlvbj4KCgoKCjwvc2VjdGlvbj4KCgoKCgo8c2VjdGlvbiBjbGFzcz0id2Vla2x5LWJveCI+CgoKCjxoMj4KTW9yZSBGcmVlIEtpZHMgQWN0aXZpdGllcyBDb21pbmcgU29vbgo8L2gyPgoKCgoKPHA+ClNhdmUgdGhpcyBwYWdlISBNb3JlIGZyZWUgcHJpbnRhYmxlIGFjdGl2aXRpZXMsIGVkdWNhdGlvbmFsIHJlc291cmNlcywgYW5kIG1vbS1hcHByb3ZlZCByZXNvdXJjZXMgYXJlIGFkZGVkIHJlZ3VsYXJseS4KPC9wPgoKCgoKPC9zZWN0aW9uPgoKCgoKCjwvc2VjdGlvbj4KCgoKCgoKPHNlY3Rpb24gY2xhc3M9ImZsb3ctc2VjdGlvbiI+CjxzcGFuIGNsYXNzPSJzZWN0aW9uLWtpY2tlciI+SG93IHRvIHVzZTwvc3Bhbj4KPGgyPvCflqjvuI8gSG93IHRvIFVzZSBUaGlzIEFjdGl2aXR5IEh1YjwvaDI+CjxwIGNsYXNzPSJzZW8tbGVhZCI+R2V0IHN0YXJ0ZWQgaW4gbWludXRlcyDigJQgZXZlcnl0aGluZyBoZXJlIGlzIGZyZWUgYW5kIG1hZGUgZm9yIGJ1c3kgcGFyZW50cy48L3A+CjxvbCBjbGFzcz0ic2VvLXN0ZXBzIj4KPGxpPjxzdHJvbmc+UGljayBhbiBhY3Rpdml0eSBiZWxvdy48L3N0cm9uZz4gQnJvd3NlIHRoZSBGYWxsIENvbG9yaW5nIFBhZ2VzIGNvbGxlY3Rpb24gYW5kIGNob29zZSBvbmUgdGhhdCBmaXRzIHlvdXIgY2hpbGQncyBtb29kIHRvZGF5LjwvbGk+CjxsaT48c3Ryb25nPkRvd25sb2FkIGl0IGZyZWUuPC9zdHJvbmc+IEV2ZXJ5IGFjdGl2aXR5IHBhZ2UgaW5jbHVkZXMgYSBmcmVlIHByaW50YWJsZSBkb3dubG9hZCDigJQgbm8gc2lnbnVwIG5lZWRlZC48L2xpPgo8bGk+PHN0cm9uZz5QcmludCBhbmQgcGxheSB0b2dldGhlci48L3N0cm9uZz4gUHJpbnQgYXQgaG9tZSwgdGhlbiBsZWFybiBzaWRlIGJ5IHNpZGUgaW4gc2hvcnQsIGZ1biBzZXNzaW9ucy48L2xpPgo8bGk+PHN0cm9uZz5Db21lIGJhY2sgZm9yIG1vcmUuPC9zdHJvbmc+IE5ldyBwcmludGFibGVzIGFyZSBhZGRlZCByZWd1bGFybHksIHNvIHRoZXJlIGlzIGFsd2F5cyBzb21ldGhpbmcgZnJlc2ggdG8gdHJ5LjwvbGk+Cjwvb2w+Cjwvc2VjdGlvbj4KCjxzZWN0aW9uIGNsYXNzPSJmbG93LXNlY3Rpb24iPgo8aDI+8J+NgiBGYWxsIENvbG91cmluZyBQYWdlcyBmb3IgQXV0dW1uIEZ1bjwvaDI+CjxwPlRoZXNlIGZhbGwgY29sb3VyaW5nIHBhZ2VzIGNlbGVicmF0ZSBhdXR1bW4gd2l0aCBsZWF2ZXMsIHB1bXBraW5zLCBhY29ybnMsIGFwcGxlcywgYW5kIGNvc3kgc3dlYXRlcnMuIEVhY2ggcGFnZSBoYXMgb25lIGJpZyBmYWxsIHNjZW5lIHdpdGggYm9sZCBvdXRsaW5lcyBmb3IgbGl0dGxlIGhhbmRzLiBQcmludCBmYWxsIGNvbG91cmluZyBwYWdlcyBmb3IgYSBjcmlzcCBhdXR1bW4gYWZ0ZXJub29uLjwvcD4KPHA+RmFsbCBjb2xvdXJpbmcgcGFnZXMgYXJlIHBlcmZlY3QgZm9yIHRhbGtpbmcgYWJvdXQgdGhlIHNlYXNvbnMuIE5hbWUgdGhlIGxlYWYgY29sb3VycyDigJQgcmVkLCBvcmFuZ2UsIHllbGxvdywgYnJvd24g4oCUIGFuZCB0YWxrIGFib3V0IHdoeSBsZWF2ZXMgY2hhbmdlLiBUaGVzZSBmYWxsIGNvbG91cmluZyBwYWdlcyB0dXJuIGNvbG91cmluZyBpbnRvIGEgbmF0dXJlIGxlc3Nvbi48L3A+CjxwPkZpbmlzaGVkIGZhbGwgY29sb3VyaW5nIHBhZ2VzIG1ha2UgYmVhdXRpZnVsIGF1dHVtbiBkZWNvcmF0aW9ucy4gVGFwZSB0aGVtIHRvIHdpbmRvd3Mgb3IgdGhlIGZyaWRnZSB0byB3ZWxjb21lIHRoZSBzZWFzb24uPC9wPgoKPHA+U2VlIDxhIGhyZWY9ImFzc2V0cy9jb2xvcmluZy9mYWxsLTEucG5nIj5hdXR1bW4gcHJpbnRhYmxlPC9hPiBmb3IgbW9yZS48L3A+Cjwvc2VjdGlvbj4KCgoKPHNlY3Rpb24gY2xhc3M9InNlby1zZWN0aW9uIj4KPHNwYW4gY2xhc3M9InNlY3Rpb24ta2lja2VyIj5GQVE8L3NwYW4+CjxoMj7inZMgRmFsbCBDb2xvcmluZyBQYWdlcyBGQVFzPC9oMj4KPGRpdiBjbGFzcz0ic2VvLWZhcSI+CjxkaXYgY2xhc3M9InNlby1mYXEtaXRlbSI+CjxoMz5XaGF0IGFjdGl2aXRpZXMgYXJlIGluY2x1ZGVkIGluIEZhbGwgQ29sb3JpbmcgUGFnZXM/PC9oMz4KPHA+VGhpcyBodWIgY29sbGVjdHMgb3VyIGZyZWUgZmFsbCBjb2xvcmluZyBwYWdlcyBwcmludGFibGVzIGluIG9uZSBwbGFjZS4gUGljayBhbnkgYWN0aXZpdHkgYmVsb3cgdG8gb3BlbiBpdHMgcGFnZSwgZG93bmxvYWQgdGhlIHByaW50YWJsZSwgYW5kIHN0YXJ0IGxlYXJuaW5nLjwvcD4KPC9kaXY+CjxkaXYgY2xhc3M9InNlby1mYXEtaXRlbSI+CjxoMz5BcmUgdGhlc2UgYWN0aXZpdGllcyByZWFsbHkgZnJlZT88L2gzPgo8cD5ZZXMg4oCUIGV2ZXJ5IHByaW50YWJsZSBvbiBNb21Zb3VOZWVkVGhpcyBpcyAxMDAlIGZyZWUgdG8gZG93bmxvYWQgYW5kIHByaW50LiBObyBzaWdudXAsIG5vIHBheW1lbnQsIGp1c3QgdGFwIHRoZSBkb3dubG9hZCBidXR0b24uPC9wPgo8L2Rpdj4KPGRpdiBjbGFzcz0ic2VvLWZhcS1pdGVtIj4KPGgzPkhvdyBkbyBJIHVzZSB0aGVzZSBhY3Rpdml0aWVzIHdpdGggbXkgY2hpbGQ/PC9oMz4KPHA+Q2hvb3NlIGFuIGFjdGl2aXR5LCBkb3dubG9hZCBhbmQgcHJpbnQgaXQsIGFuZCB3b3JrIHRocm91Z2ggaXQgdG9nZXRoZXIgaW4gc2hvcnQsIHBsYXlmdWwgc2Vzc2lvbnMuIEZvbGxvdyB5b3VyIGNoaWxkJiN4Mjc7cyBsZWFkIGFuZCBrZWVwIGl0IGZ1bi48L3A+CjwvZGl2PgoKPGRpdiBjbGFzcz0ic2VvLWZhcS1pdGVtIj4KPGgzPkFyZSB0aGVzZSBmYWxsIGNvbG91cmluZyBwYWdlcyBmcmVlIHRvIGRvd25sb2FkPzwvaDM+CjxwPlllcyDigJQgdGhlc2UgZmFsbCBjb2xvdXJpbmcgcGFnZXMgYXJlIGNvbXBsZXRlbHkgZnJlZSB0byBkb3dubG9hZCBhbmQgcHJpbnQuIE5vIHNpZ251cCwgbm8gcGF5bWVudCwganVzdCBwcmludCBhbmQgY29sb3VyLjwvcD4KPC9kaXY+CjxkaXYgY2xhc3M9InNlby1mYXEtaXRlbSI+CjxoMz5Ib3cgZG8gSSBwcmludCB0aGVzZSBmYWxsIGNvbG91cmluZyBwYWdlcyBwcmludGFibGUgc2hlZXRzPzwvaDM+CjxwPlRhcCB0aGUgZG93bmxvYWQgYnV0dG9uIG9uIGFueSBmYWxsIGNvbG91cmluZyBwYWdlcyBwcmludGFibGUgc2hlZXQsIHRoZW4gcHJpbnQgYXQgaG9tZSBvbiByZWd1bGFyIHBhcGVyLiBObyBzaWdudXAgbmVlZGVkLjwvcD4KPC9kaXY+CjxkaXYgY2xhc3M9InNlby1mYXEtaXRlbSI+CjxoMz5XaGF0IGZhbGwgYWN0aXZpdGllcyBjYW4ga2lkcyBkbyBhdCBob21lPzwvaDM+CjxwPkNvbG9yaW5nIGlzIG9uZSBvZiB0aGUgZWFzaWVzdCBmYWxsIGFjdGl2aXRpZXMgZm9yIGtpZHMgYXQgaG9tZSDigJQgcHJpbnQgdGhlIHB1bXBraW4gcGF0Y2gsIHNjYXJlY3JvdywgYW5kIGhhcnZlc3QgYmFza2V0IHNoZWV0cyBvbiB0aGlzIHBhZ2UsIHNldCBvdXQgY3JheW9ucywgYW5kIGxldCBraWRzIGNvbG9yIHdoaWxlIHlvdSB0YWxrIGFib3V0IHRoZSBzZWFzb24uPC9wPgo8L2Rpdj4KPGRpdiBjbGFzcz0ic2VvLWZhcS1pdGVtIj4KPGgzPldoZXJlIGNhbiBJIGZpbmQgZmFsbCBhY3Rpdml0aWVzIHRvIHByaW50IGF0IGhvbWU/PC9oMz4KPHA+UmlnaHQgb24gdGhpcyBwYWdlIOKAlCB0aGUgcHVtcGtpbiBwYXRjaCwgc2NhcmVjcm93LCBhbmQgaGFydmVzdCBiYXNrZXQgY29sb3JpbmcgcGFnZXMgYXJlIGZ1biBmYWxsIGFjdGl2aXRpZXMgeW91IGNhbiBkb3dubG9hZCBhbmQgcHJpbnQgZnJlZSwgd2l0aCBubyBzaWdudXAgbmVlZGVkLjwvcD4KPC9kaXY+CjwvZGl2Pgo8L3NlY3Rpb24+Cgo8c2VjdGlvbiBjbGFzcz0ic2VvLXNlY3Rpb24iPgo8c3BhbiBjbGFzcz0ic2VjdGlvbi1raWNrZXIiPktlZXAgZXhwbG9yaW5nPC9zcGFuPgo8aDI+8J+UlyBNb3JlIEZyZWUgUHJpbnRhYmxlcyBZb3XigJlsbCBMb3ZlPC9oMj4KPHAgY2xhc3M9InNlby1sZWFkIj5QYWlyIHRoaXMgcHJpbnRhYmxlIHdpdGggbW9yZSBmcmVlIGxlYXJuaW5nIGFjdGl2aXRpZXMgZnJvbSB0aGUgTW9tWW91TmVlZFRoaXMgbGlicmFyeS48L3A+Cjx1bCBjbGFzcz0ic2VvLWxpbmtzIj4KPGxpPjxhIGhyZWY9ImFscGhhYmV0LWNvbG9yaW5nLXBhZ2VzIj7wn5SkIEFscGhhYmV0IENvbG9yaW5nIFBhZ2VzPC9hPjxzcGFuPkZyZWUgQSB0byBaIGFscGhhYmV0IGNvbG9yaW5nIHByaW50YWJsZXMgZm9yIHRvZGRsZXJzIGFuZCBwcmVzY2hvb2xlcnMuPC9zcGFuPjwvbGk+CjxsaT48YSBocmVmPSJiYWNrLXRvLXNjaG9vbC1jb2xvcmluZy1wYWdlcyI+8J+OjyBGcmVlIEJhY2sgdG8gU2Nob29sIENvbG9yaW5nIFBhZ2VzPC9hPjxzcGFuPkZyZWUgYmFjayB0byBzY2hvb2wgY29sb3JpbmcgcGFnZXMgcHJpbnRhYmxlIGZvciB0b2RkbGVycyBhbmQgcHJlc2Nob29sZXJzLjwvc3Bhbj48L2xpPgo8bGk+PGEgaHJlZj0iYnVnLWluc2VjdC1jb2xvcmluZy1wYWdlcyI+8J+OjyBGcmVlIEJ1ZyAmYW1wOyBJbnNlY3QgQ29sb3JpbmcgUGFnZXM8L2E+PHNwYW4+RnJlZSBidWcgJmFtcDsgaW5zZWN0IGNvbG9yaW5nIHBhZ2VzIHByaW50YWJsZSBmb3IgdG9kZGxlcnMgYW5kIHByZXNjaG9vbGVycy48L3NwYW4+PC9saT4KPGxpPjxhIGhyZWY9ImNocmlzdG1hcy1jb2xvcmluZy1wYWdlcyI+8J+OjyBGcmVlIENocmlzdG1hcyBDb2xvcmluZyBQYWdlczwvYT48c3Bhbj5GcmVlIGNocmlzdG1hcyBjb2xvcmluZyBwYWdlcyBwcmludGFibGUgZm9yIHRvZGRsZXJzIGFuZCBwcmVzY2hvb2xlcnMuPC9zcGFuPjwvbGk+CjxsaT48YSBocmVmPSJ0dXJuLWEtcGhvdG8taW50by1hLWNvbG9yaW5nLXBhZ2UiPvCfjqggVHVybiBhIFBob3RvIEludG8gYSBDb2xvcmluZyBQYWdlPC9hPjxzcGFuPkZyZWUgY29udmVydGVyOiB0dXJuIGFueSBwaG90byDigJQgYSBwZXQsIGEgcHVtcGtpbiBwYXRjaCBzbmFwc2hvdCDigJQgaW50byBhIHByaW50YWJsZSBjb2xvcmluZyBwYWdlIGluIHlvdXIgYnJvd3Nlci48L3NwYW4+PC9saT4KPC91bD4KPC9zZWN0aW9uPgoKPC9tYWluPgo8Zm9vdGVyPgogICAgPGRpdiBjbGFzcz0iZm9vdGVyLWxvZ28iPgogICAgICAgIDxpbWcgd2lkdGg9IjMwMCIgaGVpZ2h0PSIzMDAiCiAgICAgICAgICAgIHNyYz0iYXNzZXRzL2xvZ28uc3ZnIgogICAgICAgICAgICBhbHQ9Ik1vbVlvdU5lZWRUaGlzIgogICAgICAgID4KICAgIDwvZGl2Pgo8aDM+CiAgICBNb21Zb3VOZWVkVGhpcwo8L2gzPgo8cD4KICAgIE1vbSBmaW5kcywgc21hcnQgdG9vbHMsIGZyZWUgcmVzb3VyY2VzLCByZWFsIGFuc3dlcnMKICAgIGFuZCBhIGxpdHRsZSBjaGFvcyBmcm9tIHRoZSBNb20gVW5pdmVyc2UuCjwvcD4KPGRpdiBjbGFzcz0iZm9vdGVyLWxpbmtzIj4KICAgIDxhIGhyZWY9Im1vbS1mYXZvcml0ZXMiPgogICAgICAgIE1vbSBCYXR0bGVzCiAgICA8L2E+CiAgICA8YSBocmVmPSJtb20tbGFiIj4KICAgICAgICBNb20gTGFiCiAgICA8L2E+CiAgICA8YSBocmVmPSJmcmVlLW1vbS1yZXNvdXJjZXMiPgogICAgICAgIEZyZWUgUmVzb3VyY2VzCiAgICA8L2E+CiAgICA8YSBocmVmPSJhYm91dCI+CiAgICAgICAgQWJvdXQKICAgIDwvYT4KICAgIDxhIGhyZWY9InByaXZhY3ktcG9saWN5Ij4KICAgICAgICBQcml2YWN5IFBvbGljeQogICAgPC9hPgogICAgPGEgaHJlZj0idGVybXMiPgogICAgICAgIFRlcm1zIG9mIFVzZQogICAgPC9hPgogICAgPGEgaHJlZj0iYWZmaWxpYXRlLWRpc2Nsb3N1cmUiPgogICAgICAgIEFmZmlsaWF0ZSBEaXNjbG9zdXJlCiAgICA8L2E+CiAgICA8YSBocmVmPSJkaXNjbGFpbWVyIj4KICAgICAgICBEaXNjbGFpbWVyCiAgICA8L2E+CiAgICA8YSBocmVmPSJjb250YWN0Ij4KICAgICAgICBDb250YWN0CiAgICA8L2E+CjwvZGl2Pgo8ZGl2IGNsYXNzPSJmb290ZXItYm90dG9tIj4KICAgIDxwPgogICAgICAgIMKpIDIwMjYgTW9tWW91TmVlZFRoaXMuIEFsbCByaWdodHMgcmVzZXJ2ZWQuCiAgICA8L3A+CiAgICA8IS0tIEFmZmlsaWF0ZSBkaXNjbG9zdXJlOiByZXN0b3JlIHRoZSBBbWF6b24gQXNzb2NpYXRlcyBlYXJuaW5ncyBsaW5lIGhlcmUgb25jZSBhcHByb3ZlZCBmb3IgdGhlIHByb2dyYW0uIC0tPgo8L2Rpdj4KPC9mb290ZXI+CgoKCgo8L2Rpdj4KCgoKPC9ib2R5PgoKCjwvaHRtbD4=
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<!-- Google tag (gtag.js) - deferred until page load for performance -->
+<script>
+window.addEventListener('load', function() {
+  var s = document.createElement('script');
+  s.async = true;
+  s.src = 'https://www.googletagmanager.com/gtag/js?id=G-FE48KK6THQ';
+  document.head.appendChild(s);
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-FE48KK6THQ');
+});
+</script>
+
+<meta charset="UTF-8">
+<link rel="canonical" href="https://momyouneedthis.com/fall-coloring-pages">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Free Fall Coloring Pages | Printable for Toddlers</title>
+
+<meta name="description" content="Free printable Fall Coloring Pages for toddlers and preschoolers. Download and print at home — no signup needed.">
+<meta property="og:title" content="Free Fall Coloring Pages | Printable for Toddlers">
+<meta property="og:description" content="Free printable Fall Coloring Pages for toddlers and preschoolers. Download and print at home — no signup needed.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://momyouneedthis.com/fall-coloring-pages">
+<meta property="og:image" content="https://momyouneedthis.com/assets/coloring/fall-1.png">
+
+<link rel="stylesheet" href="/style.min.css">
+<link rel="stylesheet" href="/resources.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+
+<style>
+.seo-section {
+    max-width: 900px;
+    margin: 55px auto 0;
+    padding: 45px 42px 50px;
+    background: #ffffff;
+    border: 1px solid #eee5e7;
+    border-radius: 35px;
+    box-shadow: 0 12px 35px rgba(80, 55, 55, 0.06);
+    font-family: 'Nunito', system-ui, sans-serif;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+}
+.seo-section::before {
+    content: "";
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    top: -145px;
+    right: -90px;
+    background: #ffe5ec;
+    border-radius: 50%;
+    opacity: .65;
+    pointer-events: none;
+}
+.seo-section::after {
+    content: "";
+    position: absolute;
+    width: 190px;
+    height: 190px;
+    bottom: -120px;
+    left: -80px;
+    background: #fff1c9;
+    border-radius: 50%;
+    opacity: .55;
+    pointer-events: none;
+}
+.seo-section > * { position: relative; z-index: 1; }
+.seo-section .section-kicker {
+    display: block;
+    margin-bottom: 10px;
+    color:#c03d5b;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-align: center;
+}
+.seo-section h2 {
+    max-width: 700px;
+    margin: 0 auto 14px;
+    color: #332b2b;
+    font-size: clamp(26px, 3.6vw, 34px);
+    line-height: 1.15;
+    letter-spacing: -.6px;
+    font-weight: 900;
+    text-align: center;
+}
+.seo-section h2::after {
+    content: "";
+    display: block;
+    width: 45px;
+    height: 3px;
+    margin: 16px auto 0;
+    background: #e89aaa;
+    border-radius: 999px;
+}
+.seo-lead {
+    max-width: 680px;
+    margin: 0 auto 26px;
+    color: #6d6566;
+    font-size: 16px;
+    line-height: 1.7;
+    text-align: center;
+}
+.seo-links { list-style: none; margin: 10px auto 0; padding: 0; max-width: 720px; display: grid; gap: 10px; }
+.seo-links li { padding: 16px 18px; background: #fffaf8; border: 1px solid #f1e5e7; border-radius: 16px; transition: transform .2s ease, box-shadow .2s ease; }
+.seo-links li:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(80, 55, 65, .07); }
+.seo-links a { color: #332b2b; font-size: 15px; font-weight: 900; text-decoration: none; }
+.seo-links a:hover { color:#c33761; }
+.seo-links span { display: block; margin-top: 4px; color:#6d6d6d; font-size: 13px; line-height: 1.5; }
+.seo-steps { list-style: none; margin: 0 auto; padding: 0; max-width: 720px; display: grid; gap: 12px; counter-reset: seo-step; }
+.seo-steps li { counter-increment: seo-step; position: relative; padding: 18px 20px 18px 70px; background: #fffaf8; border: 1px solid #f1e5e7; border-radius: 18px; color: #5f5758; font-size: 15px; line-height: 1.6; }
+.seo-steps li::before { content: counter(seo-step); position: absolute; left: 20px; top: 50%; transform: translateY(-50%); width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; background: #e89aaa; border-radius: 50%; color: #ffffff; font-size: 15px; font-weight: 900; }
+.seo-steps li strong { color: #332b2b; }
+.seo-faq { max-width: 720px; margin: 0 auto; display: grid; gap: 12px; }
+.seo-faq-item { padding: 20px 22px; background: #fffaf8; border: 1px solid #f0dfe3; border-radius: 18px; }
+.seo-faq-item h3 { margin: 0 0 8px; color: #332b2b; font-size: 16px; line-height: 1.4; font-weight: 900; }
+.seo-faq-item p { margin: 0; color: #686061; font-size: 14px; line-height: 1.7; }
+@media (max-width: 750px) {
+    .seo-section { margin-top: 40px; padding: 35px 20px 38px; border-radius: 28px; }
+    .seo-steps li { padding: 16px 16px 16px 62px; font-size: 14px; }
+    .seo-steps li::before { left: 16px; }
+    .seo-faq-item { padding: 18px; }
+}
+
+</style>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What activities are included in Fall Coloring Pages?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "This hub collects our free fall coloring pages printables in one place. Pick any activity below to open its page, download the printable, and start learning."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are these activities really free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes — every printable on MomYouNeedThis is 100% free to download and print. No signup, no payment, just tap the download button."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I use these activities with my child?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Choose an activity, download and print it, and work through it together in short, playful sessions. Follow your child's lead and keep it fun."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are these fall colouring pages free to download?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes — these fall colouring pages are completely free to download and print. No signup, no payment, just print and colour."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I print these fall colouring pages printable sheets?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Tap the download button on any fall colouring pages printable sheet, then print at home on regular paper. No signup needed."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What fall activities can kids do at home?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Coloring is one of the easiest fall activities for kids at home \u2014 print the pumpkin patch, scarecrow, and harvest basket sheets on this page, set out crayons, and let kids color while you talk about the season."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Where can I find fall activities to print at home?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Right on this page \u2014 the pumpkin patch, scarecrow, and harvest basket coloring pages are fun fall activities you can download and print free, with no signup needed."
+      }
+    }
+  ]
+}
+</script>
+<style>
+.coloring-more{margin:14px 0 0;color:#a0556b;font-size:15px;font-weight:800}
+.print-btn{background:#fff!important;color:#c33761!important;border:2px solid #e89aaa!important;margin-left:10px}
+.print-btn:hover{background:#fdf3f5!important;transform:translateY(-3px)}
+@media(max-width:600px){.print-btn{margin-left:0;margin-top:10px}}
+</style>
+</head>
+
+
+<body>
+
+
+<div class="page free-page">
+<main>
+
+
+
+<header>
+
+<a href="/">
+<img width="300" height="300" src="assets/logo.svg" class="logo" alt="MomYouNeedThis Logo">
+</a>
+
+</header>
+
+
+
+
+<section class="resource-page">
+
+
+
+<span class="free-badge">
+🍂 FALL COLORING FREE RESOURCE
+</span>
+
+
+
+
+<h1>
+Free Fall Coloring Pages
+</h1>
+
+
+
+
+<p class="intro">
+Celebrate the beauty of autumn with free printable fall coloring pages for kids. Discover pumpkins, leaves, apples, acorns, cozy fall activities, harvest themes, and autumn animals perfect for toddlers, preschoolers, and children of all ages.
+</p>
+
+
+
+
+<section class="featured-resources">
+
+
+
+<h2>
+🍂 Fall Coloring Pages
+</h2>
+
+
+<div class="printable-preview">
+<img width="800" height="1600" src="assets/coloring/fall-1.png" alt="Free printable Fall coloring page for kids" loading="lazy">
+</div>
+<section class="generator-bottom-cta">
+<h2>🎨 Download Your Free Fall Coloring Page</h2>
+<p>A cute, original fall coloring page made for little hands — bold outlines, big spaces, zero signup.</p>
+<a href="assets/coloring/fall-1.png" download="fall-coloring-page.png" class="download-button">⬇️ Download Free Coloring Page</a>
+<a href="assets/coloring/fall-1.png" target="_blank" rel="noopener" class="download-button print-btn">🖨️ Print</a>
+<p class="free-note">🎁 Free printable for toddlers &amp; preschoolers</p>
+</section>
+
+
+
+
+</section>
+
+<section class="featured-resources">
+
+
+
+<h2>
+🍂 Pumpkin Patch Coloring Page
+</h2>
+
+
+<div class="printable-preview">
+<img width="850" height="1100" src="assets/coloring/fall-2.png" alt="Pumpkin patch coloring page: three pumpkins of different sizes with curly vines and big leaves, and a wheelbarrow full of pumpkins" loading="lazy">
+</div>
+<section class="generator-bottom-cta">
+<h2>🎨 Download the Pumpkin Patch Coloring Page</h2>
+<p>Three pumpkins of different sizes with curly vines and big leaves, plus a wheelbarrow full of pumpkins — bold outlines, big spaces, zero signup.</p>
+<a href="assets/coloring/fall-2.png" download="pumpkin-patch-coloring-page.png" class="download-button">⬇️ Download Pumpkin Patch Page</a>
+<a href="assets/coloring/fall-2.png" target="_blank" rel="noopener" class="download-button print-btn">🖨️ Print Pumpkin Patch Page</a>
+<p class="free-note">🎁 Free printable for toddlers &amp; preschoolers</p>
+</section>
+
+
+
+
+</section>
+
+<section class="featured-resources">
+
+
+
+<h2>
+🍂 Scarecrow Coloring Page
+</h2>
+
+
+<div class="printable-preview">
+<img width="850" height="1100" src="assets/coloring/fall-3.png" alt="Scarecrow coloring page: a scarecrow wearing a floppy hat and a patched jacket with arms spread wide, two crows on its arms, pumpkins and corn stalks at its feet" loading="lazy">
+</div>
+<section class="generator-bottom-cta">
+<h2>🎨 Download the Scarecrow Coloring Page</h2>
+<p>A scarecrow in a floppy hat and patched jacket with arms spread wide, two crows on its arms, pumpkins and corn stalks at its feet — bold outlines, big spaces, zero signup.</p>
+<a href="assets/coloring/fall-3.png" download="scarecrow-coloring-page.png" class="download-button">⬇️ Download Scarecrow Page</a>
+<a href="assets/coloring/fall-3.png" target="_blank" rel="noopener" class="download-button print-btn">🖨️ Print Scarecrow Page</a>
+<p class="free-note">🎁 Free printable for toddlers &amp; preschoolers</p>
+</section>
+
+
+
+
+</section>
+
+<section class="featured-resources">
+
+
+
+<h2>
+🍂 Harvest Basket Coloring Page
+</h2>
+
+
+<div class="printable-preview">
+<img width="850" height="1100" src="assets/coloring/fall-4.png" alt="Harvest basket coloring page: a basket overflowing with apples, corn, and wheat stalks with falling autumn leaves and a squirrel holding an acorn" loading="lazy">
+</div>
+<section class="generator-bottom-cta">
+<h2>🎨 Download the Harvest Basket Coloring Page</h2>
+<p>A harvest basket overflowing with apples, corn, and wheat, falling autumn leaves, and a squirrel holding an acorn — bold outlines, big spaces, zero signup.</p>
+<a href="assets/coloring/fall-4.png" download="harvest-basket-coloring-page.png" class="download-button">⬇️ Download Harvest Basket Page</a>
+<a href="assets/coloring/fall-4.png" target="_blank" rel="noopener" class="download-button print-btn">🖨️ Print Harvest Basket Page</a>
+<p class="free-note">🎁 Free printable for toddlers &amp; preschoolers</p>
+</section>
+
+
+
+
+</section>
+
+
+
+
+
+<section class="weekly-box">
+
+
+
+<h2>
+More Free Kids Activities Coming Soon
+</h2>
+
+
+
+
+<p>
+Save this page! More free printable activities, educational resources, and mom-approved resources are added regularly.
+</p>
+
+
+
+
+</section>
+
+
+
+
+
+</section>
+
+
+
+
+
+
+<section class="flow-section">
+<span class="section-kicker">How to use</span>
+<h2>🖨️ How to Use This Activity Hub</h2>
+<p class="seo-lead">Get started in minutes — everything here is free and made for busy parents.</p>
+<ol class="seo-steps">
+<li><strong>Pick an activity below.</strong> Browse the Fall Coloring Pages collection and choose one that fits your child's mood today.</li>
+<li><strong>Download it free.</strong> Every activity page includes a free printable download — no signup needed.</li>
+<li><strong>Print and play together.</strong> Print at home, then learn side by side in short, fun sessions.</li>
+<li><strong>Come back for more.</strong> New printables are added regularly, so there is always something fresh to try.</li>
+</ol>
+</section>
+
+<section class="flow-section">
+<h2>🍂 Fall Colouring Pages for Autumn Fun</h2>
+<p>These fall colouring pages celebrate autumn with leaves, pumpkins, acorns, apples, and cosy sweaters. Each page has one big fall scene with bold outlines for little hands. Print fall colouring pages for a crisp autumn afternoon.</p>
+<p>Fall colouring pages are perfect for talking about the seasons. Name the leaf colours — red, orange, yellow, brown — and talk about why leaves change. These fall colouring pages turn colouring into a nature lesson.</p>
+<p>Finished fall colouring pages make beautiful autumn decorations. Tape them to windows or the fridge to welcome the season.</p>
+
+<p>See <a href="assets/coloring/fall-1.png">autumn printable</a> for more.</p>
+</section>
+
+
+
+<section class="seo-section">
+<span class="section-kicker">FAQ</span>
+<h2>❓ Fall Coloring Pages FAQs</h2>
+<div class="seo-faq">
+<div class="seo-faq-item">
+<h3>What activities are included in Fall Coloring Pages?</h3>
+<p>This hub collects our free fall coloring pages printables in one place. Pick any activity below to open its page, download the printable, and start learning.</p>
+</div>
+<div class="seo-faq-item">
+<h3>Are these activities really free?</h3>
+<p>Yes — every printable on MomYouNeedThis is 100% free to download and print. No signup, no payment, just tap the download button.</p>
+</div>
+<div class="seo-faq-item">
+<h3>How do I use these activities with my child?</h3>
+<p>Choose an activity, download and print it, and work through it together in short, playful sessions. Follow your child&#x27;s lead and keep it fun.</p>
+</div>
+
+<div class="seo-faq-item">
+<h3>Are these fall colouring pages free to download?</h3>
+<p>Yes — these fall colouring pages are completely free to download and print. No signup, no payment, just print and colour.</p>
+</div>
+<div class="seo-faq-item">
+<h3>How do I print these fall colouring pages printable sheets?</h3>
+<p>Tap the download button on any fall colouring pages printable sheet, then print at home on regular paper. No signup needed.</p>
+</div>
+<div class="seo-faq-item">
+<h3>What fall activities can kids do at home?</h3>
+<p>Coloring is one of the easiest fall activities for kids at home — print the pumpkin patch, scarecrow, and harvest basket sheets on this page, set out crayons, and let kids color while you talk about the season.</p>
+</div>
+<div class="seo-faq-item">
+<h3>Where can I find fall activities to print at home?</h3>
+<p>Right on this page — the pumpkin patch, scarecrow, and harvest basket coloring pages are fun fall activities you can download and print free, with no signup needed.</p>
+</div>
+</div>
+</section>
+
+<section class="seo-section">
+<span class="section-kicker">Keep exploring</span>
+<h2>🔗 More Free Printables You’ll Love</h2>
+<p class="seo-lead">Pair this printable with more free learning activities from the MomYouNeedThis library.</p>
+<ul class="seo-links">
+<li><a href="alphabet-coloring-pages">🔤 Alphabet Coloring Pages</a><span>Free A to Z alphabet coloring printables for toddlers and preschoolers.</span></li>
+<li><a href="back-to-school-coloring-pages">🎏 Free Back to School Coloring Pages</a><span>Free back to school coloring pages printable for toddlers and preschoolers.</span></li>
+<li><a href="bug-insect-coloring-pages">🎏 Free Bug &amp; Insect Coloring Pages</a><span>Free bug &amp; insect coloring pages printable for toddlers and preschoolers.</span></li>
+<li><a href="christmas-coloring-pages">🎏 Free Christmas Coloring Pages</a><span>Free christmas coloring pages printable for toddlers and preschoolers.</span></li>
+<li><a href="turn-a-photo-into-a-coloring-page">🎨 Turn a Photo Into a Coloring Page</a><span>Free converter: turn any photo — a pet, a pumpkin patch snapshot — into a printable coloring page in your browser.</span></li>
+</ul>
+</section>
+
+</main>
+<footer>
+    <div class="footer-logo">
+        <img width="300" height="300"
+            src="assets/logo.svg"
+            alt="MomYouNeedThis"
+        >
+    </div>
+<h3>
+    MomYouNeedThis
+</h3>
+<p>
+    Mom finds, smart tools, free resources, real answers
+    and a little chaos from the Mom Universe.
+</p>
+<div class="footer-links">
+    <a href="mom-favorites">
+        Mom Battles
+    </a>
+    <a href="mom-lab">
+        Mom Lab
+    </a>
+    <a href="free-mom-resources">
+        Free Resources
+    </a>
+    <a href="about">
+        About
+    </a>
+    <a href="privacy-policy">
+        Privacy Policy
+    </a>
+    <a href="terms">
+        Terms of Use
+    </a>
+    <a href="affiliate-disclosure">
+        Affiliate Disclosure
+    </a>
+    <a href="disclaimer">
+        Disclaimer
+    </a>
+    <a href="contact">
+        Contact
+    </a>
+</div>
+<div class="footer-bottom">
+    <p>
+        © 2026 MomYouNeedThis. All rights reserved.
+    </p>
+    <!-- Affiliate disclosure: restore the Amazon Associates earnings line here once approved for the program. -->
+</div>
+</footer>
+
+
+
+
+</div>
+
+
+
+</body>
+
+
+</html>
