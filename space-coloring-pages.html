@@ -1,1 +1,646 @@
-PCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9ImVuIj4KCjxoZWFkPgo8IS0tIEdvb2dsZSB0YWcgKGd0YWcuanMpIC0gZGVmZXJyZWQgdW50aWwgcGFnZSBsb2FkIGZvciBwZXJmb3JtYW5jZSAtLT4KPHNjcmlwdD4Kd2luZG93LmFkZEV2ZW50TGlzdGVuZXIoJ2xvYWQnLCBmdW5jdGlvbigpIHsKICB2YXIgcyA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ3NjcmlwdCcpOwogIHMuYXN5bmMgPSB0cnVlOwogIHMuc3JjID0gJ2h0dHBzOi8vd3d3Lmdvb2dsZXRhZ21hbmFnZXIuY29tL2d0YWcvanM/aWQ9Ry1GRTQ4S0s2VEhRJzsKICBkb2N1bWVudC5oZWFkLmFwcGVuZENoaWxkKHMpOwogIHdpbmRvdy5kYXRhTGF5ZXIgPSB3aW5kb3cuZGF0YUxheWVyIHx8IFtdOwogIGZ1bmN0aW9uIGd0YWcoKXtkYXRhTGF5ZXIucHVzaChhcmd1bWVudHMpO30KICBndGFnKCdqcycsIG5ldyBEYXRlKCkpOwogIGd0YWcoJ2NvbmZpZycsICdHLUZFNDhLSzZUSFEnKTsKfSk7Cjwvc2NyaXB0PgoKPG1ldGEgY2hhcnNldD0iVVRGLTgiPgo8bGluayByZWw9ImNhbm9uaWNhbCIgaHJlZj0iaHR0cHM6Ly9tb215b3VuZWVkdGhpcy5jb20vc3BhY2UtY29sb3JpbmctcGFnZXMiPgo8bWV0YSBuYW1lPSJ2aWV3cG9ydCIgY29udGVudD0id2lkdGg9ZGV2aWNlLXdpZHRoLCBpbml0aWFsLXNjYWxlPTEuMCI+Cgo8bWV0YSBuYW1lPSJkZXNjcmlwdGlvbiIgY29udGVudD0iRmluZCBmcmVlIHNwYWNlIGNvbG9yaW5nIHBhZ2VzIGZvciBraWRzIOKAlCBhIGZyZWUgb3JpZ2luYWwgcHJpbnRhYmxlIG1hZGUgZm9yIGxpdHRsZSBoYW5kcy4gRG93bmxvYWQsIHByaW50ICZhbXA7IGNvbG9yIHRvZGF5ISI+Cgo8bWV0YSBwcm9wZXJ0eT0ib2c6dGl0bGUiIGNvbnRlbnQ9IkZyZWUgU3BhY2UgQ29sb3JpbmcgUGFnZXMgfCBNb21Zb3VOZWVkVGhpcyI+CjxtZXRhIHByb3BlcnR5PSJvZzpkZXNjcmlwdGlvbiIgY29udGVudD0iRmluZCBmcmVlIHNwYWNlIGNvbG9yaW5nIHBhZ2VzIGZvciBraWRzIOKAlCBhIGZyZWUgb3JpZ2luYWwgcHJpbnRhYmxlIG1hZGUgZm9yIGxpdHRsZSBoYW5kcy4gRG93bmxvYWQsIHByaW50ICZhbXA7IGNvbG9yIHRvZGF5ISI+CjxtZXRhIHByb3BlcnR5PSJvZzp0eXBlIiBjb250ZW50PSJ3ZWJzaXRlIj4KPG1ldGEgcHJvcGVydHk9Im9nOnVybCIgY29udGVudD0iaHR0cHM6Ly9tb215b3VuZWVkdGhpcy5jb20vc3BhY2UtY29sb3JpbmctcGFnZXMiPgo8bWV0YSBwcm9wZXJ0eT0ib2c6aW1hZ2UiIGNvbnRlbnQ9Imh0dHBzOi8vbW9teW91bmVlZHRoaXMuY29tL2Fzc2V0cy9jb2xvcmluZy9zcGFjZS0xLnBuZyI+Cgo8dGl0bGU+RnJlZSBTcGFjZSBDb2xvcmluZyBQYWdlcyB8IE1vbVlvdU5lZWRUaGlzPC90aXRsZT4KCjxsaW5rIHJlbD0ic3R5bGVzaGVldCIgaHJlZj0iL3N0eWxlLm1pbi5jc3MiPgo8bGluayByZWw9InN0eWxlc2hlZXQiIGhyZWY9Ii9yZXNvdXJjZXMuY3NzIj4KCjxsaW5rIHJlbD0icHJlY29ubmVjdCIgaHJlZj0iaHR0cHM6Ly9mb250cy5nb29nbGVhcGlzLmNvbSI+CjxsaW5rIHJlbD0icHJlY29ubmVjdCIgaHJlZj0iaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbSIgY3Jvc3NvcmlnaW4+CjxsaW5rIGhyZWY9Imh0dHBzOi8vZm9udHMuZ29vZ2xlYXBpcy5jb20vY3NzMj9mYW1pbHk9TnVuaXRvOndnaHRANDAwOzcwMDs5MDAmZGlzcGxheT1zd2FwIiByZWw9InN0eWxlc2hlZXQiPgoKPHN0eWxlPgovKiBNb21Zb3VOZWVkVGhpcyBTRU8gZGVzaWduIHN5c3RlbSAqLwoKICAgICAgICAvKiBTRU8gY29udGVudCBzZWN0aW9ucyDigJQgZGVzaWduZWQgdG8gbWF0Y2ggdGhlIE1vbVlvdU5lZWRUaGlzIGJyYW5kLiAqLwogICAgICAgIC5zZW8tc2VjdGlvbiB7CiAgICAgICAgICAgIG1heC13aWR0aDogOTAwcHg7CiAgICAgICAgICAgIG1hcmdpbjogNTVweCBhdXRvIDA7CiAgICAgICAgICAgIHBhZGRpbmc6IDQ1cHggNDJweCA1MHB4OwogICAgICAgICAgICBiYWNrZ3JvdW5kOiAjZmZmZmZmOwogICAgICAgICAgICBib3JkZXI6IDFweCBzb2xpZCAjZWVlNWU3OwogICAgICAgICAgICBib3JkZXItcmFkaXVzOiAzNXB4OwogICAgICAgICAgICBib3gtc2hhZG93OiAwIDEycHggMzVweCByZ2JhKDgwLCA1NSwgNTUsIDAuMDYpOwogICAgICAgICAgICBmb250LWZhbWlseTogJ051bml0bycsIHN5c3RlbS11aSwgc2Fucy1zZXJpZjsKICAgICAgICAgICAgdGV4dC1hbGlnbjogbGVmdDsKICAgICAgICAgICAgcG9zaXRpb246IHJlbGF0aXZlOwogICAgICAgICAgICBvdmVyZmxvdzogaGlkZGVuOwogICAgICAgIH0KCiAgICAgICAgLnNlby1zZWN0aW9uOjpiZWZvcmUgewogICAgICAgICAgICBjb250ZW50OiAiIjsKICAgICAgICAgICAgcG9zaXRpb246IGFic29sdXRlOwogICAgICAgICAgICB3aWR0aDogMjUwcHg7CiAgICAgICAgICAgIGhlaWdodDogMjUwcHg7CiAgICAgICAgICAgIHRvcDogLTE0NXB4OwogICAgICAgICAgICByaWdodDogLTkwcHg7CiAgICAgICAgICAgIGJhY2tncm91bmQ6ICNmZmU1ZWM7CiAgICAgICAgICAgIGJvcmRlci1yYWRpdXM6IDUwJTsKICAgICAgICAgICAgb3BhY2l0eTogLjY1OwogICAgICAgICAgICBwb2ludGVyLWV2ZW50czogbm9uZTsKICAgICAgICB9CgogICAgICAgIC5zZW8tc2VjdGlvbjo6YWZ0ZXIgewogICAgICAgICAgICBjb250ZW50OiAiIjsKICAgICAgICAgICAgcG9zaXRpb246IGFic29sdXRlOwogICAgICAgICAgICB3aWR0aDogMTkwcHg7CiAgICAgICAgICAgIGhlaWdodDogMTkwcHg7CiAgICAgICAgICAgIGJvdHRvbTogLTEyMHB4OwogICAgICAgICAgICBsZWZ0OiAtODBweDsKICAgICAgICAgICAgYmFja2dyb3VuZDogI2ZmZjFjOTsKICAgICAgICAgICAgYm9yZGVyLXJhZGl1czogNTAlOwogICAgICAgICAgICBvcGFjaXR5OiAuNTU7CiAgICAgICAgICAgIHBvaW50ZXItZXZlbnRzOiBub25lOwogICAgICAgIH0KCiAgICAgICAgLnNlby1zZWN0aW9uID4gKiB7CiAgICAgICAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTsKICAgICAgICAgICAgei1pbmRleDogMTsKICAgICAgICB9CgogICAgICAgIC5zZW8tc2VjdGlvbiAuc2VjdGlvbi1raWNrZXIgewogICAgICAgICAgICBkaXNwbGF5OiBibG9jazsKICAgICAgICAgICAgbWFyZ2luLWJvdHRvbTogMTBweDsKICAgICAgICAgICAgY29sb3I6I2MwM2Q1YjsKICAgICAgICAgICAgZm9udC1zaXplOiAxMXB4OwogICAgICAgICAgICBmb250LXdlaWdodDogOTAwOwogICAgICAgICAgICBsZXR0ZXItc3BhY2luZzogMXB4OwogICAgICAgICAgICB0ZXh0LXRyYW5zZm9ybTogdXBwZXJjYXNlOwogICAgICAgICAgICB0ZXh0LWFsaWduOiBjZW50ZXI7CiAgICAgICAgfQoKICAgICAgICAuc2VvLXNlY3Rpb24gaDIgewogICAgICAgICAgICBtYXgtd2lkdGg6IDcwMHB4OwogICAgICAgICAgICBtYXJnaW46IDAgYXV0byAxNHB4OwogICAgICAgICAgICBjb2xvcjogIzMzMmIyYjsKICAgICAgICAgICAgZm9udC1zaXplOiBjbGFtcCgyNnB4LCAzLjZ2dywgMzRweCk7CiAgICAgICAgICAgIGxpbmUtaGVpZ2h0OiAxLjE1OwogICAgICAgICAgICBsZXR0ZXItc3BhY2luZzogLS42cHg7CiAgICAgICAgICAgIGZvbnQtd2VpZ2h0OiA5MDA7CiAgICAgICAgICAgIHRleHQtYWxpZ246IGNlbnRlcjsKICAgICAgICB9CgogICAgICAgIC5zZW8tc2VjdGlvbiBoMjo6YWZ0ZXIgewogICAgICAgICAgICBjb250ZW50OiAiIjsKICAgICAgICAgICAgZGlzcGxheTogYmxvY2s7CiAgICAgICAgICAgIHdpZHRoOiA0NXB4OwogICAgICAgICAgICBoZWlnaHQ6IDNweDsKICAgICAgICAgICAgbWFyZ2luOiAxNnB4IGF1dG8gMDsKICAgICAgICAgICAgYmFja2dyb3VuZDogI2U4OWFhYTsKICAgICAgICAgICAgYm9yZGVyLXJhZGl1czogOTk5cHg7CiAgICAgICAgfQoKICAgICAgICAuc2VvLWxlYWQgewogICAgICAgICAgICBtYXgtd2lkdGg6IDY4MHB4OwogICAgICAgICAgICBtYXJnaW46IDAgYXV0byAyNnB4OwogICAgICAgICAgICBjb2xvcjogIzZkNjU2NjsKICAgICAgICAgICAgZm9udC1zaXplOiAxNnB4OwogICAgICAgICAgICBsaW5lLWhlaWdodDogMS43OwogICAgICAgICAgICB0ZXh0LWFsaWduOiBjZW50ZXI7CiAgICAgICAgfQoKICAgICAgICAuc2VvLWxpbmtzIHsKICAgICAgICAgICAgbGlzdC1zdHlsZTogbm9uZTsKICAgICAgICAgICAgbWFyZ2luOiAxMHB4IGF1dG8gMDsKICAgICAgICAgICAgcGFkZGluZzogMDsKICAgICAgICAgICAgbWF4LXdpZHRoOiA3MjBweDsKICAgICAgICAgICAgZGlzcGxheTogZ3JpZDsKICAgICAgICAgICAgZ2FwOiAxMHB4OwogICAgICAgIH0KCiAgICAgICAgLnNlby1saW5rcyBsaSB7CiAgICAgICAgICAgIHBhZGRpbmc6IDE2cHggMThweDsKICAgICAgICAgICAgYmFja2dyb3VuZDogI2ZmZmFmODsKICAgICAgICAgICAgYm9yZGVyOiAxcHggc29saWQgI2YxZTVlNzsKICAgICAgICAgICAgYm9yZGVyLXJhZGl1czogMTZweDsKICAgICAgICAgICAgdHJhbnNpdGlvbjogdHJhbnNmb3JtIC4ycyBlYXNlLCBib3gtc2hhZG93IC4ycyBlYXNlOwogICAgICAgIH0KCiAgICAgICAgLnNlby1saW5rcyBsaTpob3ZlciB7CiAgICAgICAgICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlWSgtMnB4KTsKICAgICAgICAgICAgYm94LXNoYWRvdzogMCA4cHggMjBweCByZ2JhKDgwLCA1NSwgNjUsIC4wNyk7CiAgICAgICAgfQoKICAgICAgICAuc2VvLWxpbmtzIGEgewogICAgICAgICAgICBjb2xvcjogIzMzMmIyYjsKICAgICAgICAgICAgZm9udC1zaXplOiAxNXB4OwogICAgICAgICAgICBmb250LXdlaWdodDogOTAwOwogICAgICAgICAgICB0ZXh0LWRlY29yYXRpb246IG5vbmU7CiAgICAgICAgfQoKICAgICAgICAuc2VvLWxpbmtzIGE6aG92ZXIgewogICAgICAgICAgICBjb2xvcjojYzMzNzYxOwogICAgICAgIH0KCiAgICAgICAgLnNlby1saW5rcyBzcGFuIHsKICAgICAgICAgICAgZGlzcGxheTogYmxvY2s7CiAgICAgICAgICAgIG1hcmdpbi10b3A6IDRweDsKICAgICAgICAgICAgY29sb3I6IzZkNmQ2ZDsKICAgICAgICAgICAgZm9udC1zaXplOiAxM3B4OwogICAgICAgICAgICBsaW5lLWhlaWdodDogMS41OwogICAgICAgIH0KCgogICAgICAgIC5zZW8tc3RlcHMgewogICAgICAgICAgICBsaXN0LXN0eWxlOiBub25lOwogICAgICAgICAgICBtYXJnaW46IDAgYXV0bzsKICAgICAgICAgICAgcGFkZGluZzogMDsKICAgICAgICAgICAgbWF4LXdpZHRoOiA3MjBweDsKICAgICAgICAgICAgZGlzcGxheTogZ3JpZDsKICAgICAgICAgICAgZ2FwOiAxMnB4OwogICAgICAgICAgICBjb3VudGVyLXJlc2V0OiBzZW8tc3RlcDsKICAgICAgICB9CgogICAgICAgIC5zZW8tc3RlcHMgbGkgewogICAgICAgICAgICBjb3VudGVyLWluY3JlbWVudDogc2VvLXN0ZXA7CiAgICAgICAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTsKICAgICAgICAgICAgcGFkZGluZzogMThweCAyMHB4IDE4cHggNzBweDsKICAgICAgICAgICAgYmFja2dyb3VuZDogI2ZmZmFmODsKICAgICAgICAgICAgYm9yZGVyOiAxcHggc29saWQgI2YxZTVlNzsKICAgICAgICAgICAgYm9yZGVyLXJhZGl1czogMThweDsKICAgICAgICAgICAgY29sb3I6ICM1ZjU3NTg7CiAgICAgICAgICAgIGZvbnQtc2l6ZTogMTVweDsKICAgICAgICAgICAgbGluZS1oZWlnaHQ6IDEuNjsKICAgICAgICB9CgogICAgICAgIC5zZW8tc3RlcHMgbGk6OmJlZm9yZSB7CiAgICAgICAgICAgIGNvbnRlbnQ6IGNvdW50ZXIoc2VvLXN0ZXApOwogICAgICAgICAgICBwb3NpdGlvbjogYWJzb2x1dGU7CiAgICAgICAgICAgIGxlZnQ6IDIwcHg7CiAgICAgICAgICAgIHRvcDogNTAlOwogICAgICAgICAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoLTUwJSk7CiAgICAgICAgICAgIHdpZHRoOiAzNHB4OwogICAgICAgICAgICBoZWlnaHQ6IDM0cHg7CiAgICAgICAgICAgIGRpc3BsYXk6IGZsZXg7CiAgICAgICAgICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7CiAgICAgICAgICAgIGp1c3RpZnktY29udGVudDogY2VudGVyOwogICAgICAgICAgICBiYWNrZ3JvdW5kOiAjZTg5YWFhOwogICAgICAgICAgICBib3JkZXItcmFkaXVzOiA1MCU7CiAgICAgICAgICAgIGNvbG9yOiAjZmZmZmZmOwogICAgICAgICAgICBmb250LXNpemU6IDE1cHg7CiAgICAgICAgICAgIGZvbnQtd2VpZ2h0OiA5MDA7CiAgICAgICAgfQoKICAgICAgICAuc2VvLXN0ZXBzIGxpIHN0cm9uZyB7CiAgICAgICAgICAgIGNvbG9yOiAjMzMyYjJiOwogICAgICAgIH0KCgogICAgICAgIC5zZW8tZmFxIHsKICAgICAgICAgICAgbWF4LXdpZHRoOiA3MjBweDsKICAgICAgICAgICAgbWFyZ2luOiAwIGF1dG87CiAgICAgICAgICAgIGRpc3BsYXk6IGdyaWQ7CiAgICAgICAgICAgIGdhcDogMTJweDsKICAgICAgICB9CgogICAgICAgIC5zZW8tZmFxLWl0ZW0gewogICAgICAgICAgICBwYWRkaW5nOiAyMHB4IDIycHg7CiAgICAgICAgICAgIGJhY2tncm91bmQ6ICNmZmZhZjg7CiAgICAgICAgICAgIGJvcmRlcjogMXB4IHNvbGlkICNmMGRmZTM7CiAgICAgICAgICAgIGJvcmRlci1yYWRpdXM6IDE4cHg7CiAgICAgICAgfQoKICAgICAgICAuc2VvLWZhcS1pdGVtIGgzIHsKICAgICAgICAgICAgbWFyZ2luOiAwIDAgOHB4OwogICAgICAgICAgICBjb2xvcjogIzMzMmIyYjsKICAgICAgICAgICAgZm9udC1zaXplOiAxNnB4OwogICAgICAgICAgICBsaW5lLWhlaWdodDogMS40OwogICAgICAgICAgICBmb250LXdlaWdodDogOTAwOwogICAgICAgIH0KCiAgICAgICAgLnNlby1mYXEtaXRlbSBwIHsKICAgICAgICAgICAgbWFyZ2luOiAwOwogICAgICAgICAgICBjb2xvcjogIzY4NjA2MTsKICAgICAgICAgICAgZm9udC1zaXplOiAxNHB4OwogICAgICAgICAgICBsaW5lLWhlaWdodDogMS43OwogICAgICAgIH0KCkBtZWRpYSAobWF4LXdpZHRoOiA3NTBweCkgewogICAgICAgICAgICAuc2VvLXNlY3Rpb24gewogICAgICAgICAgICAgICAgbWFyZ2luLXRvcDogNDBweDsKICAgICAgICAgICAgICAgIHBhZGRpbmc6IDM1cHggMjBweCAzOHB4OwogICAgICAgICAgICAgICAgYm9yZGVyLXJhZGl1czogMjhweDsKICAgICAgICAgICAgfQogICAgICAgICAgICAuc2VvLXN0ZXBzIGxpIHsKICAgICAgICAgICAgICAgIHBhZGRpbmc6IDE2cHggMTZweCAxNnB4IDYycHg7CiAgICAgICAgICAgICAgICBmb250LXNpemU6IDE0cHg7CiAgICAgICAgICAgIH0KICAgICAgICAgICAgLnNlby1zdGVwcyBsaTo6YmVmb3JlIHsKICAgICAgICAgICAgICAgIGxlZnQ6IDE2cHg7CiAgICAgICAgICAgIH0KICAgICAgICAgICAgLnNlby1mYXEtaXRlbSB7CiAgICAgICAgICAgICAgICBwYWRkaW5nOiAxOHB4OwogICAgICAgICAgICB9CiAgICAgICAgICAgIC5zZW8tdGFibGUgewogICAgICAgICAgICAgICAgZm9udC1zaXplOiAxMnB4OwogICAgICAgICAgICB9CiAgICAgICAgICAgIC5zZW8tdGFibGUgdGgsCiAgICAgICAgICAgIC5zZW8tdGFibGUgdGQgewogICAgICAgICAgICAgICAgcGFkZGluZzogOXB4IDhweDsKICAgICAgICAgICAgfQogICAgICAgICAgICAuc2VvLXRhYmxlIHRoZWFkIHRoIHsKICAgICAgICAgICAgICAgIHdoaXRlLXNwYWNlOiBub3JtYWw7CiAgICAgICAgICAgIH0KICAgICAgICB9Cgo8L3N0eWxlPgoKPHNjcmlwdCB0eXBlPSJhcHBsaWNhdGlvbi9sZCtqc29uIj4KewogICJAY29udGV4dCI6ICJodHRwczovL3NjaGVtYS5vcmciLAogICJAdHlwZSI6ICJGQVFQYWdlIiwKICAibWFpbkVudGl0eSI6IFsKICAgIHsKICAgICAgIkB0eXBlIjogIlF1ZXN0aW9uIiwKICAgICAgIm5hbWUiOiAiQXJlIHRoZXNlIHNwYWNlIGNvbG9yaW5nIHBhZ2VzIHJlYWxseSBmcmVlPyIsCiAgICAgICJhY2NlcHRlZEFuc3dlciI6IHsKICAgICAgICAiQHR5cGUiOiAiQW5zd2VyIiwKICAgICAgICAidGV4dCI6ICJZZXMg4oCUIHRoZSBjb2xvcmluZyBwYWdlIG9uIHRoaXMgcGFnZSBpcyBhIGZyZWUgb3JpZ2luYWwgcHJpbnRhYmxlIGZyb20gTW9tWW91TmVlZFRoaXMuIE5vdGhpbmcgaGVyZSBjb3N0cyBhbnl0aGluZy4iCiAgICAgIH0KICAgIH0sCiAgICB7CiAgICAgICJAdHlwZSI6ICJRdWVzdGlvbiIsCiAgICAgICJuYW1lIjogIldoYXQgYWdlcyBhcmUgdGhlc2UgY29sb3JpbmcgcGFnZXMgZm9yPyIsCiAgICAgICJhY2NlcHRlZEFuc3dlciI6IHsKICAgICAgICAiQHR5cGUiOiAiQW5zd2VyIiwKICAgICAgICAidGV4dCI6ICJUaGV5IGFyZSBwZXJmZWN0IGZvciB0b2RkbGVycywgcHJlc2Nob29sZXJzLCBhbmQgeW91bmcga2lkcy4gQ2hvb3NlIHNpbXBsZXIgZGVzaWducyBmb3IgbGl0dGxlIG9uZXMgYW5kIG1vcmUgZGV0YWlsZWQgcGFnZXMgZm9yIG9sZGVyIGtpZHMuIgogICAgICB9CiAgICB9LAogICAgewogICAgICAiQHR5cGUiOiAiUXVlc3Rpb24iLAogICAgICAibmFtZSI6ICJIb3cgZG8gSSBwcmludCBhIGNvbG9yaW5nIHBhZ2U/IiwKICAgICAgImFjY2VwdGVkQW5zd2VyIjogewogICAgICAgICJAdHlwZSI6ICJBbnN3ZXIiLAogICAgICAgICJ0ZXh0IjogIlRhcCB0aGUgZG93bmxvYWQgYnV0dG9uIGFib3ZlIHRvIHNhdmUgdGhlIGZyZWUgY29sb3JpbmcgcGFnZSwgdGhlbiBwcmludCBpdC4gUmVndWxhciBsZXR0ZXItc2l6ZSBwYXBlciB3b3JrcyBwZXJmZWN0bHkuIgogICAgICB9CiAgICB9LAogICAgewogICAgICAiQHR5cGUiOiAiUXVlc3Rpb24iLAogICAgICAibmFtZSI6ICJXaGF0IGFnZXMgYXJlIHNwYWNlIGNvbG9yaW5nIHBhZ2VzIGZvcj8iLAogICAgICAiYWNjZXB0ZWRBbnN3ZXIiOiB7CiAgICAgICAgIkB0eXBlIjogIkFuc3dlciIsCiAgICAgICAgInRleHQiOiAiVGhlc2Ugc3BhY2UgY29sb3JpbmcgcGFnZXMgd29yayBmb3IgdG9kZGxlcnMsIHByZXNjaG9vbGVycywgYW5kIHlvdW5nIGtpZHMuIFBpY2sgc2ltcGxlIHJvY2tldCBvciBwbGFuZXQgZGVzaWducyBmb3IgbGl0dGxlIGhhbmRzIGFuZCBidXNpZXIgc3BhY2Ugc2NlbmVzIGZvciBvbGRlciBraWRzLiIKICAgICAgfQogICAgfSwKICAgIHsKICAgICAgIkB0eXBlIjogIlF1ZXN0aW9uIiwKICAgICAgIm5hbWUiOiAiV2hhdCBjYW4gcHJlc2Nob29sZXJzIGNvbG9yIG9uIHRoaXMgcGFnZT8iLAogICAgICAiYWNjZXB0ZWRBbnN3ZXIiOiB7CiAgICAgICAgIkB0eXBlIjogIkFuc3dlciIsCiAgICAgICAgInRleHQiOiAiVGhlIHByZXNjaG9vbCBzcGFjZSBhY3Rpdml0aWVzIG9uIHRoaXMgcGFnZSBhcmUgY29sb3JpbmcgcGFnZXM6IGEgcm9ja2V0LCBhbiBhc3Ryb25hdXQsIGFuZCB0aGUgcGxhbmV0cywgYWxsIGZyZWUgdG8gcHJpbnQuIgogICAgICB9CiAgICB9CiAgXQp9Cjwvc2NyaXB0PgoKPHN0eWxlPgouY29sb3JpbmctbW9yZXttYXJnaW46MTRweCAwIDA7Y29sb3I6I2EwNTU2Yjtmb250LXNpemU6MTVweDtmb250LXdlaWdodDo4MDB9Ci5wcmludC1idG57YmFja2dyb3VuZDojZmZmIWltcG9ydGFudDtjb2xvcjojYzMzNzYxIWltcG9ydGFudDtib3JkZXI6MnB4IHNvbGlkICNlODlhYWEhaW1wb3J0YW50O21hcmdpbi1sZWZ0OjEwcHh9Ci5wcmludC1idG46aG92ZXJ7YmFja2dyb3VuZDojZmRmM2Y1IWltcG9ydGFudDt0cmFuc2Zvcm06dHJhbnNsYXRlWSgtM3B4KX0KQG1lZGlhKG1heC13aWR0aDo2MDBweCl7LnByaW50LWJ0bnttYXJnaW4tbGVmdDowO21hcmdpbi10b3A6MTBweH19Cjwvc3R5bGU+CjwvaGVhZD4KCgo8Ym9keT4KCgo8ZGl2IGNsYXNzPSJwYWdlIGZyZWUtcGFnZSI+CjxtYWluPgoKCgo8aGVhZGVyPgoKPGEgaHJlZj0iLyI+CjxpbWcgd2lkdGg9IjMwMCIgaGVpZ2h0PSIzMDAiIHNyYz0iYXNzZXRzL2xvZ28uc3ZnIiBjbGFzcz0ibG9nbyIgYWx0PSJNb21Zb3VOZWVkVGhpcyBMb2dvIj4KPC9hPgoKPC9oZWFkZXI+CgoKCgo8c2VjdGlvbiBjbGFzcz0icmVzb3VyY2UtcGFnZSI+CgoKCjxzcGFuIGNsYXNzPSJmcmVlLWJhZGdlIj4K8J+agCBTUEFDRSBDT0xPUklORyBGUkVFIFJFU09VUkNFCjwvc3Bhbj4KCgoKCjxoMT4KRnJlZSBTcGFjZSBDb2xvcmluZyBQYWdlcwo8L2gxPgoKCgoKPHAgY2xhc3M9ImludHJvIj4KCkxvb2tpbmcgZm9yIGZyZWUgc3BhY2UgY29sb3JpbmcgcGFnZXM/IERvd25sb2FkIG91ciBmcmVlIG9yaWdpbmFsIFNwYWNlIGNvbG9yaW5nIHBhZ2UgYmVsb3cg4oCUIG5vIHNpZ251cCBuZWVkZWQuIEp1c3QgdGFwIGRvd25sb2FkLCBwcmludCBhdCBob21lLCBhbmQgbGV0IHRoZSBjb2xvcmluZyBmdW4gYmVnaW4hPC9wPgoKPHNlY3Rpb24gY2xhc3M9ImZsb3ctc2VjdGlvbiI+Cgo8c3BhbiBjbGFzcz0ic2VjdGlvbi1raWNrZXIiPlN0ZXAgYnkgc3RlcDwvc3Bhbj4KCjxoMj7wn5qAIEhvdyBUbyBVc2UgVGhpcyBQYWdlPC9oMj4KCjxvbCBjbGFzcz0ic2VvLXN0ZXBzIj4KPGxpPjxzdHJvbmc+QnJvd3NlIHRoZSBsaXN0PC9zdHJvbmc+IGFuZCBwaWNrIGEgY29sb3JpbmcgcGFnZSB5b3VyIGNoaWxkIHdpbGwgbG92ZS48L2xpPgo8bGk+PHN0cm9uZz5UYXAgdGhlIGRvd25sb2FkIGJ1dHRvbjwvc3Ryb25nPiB0byBzYXZlIHRoZSBmcmVlIGNvbG9yaW5nIHBhZ2UgdG8geW91ciBkZXZpY2UuPC9saT4KPGxpPjxzdHJvbmc+UHJpbnQgb24gbGV0dGVyLXNpemUgcGFwZXI8L3N0cm9uZz4g4oCUIHByaW50IGEgZmV3IGRpZmZlcmVudCBkZXNpZ25zIGZvciB2YXJpZXR5LjwvbGk+CjxsaT48c3Ryb25nPkNvbG9yIHRvZ2V0aGVyPC9zdHJvbmc+IHdpdGggY3JheW9ucyBvciBtYXJrZXJzIGFuZCBkaXNwbGF5IHRoZSBmYXZvcml0ZXMuPC9saT4KPC9vbD4KCjwvc2VjdGlvbj4KCgoKCjxzZWN0aW9uIGNsYXNzPSJmZWF0dXJlZC1yZXNvdXJjZXMiPgoKCgo8aDI+CvCfmoAgU3BhY2UgQ29sb3JpbmcgUGFnZXMKPC9oMj4KCgo8ZGl2IGNsYXNzPSJwcmludGFibGUtcHJldmlldyI+CjxpbWcgd2lkdGg9IjgwMCIgaGVpZ2h0PSIxNjAwIiBzcmM9ImFzc2V0cy9jb2xvcmluZy9zcGFjZS0xLnBuZyIgYWx0PSJTcGFjZSBjb2xvcmluZyBwYWdlcyDigJQgZnJlZSBwcmludGFibGUgc3BhY2UgY29sb3JpbmcgcGFnZSBmb3Iga2lkcyIgbG9hZGluZz0ibGF6eSI+CjwvZGl2Pgo8c2VjdGlvbiBjbGFzcz0iZ2VuZXJhdG9yLWJvdHRvbS1jdGEiPgo8aDI+8J+OqCBEb3dubG9hZCBZb3VyIEZyZWUgU3BhY2UgQ29sb3JpbmcgUGFnZTwvaDI+CjxwPkEgY3V0ZSwgb3JpZ2luYWwgc3BhY2UgY29sb3JpbmcgcGFnZSBtYWRlIGZvciBsaXR0bGUgaGFuZHMg4oCUIGJvbGQgb3V0bGluZXMsIGJpZyBzcGFjZXMsIHplcm8gc2lnbnVwLjwvcD4KPGEgaHJlZj0iYXNzZXRzL2NvbG9yaW5nL3NwYWNlLTEucG5nIiBkb3dubG9hZD0ic3BhY2UtY29sb3JpbmctcGFnZS5wbmciIGNsYXNzPSJkb3dubG9hZC1idXR0b24iPuKsh++4jyBEb3dubG9hZCBGcmVlIENvbG9yaW5nIFBhZ2U8L2E+CjxhIGhyZWY9ImFzc2V0cy9jb2xvcmluZy9zcGFjZS0xLnBuZyIgdGFyZ2V0PSJfYmxhbmsiIHJlbD0ibm9vcGVuZXIiIGNsYXNzPSJkb3dubG9hZC1idXR0b24gcHJpbnQtYnRuIj7wn5ao77iPIFByaW50PC9hPgo8cCBjbGFzcz0iZnJlZS1ub3RlIj7wn46BIEZyZWUgcHJpbnRhYmxlIGZvciB0b2RkbGVycyAmYW1wOyBwcmVzY2hvb2xlcnM8L3A+Cjwvc2VjdGlvbj4KCgoKCjwvc2VjdGlvbj4KCgoKCgo8c2VjdGlvbiBjbGFzcz0iZmVhdHVyZWQtcmVzb3VyY2VzIj4KCjxoMj4K8J+agCBSb2NrZXQgQ29sb3JpbmcgUGFnZQo8L2gyPgoKPGRpdiBjbGFzcz0icHJpbnRhYmxlLXByZXZpZXciPgo8aW1nIHdpZHRoPSI4NTAiIGhlaWdodD0iMTEwMCIgc3JjPSJhc3NldHMvY29sb3Jpbmcvc3BhY2UtMi5wbmciIGFsdD0iUm9ja2V0IGNvbG9yaW5nIHBhZ2U6IGEgYmlnIHJvY2tldCB3aXRoIGEgcm91bmQgd2luZG93IGJsYXN0aW5nIG9mZiBwYXN0IGEgc21pbGluZyBjcmVzY2VudCBtb29uIGFuZCBzdGFycywgYSBzbWFsbCBhbGllbiB3YXZpbmcgZnJvbSBhIHBsYW5ldCBiZWxvdyIgbG9hZGluZz0ibGF6eSI+CjwvZGl2Pgo8c2VjdGlvbiBjbGFzcz0iZ2VuZXJhdG9yLWJvdHRvbS1jdGEiPgo8aDI+8J+OqCBEb3dubG9hZCB0aGUgUm9ja2V0IENvbG9yaW5nIFBhZ2U8L2gyPgo8cD5BIGJpZyByb2NrZXQgd2l0aCBhIHJvdW5kIHdpbmRvdyBibGFzdGluZyBvZmYgcGFzdCBhIHNtaWxpbmcgY3Jlc2NlbnQgbW9vbiBhbmQgc3RhcnMsIGEgc21hbGwgYWxpZW4gd2F2aW5nIGZyb20gYSBwbGFuZXQgYmVsb3cg4oCUIGJvbGQgb3V0bGluZXMsIGJpZyBzcGFjZXMsIHplcm8gc2lnbnVwLjwvcD4KPGEgaHJlZj0iYXNzZXRzL2NvbG9yaW5nL3NwYWNlLTIucG5nIiBkb3dubG9hZD0icm9ja2V0LWNvbG9yaW5nLXBhZ2UucG5nIiBjbGFzcz0iZG93bmxvYWQtYnV0dG9uIj7irIfvuI8gRG93bmxvYWQgUm9ja2V0IFBhZ2U8L2E+CjxhIGhyZWY9ImFzc2V0cy9jb2xvcmluZy9zcGFjZS0yLnBuZyIgdGFyZ2V0PSJfYmxhbmsiIHJlbD0ibm9vcGVuZXIiIGNsYXNzPSJkb3dubG9hZC1idXR0b24gcHJpbnQtYnRuIj7wn5ao77iPIFByaW50IFJvY2tldCBQYWdlPC9hPgo8cCBjbGFzcz0iZnJlZS1ub3RlIj7wn46BIEZyZWUgcHJpbnRhYmxlIGZvciB0b2RkbGVycyAmYW1wOyBwcmVzY2hvb2xlcnM8L3A+Cgo8L3NlY3Rpb24+Cgo8L3NlY3Rpb24+CgoKPHNlY3Rpb24gY2xhc3M9ImZlYXR1cmVkLXJlc291cmNlcyI+Cgo8aDI+CvCfkajigI3wn5qAIEFzdHJvbmF1dCBDb2xvcmluZyBQYWdlCjwvaDI+Cgo8ZGl2IGNsYXNzPSJwcmludGFibGUtcHJldmlldyI+CjxpbWcgd2lkdGg9Ijg1MCIgaGVpZ2h0PSIxMTAwIiBzcmM9ImFzc2V0cy9jb2xvcmluZy9zcGFjZS0zLnBuZyIgYWx0PSJBc3Ryb25hdXQgY29sb3JpbmcgcGFnZTogYSBjaGlsZCBhc3Ryb25hdXQgaW4gYSBoZWxtZXQgc3VpdCBmbG9hdGluZyBhbmQgd2F2aW5nLCBhIHJpbmdlZCBwbGFuZXQgYW5kIGEgc2F0ZWxsaXRlIGJlaGluZCwgc3RhcnMgYW5kIHNob290aW5nIHN0YXJzIGFyb3VuZCIgbG9hZGluZz0ibGF6eSI+CjwvZGl2Pgo8c2VjdGlvbiBjbGFzcz0iZ2VuZXJhdG9yLWJvdHRvbS1jdGEiPgo8aDI+8J+OqCBEb3dubG9hZCB0aGUgQXN0cm9uYXV0IENvbG9yaW5nIFBhZ2U8L2gyPgo8cD5BIGNoaWxkIGFzdHJvbmF1dCBpbiBhIGhlbG1ldCBzdWl0IGZsb2F0aW5nIGFuZCB3YXZpbmcsIGEgcmluZ2VkIHBsYW5ldCBhbmQgYSBzYXRlbGxpdGUgYmVoaW5kLCBzdGFycyBhbmQgc2hvb3Rpbmcgc3RhcnMgYXJvdW5kIOKAlCBib2xkIG91dGxpbmVzLCBiaWcgc3BhY2VzLCB6ZXJvIHNpZ251cC48L3A+CjxhIGhyZWY9ImFzc2V0cy9jb2xvcmluZy9zcGFjZS0zLnBuZyIgZG93bmxvYWQ9ImFzdHJvbmF1dC1jb2xvcmluZy1wYWdlLnBuZyIgY2xhc3M9ImRvd25sb2FkLWJ1dHRvbiI+4qyH77iPIERvd25sb2FkIEFzdHJvbmF1dCBQYWdlPC9hPgo8YSBocmVmPSJhc3NldHMvY29sb3Jpbmcvc3BhY2UtMy5wbmciIHRhcmdldD0iX2JsYW5rIiByZWw9Im5vb3BlbmVyIiBjbGFzcz0iZG93bmxvYWQtYnV0dG9uIHByaW50LWJ0biI+8J+WqO+4jyBQcmludCBBc3Ryb25hdXQgUGFnZTwvYT4KPHAgY2xhc3M9ImZyZWUtbm90ZSI+8J+OgSBGcmVlIHByaW50YWJsZSBmb3IgdG9kZGxlcnMgJmFtcDsgcHJlc2Nob29sZXJzPC9wPgoKPC9zZWN0aW9uPgoKPC9zZWN0aW9uPgoKCjxzZWN0aW9uIGNsYXNzPSJmZWF0dXJlZC1yZXNvdXJjZXMiPgoKPGgyPgrwn6qQIFBsYW5ldHMgQ29sb3JpbmcgUGFnZQo8L2gyPgoKPGRpdiBjbGFzcz0icHJpbnRhYmxlLXByZXZpZXciPgo8aW1nIHdpZHRoPSI4NTAiIGhlaWdodD0iMTEwMCIgc3JjPSJhc3NldHMvY29sb3Jpbmcvc3BhY2UtNC5wbmciIGFsdD0iUGxhbmV0cyBjb2xvcmluZyBwYWdlOiBoYXBweSBwbGFuZXRzIHdpdGggZmFjZXMsIHR3byByaW5nZWQgcGxhbmV0cyBhbmQgYSBzbWlsaW5nIG1vb24sIHN0YXJzIGFuZCBnYWxheGllcyBhbGwgYXJvdW5kIiBsb2FkaW5nPSJsYXp5Ij4KPC9kaXY+CjxzZWN0aW9uIGNsYXNzPSJnZW5lcmF0b3ItYm90dG9tLWN0YSI+CjxoMj7wn46oIERvd25sb2FkIHRoZSBQbGFuZXRzIENvbG9yaW5nIFBhZ2U8L2gyPgo8cD5IYXBweSBwbGFuZXRzIHdpdGggZmFjZXMsIHR3byByaW5nZWQgcGxhbmV0cyBhbmQgYSBzbWlsaW5nIG1vb24sIHN0YXJzIGFuZCBnYWxheGllcyBhbGwgYXJvdW5kIOKAlCBib2xkIG91dGxpbmVzLCBiaWcgc3BhY2VzLCB6ZXJvIHNpZ251cC48L3A+CjxhIGhyZWY9ImFzc2V0cy9jb2xvcmluZy9zcGFjZS00LnBuZyIgZG93bmxvYWQ9InBsYW5ldHMtY29sb3JpbmctcGFnZS5wbmciIGNsYXNzPSJkb3dubG9hZC1idXR0b24iPuKsh++4jyBEb3dubG9hZCBQbGFuZXRzIFBhZ2U8L2E+CjxhIGhyZWY9ImFzc2V0cy9jb2xvcmluZy9zcGFjZS00LnBuZyIgdGFyZ2V0PSJfYmxhbmsiIHJlbD0ibm9vcGVuZXIiIGNsYXNzPSJkb3dubG9hZC1idXR0b24gcHJpbnQtYnRuIj7wn5ao77iPIFByaW50IFBsYW5ldHMgUGFnZTwvYT4KPHAgY2xhc3M9ImZyZWUtbm90ZSI+8J+OgSBGcmVlIHByaW50YWJsZSBmb3IgdG9kZGxlcnMgJmFtcDsgcHJlc2Nob29sZXJzPC9wPgoKPC9zZWN0aW9uPgoKPC9zZWN0aW9uPgoKCjxzZWN0aW9uIGNsYXNzPSJ3ZWVrbHktYm94Ij4KCgoKPGgyPgpNb3JlIEZyZWUgS2lkcyBBY3Rpdml0aWVzIENvbWluZyBTb29uCjwvaDI+CgoKCgo8cD4KU2F2ZSB0aGlzIHBhZ2UhIE1vcmUgZnJlZSBwcmludGFibGUgYWN0aXZpdGllcywgZWR1Y2F0aW9uYWwgcmVzb3VyY2VzLCBhbmQgbW9tLWFwcHJvdmVkIHJlc291cmNlcyB3aWxsIGJlIGFkZGVkIHJlZ3VsYXJseS4KPC9wPgoKCgoKPC9zZWN0aW9uPgoKCgoKCgoKPHNlY3Rpb24gY2xhc3M9ImZsb3ctc2VjdGlvbiI+CjxzcGFuIGNsYXNzPSJzZWN0aW9uLWtpY2tlciI+UHJpbnQgJiBwbGF5PC9zcGFuPgo8aDI+8J+agCBCbGFzdCBPZmYgV2l0aCBzcGFjZSBjb2xvcmluZyBwYWdlczwvaDI+CjxwPlRoZSB0aHJlZSBuYW1lZCBzaGVldHMgc3BsaXQgc3BhY2UgaW50byB0aHJlZSBzY2VuZXMuIFRoZSBSb2NrZXQgc2hlZXQgaXMgdGhlIGJsYXN0b2ZmOiBvbmUgYmlnIHJvY2tldCB3aXRoIGEgcm91bmQgd2luZG93LCBhIHNtaWxpbmcgY3Jlc2NlbnQgbW9vbiBhbmQgc3RhcnMgYWJvdmUsIGFuZCBhIHNtYWxsIGFsaWVuIHdhdmluZyBmcm9tIGEgcGxhbmV0IGJlbG93LiBUaGUgQXN0cm9uYXV0IHNoZWV0IGZsb2F0cyBhIGNoaWxkIGFzdHJvbmF1dCBpbiBhIGhlbG1ldCBzdWl0LCB3YXZpbmcsIHdpdGggYSByaW5nZWQgcGxhbmV0IGFuZCBhIHNhdGVsbGl0ZSBiZWhpbmQgYW5kIHNob290aW5nIHN0YXJzIGFyb3VuZC4gVGhlIFBsYW5ldHMgc2hlZXQgaXMgdGhlIGNyb3dkZWQgb25lOiBoYXBweSBwbGFuZXRzIHdpdGggZmFjZXMsIHR3byBvZiB0aGVtIHJpbmdlZCwgcGx1cyBhIHNtaWxpbmcgbW9vbiwgc3RhcnMgYW5kIGdhbGF4aWVzLjwvcD4KPHA+VGhlIGNvbG91ciBjaG9pY2VzIGFyZSBkcmF3biBpbiBmb3IgeW91OiBvcmFuZ2UgYW5kIHllbGxvdyBmbGFtZXMgdW5kZXIgdGhlIHJvY2tldCwgYSBkaWZmZXJlbnQgY29sb3VyIGZvciBlYWNoIHJpbmcgYXJvdW5kIHRoZSByaW5nZWQgcGxhbmV0cywgYW5kIHRoZSBhc3Ryb25hdXQncyBzdWl0IGxlZnQgd2hpdGUg4oCUIGxpa2UgYSByZWFsIHN1aXQg4oCUIHdpdGggb25seSB0aGUgaGVsbWV0IHRyaW0gYW5kIGJhY2twYWNrIGNvbG91cmVkIGluLjwvcD4KCjxwPlNlZSA8YSBocmVmPSJhc3NldHMvY29sb3Jpbmcvc3BhY2UtMS5wbmciPnNwYWNlIHByaW50YWJsZTwvYT4gZm9yIG1vcmUuPC9wPgo8L3NlY3Rpb24+Cgo8c2VjdGlvbiBjbGFzcz0ic2VvLXNlY3Rpb24iPgoKPHNwYW4gY2xhc3M9InNlY3Rpb24ta2lja2VyIj5GQVE8L3NwYW4+Cgo8aDI+4p2TIFNwYWNlIENvbG9yaW5nIFBhZ2VzIEZBUTwvaDI+Cgo8ZGl2IGNsYXNzPSJzZW8tZmFxIj4KPGRpdiBjbGFzcz0ic2VvLWZhcS1pdGVtIj4KPGgzPkFyZSB0aGVzZSBzcGFjZSBjb2xvcmluZyBwYWdlcyByZWFsbHkgZnJlZT88L2gzPgo8cD5ZZXMg4oCUIHRoZSBjb2xvcmluZyBwYWdlIG9uIHRoaXMgcGFnZSBpcyBhIGZyZWUgb3JpZ2luYWwgcHJpbnRhYmxlIGZyb20gTW9tWW91TmVlZFRoaXMuIE5vdGhpbmcgaGVyZSBjb3N0cyBhbnl0aGluZy48L3A+CjwvZGl2Pgo8ZGl2IGNsYXNzPSJzZW8tZmFxLWl0ZW0iPgo8aDM+V2hhdCBhZ2VzIGFyZSB0aGVzZSBjb2xvcmluZyBwYWdlcyBmb3I/PC9oMz4KPHA+VGhleSBhcmUgcGVyZmVjdCBmb3IgdG9kZGxlcnMsIHByZXNjaG9vbGVycywgYW5kIHlvdW5nIGtpZHMuIENob29zZSBzaW1wbGVyIGRlc2lnbnMgZm9yIGxpdHRsZSBvbmVzIGFuZCBtb3JlIGRldGFpbGVkIHBhZ2VzIGZvciBvbGRlciBraWRzLjwvcD4KPC9kaXY+CjxkaXYgY2xhc3M9InNlby1mYXEtaXRlbSI+CjxoMz5Ib3cgZG8gSSBwcmludCBhIGNvbG9yaW5nIHBhZ2U/PC9oMz4KPHA+VGFwIHRoZSBkb3dubG9hZCBidXR0b24gYWJvdmUgdG8gc2F2ZSB0aGUgZnJlZSBjb2xvcmluZyBwYWdlLCB0aGVuIHByaW50IGl0LiBSZWd1bGFyIGxldHRlci1zaXplIHBhcGVyIHdvcmtzIHBlcmZlY3RseS48L3A+CjwvZGl2Pgo8ZGl2IGNsYXNzPSJzZW8tZmFxLWl0ZW0iPgo8aDM+V2hhdCBhZ2VzIGFyZSBzcGFjZSBjb2xvcmluZyBwYWdlcyBmb3I/PC9oMz4KPHA+VGhlc2Ugc3BhY2UgY29sb3JpbmcgcGFnZXMgd29yayBmb3IgdG9kZGxlcnMsIHByZXNjaG9vbGVycywgYW5kIHlvdW5nIGtpZHMuIFBpY2sgc2ltcGxlIHJvY2tldCBvciBwbGFuZXQgZGVzaWducyBmb3IgbGl0dGxlIGhhbmRzIGFuZCBidXNpZXIgc3BhY2Ugc2NlbmVzIGZvciBvbGRlciBraWRzLjwvcD4KPC9kaXY+CjxkaXYgY2xhc3M9InNlby1mYXEtaXRlbSI+CjxoMz5XaGF0IGNhbiBwcmVzY2hvb2xlcnMgY29sb3Igb24gdGhpcyBwYWdlPzwvaDM+CjxwPlRoZSBwcmVzY2hvb2wgc3BhY2UgYWN0aXZpdGllcyBvbiB0aGlzIHBhZ2UgYXJlIGNvbG9yaW5nIHBhZ2VzOiBhIHJvY2tldCwgYW4gYXN0cm9uYXV0LCBhbmQgdGhlIHBsYW5ldHMsIGFsbCBmcmVlIHRvIHByaW50LjwvcD4KPC9kaXY+CjwvZGl2PgoKPC9zZWN0aW9uPgoKPHNlY3Rpb24gY2xhc3M9InNlby1zZWN0aW9uIj4KCjxzcGFuIGNsYXNzPSJzZWN0aW9uLWtpY2tlciI+S2VlcCBleHBsb3Jpbmc8L3NwYW4+Cgo8aDI+8J+UlyBNb3JlIEZyZWUgUHJpbnRhYmxlcyBZb3XigJlsbCBMb3ZlPC9oMj4KCjx1bCBjbGFzcz0ic2VvLWxpbmtzIj4KPGxpPgo8YSBocmVmPSJhbHBoYWJldC1jb2xvcmluZy1wYWdlcyI+RnJlZSBBbHBoYWJldCBDb2xvcmluZyBQYWdlczwvYT4KPHNwYW4+RnJlZSBwcmludGFibGUgYWxwaGFiZXQgY29sb3JpbmcgcGFnZXMgZm9yIGxpdHRsZSBsZWFybmVycy48L3NwYW4+CjwvbGk+CjxsaT4KPGEgaHJlZj0ibGV0dGVyLWItY29sb3JpbmctcGFnZXMiPkZyZWUgTGV0dGVyIEIgQ29sb3JpbmcgUGFnZXM8L2E+CjxzcGFuPkZyZWUgcHJpbnRhYmxlIGxldHRlciBiIGNvbG9yaW5nIHBhZ2VzIGZvciBsaXR0bGUgbGVhcm5lcnMuPC9zcGFuPgo8L2xpPgo8bGk+CjxhIGhyZWY9ImxldHRlci1jLWNvbG9yaW5nLXBhZ2VzIj5GcmVlIExldHRlciBDIENvbG9yaW5nIFBhZ2VzPC9hPgo8c3Bhbj5GcmVlIHByaW50YWJsZSBsZXR0ZXIgYyBjb2xvcmluZyBwYWdlcyBmb3IgbGl0dGxlIGxlYXJuZXJzLjwvc3Bhbj4KPC9saT4KPGxpPgo8YSBocmVmPSJtYXRoLWNvbG9yaW5nLXBhZ2VzIj5GcmVlIE1hdGggQ29sb3JpbmcgUGFnZXM8L2E+CjxzcGFuPkZyZWUgcHJpbnRhYmxlIG1hdGggY29sb3JpbmcgcGFnZXMgZm9yIGxpdHRsZSBsZWFybmVycy48L3NwYW4+CjwvbGk+CjwvdWw+Cgo8L3NlY3Rpb24+Cgo8L3NlY3Rpb24+CgoKCgoKPC9tYWluPgo8Zm9vdGVyPgogICAgPGRpdiBjbGFzcz0iZm9vdGVyLWxvZ28iPgogICAgICAgIDxpbWcgd2lkdGg9IjMwMCIgaGVpZ2h0PSIzMDAiCiAgICAgICAgICAgIHNyYz0iYXNzZXRzL2xvZ28uc3ZnIgogICAgICAgICAgICBhbHQ9Ik1vbVlvdU5lZWRUaGlzIgogICAgICAgID4KICAgIDwvZGl2Pgo8aDM+CiAgICBNb21Zb3VOZWVkVGhpcwo8L2gzPgo8cD4KICAgIE1vbSBmaW5kcywgc21hcnQgdG9vbHMsIGZyZWUgcmVzb3VyY2VzLCByZWFsIGFuc3dlcnMKICAgIGFuZCBhIGxpdHRsZSBjaGFvcyBmcm9tIHRoZSBNb20gVW5pdmVyc2UuCjwvcD4KPGRpdiBjbGFzcz0iZm9vdGVyLWxpbmtzIj4KICAgIDxhIGhyZWY9Im1vbS1mYXZvcml0ZXMiPgogICAgICAgIE1vbSBCYXR0bGVzCiAgICA8L2E+CiAgICA8YSBocmVmPSJtb20tbGFiIj4KICAgICAgICBNb20gTGFiCiAgICA8L2E+CiAgICA8YSBocmVmPSJmcmVlLW1vbS1yZXNvdXJjZXMiPgogICAgICAgIEZyZWUgUmVzb3VyY2VzCiAgICA8L2E+CiAgICA8YSBocmVmPSJhYm91dCI+CiAgICAgICAgQWJvdXQKICAgIDwvYT4KICAgIDxhIGhyZWY9InByaXZhY3ktcG9saWN5Ij4KICAgICAgICBQcml2YWN5IFBvbGljeQogICAgPC9hPgogICAgPGEgaHJlZj0idGVybXMiPgogICAgICAgIFRlcm1zIG9mIFVzZQogICAgPC9hPgogICAgPGEgaHJlZj0iYWZmaWxpYXRlLWRpc2Nsb3N1cmUiPgogICAgICAgIEFmZmlsaWF0ZSBEaXNjbG9zdXJlCiAgICA8L2E+CiAgICA8YSBocmVmPSJkaXNjbGFpbWVyIj4KICAgICAgICBEaXNjbGFpbWVyCiAgICA8L2E+CiAgICA8YSBocmVmPSJjb250YWN0Ij4KICAgICAgICBDb250YWN0CiAgICA8L2E+CjwvZGl2Pgo8ZGl2IGNsYXNzPSJmb290ZXItYm90dG9tIj4KICAgIDxwPgogICAgICAgIMKpIDIwMjYgTW9tWW91TmVlZFRoaXMuIEFsbCByaWdodHMgcmVzZXJ2ZWQuCiAgICA8L3A+CiAgICA8IS0tIEFmZmlsaWF0ZSBkaXNjbG9zdXJlOiByZXN0b3JlIHRoZSBBbWF6b24gQXNzb2NpYXRlcyBlYXJuaW5ncyBsaW5lIGhlcmUgb25jZSBhcHByb3ZlZCBmb3IgdGhlIHByb2dyYW0uIC0tPgo8L2Rpdj4KPC9mb290ZXI+CgoKCgo8L2Rpdj4KCgoKPC9ib2R5PgoKCjwvaHRtbD4=
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<!-- Google tag (gtag.js) - deferred until page load for performance -->
+<script>
+window.addEventListener('load', function() {
+  var s = document.createElement('script');
+  s.async = true;
+  s.src = 'https://www.googletagmanager.com/gtag/js?id=G-FE48KK6THQ';
+  document.head.appendChild(s);
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-FE48KK6THQ');
+});
+</script>
+
+<meta charset="UTF-8">
+<link rel="canonical" href="https://momyouneedthis.com/space-coloring-pages">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="description" content="Find free space coloring pages for kids — a free original printable made for little hands. Download, print &amp; color today!">
+
+<meta property="og:title" content="Free Space Coloring Pages | MomYouNeedThis">
+<meta property="og:description" content="Find free space coloring pages for kids — a free original printable made for little hands. Download, print &amp; color today!">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://momyouneedthis.com/space-coloring-pages">
+<meta property="og:image" content="https://momyouneedthis.com/assets/coloring/space-1.png">
+
+<title>Free Space Coloring Pages | MomYouNeedThis</title>
+
+<link rel="stylesheet" href="/style.min.css">
+<link rel="stylesheet" href="/resources.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+
+<style>
+/* MomYouNeedThis SEO design system */
+
+        /* SEO content sections — designed to match the MomYouNeedThis brand. */
+        .seo-section {
+            max-width: 900px;
+            margin: 55px auto 0;
+            padding: 45px 42px 50px;
+            background: #ffffff;
+            border: 1px solid #eee5e7;
+            border-radius: 35px;
+            box-shadow: 0 12px 35px rgba(80, 55, 55, 0.06);
+            font-family: 'Nunito', system-ui, sans-serif;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .seo-section::before {
+            content: "";
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            top: -145px;
+            right: -90px;
+            background: #ffe5ec;
+            border-radius: 50%;
+            opacity: .65;
+            pointer-events: none;
+        }
+
+        .seo-section::after {
+            content: "";
+            position: absolute;
+            width: 190px;
+            height: 190px;
+            bottom: -120px;
+            left: -80px;
+            background: #fff1c9;
+            border-radius: 50%;
+            opacity: .55;
+            pointer-events: none;
+        }
+
+        .seo-section > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .seo-section .section-kicker {
+            display: block;
+            margin-bottom: 10px;
+            color:#c03d5b;
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .seo-section h2 {
+            max-width: 700px;
+            margin: 0 auto 14px;
+            color: #332b2b;
+            font-size: clamp(26px, 3.6vw, 34px);
+            line-height: 1.15;
+            letter-spacing: -.6px;
+            font-weight: 900;
+            text-align: center;
+        }
+
+        .seo-section h2::after {
+            content: "";
+            display: block;
+            width: 45px;
+            height: 3px;
+            margin: 16px auto 0;
+            background: #e89aaa;
+            border-radius: 999px;
+        }
+
+        .seo-lead {
+            max-width: 680px;
+            margin: 0 auto 26px;
+            color: #6d6566;
+            font-size: 16px;
+            line-height: 1.7;
+            text-align: center;
+        }
+
+        .seo-links {
+            list-style: none;
+            margin: 10px auto 0;
+            padding: 0;
+            max-width: 720px;
+            display: grid;
+            gap: 10px;
+        }
+
+        .seo-links li {
+            padding: 16px 18px;
+            background: #fffaf8;
+            border: 1px solid #f1e5e7;
+            border-radius: 16px;
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
+
+        .seo-links li:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(80, 55, 65, .07);
+        }
+
+        .seo-links a {
+            color: #332b2b;
+            font-size: 15px;
+            font-weight: 900;
+            text-decoration: none;
+        }
+
+        .seo-links a:hover {
+            color:#c33761;
+        }
+
+        .seo-links span {
+            display: block;
+            margin-top: 4px;
+            color:#6d6d6d;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+
+        .seo-steps {
+            list-style: none;
+            margin: 0 auto;
+            padding: 0;
+            max-width: 720px;
+            display: grid;
+            gap: 12px;
+            counter-reset: seo-step;
+        }
+
+        .seo-steps li {
+            counter-increment: seo-step;
+            position: relative;
+            padding: 18px 20px 18px 70px;
+            background: #fffaf8;
+            border: 1px solid #f1e5e7;
+            border-radius: 18px;
+            color: #5f5758;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .seo-steps li::before {
+            content: counter(seo-step);
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #e89aaa;
+            border-radius: 50%;
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 900;
+        }
+
+        .seo-steps li strong {
+            color: #332b2b;
+        }
+
+
+        .seo-faq {
+            max-width: 720px;
+            margin: 0 auto;
+            display: grid;
+            gap: 12px;
+        }
+
+        .seo-faq-item {
+            padding: 20px 22px;
+            background: #fffaf8;
+            border: 1px solid #f0dfe3;
+            border-radius: 18px;
+        }
+
+        .seo-faq-item h3 {
+            margin: 0 0 8px;
+            color: #332b2b;
+            font-size: 16px;
+            line-height: 1.4;
+            font-weight: 900;
+        }
+
+        .seo-faq-item p {
+            margin: 0;
+            color: #686061;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+@media (max-width: 750px) {
+            .seo-section {
+                margin-top: 40px;
+                padding: 35px 20px 38px;
+                border-radius: 28px;
+            }
+            .seo-steps li {
+                padding: 16px 16px 16px 62px;
+                font-size: 14px;
+            }
+            .seo-steps li::before {
+                left: 16px;
+            }
+            .seo-faq-item {
+                padding: 18px;
+            }
+            .seo-table {
+                font-size: 12px;
+            }
+            .seo-table th,
+            .seo-table td {
+                padding: 9px 8px;
+            }
+            .seo-table thead th {
+                white-space: normal;
+            }
+        }
+
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Are these space coloring pages really free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes — the coloring page on this page is a free original printable from MomYouNeedThis. Nothing here costs anything."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What ages are these coloring pages for?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "They are perfect for toddlers, preschoolers, and young kids. Choose simpler designs for little ones and more detailed pages for older kids."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I print a coloring page?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Tap the download button above to save the free coloring page, then print it. Regular letter-size paper works perfectly."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What ages are space coloring pages for?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "These space coloring pages work for toddlers, preschoolers, and young kids. Pick simple rocket or planet designs for little hands and busier space scenes for older kids."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What can preschoolers color on this page?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The preschool space activities on this page are coloring pages: a rocket, an astronaut, and the planets, all free to print."
+      }
+    }
+  ]
+}
+</script>
+
+<style>
+.coloring-more{margin:14px 0 0;color:#a0556b;font-size:15px;font-weight:800}
+.print-btn{background:#fff!important;color:#c33761!important;border:2px solid #e89aaa!important;margin-left:10px}
+.print-btn:hover{background:#fdf3f5!important;transform:translateY(-3px)}
+@media(max-width:600px){.print-btn{margin-left:0;margin-top:10px}}
+</style>
+</head>
+
+
+<body>
+
+
+<div class="page free-page">
+<main>
+
+
+
+<header>
+
+<a href="/">
+<img width="300" height="300" src="assets/logo.svg" class="logo" alt="MomYouNeedThis Logo">
+</a>
+
+</header>
+
+
+
+
+<section class="resource-page">
+
+
+
+<span class="free-badge">
+🚀 SPACE COLORING FREE RESOURCE
+</span>
+
+
+
+
+<h1>
+Free Space Coloring Pages
+</h1>
+
+
+
+
+<p class="intro">
+
+Looking for free space coloring pages? Download our free original Space coloring page below — no signup needed. Just tap download, print at home, and let the coloring fun begin!</p>
+
+<section class="flow-section">
+
+<span class="section-kicker">Step by step</span>
+
+<h2>🚀 How To Use This Page</h2>
+
+<ol class="seo-steps">
+<li><strong>Browse the list</strong> and pick a coloring page your child will love.</li>
+<li><strong>Tap the download button</strong> to save the free coloring page to your device.</li>
+<li><strong>Print on letter-size paper</strong> — print a few different designs for variety.</li>
+<li><strong>Color together</strong> with crayons or markers and display the favorites.</li>
+</ol>
+
+</section>
+
+
+
+
+<section class="featured-resources">
+
+
+
+<h2>
+🚀 Space Coloring Pages
+</h2>
+
+
+<div class="printable-preview">
+<img width="800" height="1600" src="assets/coloring/space-1.png" alt="Space coloring pages — free printable space coloring page for kids" loading="lazy">
+</div>
+<section class="generator-bottom-cta">
+<h2>🎨 Download Your Free Space Coloring Page</h2>
+<p>A cute, original space coloring page made for little hands — bold outlines, big spaces, zero signup.</p>
+<a href="assets/coloring/space-1.png" download="space-coloring-page.png" class="download-button">⬇️ Download Free Coloring Page</a>
+<a href="assets/coloring/space-1.png" target="_blank" rel="noopener" class="download-button print-btn">🖨️ Print</a>
+<p class="free-note">🎁 Free printable for toddlers &amp; preschoolers</p>
+</section>
+
+
+
+
+</section>
+
+
+
+
+
+<section class="featured-resources">
+
+<h2>
+🚀 Rocket Coloring Page
+</h2>
+
+<div class="printable-preview">
+<img width="850" height="1100" src="assets/coloring/space-2.png" alt="Rocket coloring page: a big rocket with a round window blasting off past a smiling crescent moon and stars, a small alien waving from a planet below" loading="lazy">
+</div>
+<section class="generator-bottom-cta">
+<h2>🎨 Download the Rocket Coloring Page</h2>
+<p>A big rocket with a round window blasting off past a smiling crescent moon and stars, a small alien waving from a planet below — bold outlines, big spaces, zero signup.</p>
+<a href="assets/coloring/space-2.png" download="rocket-coloring-page.png" class="download-button">⬇️ Download Rocket Page</a>
+<a href="assets/coloring/space-2.png" target="_blank" rel="noopener" class="download-button print-btn">🖨️ Print Rocket Page</a>
+<p class="free-note">🎁 Free printable for toddlers &amp; preschoolers</p>
+
+</section>
+
+</section>
+
+
+<section class="featured-resources">
+
+<h2>
+👨‍🚀 Astronaut Coloring Page
+</h2>
+
+<div class="printable-preview">
+<img width="850" height="1100" src="assets/coloring/space-3.png" alt="Astronaut coloring page: a child astronaut in a helmet suit floating and waving, a ringed planet and a satellite behind, stars and shooting stars around" loading="lazy">
+</div>
+<section class="generator-bottom-cta">
+<h2>🎨 Download the Astronaut Coloring Page</h2>
+<p>A child astronaut in a helmet suit floating and waving, a ringed planet and a satellite behind, stars and shooting stars around — bold outlines, big spaces, zero signup.</p>
+<a href="assets/coloring/space-3.png" download="astronaut-coloring-page.png" class="download-button">⬇️ Download Astronaut Page</a>
+<a href="assets/coloring/space-3.png" target="_blank" rel="noopener" class="download-button print-btn">🖨️ Print Astronaut Page</a>
+<p class="free-note">🎁 Free printable for toddlers &amp; preschoolers</p>
+
+</section>
+
+</section>
+
+
+<section class="featured-resources">
+
+<h2>
+🪐 Planets Coloring Page
+</h2>
+
+<div class="printable-preview">
+<img width="850" height="1100" src="assets/coloring/space-4.png" alt="Planets coloring page: happy planets with faces, two ringed planets and a smiling moon, stars and galaxies all around" loading="lazy">
+</div>
+<section class="generator-bottom-cta">
+<h2>🎨 Download the Planets Coloring Page</h2>
+<p>Happy planets with faces, two ringed planets and a smiling moon, stars and galaxies all around — bold outlines, big spaces, zero signup.</p>
+<a href="assets/coloring/space-4.png" download="planets-coloring-page.png" class="download-button">⬇️ Download Planets Page</a>
+<a href="assets/coloring/space-4.png" target="_blank" rel="noopener" class="download-button print-btn">🖨️ Print Planets Page</a>
+<p class="free-note">🎁 Free printable for toddlers &amp; preschoolers</p>
+
+</section>
+
+</section>
+
+
+<section class="weekly-box">
+
+
+
+<h2>
+More Free Kids Activities Coming Soon
+</h2>
+
+
+
+
+<p>
+Save this page! More free printable activities, educational resources, and mom-approved resources will be added regularly.
+</p>
+
+
+
+
+</section>
+
+
+
+
+
+
+
+<section class="flow-section">
+<span class="section-kicker">Print & play</span>
+<h2>🚀 Blast Off With space coloring pages</h2>
+<p>The three named sheets split space into three scenes. The Rocket sheet is the blastoff: one big rocket with a round window, a smiling crescent moon and stars above, and a small alien waving from a planet below. The Astronaut sheet floats a child astronaut in a helmet suit, waving, with a ringed planet and a satellite behind and shooting stars around. The Planets sheet is the crowded one: happy planets with faces, two of them ringed, plus a smiling moon, stars and galaxies.</p>
+<p>The colour choices are drawn in for you: orange and yellow flames under the rocket, a different colour for each ring around the ringed planets, and the astronaut's suit left white — like a real suit — with only the helmet trim and backpack coloured in.</p>
+
+<p>See <a href="assets/coloring/space-1.png">space printable</a> for more.</p>
+</section>
+
+<section class="seo-section">
+
+<span class="section-kicker">FAQ</span>
+
+<h2>❓ Space Coloring Pages FAQ</h2>
+
+<div class="seo-faq">
+<div class="seo-faq-item">
+<h3>Are these space coloring pages really free?</h3>
+<p>Yes — the coloring page on this page is a free original printable from MomYouNeedThis. Nothing here costs anything.</p>
+</div>
+<div class="seo-faq-item">
+<h3>What ages are these coloring pages for?</h3>
+<p>They are perfect for toddlers, preschoolers, and young kids. Choose simpler designs for little ones and more detailed pages for older kids.</p>
+</div>
+<div class="seo-faq-item">
+<h3>How do I print a coloring page?</h3>
+<p>Tap the download button above to save the free coloring page, then print it. Regular letter-size paper works perfectly.</p>
+</div>
+<div class="seo-faq-item">
+<h3>What ages are space coloring pages for?</h3>
+<p>These space coloring pages work for toddlers, preschoolers, and young kids. Pick simple rocket or planet designs for little hands and busier space scenes for older kids.</p>
+</div>
+<div class="seo-faq-item">
+<h3>What can preschoolers color on this page?</h3>
+<p>The preschool space activities on this page are coloring pages: a rocket, an astronaut, and the planets, all free to print.</p>
+</div>
+</div>
+
+</section>
+
+<section class="seo-section">
+
+<span class="section-kicker">Keep exploring</span>
+
+<h2>🔗 More Free Printables You’ll Love</h2>
+
+<ul class="seo-links">
+<li>
+<a href="alphabet-coloring-pages">Free Alphabet Coloring Pages</a>
+<span>Free printable alphabet coloring pages for little learners.</span>
+</li>
+<li>
+<a href="letter-b-coloring-pages">Free Letter B Coloring Pages</a>
+<span>Free printable letter b coloring pages for little learners.</span>
+</li>
+<li>
+<a href="letter-c-coloring-pages">Free Letter C Coloring Pages</a>
+<span>Free printable letter c coloring pages for little learners.</span>
+</li>
+<li>
+<a href="math-coloring-pages">Free Math Coloring Pages</a>
+<span>Free printable math coloring pages for little learners.</span>
+</li>
+</ul>
+
+</section>
+
+</section>
+
+
+
+
+
+</main>
+<footer>
+    <div class="footer-logo">
+        <img width="300" height="300"
+            src="assets/logo.svg"
+            alt="MomYouNeedThis"
+        >
+    </div>
+<h3>
+    MomYouNeedThis
+</h3>
+<p>
+    Mom finds, smart tools, free resources, real answers
+    and a little chaos from the Mom Universe.
+</p>
+<div class="footer-links">
+    <a href="mom-favorites">
+        Mom Battles
+    </a>
+    <a href="mom-lab">
+        Mom Lab
+    </a>
+    <a href="free-mom-resources">
+        Free Resources
+    </a>
+    <a href="about">
+        About
+    </a>
+    <a href="privacy-policy">
+        Privacy Policy
+    </a>
+    <a href="terms">
+        Terms of Use
+    </a>
+    <a href="affiliate-disclosure">
+        Affiliate Disclosure
+    </a>
+    <a href="disclaimer">
+        Disclaimer
+    </a>
+    <a href="contact">
+        Contact
+    </a>
+</div>
+<div class="footer-bottom">
+    <p>
+        © 2026 MomYouNeedThis. All rights reserved.
+    </p>
+    <!-- Affiliate disclosure: restore the Amazon Associates earnings line here once approved for the program. -->
+</div>
+</footer>
+
+
+
+
+</div>
+
+
+
+</body>
+
+
+</html>
