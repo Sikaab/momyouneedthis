@@ -1062,6 +1062,7 @@ window.addEventListener('load', function() {
     function tick(){
         if(running){
             ctx.clearRect(0, 0, W, H);
+            ctx.fillStyle = '#ffffff';
             for(var i = 0; i < flakes.length; i++){
                 var f = flakes[i];
                 f.y += f.s;
