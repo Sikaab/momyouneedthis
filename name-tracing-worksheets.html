@@ -378,15 +378,22 @@ html,body{margin:0!important;padding:0!important;background:#ffffff!important}
 </div>
 <section class="tool-section" aria-label="Name tracing worksheet maker">
 <h2>✏️ Make Your Own Name Tracing Worksheets</h2>
-<p class="tool-lead">Add a name, pick a trace style and a letter size — the sheet below updates as you type. Download it as a PDF or print it straight from this page. Nothing is uploaded: the name stays on your device.</p>
+<p class="tool-lead">Add a name, pick a trace style and a letter size — the sheet below updates as you type. Add an extra line to trace and starting dots that show where each letter begins, if you like. Download it as a PDF or print it straight from this page. Nothing is uploaded: the name stays on your device.</p>
 <div class="tool-grid">
 <form class="tool-form" id="traceForm">
 <label class="tool-label" for="childName">Child's first name</label>
 <input id="childName" type="text" maxlength="14" placeholder="e.g. Charlotte" autocomplete="off" spellcheck="false">
+<label class="tool-label" for="extraLine">Extra line to trace (optional)</label>
+<input id="extraLine" type="text" maxlength="24" placeholder="e.g. Smith, or I love my family" autocomplete="off" spellcheck="false">
 <fieldset>
 <legend>Trace style</legend>
 <label class="pill selected"><input type="radio" name="traceStyle" value="dots" checked><span>Dots — classic dotted letters to trace over</span></label>
-<label class="pill"><input type="radio" name="traceStyle" value="dash"><span>Dashed outline — a bolder broken outline</span></label>
+<label class="pill"><input type="radio" name="traceStyle" value="dash"><span>Dashed line — a bolder broken line to trace over</span></label>
+</fieldset>
+<fieldset>
+<legend>Starting dots</legend>
+<label class="pill selected"><input type="radio" name="startDots" value="on" checked><span>On — a bigger dot shows where each letter starts</span></label>
+<label class="pill"><input type="radio" name="startDots" value="off"><span>Off — plain dotted letters</span></label>
 </fieldset>
 <fieldset>
 <legend>Letter size</legend>
@@ -424,7 +431,7 @@ html,body{margin:0!important;padding:0!important;background:#ffffff!important}
 <h2>🖨️ How to Use This Worksheet Maker</h2>
 <ol class="seo-steps">
 <li><strong>Type the name.</strong> Add your child's first name — up to 14 letters — exactly as they will write it, with a capital first letter.</li>
-<li><strong>Pick a style and size.</strong> Dots are the classic trace letters; the dashed outline gives a bolder guide. Preschool makes big letters on 5 rows; Kindergarten makes smaller letters on 6 rows.</li>
+<li><strong>Pick a style and size.</strong> Dots are the classic trace letters; the dashed line gives a bolder guide. Starting dots show where each letter begins, and the extra line can hold a last name or a short sentence to trace. Preschool makes big letters on 5 rows; Kindergarten makes smaller letters on 6 rows.</li>
 <li><strong>Download or print.</strong> Save the PDF or print straight from the page, on US Letter paper at 100% scale so the lines print true.</li>
 <li><strong>Work down the sheet.</strong> Trace the first two rows together, copy beside the model on the third row, then let your child try the blank rows alone.</li>
 <li><strong>Print fresh sheets as they grow.</strong> A new sheet for a sibling, a shorter name, or a neater attempt takes seconds — make as many as you need.</li>
@@ -546,6 +553,7 @@ if (!canvas || !canvas.getContext) { return; }
 var ctx = canvas.getContext('2d');
 var W = 1700, H = 2200, MX = 130, CW = W - MX * 2;
 var nameInput = document.getElementById('childName');
+var extraInput = document.getElementById('extraLine');
 var frame = document.getElementById('sheetFrame');
 var actions = document.getElementById('toolActions');
 var hint = document.getElementById('toolHint');
@@ -569,6 +577,33 @@ function fontStr(weight, size) {
 function setTracking(v) {
   try { ctx.letterSpacing = v; } catch (e) {}
 }
+var GLYPHS = {" ":[16,0,[]],"A":[18,1,[[[9,21],[1,0]],[[9,21],[17,0]],[[4,7],[14,7]]]],"B":[21,4,[[[4,21],[4,0]],[[4,21],[13,21],[16,20],[17,19],[18,17],[18,15],[17,13],[16,12],[13,11]],[[4,11],[13,11],[16,10],[17,9],[18,7],[18,4],[17,2],[16,1],[13,0],[4,0]]]],"C":[21,3,[[[18,16],[17,18],[15,20],[13,21],[9,21],[7,20],[5,18],[4,16],[3,13],[3,8],[4,5],[5,3],[7,1],[9,0],[13,0],[15,1],[17,3],[18,5]]]],"D":[21,4,[[[4,21],[4,0]],[[4,21],[11,21],[14,20],[16,18],[17,16],[18,13],[18,8],[17,5],[16,3],[14,1],[11,0],[4,0]]]],"E":[19,4,[[[4,21],[4,0]],[[4,21],[17,21]],[[4,11],[12,11]],[[4,0],[17,0]]]],"F":[18,4,[[[4,21],[4,0]],[[4,21],[17,21]],[[4,11],[12,11]]]],"G":[21,3,[[[18,16],[17,18],[15,20],[13,21],[9,21],[7,20],[5,18],[4,16],[3,13],[3,8],[4,5],[5,3],[7,1],[9,0],[13,0],[15,1],[17,3],[18,5],[18,8]],[[13,8],[18,8]]]],"H":[22,4,[[[4,21],[4,0]],[[18,21],[18,0]],[[4,11],[18,11]]]],"I":[11,1,[[[4,21],[4,0]],[[1,21],[7,21]],[[1,0],[7,0]]]],"J":[14,1,[[[10,21],[10,5],[9,2],[8,1],[6,0],[4,0],[2,1],[1,3],[0,6]],[[0,21],[12,21]]]],"K":[21,4,[[[4,21],[4,0]],[[18,21],[4,7]],[[9,12],[18,0]]]],"L":[17,4,[[[4,21],[4,0]],[[4,0],[16,0]]]],"M":[24,4,[[[4,21],[4,0]],[[4,21],[12,0]],[[20,21],[12,0]],[[20,21],[20,0]]]],"N":[22,4,[[[4,21],[4,0]],[[4,21],[18,0]],[[18,21],[18,0]]]],"O":[22,3,[[[9,21],[7,20],[5,18],[4,16],[3,13],[3,8],[4,5],[5,3],[7,1],[9,0],[13,0],[15,1],[17,3],[18,5],[19,8],[19,13],[18,16],[17,18],[15,20],[13,21],[9,21]]]],"P":[21,4,[[[4,21],[4,0]],[[4,21],[13,21],[16,20],[17,19],[18,17],[18,14],[17,12],[16,11],[13,10],[4,10]]]],"Q":[22,3,[[[9,21],[7,20],[5,18],[4,16],[3,13],[3,8],[4,5],[5,3],[7,1],[9,0],[13,0],[15,1],[17,3],[18,5],[19,8],[19,13],[18,16],[17,18],[15,20],[13,21],[9,21]],[[12,4],[18,-2]]]],"R":[21,4,[[[4,21],[4,0]],[[4,21],[13,21],[16,20],[17,19],[18,17],[18,15],[17,13],[16,12],[13,11],[4,11]],[[11,11],[18,0]]]],"S":[20,3,[[[17,18],[15,20],[12,21],[8,21],[5,20],[3,18],[3,16],[4,14],[5,13],[7,12],[13,10],[15,9],[16,8],[17,6],[17,3],[15,1],[12,0],[8,0],[5,1],[3,3]]]],"T":[16,1,[[[8,21],[8,0]],[[1,21],[15,21]]]],"U":[22,4,[[[4,21],[4,6],[5,3],[7,1],[10,0],[12,0],[15,1],[17,3],[18,6],[18,21]]]],"V":[18,1,[[[1,21],[9,0]],[[17,21],[9,0]]]],"W":[24,2,[[[2,21],[7,0]],[[12,21],[7,0]],[[12,21],[17,0]],[[22,21],[17,0]]]],"X":[20,3,[[[3,21],[17,0]],[[17,21],[3,0]]]],"Y":[18,1,[[[1,21],[9,11],[9,0]],[[17,21],[9,11]]]],"Z":[20,3,[[[17,21],[3,0]],[[3,21],[17,21]],[[3,0],[17,0]]]],"a":[19,3,[[[15,14],[15,0]],[[15,11],[13,13],[11,14],[8,14],[6,13],[4,11],[3,8],[3,6],[4,3],[6,1],[8,0],[11,0],[13,1],[15,3]]]],"b":[19,4,[[[4,21],[4,0]],[[4,11],[6,13],[8,14],[11,14],[13,13],[15,11],[16,8],[16,6],[15,3],[13,1],[11,0],[8,0],[6,1],[4,3]]]],"c":[18,3,[[[15,11],[13,13],[11,14],[8,14],[6,13],[4,11],[3,8],[3,6],[4,3],[6,1],[8,0],[11,0],[13,1],[15,3]]]],"d":[19,3,[[[15,21],[15,0]],[[15,11],[13,13],[11,14],[8,14],[6,13],[4,11],[3,8],[3,6],[4,3],[6,1],[8,0],[11,0],[13,1],[15,3]]]],"e":[18,3,[[[3,8],[15,8],[15,10],[14,12],[13,13],[11,14],[8,14],[6,13],[4,11],[3,8],[3,6],[4,3],[6,1],[8,0],[11,0],[13,1],[15,3]]]],"f":[12,2,[[[10,21],[8,21],[6,20],[5,17],[5,0]],[[2,14],[9,14]]]],"g":[19,3,[[[15,14],[15,-2],[14,-5],[13,-6],[11,-7],[8,-7],[6,-6]],[[15,11],[13,13],[11,14],[8,14],[6,13],[4,11],[3,8],[3,6],[4,3],[6,1],[8,0],[11,0],[13,1],[15,3]]]],"h":[19,4,[[[4,21],[4,0]],[[4,10],[7,13],[9,14],[12,14],[14,13],[15,10],[15,0]]]],"i":[8,3,[[[3,21],[4,20],[5,21],[4,22],[3,21]],[[4,14],[4,0]]]],"j":[10,1,[[[5,21],[6,20],[7,21],[6,22],[5,21]],[[6,14],[6,-3],[5,-6],[3,-7],[1,-7]]]],"k":[17,4,[[[4,21],[4,0]],[[14,14],[4,4]],[[8,8],[15,0]]]],"l":[8,4,[[[4,21],[4,0]]]],"m":[30,4,[[[4,14],[4,0]],[[4,10],[7,13],[9,14],[12,14],[14,13],[15,10],[15,0]],[[15,10],[18,13],[20,14],[23,14],[25,13],[26,10],[26,0]]]],"n":[19,4,[[[4,14],[4,0]],[[4,10],[7,13],[9,14],[12,14],[14,13],[15,10],[15,0]]]],"o":[19,3,[[[8,14],[6,13],[4,11],[3,8],[3,6],[4,3],[6,1],[8,0],[11,0],[13,1],[15,3],[16,6],[16,8],[15,11],[13,13],[11,14],[8,14]]]],"p":[19,4,[[[4,14],[4,-7]],[[4,11],[6,13],[8,14],[11,14],[13,13],[15,11],[16,8],[16,6],[15,3],[13,1],[11,0],[8,0],[6,1],[4,3]]]],"q":[19,3,[[[15,14],[15,-7]],[[15,11],[13,13],[11,14],[8,14],[6,13],[4,11],[3,8],[3,6],[4,3],[6,1],[8,0],[11,0],[13,1],[15,3]]]],"r":[13,4,[[[4,14],[4,0]],[[4,8],[5,11],[7,13],[9,14],[12,14]]]],"s":[17,3,[[[14,11],[13,13],[10,14],[7,14],[4,13],[3,11],[4,9],[6,8],[11,7],[13,6],[14,4],[14,3],[13,1],[10,0],[7,0],[4,1],[3,3]]]],"t":[12,2,[[[5,21],[5,4],[6,1],[8,0],[10,0]],[[2,14],[9,14]]]],"u":[19,4,[[[4,14],[4,4],[5,1],[7,0],[10,0],[12,1],[15,4]],[[15,14],[15,0]]]],"v":[16,2,[[[2,14],[8,0]],[[14,14],[8,0]]]],"w":[22,3,[[[3,14],[7,0]],[[11,14],[7,0]],[[11,14],[15,0]],[[19,14],[15,0]]]],"x":[17,3,[[[3,14],[14,0]],[[14,14],[3,0]]]],"y":[16,1,[[[2,14],[8,0]],[[14,14],[8,0],[6,-4],[4,-6],[2,-7],[1,-7]]]],"z":[17,3,[[[14,14],[3,0]],[[3,14],[14,14]],[[3,0],[14,0]]]],"0":[20,3,[[[9,21],[6,20],[4,17],[3,12],[3,9],[4,4],[6,1],[9,0],[11,0],[14,1],[16,4],[17,9],[17,12],[16,17],[14,20],[11,21],[9,21]]]],"1":[20,6,[[[6,17],[8,18],[11,21],[11,0]]]],"2":[20,3,[[[4,16],[4,17],[5,19],[6,20],[8,21],[12,21],[14,20],[15,19],[16,17],[16,15],[15,13],[13,10],[3,0],[17,0]]]],"3":[20,3,[[[5,21],[16,21],[10,13],[13,13],[15,12],[16,11],[17,8],[17,6],[16,3],[14,1],[11,0],[8,0],[5,1],[4,2],[3,4]]]],"4":[20,3,[[[13,21],[3,7],[18,7]],[[13,21],[13,0]]]],"5":[20,3,[[[15,21],[5,21],[4,12],[5,13],[8,14],[11,14],[14,13],[16,11],[17,8],[17,6],[16,3],[14,1],[11,0],[8,0],[5,1],[4,2],[3,4]]]],"6":[20,4,[[[16,18],[15,20],[12,21],[10,21],[7,20],[5,17],[4,12],[4,7],[5,3],[7,1],[10,0],[11,0],[14,1],[16,3],[17,6],[17,7],[16,10],[14,12],[11,13],[10,13],[7,12],[5,10],[4,7]]]],"7":[20,3,[[[17,21],[7,0]],[[3,21],[17,21]]]],"8":[20,3,[[[8,21],[5,20],[4,18],[4,16],[5,14],[7,13],[11,12],[14,11],[16,9],[17,7],[17,4],[16,2],[15,1],[12,0],[8,0],[5,1],[4,2],[3,4],[3,7],[4,9],[6,11],[9,12],[13,13],[15,14],[16,16],[16,18],[15,20],[12,21],[8,21]]]],"9":[20,3,[[[16,14],[15,11],[13,9],[10,8],[9,8],[6,9],[4,11],[3,14],[3,15],[4,18],[6,20],[9,21],[10,21],[13,20],[15,18],[16,14],[16,9],[15,4],[13,1],[10,0],[8,0],[5,1],[4,3]]]],"'":[10,4,[[[5,19],[4,20],[5,21],[6,20],[6,18],[5,16],[4,15]]]],"-":[26,4,[[[4,9],[22,9]]]],".":[10,4,[[[5,2],[4,1],[5,0],[6,1],[5,2]]]]};
+function traceText(t) {
+  return (t || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+function cleanExtra() {
+  return (extraInput.value || '').replace(/\s+/g, ' ').trim().slice(0, 24);
+}
+function getStartDots() {
+  var r = document.querySelector('input[name="startDots"]:checked');
+  return r ? r.value === 'on' : true;
+}
+function traceUnit(fs) { return (fs * 0.71) / 21; }
+function traceWidth(text, fs) {
+  var u = traceUnit(fs), w = 0;
+  for (var i = 0; i < text.length; i++) {
+    var g = GLYPHS[text[i]];
+    w += (g ? g[0] : 8) * u;
+    if (i) { w += 3; }
+  }
+  return w;
+}
+function fitTraceFs(text, startFs, maxWidth) {
+  var fs = startFs;
+  var w = traceWidth(text, fs);
+  if (w > maxWidth && w > 0) { fs = Math.max(42, Math.floor(fs * maxWidth / w)); }
+  return fs;
+}
 function roundRectPath(x, y, w, h, r) {
   ctx.beginPath();
   ctx.moveTo(x + r, y);
@@ -588,28 +623,86 @@ function fitFontSize(text, weight, startSize, maxWidth) {
   }
   return size;
 }
-function drawTraceOnce(text, x, baseY, fs, style) {
+function drawTraceOnce(text, x, baseY, fs, style, startDots) {
+  if (style === 'dots') { drawTraceDots(text, x, baseY, fs, startDots); }
+  else { drawTraceStroke(text, x, baseY, fs, startDots); }
+}
+function eachGlyph(text, x, fs, fn) {
+  var u = traceUnit(fs);
+  var cx = x;
+  for (var i = 0; i < text.length; i++) {
+    var g = GLYPHS[text[i]];
+    if (i) { cx += 3; }
+    if (g) { fn(cx + g[1] * u, g, u); }
+    cx += (g ? g[0] : 8) * u;
+  }
+}
+function drawTraceStroke(text, x, baseY, fs, startDots) {
   ctx.save();
-  ctx.font = fontStr(800, fs);
-  ctx.textAlign = 'left';
-  ctx.textBaseline = 'alphabetic';
-  setTracking('3px');
+  ctx.strokeStyle = '#8f8387';
+  ctx.fillStyle = '#8f8387';
   ctx.lineJoin = 'round';
   ctx.lineCap = 'round';
-  if (style === 'dots') {
-    ctx.setLineDash([0.1, Math.max(7, fs * 0.082)]);
-    ctx.lineWidth = Math.max(3.4, fs * 0.034);
-  } else {
-    ctx.setLineDash([fs * 0.11, fs * 0.065]);
-    ctx.lineWidth = Math.max(3, fs * 0.026);
-  }
-  ctx.strokeStyle = '#8f8387';
-  ctx.strokeText(text, x, baseY);
+  ctx.setLineDash([fs * 0.11, fs * 0.065]);
+  ctx.lineWidth = Math.max(3, fs * 0.026);
+  eachGlyph(text, x, fs, function (gx, g, u) {
+    ctx.beginPath();
+    for (var sg = 0; sg < g[2].length; sg++) {
+      var seg = g[2][sg];
+      for (var p = 0; p < seg.length; p++) {
+        var px = gx + seg[p][0] * u;
+        var py = baseY - seg[p][1] * u;
+        if (p === 0) { ctx.moveTo(px, py); } else { ctx.lineTo(px, py); }
+      }
+    }
+    ctx.stroke();
+    if (startDots) { drawStartDot(gx, g, u, baseY, fs); }
+  });
+  ctx.restore();
+}
+function drawTraceDots(text, x, baseY, fs, startDots) {
+  var gap = Math.max(8, fs * 0.105);
+  var r = Math.max(3, fs * 0.026);
+  ctx.save();
+  ctx.fillStyle = '#8f8387';
+  eachGlyph(text, x, fs, function (gx, g, u) {
+    var nextIn = 0;
+    for (var sg = 0; sg < g[2].length; sg++) {
+      var seg = g[2][sg];
+      for (var p = 0; p + 1 < seg.length; p++) {
+        var ax = gx + seg[p][0] * u, ay = baseY - seg[p][1] * u;
+        var bx = gx + seg[p + 1][0] * u, by = baseY - seg[p + 1][1] * u;
+        var L = Math.sqrt((bx - ax) * (bx - ax) + (by - ay) * (by - ay));
+        if (L === 0) { continue; }
+        var t = nextIn;
+        while (t <= L) {
+          var fx = ax + (bx - ax) * (t / L), fy = ay + (by - ay) * (t / L);
+          ctx.beginPath();
+          ctx.arc(fx, fy, r, 0, Math.PI * 2);
+          ctx.fill();
+          t += gap;
+        }
+        nextIn = t - L;
+      }
+    }
+    if (startDots) { drawStartDot(gx, g, u, baseY, fs); }
+  });
+  ctx.restore();
+}
+function drawStartDot(gx, g, u, baseY, fs) {
+  if (!g[2].length || !g[2][0].length) { return; }
+  var fp = g[2][0][0];
+  ctx.save();
+  ctx.setLineDash([]);
+  ctx.beginPath();
+  ctx.arc(gx + fp[0] * u, baseY - fp[1] * u, Math.max(5, fs * 0.05), 0, Math.PI * 2);
+  ctx.fill();
   ctx.restore();
 }
 function drawSheet() {
   var name = cleanName();
   var style = getStyle();
+  var startDots = getStartDots();
   var level = getLevel();
   var conf = (level === 'kindergarten')
     ? { fs0: 126, pitch: 250, rows: 6 }
@@ -638,23 +731,23 @@ function drawSheet() {
 
   var fs = conf.fs0;
   var nameW = 0;
+  var traceName = traceText(name);
+  var extra = cleanExtra();
+  var traceExtra = traceText(extra);
+  var fsExtra = fs;
   if (name) {
-    ctx.font = fontStr(800, fs);
-    setTracking('3px');
-    nameW = ctx.measureText(name).width;
-    var maxW = CW - 16;
-    if (nameW > maxW && nameW > 0) {
-      fs = Math.max(42, Math.floor(fs * maxW / nameW));
-      ctx.font = fontStr(800, fs);
-      nameW = ctx.measureText(name).width;
-    }
-    setTracking('0px');
+    fs = fitTraceFs(traceName, fs, CW - 16);
+    nameW = traceWidth(traceName, fs);
+    fsExtra = fitTraceFs(traceExtra, fs, CW - 16);
   }
 
   var areaTop = 296, areaH = 2010 - 296;
   var totalH = conf.pitch * conf.rows;
   var startTop = areaTop + Math.max(0, (areaH - totalH) / 2);
-  var labels = ['TRACE', 'TRACE', 'COPY', 'WRITE', 'WRITE', 'WRITE'];
+  var plan = [{ kind: 'trace', label: 'TRACE' }, { kind: 'trace', label: 'TRACE' }, { kind: 'copy', label: 'COPY' }];
+  var writeRows = conf.rows - 3;
+  if (name && extra) { plan.push({ kind: 'extra', label: 'TRACE' }); writeRows -= 1; }
+  for (var wI = 0; wI < writeRows; wI++) { plan.push({ kind: 'write', label: 'WRITE' }); }
 
   for (var i = 0; i < conf.rows; i++) {
     var rowTop = startTop + i * conf.pitch;
@@ -682,20 +775,22 @@ function drawSheet() {
     ctx.textAlign = 'left';
     ctx.textBaseline = 'alphabetic';
     setTracking('3px');
-    ctx.fillText(labels[i], MX, topY - 16);
+    ctx.fillText(plan[i].label, MX, topY - 16);
     ctx.restore();
 
-    if (name && i < 2) {
+    if (name && plan[i].kind === 'trace') {
       var gap = fs * 0.55;
       var x = MX;
       var count = 0;
       while (count < 3 && x + nameW <= W - MX + 2) {
-        drawTraceOnce(name, x, baseY, fs, style);
+        drawTraceOnce(traceName, x, baseY, fs, style, startDots);
         x += nameW + gap;
         count++;
       }
-    } else if (name && i === 2) {
-      drawTraceOnce(name, MX, baseY, fs, style);
+    } else if (name && plan[i].kind === 'copy') {
+      drawTraceOnce(traceName, MX, baseY, fs, style, startDots);
+    } else if (name && plan[i].kind === 'extra') {
+      drawTraceOnce(traceExtra, MX, baseY, fsExtra, style, startDots);
     }
   }
 
@@ -742,6 +837,7 @@ function printSheet() {
   window.print();
 }
 
+extraInput.addEventListener('input', function () { drawSheet(); });
 nameInput.addEventListener('input', function () {
   if (hint.classList.contains('is-alert')) {
     hint.textContent = HINT_DEFAULT;
