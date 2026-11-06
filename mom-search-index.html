@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) - deferred until page load for performance -->
+<script>
+window.addEventListener('load', function() {
+  var s = document.createElement('script');
+  s.async = true;
+  s.src = 'https://www.googletagmanager.com/gtag/js?id=G-FE48KK6THQ';
+  document.head.appendChild(s);
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-FE48KK6THQ');
+});
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Mom Search Index — What Moms Search For Most, and When | MomYouNeedThis</title>
+<meta name="description" content="The Mom Search Index ranks what moms actually search for — drawing, coloring pages, worksheets and more — from a 2,050-term keyword bank, with the seasonal spikes (Halloween, Easter, January potty training) that decide when to publish.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://momyouneedthis.com/mom-search-index">
+<link rel="stylesheet" href="/style.min.css">
+    <link rel="stylesheet" href="/blog.css">
+<link rel="stylesheet" href="/blog-post.css">
+<link
+href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap"
+rel="stylesheet"
+>
+
+<style>
+        /* SEO content sections — designed to match the MomYouNeedThis brand. */
+        .seo-section {
+            max-width: 900px;
+            margin: 55px auto 0;
+            padding: 45px 42px 50px;
+            background: #ffffff;
+            border: 1px solid #eee5e7;
+            border-radius: 35px;
+            box-shadow: 0 12px 35px rgba(80, 55, 55, 0.06);
+            font-family: 'Nunito', system-ui, sans-serif;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+        .seo-section::before {
+            content: "";
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            top: -145px;
+            right: -90px;
+            background: #ffe5ec;
+            border-radius: 50%;
+            opacity: .65;
+            pointer-events: none;
+        }
+        .seo-section::after {
+            content: "";
+            position: absolute;
+            width: 190px;
+            height: 190px;
+            bottom: -120px;
+            left: -80px;
+            background: #fff1c9;
+            border-radius: 50%;
+            opacity: .55;
+            pointer-events: none;
+        }
+        .seo-section > * {
+            position: relative;
+            z-index: 1;
+        }
+        .seo-section .section-kicker {
+            display: block;
+            margin-bottom: 10px;
+            color:#c03d5b;
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+        .seo-section h2 {
+            max-width: 700px;
+            margin: 0 auto 14px;
+            color: #332b2b;
+            font-size: clamp(26px, 3.6vw, 34px);
+            line-height: 1.15;
+            letter-spacing: -.6px;
+            font-weight: 900;
+            text-align: center;
+        }
+        .seo-section h2::after {
+            content: "";
+            display: block;
+            width: 45px;
+            height: 3px;
+            margin: 16px auto 0;
+            background: #e89aaa;
+            border-radius: 999px;
+        }
+        .seo-lead {
+            max-width: 680px;
+            margin: 0 auto 26px;
+            color: #6d6566;
+            font-size: 16px;
+            line-height: 1.7;
+            text-align: center;
+        }
+        .seo-links {
+            list-style: none;
+            margin: 10px auto 0;
+            padding: 0;
+            max-width: 720px;
+            display: grid;
+            gap: 10px;
+        }
+        .seo-links li {
+            padding: 16px 18px;
+            background: #fffaf8;
+            border: 1px solid #f1e5e7;
+            border-radius: 16px;
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
+        .seo-links li:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(80, 55, 65, .07);
+        }
+        .seo-links a {
+            color: #332b2b;
+            font-size: 15px;
+            font-weight: 900;
+            text-decoration: none;
+        }
+        .seo-links a:hover {
+            color:#c33761;
+        }
+        .seo-links span {
+            display: block;
+            margin-top: 4px;
+            color:#6d6d6d;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .seo-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            line-height: 1.45;
+        }
+        .seo-table th,
+        .seo-table td {
+            text-align: left;
+            padding: 12px 14px;
+            border-bottom: 1px solid #f0e5e8;
+        }
+        .seo-table thead th {
+            background: #fff5f8;
+            color:#c03d5b;
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: .6px;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+        .seo-table thead th:first-child {
+            border-radius: 12px 0 0 0;
+        }
+        .seo-table thead th:last-child {
+            border-radius: 0 12px 0 0;
+        }
+        .seo-table tbody td:first-child {
+            font-weight: 800;
+            color: #332b2b;
+        }
+        .seo-table caption {
+            caption-side: top;
+            padding-bottom: 10px;
+            font-size: 13px;
+            font-weight: 800;
+            color: #8a8384;
+            text-align: left;
+        }
+        .seo-source-note {
+            margin: 16px auto 0;
+            max-width: 720px;
+            font-size: 12.5px;
+            line-height: 1.6;
+            color:#6d6d6d;
+            text-align: left;
+        }
+        .seo-source-note a {
+            color:#c03d5b;
+            font-weight: 700;
+        }
+
+        @media (max-width: 750px) {
+            .seo-section {
+                margin-top: 40px;
+                padding: 35px 20px 38px;
+                border-radius: 28px;
+            }
+            .seo-steps li {
+                padding: 16px 16px 16px 62px;
+                font-size: 14px;
+            }
+            .seo-steps li::before {
+                left: 16px;
+            }
+            .seo-faq-item {
+                padding: 18px;
+            }
+            .seo-table {
+                font-size: 12px;
+            }
+            .seo-table th,
+            .seo-table td {
+                padding: 9px 8px;
+            }
+            .seo-table thead th {
+                white-space: normal;
+            }
+        }
+        .seo-faq {
+            max-width: 720px;
+            margin: 0 auto;
+            display: grid;
+            gap: 12px;
+        }
+        .seo-faq-item {
+            padding: 20px 22px;
+            background: #fffaf8;
+            border: 1px solid #f0dfe3;
+            border-radius: 18px;
+        }
+        .seo-faq-item h3 {
+            margin: 0 0 8px;
+            color: #332b2b;
+            font-size: 16px;
+            line-height: 1.4;
+            font-weight: 900;
+        }
+        .seo-faq-item p {
+            margin: 0;
+            color: #686061;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+    </style>
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="The Mom Search Index — What Moms Search For Most, and When | MomYouNeedThis">
+<meta property="og:description" content="Drawing is the #1 thing moms search for — about 3× coloring. The Mom Search Index ranks parent search intents and maps their seasons, from a 2,050-term keyword bank (DataForSEO volumes).">
+<meta property="og:url" content="https://momyouneedthis.com/mom-search-index">
+<meta property="og:site_name" content="MomYouNeedThis">
+<meta property="og:image" content="https://momyouneedthis.com/assets/logo.svg">
+<meta property="og:image:alt" content="MomYouNeedThis">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Mom Search Index — What Moms Search For Most, and When | MomYouNeedThis">
+<meta name="twitter:description" content="Drawing is the #1 thing moms search for — about 3× coloring. The Mom Search Index ranks parent search intents and maps their seasons, from a 2,050-term keyword bank (DataForSEO volumes).">
+</head>
+<body>
+<div class="page">
+<main>
+<section class="resource-page">
+<!-- =========================
+     ARTICLE HEADER
+========================= -->
+<div class="article-breadcrumbs">
+<a href="/">Home</a>
+<span>›</span>
+<a href="parenting-statistics">Parenting Statistics</a>
+<span>›</span>
+<span>The Mom Search Index</span>
+</div>
+<header class="article-header">
+<span class="article-category">
+📊 THE MOM SEARCH INDEX — WHAT MOMS GOOGLE, BY THE NUMBERS
+</span>
+<h1>
+The Mom Search Index <span>What Moms Search For Most — and the Months They Search for It</span>
+</h1>
+<p class="article-intro">
+We took the 2,050 real search terms in the MomYouNeedThis keyword bank — every coloring page, worksheet, chart and 2 a.m. schedule question in it — grouped them into the intents behind the searches, and read a full year of monthly volumes. What came back is a map of what moms actually need, and a calendar of when they need it. Some of it surprised us, too.
+</p>
+<div class="article-meta">
+<span>💗 MomYouNeedThis</span>
+<span>•</span>
+<span>Last updated: November 6, 2026</span>
+</div>
+</header>
+<!-- =========================
+     ARTICLE CONTENT
+========================= -->
+<article class="article-content">
+<div class="article-highlight">
+<strong>Quick Answer</strong>
+<p>
+Drawing is the #1 thing moms search for — drawing tutorials pull about 3× the searches of coloring pages (4,924,340 vs 1,648,970 searches a month, DataForSEO volumes, deduplicated). And mom searches run on a calendar: Halloween coloring searches spike 187× from their January floor to their October peak, Easter gets a six-week rocket, and potty training belongs to January.
+</p>
+</div>
+<div class="article-note">
+<strong>At a Glance</strong>
+<ul>
+<li><strong>Built from:</strong> A 2,050-term bank of real parent searches</li>
+<li><strong>Volume ruler:</strong> DataForSEO (Google Ads volumes, US, monthly)</li>
+<li><strong>Season window:</strong> October 2025 – September 2026, month by month</li>
+<li><strong>Biggest intent:</strong> Drawing tutorials — 4,924,340 searches/month</li>
+<li><strong>Sharpest spike:</strong> Easter coloring pages — ~279× from summer floor to March peak</li>
+<li><strong>Steadiest intent:</strong> Nap &amp; sleep schedules — searched all year round</li>
+<li><strong>How to cite it:</strong> Link this page and name the ruler — full method below</li>
+</ul>
+</div>
+<!-- =========================
+     INTENT LEAGUE TABLE
+========================= -->
+<section class="article-section">
+<span class="section-kicker">📊 THE MOM SEARCH INDEX</span>
+<h2>🏆 The Intent League Table: What Moms Search For Most</h2>
+<p class="seo-lead">Ranked by monthly searches on the DataForSEO ruler — one deduplicated volume per intent, never a sum of its spellings.</p>
+<table class="seo-table">
+<thead>
+<tr><th>Rank</th><th>What moms are searching for (intent)</th><th>Searches / month (DataForSEO)</th><th>Bank terms behind it</th></tr>
+</thead>
+<tbody>
+<tr><th>1</th><td>Drawing tutorials</td><td>4,924,340</td><td>383</td></tr>
+<tr><th>2</th><td>Coloring pages</td><td>1,648,970</td><td>284</td></tr>
+<tr><th>3</th><td>Math &amp; counting worksheets</td><td>396,840</td><td>165</td></tr>
+<tr><th>4</th><td>Family events &amp; occasions</td><td>253,290</td><td>43</td></tr>
+<tr><th>5</th><td>Kindergarten &amp; school readiness</td><td>241,530</td><td>279</td></tr>
+<tr><th>6</th><td>Indoor &amp; general activities</td><td>229,690</td><td>188</td></tr>
+<tr><th>7</th><td>Alphabet, letters &amp; phonics</td><td>60,390</td><td>78</td></tr>
+<tr><th>8</th><td>Potty training</td><td>43,080</td><td>11</td></tr>
+<tr><th>9</th><td>Nap &amp; sleep schedules</td><td>35,370</td><td>17</td></tr>
+<tr><th>10</th><td>Sight words</td><td>18,900</td><td>29</td></tr>
+<tr><th>11</th><td>Tracing (letters, numbers, shapes)</td><td>15,040</td><td>31</td></tr>
+</tbody>
+</table>
+<p>Two rows deserve a second look. <strong>Drawing's lead is not close</strong>: the top single searches in the whole bank are drawing terms — “flower drawing” alone draws 450,000 searches a month, ahead of “drawing ideas” (368,000) and “cat drawing” (165,000). And <strong>potty training is the most concentrated intent on the table</strong> — just 11 terms carrying 43,080 searches a month, more than the sight words (29 terms) and tracing (31 terms) intents combined. Few searches, all of them urgent. Across all 24 intents we grouped, the bank totals 8,433,150 deduplicated searches a month on the DataForSEO ruler — a floor, since DataForSEO held volumes for 1,208 of the 2,050 terms.</p>
+</section>
+<!-- =========================
+     SEASONAL CALENDAR
+========================= -->
+<section class="article-section">
+<span class="section-kicker">🗓️ THE SEASONAL CALENDAR</span>
+<h2>🗓️ The Seasonal Calendar: Mom Searches Run on a Schedule</h2>
+<p>Line the year up month by month (DataForSEO monthly series, October 2025 – September 2026) and parent demand turns out to have seasons as real as the weather. Five moments run the calendar:</p>
+<p><strong>September is the real start of Halloween.</strong> “Halloween coloring pages” sits at about 3,600 searches a month in January — then climbs to 33,100 in August and <strong>165,000 in September</strong>, a full month before it peaks at 673,000 in October. A Halloween page published in October is a month late; September is the publish window, while moms are already searching.</p>
+<figure style="margin:26px auto;max-width:720px;">
+<svg viewBox="0 0 720 380" width="100%" role="img" aria-label="Bar chart of monthly searches for Halloween coloring pages, October 2025 to September 2026" style="display:block;width:100%;height:auto;">
+<rect x="0" y="0" width="720" height="380" rx="16" fill="#FFF6EC"/>
+<rect x="29.3" y="42" width="38" height="280" rx="4" fill="#D05A82"/>
+<text x="48.3" y="34" text-anchor="middle" font-family="Nunito, sans-serif" font-size="11" font-weight="800" fill="#2D1B2E">673,000</text>
+<text x="48.3" y="344" text-anchor="middle" font-family="Nunito, sans-serif" font-size="12" font-weight="700" fill="#2D1B2E">Oct</text>
+<rect x="86.0" y="317" width="38" height="5" rx="4" fill="#E89AAA"/>
+<text x="105.0" y="309" text-anchor="middle" font-family="Nunito, sans-serif" font-size="11" font-weight="800" fill="#2D1B2E">12,100</text>
+<text x="105.0" y="344" text-anchor="middle" font-family="Nunito, sans-serif" font-size="12" font-weight="700" fill="#2D1B2E">Nov</text>
+<rect x="142.7" y="320" width="38" height="2" rx="4" fill="#E89AAA"/>
+<text x="161.7" y="312" text-anchor="middle" font-family="Nunito, sans-serif" font-size="11" font-weight="800" fill="#2D1B2E">4,400</text>
+<text x="161.7" y="344" text-anchor="middle" font-family="Nunito, sans-serif" font-size="12" font-weight="700" fill="#2D1B2E">Dec</text>
+<rect x="199.3" y="320" width="38" height="2" rx="4" fill="#E89AAA"/>
+<text x="218.3" y="312" text-anchor="middle" font-family="Nunito, sans-serif" font-size="11" font-weight="800" fill="#2D1B2E">3,600</text>
+<text x="218.3" y="344" text-anchor="middle" font-family="Nunito, sans-serif" font-size="12" font-weight="700" fill="#2D1B2E">Jan</text>
+<rect x="256.0" y="320" width="38" height="2" rx="4" fill="#E89AAA"/>
+<text x="275.0" y="312" text-anchor="middle" font-family="Nunito, sans-serif" font-size="11" font-weight="800" fill="#2D1B2E">3,600</text>
+<text x="275.0" y="344" text-anchor="middle" font-family="Nunito, sans-serif" font-size="12" font-weight="700" fill="#2D1B2E">Feb</text>
+<rect x="312.7" y="320" width="38" height="2" rx="4" fill="#E89AAA"/>
+<text x="331.7" y="312" text-anchor="middle" font-family="Nunito, sans-serif" font-size="11" font-weight="800" fill="#2D1B2E">3,600</text>
+<text x="331.7" y="344" text-anchor="middle" font-family="Nunito, sans-serif" font-size="12" font-weight="700" fill="#2D1B2E">Mar</text>
+<rect x="369.3" y="320" width="38" height="2" rx="4" fill="#E89AAA"/>
+<text x="388.3" y="312" text-anchor="middle" font-family="Nunito, sans-serif" font-size="11" font-weight="800" fill="#2D1B2E">3,600</text>
+<text x="388.3" y="344" text-anchor="middle" font-family="Nunito, sans-serif" font-size="12" font-weight="700" fill="#2D1B2E">Apr</text>
+<rect x="426.0" y="320" width="38" height="2" rx="4" fill="#E89AAA"/>
+<text x="445.0" y="312" text-anchor="middle" font-family="Nunito, sans-serif" font-size="11" font-weight="800" fill="#2D1B2E">4,400</text>
+<text x="445.0" y="344" text-anchor="middle" font-family="Nunito, sans-serif" font-size="12" font-weight="700" fill="#2D1B2E">May</text>
+<rect x="482.7" y="320" width="38" height="2" rx="4" fill="#E89AAA"/>
+<text x="501.7" y="312" text-anchor="middle" font-family="Nunito, sans-serif" font-size="11" font-weight="800" fill="#2D1B2E">4,400</text>
+<text x="501.7" y="344" text-anchor="middle" font-family="Nunito, sans-serif" font-size="12" font-weight="700" fill="#2D1B2E">Jun</text>
+<rect x="539.3" y="318" width="38" height="4" rx="4" fill="#E89AAA"/>
+<text x="558.3" y="310" text-anchor="middle" font-family="Nunito, sans-serif" font-size="11" font-weight="800" fill="#2D1B2E">9,900</text>
+<text x="558.3" y="344" text-anchor="middle" font-family="Nunito, sans-serif" font-size="12" font-weight="700" fill="#2D1B2E">Jul</text>
+<rect x="596.0" y="308" width="38" height="14" rx="4" fill="#E89AAA"/>
+<text x="615.0" y="300" text-anchor="middle" font-family="Nunito, sans-serif" font-size="11" font-weight="800" fill="#2D1B2E">33,100</text>
+<text x="615.0" y="344" text-anchor="middle" font-family="Nunito, sans-serif" font-size="12" font-weight="700" fill="#2D1B2E">Aug</text>
+<rect x="652.7" y="253" width="38" height="69" rx="4" fill="#E89AAA"/>
+<text x="671.7" y="245" text-anchor="middle" font-family="Nunito, sans-serif" font-size="11" font-weight="800" fill="#2D1B2E">165,000</text>
+<text x="671.7" y="344" text-anchor="middle" font-family="Nunito, sans-serif" font-size="12" font-weight="700" fill="#2D1B2E">Sep</text>
+<line x1="20" y1="322" x2="700" y2="322" stroke="#2D1B2E" stroke-opacity="0.25" stroke-width="1"/>
+</svg>
+<figcaption style="margin-top:10px;text-align:center;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;color:#2D1B2E;">Monthly searches, Halloween coloring — DataForSEO, Oct 2025–Sep 2026 series.</figcaption>
+</figure>
+<p><strong>Easter is a six-week rocket.</strong> “Easter coloring pages” is at 22,200 searches by February, peaks at <strong>201,000 in March — about 279× its summer floor of 720</strong> — and is back down to 1,600 by May. There is no long tail to catch: the window opens, spikes, and closes in about six weeks.</p>
+<p><strong>Potty training is a January intent.</strong> The potty training intent peaks in January at 72,100 searches a month, 4× its September low, and “potty training chart” jumps <strong>+123% from December (8,100) to January (18,100)</strong>. New year, fresh start, same toddler — parents act on the resolution in January, not in the spring advice columns.</p>
+<p><strong>Tracing runs back-to-school, against the grain.</strong> While most of the bank fades after autumn, tracing searches peak in <strong>September (22,260 a month), with August second</strong>, and trough in December. It rises in exactly the months the wider bank falls — a school-year intent, not a holiday one. (Small base — 7 monthly series — so read the shape as directional.)</p>
+<p><strong>Nap &amp; sleep never takes a month off.</strong> Sleep-schedule searches hold a narrow <strong>32,500–42,240 a month band all year</strong> — a peak-to-trough swing of about +30%, the flattest of any intent measured, against far larger swings elsewhere. Babies do not check the calendar, so neither do the parents searching for their nap schedules. Sleep is the bank's one genuinely evergreen intent.</p>
+<p>One honesty note before anyone quotes the swings: the DataForSEO monthly series tilts autumn-high and summer-low across almost everything, so intent-level swing percentages in this index are <strong>indicative, upper-bound readings</strong>. The single-term holiday spikes above — Halloween's 187×, Easter's ~279× — are far larger than that tilt and are reported as the measured findings they are. The Method &amp; Sources section below has the full detail.</p>
+</section>
+<!-- =========================
+     CURSIVE BLIND SPOT
+========================= -->
+<section class="article-section">
+<span class="section-kicker">✏️ THE CURSIVE BLIND SPOT</span>
+<h2>✏️ The Cursive Blind Spot</h2>
+<p>Every index has a hole in it, and ours is cursive. The bank holds <strong>just 3 cursive terms</strong> — and the competitor-ranked measurement of the same search universe put the cursive intent at <strong>591,200 searches a month (DataForSEO)</strong>, larger than this bank's sight words, tracing, nap &amp; sleep and potty training intents <em>combined</em>.</p>
+<p>That gap says something real about how parent-search coverage gets built: banks like ours grow from the pages a site already publishes, so they over-cover what the site does and under-cover what it has not built yet. Parents did not stop searching for cursive practice — “cursive alphabet” and its family are right there in the competitor pool at volume. The searches were always there; the coverage was not. We are publishing the hole in our own data because an index that only flatters its source is not worth citing.</p>
+</section>
+<!-- =========================
+     METHOD & SOURCES
+========================= -->
+<section class="article-section">
+<span class="section-kicker">🔬 METHOD & SOURCES</span>
+<h2>🔬 Method &amp; Sources</h2>
+<p>This index was built by MomYouNeedThis from data files already in hand — no new measurement was commissioned for it — and every figure on this page can be traced to the steps below.</p>
+<ul class="seo-checklist">
+<li><strong>The bank:</strong> 2,050 parent search terms, assembled in October 2026 from competitor-ranked keyword research in the toddler, preschool and early-elementary space.</li>
+<li><strong>The ruler:</strong> All volumes are DataForSEO (the Google Ads search-volume database, US, monthly averages) unless a figure says otherwise. DataForSEO held volumes for 1,208 of the 2,050 terms; unmeasured terms count as zero, so every total here is a floor.</li>
+<li><strong>Deduplication:</strong> Terms were machine-clustered into intents, then spelling and format variants inside an intent (the ~20 ways to write fall/autumn coloring, for example) were collapsed to one canonical form and counted once, at the head volume. Intent totals are deduplicated intent volumes — never sums of spellings.</li>
+<li><strong>Seasonality:</strong> The monthly series behind the calendar is the same DataForSEO data — 12 monthly values per term, October 2025 – September 2026.</li>
+<li><strong>The tilt caveat:</strong> The DataForSEO monthly series reads high in October–December and low in summer across nearly all intents, seasonal or not. Intent-level swing percentages are therefore labeled indicative, upper-bound figures. The holiday-term spikes (Halloween 187×, Easter ~279×) dwarf the tilt and are stated plainly as measured findings.</li>
+<li><strong>What we do not claim:</strong> Scavenger hunts carry no reliable seasonality in this data (only 1 of their 24 terms has a monthly series), so this page claims none for them. No Google Trends figures, estimates or modeled numbers are used anywhere in the index.</li>
+<li><strong>The cursive comparison</strong> uses a separate competitor-pool measurement dated October 20, 2026, on the same DataForSEO ruler; it is a statement about this bank's coverage, not about total market size.</li>
+</ul>
+<p>Citing this index? Please link this page, name the finding and its ruler (“DataForSEO volumes, Mom Search Index”) — that is all we ask.</p>
+</section>
+<!-- =========================
+     RELATED GUIDES
+========================= -->
+<section class="related-guides">
+<div class="section-heading">
+<span>WHAT'S NEXT</span>
+<h2>
+🧭 Keep Exploring
+</h2>
+</div>
+<div class="blog-grid">
+<article class="blog-card">
+<div class="blog-card-icon">
+📊
+</div>
+<span>
+PARENTING STATISTICS
+</span>
+<h3>Parenting Statistics &amp; Research Reports</h3>
+<p>The hub this report lives in — every MomYouNeedThis data report, with its method and sources stated. <a href="parenting-statistics">Browse the research hub</a>.</p>
+</article>
+<article class="blog-card">
+<div class="blog-card-icon">
+😴
+</div>
+<span>
+NAP & SLEEP
+</span>
+<h3>Nap Schedule by Age</h3>
+<p>The evergreen intent in action: nap charts and a sample day for every age from newborn to 24 months. <a href="nap-schedule-by-age">See the nap schedules</a>.</p>
+</article>
+<article class="blog-card">
+<div class="blog-card-icon">
+📝
+</div>
+<span>
+THE BLOG
+</span>
+<h3>The MomYouNeedThis Blog</h3>
+<p>Real answers for real mom life — the questions parents are actually Googling, answered one at a time. <a href="blog">Read the blog</a>.</p>
+</article>
+</div>
+</section>
+<!-- SEO: FAQ -->
+<section class="seo-section">
+<span class="section-kicker">FAQ</span>
+<h2>❓ Mom Search Index FAQ</h2>
+<div class="seo-faq">
+<div class="seo-faq-item">
+<h3>What do moms search for most?</h3>
+<p>Drawing. In our 2,050-term keyword bank, drawing tutorials are the biggest parent-search intent at 4,924,340 searches a month (DataForSEO volumes, deduplicated) — about 3× the coloring pages intent at 1,648,970 a month. The single most-searched drawing term is “flower drawing” at 450,000 searches a month.</p>
+</div>
+<div class="seo-faq-item">
+<h3>When do Halloween coloring page searches peak?</h3>
+<p>October — at 673,000 searches for “halloween coloring pages,” which is 187× the term's January floor of 3,600 (DataForSEO monthly series, October 2025 – September 2026). The useful detail is September: the term is already at 165,000 searches a month a full month before Halloween, so pages published in September catch the ramp instead of missing it.</p>
+</div>
+<div class="seo-faq-item">
+<h3>Is potty training really a January thing?</h3>
+<p>In search data, yes. The potty training intent peaks in January at 72,100 searches a month — 4× its September low of 18,060 — and the head term “potty training chart” jumps +123% from December (8,100) to January (18,100) on the DataForSEO monthly series. New Year, fresh start, same toddler.</p>
+</div>
+<div class="seo-faq-item">
+<h3>Which mom searches stay steady all year?</h3>
+<p>Nap and sleep schedules. Sleep-schedule searches stay in a narrow band of 32,500 to 42,240 searches a month across the whole year (DataForSEO) — the flattest intent we measured, because babies ignore the calendar. Most other intents swing far harder between their peak and trough months; those swing percentages are indicative upper bounds, as the Method &amp; Sources section explains.</p>
+</div>
+<div class="seo-faq-item">
+<h3>What is the Mom Search Index based on?</h3>
+<p>A bank of 2,050 real parent search terms, with monthly volumes from DataForSEO (the Google Ads volume database, US) covering October 2025 to September 2026. Spelling and format variants of the same search are collapsed and counted once, so every total is one intent's volume — never a sum of its spellings. DataForSEO had volumes for 1,208 of the 2,050 terms, so the totals are floors, not ceilings.</p>
+</div>
+<div class="seo-faq-item">
+<h3>Why is cursive called a blind spot?</h3>
+<p>Because the demand is large and the coverage is nearly empty. Our bank holds just 3 cursive terms, while a competitor-ranked measurement put the cursive intent at 591,200 searches a month (DataForSEO) — larger than our bank's sight words, tracing, nap and potty intents combined. It is the clearest gap between what parents search for and what the bank was built to cover.</p>
+</div>
+</div>
+</section>
+</article>
+</section>
+</main>
+<footer>
+    <div class="footer-logo">
+        <img width="300" height="300"
+            src="assets/logo.svg"
+            alt="MomYouNeedThis"
+        >
+    </div>
+<h3>
+    MomYouNeedThis
+</h3>
+<p>
+    Mom finds, smart tools, free resources, real answers
+    and a little chaos from the Mom Universe.
+</p>
+<div class="footer-links">
+    <a href="mom-favorites">
+        Mom Battles
+    </a>
+    <a href="mom-lab">
+        Mom Lab
+    </a>
+    <a href="free-mom-resources">
+        Free Resources
+    </a>
+    <a href="about">
+        About
+    </a>
+    <a href="privacy-policy">
+        Privacy Policy
+    </a>
+    <a href="terms">
+        Terms of Use
+    </a>
+    <a href="affiliate-disclosure">
+        Affiliate Disclosure
+    </a>
+    <a href="disclaimer">
+        Disclaimer
+    </a>
+    <a href="contact">
+        Contact
+    </a>
+</div>
+<div class="footer-bottom">
+    <p>
+        © 2026 MomYouNeedThis. All rights reserved.
+    </p>
+    <!-- Affiliate disclosure: restore the Amazon Associates earnings line here once approved for the program. -->
+</div>
+</footer>
+</div>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What do moms search for most?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Drawing. In our 2,050-term keyword bank, drawing tutorials are the biggest parent-search intent at 4,924,340 searches a month (DataForSEO volumes, deduplicated) — about 3× the coloring pages intent at 1,648,970 a month. The single most-searched drawing term is “flower drawing” at 450,000 searches a month."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "When do Halloween coloring page searches peak?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "October — at 673,000 searches for “halloween coloring pages,” which is 187× the term's January floor of 3,600 (DataForSEO monthly series, October 2025 – September 2026). The useful detail is September: the term is already at 165,000 searches a month a full month before Halloween, so pages published in September catch the ramp instead of missing it."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is potty training really a January thing?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "In search data, yes. The potty training intent peaks in January at 72,100 searches a month — 4× its September low of 18,060 — and the head term “potty training chart” jumps +123% from December (8,100) to January (18,100) on the DataForSEO monthly series. New Year, fresh start, same toddler."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which mom searches stay steady all year?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nap and sleep schedules. Sleep-schedule searches stay in a narrow band of 32,500 to 42,240 searches a month across the whole year (DataForSEO) — the flattest intent we measured, because babies ignore the calendar. Most other intents swing far harder between their peak and trough months; those swing percentages are indicative upper bounds, as the Method & Sources section explains."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the Mom Search Index based on?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A bank of 2,050 real parent search terms, with monthly volumes from DataForSEO (the Google Ads volume database, US) covering October 2025 to September 2026. Spelling and format variants of the same search are collapsed and counted once, so every total is one intent's volume — never a sum of its spellings. DataForSEO had volumes for 1,208 of the 2,050 terms, so the totals are floors, not ceilings."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why is cursive called a blind spot?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Because the demand is large and the coverage is nearly empty. Our bank holds just 3 cursive terms, while a competitor-ranked measurement put the cursive intent at 591,200 searches a month (DataForSEO) — larger than our bank's sight words, tracing, nap and potty intents combined. It is the clearest gap between what parents search for and what the bank was built to cover."
+      }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://momyouneedthis.com/"}, {"@type": "ListItem", "position": 2, "name": "Parenting Statistics", "item": "https://momyouneedthis.com/parenting-statistics"}, {"@type": "ListItem", "position": 3, "name": "The Mom Search Index", "item": "https://momyouneedthis.com/mom-search-index"}]}
+</script>
+</body>
+</html>
