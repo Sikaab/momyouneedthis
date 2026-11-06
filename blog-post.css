@@ -928,3 +928,23 @@
         padding: 19px;
     }
 }
+
+
+/* =====================================================
+   PARENTING STATISTICS / RESEARCH PAGES (scoped)
+   Moved out of the pages' HTML 2026-11-06
+===================================================== */
+body.research-page .seo-faq.method-compact { gap:8px }
+body.research-page .seo-faq.method-compact .seo-faq-item { padding:12px 16px }
+body.research-page .seo-faq.method-compact .seo-faq-item h3 { font-size:15px;margin:0 0 3px }
+body.research-page .seo-faq.method-compact .seo-faq-item p { font-size:13.5px;line-height:1.55 }
+body.research-page .seo-faq.method-compact .seo-faq-item p a { color:#D05A82;font-weight:700;text-decoration:underline }
+body.research-page .article-section figure { margin:26px auto 30px }
+body.research-page .seo-source-note { max-width:100% }
+body.research-page .quick-answer p { font-size:16px;line-height:1.65 }
+body.research-page .quick-answer h2 { font-size:16px }
+body.research-page .article-section .section-kicker { display:block;margin-bottom:10px;color:#c03d5b;font-size:11px;font-weight:900;letter-spacing:1px;text-transform:uppercase;text-align:left }
+body.research-page .table-scroll { max-width:100%;margin:0 auto 18px;overflow-x:auto }
+body.research-page .table-scroll .seo-table { min-width:660px }
+body.research-page .quick-answer { margin-top:40px }
+body.research-page .fact-box { margin-top:40px }
