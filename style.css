@@ -1023,8 +1023,6 @@ box-shadow:0 10px 25px rgba(0,0,0,.08);
 }
 
 
-
-
 /* =====================
    AMAZON FAVORITES / MOM BATTLES
 ===================== */
@@ -4427,7 +4425,7 @@ width:100%;
 
 }
 
-/* Keep the first category closer to the top */
+
 .featured-resources h2:first-child{
 
     margin-top:0;

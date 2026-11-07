@@ -1,4 +1,4 @@
-// Smooth button interaction
+
 
 const chartButton = document.querySelector("button");
 
