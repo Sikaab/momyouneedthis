@@ -948,3 +948,320 @@ body.research-page .table-scroll { max-width:100%;margin:0 auto 18px;overflow-x:
 body.research-page .table-scroll .seo-table { min-width:660px }
 body.research-page .quick-answer { margin-top:40px }
 body.research-page .fact-box { margin-top:40px }
+
+/* Parenting Statistics reports: page styles moved out of the pages' inline <style> blocks, 2026-11-06. */
+body.research-page .seo-section {
+            max-width: 900px;
+            margin: 55px auto 0;
+            padding: 45px 42px 50px;
+            background: #ffffff;
+            border: 1px solid #eee5e7;
+            border-radius: 35px;
+            box-shadow: 0 12px 35px rgba(80, 55, 55, 0.06);
+            font-family: 'Nunito', system-ui, sans-serif;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+body.research-page .seo-section::before {
+            content: "";
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            top: -145px;
+            right: -90px;
+            background: #ffe5ec;
+            border-radius: 50%;
+            opacity: .65;
+            pointer-events: none;
+        }
+body.research-page .seo-section::after {
+            content: "";
+            position: absolute;
+            width: 190px;
+            height: 190px;
+            bottom: -120px;
+            left: -80px;
+            background: #fff1c9;
+            border-radius: 50%;
+            opacity: .55;
+            pointer-events: none;
+        }
+body.research-page .seo-section > * {
+            position: relative;
+            z-index: 1;
+        }
+body.research-page .seo-section .section-kicker {
+            display: block;
+            margin-bottom: 10px;
+            color:#c03d5b;
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+body.research-page .seo-section h2 {
+            max-width: 700px;
+            margin: 0 auto 14px;
+            color: #332b2b;
+            font-size: clamp(26px, 3.6vw, 34px);
+            line-height: 1.15;
+            letter-spacing: -.6px;
+            font-weight: 900;
+            text-align: center;
+        }
+body.research-page .seo-section h2::after {
+            content: "";
+            display: block;
+            width: 45px;
+            height: 3px;
+            margin: 16px auto 0;
+            background: #e89aaa;
+            border-radius: 999px;
+        }
+body.research-page .seo-lead {
+            max-width: 680px;
+            margin: 0 auto 26px;
+            color: #6d6566;
+            font-size: 16px;
+            line-height: 1.7;
+            text-align: center;
+        }
+body.research-page .seo-links {
+            list-style: none;
+            margin: 10px auto 0;
+            padding: 0;
+            max-width: 720px;
+            display: grid;
+            gap: 10px;
+        }
+body.research-page .seo-links li {
+            padding: 16px 18px;
+            background: #fffaf8;
+            border: 1px solid #f1e5e7;
+            border-radius: 16px;
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
+body.research-page .seo-links li:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(80, 55, 65, .07);
+        }
+body.research-page .seo-links a {
+            color: #332b2b;
+            font-size: 15px;
+            font-weight: 900;
+            text-decoration: none;
+        }
+body.research-page .seo-links a:hover {
+            color:#c33761;
+        }
+body.research-page .seo-links span {
+            display: block;
+            margin-top: 4px;
+            color:#6d6d6d;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+body.research-page .seo-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            line-height: 1.45;
+        }
+body.research-page .seo-table th, body.research-page .seo-table td {
+            text-align: left;
+            padding: 12px 14px;
+            border-bottom: 1px solid #f0e5e8;
+        }
+body.research-page .seo-table thead th {
+            background: #fff5f8;
+            color:#c03d5b;
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: .6px;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+body.research-page .seo-table thead th:first-child {
+            border-radius: 12px 0 0 0;
+        }
+body.research-page .seo-table thead th:last-child {
+            border-radius: 0 12px 0 0;
+        }
+body.research-page .seo-table tbody td:first-child {
+            font-weight: 800;
+            color: #332b2b;
+        }
+body.research-page .seo-table caption {
+            caption-side: top;
+            padding-bottom: 10px;
+            font-size: 13px;
+            font-weight: 800;
+            color: #8a8384;
+            text-align: left;
+        }
+body.research-page .seo-source-note {
+            margin: 16px auto 0;
+            max-width: 720px;
+            font-size: 12.5px;
+            line-height: 1.6;
+            color:#6d6d6d;
+            text-align: left;
+        }
+body.research-page .seo-source-note a {
+            color:#c03d5b;
+            font-weight: 700;
+        }
+@media (max-width: 750px) {
+body.research-page .seo-section {
+                margin-top: 40px;
+                padding: 35px 20px 38px;
+                border-radius: 28px;
+            }
+body.research-page .seo-steps li {
+                padding: 16px 16px 16px 62px;
+                font-size: 14px;
+            }
+body.research-page .seo-steps li::before {
+                left: 16px;
+            }
+body.research-page .seo-faq-item {
+                padding: 18px;
+            }
+body.research-page .seo-table {
+                font-size: 12px;
+            }
+body.research-page .seo-table th, body.research-page .seo-table td {
+                padding: 9px 8px;
+            }
+body.research-page .seo-table thead th {
+                white-space: normal;
+            }
+}
+body.research-page .seo-faq {
+            max-width: 720px;
+            margin: 0 auto;
+            display: grid;
+            gap: 12px;
+        }
+body.research-page .seo-faq-item {
+            padding: 20px 22px;
+            background: #fffaf8;
+            border: 1px solid #f0dfe3;
+            border-radius: 18px;
+        }
+body.research-page .seo-faq-item h3 {
+            margin: 0 0 8px;
+            color: #332b2b;
+            font-size: 16px;
+            line-height: 1.4;
+            font-weight: 900;
+        }
+body.research-page .seo-faq-item p {
+            margin: 0;
+            color: #686061;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+body.research-page .seo-steps {
+            list-style: none;
+            margin: 0 auto;
+            padding: 0;
+            max-width: 720px;
+            display: grid;
+            gap: 12px;
+            counter-reset: seo-step;
+        }
+body.research-page .seo-steps li {
+            counter-increment: seo-step;
+            position: relative;
+            padding: 18px 20px 18px 70px;
+            background: #fffaf8;
+            border: 1px solid #f1e5e7;
+            border-radius: 18px;
+            color: #5f5758;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+body.research-page .seo-steps li::before {
+            content: counter(seo-step);
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #e89aaa;
+            border-radius: 50%;
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 900;
+        }
+body.research-page .seo-steps li strong {
+            color: #332b2b;
+        }
+body.research-page .seo-checklist {
+            list-style: none;
+            margin: 0 auto;
+            padding: 0;
+            max-width: 720px;
+            display: grid;
+            gap: 10px;
+        }
+body.research-page .seo-checklist li {
+            position: relative;
+            padding: 14px 16px 14px 48px;
+            background: #fffaf8;
+            border: 1px solid #f1e5e7;
+            border-radius: 14px;
+            color: #5f5758;
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 1.5;
+        }
+body.research-page .seo-checklist li::before {
+            content: "\2713";
+            position: absolute;
+            left: 16px;
+            top: 14px;
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fff0f4;
+            border-radius: 50%;
+            color:#c33761;
+            font-size: 12px;
+            font-weight: 900;
+        }
+@media (max-width: 750px) {
+body.research-page .seo-section {
+                margin-top: 40px;
+                padding: 35px 20px 38px;
+                border-radius: 28px;
+            }
+body.research-page .seo-steps li {
+                padding: 16px 16px 16px 62px;
+                font-size: 14px;
+            }
+body.research-page .seo-steps li::before {
+                left: 16px;
+            }
+body.research-page .seo-faq-item {
+                padding: 18px;
+            }
+body.research-page .seo-table {
+                font-size: 12px;
+            }
+body.research-page .seo-table th, body.research-page .seo-table td {
+                padding: 9px 8px;
+            }
+body.research-page .seo-table thead th {
+                white-space: normal;
+            }
+}
