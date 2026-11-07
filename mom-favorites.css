@@ -1010,7 +1010,7 @@ height:52px;
 font-size:17px;
 }
 
-/* Tablet lightning */
+
 .versus::before{
 top:50%;
 width:72px;
@@ -1056,7 +1056,7 @@ font-size:35px;
 font-size:14px;
 }
 
-/* Keep BOTH products beside each other */
+
 .contenders{
 grid-template-columns:minmax(0,1fr) 48px minmax(0,1fr);
 }
@@ -1087,7 +1087,7 @@ width:80px;
 height:108px;
 }
 
-/* Smaller cards */
+
 .battle-card{
 padding:10px;
 border-radius:21px;
@@ -1128,7 +1128,7 @@ padding:4px 5px;
 font-size:7px;
 }
 
-/* Two animated fires on the RIGHT side */
+
 .leader-fire{
 font-size:16px;
 }
@@ -1331,7 +1331,7 @@ height:41px;
 font-size:13px;
 }
 
-/* Very small phone lightning */
+
 .versus::before{
 top:50%;
 width:58px;
