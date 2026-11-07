@@ -231,14 +231,12 @@ function createChartDays(){
 chartGrid.innerHTML = "";
 
 
-
 const table =
 document.createElement("table");
 
 
 table.className =
 "potty-chart-table";
-
 
 
 table.innerHTML = `
@@ -271,7 +269,6 @@ ${createRewardCells()}
 </tr>
 
 
-
 <tr>
 
 <td class="activity-label">
@@ -281,7 +278,6 @@ ${createRewardCells()}
 ${createRewardCells()}
 
 </tr>
-
 
 
 <tr>
@@ -295,7 +291,6 @@ ${createRewardCells()}
 </tr>
 
 `;
-
 
 
 chartGrid.appendChild(table);
@@ -552,8 +547,6 @@ document
 });
 
 
-// Mark the default color as selected on load.
-
 document
 .querySelectorAll(".color-choice")
 .forEach(b=>{
@@ -591,7 +584,6 @@ previewButton.addEventListener(
 });
 
 
-
 closeModal.addEventListener(
 "click",
 ()=>{
@@ -601,8 +593,6 @@ closeModal.addEventListener(
 
 });
 
-
-// Close when clicking outside the modal content.
 
 emailModal.addEventListener(
 "click",
@@ -616,8 +606,6 @@ if(event.target===emailModal){
 
 });
 
-
-// Enter in the email field submits.
 
 document.getElementById("emailInput").addEventListener(
 "keydown",
@@ -683,7 +671,6 @@ showEmailError(
 }
 
 
-
 const clone =
 preview.cloneNode(true);
 
@@ -732,20 +719,16 @@ useCORS:true
 );
 
 
-
 document.body.removeChild(clone);
-
 
 
 const chartImage =
 canvas.toDataURL("image/png");
 
 
-
 const {
 jsPDF
 }=window.jspdf;
-
 
 
 const pdf =
@@ -758,10 +741,8 @@ format:"a4"
 );
 
 
-
 const pageWidth=297;
 const pageHeight=210;
-
 
 
 /* =========================
@@ -775,7 +756,6 @@ const chartWidth=287;
 const chartHeight =
 (canvas.height * chartWidth) /
 canvas.width;
-
 
 
 pdf.addImage(
@@ -797,10 +777,8 @@ const couponsImg =
 new Image();
 
 
-
 couponsImg.src =
 themes[chartData.theme].coupons;
-
 
 
 await new Promise(
@@ -813,9 +791,7 @@ couponsImg.onerror=reject;
 });
 
 
-
 pdf.addPage();
-
 
 
 const couponWidth=287;
@@ -824,7 +800,6 @@ const couponWidth=287;
 const couponHeight =
 (couponsImg.height * couponWidth) /
 couponsImg.width;
-
 
 
 pdf.addImage(
@@ -894,7 +869,6 @@ align:"center"
 );
 
 
-
 pdf.setFont(
 "helvetica",
 "normal"
@@ -913,7 +887,6 @@ align:"center"
 );
 
 
-
 /* =========================
 SIDE BY SIDE GUIDE SECTIONS
 ========================= */
@@ -921,7 +894,6 @@ SIDE BY SIDE GUIDE SECTIONS
 
 let leftY = 60;
 let rightY = 60;
-
 
 
 function addGuideSection(title, lines, x, y){
@@ -953,7 +925,6 @@ pdf.setFont(
 pdf.setFontSize(11);
 
 
-
 lines.forEach(line=>{
 
 
@@ -970,13 +941,10 @@ y += 6;
 });
 
 
-
 return y + 12;
 
 
 }
-
-
 
 
 /* =========================
@@ -1000,7 +968,6 @@ leftY = addGuideSection(
 15,
 leftY
 );
-
 
 
 leftY = addGuideSection(
@@ -1042,7 +1009,6 @@ rightY = addGuideSection(
 155,
 rightY
 );
-
 
 
 rightY = addGuideSection(
@@ -1135,7 +1101,6 @@ certificateImg.src =
 themes[chartData.theme].certificate;
 
 
-
 await new Promise(
 (resolve,reject)=>{
 
@@ -1146,9 +1111,7 @@ certificateImg.onerror=reject;
 });
 
 
-
 pdf.addPage();
-
 
 
 const certWidth=287;
@@ -1157,7 +1120,6 @@ const certWidth=287;
 const certHeight =
 (certificateImg.height * certWidth) /
 certificateImg.width;
-
 
 
 pdf.addImage(
@@ -1170,9 +1132,7 @@ certHeight
 );
 
 
-
 pdf.setTextColor(80,80,80);
-
 
 
 pdf.setFont(
@@ -1194,7 +1154,6 @@ align:"center"
 );
 
 
-
 pdf.setFontSize(16);
 
 
@@ -1212,7 +1171,6 @@ pdf.text(
 align:"center"
 }
 );
-
 
 
 pdf.setFontSize(32);
@@ -1234,7 +1192,6 @@ align:"center"
 );
 
 
-
 pdf.setFontSize(15);
 
 
@@ -1254,11 +1211,9 @@ align:"center"
 );
 
 
-
 pdf.save(
 `${chartData.name}-potty-chart.pdf`
 );
-
 
 
 emailModal.style.display="none";

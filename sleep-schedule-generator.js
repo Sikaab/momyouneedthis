@@ -1,7 +1,6 @@
-// =====================================
+
 // BABY SLEEP TRACKER
 // MomYouNeedThis
-// =====================================
 
 
 const sleepData = {
@@ -93,9 +92,6 @@ daySleep:45
 };
 
 
-
-
-
 const ageInput =
 document.getElementById("babyAge");
 
@@ -152,9 +148,6 @@ const wwResetButton =
 document.getElementById("wwReset");
 
 
-
-
-
 let naps=[];
 
 
@@ -164,12 +157,7 @@ let naps=[];
 let wwAdjust=0;
 
 
-
-
-
-// ================================
 // TIME HELPERS
-// ================================
 
 
 const DEFAULT_WAKE = "07:00";
@@ -206,7 +194,6 @@ let v=toMinutes(wakeInput.value);
 return v===null ? toMinutes(DEFAULT_WAKE) : v;
 
 }
-
 
 
 function formatTime(minutes){
@@ -259,8 +246,6 @@ return isNextDay(minutes) ? t+" (tomorrow)" : t;
 }
 
 
-
-
 function formatDuration(minutes){
 
 if(minutes===null || minutes===undefined || !Number.isFinite(minutes))
@@ -299,13 +284,7 @@ return minutes+"m";
 }
 
 
-
-
-
-
-// ================================
 // WAKE WINDOW
-// ================================
 
 
 function getWakeWindow(){
@@ -330,12 +309,7 @@ return Math.round(
 }
 
 
-
-
-
-// ================================
 // ADD NAP
-// ================================
 
 
 // Renumber nap headings so they stay sequential after a removal.
@@ -480,9 +454,7 @@ Remove
 `;
 
 
-
 napList.appendChild(div);
-
 
 
 div.querySelector(".remove-nap")
@@ -537,15 +509,7 @@ updateTracker();
 });
 
 
-
-
-
-
-
-
-// ================================
 // CALCULATIONS
-// ================================
 
 
 function collectNaps(){
@@ -566,7 +530,6 @@ row.querySelector(".nap-start").value;
 
 let duration =
 getRowDuration(row);
-
 
 
 if(start){
@@ -674,10 +637,6 @@ return warnings;
 }
 
 
-
-
-
-
 function calculateNextSleep(){
 
 
@@ -688,12 +647,9 @@ if(lastSleep===null)
 lastSleep=wakeMinutes();
 
 
-
 return lastSleep + getWakeWindow();
 
 }
-
-
 
 
 // A real bedtime estimate, independent of today's logged naps:
@@ -713,15 +669,7 @@ return wakeMinutes() + windows*mid + data.daySleep;
 }
 
 
-
-
-
-
-
-
-// ================================
 // RENDER
-// ================================
 
 
 function renderTimeline(){
@@ -753,7 +701,6 @@ ${formatTime(wakeMinutes())}
 </div>
 
 `;
-
 
 
 naps.forEach((nap,index)=>{
@@ -794,25 +741,16 @@ ${formatDuration(nap.minutes)}
 `;
 
 
-
 });
 
 
-
 }
-
-
-
-
-
-
 
 
 function updateTracker(){
 
 
 collectNaps();
-
 
 
 let data=sleepData[ageInput.value];
@@ -837,7 +775,6 @@ wakeWindowDetail.textContent =
 wwResetButton.hidden = (wwAdjust===0);
 
 
-
 // No-nap ages: don't present a sweet spot time.
 
 let noNap = data.naps===0;
@@ -859,7 +796,6 @@ nextSleep.textContent=formatTimeWithDay(ns);
 }
 
 
-
 let bt=calculateBedtime();
 
 bedtime.textContent=formatTimeWithDay(bt);
@@ -875,15 +811,12 @@ bedtimeExplanation.textContent =
 "Typical bedtime for this age — estimated from usual naps and wake windows, not today's log.";
 
 
-
 document.getElementById("summaryAge")
 .textContent=data.label;
 
 
-
 document.getElementById("summaryWake")
 .textContent=formatTime(wakeMinutes());
-
 
 
 let total=0;
@@ -898,7 +831,6 @@ total+=n.minutes;
 
 document.getElementById("summaryDaySleep")
 .textContent=formatDuration(total);
-
 
 
 // Nap input warnings.
@@ -918,20 +850,13 @@ napWarnings.appendChild(p);
 });
 
 
-
 renderTimeline();
-
 
 
 }
 
 
-
-
-
-// ================================
 // SAVE
-// ================================
 
 
 saveButton.addEventListener(
@@ -968,18 +893,10 @@ saveButton.textContent=
 },2000);
 
 
-
 });
 
 
-
-
-
-
-
-// ================================
 // EVENTS
-// ================================
 
 
 // Wake window ± adjuster: tweak the midpoint for babies
@@ -1018,12 +935,10 @@ updateTracker();
 });
 
 
-
 ageInput.addEventListener(
 "change",
 updateTracker
 );
-
 
 
 wakeInput.addEventListener(
@@ -1032,14 +947,7 @@ updateTracker
 );
 
 
-
-
-
-
-
-// ================================
 // LOAD
-// ================================
 
 
 window.addEventListener(
@@ -1051,7 +959,6 @@ let saved =
 localStorage.getItem(
 "momSleepTracker"
 );
-
 
 
 if(saved){

@@ -1008,7 +1008,7 @@ height:52px;
 font-size:17px;
 }
 
-/* Tablet lightning */
+
 .versus::before{
 top:calc(50% + 31px);
 width:22px;
@@ -1054,7 +1054,7 @@ font-size:35px;
 font-size:14px;
 }
 
-/* Keep BOTH products beside each other */
+
 .contenders{
 grid-template-columns:minmax(0,1fr) 48px minmax(0,1fr);
 }
@@ -1072,7 +1072,7 @@ background:transparent;
 box-shadow:none;
 }
 
-/* Mobile lightning directly under VS */
+
 .versus::before{
 top:calc(50% + 28px);
 width:19px;
@@ -1085,7 +1085,7 @@ width:23px;
 height:40px;
 }
 
-/* Smaller cards */
+
 .battle-card{
 padding:10px;
 border-radius:21px;
@@ -1126,7 +1126,7 @@ padding:4px 5px;
 font-size:7px;
 }
 
-/* Two animated fires on the RIGHT side */
+
 .leader-fire{
 font-size:16px;
 }
@@ -1329,7 +1329,7 @@ height:41px;
 font-size:13px;
 }
 
-/* Very small phone lightning */
+
 .versus::before{
 top:calc(50% + 25px);
 width:18px;
