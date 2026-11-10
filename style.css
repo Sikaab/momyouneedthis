@@ -6269,3 +6269,28 @@ html{
     font-size:19px;
   }
 }
+
+/* Home button (top-of-page nav) */
+.home-btn-row {
+    text-align: right;
+    margin: 0 0 6px;
+}
+.home-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: #D05A82;
+    font-weight: 900;
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    text-decoration: none;
+}
+.home-btn svg {
+    width: 13px;
+    height: 13px;
+    fill: currentColor;
+    flex: none;
+}
+.home-btn:hover {
+    text-decoration: underline;
+}
