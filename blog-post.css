@@ -1268,3 +1268,7 @@ body.research-page .seo-table thead th {
 
 /* Research pages: tighten the gap between the last article section and What's Next. */
 body.research-page .related-guides { margin-top: 15px; }
+
+.about-photo{display:block;width:100%;max-width:300px;height:auto;border-radius:18px;margin:16px auto 18px}
+body.about-page .article-header{padding-bottom:18px}
+body.about-page .article-content>.article-section:first-child{margin-top:0}
