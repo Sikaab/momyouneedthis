@@ -35,4 +35,3 @@
 .flow-section ul{color:#5f5758;font-size:17px;line-height:1.8;margin:0 0 18px;padding-left:0;list-style:none}
 .flow-section li{margin-bottom:10px;position:relative;padding-left:28px}
 .flow-section li::before{content:"✓";position:absolute;left:0;top:0;color:#D05A82;font-weight:900;font-size:16px}
-.home-btn-row{text-align:right;margin:0 0 6px}.home-btn{display:inline-flex;align-items:center;gap:5px;color:#d05a82;font-weight:900;font-size:13px;letter-spacing:1.5px;text-decoration:none}.home-btn svg{width:13px;height:13px;fill:currentColor;flex:none}.home-btn:hover{text-decoration:underline}
