@@ -3043,3 +3043,23 @@ REDUCED MOTION
         transform: none;
     }
 }
+
+/* Page-end sections match the rest of the site: same side spacing as the
+   standard content column, and the footer capped at the standard width. */
+.mom-lab-page > .seo-section {
+    width: calc(100% - 40px);
+}
+.mom-lab-page > footer {
+    width: calc(100% - 40px);
+    max-width: 1060px;
+    margin-left: auto;
+    margin-right: auto;
+}
+@media (max-width: 750px) {
+    .mom-lab-page > .seo-section {
+        width: calc(100% - 32px);
+    }
+    .mom-lab-page > footer {
+        width: calc(100% - 32px);
+    }
+}
