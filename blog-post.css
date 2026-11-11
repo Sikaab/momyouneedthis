@@ -1272,3 +1272,6 @@ body.research-page .related-guides { margin-top: 15px; }
 .about-photo{display:block;width:100%;max-width:300px;height:auto;border-radius:18px;margin:16px auto 18px}
 body.about-page .article-header{padding-bottom:18px}
 body.about-page .article-content>.article-section:first-child{margin-top:0}
+.article-section p a{color:#D05A82;font-weight:700;text-decoration:underline}
+body.about-page .article-content{padding-bottom:24px}
+body.about-page .article-content>.article-section:last-child{margin-bottom:0}
