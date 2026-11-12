@@ -888,6 +888,10 @@
         gap: 10px;
     }
 
+    body.about-page .phrase-grid {
+        grid-template-columns: 1fr;
+    }
+
     .phrase-card {
         min-height: 105px;
         padding: 15px 10px;
