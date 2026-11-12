@@ -3214,6 +3214,10 @@ box-shadow:0 10px 25px rgba(0,0,0,.08);
     margin: 40px auto;
 }
 
+.alphabet-grid > *:last-child:nth-child(6n+1) {
+    grid-column: 1 / -1;
+}
+
 .letter-card {
     background: #fff0f7;
     border-radius: 22px;
@@ -3244,10 +3248,10 @@ box-shadow:0 10px 25px rgba(0,0,0,.08);
     color:#6d6d6d;
 }
 
-@media(max-width:700px){
+@media(max-width:750px){
 
     .alphabet-grid {
-        grid-template-columns: repeat(3,1fr);
+        grid-template-columns: 1fr;
     }
 
     .letter-card span {
@@ -3498,6 +3502,12 @@ grid-template-columns:1fr;
 
 }
 
+.resource-library > a:last-child:nth-child(odd){
+
+    grid-column:1/-1;
+
+}
+
 @media(max-width:750px){
 
     .resource-library{
@@ -3677,6 +3687,18 @@ footer p{
 .featured-grid a:hover{
 
     transform:translateY(-5px);
+
+}
+
+.featured-grid > a:last-child:nth-child(odd){
+
+    grid-column:1/-1;
+
+}
+
+.featured-grid:has(> a:nth-child(2):last-child){
+
+    grid-template-columns:1fr;
 
 }
 
