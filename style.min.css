@@ -34,4 +34,4 @@
 
 .flow-section ul{color:#5f5758;font-size:17px;line-height:1.8;margin:0 0 18px;padding-left:0;list-style:none}
 .flow-section li{margin-bottom:10px;position:relative;padding-left:28px}
-.flow-section li::before{content:"✓";position:absolute;left:0;top:0;color:#D05A82;font-weight:900;font-size:16px}
+.flow-section li::before{content:"✓";position:absolute;left:0;top:0;color:#D05A82;font-weight:900;font-size:16px}.last-updated{font-size:14px;font-weight:400;color:#6d6d6d;margin-top:10px;line-height:1.3;text-align:center}
