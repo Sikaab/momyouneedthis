@@ -673,21 +673,24 @@ Every little step is a big achievement!
      EMAIL MODAL
 =========================== -->
 
-<div
+<dialog
 id="emailModal"
-class="potty-modal">
+class="potty-modal"
+closedby="any"
+aria-labelledby="emailModalTitle">
 
 <div class="potty-modal-content">
 
 <button
 id="closeModal"
-class="potty-close">
+class="potty-close"
+type="button">
 
 ×
 
 </button>
 
-<h2>
+<h2 id="emailModalTitle">
 🎉 Your Chart Is Ready!
 </h2>
 
@@ -709,7 +712,8 @@ hidden>
 
 <button
 id="downloadButton"
-class="download-button">
+class="download-button"
+type="button">
 
 Download My Chart
 
@@ -723,7 +727,7 @@ Your download will start immediately after.
 
 </div>
 
-</div>
+</dialog>
 
 <!-- ===========================
      BENEFITS

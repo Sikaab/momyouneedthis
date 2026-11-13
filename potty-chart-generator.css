@@ -828,21 +828,41 @@ font-weight:900;
 
 .potty-modal {
 
-display:none;
+border:none;
 
-position:fixed;
+background:transparent;
 
-inset:0;
+padding:0;
+
+margin:auto;
+
+width:calc(100% - 40px);
+
+max-width:450px;
+
+max-height:calc(100% - 40px);
+
+box-sizing:border-box;
+
+color:inherit;
+
+}
+
+
+.potty-modal::backdrop {
 
 background:rgba(0,0,0,.45);
 
-align-items:center;
+overflow:hidden;
 
-justify-content:center;
+overscroll-behavior:contain;
 
-z-index:999;
+}
 
-padding:20px;
+
+.potty-modal:modal {
+
+overscroll-behavior:contain;
 
 }
 

@@ -399,59 +399,6 @@
         }
 
         /* -----------------------------------------------
-           GLOBAL MODAL CLICK HANDLING
-        ------------------------------------------------ */
-
-        document.addEventListener(
-            "click",
-            function (event) {
-
-                const target =
-                    event.target;
-
-                if (!target) {
-                    return;
-                }
-
-                if (
-                    target.matches &&
-                    target.matches(
-                        "[data-close-settings]"
-                    )
-                ) {
-                    closeSettings();
-                }
-
-                if (
-                    target.matches &&
-                    target.matches(
-                        "[data-close-modal]"
-                    )
-                ) {
-                    closeActionModal();
-                }
-
-                if (
-                    target.matches &&
-                    target.matches(
-                        "[data-close-baby-name]"
-                    )
-                ) {
-                    closeBabyNameModal();
-                }
-
-                if (
-                    target.matches &&
-                    target.matches(
-                        "[data-close-delete]"
-                    )
-                ) {
-                    closeDeleteModal();
-                }
-            }
-        );
-
-        /* -----------------------------------------------
            BABY NAME
         ------------------------------------------------ */
 
@@ -3473,20 +3420,10 @@
         container.innerHTML =
             content;
 
-        show(modal);
+        if (!modal.open) {
 
-        modal.setAttribute(
-            "aria-hidden",
-            "false"
-        );
-
-        /*
-         * Prevent the browser from scrolling the page behind
-         * the modal while it is open.
-         */
-        document.body.classList.add(
-            "modal-open"
-        );
+            modal.showModal();
+        }
     }
 
     function closeActionModal() {
@@ -3498,16 +3435,10 @@
             return;
         }
 
-        hide(modal);
+        if (modal.open) {
 
-        modal.setAttribute(
-            "aria-hidden",
-            "true"
-        );
-
-        document.body.classList.remove(
-            "modal-open"
-        );
+            modal.close();
+        }
     }
 
     function openSettings() {
@@ -3539,16 +3470,10 @@
                 state.voiceConfirmation;
         }
 
-        show(modal);
+        if (!modal.open) {
 
-        modal.setAttribute(
-            "aria-hidden",
-            "false"
-        );
-
-        document.body.classList.add(
-            "modal-open"
-        );
+            modal.showModal();
+        }
 
         const button =
             $("settingsButton");
@@ -3571,16 +3496,10 @@
             return;
         }
 
-        hide(modal);
+        if (modal.open) {
 
-        modal.setAttribute(
-            "aria-hidden",
-            "true"
-        );
-
-        document.body.classList.remove(
-            "modal-open"
-        );
+            modal.close();
+        }
 
         const button =
             $("settingsButton");
@@ -3615,16 +3534,10 @@
                     : state.babyName;
         }
 
-        show(modal);
+        if (!modal.open) {
 
-        modal.setAttribute(
-            "aria-hidden",
-            "false"
-        );
-
-        document.body.classList.add(
-            "modal-open"
-        );
+            modal.showModal();
+        }
     }
 
     function closeBabyNameModal() {
@@ -3636,16 +3549,10 @@
             return;
         }
 
-        hide(modal);
+        if (modal.open) {
 
-        modal.setAttribute(
-            "aria-hidden",
-            "true"
-        );
-
-        document.body.classList.remove(
-            "modal-open"
-        );
+            modal.close();
+        }
     }
 
     /* =====================================================
@@ -3661,16 +3568,10 @@
             return;
         }
 
-        show(modal);
+        if (!modal.open) {
 
-        modal.setAttribute(
-            "aria-hidden",
-            "false"
-        );
-
-        document.body.classList.add(
-            "modal-open"
-        );
+            modal.showModal();
+        }
     }
 
     function closeDeleteModal() {
@@ -3682,15 +3583,67 @@
             return;
         }
 
-        hide(modal);
+        if (modal.open) {
 
-        modal.setAttribute(
-            "aria-hidden",
-            "true"
-        );
+            modal.close();
+        }
+    }
 
-        document.body.classList.remove(
-            "modal-open"
+    /*
+     * Light-dismiss fallback for browsers without
+     * closedby support (Safari). Where closedby="any"
+     * is supported the browser closes the dialog when
+     * the backdrop is clicked; here a press and release
+     * outside the modal content does the same.
+     */
+    if (!("closedBy" in HTMLDialogElement.prototype)) {
+
+        document.querySelectorAll(
+            "dialog.tracker-modal"
+        ).forEach(
+            function (dialog) {
+
+                let pressedOutside = false;
+
+                const isOutside =
+                    function (event) {
+
+                        const rect =
+                            dialog.getBoundingClientRect();
+
+                        return (
+                            event.clientX < rect.left ||
+                            event.clientX > rect.right ||
+                            event.clientY < rect.top ||
+                            event.clientY > rect.bottom
+                        );
+                    };
+
+                dialog.addEventListener(
+                    "pointerdown",
+                    function (event) {
+
+                        pressedOutside =
+                            isOutside(event);
+                    }
+                );
+
+                dialog.addEventListener(
+                    "pointerup",
+                    function (event) {
+
+                        if (
+                            pressedOutside &&
+                            isOutside(event)
+                        ) {
+
+                            dialog.close();
+                        }
+
+                        pressedOutside = false;
+                    }
+                );
+            }
         );
     }
 

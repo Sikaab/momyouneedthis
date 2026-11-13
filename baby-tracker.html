@@ -1374,23 +1374,15 @@ a.myf-card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(80,55,65
      ACTION MODAL
 ========================================================= -->
 
-<div
+<dialog
     id="actionModal"
-    class="tracker-modal hidden"
-    aria-hidden="true"
+    class="tracker-modal"
+    closedby="any"
+    aria-labelledby="modalContentTitle"
 >
 
     <div
-        class="modal-overlay"
-        data-close-modal
-    ></div>
-
-
-    <div
         class="tracker-modal-content"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="modalContentTitle"
     >
 
         <button
@@ -1407,30 +1399,22 @@ a.myf-card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(80,55,65
 
     </div>
 
-</div>
+</dialog>
 
 
 <!-- =========================================================
      SETTINGS MODAL
 ========================================================= -->
 
-<div
+<dialog
     id="settingsModal"
-    class="tracker-modal hidden"
-    aria-hidden="true"
+    class="tracker-modal"
+    closedby="any"
+    aria-labelledby="settingsTitle"
 >
 
     <div
-        class="modal-overlay"
-        data-close-settings
-    ></div>
-
-
-    <div
         class="tracker-modal-content tracker-settings-modal"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="settingsTitle"
     >
 
         <button
@@ -1609,29 +1593,22 @@ a.myf-card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(80,55,65
 
     </div>
 
-</div>
+</dialog>
 
 
 <!-- =========================================================
      BABY NAME MODAL
 ========================================================= -->
 
-<div
+<dialog
     id="babyNameModal"
-    class="tracker-modal hidden"
-    aria-hidden="true"
+    class="tracker-modal"
+    closedby="any"
+    aria-labelledby="babyNameTitle"
 >
 
     <div
-        class="modal-overlay"
-        data-close-baby-name
-    ></div>
-
-
-    <div
         class="tracker-modal-content"
-        role="dialog"
-        aria-modal="true"
     >
 
         <button
@@ -1650,7 +1627,7 @@ a.myf-card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(80,55,65
                 👶 BABY PROFILE
             </span>
 
-            <h2>
+            <h2 id="babyNameTitle">
                 Who are we tracking?
             </h2>
 
@@ -1671,6 +1648,7 @@ a.myf-card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(80,55,65
 
                 <input
                     type="text"
+                    autofocus
                     id="babyNameModalInput"
                     placeholder="Baby"
                     maxlength="40"
@@ -1691,36 +1669,29 @@ a.myf-card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(80,55,65
 
     </div>
 
-</div>
+</dialog>
 
 
 <!-- =========================================================
      DELETE CONFIRMATION
 ========================================================= -->
 
-<div
+<dialog
     id="deleteDataModal"
-    class="tracker-modal hidden"
-    aria-hidden="true"
+    class="tracker-modal"
+    closedby="any"
+    aria-labelledby="deleteDataTitle"
 >
 
     <div
-        class="modal-overlay"
-        data-close-delete
-    ></div>
-
-
-    <div
         class="tracker-modal-content delete-confirmation"
-        role="dialog"
-        aria-modal="true"
     >
 
         <div class="delete-icon">
             🗑️
         </div>
 
-        <h2>
+        <h2 id="deleteDataTitle">
             Delete everything?
         </h2>
 
@@ -1740,6 +1711,7 @@ a.myf-card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(80,55,65
 
             <button
                 type="button"
+                autofocus
                 id="cancelDeleteButton"
                 class="settings-secondary-button"
             >
@@ -1759,7 +1731,7 @@ a.myf-card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(80,55,65
 
     </div>
 
-</div>
+</dialog>
 
 
 <!-- =========================================================
