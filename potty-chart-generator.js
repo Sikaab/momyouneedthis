@@ -578,8 +578,11 @@ previewButton.addEventListener(
 
     updatePreview();
 
-    emailModal.style.display =
-    "flex";
+    if(!emailModal.open){
+
+    emailModal.showModal();
+
+    }
 
 });
 
@@ -588,23 +591,54 @@ closeModal.addEventListener(
 "click",
 ()=>{
 
-    emailModal.style.display =
-    "none";
+    emailModal.close();
 
 });
 
 
+/* Light-dismiss fallback for browsers without
+   closedby support (Safari): a press and release
+   outside the dialog box closes it, matching the
+   closedby="any" behaviour. */
+
+if(!("closedBy" in HTMLDialogElement.prototype)){
+
+let pressedOutside = false;
+
+const isOutsideModal = (event)=>{
+
+const rect = emailModal.getBoundingClientRect();
+
+return event.clientX < rect.left ||
+event.clientX > rect.right ||
+event.clientY < rect.top ||
+event.clientY > rect.bottom;
+
+};
+
 emailModal.addEventListener(
-"click",
+"pointerdown",
 (event)=>{
 
-if(event.target===emailModal){
+pressedOutside = isOutsideModal(event);
 
-    emailModal.style.display="none";
+});
+
+emailModal.addEventListener(
+"pointerup",
+(event)=>{
+
+if(pressedOutside && isOutsideModal(event)){
+
+emailModal.close();
 
 }
 
+pressedOutside = false;
+
 });
+
+}
 
 
 document.getElementById("emailInput").addEventListener(
@@ -1216,7 +1250,7 @@ pdf.save(
 );
 
 
-emailModal.style.display="none";
+emailModal.close();
 
 
 }
