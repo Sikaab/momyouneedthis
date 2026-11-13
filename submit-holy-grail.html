@@ -180,6 +180,10 @@ window.addEventListener('load', function() {
         border-color:#e89aaa;
         box-shadow:0 0 0 4px rgba(232,154,170,.12);
     }
+    .holy-grail-field input:user-invalid{
+        border-color:#b4233d;
+        background:#fff7f8;
+    }
     /* =====================================================
        ERROR
     ====================================================== */
@@ -442,7 +446,6 @@ window.addEventListener('load', function() {
 <div class="holy-grail-form">
     <form
         id="holyGrailForm"
-        novalidate
     >
         <!-- PRODUCT NAME -->
         <div class="holy-grail-field">
@@ -457,6 +460,8 @@ window.addEventListener('load', function() {
                 maxlength="150"
                 autocomplete="off"
                 required
+                aria-invalid="false"
+                data-error="holyGrailError"
             >
         </div>
         <!-- BRAND -->
@@ -472,14 +477,16 @@ window.addEventListener('load', function() {
                 maxlength="100"
                 autocomplete="off"
                 required
+                aria-invalid="false"
+                data-error="holyGrailError"
             >
         </div>
         <!-- ERROR MESSAGE -->
         <p
             id="holyGrailError"
             class="holy-grail-error"
-            role="alert"
             aria-live="polite"
+            aria-atomic="true"
         ></p>
         <!-- SUBMIT BUTTON -->
         <button

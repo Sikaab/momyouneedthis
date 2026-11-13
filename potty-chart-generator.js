@@ -66,6 +66,14 @@ document.getElementById("closeModal");
 const downloadButton =
 document.getElementById("downloadButton");
 
+
+const emailForm =
+document.getElementById("emailForm");
+
+
+const emailInput =
+document.getElementById("emailInput");
+
 /* ===========================
    COLORS
 =========================== */
@@ -393,14 +401,20 @@ chartData.days
 const SAVE_LEAD_TIMEOUT_MS = 8000;
 
 
-function isValidEmail(email){
+function emailErrorMessage(){
 
-return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email || "");
+if(emailInput.validity.valueMissing){
+
+return "Please enter your email first.";
+
+}
+
+return "Please enter a valid email address.";
 
 }
 
 
-function showEmailError(message){
+function showEmailError(message, isValidationError = false){
 
 let el=document.getElementById("emailError");
 
@@ -413,6 +427,10 @@ el.hidden=true;
 
 el.textContent="";
 
+emailInput.setAttribute("aria-invalid", "false");
+
+emailInput.removeAttribute("aria-describedby");
+
 return;
 
 }
@@ -420,6 +438,35 @@ return;
 el.hidden=false;
 
 el.textContent=message;
+
+if(isValidationError){
+
+emailInput.setAttribute("aria-invalid", "true");
+
+emailInput.setAttribute("aria-describedby", "emailError");
+
+} else {
+
+emailInput.setAttribute("aria-invalid", "false");
+
+emailInput.removeAttribute("aria-describedby");
+
+}
+
+}
+
+
+function syncEmailError(){
+
+if(emailInput.matches(":user-invalid")){
+
+showEmailError(emailErrorMessage(), true);
+
+} else {
+
+showEmailError(null);
+
+}
 
 }
 
@@ -435,12 +482,6 @@ async function saveLead(){
 
     if(!email){
         console.log("No email");
-        return false;
-    }
-
-    if(!isValidEmail(email)){
-        console.log("Invalid email");
-        showEmailError("Please enter a valid email address.");
         return false;
     }
 
@@ -641,53 +682,45 @@ pressedOutside = false;
 }
 
 
-document.getElementById("emailInput").addEventListener(
-"keydown",
+emailInput.addEventListener(
+"invalid",
 (event)=>{
-
-if(event.key==="Enter"){
 
 event.preventDefault();
 
-downloadButton.click();
+showEmailError(emailErrorMessage(), true);
 
-}
+emailInput.focus();
 
 });
+
+
+emailInput.addEventListener(
+"blur",
+syncEmailError
+);
+
+
+emailInput.addEventListener(
+"input",
+syncEmailError
+);
 
 /* ===========================
    PDF DOWNLOAD
 =========================== */
 
-downloadButton.addEventListener(
-"click",
-async()=>{
+emailForm.addEventListener(
+"submit",
+async(event)=>{
+
+event.preventDefault();
 
 let originalText =
 downloadButton.textContent;
 
 try{
 
-
-const email =
-document.getElementById("emailInput").value.trim();
-
-
-if(!email){
-
-showEmailError("Please enter your email first.");
-
-return;
-
-}
-
-if(!isValidEmail(email)){
-
-showEmailError("Please enter a valid email address.");
-
-return;
-
-}
 
 showEmailError(null);
 

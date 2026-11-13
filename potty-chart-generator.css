@@ -931,6 +931,15 @@ margin-top:15px;
 }
 
 
+.potty-modal input:user-invalid {
+
+border-color:#e0245e;
+
+background:#fff7f8;
+
+}
+
+
 .potty-close {
 
 position:absolute;

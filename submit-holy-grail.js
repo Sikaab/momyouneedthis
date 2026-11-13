@@ -67,6 +67,214 @@ const submitAnother =
 
 
 /* ===========================
+   VALIDATION
+=========================== */
+
+let errorField = null;
+
+
+function fieldErrorMessage(
+    input
+) {
+
+    if (
+        input ===
+        productNameInput
+    ) {
+
+        return "Please enter the product name.";
+
+    }
+
+
+    return "Please enter the brand.";
+
+}
+
+
+function showFieldError(
+    input
+) {
+
+    errorField =
+        input;
+
+
+    input.setAttribute(
+        "aria-invalid",
+        "true"
+    );
+
+
+    input.setAttribute(
+        "aria-describedby",
+        "holyGrailError"
+    );
+
+
+    showError(
+        fieldErrorMessage(
+            input
+        )
+    );
+
+
+    input.focus();
+
+}
+
+
+function syncFieldState(
+    input
+) {
+
+    if (input.validity.valid) {
+
+        input.setAttribute(
+            "aria-invalid",
+            "false"
+        );
+
+
+        input.removeAttribute(
+            "aria-describedby"
+        );
+
+
+        if (
+            errorField ===
+            input
+        ) {
+
+            errorField =
+                null;
+
+
+            clearError();
+
+        }
+
+    } else if (
+        errorField ===
+        input
+    ) {
+
+        input.setAttribute(
+            "aria-invalid",
+            "true"
+        );
+
+
+        input.setAttribute(
+            "aria-describedby",
+            "holyGrailError"
+        );
+
+    }
+
+}
+
+
+function syncAriaInvalid(
+    input
+) {
+
+    input.setAttribute(
+        "aria-invalid",
+        input.matches(":user-invalid")
+            ? "true"
+            : "false"
+    );
+
+}
+
+
+[
+    productNameInput,
+    brandInput
+].forEach((input) => {
+
+    if (!input) {
+
+        return;
+
+    }
+
+
+    input.addEventListener(
+        "invalid",
+        (event) => {
+
+            event.preventDefault();
+
+
+            input.setAttribute(
+                "aria-invalid",
+                "true"
+            );
+
+
+            if (
+                input === brandInput &&
+                productNameInput &&
+                !productNameInput.validity.valid
+            ) {
+
+                showFieldError(
+                    productNameInput
+                );
+
+
+                return;
+
+            }
+
+
+            showFieldError(
+                input
+            );
+
+        }
+    );
+
+
+    input.addEventListener(
+        "input",
+        () => {
+
+            input.setCustomValidity(
+                ""
+            );
+
+
+            syncFieldState(
+                input
+            );
+
+
+            syncAriaInvalid(
+                input
+            );
+
+        }
+    );
+
+
+    input.addEventListener(
+        "blur",
+        () => {
+
+            syncAriaInvalid(
+                input
+            );
+
+        }
+    );
+
+});
+
+
+/* ===========================
    AUTH STATE
 =========================== */
 
@@ -595,15 +803,41 @@ function showError(
 
 function clearError() {
 
-    if (!errorMessage) {
+    if (errorMessage) {
 
-        return;
+        errorMessage.textContent =
+            "";
 
     }
 
 
-    errorMessage.textContent =
-        "";
+    errorField =
+        null;
+
+
+    [
+        productNameInput,
+        brandInput
+    ].forEach((input) => {
+
+        if (!input) {
+
+            return;
+
+        }
+
+
+        input.setAttribute(
+            "aria-invalid",
+            "false"
+        );
+
+
+        input.removeAttribute(
+            "aria-describedby"
+        );
+
+    });
 
 }
 
@@ -680,16 +914,14 @@ if (form) {
 
             if (!productName) {
 
-                showError(
+                productNameInput.setCustomValidity(
                     "Please enter the product name."
                 );
 
 
-                if (productNameInput) {
-
-                    productNameInput.focus();
-
-                }
+                showFieldError(
+                    productNameInput
+                );
 
 
                 return;
@@ -699,16 +931,14 @@ if (form) {
 
             if (!brand) {
 
-                showError(
+                brandInput.setCustomValidity(
                     "Please enter the brand."
                 );
 
 
-                if (brandInput) {
-
-                    brandInput.focus();
-
-                }
+                showFieldError(
+                    brandInput
+                );
 
 
                 return;
