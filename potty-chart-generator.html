@@ -698,26 +698,35 @@ type="button">
 Enter your email to download your personalized potty chart.
 </p>
 
+<form id="emailForm">
+
 <input
 id="emailInput"
+name="email"
 type="email"
-placeholder="Your email address" aria-label="Email address">
+placeholder="Your email address" aria-label="Email address"
+autocomplete="email"
+required
+aria-invalid="false"
+data-error="emailError">
 
 <p
 id="emailError"
 class="potty-error"
-role="alert"
+aria-live="polite"
 hidden>
 </p>
 
 <button
 id="downloadButton"
 class="download-button"
-type="button">
+type="submit">
 
 Download My Chart
 
 </button>
+
+</form>
 
 <p class="potty-small-text">
 
