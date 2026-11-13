@@ -707,6 +707,77 @@ syncEmailError
 );
 
 /* ===========================
+   PDF LIBRARIES (ON DEMAND)
+=========================== */
+
+
+let pdfLibrariesPromise = null;
+
+
+function loadLibrary(src){
+
+return new Promise((resolve,reject)=>{
+
+const script =
+document.createElement("script");
+
+script.src = src;
+
+script.onload = resolve;
+
+script.onerror = reject;
+
+document.head.appendChild(script);
+
+});
+
+}
+
+
+function loadPdfLibraries(){
+
+if(window.html2canvas && window.jspdf && window.jspdf.jsPDF){
+
+return Promise.resolve();
+
+}
+
+if(!pdfLibrariesPromise){
+
+pdfLibrariesPromise = Promise.all([
+
+loadLibrary(
+"https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
+),
+
+loadLibrary(
+"https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"
+)
+
+]).then(()=>{
+
+if(!window.html2canvas || !window.jspdf || !window.jspdf.jsPDF){
+
+throw new Error("PDF libraries unavailable");
+
+}
+
+}).catch((error)=>{
+
+pdfLibrariesPromise = null;
+
+throw error;
+
+});
+
+}
+
+return pdfLibrariesPromise;
+
+}
+
+
+/* ===========================
    PDF DOWNLOAD
 =========================== */
 
@@ -736,6 +807,9 @@ showEmailError(
 );
 
 }
+
+
+await loadPdfLibraries();
 
 
 const clone =
