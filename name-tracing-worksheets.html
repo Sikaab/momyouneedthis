@@ -40,7 +40,6 @@ window.addEventListener('load', function() {
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <style>
         
@@ -818,17 +817,34 @@ function fileSlug() {
   var s = cleanName().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
   return s || 'name';
 }
+var jsPDFLoad = null;
+function ensureJsPDF() {
+  if (window.jspdf && window.jspdf.jsPDF) { return Promise.resolve(true); }
+  if (!jsPDFLoad) {
+    jsPDFLoad = new Promise(function (resolve) {
+      var sc = document.createElement('script');
+      sc.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+      sc.async = true;
+      sc.onload = function () { resolve(!!(window.jspdf && window.jspdf.jsPDF)); };
+      sc.onerror = function () { jsPDFLoad = null; resolve(false); };
+      document.head.appendChild(sc);
+    });
+  }
+  return jsPDFLoad;
+}
 function downloadPDF() {
   if (!guard()) { return; }
   drawSheet();
-  if (!window.jspdf || !window.jspdf.jsPDF) {
-    hint.textContent = 'The PDF maker is still loading — wait a second and try again, or use Print instead.';
-    hint.classList.add('is-alert');
-    return;
-  }
-  var pdf = new window.jspdf.jsPDF({ orientation: 'portrait', unit: 'pt', format: 'letter' });
-  pdf.addImage(canvas.toDataURL('image/jpeg', 0.95), 'JPEG', 0, 0, 612, 792);
-  pdf.save(fileSlug() + '-name-tracing-worksheet.pdf');
+  ensureJsPDF().then(function (ready) {
+    if (!ready) {
+      hint.textContent = 'The PDF maker is still loading — wait a second and try again, or use Print instead.';
+      hint.classList.add('is-alert');
+      return;
+    }
+    var pdf = new window.jspdf.jsPDF({ orientation: 'portrait', unit: 'pt', format: 'letter' });
+    pdf.addImage(canvas.toDataURL('image/jpeg', 0.95), 'JPEG', 0, 0, 612, 792);
+    pdf.save(fileSlug() + '-name-tracing-worksheet.pdf');
+  });
 }
 function printSheet() {
   if (!guard()) { return; }
