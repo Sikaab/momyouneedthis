@@ -1,0 +1,39 @@
+
+.printable-preview-card {
+    max-width: 560px;
+    margin: 30px auto;
+    padding: 48px 30px 42px;
+    background: linear-gradient(135deg, #fff5f7 0%, #ffe5ec 100%);
+    border: 2px dashed #e89aaa;
+    border-radius: 28px;
+    text-align: center;
+    font-family: 'Nunito', system-ui, sans-serif;
+}
+.printable-preview-card .preview-emoji {
+    font-size: 72px;
+    display: block;
+    margin-bottom: 14px;
+}
+.printable-preview-card h3 {
+    margin: 0 0 8px;
+    color: #332b2b;
+    font-size: 22px;
+    font-weight: 900;
+}
+.printable-preview-card p {
+    margin: 0;
+    color: #8a7a7d;
+    font-size: 15px;
+    line-height: 1.6;
+}
+.printable-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    justify-content: center;
+    margin: 10px auto 0;
+}
+@media (max-width: 750px) {
+    .printable-preview-card { padding: 36px 20px 32px; }
+    .printable-preview-card .preview-emoji { font-size: 56px; }
+}
