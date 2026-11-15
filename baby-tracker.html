@@ -235,7 +235,7 @@ window.addEventListener('load', function() {
          BABY PROFILE
     ====================================================== -->
 
-    <section class="tracker-baby-profile">
+    <section class="tracker-baby-profile" aria-label="Baby profile">
 
         <div class="baby-profile-avatar">
             👶
@@ -688,7 +688,7 @@ window.addEventListener('load', function() {
          ACTIVE SLEEP
     ====================================================== -->
 
-    <section
+    <section aria-label="Nap in progress"
         id="activeSleepCard"
         class="active-sleep-card hidden"
     >
@@ -819,7 +819,7 @@ window.addEventListener('load', function() {
          BACKUP / PRIVACY
     ====================================================== -->
 
-    <section class="tracker-privacy">
+    <section class="tracker-privacy" aria-label="Backup and privacy">
 
         <span>
             🔒
@@ -860,6 +860,7 @@ window.addEventListener('load', function() {
                 <input
                     type="file"
                     id="importDataInput"
+                    aria-label="Import backup"
                     accept=".json,application/json"
                     hidden
                 >
