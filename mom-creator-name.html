@@ -138,6 +138,7 @@ window.addEventListener('load', function() {
 {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://momyouneedthis.com/"}, {"@type": "ListItem", "position": 2, "name": "Meet MomLife With Lizzy", "item": "https://momyouneedthis.com/mom-creator-name"}]}
 </script>
 <link rel="stylesheet" href="/creator-profiles.css">
+<script src="img-fallback.js" defer></script>
 </head>
 <body>
 <div class="creator-page">
@@ -210,10 +211,7 @@ window.addEventListener('load', function() {
     src="assets/momlife-with-lizzy.jpg"
     alt="MomLife With Lizzy — Mom Creator Worth Following"
     class="creator-hero-photo"
-    onerror="
-        this.style.display='none';
-        this.nextElementSibling.style.display='block';
-    " loading="eager" fetchpriority="high"
+    data-fallback="sibling" loading="eager" fetchpriority="high"
 >
 <div
     class="creator-photo-fallback"
