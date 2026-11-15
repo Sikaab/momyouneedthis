@@ -833,6 +833,16 @@
     }
 }
 
+.article-highlight > h2 {
+    display: block;
+    margin-bottom: 10px;
+    color: #d4778e;
+    font-size: 21px;
+    font-weight: 900;
+    line-height: normal;
+    letter-spacing: normal;
+}
+
 
 @media (max-width: 500px) {
 
@@ -856,6 +866,10 @@
     }
 
     .article-highlight > strong {
+        font-size: 18px;
+    }
+
+    .article-highlight > h2 {
         font-size: 18px;
     }
 
