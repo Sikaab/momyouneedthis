@@ -134,6 +134,7 @@ window.addEventListener('load', function() {
 </script>
 
 <link rel="stylesheet" href="/creator-profiles.css">
+<script src="img-fallback.js" defer></script>
 </head>
 
 <body>
@@ -225,10 +226,7 @@ window.addEventListener('load', function() {
     src="assets/mom-not-the-nanny.jpg"
     alt="Ana Balich of Not the Nanny"
     class="creator-hero-photo"
-    onerror="
-        this.style.display='none';
-        this.nextElementSibling.style.display='block';
-    " loading="eager" fetchpriority="high"
+    data-fallback="sibling" loading="eager" fetchpriority="high"
 >
 
 <div
