@@ -1,6 +1,6 @@
 
 .bundle-hero{
-    max-width:1000px;margin:36px auto 10px;padding:44px 40px;
+    max-width:1000px;margin:36px auto 36px;padding:44px 40px;
     background:linear-gradient(135deg,#fff5f8 0%,#fffaf0 60%,#f0f7ff 100%);
     border:2px solid #f3d9e0;border-radius:32px;text-align:center;
     position:relative;overflow:hidden;
@@ -49,7 +49,7 @@
     color:#6b5560;font-size:14px;line-height:1.6;
 }
 @media(max-width:600px){
-    .bundle-hero{padding:32px 20px;margin:24px 0 6px;}
+    .bundle-hero{padding:32px 20px;margin:24px 0 24px;}
     .bundle-grid{grid-template-columns:repeat(2,1fr);gap:12px;}
     .bundle-thumb{height:110px;}
     .bundle-thumb .thumb-emoji{font-size:52px;}
