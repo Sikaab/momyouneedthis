@@ -194,7 +194,7 @@ a {
 .creator-hero-photo-wrap {
     position: relative;
     width:
-        min(320px, 88%);
+        min(200px, 88%);
     margin: 0 auto;
     z-index: 2;
 }
@@ -211,6 +211,7 @@ a {
 .creator-hero-photo {
     position: relative;
     width: 100%;
+    height: auto;
     aspect-ratio: 0.9;
     object-fit: cover;
     border-radius: 34px;
@@ -241,9 +242,9 @@ a {
 .creator-photo-stamp {
     position: absolute;
     right: -7px;
-    top: 25px;
-    width: 95px;
-    height: 95px;
+    top: 16px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     background: var(--mynt-pink);
     color: var(--mynt-white);
@@ -251,7 +252,7 @@ a {
     align-items: center;
     justify-content: center;
     text-align: center;
-    font-size: 9px;
+    font-size: 6px;
     line-height: 1.35;
     font-weight: 900;
     letter-spacing: 0.8px;
@@ -869,14 +870,14 @@ footer > p {
         text-align: left;
     }
     .creator-hero-photo-wrap {
-        width: min(410px, 100%);
+        width: min(290px, 100%);
     }
     .creator-photo-stamp {
         right: -10px;
-        top: 35px;
-        width: 120px;
-        height: 120px;
-        font-size: 11px;
+        top: 25px;
+        width: 85px;
+        height: 85px;
+        font-size: 8px;
     }
     .creator-photo-caption {
         font-size: 12px;
@@ -1064,12 +1065,12 @@ footer > p {
         font-size: 9px;
     }
     .creator-hero-photo-wrap {
-        width: min(270px, 82vw);
+        width: min(190px, 82vw);
     }
     .creator-photo-stamp {
-        width: 82px;
-        height: 82px;
-        font-size: 8px;
+        width: 58px;
+        height: 58px;
+        font-size: 6px;
     }
     .creator-intro-section,
     .creator-test-section,
