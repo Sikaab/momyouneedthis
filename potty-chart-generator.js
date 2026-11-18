@@ -478,8 +478,6 @@ async function saveLead(){
     const email =
     document.getElementById("emailInput").value.trim();
 
-    console.log("Email:", email);
-
     if(!email){
         console.log("No email");
         return false;
@@ -496,8 +494,10 @@ async function saveLead(){
                 collection(db, "leads"),
                 {
                     email: email,
-                    childName: chartData.name || "unknown child name",
                     theme: chartData.theme || "unknown theme",
+                    marketingConsent: true,
+                    consentVersion: "bundled-2026-11",
+                    source: "potty-chart-generator",
                     createdAt: serverTimestamp()
                 }
             ),
