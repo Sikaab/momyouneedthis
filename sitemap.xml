@@ -122,12 +122,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://momyouneedthis.com/animal-habitats</loc>
-    <lastmod>2026-10-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://momyouneedthis.com/animal-learning-pages</loc>
     <lastmod>2026-10-01</lastmod>
     <changefreq>monthly</changefreq>
@@ -286,18 +280,6 @@
   </url>
   <url>
     <loc>https://momyouneedthis.com/blog-baby-naps</loc>
-    <lastmod>2026-10-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://momyouneedthis.com/blog-baby-night-waking</loc>
-    <lastmod>2026-10-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://momyouneedthis.com/blog-baby-products-every-day</loc>
     <lastmod>2026-10-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -1064,11 +1046,6 @@
     <lastmod>2026-10-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://momyouneedthis.com/emotions-feelings-coloring-pages</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://momyouneedthis.com/emotions-learning-activities</loc>
@@ -2745,12 +2722,6 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://momyouneedthis.com/seasons-learning-activities</loc>
-    <lastmod>2026-10-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://momyouneedthis.com/seasons-learning-pages</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -2985,11 +2956,6 @@
     <lastmod>2026-10-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://momyouneedthis.com/sort-by-shape-activities</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://momyouneedthis.com/sort-by-size-activities</loc>
