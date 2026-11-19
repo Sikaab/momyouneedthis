@@ -6,7 +6,7 @@
 .sleep-app {
 
 max-width:1100px;
-margin:40px auto;
+margin:0 auto 40px;
 padding:0;
 background:linear-gradient(180deg,#fff5f8,#ffffff);
 display:grid;
