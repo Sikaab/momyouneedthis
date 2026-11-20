@@ -59,3 +59,9 @@
 .seo-links a:hover{color:#c33761}
 .seo-links span{display:block;margin-top:4px;color:#6d6d6d;font-size:13px;line-height:1.5}
 
+
+/* Closed-hero stack trim: heroes on these sheet pages hold only badge + title, so the shared hero padding + Quick Answer margin stack to a 91px void; trims bring it to ~65px, in line with the approved model pages. */
+.resource-page{padding-bottom:20px}
+.quick-answer{margin-top:20px}
+.key-card,.howto-card{margin:28px auto}
+.sheet-hero{margin:24px auto}
