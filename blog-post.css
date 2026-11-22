@@ -17,7 +17,7 @@
 }
 
 .article-breadcrumbs a {
-    color: #d97f95;
+    color: #a35f70;
     text-decoration: none;
     font-weight: 900;
 }
@@ -45,7 +45,7 @@
     padding: 10px 18px;
     margin-bottom: 20px;
     background: #fff0f5;
-    color: #d4778e;
+    color: #a55d6f;
     border-radius: 999px;
     font-size: 12px;
     font-weight: 900;
@@ -164,7 +164,7 @@
     align-items: center;
     justify-content: center;
     background: #ffe3ec;
-    color: #d4778e;
+    color: #a55d6f;
     border-radius: 50%;
     font-size: 12px;
     font-weight: 900;
@@ -223,7 +223,7 @@
 .article-highlight > strong {
     display: block;
     margin-bottom: 10px;
-    color: #d4778e;
+    color: #a55d6f;
     font-size: 21px;
     font-weight: 900;
 }
@@ -267,7 +267,7 @@
 .response-box strong {
     display: block;
     margin-bottom: 6px;
-    color: #d4778e;
+    color: #a55d6f;
     font-size: 19px;
     font-weight: 900;
 }
@@ -310,7 +310,7 @@
     padding: 23px 25px;
     background: #fff3f7;
     border-radius: 20px;
-    color: #d4778e;
+    color: #a55d6f;
     font-size: 20px;
     line-height: 1.5;
     font-weight: 900;
@@ -489,13 +489,13 @@
     padding: 10px 15px;
     background: #fff;
     border-radius: 12px;
-    color: #d4778e;
+    color: #a55d6f;
     font-size: 14px;
 }
 
 .formula-box span,
 .learning-chain span {
-    color: #d97f95;
+    color: #a35f70;
     font-size: 20px;
     font-weight: 900;
 }
@@ -520,7 +520,7 @@
 .script-label {
     display: inline-block;
     margin-bottom: 12px;
-    color: #d4778e;
+    color: #a55d6f;
     font-size: 12px;
     font-weight: 900;
     letter-spacing: .6px;
@@ -591,7 +591,7 @@
     padding: 18px 22px;
     background: #fff0f5;
     border-radius: 18px;
-    color: #d4778e;
+    color: #a55d6f;
     text-align: center;
     font-size: 17px;
 }
@@ -645,7 +645,7 @@
 
 .article-conclusion .conclusion-final {
     margin-top: 25px;
-    color: #d4778e;
+    color: #a55d6f;
     font-size: 20px;
     font-weight: 900;
 }
@@ -667,7 +667,7 @@
 }
 
 .section-heading > span {
-    color: #d4778e;
+    color: #a55d6f;
     font-size: 12px;
     font-weight: 900;
     letter-spacing: .6px;
@@ -720,7 +720,7 @@
 
 .related-card > span {
     margin-bottom: 8px;
-    color: #d4778e;
+    color: #a55d6f;
     font-size: 11px;
     font-weight: 900;
 }
@@ -836,7 +836,7 @@
 .article-highlight > h2 {
     display: block;
     margin-bottom: 10px;
-    color: #d4778e;
+    color: #a55d6f;
     font-size: 21px;
     font-weight: 900;
     line-height: normal;
@@ -956,7 +956,7 @@ body.research-page .seo-faq.method-compact { gap:8px }
 body.research-page .seo-faq.method-compact .seo-faq-item { padding:12px 16px }
 body.research-page .seo-faq.method-compact .seo-faq-item h3 { font-size:15px;margin:0 0 3px }
 body.research-page .seo-faq.method-compact .seo-faq-item p { font-size:13.5px;line-height:1.55 }
-body.research-page .seo-faq.method-compact .seo-faq-item p a { color:#D05A82;font-weight:700;text-decoration:underline }
+body.research-page .seo-faq.method-compact .seo-faq-item p a { color:#B14C6E;font-weight:700;text-decoration:underline }
 body.research-page .article-section figure { margin:26px auto 30px }
 body.research-page .seo-source-note { max-width:100% }
 body.research-page .quick-answer p { font-size:16px;line-height:1.65 }
@@ -1290,7 +1290,7 @@ body.research-page .related-guides { margin-top: 15px; }
 .about-photo{display:block;width:100%;max-width:300px;height:auto;border-radius:18px;margin:16px auto 18px}
 body.about-page .article-header{padding-bottom:18px}
 body.about-page .article-content>.article-section:first-child{margin-top:0}
-.article-section p a{color:#D05A82;font-weight:700;text-decoration:underline}
+.article-section p a{color:#B14C6E;font-weight:700;text-decoration:underline}
 body.about-page .article-content{padding-bottom:24px}
 body.about-page .article-content>.article-section:last-child{margin-bottom:0}
 body.about-page .article-content{padding-bottom:12px}
