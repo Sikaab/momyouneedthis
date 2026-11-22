@@ -6392,3 +6392,58 @@ html{
 .explore-section {
     text-align: center;
 }
+
+.seo-steps {
+    list-style: none;
+    margin: 0 auto;
+    padding: 0;
+    max-width: 720px;
+    display: grid;
+    gap: 12px;
+    counter-reset: seo-step;
+}
+
+.seo-steps li {
+    counter-increment: seo-step;
+    position: relative;
+    padding: 18px 20px 18px 70px;
+    background: #fffaf8;
+    border: 1px solid #f1e5e7;
+    border-radius: 18px;
+    color: #5f5758;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.seo-steps li::before {
+    content: counter(seo-step);
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e89aaa;
+    border-radius: 50%;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 900;
+}
+
+.seo-steps li strong {
+    color: #332b2b;
+}
+
+@media (max-width: 750px) {
+    .seo-steps li {
+        padding: 16px 16px 16px 62px;
+        font-size: 14px;
+    }
+
+    .seo-steps li::before {
+        left: 16px;
+    }
+}
