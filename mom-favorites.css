@@ -628,7 +628,7 @@ align-items:center;
 justify-content:center;
 box-sizing:border-box;
 border-radius:13px;
-font-family:'Nunito',sans-serif;
+font-family:'Nunito','Nunito Fallback',sans-serif;
 font-size:12px;
 font-weight:900;
 text-decoration:none;

@@ -10,7 +10,7 @@
             border: 1px solid #eee5e7;
             border-radius: 35px;
             box-shadow: 0 12px 35px rgba(80, 55, 55, 0.06);
-            font-family: 'Nunito', system-ui, sans-serif;
+            font-family: 'Nunito','Nunito Fallback', system-ui, sans-serif;
             text-align: left;
             position: relative;
             overflow: hidden;
@@ -232,7 +232,7 @@
             }
         }
 .printable-preview img{height:auto !important;object-fit:contain;max-height:550px;width:auto !important;max-width:100% !important;display:block;margin:0 auto}
-.mini-gallery{max-width:900px;margin:24px auto;padding:0 16px;font-family:'Nunito',system-ui,sans-serif}
+.mini-gallery{max-width:900px;margin:24px auto;padding:0 16px;font-family:'Nunito','Nunito Fallback',system-ui,sans-serif}
 .mini-gallery h2{margin:0 0 8px;color:#332b2b;font-size:22px;font-weight:900}
 .mini-gallery .gallery-sub{margin:0 0 20px;color:#6d6566;font-size:15px;line-height:1.6}
 .gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}

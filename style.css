@@ -1,3 +1,69 @@
+@font-face {
+  font-family: 'Nunito Fallback';
+  src: local('Arial'), local('Liberation Sans');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  ascent-override: 101.1%;
+  descent-override: 35.3%;
+  line-gap-override: 0%;
+  size-adjust: 89.89%;
+}
+@font-face {
+  font-family: 'Nunito Fallback';
+  src: local('Arial'), local('Liberation Sans');
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  ascent-override: 101.1%;
+  descent-override: 35.3%;
+  line-gap-override: 0%;
+  size-adjust: 90.58%;
+}
+@font-face {
+  font-family: 'Nunito Fallback';
+  src: local('Arial'), local('Liberation Sans');
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  ascent-override: 101.1%;
+  descent-override: 35.3%;
+  line-gap-override: 0%;
+  size-adjust: 86.65%;
+}
+@font-face {
+  font-family: 'Nunito Fallback';
+  src: local('Arial'), local('Liberation Sans');
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  ascent-override: 101.1%;
+  descent-override: 35.3%;
+  line-gap-override: 0%;
+  size-adjust: 88.12%;
+}
+@font-face {
+  font-family: 'Nunito Fallback';
+  src: local('Arial'), local('Liberation Sans');
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  ascent-override: 101.1%;
+  descent-override: 35.3%;
+  line-gap-override: 0%;
+  size-adjust: 89.76%;
+}
+@font-face {
+  font-family: 'Nunito Fallback';
+  src: local('Arial'), local('Liberation Sans');
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  ascent-override: 101.1%;
+  descent-override: 35.3%;
+  line-gap-override: 0%;
+  size-adjust: 91.41%;
+}
 *{
     box-sizing:border-box;
     margin:0;
@@ -19,7 +85,7 @@ body{
 
     background:#fffaf8;
 
-    font-family:'Nunito',sans-serif;
+    font-family:'Nunito','Nunito Fallback',sans-serif;
 
     color:#332b2b;
 
@@ -6139,7 +6205,7 @@ html{
   color:#b04a63;
   font-weight:700;
   text-align:center;
-  font-family:'Nunito',system-ui,sans-serif;
+  font-family:'Nunito','Nunito Fallback',system-ui,sans-serif;
 }
 
 /* ---- FAQ cards: classic pattern (h3 questions inside .generator-bottom-cta) ----
@@ -6154,7 +6220,7 @@ html{
   border-bottom:0;
   border-radius:18px 18px 0 0;
   color:#332b2b;
-  font-family:'Nunito',system-ui,sans-serif;
+  font-family:'Nunito','Nunito Fallback',system-ui,sans-serif;
   font-size:16px;
   font-weight:900;
   line-height:1.4;
@@ -6183,7 +6249,7 @@ html{
   border:1px solid #eee5e7;
   border-radius:35px;
   box-shadow:0 12px 35px rgba(80,55,55,.06);
-  font-family:'Nunito',system-ui,sans-serif;
+  font-family:'Nunito','Nunito Fallback',system-ui,sans-serif;
   text-align:left;
   position:relative;
   overflow:hidden;

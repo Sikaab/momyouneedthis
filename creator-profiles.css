@@ -1,3 +1,69 @@
+@font-face {
+  font-family: 'Nunito Fallback';
+  src: local('Arial'), local('Liberation Sans');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  ascent-override: 101.1%;
+  descent-override: 35.3%;
+  line-gap-override: 0%;
+  size-adjust: 89.89%;
+}
+@font-face {
+  font-family: 'Nunito Fallback';
+  src: local('Arial'), local('Liberation Sans');
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  ascent-override: 101.1%;
+  descent-override: 35.3%;
+  line-gap-override: 0%;
+  size-adjust: 90.58%;
+}
+@font-face {
+  font-family: 'Nunito Fallback';
+  src: local('Arial'), local('Liberation Sans');
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  ascent-override: 101.1%;
+  descent-override: 35.3%;
+  line-gap-override: 0%;
+  size-adjust: 86.65%;
+}
+@font-face {
+  font-family: 'Nunito Fallback';
+  src: local('Arial'), local('Liberation Sans');
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  ascent-override: 101.1%;
+  descent-override: 35.3%;
+  line-gap-override: 0%;
+  size-adjust: 88.12%;
+}
+@font-face {
+  font-family: 'Nunito Fallback';
+  src: local('Arial'), local('Liberation Sans');
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  ascent-override: 101.1%;
+  descent-override: 35.3%;
+  line-gap-override: 0%;
+  size-adjust: 89.76%;
+}
+@font-face {
+  font-family: 'Nunito Fallback';
+  src: local('Arial'), local('Liberation Sans');
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  ascent-override: 101.1%;
+  descent-override: 35.3%;
+  line-gap-override: 0%;
+  size-adjust: 91.41%;
+}
 
 /* =========================================================
    MOMYOUNEEDTHIS — CREATOR SPOTLIGHT
@@ -31,7 +97,7 @@ html {
 }
 body {
     margin: 0;
-    font-family: "Nunito", sans-serif;
+    font-family: "Nunito","Nunito Fallback", sans-serif;
     color: var(--mynt-text);
     background: var(--mynt-white);
     line-height: 1.6;
