@@ -6321,3 +6321,7 @@ html{
   white-space: nowrap;
   border: 0;
 }
+
+.explore-section {
+    text-align: center;
+}
