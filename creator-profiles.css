@@ -5,7 +5,7 @@
    MOBILE-FIRST
 ========================================================= */
 :root {
-    --mynt-pink: #d05a82;
+    --mynt-pink: #b14c6e;
     --mynt-pink-dark: #b9476d;
     --mynt-pink-soft: #fff1f5;
     --mynt-pink-medium: #f1b3c5;
@@ -16,7 +16,7 @@
     --mynt-navy: #202c3c;
     --mynt-text: #222222;
     --mynt-gray: #666666;
-    --mynt-light-gray: #999999;
+    --mynt-light-gray: #717171;
     --mynt-white: #ffffff;
     --shadow-soft:
         0 12px 35px rgba(32, 44, 60, 0.08);

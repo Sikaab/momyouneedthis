@@ -326,7 +326,7 @@ transition: transform .2s ease, box-shadow .2s ease;
 }
 
 .creator-primary-button {
-background: #d05a82;
+background: #b14c6e;
 color: #fff;
 box-shadow: 0 8px 18px rgba(208,90,130,.22);
 }
@@ -682,7 +682,7 @@ line-height: 1.7;
 }
 
 .creator-secondary-button {
-border: 2px solid #d05a82;
+border: 2px solid #b14c6e;
 color:#c23767;
 background: #fff;
 }
@@ -733,7 +733,7 @@ font-size: 13px;
 flex-shrink: 0;
 padding: 14px 20px;
 border-radius: 14px;
-background: #d05a82;
+background: #b14c6e;
 color: #fff;
 text-decoration: none;
 font-size: 12px;
@@ -1626,7 +1626,7 @@ align-items: center;
 justify-content: center;
 padding: 14px 22px;
 border-radius: 14px;
-background: #d05a82;
+background: #b14c6e;
 color: #fff;
 text-decoration: none;
 font-size: 12px;

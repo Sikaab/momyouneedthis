@@ -142,7 +142,7 @@
     padding: 9px 17px;
 
     background: #fde5ec;
-    color: #d4778e;
+    color: #a55d6f;
 
     border-radius: 999px;
 
@@ -235,7 +235,7 @@
 }
 
 .blog-featured-card > span {
-    color: #d4778e;
+    color: #a55d6f;
 
     font-size: 11px;
     font-weight: 900;
@@ -264,7 +264,7 @@
 .blog-featured-card strong {
     margin-top: auto;
 
-    color: #e293a4;
+    color: #9e6773;
 
     font-size: 14px;
     font-weight: 900;
@@ -300,7 +300,7 @@
 
     margin-bottom: 8px;
 
-    color: #d4778e;
+    color: #a55d6f;
 
     font-size: 12px;
     font-weight: 900;
@@ -398,7 +398,7 @@
 }
 
 .blog-card > span {
-    color: #d4778e;
+    color: #a55d6f;
 
     font-size: 11px;
     font-weight: 900;
@@ -427,7 +427,7 @@
 .blog-card a {
     margin-top: auto;
 
-    color: #e293a4;
+    color: #9e6773;
 
     text-decoration: none;
 
@@ -438,7 +438,7 @@
 }
 
 .blog-card a:hover {
-    color: #d4778e;
+    color: #a55d6f;
     text-decoration: underline;
 }
 
@@ -468,7 +468,7 @@
     border: 1px solid #f5d9e2;
     border-radius: 999px;
 
-    color: #d4778e;
+    color: #a55d6f;
 
     text-decoration: none;
 
@@ -521,7 +521,7 @@
 }
 
 .blog-resource-cta > span {
-    color: #d4778e;
+    color: #a55d6f;
 
     font-size: 12px;
     font-weight: 900;
