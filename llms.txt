@@ -1,0 +1,21 @@
+# MomYouNeedThis
+
+> Free tools, apps and printables for moms of babies and toddlers: 500+ free printables (coloring pages, worksheets, drawing tutorials), free online generators and trackers, and practical parenting guides and statistics. Everything is free to use.
+
+## Free tools
+
+- [Photo to Coloring Page Converter](https://momyouneedthis.com/turn-a-photo-into-a-coloring-page): Turn any photo into a printable coloring page, free, in the browser.
+- [Name Tracing Worksheets Generator](https://momyouneedthis.com/name-tracing-worksheets): Create personalized name tracing practice sheets for preschoolers.
+- [Potty Chart Generator](https://momyouneedthis.com/potty-chart-generator): Make a personalized printable potty training reward chart.
+- [Sleep Schedule Generator](https://momyouneedthis.com/sleep-schedule-generator): Build a baby or toddler sleep schedule by age, with wake windows.
+- [Baby Tracker](https://momyouneedthis.com/baby-tracker): Simple free tracker for feeds, naps and diapers.
+
+## Free printables
+
+- [Learning Activities](https://momyouneedthis.com/learning-activities): Toddler and preschool learning activities and printable activity pages.
+- [Drawing Tutorials](https://momyouneedthis.com/drawing-tutorials): Step-by-step how-to-draw tutorials for kids, with printable steps.
+- [Free Mom Resources](https://momyouneedthis.com/free-mom-resources): The full library of free printables, organized by type and theme.
+
+## Parenting guides and data
+
+- [Parenting Statistics](https://momyouneedthis.com/parenting-statistics): Data-led reports on childcare costs, reading aloud and what moms search for.
