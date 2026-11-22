@@ -1,12 +1,12 @@
 
 .sheet-hero{max-width:700px;margin:32px auto;padding:0 16px;text-align:center}
 .sheet-hero img{width:100%;border:2px solid #f3d9e0;border-radius:20px;background:#fff}
-.hub-section{max-width:900px;margin:36px auto;padding:0 16px;font-family:'Nunito',system-ui,sans-serif}
+.hub-section{max-width:900px;margin:36px auto;padding:0 16px;font-family:'Nunito','Nunito Fallback',system-ui,sans-serif}
 .hub-section h2{color:#c03d5b;font-size:22px;font-weight:900;margin:0 0 14px}
 .hub-section p{color:#5f5758;font-size:16px;line-height:1.75;margin:0 0 16px}
 .hub-section ul,.hub-section ol{color:#5f5758;font-size:16px;line-height:1.75;margin:0 0 16px;padding-left:24px}
 .hub-section li{margin-bottom:8px}
-.key-table{border-collapse:collapse;width:100%;min-width:560px;font-family:'Nunito',system-ui,sans-serif}
+.key-table{border-collapse:collapse;width:100%;min-width:560px;font-family:'Nunito','Nunito Fallback',system-ui,sans-serif}
 .key-table th,.key-table td{border:2px solid #f3d9e0;padding:12px 14px;text-align:left;font-size:15px}
 .key-table th{background:#FFF6EC;color:#2D1B2E;font-weight:900}
 .key-table td{color:#5f5758}
@@ -19,26 +19,26 @@
 .color-dot{display:inline-block;width:14px;height:14px;border-radius:50%;margin-right:8px;vertical-align:-2px;border:1px solid rgba(0,0,0,.15)}
 
 /* Always-visible scroll cue for tables — shows on all devices, not just on touch */
-.scroll-cue{display:flex;align-items:center;justify-content:center;gap:8px;max-width:900px;margin:8px auto 4px;padding:8px 16px;background:#FFF6EC;border:2px solid #f3d9e0;border-radius:999px;font-family:'Nunito',system-ui,sans-serif;font-size:14px;font-weight:800;color:#c03d5b}
+.scroll-cue{display:flex;align-items:center;justify-content:center;gap:8px;max-width:900px;margin:8px auto 4px;padding:8px 16px;background:#FFF6EC;border:2px solid #f3d9e0;border-radius:999px;font-family:'Nunito','Nunito Fallback',system-ui,sans-serif;font-size:14px;font-weight:800;color:#c03d5b}
 .table-scroll{overflow-x:scroll !important;-webkit-overflow-scrolling:touch;scrollbar-width:auto;scrollbar-color:#D05A82 #f3d9e0}
 .table-scroll::-webkit-scrollbar{height:18px !important;-webkit-appearance:none}
 .table-scroll::-webkit-scrollbar-track{background:#f3d9e0;border-radius:8px;border:1px solid #E89AAA}
 .table-scroll::-webkit-scrollbar-thumb{background:#D05A82;border-radius:8px;border:2px solid #f3d9e0;min-width:80px}
 
 
-.key-card{max-width:900px;margin:36px auto;padding:28px 32px;background:#fff;border:3px solid #E89AAA;border-radius:24px;font-family:'Nunito',system-ui,sans-serif;box-shadow:0 4px 16px rgba(208,90,130,.12)}
+.key-card{max-width:900px;margin:36px auto;padding:28px 32px;background:#fff;border:3px solid #E89AAA;border-radius:24px;font-family:'Nunito','Nunito Fallback',system-ui,sans-serif;box-shadow:0 4px 16px rgba(208,90,130,.12)}
 .key-card h2{margin:0 0 14px;color:#c03d5b;font-size:22px;font-weight:900}
 .key-card p{color:#5f5758;font-size:16px;line-height:1.75;margin:0 0 16px}
 .key-card p:last-child{margin-bottom:0}
 .key-card strong{color:#2D1B2E}
-.howto-card{max-width:900px;margin:36px auto;padding:28px 32px;background:#fff;border:3px dashed #E89AAA;border-radius:24px;font-family:'Nunito',system-ui,sans-serif;box-shadow:0 4px 16px rgba(208,90,130,.12)}
+.howto-card{max-width:900px;margin:36px auto;padding:28px 32px;background:#fff;border:3px dashed #E89AAA;border-radius:24px;font-family:'Nunito','Nunito Fallback',system-ui,sans-serif;box-shadow:0 4px 16px rgba(208,90,130,.12)}
 .howto-card h2{margin:0 0 14px;color:#c03d5b;font-size:22px;font-weight:900}
 .howto-card p{color:#5f5758;font-size:16px;line-height:1.75;margin:0 0 16px}
 .howto-card ol{color:#5f5758;font-size:16px;line-height:1.75;margin:0 0 16px;padding-left:24px}
 .howto-card li{margin-bottom:10px}
 .howto-card strong{color:#2D1B2E}
 
-.seo-section{max-width:900px;margin:55px auto 0;padding:45px 42px 50px;background:#ffffff;border:1px solid #eee5e7;border-radius:35px;box-shadow:0 12px 35px rgba(80,55,55,.06);font-family:'Nunito',system-ui,sans-serif;text-align:left;position:relative;overflow:hidden}
+.seo-section{max-width:900px;margin:55px auto 0;padding:45px 42px 50px;background:#ffffff;border:1px solid #eee5e7;border-radius:35px;box-shadow:0 12px 35px rgba(80,55,55,.06);font-family:'Nunito','Nunito Fallback',system-ui,sans-serif;text-align:left;position:relative;overflow:hidden}
 .seo-section::before{content:"";position:absolute;width:250px;height:250px;top:-145px;right:-90px;background:#ffe5ec;border-radius:50%;opacity:.65;pointer-events:none}
 .seo-section::after{content:"";position:absolute;width:190px;height:190px;bottom:-120px;left:-80px;background:#fff1c9;border-radius:50%;opacity:.55;pointer-events:none}
 .seo-section>*{position:relative;z-index:1}

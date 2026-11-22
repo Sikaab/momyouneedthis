@@ -9,7 +9,7 @@
             border: 1px solid #eee5e7;
             border-radius: 35px;
             box-shadow: 0 12px 35px rgba(80, 55, 55, 0.06);
-            font-family: 'Nunito', system-ui, sans-serif;
+            font-family: 'Nunito','Nunito Fallback', system-ui, sans-serif;
             text-align: left;
             position: relative;
             overflow: hidden;
@@ -244,7 +244,7 @@
             width: 220px;
             height: 220px;
             margin: 0 auto;
-            font-family: 'Nunito', system-ui, sans-serif;
+            font-family: 'Nunito','Nunito Fallback', system-ui, sans-serif;
             font-weight: 900;
             font-size: 150px;
             line-height: 1;

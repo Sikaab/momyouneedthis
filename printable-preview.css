@@ -7,7 +7,7 @@
     border: 2px dashed #e89aaa;
     border-radius: 28px;
     text-align: center;
-    font-family: 'Nunito', system-ui, sans-serif;
+    font-family: 'Nunito','Nunito Fallback', system-ui, sans-serif;
 }
 .printable-preview-card .preview-emoji {
     font-size: 72px;

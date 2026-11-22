@@ -927,7 +927,7 @@ font-size:15px;
 ===================================== */
 
 .sleep-app {
-font-family:'Nunito',system-ui,-apple-system,'Segoe UI',sans-serif;
+font-family:'Nunito','Nunito Fallback',system-ui,-apple-system,'Segoe UI',sans-serif;
 padding:36px;
 border-radius:34px;
 color:#eaf0ff;
