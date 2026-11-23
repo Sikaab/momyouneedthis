@@ -232,3 +232,13 @@
             }
         }
 
+        .seo-section ul:not(.seo-links):not(.seo-steps) {
+            list-style: none;
+            margin: 0 0 18px;
+            padding-left: 0;
+        }
+
+        .seo-section ul:not(.seo-links):not(.seo-steps) li {
+            margin-bottom: 10px;
+        }
+
