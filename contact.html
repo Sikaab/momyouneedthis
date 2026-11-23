@@ -51,9 +51,176 @@ content="Contact MomYouNeedThis with questions, feedback, suggestions or busines
 
 <link rel="canonical" href="https://momyouneedthis.com/contact">
 
-<link rel="stylesheet" href="/style.min.css">
-<link rel="stylesheet" href="/blog.css">
-<link rel="stylesheet" href="/blog-post.css">
+<style>@font-face{font-family:'Nunito Fallback';src:local('Arial'),local('Liberation Sans');font-style:normal;font-weight:400;font-display:swap;ascent-override:101.1%;descent-override:35.3%;line-gap-override:0%;size-adjust:89.89%}@font-face{font-family:'Nunito Fallback';src:local('Arial'),local('Liberation Sans');font-style:normal;font-weight:500;font-display:swap;ascent-override:101.1%;descent-override:35.3%;line-gap-override:0%;size-adjust:90.58%}@font-face{font-family:'Nunito Fallback';src:local('Arial'),local('Liberation Sans');font-style:normal;font-weight:600;font-display:swap;ascent-override:101.1%;descent-override:35.3%;line-gap-override:0%;size-adjust:86.65%}@font-face{font-family:'Nunito Fallback';src:local('Arial'),local('Liberation Sans');font-style:normal;font-weight:700;font-display:swap;ascent-override:101.1%;descent-override:35.3%;line-gap-override:0%;size-adjust:88.12%}@font-face{font-family:'Nunito Fallback';src:local('Arial'),local('Liberation Sans');font-style:normal;font-weight:800;font-display:swap;ascent-override:101.1%;descent-override:35.3%;line-gap-override:0%;size-adjust:89.76%}@font-face{font-family:'Nunito Fallback';src:local('Arial'),local('Liberation Sans');font-style:normal;font-weight:900;font-display:swap;ascent-override:101.1%;descent-override:35.3%;line-gap-override:0%;size-adjust:91.41%}*{box-sizing:border-box;margin:0;padding:0}html,img{max-width:100%;height:auto}body{overflow-x:hidden;scroll-behavior:auto}body{background:#fffaf8;font-family:'Nunito','Nunito Fallback',sans-serif;color:#332b2b;width:100%;display:flex;justify-content:center}.page{width:100%;max-width:1100px;margin:0 auto;padding:0 20px 60px}@keyframes badgeFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}@keyframes badgePulse{0%{transform:scale(1);opacity:.5}50%{transform:scale(1.08);opacity:.2}100%{transform:scale(1);opacity:.5}}footer{margin-top:40px;background:#fff0f4;border-radius:25px;padding:25px 20px;text-align:center}.footer-logo img{width:55px;margin-bottom:10px}footer h3{font-size:20px;font-weight:900;margin-bottom:8px}footer p{color:#6d6d6d;font-size:14px;line-height:1.4}.footer-links{display:flex;justify-content:center;gap:15px;flex-wrap:wrap;margin:15px 0}.footer-links a{text-decoration:none;color:#332b2b;font-size:14px;font-weight:700}.footer-bottom{border-top:1px solid #f2dce2;padding-top:12px}.footer-bottom p{margin:4px;font-size:12px}.featured-grid:has(>a:nth-child(2):last-child){grid-template-columns:1fr}@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}.resource-page{text-align:center;padding:30px 0}.resource-page h1{font-size:50px;font-weight:900;margin:25px 0}.resource-page h1 span{display:block;color:#cb2f50}.resource-page h2{font-size:35px;margin-bottom:30px}.resource-page{text-align:center;padding:40px 0 16px}.resource-page h1{font-size:55px;font-weight:900;margin:25px 0;line-height:1.1}.resource-page h1 span{display:block;color:#cb2f50}@media(max-width:750px){.resource-page h1{font-size:38px}}html{scroll-behavior:smooth}@media(max-width:750px){.resource-page h1{font-size:38px}}@media(max-width:750px){@media(max-width:750px){.page{padding:0 16px 50px}.footer-links{flex-direction:column;gap:10px}}}.article-section{
+    width: 100%;
+    margin: 0 0 85px;
+    scroll-margin-top: 30px;
+}@media (max-width: 650px){.article-section{
+        margin-bottom: 65px;
+    }}.article-breadcrumbs{
+    max-width: 900px;
+    margin: 0 auto 25px;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    color: #999;
+    font-size: 13px;
+    font-weight: 700;
+}.article-breadcrumbs a{
+    color: #a35f70;
+    text-decoration: none;
+    font-weight: 900;
+}.article-breadcrumbs a:hover{
+    text-decoration: underline;
+}.article-header{
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px 20px 55px;
+    text-align: center;
+}.article-category{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 18px;
+    margin-bottom: 20px;
+    background: #fff0f5;
+    color: #a55d6f;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: .5px;
+}.article-header h1{
+    max-width: 850px;
+    margin: 0 auto 22px;
+    color: #332b2b;
+    font-size: clamp(38px, 5vw, 62px);
+    line-height: 1.08;
+    font-weight: 900;
+    letter-spacing: -1.5px;
+}.article-header h1 span{
+    display: block;
+    color: #e29aaa;
+}.article-intro{
+    max-width: 720px;
+    margin: 0 auto 25px;
+    color: #666;
+    font-size: 18px;
+    line-height: 1.7;
+}.article-content{
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px 70px;
+}.article-section{
+    margin: 55px 0;
+}.article-content > .article-section:first-child{
+    margin-top: 20px;
+}.article-section h2{
+    margin: 0 0 18px;
+    color: #332b2b;
+    font-size: 31px;
+    line-height: 1.2;
+    font-weight: 900;
+    letter-spacing: -.5px;
+}.article-section p{
+    margin: 0 0 18px;
+    color: #626262;
+    font-size: 16px;
+    line-height: 1.8;
+}.article-section strong{
+    color: #403737;
+}.article-highlight{
+    margin-bottom: 50px;
+    padding: 30px 32px;
+    background: linear-gradient(
+        135deg,
+        #fff0f6,
+        #fff8fb
+    );
+    border-left: 5px solid #e59aaa;
+    border-radius: 22px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, .035);
+}.article-highlight > strong{
+    display: block;
+    margin-bottom: 10px;
+    color: #a55d6f;
+    font-size: 21px;
+    font-weight: 900;
+}.article-highlight p{
+    margin-bottom: 15px;
+}.article-highlight p:last-child{
+    margin-bottom: 0;
+}.phrase-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin: 25px 0 30px;
+}.phrase-card{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 125px;
+    padding: 20px;
+    background: #fff8fa;
+    border: 1px solid #f1e5e9;
+    border-radius: 20px;
+    text-align: center;
+}.phrase-card span{
+    font-size: 28px;
+}.phrase-card strong{
+    color: #403737;
+    font-size: 15px;
+}@media (max-width: 800px){.article-header{
+        padding: 15px 15px 40px;
+    }.article-header h1{
+        font-size: 39px;
+        letter-spacing: -.8px;
+    }.article-header h1 span{
+        display: inline;
+    }.article-intro{
+        font-size: 16px;
+        line-height: 1.65;
+    }.article-content{
+        padding: 0 15px 55px;
+    }.article-section{
+        margin: 45px 0;
+    }.article-section h2{
+        font-size: 27px;
+    }.phrase-grid{
+        grid-template-columns: repeat(2, 1fr);
+    }}@media (max-width: 500px){.article-breadcrumbs{
+        font-size: 12px;
+        margin-bottom: 15px;
+    }.article-header h1{
+        font-size: 33px;
+    }.article-category{
+        font-size: 11px;
+        padding: 9px 15px;
+    }.article-highlight{
+        padding: 23px 21px;
+        border-radius: 19px;
+    }.article-highlight > strong{
+        font-size: 18px;
+    }.phrase-grid{
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }.phrase-card{
+        min-height: 105px;
+        padding: 15px 10px;
+    }.phrase-card span{
+        font-size: 24px;
+    }.phrase-card strong{
+        font-size: 13px;
+    }.article-section p,
+    .article-section li{
+        font-size: 15px;
+    }}.article-section p a{color:#B14C6E;font-weight:700;text-decoration:underline}</style><link rel="preload" href="/style.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><link rel="preload" href="/blog.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><link rel="preload" href="/blog-post.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="/style.min.css"><link rel="stylesheet" href="/blog.css"><link rel="stylesheet" href="/blog-post.css"></noscript>
+
+
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
