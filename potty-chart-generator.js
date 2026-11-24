@@ -3,12 +3,6 @@
    MomYouNeedThis
 ===================================== */
 
-import { db } from "./firebase-config.js";
-import { 
-  collection, 
-  addDoc, 
-  serverTimestamp 
-} from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
 
 /* ===========================
    STATE
@@ -487,6 +481,14 @@ async function saveLead(){
 
 
     try {
+
+        const { db } = await import("./firebase-config.js");
+
+        const {
+            collection,
+            addDoc,
+            serverTimestamp
+        } = await import("https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js");
 
         const docRef = await Promise.race([
 
