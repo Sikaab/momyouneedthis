@@ -466,6 +466,95 @@ animation:leaderFireLeft 1.4s ease-in-out infinite;
 animation:leaderFireRight 1.4s ease-in-out infinite;
 }
 
+/* Fire placement varies by battle */
+#toddler .leader-fire-left{
+left:10px;
+right:auto;
+}
+
+#toddler .leader-fire-right{
+left:28px;
+right:auto;
+}
+
+#toddler .leader-fire-p2-left{
+right:10px;
+left:auto;
+}
+
+#toddler .leader-fire-p2-right{
+right:28px;
+left:auto;
+}
+
+#sleep .leader-fire-left,
+#sleep .leader-fire-p2-left{
+top:104px;
+}
+
+#sleep .leader-fire-right,
+#sleep .leader-fire-p2-right{
+top:120px;
+}
+
+#potty .leader-fire-left{
+left:10px;
+right:auto;
+top:104px;
+}
+
+#potty .leader-fire-right{
+left:28px;
+right:auto;
+top:120px;
+}
+
+#potty .leader-fire-p2-left{
+right:10px;
+left:auto;
+top:104px;
+}
+
+#potty .leader-fire-p2-right{
+right:28px;
+left:auto;
+top:120px;
+}
+
+#feeding .leader-fire-left,
+#feeding .leader-fire-p2-left{
+top:166px;
+}
+
+#feeding .leader-fire-right,
+#feeding .leader-fire-p2-right{
+top:182px;
+}
+
+#under25 .leader-fire-left{
+left:10px;
+right:auto;
+top:166px;
+}
+
+#under25 .leader-fire-right{
+left:28px;
+right:auto;
+top:182px;
+}
+
+#under25 .leader-fire-p2-left{
+right:10px;
+left:auto;
+top:166px;
+}
+
+#under25 .leader-fire-p2-right{
+right:28px;
+left:auto;
+top:182px;
+}
+
 @keyframes leaderFireLeft{
 
 0%,
@@ -1175,6 +1264,94 @@ top:28px;
 left:18px;
 right:auto;
 top:39px;
+}
+
+#toddler .leader-fire-left{
+left:5px;
+right:auto;
+}
+
+#toddler .leader-fire-right{
+left:18px;
+right:auto;
+}
+
+#toddler .leader-fire-p2-left{
+right:5px;
+left:auto;
+}
+
+#toddler .leader-fire-p2-right{
+right:18px;
+left:auto;
+}
+
+#sleep .leader-fire-left,
+#sleep .leader-fire-p2-left{
+top:62px;
+}
+
+#sleep .leader-fire-right,
+#sleep .leader-fire-p2-right{
+top:73px;
+}
+
+#potty .leader-fire-left{
+left:5px;
+right:auto;
+top:62px;
+}
+
+#potty .leader-fire-right{
+left:18px;
+right:auto;
+top:73px;
+}
+
+#potty .leader-fire-p2-left{
+right:5px;
+left:auto;
+top:62px;
+}
+
+#potty .leader-fire-p2-right{
+right:18px;
+left:auto;
+top:73px;
+}
+
+#feeding .leader-fire-left,
+#feeding .leader-fire-p2-left{
+top:96px;
+}
+
+#feeding .leader-fire-right,
+#feeding .leader-fire-p2-right{
+top:107px;
+}
+
+#under25 .leader-fire-left{
+left:5px;
+right:auto;
+top:96px;
+}
+
+#under25 .leader-fire-right{
+left:18px;
+right:auto;
+top:107px;
+}
+
+#under25 .leader-fire-p2-left{
+right:5px;
+left:auto;
+top:96px;
+}
+
+#under25 .leader-fire-p2-right{
+right:18px;
+left:auto;
+top:107px;
 }
 
 .contender-content{
